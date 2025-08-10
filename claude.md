@@ -35,8 +35,7 @@
   - 説明文
 - **アクション**: 再生ボタンタップで動画ページへ遷移
 
-### 3. 動画ページ（ランドスケープ専用）
-- **画面向き**: ランドスケープ（横向き）強制
+### 3. 動画ページ（90回転させてぱっと見ランドスケープのように表示）
 - **機能**:
   - 画面の右側3/4程度の大きな動画プレイヤー
   - 動画コントロール（再生/一時停止、前後スキップ、巻き戻し）
@@ -67,14 +66,9 @@
 
 ## 技術要件
 
-### 画面向き制御
-- TOPページ・詳細ページ: ポートレート固定
-- 動画ページ: ランドスケープ固定
-
 ### ナビゲーション
 - TOPページ ⇔ 詳細ページ: ボトムシートの表示/非表示
-- 詳細ページ → 動画ページ: 画面遷移 + 画面向き変更
-- 動画ページ → 詳細ページ: 戻るボタンで画面向き復元
+- 詳細ページ → 動画ページ: 画面遷移
 
 ### データ構造（想定）
 ```typescript
@@ -83,11 +77,12 @@ interface StringFigure {
   name: string;
   difficulty: 'easy' | 'medium' | 'hard';
   thumbnail: string;
-  image: string;
+  patternImage: string;
+  previewUrl: string;
   videoUrl: string;
   description: string;
   isBookmarked: boolean;
-  isPremium?: boolean; // 有料コンテンツかどうか
+  premiumCourseId: number; // 0=無料、0以外のID=有料コース
 }
 
 interface AppSettings {
@@ -117,7 +112,6 @@ interface DropdownMenuState {
 ### Phase 3: 動画ページ実装
 1. ランドスケープレイアウト作成
 2. 動画プレイヤー実装
-3. 画面向き制御
 
 ### Phase 4: 機能拡張
 1. ブックマーク機能
@@ -128,7 +122,6 @@ interface DropdownMenuState {
 6. アプリ内課金・購入復元機能
 
 ## 必要なライブラリ（推定）
-- `expo-screen-orientation`: 画面向き制御
 - `expo-av`: 動画再生
 - `react-native-reanimated`: アニメーション（ボトムシート）
 - `react-native-gesture-handler`: ジェスチャー操作

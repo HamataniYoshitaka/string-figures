@@ -6,11 +6,13 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
 import DetailBottomSheet from '../components/DetailBottomSheet';
+import { dummyStringFigures } from '../data/dummyData';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -18,47 +20,109 @@ interface Props {
   navigation: HomeScreenNavigationProp;
 }
 
-// ダミーデータ
-const dummyStringFigures: StringFigure[] = [
-  {
-    id: '1',
-    name: 'アムワンキョ',
-    difficulty: 'medium',
-    thumbnail: '',
-    image: '',
-    videoUrl: '',
-    description: 'アムワンキョの説明文です。',
-    isBookmarked: false,
-  },
-  {
-    id: '2', 
-    name: 'ふたつの星',
-    difficulty: 'easy',
-    thumbnail: '',
-    image: '',
-    videoUrl: '',
-    description: 'ふたつの星の説明文です。',
-    isBookmarked: true,
-  },
-  {
-    id: '3',
-    name: 'シベリアの家',
-    difficulty: 'hard',
-    thumbnail: '',
-    image: '',
-    videoUrl: '',
-    description: 'シベリアの家の説明文です。',
-    isBookmarked: false,
-  },
-];
-
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [bottomSheet, setBottomSheet] = useState<BottomSheetState>({
     isVisible: false,
     selectedItem: null,
   });
 
+  const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
 
+  // マソンリーレイアウト用に2つのカラムに分ける
+  const organizeIntoColumns = (items: StringFigure[]) => {
+    const leftColumn: StringFigure[] = [];
+    const rightColumn: StringFigure[] = [];
+    
+    items.forEach((item, index) => {
+      if (index % 2 === 0) {
+        leftColumn.push(item);
+      } else {
+        rightColumn.push(item);
+      }
+    });
+    
+    return { leftColumn, rightColumn };
+  };
+
+  const { leftColumn, rightColumn } = organizeIntoColumns(dummyStringFigures);
+
+  const renderCard = (item: StringFigure) => {
+    const imageInfo = imageDimensions[item.id];
+    let calculatedHeight = 200; // デフォルト高さ
+    
+    if (imageInfo) {
+      // カードの幅を取得（画面幅の約45%と仮定）
+      const cardWidth = 160; // 概算値
+      calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
+      // 最大高さを制限
+      calculatedHeight = Math.min(calculatedHeight, 300);
+    }
+    
+    return (
+      <TouchableOpacity
+        key={item.id}
+        style={styles.card}
+        onPress={() => handleItemPress(item)}
+      >
+        <View style={styles.cardImageContainer}>
+          {item.thumbnail ? (
+            <Image 
+              source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail}
+              style={[
+                styles.cardImage,
+                { height: calculatedHeight }
+              ]}
+              resizeMode="cover"
+              onLoad={(event) => handleImageLoad(item.id, event)}
+            />
+          ) : (
+            <View style={styles.cardImagePlaceholder}>
+              <Text style={styles.cardImageText}>画像</Text>
+            </View>
+          )}
+          {/* ブックマークアイコン */}
+          {item.isBookmarked && (
+            <View style={styles.bookmarkContainer}>
+              <Text style={styles.bookmarkIcon}>🔖</Text>
+            </View>
+          )}
+        </View>
+        <View style={styles.cardContent}>
+          <Text style={styles.cardTitle}>{item.name}</Text>
+          <View style={styles.cardFooter}>
+            <View style={[
+              styles.difficultyBadge,
+              { backgroundColor: getDifficultyColor(item.difficulty) }
+            ]}>
+              <Text style={styles.difficultyText}>
+                {item.difficulty === 'easy' ? 'かんたん' :
+                 item.difficulty === 'medium' ? 'ふつう' : 'むずかしい'}
+              </Text>
+            </View>
+            <View style={[
+              styles.difficultyIcon,
+              { backgroundColor: getDifficultyColor(item.difficulty) }
+            ]}>
+              <Text style={styles.difficultyIconText}>
+                {item.difficulty === 'easy' ? '易' :
+                 item.difficulty === 'medium' ? '中' : '難'}
+              </Text>
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+
+
+  const handleImageLoad = (itemId: string, event: any) => {
+    const { width, height } = event.nativeEvent.source;
+    setImageDimensions(prev => ({
+      ...prev,
+      [itemId]: { width, height }
+    }));
+  };
 
   const handleItemPress = (item: StringFigure) => {
     setBottomSheet({
@@ -90,51 +154,36 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* ヘッダー */}
-      <View style={styles.header}>
-        <Text style={styles.title}>あやとり</Text>
-        <TouchableOpacity style={styles.menuButton}>
-          <Text style={styles.menuIcon}>⋮</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* フィルターボタン */}
-      <View style={styles.filterContainer}>
-        <TouchableOpacity style={[styles.filterButton, { backgroundColor: '#4CAF50' }]}>
-          <Text style={styles.filterText}>かんたん</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.filterButton, { backgroundColor: '#FFC107' }]}>
-          <Text style={styles.filterText}>ふつう</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.filterButton, { backgroundColor: '#FF9800' }]}>
-          <Text style={styles.filterText}>むずかしい</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* あやとり一覧 */}
       <ScrollView style={styles.scrollView}>
+        {/* ヘッダー */}
+        <View style={styles.header}>
+          <Text style={styles.title}>あやとり</Text>
+          <TouchableOpacity style={styles.menuButton}>
+            <Text style={styles.menuIcon}>⋮</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* フィルターボタン */}
+        <View style={styles.filterContainer}>
+          <TouchableOpacity style={[styles.filterButton, { backgroundColor: '#4CAF50' }]}>
+            <Text style={styles.filterText}>かんたん</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.filterButton, { backgroundColor: '#FFC107' }]}>
+            <Text style={styles.filterText}>ふつう</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.filterButton, { backgroundColor: '#FF9800' }]}>
+            <Text style={styles.filterText}>むずかしい</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* あやとり一覧 */}
         <View style={styles.gridContainer}>
-          {dummyStringFigures.map((item) => (
-            <TouchableOpacity
-              key={item.id}
-              style={styles.card}
-              onPress={() => handleItemPress(item)}
-            >
-              <View style={styles.cardImagePlaceholder}>
-                <Text style={styles.cardImageText}>画像</Text>
-              </View>
-              <Text style={styles.cardTitle}>{item.name}</Text>
-              <View style={[
-                styles.difficultyBadge,
-                { backgroundColor: getDifficultyColor(item.difficulty) }
-              ]}>
-                <Text style={styles.difficultyText}>
-                  {item.difficulty === 'easy' ? 'かんたん' :
-                   item.difficulty === 'medium' ? 'ふつう' : 'むずかしい'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+          <View style={styles.column}>
+            {leftColumn.map(renderCard)}
+          </View>
+          <View style={styles.column}>
+            {rightColumn.map(renderCard)}
+          </View>
         </View>
       </ScrollView>
 
@@ -152,7 +201,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF8E7',
+    backgroundColor: '#ffffff',
   },
   header: {
     flexDirection: 'row',
@@ -194,32 +243,59 @@ const styles = StyleSheet.create({
   },
   gridContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     paddingHorizontal: 20,
     gap: 15,
   },
+  column: {
+    flex: 1,
+    gap: 15,
+  },
   card: {
-    width: '47%',
+    width: '100%',
     backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 12,
+    padding: 0,
+    elevation: 5,
+    marginBottom: 15,
+  },
+  cardImageContainer: {
+    position: 'relative',
+    width: '100%',
+    backgroundColor: 'transparent',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
     shadowRadius: 4,
-    elevation: 3,
+    borderRadius: 12,
+
+  },
+  cardImage: {
+    width: '100%',
+    backgroundColor: '#F5F5F5',
+    borderRadius: 12,
   },
   cardImagePlaceholder: {
-    height: 120,
+    width: '100%',
+    aspectRatio: 1,
     backgroundColor: '#F5F5F5',
-    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    borderRadius: 12,
   },
   cardImageText: {
     color: '#9E9E9E',
     fontSize: 16,
+  },
+  bookmarkContainer: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    zIndex: 1,
+  },
+  bookmarkIcon: {
+    fontSize: 20,
+  },
+  cardContent: {
+    padding: 12,
   },
   cardTitle: {
     fontSize: 14,
@@ -227,8 +303,12 @@ const styles = StyleSheet.create({
     color: '#333',
     marginBottom: 8,
   },
+  cardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   difficultyBadge: {
-    alignSelf: 'flex-start',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
@@ -237,6 +317,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
     fontWeight: '500',
+  },
+  difficultyIcon: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  difficultyIconText: {
+    color: 'white',
+    fontSize: 10,
+    fontWeight: 'bold',
   },
 });
 
