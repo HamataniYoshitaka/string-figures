@@ -12,6 +12,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
 import DetailBottomSheet from '../components/DetailBottomSheet';
+import IconButton from '../components/IconButton';
 import { dummyStringFigures } from '../data/dummyData';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -176,6 +177,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
+        {/* アイコンボタン例 */}
+        <View style={styles.iconButtonContainer}>
+          <IconButton 
+            title="お気に入り" 
+            onPress={() => console.log('お気に入りボタンが押されました')}
+          />
+        </View>
+
         {/* あやとり一覧 */}
         <View style={styles.gridContainer}>
           <View style={styles.column}>
@@ -238,6 +247,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
   },
+  iconButtonContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 15,
+  },
   scrollView: {
     flex: 1,
   },
@@ -295,7 +308,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   cardContent: {
-    padding: 12,
+    paddingHorizontal: 0,
+    paddingVertical: 12,
   },
   cardTitle: {
     fontSize: 14,
