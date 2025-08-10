@@ -1,0 +1,244 @@
+import React from 'react';
+import {
+  View,
+  Text,
+  Modal,
+  StyleSheet,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Dimensions,
+} from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  runOnJS,
+} from 'react-native-reanimated';
+
+import { StringFigure } from '../types';
+
+interface Props {
+  isVisible: boolean;
+  item: StringFigure | null;
+  onClose: () => void;
+  onPlayVideo: (item: StringFigure) => void;
+}
+
+const { height: screenHeight } = Dimensions.get('window');
+
+const DetailBottomSheet: React.FC<Props> = ({
+  isVisible,
+  item,
+  onClose,
+  onPlayVideo,
+}) => {
+  const translateY = useSharedValue(screenHeight);
+
+  React.useEffect(() => {
+    if (isVisible) {
+      translateY.value = withTiming(0, { duration: 300 });
+    } else {
+      translateY.value = withTiming(screenHeight, { duration: 300 });
+    }
+  }, [isVisible]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+  }));
+
+  const handlePlayPress = () => {
+    if (item) {
+      onPlayVideo(item);
+    }
+  };
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case 'easy': return '#4CAF50';
+      case 'medium': return '#FFC107';
+      case 'hard': return '#FF9800';
+      default: return '#9E9E9E';
+    }
+  };
+
+  const getDifficultyText = (difficulty: string) => {
+    switch (difficulty) {
+      case 'easy': return 'かんたん';
+      case 'medium': return 'ふつう';
+      case 'hard': return 'むずかしい';
+      default: return '';
+    }
+  };
+
+  if (!isVisible || !item) return null;
+
+  return (
+    <Modal
+      transparent
+      visible={isVisible}
+      animationType="none"
+      onRequestClose={onClose}
+    >
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={styles.overlay}>
+          <TouchableWithoutFeedback>
+            <Animated.View style={[styles.bottomSheet, animatedStyle]}>
+              {/* ハンドル */}
+              <View style={styles.handle} />
+
+              {/* コンテンツ */}
+              <View style={styles.content}>
+                {/* メイン画像エリア */}
+                <View style={styles.imageContainer}>
+                  <View style={styles.imagePlaceholder}>
+                    <Text style={styles.imageText}>動画プレビュー</Text>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.playButton}
+                    onPress={handlePlayPress}
+                  >
+                    <Text style={styles.playIcon}>▶</Text>
+                  </TouchableOpacity>
+                </View>
+
+                {/* サムネイル */}
+                <View style={styles.thumbnailContainer}>
+                  <View style={styles.thumbnail}>
+                    <Text style={styles.thumbnailText}>完成図</Text>
+                  </View>
+                </View>
+
+                {/* 作品情報 */}
+                <View style={styles.infoContainer}>
+                  <Text style={styles.title}>{item.name}</Text>
+                  <View style={[
+                    styles.difficultyBadge,
+                    { backgroundColor: getDifficultyColor(item.difficulty) }
+                  ]}>
+                    <Text style={styles.difficultyText}>
+                      {getDifficultyText(item.difficulty)}
+                    </Text>
+                  </View>
+                  <Text style={styles.description}>{item.description}</Text>
+                </View>
+              </View>
+            </Animated.View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </Modal>
+  );
+};
+
+const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  bottomSheet: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    minHeight: screenHeight * 0.6,
+    maxHeight: screenHeight * 0.8,
+  },
+  handle: {
+    width: 40,
+    height: 4,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginTop: 12,
+    marginBottom: 20,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  imageContainer: {
+    position: 'relative',
+    marginBottom: 20,
+  },
+  imagePlaceholder: {
+    height: 200,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageText: {
+    color: '#9E9E9E',
+    fontSize: 16,
+  },
+  playButton: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -25,
+    marginLeft: -25,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  playIcon: {
+    fontSize: 18,
+    color: '#333',
+    marginLeft: 2,
+  },
+  thumbnailContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  thumbnail: {
+    width: 80,
+    height: 60,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  thumbnailText: {
+    color: '#9E9E9E',
+    fontSize: 12,
+  },
+  infoContainer: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  difficultyBadge: {
+    alignSelf: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    marginBottom: 16,
+  },
+  difficultyText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  description: {
+    fontSize: 14,
+    color: '#666',
+    lineHeight: 20,
+    textAlign: 'center',
+  },
+});
+
+export default DetailBottomSheet;

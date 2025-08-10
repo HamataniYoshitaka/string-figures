@@ -1,20 +1,39 @@
+import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as ScreenOrientation from 'expo-screen-orientation';
+import 'react-native-gesture-handler';
+
+import { RootStackParamList } from './src/types';
+import HomeScreen from './src/screens/HomeScreen';
+import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
+
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
+  useEffect(() => {
+    // アプリ起動時にポートレートモードに固定
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <NavigationContainer>
       <StatusBar style="auto" />
-    </View>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen 
+          name="VideoPlayer" 
+          component={VideoPlayerScreen}
+          options={{
+            gestureEnabled: true,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
