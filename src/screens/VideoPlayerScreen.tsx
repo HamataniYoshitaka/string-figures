@@ -36,75 +36,68 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   return (
     <View style={styles.outerContainer}>
       <View style={styles.rotatedContainer}>
-      {/* 左側のコントロールエリア */}
-      <View style={styles.leftPanel}>
-        {/* 戻るボタン */}
-        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-          <Text style={styles.backIcon}>←</Text>
-        </TouchableOpacity>
-
-        {/* ブックマークボタン */}
-        <TouchableOpacity style={styles.bookmarkButton}>
-          <Text style={styles.bookmarkIcon}>
-            {stringFigure.isBookmarked ? '★' : '☆'}
-          </Text>
-        </TouchableOpacity>
-
-        {/* コントロールボタン */}
-        <View style={styles.controlsContainer}>
-          <TouchableOpacity style={styles.controlButton}>
-            <View style={styles.floatingButton}>
-              <SkipPreviousIcon width={24} height={24} fillColor="white" />
+        {/* 右側の動画エリア（absoluteで配置） */}
+        <View style={styles.videoArea}>
+          <View style={styles.videoPlayer}>
+            <Text style={styles.videoPlaceholder}>動画プレイヤー</Text>
+            <Text style={styles.videoTitle}>{stringFigure.name}</Text>
+            
+            {/* 字幕エリア - 動画の上に重ねて表示 */}
+            <View style={styles.subtitleArea}>
+              <Text style={styles.subtitleText}>
+                右手の人差し指で、左手中指の手前の糸を下から取ります
+              </Text>
             </View>
-            <Text style={styles.controlLabel}>まえ</Text>
-          </TouchableOpacity>
+          </View>
 
-          <TouchableOpacity style={styles.controlButton}>
-            <View style={styles.floatingButton}>
-              <ReplayIcon width={24} height={24} fillColor="white" />
+          {/* 進捗バー */}
+          <View style={styles.progressContainer}>
+            <View style={styles.progressBar}>
+              <View style={styles.progressFill} />
             </View>
-            <Text style={styles.controlLabel}>もういちど</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.controlButton}>
-            <View style={styles.floatingButton}>
-              <SkipNextIcon width={24} height={24} fillColor="white" />
-            </View>
-            <Text style={styles.controlLabel}>つぎ</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* 再生速度 */}
-        <View style={styles.speedContainer}>
-          <TouchableOpacity style={styles.speedButton}>
-            <Text style={styles.speedIcon}>⚙</Text>
-            <Text style={styles.speedText}>1.0x</Text>
-          </TouchableOpacity>
-          <Text style={styles.speedLabel}>はやく</Text>
-        </View>
-      </View>
-
-      {/* 右側の動画エリア */}
-      <View style={styles.videoArea}>
-        <View style={styles.videoPlayer}>
-          <Text style={styles.videoPlaceholder}>動画プレイヤー</Text>
-          <Text style={styles.videoTitle}>{stringFigure.name}</Text>
-        </View>
-
-        {/* 字幕エリア */}
-        <View style={styles.subtitleArea}>
-          <Text style={styles.subtitleText}>
-            右手の人差し指で、左手中指の手前の糸を下から取ります
-          </Text>
-        </View>
-
-        {/* 進捗バー */}
-        <View style={styles.progressContainer}>
-          <View style={styles.progressBar}>
-            <View style={styles.progressFill} />
           </View>
         </View>
-      </View>
+
+        {/* 左側のコントロールエリア（動画の上に重ねて表示） */}
+        <View style={styles.leftPanel}>
+          {/* 戻るボタン */}
+          <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+            <Text style={styles.backIcon}>←</Text>
+          </TouchableOpacity>
+
+          {/* コントロールボタン */}
+          <View style={styles.controlsContainer}>
+            <TouchableOpacity style={styles.controlButton}>
+              <View style={styles.floatingButton}>
+                <SkipNextIcon width={24} height={24} fillColor="white" />
+              </View>
+              <Text style={styles.controlLabel}>つぎ</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.controlButton}>
+              <View style={styles.floatingButton}>
+                <ReplayIcon width={24} height={24} fillColor="white" />
+              </View>
+              <Text style={styles.controlLabel}>もういちど</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.controlButton}>
+              <View style={styles.floatingButton}>
+                <SkipPreviousIcon width={24} height={24} fillColor="white" />
+              </View>
+              <Text style={styles.controlLabel}>まえ</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* 再生速度 */}
+          <View style={styles.speedContainer}>
+            <TouchableOpacity style={styles.speedButton}>
+              <Text style={styles.speedIcon}>⚙</Text>
+              <Text style={styles.speedText}>1.0x</Text>
+            </TouchableOpacity>
+            <Text style={styles.speedLabel}>はやく</Text>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -113,7 +106,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   outerContainer: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -121,11 +114,15 @@ const styles = StyleSheet.create({
     width: screenHeight,
     height: screenWidth,
     transform: [{ rotate: '90deg' }],
-    flexDirection: 'row',
+    position: 'relative',
   },
   leftPanel: {
-    width: screenHeight * 0.25,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    position: 'absolute',
+    left: 8,
+    top: 0,
+    bottom: 0,
+    width: 150,
+    zIndex: 10,
     paddingVertical: 20,
     paddingHorizontal: 16,
     justifyContent: 'space-between',
@@ -133,6 +130,9 @@ const styles = StyleSheet.create({
   backButton: {
     alignSelf: 'flex-start',
     padding: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 20,
+    marginBottom: 20,
   },
   backIcon: {
     fontSize: 24,
@@ -150,28 +150,29 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 20,
+    gap: 12,
   },
   controlButton: {
+    flexDirection: 'row',
     alignItems: 'center',
     padding: 8,
+    gap: 8,
   },
   floatingButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: 'rgba(87, 83, 77, 0.9)',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   controlIcon: {
     fontSize: 20,
@@ -179,43 +180,48 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   controlLabel: {
-    fontSize: 12,
-    color: 'white',
-    textAlign: 'center',
+    fontSize: 11,
+    color: 'black',
+    fontWeight: '400',
   },
   speedContainer: {
     alignItems: 'center',
+    marginBottom: 20,
   },
   speedButton: {
     alignItems: 'center',
     padding: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 20,
   },
   speedIcon: {
-    fontSize: 18,
+    fontSize: 16,
     color: 'white',
     marginBottom: 4,
   },
   speedText: {
-    fontSize: 14,
+    fontSize: 12,
     color: 'white',
     fontWeight: 'bold',
   },
   speedLabel: {
-    fontSize: 12,
+    fontSize: 11,
     color: 'white',
     marginTop: 4,
   },
   videoArea: {
-    flex: 1,
-    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'flex-end',
   },
   videoPlayer: {
     flex: 1,
-    backgroundColor: '#333',
+    backgroundColor: '#33f',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
-    borderRadius: 8,
+    aspectRatio: 16 / 9,
   },
   videoPlaceholder: {
     fontSize: 18,
@@ -228,17 +234,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   subtitleArea: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    paddingHorizontal: 20,
+    position: 'absolute',
+    bottom: 60, // 進捗バーの上に配置
+    left: 20,
+    right: 20,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 16,
     paddingVertical: 12,
-    marginHorizontal: 10,
-    borderRadius: 8,
   },
   subtitleText: {
-    fontSize: 14,
+    fontSize: 16,
     color: 'white',
     textAlign: 'center',
-    lineHeight: 20,
+    lineHeight: 24,
+    textShadowColor: 'black',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    fontWeight: '500',
   },
   progressContainer: {
     paddingHorizontal: 20,
