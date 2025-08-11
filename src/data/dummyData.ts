@@ -8,7 +8,7 @@ export const dummyStringFigures: StringFigure[] = [
     thumbnail: require('../../assets/string-figures/dummy1/thumbnail.jpg'),
     patternImage: require('../../assets/string-figures/dummy1/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy2/preview.mp4'),
-    videoUrl: '',
+    videoUrl: require('../../assets/string-figures/dummy2/preview.mp4'),
     description: 'アムワンキョの説明文です。',
     isBookmarked: false,
     premiumCourseId: 0, // 無料
@@ -20,7 +20,7 @@ export const dummyStringFigures: StringFigure[] = [
     thumbnail: require('../../assets/string-figures/dummy2/thumbnail.jpg'),
     patternImage: require('../../assets/string-figures/dummy2/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy2/preview.mp4'),
-    videoUrl: '',
+    videoUrl: require('../../assets/string-figures/dummy2/preview.mp4'),
     description: 'ふたつの星の説明文です。',
     isBookmarked: true,
     premiumCourseId: 0, // 無料
@@ -32,7 +32,7 @@ export const dummyStringFigures: StringFigure[] = [
     thumbnail: require('../../assets/string-figures/dummy3/thumbnail.jpg'),
     patternImage: require('../../assets/string-figures/dummy3/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy3/preview.mp4'),
-    videoUrl: '',
+    videoUrl: require('../../assets/string-figures/dummy3/preview.mp4'),
     description: 'シベリアの家の説明文です。',
     isBookmarked: false,
     premiumCourseId: 1, // 有料コース1
@@ -44,7 +44,7 @@ export const dummyStringFigures: StringFigure[] = [
     thumbnail: require('../../assets/string-figures/dummy4/thumbnail.jpg'),
     patternImage: require('../../assets/string-figures/dummy4/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy4/preview.mp4'),
-    videoUrl: '',
+    videoUrl: require('../../assets/string-figures/dummy4/preview.mp4'),
     description: 'イヌイットの網の説明文です。伝統的な漁網のパターンを模したあやとりです。',
     isBookmarked: false,
     premiumCourseId: 2, // 有料コース2

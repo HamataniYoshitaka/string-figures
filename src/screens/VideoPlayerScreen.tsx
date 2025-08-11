@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import { Video, ResizeMode } from 'expo-av';
 
 import { RootStackParamList } from '../types';
 import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon } from '../components/icons';
@@ -40,8 +41,18 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         {/* 右側の動画エリア（absoluteで配置） */}
         <View style={styles.videoArea}>
           <View style={styles.videoPlayer}>
-            <Text style={styles.videoPlaceholder}>動画プレイヤー</Text>
-            <Text style={styles.videoTitle}>{stringFigure.name}</Text>
+            <Video
+              source={typeof stringFigure.videoUrl === 'string' 
+                ? { uri: stringFigure.videoUrl } 
+                : stringFigure.videoUrl
+              }
+              style={styles.video}
+              resizeMode={ResizeMode.COVER}
+              shouldPlay={false}
+              isLooping={false}
+              isMuted={true}
+              useNativeControls={false}
+            />
             
             {/* 字幕エリア - 動画の上に重ねて表示 */}
             <View style={styles.subtitleArea}>
@@ -248,10 +259,15 @@ const styles = StyleSheet.create({
   },
   videoPlayer: {
     flex: 1,
-    backgroundColor: '#33f',
+    backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
     aspectRatio: 16 / 9,
+    position: 'relative',
+  },
+  video: {
+    width: '100%',
+    height: '100%',
   },
   videoPlaceholder: {
     fontSize: 18,
