@@ -18,6 +18,7 @@ import Animated, {
 import { Video, ResizeMode } from 'expo-av';
 
 import { StringFigure } from '../types';
+import { EasyIcon, NormalIcon, HardIcon } from './icons';
 
 interface Props {
   isVisible: boolean;
@@ -54,12 +55,12 @@ const DetailBottomSheet: React.FC<Props> = ({
     }
   };
 
-  const getDifficultyColor = (difficulty: string) => {
+  const getDifficultyIcon = (difficulty: string) => {
     switch (difficulty) {
-      case 'easy': return '#4CAF50';
-      case 'medium': return '#FFC107';
-      case 'hard': return '#FF9800';
-      default: return '#9E9E9E';
+      case 'easy': return EasyIcon;
+      case 'medium': return NormalIcon;
+      case 'hard': return HardIcon;
+      default: return EasyIcon;
     }
   };
 
@@ -139,10 +140,11 @@ const DetailBottomSheet: React.FC<Props> = ({
                 {/* 作品情報 */}
                 <View style={styles.infoContainer}>
                   <Text style={styles.title}>{item.name}</Text>
-                  <View style={[
-                    styles.difficultyBadge,
-                    { backgroundColor: getDifficultyColor(item.difficulty) }
-                  ]}>
+                  <View style={styles.difficultyContainer}>
+                    {(() => {
+                      const IconComponent = getDifficultyIcon(item.difficulty);
+                      return <IconComponent width={28} height={28} strokeColor="#666" />;
+                    })()}
                     <Text style={styles.difficultyText}>
                       {getDifficultyText(item.difficulty)}
                     </Text>
@@ -253,22 +255,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 12,
     textAlign: 'center',
+    fontFamily: 'KleeOne-SemiBold',
   },
-  difficultyBadge: {
-    alignSelf: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
+  difficultyContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
+    gap: 6,
+    backgroundColor: '#F5F5F5',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 16,
+    alignSelf: 'center',
   },
   difficultyText: {
-    color: 'white',
-    fontSize: 14,
+    color: '#666',
+    fontSize: 16,
     fontWeight: '500',
   },
   description: {

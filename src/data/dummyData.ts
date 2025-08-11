@@ -7,7 +7,7 @@ export const dummyStringFigures: StringFigure[] = [
     difficulty: 'medium',
     thumbnail: require('../../assets/string-figures/dummy1/thumbnail.jpg'),
     patternImage: require('../../assets/string-figures/dummy1/pattern.jpg'),
-    previewUrl: '',
+    previewUrl: require('../../assets/string-figures/dummy2/preview.mp4'),
     videoUrl: '',
     description: 'アムワンキョの説明文です。',
     isBookmarked: false,
