@@ -12,7 +12,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
 import DetailBottomSheet from '../components/DetailBottomSheet';
-import IconButton from '../components/IconButton';
 import { dummyStringFigures } from '../data/dummyData';
 import { EasyIcon, NormalIcon, HardIcon } from '../components/icons';
 
@@ -29,6 +28,20 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   });
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
+  
+  const [selectedFilters, setSelectedFilters] = useState<('easy' | 'medium' | 'hard')[]>([]);
+
+  const toggleFilter = (filter: 'easy' | 'medium' | 'hard') => {
+    setSelectedFilters(prev => {
+      if (prev.includes(filter)) {
+        // フィルターが既に選択されている場合は削除
+        return prev.filter(f => f !== filter);
+      } else {
+        // フィルターが選択されていない場合は追加
+        return [...prev, filter];
+      }
+    });
+  };
 
   // マソンリーレイアウト用に2つのカラムに分ける
   const organizeIntoColumns = (items: StringFigure[]) => {
@@ -46,7 +59,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     return { leftColumn, rightColumn };
   };
 
-  const { leftColumn, rightColumn } = organizeIntoColumns(dummyStringFigures);
+  // フィルターされたデータを取得
+  const filteredStringFigures = selectedFilters.length === 0 
+    ? dummyStringFigures // 全て非選択の場合は全データを表示
+    : dummyStringFigures.filter(item => 
+        selectedFilters.includes(item.difficulty as 'easy' | 'medium' | 'hard')
+      );
+
+  const { leftColumn, rightColumn } = organizeIntoColumns(filteredStringFigures);
 
   const renderCard = (item: StringFigure) => {
     const imageInfo = imageDimensions[item.id];
@@ -161,23 +181,66 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
         {/* フィルターボタン */}
         <View style={styles.filterContainer}>
-          <TouchableOpacity style={[styles.filterButton, { backgroundColor: '#4CAF50' }]}>
-            <Text style={styles.filterText}>かんたん</Text>
+          <TouchableOpacity 
+            style={[
+              styles.filterButton, 
+              selectedFilters.includes('easy') ? styles.filterButtonSelected : styles.filterButtonUnselected
+            ]}
+            onPress={() => toggleFilter('easy')}
+          >
+            <EasyIcon 
+              width={24} 
+              height={24} 
+              strokeColor={selectedFilters.includes('easy') ? '#ffffff' : '#57534D'} 
+              strokeWidth={1.5}
+            />
+            <Text style={[
+              styles.filterText, 
+              selectedFilters.includes('easy') ? styles.filterTextSelected : styles.filterTextUnselected
+            ]}>
+              かんたん
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.filterButton, { backgroundColor: '#FFC107' }]}>
-            <Text style={styles.filterText}>ふつう</Text>
+          <TouchableOpacity 
+            style={[
+              styles.filterButton, 
+              selectedFilters.includes('medium') ? styles.filterButtonSelected : styles.filterButtonUnselected
+            ]}
+            onPress={() => toggleFilter('medium')}
+          >
+            <NormalIcon
+              width={24}
+              height={24}
+              strokeColor={selectedFilters.includes('medium') ? '#ffffff' : '#57534D'}
+              strokeWidth={1.5}
+            />
+            <Text style={[
+              styles.filterText, 
+              selectedFilters.includes('medium') ? styles.filterTextSelected : styles.filterTextUnselected
+            ]}>
+              ふつう
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.filterButton, { backgroundColor: '#FF9800' }]}>
-            <Text style={styles.filterText}>むずかしい</Text>
+          <TouchableOpacity 
+            style={[
+              styles.filterButton, 
+              selectedFilters.includes('hard') ? styles.filterButtonSelected : styles.filterButtonUnselected
+            ]}
+            onPress={() => toggleFilter('hard')}
+          >
+            <HardIcon
+              width={24}
+              height={24}
+              strokeColor={selectedFilters.includes('hard') ? '#ffffff' : '#57534D'}
+              strokeWidth={1.5}
+            />
+            <Text style={[
+              styles.filterText, 
+              selectedFilters.includes('hard') ? styles.filterTextSelected : styles.filterTextUnselected
+            ]}>
+              むずかしい
+            </Text>
           </TouchableOpacity>
-        </View>
-
-        {/* アイコンボタン例 */}
-        <View style={styles.iconButtonContainer}>
-          <IconButton 
-            title="お気に入り" 
-            onPress={() => console.log('お気に入りボタンが押されました')}
-          />
         </View>
 
         {/* あやとり一覧 */}
@@ -234,19 +297,29 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   filterButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    paddingVertical: 6,
     borderRadius: 20,
+    gap: 6,
+  },
+  filterButtonSelected: {
+    backgroundColor: '#57534D',
+  },
+  filterButtonUnselected: {
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
   filterText: {
-    color: 'white',
     fontSize: 14,
-    fontWeight: '500',
-    fontFamily: 'KleeOne-Regular',
   },
-  iconButtonContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 15,
+  filterTextSelected: {
+    color: '#ffffff',
+  },
+  filterTextUnselected: {
+    color: '#57534D',
   },
   scrollView: {
     flex: 1,
