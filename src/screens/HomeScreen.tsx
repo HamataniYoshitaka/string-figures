@@ -14,6 +14,7 @@ import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
 import DetailBottomSheet from '../components/DetailBottomSheet';
 import IconButton from '../components/IconButton';
 import { dummyStringFigures } from '../data/dummyData';
+import { EasyIcon, NormalIcon, HardIcon } from '../components/icons';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -89,26 +90,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           )}
         </View>
         <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>{item.name}</Text>
-          <View style={styles.cardFooter}>
-            <View style={[
-              styles.difficultyBadge,
-              { backgroundColor: getDifficultyColor(item.difficulty) }
-            ]}>
-              <Text style={styles.difficultyText}>
-                {item.difficulty === 'easy' ? 'かんたん' :
-                 item.difficulty === 'medium' ? 'ふつう' : 'むずかしい'}
-              </Text>
-            </View>
-            <View style={[
-              styles.difficultyIcon,
-              { backgroundColor: getDifficultyColor(item.difficulty) }
-            ]}>
-              <Text style={styles.difficultyIconText}>
-                {item.difficulty === 'easy' ? '易' :
-                 item.difficulty === 'medium' ? '中' : '難'}
-              </Text>
-            </View>
+          <View style={styles.titleContainer}>
+            <Text style={styles.cardTitle}>{item.name}</Text>
+            {getDifficultyIcon(item.difficulty, 24)}
           </View>
         </View>
       </TouchableOpacity>
@@ -150,6 +134,26 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       case 'medium': return '#FFC107';
       case 'hard': return '#FF9800';
       default: return '#9E9E9E';
+    }
+  };
+
+  const getDifficultyIcon = (difficulty: string, size: number = 16) => {
+    const iconProps = {
+      width: size,
+      height: size,
+      strokeColor: '#57534D',
+      strokeWidth: 1.5,
+    };
+
+    switch (difficulty) {
+      case 'easy':
+        return <EasyIcon {...iconProps} />;
+      case 'medium':
+        return <NormalIcon {...iconProps} />;
+      case 'hard':
+        return <HardIcon {...iconProps} />;
+      default:
+        return <EasyIcon {...iconProps} />;
     }
   };
 
@@ -311,26 +315,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 12,
   },
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
   cardTitle: {
     fontSize: 14,
     fontWeight: '500',
     color: '#333',
-    marginBottom: 8,
-  },
-  cardFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  difficultyBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  difficultyText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: '500',
+    flex: 1,
   },
   difficultyIcon: {
     width: 24,
@@ -338,11 +333,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  difficultyIconText: {
-    color: 'white',
-    fontSize: 10,
-    fontWeight: 'bold',
   },
 });
 

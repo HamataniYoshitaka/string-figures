@@ -1,7 +1,7 @@
 import React from 'react';
 import { Svg, Path } from 'react-native-svg';
 
-interface CustomIconProps {
+interface EasyIconProps {
   width?: number;
   height?: number;
   strokeColor?: string;
@@ -9,7 +9,7 @@ interface CustomIconProps {
   strokeWidth?: number;
 }
 
-const CustomIcon: React.FC<CustomIconProps> = ({
+const EasyIcon: React.FC<EasyIconProps> = ({
   width = 24,
   height = 25,
   strokeColor = '#57534D',
@@ -28,4 +28,4 @@ const CustomIcon: React.FC<CustomIconProps> = ({
   );
 };
 
-export default CustomIcon;
+export default EasyIcon;

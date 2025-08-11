@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { CustomIcon } from './icons';
+import { EasyIcon } from './icons';
 
 interface IconButtonProps {
   onPress?: () => void;
@@ -65,7 +65,7 @@ const IconButton: React.FC<IconButtonProps> = ({ onPress, title = 'Button' }) =>
       onPressOut={handlePressOut}
       activeOpacity={0.8}
     >
-      <CustomIcon
+      <EasyIcon
         width={24}
         height={25}
         strokeColor={strokeColor}
