@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Dimensions,
+  Image,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -14,6 +15,7 @@ import Animated, {
   withTiming,
   runOnJS,
 } from 'react-native-reanimated';
+import { Video, ResizeMode } from 'expo-av';
 
 import { StringFigure } from '../types';
 
@@ -90,9 +92,24 @@ const DetailBottomSheet: React.FC<Props> = ({
               <View style={styles.content}>
                 {/* メイン画像エリア */}
                 <View style={styles.imageContainer}>
-                  <View style={styles.imagePlaceholder}>
-                    <Text style={styles.imageText}>動画プレビュー</Text>
-                  </View>
+                  {item.previewUrl ? (
+                    <Video
+                      source={typeof item.previewUrl === 'string' 
+                        ? { uri: item.previewUrl } 
+                        : item.previewUrl
+                      }
+                      style={styles.videoPreview}
+                      shouldPlay={true}
+                      isLooping={true}
+                      isMuted={true}
+                      resizeMode={ResizeMode.CONTAIN}
+                      useNativeControls={false}
+                    />
+                  ) : (
+                    <View style={styles.imagePlaceholder}>
+                      <Text style={styles.imageText}>動画プレビュー</Text>
+                    </View>
+                  )}
                   <TouchableOpacity
                     style={styles.playButton}
                     onPress={handlePlayPress}
@@ -104,7 +121,18 @@ const DetailBottomSheet: React.FC<Props> = ({
                 {/* サムネイル */}
                 <View style={styles.thumbnailContainer}>
                   <View style={styles.thumbnail}>
-                    <Text style={styles.thumbnailText}>完成図</Text>
+                    {item.patternImage ? (
+                      <Image 
+                        source={typeof item.patternImage === 'string' 
+                          ? { uri: item.patternImage } 
+                          : item.patternImage
+                        } 
+                        style={styles.thumbnailImage}
+                        resizeMode="cover"
+                      />
+                    ) : (
+                      <Text style={styles.thumbnailText}>完成図</Text>
+                    )}
                   </View>
                 </View>
 
@@ -168,6 +196,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  videoPreview: {
+    height: 200,
+    borderRadius: 12,
+    backgroundColor: '#F5F5F5',
+  },
   imageText: {
     color: '#9E9E9E',
     fontSize: 16,
@@ -206,6 +239,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
+  },
+  thumbnailImage: {
+    width: '100%',
+    height: '100%',
   },
   thumbnailText: {
     color: '#9E9E9E',

@@ -5,7 +5,7 @@ export interface StringFigure {
   name: string;
   difficulty: 'easy' | 'medium' | 'hard';
   thumbnail: ImageSourcePropType | string;
-  patternImage: string;
+  patternImage: ImageSourcePropType | string;
   previewUrl: string;
   videoUrl: string;
   description: string;
