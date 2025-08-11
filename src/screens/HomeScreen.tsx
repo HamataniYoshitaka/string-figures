@@ -12,6 +12,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
 import DetailBottomSheet from '../components/DetailBottomSheet';
+import FilterButtons from '../components/FilterButtons';
 import { dummyStringFigures } from '../data/dummyData';
 import { EasyIcon, NormalIcon, HardIcon } from '../components/icons';
 
@@ -180,68 +181,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         </View>
 
         {/* フィルターボタン */}
-        <View style={styles.filterContainer}>
-          <TouchableOpacity 
-            style={[
-              styles.filterButton, 
-              selectedFilters.includes('easy') ? styles.filterButtonSelected : styles.filterButtonUnselected
-            ]}
-            onPress={() => toggleFilter('easy')}
-          >
-            <EasyIcon 
-              width={24} 
-              height={24} 
-              strokeColor={selectedFilters.includes('easy') ? '#ffffff' : '#57534D'} 
-              strokeWidth={1.5}
-            />
-            <Text style={[
-              styles.filterText, 
-              selectedFilters.includes('easy') ? styles.filterTextSelected : styles.filterTextUnselected
-            ]}>
-              かんたん
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={[
-              styles.filterButton, 
-              selectedFilters.includes('medium') ? styles.filterButtonSelected : styles.filterButtonUnselected
-            ]}
-            onPress={() => toggleFilter('medium')}
-          >
-            <NormalIcon
-              width={24}
-              height={24}
-              strokeColor={selectedFilters.includes('medium') ? '#ffffff' : '#57534D'}
-              strokeWidth={1.5}
-            />
-            <Text style={[
-              styles.filterText, 
-              selectedFilters.includes('medium') ? styles.filterTextSelected : styles.filterTextUnselected
-            ]}>
-              ふつう
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={[
-              styles.filterButton, 
-              selectedFilters.includes('hard') ? styles.filterButtonSelected : styles.filterButtonUnselected
-            ]}
-            onPress={() => toggleFilter('hard')}
-          >
-            <HardIcon
-              width={24}
-              height={24}
-              strokeColor={selectedFilters.includes('hard') ? '#ffffff' : '#57534D'}
-              strokeWidth={1.5}
-            />
-            <Text style={[
-              styles.filterText, 
-              selectedFilters.includes('hard') ? styles.filterTextSelected : styles.filterTextUnselected
-            ]}>
-              むずかしい
-            </Text>
-          </TouchableOpacity>
-        </View>
+        <FilterButtons 
+          selectedFilters={selectedFilters}
+          onToggleFilter={toggleFilter}
+        />
 
         {/* あやとり一覧 */}
         <View style={styles.gridContainer}>
@@ -289,37 +232,6 @@ const styles = StyleSheet.create({
   menuIcon: {
     fontSize: 20,
     color: '#5D4037',
-  },
-  filterContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    paddingBottom: 15,
-    gap: 10,
-  },
-  filterButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    borderRadius: 20,
-    gap: 6,
-  },
-  filterButtonSelected: {
-    backgroundColor: '#57534D',
-  },
-  filterButtonUnselected: {
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-  },
-  filterText: {
-    fontSize: 14,
-  },
-  filterTextSelected: {
-    color: '#ffffff',
-  },
-  filterTextUnselected: {
-    color: '#57534D',
   },
   scrollView: {
     flex: 1,
