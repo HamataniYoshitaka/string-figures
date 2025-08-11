@@ -10,7 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 import { RootStackParamList } from '../types';
-import { SkipNextIcon, SkipPreviousIcon, ReplayIcon } from '../components/icons';
+import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon } from '../components/icons';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -62,7 +62,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         <View style={styles.leftPanel}>
           {/* 戻るボタン */}
           <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-            <Text style={styles.backIcon}>←</Text>
+            <CloseIcon width={32} height={32} fillColor="#79716B" />
           </TouchableOpacity>
 
           {/* コントロールボタン */}
@@ -118,25 +118,22 @@ const styles = StyleSheet.create({
   },
   leftPanel: {
     position: 'absolute',
-    left: 8,
+    left: 36,
     top: 0,
     bottom: 0,
     width: 150,
     zIndex: 10,
     paddingVertical: 20,
-    paddingHorizontal: 16,
+    paddingHorizontal: 0,
     justifyContent: 'space-between',
   },
   backButton: {
     alignSelf: 'flex-start',
     padding: 8,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     borderRadius: 20,
+    marginLeft: 8,
     marginBottom: 20,
-  },
-  backIcon: {
-    fontSize: 24,
-    color: 'white',
   },
   bookmarkButton: {
     alignSelf: 'flex-end',
@@ -148,9 +145,7 @@ const styles = StyleSheet.create({
   },
   controlsContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 12,
+    gap: 8,
   },
   controlButton: {
     flexDirection: 'row',

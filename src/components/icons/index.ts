@@ -7,3 +7,4 @@ export { default as SkipNextIcon } from './SkipNext';
 export { default as SkipPreviousIcon } from './SkipPrevious';
 export { default as ReplayIcon } from './Replay';
 export { default as PlaySpeedIcon } from './PlaySpeed';
+export { default as CloseIcon } from './Close';
