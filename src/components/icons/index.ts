@@ -3,3 +3,7 @@ export { default as HardIcon } from './Hard';
 export { default as NormalIcon } from './Normal';
 export { default as BookmarkIcon } from './Bookmark';
 export { default as PlayIcon } from './Play';
+export { default as SkipNextIcon } from './SkipNext';
+export { default as SkipPreviousIcon } from './SkipPrevious';
+export { default as ReplayIcon } from './Replay';
+export { default as PlaySpeedIcon } from './PlaySpeed';

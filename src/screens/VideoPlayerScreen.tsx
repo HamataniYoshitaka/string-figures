@@ -10,6 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 
 import { RootStackParamList } from '../types';
+import { SkipNextIcon, SkipPreviousIcon, ReplayIcon } from '../components/icons';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -52,18 +53,24 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         {/* コントロールボタン */}
         <View style={styles.controlsContainer}>
           <TouchableOpacity style={styles.controlButton}>
-            <Text style={styles.controlIcon}>⏮</Text>
-            <Text style={styles.controlLabel}>つぎ</Text>
+            <View style={styles.floatingButton}>
+              <SkipPreviousIcon width={24} height={24} fillColor="white" />
+            </View>
+            <Text style={styles.controlLabel}>まえ</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.controlButton}>
-            <Text style={styles.controlIcon}>⏪</Text>
+            <View style={styles.floatingButton}>
+              <ReplayIcon width={24} height={24} fillColor="white" />
+            </View>
             <Text style={styles.controlLabel}>もういちど</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.controlButton}>
-            <Text style={styles.controlIcon}>⏭</Text>
-            <Text style={styles.controlLabel}>まえ</Text>
+            <View style={styles.floatingButton}>
+              <SkipNextIcon width={24} height={24} fillColor="white" />
+            </View>
+            <Text style={styles.controlLabel}>つぎ</Text>
           </TouchableOpacity>
         </View>
 
@@ -148,6 +155,23 @@ const styles = StyleSheet.create({
   controlButton: {
     alignItems: 'center',
     padding: 8,
+  },
+  floatingButton: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: 'rgba(87, 83, 77, 0.9)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
   },
   controlIcon: {
     fontSize: 20,
