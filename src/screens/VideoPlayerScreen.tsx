@@ -11,6 +11,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import { RootStackParamList } from '../types';
 import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon } from '../components/icons';
+import PlaySpeedIcon from '../components/icons/PlaySpeed';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -91,11 +92,20 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
           {/* 再生速度 */}
           <View style={styles.speedContainer}>
-            <TouchableOpacity style={styles.speedButton}>
-              <Text style={styles.speedIcon}>⚙</Text>
+            <View style={styles.speedDisplay}>
+              <PlaySpeedIcon width={24} height={24} fillColor="#292524" strokeColor="#57534D" />
               <Text style={styles.speedText}>1.0x</Text>
-            </TouchableOpacity>
-            <Text style={styles.speedLabel}>はやく</Text>
+            </View>
+            <View style={styles.speedButtons}>
+              <TouchableOpacity style={[styles.speedButton, styles.speedButtonTop]}>
+                <Text style={styles.speedButtonText}>ゆっくり</Text>
+                <View style={styles.speedButtonTail} />
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.speedButton, styles.speedButtonBottom]}>
+                <Text style={styles.speedButtonText}>はやく</Text>
+                <View style={[styles.speedButtonTail, styles.speedButtonTailBottom]} />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -180,29 +190,54 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   speedContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+    gap: 8,
+  },
+  speedDisplay: {
+    alignItems: 'center',
+    width: 52,
+  },
+  speedButtons: {
+    gap: 6,
   },
   speedButton: {
-    alignItems: 'center',
-    padding: 8,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 20,
+    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8,
+    position: 'relative',
   },
-  speedIcon: {
-    fontSize: 16,
-    color: 'white',
-    marginBottom: 4,
+  speedButtonTop: {
+    borderBottomLeftRadius: 0,
+  },
+  speedButtonBottom: {
+    borderTopRightRadius: 0,
+  },
+  speedButtonText: {
+    fontSize: 12,
+    color: '#57534D',
+    fontWeight: '400',
+  },
+  speedButtonTail: {
+    position: 'absolute',
+    left: -4,
+    top: 12,
+    width: 8,
+    height: 8,
+    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    transform: [{ rotate: '45deg' }],
+  },
+  speedButtonTailBottom: {
+    top: -4,
+    transform: [{ rotate: '45deg' }],
   },
   speedText: {
-    fontSize: 12,
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  speedLabel: {
-    fontSize: 11,
-    color: 'white',
-    marginTop: 4,
+    fontSize: 16,
+    color: '#292524',
+    fontWeight: '400',
+    marginTop: 2,
   },
   videoArea: {
     position: 'absolute',
