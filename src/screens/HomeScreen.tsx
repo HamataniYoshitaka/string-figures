@@ -128,15 +128,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     navigation.navigate('VideoPlayer', { stringFigure: item });
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'easy': return '#4CAF50';
-      case 'medium': return '#FFC107';
-      case 'hard': return '#FF9800';
-      default: return '#9E9E9E';
-    }
-  };
-
   const getDifficultyIcon = (difficulty: string, size: number = 16) => {
     const iconProps = {
       width: size,
@@ -227,6 +218,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#5D4037',
+    fontFamily: 'KleeOne-SemiBold',
   },
   menuButton: {
     padding: 8,
@@ -250,6 +242,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     fontWeight: '500',
+    fontFamily: 'KleeOne-Regular',
   },
   iconButtonContainer: {
     paddingHorizontal: 20,
@@ -301,6 +294,7 @@ const styles = StyleSheet.create({
   cardImageText: {
     color: '#9E9E9E',
     fontSize: 16,
+    fontFamily: 'KleeOne-Regular',
   },
   bookmarkContainer: {
     position: 'absolute',
@@ -326,6 +320,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#333',
     flex: 1,
+    fontFamily: 'KleeOne-Regular',
   },
   difficultyIcon: {
     width: 24,

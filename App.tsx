@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import * as Font from 'expo-font';
+import { View, Text } from 'react-native';
 import 'react-native-gesture-handler';
 
 import { RootStackParamList } from './src/types';
@@ -12,10 +14,38 @@ import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App() {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
   useEffect(() => {
-    // アプリ起動時にポートレートモードに固定
-    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+    // フォントとスクリーンオリエンテーションの設定
+    const loadResources = async () => {
+      try {
+        // フォントをロード
+        await Font.loadAsync({
+          'KleeOne-Regular': require('./assets/fonts/Klee_One/KleeOne-Regular.ttf'),
+          'KleeOne-SemiBold': require('./assets/fonts/Klee_One/KleeOne-SemiBold.ttf'),
+        });
+        
+        // アプリ起動時にポートレートモードに固定
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+        
+        setFontLoaded(true);
+      } catch (error) {
+        console.warn('フォントの読み込みに失敗しました:', error);
+        setFontLoaded(true); // エラーでもアプリを続行
+      }
+    };
+
+    loadResources();
   }, []);
+
+  if (!fontLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>読み込み中...</Text>
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer>
