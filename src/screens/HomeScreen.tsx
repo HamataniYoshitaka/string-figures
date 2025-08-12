@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
@@ -38,8 +40,33 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [menuButtonPosition, setMenuButtonPosition] = useState({ x: 0, y: 0 });
   const menuButtonRef = useRef<View>(null);
 
-  // 現在の言語を取得（後でAppSettingsから取得するように変更予定）
-  const currentLanguage: 'ja' | 'en' = 'ja'; // デフォルトは日本語
+  // 現在の言語設定の状態
+  const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
+
+  // アプリ起動時に保存された言語設定を読み込む
+  useEffect(() => {
+    loadLanguageSetting();
+  }, []);
+
+  const loadLanguageSetting = async () => {
+    try {
+      const savedLanguage = await AsyncStorage.getItem('app_language');
+      if (savedLanguage && (savedLanguage === 'ja' || savedLanguage === 'en')) {
+        setCurrentLanguage(savedLanguage);
+      }
+    } catch (error) {
+      console.error('言語設定の読み込みに失敗しました:', error);
+    }
+  };
+
+  const saveLanguageSetting = async (language: 'ja' | 'en') => {
+    try {
+      await AsyncStorage.setItem('app_language', language);
+      setCurrentLanguage(language);
+    } catch (error) {
+      console.error('言語設定の保存に失敗しました:', error);
+    }
+  };
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
@@ -150,15 +177,42 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     setIsDropDownVisible(false);
   };
 
+  // 言語選択ActionSheetを表示
+  const showLanguageActionSheet = () => {
+    // iOS/Android共通のAlert実装に統一
+    Alert.alert(
+      currentLanguage === 'ja' ? '言語を選択してください' : 'Select Language',
+      '',
+      [
+        {
+          text: '日本語',
+          onPress: () => saveLanguageSetting('ja'),
+        },
+        {
+          text: 'English',
+          onPress: () => saveLanguageSetting('en'),
+        },
+        {
+          text: currentLanguage === 'ja' ? 'キャンセル' : 'Cancel',
+          style: 'cancel',
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
   // ドロップダウンメニューの項目
   const dropDownItems = [
     {
       id: 'language',
       label: '言語',
-      value: '日本語',
+      value: currentLanguage === 'ja' ? '日本語' : 'English',
       onPress: () => {
-        // TODO: 言語設定画面への遷移
-        console.log('言語設定');
+        handleCloseDropDown();
+        // ドロップダウンが完全に閉じるまで少し待ってからActionSheetを表示
+        setTimeout(() => {
+          showLanguageActionSheet();
+        }, 300);
       },
     },
     {
@@ -185,7 +239,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       <ScrollView style={styles.scrollView}>
         {/* ヘッダー */}
         <View style={styles.header}>
-          <Text style={styles.title}>あやとり</Text>
+          <Text style={styles.title}>
+            {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
+          </Text>
           <TouchableOpacity 
             ref={menuButtonRef}
             style={styles.menuButton}
