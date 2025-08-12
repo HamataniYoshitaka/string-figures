@@ -2,13 +2,13 @@ import { ImageSourcePropType } from 'react-native';
 
 export interface StringFigure {
   id: string;
-  name: string;
+  name: { ja: string; en: string };
   difficulty: 'easy' | 'medium' | 'hard';
   thumbnail: ImageSourcePropType | string;
   patternImage: ImageSourcePropType | string;
   previewUrl: string;
   videoUrl: string;
-  description: string;
+  description: { ja: string; en: string };
   isBookmarked: boolean;
   premiumCourseId: number; // 0=無料、0以外のID=有料コース
 }

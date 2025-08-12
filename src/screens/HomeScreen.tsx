@@ -32,6 +32,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   
   const [selectedFilters, setSelectedFilters] = useState<('easy' | 'medium' | 'hard')[]>([]);
 
+  // 現在の言語を取得（後でAppSettingsから取得するように変更予定）
+  const currentLanguage: 'ja' | 'en' = 'ja'; // デフォルトは日本語
+
+  // 多言語対応のヘルパー関数
+  const getLocalizedText = (textObj: { ja: string; en: string }) => {
+    return textObj[currentLanguage];
+  };
+
   const toggleFilter = (filter: 'easy' | 'medium' | 'hard') => {
     setSelectedFilters(prev => {
       if (prev.includes(filter)) {
@@ -112,7 +120,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         </View>
         <View style={styles.cardContent}>
           <View style={styles.titleContainer}>
-            <Text style={styles.cardTitle}>{item.name}</Text>
+            <Text style={styles.cardTitle}>{getLocalizedText(item.name)}</Text>
             {getDifficultyIcon(item.difficulty, 24)}
           </View>
         </View>

@@ -38,6 +38,14 @@ const DetailBottomSheet: React.FC<Props> = ({
 }) => {
   const translateY = useSharedValue(screenHeight);
 
+  // 現在の言語を取得（後でAppSettingsから取得するように変更予定）
+  const currentLanguage: 'ja' | 'en' = 'ja'; // デフォルトは日本語
+
+  // 多言語対応のヘルパー関数
+  const getLocalizedText = (textObj: { ja: string; en: string }) => {
+    return textObj[currentLanguage];
+  };
+
   React.useEffect(() => {
     if (isVisible) {
       translateY.value = withTiming(0, { duration: 300 });
@@ -149,7 +157,7 @@ const DetailBottomSheet: React.FC<Props> = ({
 
                 {/* 作品情報 */}
                 <View style={styles.infoContainer}>
-                  <Text style={styles.title}>{item.name}</Text>
+                  <Text style={styles.title}>{getLocalizedText(item.name)}</Text>
                   <View style={styles.difficultyContainer}>
                     {(() => {
                       const IconComponent = getDifficultyIcon(item.difficulty);
@@ -159,7 +167,7 @@ const DetailBottomSheet: React.FC<Props> = ({
                       {getDifficultyText(item.difficulty)}
                     </Text>
                   </View>
-                  <Text style={styles.description}>{item.description}</Text>
+                  <Text style={styles.description}>{getLocalizedText(item.description)}</Text>
                 </View>
               </View>
             </Animated.View>
