@@ -17,6 +17,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { StringFigure } from '../types';
 import { EasyIcon, NormalIcon, HardIcon, PlayIcon } from './icons';
@@ -37,9 +38,25 @@ const DetailBottomSheet: React.FC<Props> = ({
   onPlayVideo,
 }) => {
   const translateY = useSharedValue(screenHeight);
+  
+  // 言語設定のstate
+  const [currentLanguage, setCurrentLanguage] = React.useState<'ja' | 'en'>('ja');
 
-  // 現在の言語を取得（後でAppSettingsから取得するように変更予定）
-  const currentLanguage: 'ja' | 'en' = 'ja'; // デフォルトは日本語
+  // コンポーネントのマウント時に言語設定を読み込む
+  React.useEffect(() => {
+    loadLanguageSetting();
+  }, []);
+
+  const loadLanguageSetting = async () => {
+    try {
+      const savedLanguage = await AsyncStorage.getItem('app_language');
+      if (savedLanguage && (savedLanguage === 'ja' || savedLanguage === 'en')) {
+        setCurrentLanguage(savedLanguage);
+      }
+    } catch (error) {
+      console.error('言語設定の読み込みに失敗しました:', error);
+    }
+  };
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
@@ -74,12 +91,14 @@ const DetailBottomSheet: React.FC<Props> = ({
   };
 
   const getDifficultyText = (difficulty: string) => {
-    switch (difficulty) {
-      case 'easy': return 'かんたん';
-      case 'medium': return 'ふつう';
-      case 'hard': return 'むずかしい';
-      default: return '';
-    }
+    const difficultyTexts = {
+      easy: { ja: 'かんたん', en: 'Easy' },
+      medium: { ja: 'ふつう', en: 'Normal' },
+      hard: { ja: 'むずかしい', en: 'Hard' },
+    };
+    
+    const textObj = difficultyTexts[difficulty as keyof typeof difficultyTexts];
+    return textObj ? getLocalizedText(textObj) : '';
   };
 
   if (!isVisible || !item) return null;
@@ -117,7 +136,9 @@ const DetailBottomSheet: React.FC<Props> = ({
                     />
                   ) : (
                     <View style={styles.imagePlaceholder}>
-                      <Text style={styles.imageText}>動画プレビュー</Text>
+                      <Text style={styles.imageText}>
+                        {getLocalizedText({ ja: '動画プレビュー', en: 'Video Preview' })}
+                      </Text>
                     </View>
                   )}
                   
@@ -150,7 +171,9 @@ const DetailBottomSheet: React.FC<Props> = ({
                         resizeMode="cover"
                       />
                     ) : (
-                      <Text style={styles.thumbnailText}>完成図</Text>
+                      <Text style={styles.thumbnailText}>
+                        {getLocalizedText({ ja: '完成図', en: 'Pattern' })}
+                      </Text>
                     )}
                   </View>
                 </View>
