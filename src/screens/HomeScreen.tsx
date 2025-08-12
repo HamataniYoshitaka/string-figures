@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
 import DetailBottomSheet from '../components/DetailBottomSheet';
 import FilterButtons from '../components/FilterButtons';
 import StringFigureCard from '../components/StringFigureCard';
+import DropDownMenu from '../components/DropDownMenu';
 import { dummyStringFigures } from '../data/dummyData';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -31,6 +32,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
   
   const [selectedFilters, setSelectedFilters] = useState<('easy' | 'medium' | 'hard')[]>([]);
+
+  // ドロップダウンメニューの状態
+  const [isDropDownVisible, setIsDropDownVisible] = useState(false);
+  const [menuButtonPosition, setMenuButtonPosition] = useState({ x: 0, y: 0 });
+  const menuButtonRef = useRef<View>(null);
 
   // 現在の言語を取得（後でAppSettingsから取得するように変更予定）
   const currentLanguage: 'ja' | 'en' = 'ja'; // デフォルトは日本語
@@ -130,13 +136,61 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     navigation.navigate('VideoPlayer', { stringFigure: item });
   };
 
+  // メニューボタンの処理
+  const handleMenuPress = () => {
+    if (menuButtonRef.current) {
+      menuButtonRef.current.measure((x, y, width, height, pageX, pageY) => {
+        setMenuButtonPosition({ x: pageX, y: pageY });
+        setIsDropDownVisible(true);
+      });
+    }
+  };
+
+  const handleCloseDropDown = () => {
+    setIsDropDownVisible(false);
+  };
+
+  // ドロップダウンメニューの項目
+  const dropDownItems = [
+    {
+      id: 'language',
+      label: '言語',
+      value: '日本語',
+      onPress: () => {
+        // TODO: 言語設定画面への遷移
+        console.log('言語設定');
+      },
+    },
+    {
+      id: 'subtitles',
+      label: '動画の字幕',
+      value: 'あり',
+      onPress: () => {
+        // TODO: 字幕設定の切り替え
+        console.log('字幕設定');
+      },
+    },
+    {
+      id: 'restore',
+      label: '購入情報を復元',
+      onPress: () => {
+        // TODO: 購入情報復元処理
+        console.log('購入情報復元');
+      },
+    },
+  ];
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         {/* ヘッダー */}
         <View style={styles.header}>
           <Text style={styles.title}>あやとり</Text>
-          <TouchableOpacity style={styles.menuButton}>
+          <TouchableOpacity 
+            ref={menuButtonRef}
+            style={styles.menuButton}
+            onPress={handleMenuPress}
+          >
             <Text style={styles.menuIcon}>⋮</Text>
           </TouchableOpacity>
         </View>
@@ -164,6 +218,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         item={bottomSheet.selectedItem}
         onClose={handleCloseBottomSheet}
         onPlayVideo={handlePlayVideo}
+      />
+
+      {/* ドロップダウンメニュー */}
+      <DropDownMenu
+        isVisible={isDropDownVisible}
+        onClose={handleCloseDropDown}
+        items={dropDownItems}
+        buttonPosition={menuButtonPosition}
       />
     </SafeAreaView>
   );
