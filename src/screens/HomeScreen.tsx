@@ -255,6 +255,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         <FilterButtons 
           selectedFilters={selectedFilters}
           onToggleFilter={toggleFilter}
+          currentLanguage={currentLanguage}
         />
 
         {/* あやとり一覧 */}

@@ -11,12 +11,28 @@ import { EasyIcon, NormalIcon, HardIcon } from './icons';
 interface FilterButtonsProps {
   selectedFilters: ('easy' | 'medium' | 'hard')[];
   onToggleFilter: (filter: 'easy' | 'medium' | 'hard') => void;
+  currentLanguage: 'ja' | 'en';
 }
 
 const FilterButtons: React.FC<FilterButtonsProps> = ({
   selectedFilters,
   onToggleFilter,
+  currentLanguage,
 }) => {
+  // 多言語対応のヘルパー関数
+  const getLocalizedText = (textObj: { ja: string; en: string }) => {
+    return textObj[currentLanguage];
+  };
+
+  // 難易度テキストを取得
+  const getDifficultyText = (difficulty: 'easy' | 'medium' | 'hard') => {
+    const difficultyTexts = {
+      easy: { ja: 'かんたん', en: 'Easy' },
+      medium: { ja: 'ふつう', en: 'Normal' },
+      hard: { ja: 'むずかしい', en: 'Hard' },
+    };
+    return getLocalizedText(difficultyTexts[difficulty]);
+  };
   return (
     <ScrollView 
       horizontal
@@ -41,7 +57,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           styles.filterText, 
           selectedFilters.includes('easy') ? styles.filterTextSelected : styles.filterTextUnselected
         ]}>
-          かんたん
+          {getDifficultyText('easy')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity 
@@ -61,7 +77,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           styles.filterText, 
           selectedFilters.includes('medium') ? styles.filterTextSelected : styles.filterTextUnselected
         ]}>
-          ふつう
+          {getDifficultyText('medium')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity 
@@ -81,7 +97,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           styles.filterText, 
           selectedFilters.includes('hard') ? styles.filterTextSelected : styles.filterTextUnselected
         ]}>
-          むずかしい
+          {getDifficultyText('hard')}
         </Text>
       </TouchableOpacity>
     </ScrollView>
