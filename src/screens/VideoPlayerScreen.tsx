@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
-import { Video, ResizeMode } from 'expo-av';
+import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 
 import { RootStackParamList } from '../types';
 import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon } from '../components/icons';
@@ -29,6 +29,11 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
+  
+  // ステート管理
+  const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
+  const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
+  const videoRef = useRef<Video>(null);
 
   // 現在の言語を取得（後でAppSettingsから取得するように変更予定）
   const currentLanguage: 'ja' | 'en' = 'ja'; // デフォルトは日本語
@@ -36,6 +41,53 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
+  };
+
+  // 動画の再生状況を監視
+  const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+    if (status.isLoaded && status.didJustFinish) {
+      // 動画が終了した場合、最後のフレームで一時停止
+      console.log('Video finished');
+    }
+  };
+
+  // 動画がロードされた時の処理
+  const handleVideoLoad = async () => {
+    if (shouldAutoPlay && videoRef.current) {
+      try {
+        // 動画を最初の位置（0秒）にセットしてから再生
+        await videoRef.current.setPositionAsync(0);
+        await videoRef.current.playAsync();
+        setShouldAutoPlay(false);
+      } catch (error) {
+        console.error('Error auto-playing video:', error);
+      }
+    }
+  };
+
+  // つぎへボタンの処理
+  const handleNextChapter = async () => {
+    if (!videoRef.current) return;
+
+    try {
+      const status = await videoRef.current.getStatusAsync();
+      
+      if (status.isLoaded) {
+        const currentPosition = status.positionMillis || 0;
+        
+        // chapter0で動画の再生時間が0秒の場合はそのまま再生
+        if (currentChapterIndex === 0 && currentPosition === 0) {
+          await videoRef.current.playAsync();
+        } 
+        // それ以外の場合は次のchapterへ進む
+        else if (currentChapterIndex < stringFigure.chapters.length - 1) {
+          setShouldAutoPlay(true);
+          setCurrentChapterIndex(prev => prev + 1);
+        }
+      }
+    } catch (error) {
+      console.error('Error handling next chapter:', error);
+    }
   };
 
   const handleGoBack = () => {
@@ -50,9 +102,11 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         <View style={styles.videoArea}>
           <View style={styles.videoPlayer}>
             <Video
-              source={typeof stringFigure.chapters[0].videoUrl === 'string' 
-                ? { uri: stringFigure.chapters[0].videoUrl } 
-                : stringFigure.chapters[0].videoUrl
+              key={`chapter-${currentChapterIndex}`}
+              ref={videoRef}
+              source={typeof stringFigure.chapters[currentChapterIndex].videoUrl === 'string' 
+                ? { uri: stringFigure.chapters[currentChapterIndex].videoUrl } 
+                : stringFigure.chapters[currentChapterIndex].videoUrl
               }
               style={styles.video}
               resizeMode={ResizeMode.COVER}
@@ -60,6 +114,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
               isLooping={false}
               isMuted={true}
               useNativeControls={false}
+              onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+              onLoad={handleVideoLoad}
             />
             
             {/* 字幕エリア - 動画の上に重ねて表示 */}
@@ -87,7 +143,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
           {/* コントロールボタン */}
           <View style={styles.controlsContainer}>
-            <TouchableOpacity style={styles.controlButton}>
+            <TouchableOpacity style={styles.controlButton} onPress={handleNextChapter}>
               <View style={styles.floatingButton}>
                 <SkipNextIcon width={24} height={24} fillColor="white" />
               </View>
