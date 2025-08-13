@@ -39,6 +39,7 @@ const DetailBottomSheet: React.FC<Props> = ({
   currentLanguage,
 }) => {
   const translateY = useSharedValue(screenHeight);
+  const isSmallScreen = screenHeight <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
@@ -56,6 +57,11 @@ const DetailBottomSheet: React.FC<Props> = ({
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }],
   }));
+
+  const dynamicBottomSheetStyle = {
+    ...styles.bottomSheet,
+    minHeight: isSmallScreen ? screenHeight * 0.75 : screenHeight * 0.6,
+  };
 
   const handlePlayPress = () => {
     if (item) {
@@ -95,7 +101,7 @@ const DetailBottomSheet: React.FC<Props> = ({
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.overlay}>
           <TouchableWithoutFeedback>
-            <Animated.View style={[styles.bottomSheet, animatedStyle]}>
+            <Animated.View style={[dynamicBottomSheetStyle, animatedStyle]}>
               {/* ハンドル */}
               <View style={styles.handle} />
 
@@ -193,7 +199,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    minHeight: screenHeight * 0.6,
     maxHeight: screenHeight * 0.8,
     overflow: 'hidden',
     position: 'relative',

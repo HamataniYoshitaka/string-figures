@@ -46,7 +46,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
   
   // iPhoneSE2のような小さい画面かどうかを判定
-  console.log('screenHeight:', screenHeight);
   const isSmallScreen = screenHeight <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
   const isLargeScreen = screenHeight >= 852;
 
@@ -178,7 +177,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  // さいしょからボタンの処理
+  // はじめからボタンの処理
   const handleRestartFromBeginning = async () => {
     try {
       setShouldAutoPlay(true);
@@ -306,7 +305,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
                   styles.chapterBalloon,
                   styles.speedButtonTop
                 ]}>
-                  <Text>さいしょから</Text>
+                  <Text>はじめから</Text>
                   <SpeedButtonTail 
                     fillColor={'rgba(208, 205, 205, 0.5)'}
                     isBottom={true}
