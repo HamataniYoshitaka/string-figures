@@ -35,6 +35,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
+  const [playbackPosition, setPlaybackPosition] = useState(0);
+  const [videoDuration, setVideoDuration] = useState(0);
   const videoRef = useRef<Video>(null);
 
   // アプリ起動時に保存された言語設定を読み込む
@@ -63,14 +65,21 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   // 動画の再生状況を監視
   const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
-    if (status.isLoaded && status.didJustFinish) {
-      // 動画が終了した場合、最後のフレームで一時停止
-      console.log('Video finished');
+    if (status.isLoaded) {
+      setPlaybackPosition(status.positionMillis || 0);
+      setVideoDuration(status.durationMillis || 0);
+      
+      if (status.didJustFinish) {
+        // 動画が終了した場合、最後のフレームで一時停止
+        console.log('Video finished');
+      }
     }
   };
 
   // 動画がロードされた時の処理
   const handleVideoLoad = async () => {
+    setPlaybackPosition(0); // 新しい動画読み込み時は進捗をリセット
+    
     if (shouldAutoPlay && videoRef.current) {
       try {
         // 動画を最初の位置（0秒）にセットしてから再生
@@ -101,6 +110,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         else if (currentChapterIndex < stringFigure.chapters.length - 1) {
           setShouldAutoPlay(true);
           setCurrentChapterIndex(prev => prev + 1);
+          setPlaybackPosition(0); // 新しいチャプターの開始時は進捗をリセット
         }
       }
     } catch (error) {
@@ -111,6 +121,85 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const handleGoBack = () => {
     console.log('handleGoBack');
     navigation.goBack();
+  };
+
+  // もういちどボタンの処理
+  const handleReplay = async () => {
+    if (!videoRef.current) return;
+
+    try {
+      await videoRef.current.setPositionAsync(0);
+      setPlaybackPosition(0);
+      await videoRef.current.playAsync();
+    } catch (error) {
+      console.error('Error replaying video:', error);
+    }
+  };
+
+  // まえボタンの処理
+  const handlePreviousChapter = async () => {
+    if (!videoRef.current) return;
+
+    try {
+      if (currentChapterIndex > 0) {
+        setShouldAutoPlay(true);
+        setCurrentChapterIndex(prev => prev - 1);
+        setPlaybackPosition(0);
+      }
+    } catch (error) {
+      console.error('Error handling previous chapter:', error);
+    }
+  };
+
+  // 進捗計算のヘルパー関数
+  const getChapterProgress = (chapterIndex: number) => {
+    if (chapterIndex < currentChapterIndex) {
+      // 完了したチャプター
+      return 1;
+    } else if (chapterIndex === currentChapterIndex) {
+      // 現在のチャプター
+      return videoDuration > 0 ? playbackPosition / videoDuration : 0;
+    } else {
+      // 未開始のチャプター
+      return 0;
+    }
+  };
+
+  // 進捗バーコンポーネント
+  const ProgressBars = () => {
+    const chapters = stringFigure.chapters;
+    
+    return (
+      <View style={styles.progressContainer}>
+        <View style={styles.progressBarsContainer}>
+          {chapters.map((_, index) => {
+            const progress = getChapterProgress(index);
+            const isCompleted = progress === 1;
+            const isActive = index === currentChapterIndex;
+            
+            return (
+              <View key={index} style={styles.progressBarWrapper}>
+                <View 
+                  style={[
+                    styles.progressBarBackground,
+                    isCompleted ? styles.progressBarCompleted : styles.progressBarIncomplete
+                  ]}
+                >
+                  {isActive && progress > 0 && progress < 1 && (
+                    <View 
+                      style={[
+                        styles.progressBarFill,
+                        { width: `${progress * 100}%` }
+                      ]}
+                    />
+                  )}
+                </View>
+              </View>
+            );
+          })}
+        </View>
+      </View>
+    );
   };
 
   return (
@@ -145,11 +234,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
           </View>
 
           {/* 進捗バー */}
-          <View style={styles.progressContainer}>
-            <View style={styles.progressBar}>
-              <View style={styles.progressFill} />
-            </View>
-          </View>
+          <ProgressBars />
         </View>
 
         {/* 左側のコントロールエリア（動画の上に重ねて表示） */}
@@ -168,14 +253,14 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
               <Text style={styles.controlLabel}>つぎ</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.controlButton}>
+            <TouchableOpacity style={styles.controlButton} onPress={handleReplay}>
               <View style={styles.floatingButton}>
                 <ReplayIcon width={24} height={24} fillColor="white" />
               </View>
               <Text style={styles.controlLabel}>もういちど</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.controlButton}>
+            <TouchableOpacity style={styles.controlButton} onPress={handlePreviousChapter}>
               <View style={styles.floatingButton}>
                 <SkipPreviousIcon width={24} height={24} fillColor="white" />
               </View>
@@ -387,6 +472,32 @@ const styles = StyleSheet.create({
   progressContainer: {
     paddingHorizontal: 20,
     paddingVertical: 16,
+  },
+  progressBarsContainer: {
+    flexDirection: 'row',
+    gap: 4,
+    alignItems: 'center',
+  },
+  progressBarWrapper: {
+    flex: 1,
+    minWidth: 20,
+  },
+  progressBarBackground: {
+    height: 6,
+    borderRadius: 3,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  progressBarCompleted: {
+    backgroundColor: '#1C1917', // stone-900
+  },
+  progressBarIncomplete: {
+    backgroundColor: '#D6D3D1', // stone-300
+  },
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: '#1C1917', // stone-900
+    borderRadius: 3,
   },
   progressBar: {
     height: 4,
