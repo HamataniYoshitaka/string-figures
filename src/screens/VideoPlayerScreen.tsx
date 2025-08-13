@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
@@ -33,10 +34,27 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // ステート管理
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
   const videoRef = useRef<Video>(null);
 
+  // アプリ起動時に保存された言語設定を読み込む
+  useEffect(() => {
+    loadLanguageSetting();
+  }, []);
+
+  const loadLanguageSetting = async () => {
+    try {
+      const savedLanguage = await AsyncStorage.getItem('app_language');
+      if (savedLanguage && (savedLanguage === 'ja' || savedLanguage === 'en')) {
+        setCurrentLanguage(savedLanguage);
+      }
+    } catch (error) {
+      console.error('言語設定の読み込みに失敗しました:', error);
+    }
+  };
+
   // 現在の言語を取得（後でAppSettingsから取得するように変更予定）
-  const currentLanguage: 'ja' | 'en' = 'ja'; // デフォルトは日本語
+  // const currentLanguage: 'ja' | 'en' = 'ja'; // デフォルトは日本語
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
@@ -121,7 +139,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
             {/* 字幕エリア - 動画の上に重ねて表示 */}
             <View style={styles.subtitleArea}>
               <Text style={styles.subtitleText}>
-                右手の人差し指で、左手中指の手前の糸を下から取ります
+                {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
               </Text>
             </View>
           </View>
@@ -320,6 +338,8 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     justifyContent: 'flex-end',
+    paddingTop: 12,
+    paddingEnd: 12,
   },
   videoPlayer: {
     flex: 1,
@@ -328,6 +348,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     aspectRatio: 16 / 9,
     position: 'relative',
+    borderRadius: 32,
+    overflow: 'hidden',
   },
   video: {
     width: '100%',
