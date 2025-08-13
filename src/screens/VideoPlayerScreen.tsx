@@ -12,7 +12,7 @@ import { RouteProp } from '@react-navigation/native';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 
 import { RootStackParamList } from '../types';
-import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon } from '../components/icons';
+import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon, SkipBackwardIcon } from '../components/icons';
 import PlaySpeedIcon from '../components/icons/PlaySpeed';
 import ProgressBars from '../components/ProgressBars';
 
@@ -38,6 +38,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
   const [playbackPosition, setPlaybackPosition] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
+  const [isLastChapterCompleted, setIsLastChapterCompleted] = useState(false);
   const videoRef = useRef<Video>(null);
 
   // アプリ起動時に保存された言語設定を読み込む
@@ -71,8 +72,13 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       setVideoDuration(status.durationMillis || 0);
       
       if (status.didJustFinish) {
-        // 動画が終了した場合、最後のフレームで一時停止
+        // 動画が終了した場合
         console.log('Video finished');
+        
+        // 最後のチャプターが完了した場合
+        if (currentChapterIndex === stringFigure.chapters.length - 1) {
+          setIsLastChapterCompleted(true);
+        }
       }
     }
   };
@@ -80,6 +86,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // 動画がロードされた時の処理
   const handleVideoLoad = async () => {
     setPlaybackPosition(0); // 新しい動画読み込み時は進捗をリセット
+    setIsLastChapterCompleted(false); // 新しい動画読み込み時は完了状態をリセット
     
     if (shouldAutoPlay && videoRef.current) {
       try {
@@ -139,7 +146,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   // まえボタンの処理
   const handlePreviousChapter = async () => {
-    if (!videoRef.current) return;
+    if (!videoRef.current || currentChapterIndex === 0) return;
 
     try {
       if (currentChapterIndex > 0) {
@@ -149,6 +156,18 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       }
     } catch (error) {
       console.error('Error handling previous chapter:', error);
+    }
+  };
+
+  // さいしょからボタンの処理
+  const handleRestartFromBeginning = async () => {
+    try {
+      setShouldAutoPlay(true);
+      setCurrentChapterIndex(0);
+      setPlaybackPosition(0);
+      setIsLastChapterCompleted(false);
+    } catch (error) {
+      console.error('Error restarting from beginning:', error);
     }
   };
 
@@ -214,25 +233,74 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
           {/* コントロールボタン */}
           <View style={styles.controlsContainer}>
-            <TouchableOpacity style={styles.controlButton} onPress={handleNextChapter}>
-              <View style={styles.floatingButton}>
-                <SkipNextIcon width={24} height={24} fillColor="white" />
+            {isLastChapterCompleted ? (
+              <TouchableOpacity style={styles.controlButton} onPress={handleRestartFromBeginning}>
+                <View style={styles.floatingButton}>
+                  <SkipBackwardIcon width={24} height={24} fillColor="white" />
+                </View>
+                <Text style={styles.controlLabel}>さいしょから</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity 
+                style={styles.controlButton} 
+                onPress={currentChapterIndex < stringFigure.chapters.length - 1 ? handleNextChapter : undefined}
+                disabled={currentChapterIndex === stringFigure.chapters.length - 1}
+              >
+                <View style={[
+                  styles.floatingButton,
+                  currentChapterIndex === stringFigure.chapters.length - 1 && styles.disabledButton
+                ]}>
+                  <SkipNextIcon width={24} height={24} fillColor="white" strokeColor='transparent' />
+                </View>
+                <Text style={[
+                  styles.controlLabel,
+                  currentChapterIndex === stringFigure.chapters.length - 1 && styles.disabledLabel
+                ]}>つぎ</Text>
+              </TouchableOpacity>
+            )}
+
+            <TouchableOpacity 
+              style={styles.controlButton} 
+              onPress={currentChapterIndex === 0 && playbackPosition === 0 ? undefined : handleReplay}
+              disabled={currentChapterIndex === 0 && playbackPosition === 0}
+            >
+              <View style={[
+                styles.floatingButton,
+                currentChapterIndex === 0 && playbackPosition === 0 && styles.disabledButton
+              ]}>
+                <ReplayIcon 
+                  width={24} 
+                  height={24} 
+                  fillColor={"white"}
+                  strokeColor='transparent'
+                />
               </View>
-              <Text style={styles.controlLabel}>つぎ</Text>
+              <Text style={[
+                styles.controlLabel,
+                currentChapterIndex === 0 && playbackPosition === 0 && styles.disabledLabel
+              ]}>もういちど</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.controlButton} onPress={handleReplay}>
-              <View style={styles.floatingButton}>
-                <ReplayIcon width={24} height={24} fillColor="white" />
+            <TouchableOpacity 
+              style={styles.controlButton} 
+              onPress={currentChapterIndex > 0 ? handlePreviousChapter : undefined}
+              disabled={currentChapterIndex === 0}
+            >
+              <View style={[
+                styles.floatingButton,
+                currentChapterIndex === 0 && styles.disabledButton
+              ]}>
+                <SkipPreviousIcon 
+                  width={24} 
+                  height={24} 
+                  fillColor={"white"}
+                  strokeColor='transparent'
+                />
               </View>
-              <Text style={styles.controlLabel}>もういちど</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.controlButton} onPress={handlePreviousChapter}>
-              <View style={styles.floatingButton}>
-                <SkipPreviousIcon width={24} height={24} fillColor="white" />
-              </View>
-              <Text style={styles.controlLabel}>まえ</Text>
+              <Text style={[
+                styles.controlLabel,
+                currentChapterIndex === 0 && styles.disabledLabel
+              ]}>まえ</Text>
             </TouchableOpacity>
           </View>
 
@@ -325,6 +393,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  disabledButton: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    shadowOpacity: 0.1,
+  },
   controlIcon: {
     fontSize: 20,
     color: 'white',
@@ -334,6 +406,9 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: 'black',
     fontWeight: '400',
+  },
+  disabledLabel: {
+    color: '#999',
   },
   speedContainer: {
     flexDirection: 'row',
