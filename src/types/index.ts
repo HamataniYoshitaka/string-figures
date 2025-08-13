@@ -7,10 +7,13 @@ export interface StringFigure {
   thumbnail: ImageSourcePropType | string;
   patternImage: ImageSourcePropType | string;
   previewUrl: string;
-  videoUrl: string;
   description: { ja: string; en: string };
   isBookmarked: boolean;
   premiumCourseId: number; // 0=無料、0以外のID=有料コース
+  chapters: {
+    subtitle: { ja: string; en: string };
+    videoUrl: string;
+  }[];
 }
 
 export interface AppSettings {

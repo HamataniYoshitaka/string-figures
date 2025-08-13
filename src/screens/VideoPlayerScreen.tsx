@@ -50,9 +50,9 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         <View style={styles.videoArea}>
           <View style={styles.videoPlayer}>
             <Video
-              source={typeof stringFigure.videoUrl === 'string' 
-                ? { uri: stringFigure.videoUrl } 
-                : stringFigure.videoUrl
+              source={typeof stringFigure.chapters[0].videoUrl === 'string' 
+                ? { uri: stringFigure.chapters[0].videoUrl } 
+                : stringFigure.chapters[0].videoUrl
               }
               style={styles.video}
               resizeMode={ResizeMode.COVER}
