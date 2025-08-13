@@ -33,6 +33,14 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
+// 再生速度の表示文字列を取得する関数
+const getPlaybackRateDisplay = (rate: number): string => {
+  if (rate === 1.0) return '1.0';
+  if (rate === 1.25) return '1.25';
+  if (rate === 0.75) return '0.75';
+  return rate.toString();
+};
+
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
   
@@ -288,7 +296,16 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
                 <View style={styles.floatingButton}>
                   <SkipBackwardIcon width={24} height={24} fillColor="white" />
                 </View>
-                <Text style={styles.controlLabel}>さいしょから</Text>
+                <View style={[
+                  styles.chapterBalloon,
+                  styles.speedButtonTop
+                ]}>
+                  <Text>さいしょから</Text>
+                  <SpeedButtonTail 
+                    fillColor={'rgba(208, 205, 205, 0.5)'}
+                    isBottom={true}
+                  />
+                </View>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity 
@@ -302,10 +319,19 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
                 ]}>
                   <SkipNextIcon width={24} height={24} fillColor="white" strokeColor='transparent' />
                 </View>
-                <Text style={[
-                  styles.controlLabel,
-                  currentChapterIndex === stringFigure.chapters.length - 1 && styles.disabledLabel
-                ]}>つぎ</Text>
+                <View style={[
+                  styles.chapterBalloon,
+                  styles.speedButtonTop,
+                  currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonDisabled
+                ]}>
+                  <Text style={[
+                    currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonTextDisabled
+                  ]}>つぎ</Text>
+                  <SpeedButtonTail 
+                    fillColor={currentChapterIndex === stringFigure.chapters.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                    isBottom={true}
+                  />
+                </View>
               </TouchableOpacity>
             )}
 
@@ -325,10 +351,19 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
                   strokeColor='transparent'
                 />
               </View>
-              <Text style={[
-                styles.controlLabel,
-                currentChapterIndex === 0 && playbackPosition === 0 && styles.disabledLabel
-              ]}>もういちど</Text>
+              <View style={[
+                styles.chapterBalloon,
+                styles.speedButtonTop,
+                currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonDisabled
+              ]}>
+                <Text style={[
+                  currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonTextDisabled
+                ]}>もういちど</Text>
+                <SpeedButtonTail 
+                  fillColor={currentChapterIndex === 0 && playbackPosition === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                  isBottom={true}
+                />
+              </View>
             </TouchableOpacity>
 
             <TouchableOpacity 
@@ -347,10 +382,19 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
                   strokeColor='transparent'
                 />
               </View>
-              <Text style={[
-                styles.controlLabel,
-                currentChapterIndex === 0 && styles.disabledLabel
-              ]}>まえ</Text>
+              <View style={[
+                styles.chapterBalloon,
+                styles.speedButtonTop,
+                currentChapterIndex === 0 && styles.speedButtonDisabled
+              ]}>
+                <Text style={[
+                  currentChapterIndex === 0 && styles.speedButtonTextDisabled
+                ]}>まえ</Text>
+                <SpeedButtonTail 
+                  fillColor={currentChapterIndex === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                  isBottom={true}
+                />
+              </View>
             </TouchableOpacity>
           </View>
 
@@ -358,7 +402,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
           <View style={styles.speedContainer}>
             <View style={styles.speedDisplay}>
               <PlaySpeedIcon width={24} height={24} fillColor="#292524" strokeColor="#57534D" />
-              <Text style={styles.speedText}>{playbackRate}x</Text>
+              <Text style={styles.speedText}>{getPlaybackRateDisplay(playbackRate)}x</Text>
             </View>
             <View style={styles.speedButtons}>
               <TouchableOpacity 
@@ -454,7 +498,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 8,
-    gap: 8,
+    gap: 12,
   },
   floatingButton: {
     width: 48,
@@ -482,7 +526,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   controlLabel: {
-    fontSize: 11,
+    fontSize: 14,
     color: 'black',
     fontWeight: '400',
   },
@@ -507,6 +551,16 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 8,
     position: 'relative',
+  },
+  chapterBalloon: {
+    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    fontSize: 14,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    position: 'relative',
+    color: '#57534D',
+    fontWeight: '400',
   },
   speedButtonTop: {
     borderBottomLeftRadius: 0,
