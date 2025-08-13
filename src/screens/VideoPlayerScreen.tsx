@@ -45,6 +45,11 @@ const getPlaybackRateDisplay = (rate: number): string => {
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
   
+  // iPhoneSE2のような小さい画面かどうかを判定
+  console.log('screenHeight:', screenHeight);
+  const isSmallScreen = screenHeight <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
+  const isLargeScreen = screenHeight >= 852;
+
   // ステート管理
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
@@ -247,7 +252,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     <View style={styles.outerContainer}>
       <View style={styles.rotatedContainer}>
         {/* 右側の動画エリア（absoluteで配置） */}
-        <View style={styles.videoArea}>
+        <View style={[styles.videoArea, { paddingBottom: isSmallScreen ? 32 : 0 }]}>
           <View style={styles.videoPlayer}>
             <Video
               key={`chapter-${currentChapterIndex}`}
@@ -284,7 +289,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         </View>
 
         {/* 左側のコントロールエリア（動画の上に重ねて表示） */}
-        <View style={styles.leftPanel}>
+        <View style={[styles.leftPanel, { left: isSmallScreen ? 16 : isLargeScreen ? 52 : 36 }]}>
           {/* 戻るボタン */}
           <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
             <CloseIcon width={32} height={32} fillColor="#79716B" />
@@ -465,7 +470,6 @@ const styles = StyleSheet.create({
   },
   leftPanel: {
     position: 'absolute',
-    left: 36,
     top: 0,
     bottom: 0,
     width: 150,
@@ -604,6 +608,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderRadius: 32,
     overflow: 'hidden',
+    width: '100%',
   },
   video: {
     width: '100%',
