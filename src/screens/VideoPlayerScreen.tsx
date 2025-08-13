@@ -29,6 +29,9 @@ interface Props {
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
+// 再生速度の設定配列
+const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
   
@@ -39,6 +42,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [playbackPosition, setPlaybackPosition] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
   const [isLastChapterCompleted, setIsLastChapterCompleted] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1.0);
   const videoRef = useRef<Video>(null);
 
   // アプリ起動時に保存された言語設定を読み込む
@@ -185,6 +189,50 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
+  // 再生速度を遅くする関数
+  const handleSlowerSpeed = async () => {
+    if (!videoRef.current) return;
+    
+    try {
+      const status = await videoRef.current.getStatusAsync();
+      // 動画が再生中の場合は何もしない
+      if (status.isLoaded && status.isPlaying) {
+        return;
+      }
+      
+      const currentIndex = PLAYBACK_RATES.indexOf(playbackRate);
+      if (currentIndex > 0) {
+        const newRate = PLAYBACK_RATES[currentIndex - 1];
+        setPlaybackRate(newRate);
+        await videoRef.current.setRateAsync(newRate, true);
+      }
+    } catch (error) {
+      console.error('Error setting playback rate:', error);
+    }
+  };
+
+  // 再生速度を速くする関数
+  const handleFasterSpeed = async () => {
+    if (!videoRef.current) return;
+    
+    try {
+      const status = await videoRef.current.getStatusAsync();
+      // 動画が再生中の場合は何もしない
+      if (status.isLoaded && status.isPlaying) {
+        return;
+      }
+      
+      const currentIndex = PLAYBACK_RATES.indexOf(playbackRate);
+      if (currentIndex < PLAYBACK_RATES.length - 1) {
+        const newRate = PLAYBACK_RATES[currentIndex + 1];
+        setPlaybackRate(newRate);
+        await videoRef.current.setRateAsync(newRate, true);
+      }
+    } catch (error) {
+      console.error('Error setting playback rate:', error);
+    }
+  };
+
   return (
     <View style={styles.outerContainer}>
       <View style={styles.rotatedContainer}>
@@ -204,6 +252,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
               isLooping={false}
               isMuted={true}
               useNativeControls={false}
+              rate={playbackRate}
               onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
               onLoad={handleVideoLoad}
             />
@@ -308,16 +357,45 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
           <View style={styles.speedContainer}>
             <View style={styles.speedDisplay}>
               <PlaySpeedIcon width={24} height={24} fillColor="#292524" strokeColor="#57534D" />
-              <Text style={styles.speedText}>1.0x</Text>
+              <Text style={styles.speedText}>{playbackRate}x</Text>
             </View>
             <View style={styles.speedButtons}>
-              <TouchableOpacity style={[styles.speedButton, styles.speedButtonTop]}>
-                <Text style={styles.speedButtonText}>ゆっくり</Text>
-                <View style={styles.speedButtonTail} />
+              <TouchableOpacity 
+                style={[
+                  styles.speedButton, 
+                  styles.speedButtonTop,
+                  PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonDisabled
+                ]}
+                onPress={handleSlowerSpeed}
+                disabled={PLAYBACK_RATES.indexOf(playbackRate) === 0}
+              >
+                <Text style={[
+                  styles.speedButtonText,
+                  PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonTextDisabled
+                ]}>ゆっくり</Text>
+                <View style={[
+                  styles.speedButtonTail,
+                  PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonTailDisabled
+                ]} />
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.speedButton, styles.speedButtonBottom]}>
-                <Text style={styles.speedButtonText}>はやく</Text>
-                <View style={[styles.speedButtonTail, styles.speedButtonTailBottom]} />
+              <TouchableOpacity 
+                style={[
+                  styles.speedButton, 
+                  styles.speedButtonBottom,
+                  PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonDisabled
+                ]}
+                onPress={handleFasterSpeed}
+                disabled={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1}
+              >
+                <Text style={[
+                  styles.speedButtonText,
+                  PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonTextDisabled
+                ]}>はやく</Text>
+                <View style={[
+                  styles.speedButtonTail, 
+                  styles.speedButtonTailBottom,
+                  PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonTailDisabled
+                ]} />
               </TouchableOpacity>
             </View>
           </View>
@@ -441,6 +519,12 @@ const styles = StyleSheet.create({
     color: '#57534D',
     fontWeight: '400',
   },
+  speedButtonTextDisabled: {
+    color: '#999',
+  },
+  speedButtonDisabled: {
+    backgroundColor: 'rgba(208, 205, 205, 0.3)',
+  },
   speedButtonTail: {
     position: 'absolute',
     left: -4,
@@ -449,6 +533,9 @@ const styles = StyleSheet.create({
     height: 8,
     backgroundColor: 'rgba(208, 205, 205, 0.5)',
     transform: [{ rotate: '45deg' }],
+  },
+  speedButtonTailDisabled: {
+    backgroundColor: 'rgba(208, 205, 205, 0.3)',
   },
   speedButtonTailBottom: {
     top: -4,
