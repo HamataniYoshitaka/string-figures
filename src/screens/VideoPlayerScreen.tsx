@@ -35,6 +35,7 @@ const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
 // 再生速度の表示文字列を取得する関数
 const getPlaybackRateDisplay = (rate: number): string => {
+  if (rate === 2.0) return '2.0';
   if (rate === 1.0) return '1.0';
   if (rate === 1.25) return '1.25';
   if (rate === 0.75) return '0.75';
@@ -620,7 +621,7 @@ const styles = StyleSheet.create({
   },
   subtitleArea: {
     position: 'absolute',
-    bottom: 60, // 進捗バーの上に配置
+    bottom: 0, // 進捗バーの上に配置
     left: 20,
     right: 20,
     backgroundColor: 'transparent',
@@ -633,8 +634,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 24,
     textShadowColor: 'black',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 3,
     fontWeight: '500',
   },
   progressBar: {
