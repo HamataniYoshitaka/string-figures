@@ -425,8 +425,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: 150,
     zIndex: 10,
-    paddingVertical: 20,
+    paddingVertical: 16,
     paddingHorizontal: 0,
+    flexDirection: 'column',
     justifyContent: 'space-between',
   },
   backButton: {
@@ -447,7 +448,7 @@ const styles = StyleSheet.create({
   },
   controlsContainer: {
     flex: 1,
-    gap: 8,
+    gap: 4,
   },
   controlButton: {
     flexDirection: 'row',
@@ -491,20 +492,19 @@ const styles = StyleSheet.create({
   speedContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-    gap: 8,
+    gap: 0,
   },
   speedDisplay: {
     alignItems: 'center',
-    width: 52,
+    width: 68,
   },
   speedButtons: {
-    gap: 6,
+    gap: 8,
   },
   speedButton: {
     backgroundColor: 'rgba(208, 205, 205, 0.5)',
     paddingHorizontal: 8,
-    paddingVertical: 2,
+    paddingVertical: 4,
     borderRadius: 8,
     position: 'relative',
   },
@@ -512,7 +512,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
   },
   speedButtonBottom: {
-    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
   },
   speedButtonText: {
     fontSize: 12,
