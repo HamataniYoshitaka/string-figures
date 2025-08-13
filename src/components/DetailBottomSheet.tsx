@@ -17,7 +17,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { StringFigure } from '../types';
 import { EasyIcon, NormalIcon, HardIcon, PlayIcon } from './icons';
@@ -27,6 +26,7 @@ interface Props {
   item: StringFigure | null;
   onClose: () => void;
   onPlayVideo: (item: StringFigure) => void;
+  currentLanguage: 'ja' | 'en';
 }
 
 const { height: screenHeight } = Dimensions.get('window');
@@ -36,27 +36,9 @@ const DetailBottomSheet: React.FC<Props> = ({
   item,
   onClose,
   onPlayVideo,
+  currentLanguage,
 }) => {
   const translateY = useSharedValue(screenHeight);
-  
-  // 言語設定のstate
-  const [currentLanguage, setCurrentLanguage] = React.useState<'ja' | 'en'>('ja');
-
-  // コンポーネントのマウント時に言語設定を読み込む
-  React.useEffect(() => {
-    loadLanguageSetting();
-  }, []);
-
-  const loadLanguageSetting = async () => {
-    try {
-      const savedLanguage = await AsyncStorage.getItem('app_language');
-      if (savedLanguage && (savedLanguage === 'ja' || savedLanguage === 'en')) {
-        setCurrentLanguage(savedLanguage);
-      }
-    } catch (error) {
-      console.error('言語設定の読み込みに失敗しました:', error);
-    }
-  };
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {

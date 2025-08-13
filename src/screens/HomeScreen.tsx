@@ -275,6 +275,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         item={bottomSheet.selectedItem}
         onClose={handleCloseBottomSheet}
         onPlayVideo={handlePlayVideo}
+        currentLanguage={currentLanguage}
       />
 
       {/* ドロップダウンメニュー */}
