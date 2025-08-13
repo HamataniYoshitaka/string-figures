@@ -5,6 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Animated,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -58,6 +60,34 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isLastChapterCompleted, setIsLastChapterCompleted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const videoRef = useRef<Video>(null);
+
+  // アニメーション用のrefs
+  const nextButtonScale = useRef(new Animated.Value(1)).current;
+  const replayButtonScale = useRef(new Animated.Value(1)).current;
+  const previousButtonScale = useRef(new Animated.Value(1)).current;
+  const restartButtonScale = useRef(new Animated.Value(1)).current;
+  const backButtonScale = useRef(new Animated.Value(1)).current;
+  const slowerSpeedScale = useRef(new Animated.Value(1)).current;
+  const fasterSpeedScale = useRef(new Animated.Value(1)).current;
+
+  // アニメーションヘルパー関数
+  const createPressInHandler = (scale: Animated.Value) => () => {
+    Animated.spring(scale, {
+      toValue: 0.95,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 8,
+    }).start();
+  };
+
+  const createPressOutHandler = (scale: Animated.Value) => () => {
+    Animated.spring(scale, {
+      toValue: 1,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 8,
+    }).start();
+  };
 
   // アプリ起動時に保存された言語設定を読み込む
   useEffect(() => {
@@ -290,117 +320,163 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         {/* 左側のコントロールエリア（動画の上に重ねて表示） */}
         <View style={[styles.leftPanel, { left: isSmallScreen ? 16 : isLargeScreen ? 52 : 36 }]}>
           {/* 戻るボタン */}
-          <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-            <CloseIcon width={32} height={32} fillColor="#79716B" />
-          </TouchableOpacity>
+          <TouchableWithoutFeedback 
+            onPress={handleGoBack}
+            onPressIn={createPressInHandler(backButtonScale)}
+            onPressOut={createPressOutHandler(backButtonScale)}
+          >
+            <Animated.View 
+              style={[
+                styles.backButton,
+                { transform: [{ scale: backButtonScale }] }
+              ]}
+            >
+              <CloseIcon width={32} height={32} fillColor="#79716B" />
+            </Animated.View>
+          </TouchableWithoutFeedback>
 
           {/* コントロールボタン */}
           <View style={styles.controlsContainer}>
             {isLastChapterCompleted ? (
-              <TouchableOpacity style={styles.controlButton} onPress={handleRestartFromBeginning}>
-                <View style={styles.floatingButton}>
-                  <SkipBackwardIcon width={24} height={24} fillColor="white" />
-                </View>
-                <View style={[
-                  styles.chapterBalloon,
-                  styles.speedButtonTop
-                ]}>
-                  <Text>はじめから</Text>
-                  <SpeedButtonTail 
-                    fillColor={'rgba(208, 205, 205, 0.5)'}
-                    isBottom={true}
-                  />
-                </View>
-              </TouchableOpacity>
+              <TouchableWithoutFeedback 
+                onPress={handleRestartFromBeginning}
+                onPressIn={createPressInHandler(restartButtonScale)}
+                onPressOut={createPressOutHandler(restartButtonScale)}
+              >
+                <Animated.View 
+                  style={[
+                    styles.controlButton,
+                    { transform: [{ scale: restartButtonScale }] }
+                  ]}
+                >
+                  <View style={styles.floatingButton}>
+                    <SkipBackwardIcon width={24} height={24} fillColor="white" />
+                  </View>
+                  <View style={[
+                    styles.chapterBalloon,
+                    styles.speedButtonTop
+                  ]}>
+                    <Text>はじめから</Text>
+                    <SpeedButtonTail 
+                      fillColor={'rgba(208, 205, 205, 0.5)'}
+                      isBottom={true}
+                    />
+                  </View>
+                </Animated.View>
+              </TouchableWithoutFeedback>
             ) : (
-              <TouchableOpacity 
-                style={styles.controlButton} 
+              <TouchableWithoutFeedback 
                 onPress={currentChapterIndex < stringFigure.chapters.length - 1 ? handleNextChapter : undefined}
+                onPressIn={currentChapterIndex < stringFigure.chapters.length - 1 ? createPressInHandler(nextButtonScale) : undefined}
+                onPressOut={currentChapterIndex < stringFigure.chapters.length - 1 ? createPressOutHandler(nextButtonScale) : undefined}
                 disabled={currentChapterIndex === stringFigure.chapters.length - 1}
+              >
+                <Animated.View 
+                  style={[
+                    styles.controlButton,
+                    { transform: [{ scale: nextButtonScale }] }
+                  ]}
+                >
+                  <View style={[
+                    styles.floatingButton,
+                    currentChapterIndex === stringFigure.chapters.length - 1 && styles.disabledButton
+                  ]}>
+                    <SkipNextIcon width={24} height={24} fillColor="white" strokeColor='transparent' />
+                  </View>
+                  <View style={[
+                    styles.chapterBalloon,
+                    styles.speedButtonTop,
+                    currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonDisabled
+                  ]}>
+                    <Text style={[
+                      currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonTextDisabled
+                    ]}>つぎ</Text>
+                    <SpeedButtonTail 
+                      fillColor={currentChapterIndex === stringFigure.chapters.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                      isBottom={true}
+                    />
+                  </View>
+                </Animated.View>
+              </TouchableWithoutFeedback>
+            )}
+
+            <TouchableWithoutFeedback 
+              onPress={currentChapterIndex === 0 && playbackPosition === 0 ? undefined : handleReplay}
+              onPressIn={currentChapterIndex === 0 && playbackPosition === 0 ? undefined : createPressInHandler(replayButtonScale)}
+              onPressOut={currentChapterIndex === 0 && playbackPosition === 0 ? undefined : createPressOutHandler(replayButtonScale)}
+              disabled={currentChapterIndex === 0 && playbackPosition === 0}
+            >
+              <Animated.View 
+                style={[
+                  styles.controlButton,
+                  { transform: [{ scale: replayButtonScale }] }
+                ]}
               >
                 <View style={[
                   styles.floatingButton,
-                  currentChapterIndex === stringFigure.chapters.length - 1 && styles.disabledButton
+                  currentChapterIndex === 0 && playbackPosition === 0 && styles.disabledButton
                 ]}>
-                  <SkipNextIcon width={24} height={24} fillColor="white" strokeColor='transparent' />
+                  <ReplayIcon 
+                    width={24} 
+                    height={24} 
+                    fillColor={"white"}
+                    strokeColor='transparent'
+                  />
                 </View>
                 <View style={[
                   styles.chapterBalloon,
                   styles.speedButtonTop,
-                  currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonDisabled
+                  currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonDisabled
                 ]}>
                   <Text style={[
-                    currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonTextDisabled
-                  ]}>つぎ</Text>
+                    currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonTextDisabled
+                  ]}>もういちど</Text>
                   <SpeedButtonTail 
-                    fillColor={currentChapterIndex === stringFigure.chapters.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                    fillColor={currentChapterIndex === 0 && playbackPosition === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
                     isBottom={true}
                   />
                 </View>
-              </TouchableOpacity>
-            )}
+              </Animated.View>
+            </TouchableWithoutFeedback>
 
-            <TouchableOpacity 
-              style={styles.controlButton} 
-              onPress={currentChapterIndex === 0 && playbackPosition === 0 ? undefined : handleReplay}
-              disabled={currentChapterIndex === 0 && playbackPosition === 0}
-            >
-              <View style={[
-                styles.floatingButton,
-                currentChapterIndex === 0 && playbackPosition === 0 && styles.disabledButton
-              ]}>
-                <ReplayIcon 
-                  width={24} 
-                  height={24} 
-                  fillColor={"white"}
-                  strokeColor='transparent'
-                />
-              </View>
-              <View style={[
-                styles.chapterBalloon,
-                styles.speedButtonTop,
-                currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonDisabled
-              ]}>
-                <Text style={[
-                  currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonTextDisabled
-                ]}>もういちど</Text>
-                <SpeedButtonTail 
-                  fillColor={currentChapterIndex === 0 && playbackPosition === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
-                  isBottom={true}
-                />
-              </View>
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-              style={styles.controlButton} 
+            <TouchableWithoutFeedback 
               onPress={currentChapterIndex > 0 ? handlePreviousChapter : undefined}
+              onPressIn={currentChapterIndex > 0 ? createPressInHandler(previousButtonScale) : undefined}
+              onPressOut={currentChapterIndex > 0 ? createPressOutHandler(previousButtonScale) : undefined}
               disabled={currentChapterIndex === 0}
             >
-              <View style={[
-                styles.floatingButton,
-                currentChapterIndex === 0 && styles.disabledButton
-              ]}>
-                <SkipPreviousIcon 
-                  width={24} 
-                  height={24} 
-                  fillColor={"white"}
-                  strokeColor='transparent'
-                />
-              </View>
-              <View style={[
-                styles.chapterBalloon,
-                styles.speedButtonTop,
-                currentChapterIndex === 0 && styles.speedButtonDisabled
-              ]}>
-                <Text style={[
-                  currentChapterIndex === 0 && styles.speedButtonTextDisabled
-                ]}>まえ</Text>
-                <SpeedButtonTail 
-                  fillColor={currentChapterIndex === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
-                  isBottom={true}
-                />
-              </View>
-            </TouchableOpacity>
+              <Animated.View 
+                style={[
+                  styles.controlButton,
+                  { transform: [{ scale: previousButtonScale }] }
+                ]}
+              >
+                <View style={[
+                  styles.floatingButton,
+                  currentChapterIndex === 0 && styles.disabledButton
+                ]}>
+                  <SkipPreviousIcon 
+                    width={24} 
+                    height={24} 
+                    fillColor={"white"}
+                    strokeColor='transparent'
+                  />
+                </View>
+                <View style={[
+                  styles.chapterBalloon,
+                  styles.speedButtonTop,
+                  currentChapterIndex === 0 && styles.speedButtonDisabled
+                ]}>
+                  <Text style={[
+                    currentChapterIndex === 0 && styles.speedButtonTextDisabled
+                  ]}>まえ</Text>
+                  <SpeedButtonTail 
+                    fillColor={currentChapterIndex === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                    isBottom={true}
+                  />
+                </View>
+              </Animated.View>
+            </TouchableWithoutFeedback>
           </View>
 
           {/* 再生速度 */}
@@ -410,42 +486,54 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
               <Text style={styles.speedText}>{getPlaybackRateDisplay(playbackRate)}x</Text>
             </View>
             <View style={styles.speedButtons}>
-              <TouchableOpacity 
-                style={[
-                  styles.speedButton, 
-                  styles.speedButtonTop,
-                  PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonDisabled
-                ]}
+              <TouchableWithoutFeedback 
                 onPress={handleSlowerSpeed}
+                onPressIn={PLAYBACK_RATES.indexOf(playbackRate) === 0 ? undefined : createPressInHandler(slowerSpeedScale)}
+                onPressOut={PLAYBACK_RATES.indexOf(playbackRate) === 0 ? undefined : createPressOutHandler(slowerSpeedScale)}
                 disabled={PLAYBACK_RATES.indexOf(playbackRate) === 0}
               >
-                <Text style={[
-                  styles.speedButtonText,
-                  PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonTextDisabled
-                ]}>ゆっくり</Text>
-                <SpeedButtonTail 
-                  fillColor={PLAYBACK_RATES.indexOf(playbackRate) === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
-                  isBottom={true}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity 
-                style={[
-                  styles.speedButton, 
-                  styles.speedButtonBottom,
-                  PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonDisabled
-                ]}
+                <Animated.View 
+                  style={[
+                    styles.speedButton, 
+                    styles.speedButtonTop,
+                    PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonDisabled,
+                    { transform: [{ scale: slowerSpeedScale }] }
+                  ]}
+                >
+                  <Text style={[
+                    styles.speedButtonText,
+                    PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonTextDisabled
+                  ]}>ゆっくり</Text>
+                  <SpeedButtonTail 
+                    fillColor={PLAYBACK_RATES.indexOf(playbackRate) === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                    isBottom={true}
+                  />
+                </Animated.View>
+              </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback 
                 onPress={handleFasterSpeed}
+                onPressIn={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 ? undefined : createPressInHandler(fasterSpeedScale)}
+                onPressOut={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 ? undefined : createPressOutHandler(fasterSpeedScale)}
                 disabled={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1}
               >
-                <Text style={[
-                  styles.speedButtonText,
-                  PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonTextDisabled
-                ]}>はやく</Text>
-                <SpeedButtonTail 
-                  fillColor={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
-                  isBottom={false}
-                />
-              </TouchableOpacity>
+                <Animated.View 
+                  style={[
+                    styles.speedButton, 
+                    styles.speedButtonBottom,
+                    PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonDisabled,
+                    { transform: [{ scale: fasterSpeedScale }] }
+                  ]}
+                >
+                  <Text style={[
+                    styles.speedButtonText,
+                    PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonTextDisabled
+                  ]}>はやく</Text>
+                  <SpeedButtonTail 
+                    fillColor={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                    isBottom={false}
+                  />
+                </Animated.View>
+              </TouchableWithoutFeedback>
             </View>
           </View>
         </View>
@@ -508,7 +596,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -518,11 +606,12 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
+    elevation: 8,
   },
   disabledButton: {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     shadowOpacity: 0.1,
+    elevation: 0,
   },
   controlIcon: {
     fontSize: 20,
