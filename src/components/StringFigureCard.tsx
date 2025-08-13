@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import { StringFigure } from '../types';
 import { EasyIcon, NormalIcon, HardIcon } from './icons';
@@ -93,18 +94,24 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     padding: 0,
-    elevation: 5,
     marginBottom: 15,
   },
   cardImageContainer: {
     position: 'relative',
     width: '100%',
     backgroundColor: 'transparent',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
     borderRadius: 12,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 8,
+      },
+    }),
   },
   cardImage: {
     width: '100%',
@@ -135,7 +142,7 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     paddingHorizontal: 0,
-    paddingVertical: 12,
+    paddingVertical: 6,
   },
   titleContainer: {
     flexDirection: 'row',

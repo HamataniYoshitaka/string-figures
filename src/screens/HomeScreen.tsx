@@ -8,6 +8,7 @@ import {
   ScrollView,
   Image,
   Alert,
+  Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -300,12 +301,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 15,
+    paddingTop: Platform.OS === 'android' ? 32 : 8, // Android用に12pt追加
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 28,
     color: '#5D4037',
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: Platform.OS === 'ios' ? 'KleeOne-SemiBold' : 'KleeOne-SemiBold',
+    fontWeight: Platform.OS === 'android' ? '600' : 'normal', // Androidでのフォント重み調整
+    lineHeight: Platform.OS === 'android' ? 34 : 32, // Androidでより大きなlineHeight
+    includeFontPadding: false, // Androidの余分なパディングを削除
+    textAlignVertical: Platform.OS === 'android' ? 'center' : 'auto', // Android用の垂直配置
+    minHeight: Platform.OS === 'android' ? 34 : undefined, // Androidで最小高さを確保
   },
   menuButton: {
     padding: 8,
