@@ -14,6 +14,7 @@ import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import { RootStackParamList } from '../types';
 import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon } from '../components/icons';
 import PlaySpeedIcon from '../components/icons/PlaySpeed';
+import ProgressBars from '../components/ProgressBars';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -165,43 +166,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  // 進捗バーコンポーネント
-  const ProgressBars = () => {
-    const chapters = stringFigure.chapters;
-    
-    return (
-      <View style={styles.progressContainer}>
-        <View style={styles.progressBarsContainer}>
-          {chapters.map((_, index) => {
-            const progress = getChapterProgress(index);
-            const isCompleted = progress === 1;
-            const isActive = index === currentChapterIndex;
-            
-            return (
-              <View key={index} style={styles.progressBarWrapper}>
-                <View 
-                  style={[
-                    styles.progressBarBackground,
-                    isCompleted ? styles.progressBarCompleted : styles.progressBarIncomplete
-                  ]}
-                >
-                  {isActive && progress > 0 && progress < 1 && (
-                    <View 
-                      style={[
-                        styles.progressBarFill,
-                        { width: `${progress * 100}%` }
-                      ]}
-                    />
-                  )}
-                </View>
-              </View>
-            );
-          })}
-        </View>
-      </View>
-    );
-  };
-
   return (
     <View style={styles.outerContainer}>
       <View style={styles.rotatedContainer}>
@@ -234,7 +198,11 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
           </View>
 
           {/* 進捗バー */}
-          <ProgressBars />
+          <ProgressBars 
+            chapters={stringFigure.chapters}
+            currentChapterIndex={currentChapterIndex}
+            getChapterProgress={getChapterProgress}
+          />
         </View>
 
         {/* 左側のコントロールエリア（動画の上に重ねて表示） */}
@@ -468,36 +436,6 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
     fontWeight: '500',
-  },
-  progressContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-  },
-  progressBarsContainer: {
-    flexDirection: 'row',
-    gap: 4,
-    alignItems: 'center',
-  },
-  progressBarWrapper: {
-    flex: 1,
-    minWidth: 20,
-  },
-  progressBarBackground: {
-    height: 6,
-    borderRadius: 3,
-    overflow: 'hidden',
-    position: 'relative',
-  },
-  progressBarCompleted: {
-    backgroundColor: '#1C1917', // stone-900
-  },
-  progressBarIncomplete: {
-    backgroundColor: '#D6D3D1', // stone-300
-  },
-  progressBarFill: {
-    height: '100%',
-    backgroundColor: '#1C1917', // stone-900
-    borderRadius: 3,
   },
   progressBar: {
     height: 4,
