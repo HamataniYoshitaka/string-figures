@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Image,
   Platform,
+  Animated,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { StringFigure } from '../types';
 import { EasyIcon, NormalIcon, HardIcon } from './icons';
@@ -25,6 +27,26 @@ const StringFigureCard: React.FC<Props> = ({
   onPress,
   onImageLoad,
 }) => {
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 0.95,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 8,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 8,
+    }).start();
+  };
+
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
@@ -51,41 +73,50 @@ const StringFigureCard: React.FC<Props> = ({
   };
 
   return (
-    <TouchableOpacity
-      key={item.id}
-      style={styles.card}
+    <TouchableWithoutFeedback
       onPress={() => onPress(item)}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
     >
-      <View style={styles.cardImageContainer}>
-        {item.thumbnail ? (
-          <Image 
-            source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail}
-            style={[
-              styles.cardImage,
-              { height: calculatedHeight }
-            ]}
-            resizeMode="cover"
-            onLoad={(event) => onImageLoad(item.id, event)}
-          />
-        ) : (
-          <View style={styles.cardImagePlaceholder}>
-            <Text style={styles.cardImageText}>画像</Text>
-          </View>
-        )}
-        {/* ブックマークアイコン */}
-        {item.isBookmarked && (
-          <View style={styles.bookmarkContainer}>
-            <Text style={styles.bookmarkIcon}>🔖</Text>
-          </View>
-        )}
-      </View>
-      <View style={styles.cardContent}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.cardTitle}>{getLocalizedText(item.name)}</Text>
-          {getDifficultyIcon(item.difficulty, 24)}
+      <Animated.View
+        style={[
+          styles.card,
+          {
+            transform: [{ scale: scaleAnim }],
+          },
+        ]}
+      >
+        <View style={styles.cardImageContainer}>
+          {item.thumbnail ? (
+            <Image 
+              source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail}
+              style={[
+                styles.cardImage,
+                { height: calculatedHeight }
+              ]}
+              resizeMode="cover"
+              onLoad={(event) => onImageLoad(item.id, event)}
+            />
+          ) : (
+            <View style={styles.cardImagePlaceholder}>
+              <Text style={styles.cardImageText}>画像</Text>
+            </View>
+          )}
+          {/* ブックマークアイコン */}
+          {item.isBookmarked && (
+            <View style={styles.bookmarkContainer}>
+              <Text style={styles.bookmarkIcon}>🔖</Text>
+            </View>
+          )}
         </View>
-      </View>
-    </TouchableOpacity>
+        <View style={styles.cardContent}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.cardTitle}>{getLocalizedText(item.name)}</Text>
+            {getDifficultyIcon(item.difficulty, 24)}
+          </View>
+        </View>
+      </Animated.View>
+    </TouchableWithoutFeedback>
   );
 };
 
