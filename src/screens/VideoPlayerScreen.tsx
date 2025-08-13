@@ -14,6 +14,7 @@ import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import { RootStackParamList } from '../types';
 import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon, SkipBackwardIcon } from '../components/icons';
 import PlaySpeedIcon from '../components/icons/PlaySpeed';
+import SpeedButtonTail from '../components/icons/SpeedButtonTail';
 import ProgressBars from '../components/ProgressBars';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
@@ -373,10 +374,10 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
                   styles.speedButtonText,
                   PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonTextDisabled
                 ]}>ゆっくり</Text>
-                <View style={[
-                  styles.speedButtonTail,
-                  PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonTailDisabled
-                ]} />
+                <SpeedButtonTail 
+                  fillColor={PLAYBACK_RATES.indexOf(playbackRate) === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                  isBottom={true}
+                />
               </TouchableOpacity>
               <TouchableOpacity 
                 style={[
@@ -391,11 +392,10 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
                   styles.speedButtonText,
                   PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonTextDisabled
                 ]}>はやく</Text>
-                <View style={[
-                  styles.speedButtonTail, 
-                  styles.speedButtonTailBottom,
-                  PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonTailDisabled
-                ]} />
+                <SpeedButtonTail 
+                  fillColor={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+                  isBottom={false}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -524,22 +524,6 @@ const styles = StyleSheet.create({
   },
   speedButtonDisabled: {
     backgroundColor: 'rgba(208, 205, 205, 0.3)',
-  },
-  speedButtonTail: {
-    position: 'absolute',
-    left: -4,
-    top: 12,
-    width: 8,
-    height: 8,
-    backgroundColor: 'rgba(208, 205, 205, 0.5)',
-    transform: [{ rotate: '45deg' }],
-  },
-  speedButtonTailDisabled: {
-    backgroundColor: 'rgba(208, 205, 205, 0.3)',
-  },
-  speedButtonTailBottom: {
-    top: -4,
-    transform: [{ rotate: '45deg' }],
   },
   speedText: {
     fontSize: 16,
