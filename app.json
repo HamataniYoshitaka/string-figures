@@ -33,7 +33,8 @@
     },
     "plugins": [
       "expo-font",
-      "expo-speech-recognition"
+      "expo-speech-recognition",
+      "expo-localization"
     ]
   }
 }

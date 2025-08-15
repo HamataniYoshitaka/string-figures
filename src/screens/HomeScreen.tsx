@@ -11,6 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Localization from 'expo-localization';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
@@ -53,10 +54,20 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     try {
       const savedLanguage = await AsyncStorage.getItem('app_language');
       if (savedLanguage && (savedLanguage === 'ja' || savedLanguage === 'en')) {
+        // 保存された言語設定がある場合はそれを使用
         setCurrentLanguage(savedLanguage);
+      } else {
+        // 初回起動時：OS言語設定に基づいて言語を決定
+        const osLanguage = Localization.getLocales()[0]?.languageCode || 'en';
+        const initialLanguage = osLanguage === 'ja' ? 'ja' : 'en';
+        setCurrentLanguage(initialLanguage);
+        // 決定した言語をAsyncStorageに保存
+        await AsyncStorage.setItem('app_language', initialLanguage);
       }
     } catch (error) {
       console.error('言語設定の読み込みに失敗しました:', error);
+      // エラーの場合はデフォルトで英語を設定
+      setCurrentLanguage('en');
     }
   };
 
