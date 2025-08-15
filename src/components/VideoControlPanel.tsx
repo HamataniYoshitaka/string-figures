@@ -60,6 +60,9 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   const [isSupported, setIsSupported] = useState(false);
   const [isIntentionallyStopped, setIsIntentionallyStopped] = useState(false);
   const [isProcessingKeyword, setIsProcessingKeyword] = useState(false);
+  
+  // 音声認識活動監視用のタイマー
+  const activityTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // アニメーション用のrefs
   const nextButtonScale = useRef(new Animated.Value(1)).current;
@@ -70,8 +73,41 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   const slowerSpeedScale = useRef(new Animated.Value(1)).current;
   const fasterSpeedScale = useRef(new Animated.Value(1)).current;
 
+  // 活動監視タイマーをリセットする関数
+  const resetActivityTimer = () => {
+    if (activityTimerRef.current) {
+      clearTimeout(activityTimerRef.current);
+    }
+    
+    // 20秒後に音声認識を再起動
+    activityTimerRef.current = setTimeout(() => {
+      if (isSupported && recognizing && !isIntentionallyStopped && !isProcessingKeyword) {
+        console.log('20秒間音声認識イベントが発生しないため、音声認識を再起動します');
+        
+        // 処理中フラグを設定（連続処理を防ぐ）
+        setIsProcessingKeyword(true);
+        
+        // 音声認識を一時停止（意図的な停止フラグを設定）
+        setIsIntentionallyStopped(true);
+        stopRecognition();
+        
+        // 少し遅延してから再開（ユーザーのアクションが完了するのを待つ）
+        setTimeout(() => {
+          if (isSupported) {
+            setIsIntentionallyStopped(false);
+            setIsProcessingKeyword(false);
+            startRecognition();
+          }
+        }, 1500); // 1.5秒後に再開（処理時間を長めに設定）
+      }
+    }, 20000); // 20秒
+  };
+
   // 音声認識の結果を受け取るイベントリスナー
   useSpeechRecognitionEvent('result', (event) => {
+    // 活動監視タイマーをリセット
+    resetActivityTimer();
+    
     const transcript = event.results[0]?.transcript || '';
     if (transcript && !isProcessingKeyword) {
       console.log('音声認識結果:', transcript);
@@ -170,6 +206,12 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
         setIsProcessingKeyword(true);
         stopRecognition();
       }
+      
+      // タイマーのクリーンアップ
+      if (activityTimerRef.current) {
+        clearTimeout(activityTimerRef.current);
+        activityTimerRef.current = null;
+      }
     };
   }, []);
 
@@ -197,6 +239,9 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       });
 
       setRecognizing(true);
+      
+      // 音声認識開始時に活動監視タイマーを開始
+      resetActivityTimer();
     } catch (error) {
       console.error('音声認識開始エラー:', error);
     }
@@ -214,6 +259,12 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       await ExpoSpeechRecognitionModule.stop();
       setRecognizing(false);
       console.log('音声認識を停止しました');
+      
+      // 活動監視タイマーをクリア
+      if (activityTimerRef.current) {
+        clearTimeout(activityTimerRef.current);
+        activityTimerRef.current = null;
+      }
     } catch (error) {
       console.error('音声認識停止エラー:', error);
     }
