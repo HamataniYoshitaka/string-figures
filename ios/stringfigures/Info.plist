@@ -5,7 +5,12 @@
     <key>CADisableMinimumFrameDurationOnPhone</key>
     <true/>
     <key>CFBundleDevelopmentRegion</key>
-    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <string>en</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+      <string>en</string>
+      <string>ja</string>
+    </array>
     <key>CFBundleDisplayName</key>
     <string>string-figures</string>
     <key>CFBundleExecutable</key>
@@ -45,9 +50,9 @@
       <true/>
     </dict>
     <key>NSMicrophoneUsageDescription</key>
-    <string>このアプリは、音声認識のためにマイクへのアクセスが必要です。</string>
+    <string>This app needs access to the microphone for speech recognition.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
-    <string>このアプリは、動画の操作を音声で行うために音声認識機能を使用します。</string>
+    <string>This app uses speech recognition to control video playback with voice commands.</string>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>

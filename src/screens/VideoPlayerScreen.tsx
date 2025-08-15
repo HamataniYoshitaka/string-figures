@@ -297,6 +297,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
           PLAYBACK_RATES={PLAYBACK_RATES}
           isSmallScreen={isSmallScreen}
           isLargeScreen={isLargeScreen}
+          currentLanguage={currentLanguage}
           onGoBack={handleGoBack}
           onNextChapter={handleNextChapter}
           onReplay={handleReplay}

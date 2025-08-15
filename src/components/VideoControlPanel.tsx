@@ -22,6 +22,7 @@ interface VideoControlPanelProps {
   PLAYBACK_RATES: number[];
   isSmallScreen: boolean;
   isLargeScreen: boolean;
+  currentLanguage: 'ja' | 'en';
   onGoBack: () => void;
   onNextChapter: () => void;
   onReplay: () => void;
@@ -41,6 +42,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   PLAYBACK_RATES,
   isSmallScreen,
   isLargeScreen,
+  currentLanguage,
   onGoBack,
   onNextChapter,
   onReplay,
@@ -50,6 +52,11 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onFasterSpeed,
   getPlaybackRateDisplay,
 }) => {
+  // 多言語対応のヘルパー関数
+  const getLocalizedText = (textObj: { ja: string; en: string }) => {
+    return textObj[currentLanguage];
+  };
+
   // 音声認識のカスタムフック
   const speechRecognition = useSpeechRecognition({
     onKeywordDetected: (keyword) => {
@@ -173,7 +180,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
                 styles.chapterBalloon,
                 styles.speedButtonTop
               ]}>
-                <Text>はじめから</Text>
+                <Text>{getLocalizedText({ ja: 'はじめから', en: 'Restart' })}</Text>
                 <SpeedButtonTail 
                   fillColor={'rgba(208, 205, 205, 0.5)'}
                   isBottom={true}
@@ -207,7 +214,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
               ]}>
                 <Text style={[
                   currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonTextDisabled
-                ]}>つぎ</Text>
+                ]}>{getLocalizedText({ ja: 'つぎ', en: 'Next' })}</Text>
                 <SpeedButtonTail 
                   fillColor={currentChapterIndex === stringFigure.chapters.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
                   isBottom={true}
@@ -247,7 +254,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
             ]}>
               <Text style={[
                 currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonTextDisabled
-              ]}>もういちど</Text>
+              ]}>{getLocalizedText({ ja: 'もういちど', en: 'Replay' })}</Text>
               <SpeedButtonTail 
                 fillColor={currentChapterIndex === 0 && playbackPosition === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
                 isBottom={true}
@@ -286,7 +293,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
             ]}>
               <Text style={[
                 currentChapterIndex === 0 && styles.speedButtonTextDisabled
-              ]}>まえ</Text>
+              ]}>{getLocalizedText({ ja: 'まえ', en: 'Previous' })}</Text>
               <SpeedButtonTail 
                 fillColor={currentChapterIndex === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
                 isBottom={true}
@@ -320,7 +327,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
               <Text style={[
                 styles.speedButtonText,
                 PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonTextDisabled
-              ]}>ゆっくり</Text>
+              ]}>{getLocalizedText({ ja: 'ゆっくり', en: 'Slower' })}</Text>
               <SpeedButtonTail 
                 fillColor={PLAYBACK_RATES.indexOf(playbackRate) === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
                 isBottom={true}
@@ -344,7 +351,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
               <Text style={[
                 styles.speedButtonText,
                 PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonTextDisabled
-              ]}>はやく</Text>
+              ]}>{getLocalizedText({ ja: 'はやく', en: 'Faster' })}</Text>
               <SpeedButtonTail 
                 fillColor={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
                 isBottom={false}
