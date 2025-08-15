@@ -1,11 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Animated,
   TouchableWithoutFeedback,
+  Platform,
+  NativeModules,
 } from 'react-native';
+import {
+  ExpoSpeechRecognitionModule,
+  useSpeechRecognitionEvent,
+} from 'expo-speech-recognition';
 
 import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon, SkipBackwardIcon } from './icons';
 import PlaySpeedIcon from './icons/PlaySpeed';
@@ -49,6 +55,10 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onFasterSpeed,
   getPlaybackRateDisplay,
 }) => {
+  // 音声認識の状態管理
+  const [recognizing, setRecognizing] = useState(false);
+  const [isSupported, setIsSupported] = useState(false);
+
   // アニメーション用のrefs
   const nextButtonScale = useRef(new Animated.Value(1)).current;
   const replayButtonScale = useRef(new Animated.Value(1)).current;
@@ -57,6 +67,114 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const slowerSpeedScale = useRef(new Animated.Value(1)).current;
   const fasterSpeedScale = useRef(new Animated.Value(1)).current;
+
+  // 音声認識の結果を受け取るイベントリスナー
+  useSpeechRecognitionEvent('result', (event) => {
+    const transcript = event.results[0]?.transcript || '';
+    if (transcript) {
+      console.log('音声認識結果:', transcript);
+    }
+  });
+
+  // エラーハンドリング
+  useSpeechRecognitionEvent('error', (event) => {
+    console.error('音声認識エラー:', event.error);
+    setRecognizing(false);
+  });
+
+  // 音声認識終了時
+  useSpeechRecognitionEvent('end', () => {
+    console.log('音声認識終了');
+    setRecognizing(false);
+  });
+
+  // デバイスの言語を取得する関数
+  const getDeviceLanguage = () => {
+    // iOSの場合
+    if (Platform.OS === 'ios') {
+      const locale = NativeModules.SettingsManager?.getConstants()?.settings?.AppleLocale ||
+                     NativeModules.SettingsManager?.getConstants()?.settings?.AppleLanguages?.[0];
+      return locale?.replace('_', '-') || 'en-US';
+    }
+    
+    // Androidの場合
+    if (Platform.OS === 'android') {
+      const locale = NativeModules.I18nManager?.getConstants()?.localeIdentifier;
+      return locale?.replace('_', '-') || 'en-US';
+    }
+    
+    return 'en-US';
+  };
+
+  // 音声認識サポート確認と自動開始
+  useEffect(() => {
+    const initializeSpeechRecognition = async () => {
+      try {
+        // 音声認識がサポートされているか確認
+        const supported = await ExpoSpeechRecognitionModule.isRecognitionAvailable();
+        setIsSupported(supported);
+        
+        if (supported) {
+          console.log('音声認識をサポートしています');
+          // 自動で音声認識を開始
+          await startRecognition();
+        } else {
+          console.log('音声認識はサポートされていません');
+        }
+      } catch (error) {
+        console.error('音声認識の初期化エラー:', error);
+      }
+    };
+
+    initializeSpeechRecognition();
+
+    // クリーンアップ関数
+    return () => {
+      if (recognizing) {
+        stopRecognition();
+      }
+    };
+  }, []);
+
+  // 音声認識開始
+  const startRecognition = async () => {
+    try {
+      // マイクの権限をリクエスト
+      const { granted } = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+      
+      if (!granted) {
+        console.log('マイクの使用許可が拒否されました');
+        return;
+      }
+
+      // OSの言語設定を取得
+      const deviceLanguage = getDeviceLanguage();
+      console.log('音声認識開始、言語:', deviceLanguage);
+
+      // 音声認識を開始
+      await ExpoSpeechRecognitionModule.start({
+        lang: deviceLanguage, // デバイスの言語設定を使用
+        interimResults: true, // 途中結果も取得
+        maxAlternatives: 5,
+        continuous: true, // 継続的な認識を有効化
+      });
+
+      setRecognizing(true);
+    } catch (error) {
+      console.error('音声認識開始エラー:', error);
+    }
+  };
+
+  // 音声認識停止
+  const stopRecognition = async () => {
+    try {
+      await ExpoSpeechRecognitionModule.stop();
+      setRecognizing(false);
+      console.log('音声認識を停止しました');
+    } catch (error) {
+      console.error('音声認識停止エラー:', error);
+    }
+  };
 
   // アニメーションヘルパー関数
   const createPressInHandler = (scale: Animated.Value) => () => {

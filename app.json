@@ -14,7 +14,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.string-figures"
+      "bundleIdentifier": "com.anonymous.string-figures",
+      "infoPlist": {
+        "NSSpeechRecognitionUsageDescription": "このアプリは、動画の操作を音声で行うために音声認識機能を使用します。",
+        "NSMicrophoneUsageDescription": "このアプリは、音声認識のためにマイクへのアクセスが必要です。"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -28,7 +32,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-speech-recognition"
     ]
   }
 }
