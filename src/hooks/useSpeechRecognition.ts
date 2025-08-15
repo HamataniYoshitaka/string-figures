@@ -8,7 +8,7 @@ import {
 interface UseSpeechRecognitionProps {
   /** 音声認識でキーワードが検出された時のコールバック */
   onKeywordDetected?: (keyword: string) => void;
-  /** 検出対象のキーワード一覧（デフォルト: ['まえ', 'つぎ', 'もういちど', 'ゆっくり', 'はやく']） */
+  /** 検出対象のキーワード一覧（デフォルト: ['まえ', '前', 'つぎ', '次', 'もういちど', 'もう一度', 'ゆっくり', 'はやく', '早く', '速く']） */
   keywords?: string[];
   /** 音声認識の無活動時間（ミリ秒）。この時間経過後に自動再起動（デフォルト: 20000） */
   inactivityTimeout?: number;
@@ -42,7 +42,7 @@ interface UseSpeechRecognitionReturn {
  */
 export const useSpeechRecognition = ({
   onKeywordDetected,
-  keywords = ['まえ', 'つぎ', 'もういちど', 'ゆっくり', 'はやく'],
+  keywords = ['まえ', '前', 'つぎ', '次', 'もういちど', 'もう一度', 'ゆっくり', 'はやく', '早く', '速く'],
   inactivityTimeout = 20000,
   pauseAfterKeywordMs = 1500,
 }: UseSpeechRecognitionProps = {}): UseSpeechRecognitionReturn => {

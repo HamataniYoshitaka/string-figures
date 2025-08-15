@@ -57,6 +57,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       // キーワードに応じてアクションを実行
       switch (keyword) {
         case 'つぎ':
+        case '次':
           if (isLastChapterCompleted) {
             onRestartFromBeginning();
           } else if (currentChapterIndex < stringFigure.chapters.length - 1) {
@@ -64,11 +65,13 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
           }
           break;
         case 'まえ':
+        case '前':
           if (currentChapterIndex > 0) {
             onPreviousChapter();
           }
           break;
         case 'もういちど':
+        case 'もう一度':
           if (!(currentChapterIndex === 0 && playbackPosition === 0)) {
             onReplay();
           }
@@ -79,6 +82,8 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
           }
           break;
         case 'はやく':
+        case '早く':
+        case '速く':
           if (PLAYBACK_RATES.indexOf(playbackRate) < PLAYBACK_RATES.length - 1) {
             onFasterSpeed();
           }
