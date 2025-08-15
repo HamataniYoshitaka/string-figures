@@ -58,6 +58,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   // 音声認識の状態管理
   const [recognizing, setRecognizing] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
+  const [isIntentionallyStopped, setIsIntentionallyStopped] = useState(false);
 
   // アニメーション用のrefs
   const nextButtonScale = useRef(new Animated.Value(1)).current;
@@ -73,18 +74,46 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
     const transcript = event.results[0]?.transcript || '';
     if (transcript) {
       console.log('音声認識結果:', transcript);
+      
+      // 指定のキーワードを検出した場合、一時的に音声認識を停止
+      const keywords = ['まえ', 'つぎ', 'もういちど', 'ゆっくり', 'はやく'];
+      const matchedKeyword = keywords.find(keyword => transcript.includes(keyword));
+      
+      if (matchedKeyword) {
+        console.log('キーワード検出:', matchedKeyword);
+        // 音声認識を一時停止（意図的な停止フラグを設定）
+        setIsIntentionallyStopped(true);
+        stopRecognition();
+        
+        // 少し遅延してから再開（ユーザーのアクションが完了するのを待つ）
+        setTimeout(() => {
+          if (isSupported) {
+            setIsIntentionallyStopped(false);
+            startRecognition();
+          }
+        }, 1000); // 1秒後に再開
+      }
     }
   });
 
   // エラーハンドリング
   useSpeechRecognitionEvent('error', (event) => {
-    console.error('音声認識エラー:', event.error);
+    // 意図的な停止の場合は、audio-captureエラーを無視
+    if (isIntentionallyStopped && event.error === 'audio-capture') {
+      console.log('音声認識停止に伴う予期されるエラー (無視):', event.error);
+    } else {
+      console.error('音声認識エラー:', event.error);
+    }
     setRecognizing(false);
   });
 
   // 音声認識終了時
   useSpeechRecognitionEvent('end', () => {
-    console.log('音声認識終了');
+    if (isIntentionallyStopped) {
+      console.log('音声認識終了 (意図的な停止)');
+    } else {
+      console.log('音声認識終了');
+    }
     setRecognizing(false);
   });
 
@@ -131,6 +160,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
     // クリーンアップ関数
     return () => {
       if (recognizing) {
+        setIsIntentionallyStopped(true);
         stopRecognition();
       }
     };
