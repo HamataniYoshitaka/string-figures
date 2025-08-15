@@ -1,22 +1,17 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Animated,
   TouchableWithoutFeedback,
-  Platform,
-  NativeModules,
 } from 'react-native';
-import {
-  ExpoSpeechRecognitionModule,
-  useSpeechRecognitionEvent,
-} from 'expo-speech-recognition';
 
 import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon, SkipBackwardIcon } from './icons';
 import PlaySpeedIcon from './icons/PlaySpeed';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import { StringFigure } from '../types';
+import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 
 interface VideoControlPanelProps {
   stringFigure: StringFigure;
@@ -55,15 +50,43 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onFasterSpeed,
   getPlaybackRateDisplay,
 }) => {
-  // 音声認識の状態管理
-  const [recognizing, setRecognizing] = useState(false);
-  const [isSupported, setIsSupported] = useState(false);
-  const [isIntentionallyStopped, setIsIntentionallyStopped] = useState(false);
-  const [isProcessingKeyword, setIsProcessingKeyword] = useState(false);
+  // 音声認識のカスタムフック
+  const speechRecognition = useSpeechRecognition({
+    onKeywordDetected: (keyword) => {
+      console.log('キーワード検出:', keyword);
+      // キーワードに応じてアクションを実行
+      switch (keyword) {
+        case 'つぎ':
+          if (isLastChapterCompleted) {
+            onRestartFromBeginning();
+          } else if (currentChapterIndex < stringFigure.chapters.length - 1) {
+            onNextChapter();
+          }
+          break;
+        case 'まえ':
+          if (currentChapterIndex > 0) {
+            onPreviousChapter();
+          }
+          break;
+        case 'もういちど':
+          if (!(currentChapterIndex === 0 && playbackPosition === 0)) {
+            onReplay();
+          }
+          break;
+        case 'ゆっくり':
+          if (PLAYBACK_RATES.indexOf(playbackRate) > 0) {
+            onSlowerSpeed();
+          }
+          break;
+        case 'はやく':
+          if (PLAYBACK_RATES.indexOf(playbackRate) < PLAYBACK_RATES.length - 1) {
+            onFasterSpeed();
+          }
+          break;
+      }
+    },
+  });
   
-  // 音声認識活動監視用のタイマー
-  const activityTimerRef = useRef<NodeJS.Timeout | null>(null);
-
   // アニメーション用のrefs
   const nextButtonScale = useRef(new Animated.Value(1)).current;
   const replayButtonScale = useRef(new Animated.Value(1)).current;
@@ -73,217 +96,10 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   const slowerSpeedScale = useRef(new Animated.Value(1)).current;
   const fasterSpeedScale = useRef(new Animated.Value(1)).current;
 
-  // 活動監視タイマーをリセットする関数
-  const resetActivityTimer = () => {
-    if (activityTimerRef.current) {
-      clearTimeout(activityTimerRef.current);
-    }
-    
-    // 20秒後に音声認識を再起動
-    activityTimerRef.current = setTimeout(() => {
-      if (isSupported && recognizing && !isIntentionallyStopped && !isProcessingKeyword) {
-        console.log('20秒間音声認識イベントが発生しないため、音声認識を再起動します');
-        
-        // 処理中フラグを設定（連続処理を防ぐ）
-        setIsProcessingKeyword(true);
-        
-        // 音声認識を一時停止（意図的な停止フラグを設定）
-        setIsIntentionallyStopped(true);
-        stopRecognition();
-        
-        // 少し遅延してから再開（ユーザーのアクションが完了するのを待つ）
-        setTimeout(() => {
-          if (isSupported) {
-            setIsIntentionallyStopped(false);
-            setIsProcessingKeyword(false);
-            startRecognition();
-          }
-        }, 1500); // 1.5秒後に再開（処理時間を長めに設定）
-      }
-    }, 20000); // 20秒
-  };
-
-  // 音声認識の結果を受け取るイベントリスナー
-  useSpeechRecognitionEvent('result', (event) => {
-    // 活動監視タイマーをリセット
-    resetActivityTimer();
-    
-    const transcript = event.results[0]?.transcript || '';
-    if (transcript && !isProcessingKeyword) {
-      console.log('音声認識結果:', transcript);
-      
-      // 指定のキーワードを検出した場合、一時的に音声認識を停止
-      const keywords = ['まえ', 'つぎ', 'もういちど', 'ゆっくり', 'はやく'];
-      const matchedKeyword = keywords.find(keyword => transcript.includes(keyword));
-      
-      if (matchedKeyword) {
-        console.log('キーワード検出:', matchedKeyword);
-        
-        // 処理中フラグを設定（連続処理を防ぐ）
-        setIsProcessingKeyword(true);
-        
-        // 音声認識を一時停止（意図的な停止フラグを設定）
-        setIsIntentionallyStopped(true);
-        stopRecognition();
-        
-        // 少し遅延してから再開（ユーザーのアクションが完了するのを待つ）
-        setTimeout(() => {
-          if (isSupported) {
-            setIsIntentionallyStopped(false);
-            setIsProcessingKeyword(false);
-            startRecognition();
-          }
-        }, 1500); // 1.5秒後に再開（処理時間を長めに設定）
-      }
-    }
-  });
-
-  // エラーハンドリング
-  useSpeechRecognitionEvent('error', (event) => {
-    // 意図的な停止の場合は、audio-captureエラーを無視
-    if (isIntentionallyStopped && event.error === 'audio-capture') {
-      console.log('音声認識停止に伴う予期されるエラー (無視):', event.error);
-    } else {
-      console.error('音声認識エラー:', event.error);
-    }
-    setRecognizing(false);
-  });
-
-  // 音声認識終了時
-  useSpeechRecognitionEvent('end', () => {
-    if (isIntentionallyStopped) {
-      console.log('音声認識終了 (意図的な停止)');
-    } else {
-      console.log('音声認識終了');
-    }
-    setRecognizing(false);
-  });
-
-  // デバイスの言語を取得する関数
-  const getDeviceLanguage = () => {
-    // iOSの場合
-    if (Platform.OS === 'ios') {
-      const locale = NativeModules.SettingsManager?.getConstants()?.settings?.AppleLocale ||
-                     NativeModules.SettingsManager?.getConstants()?.settings?.AppleLanguages?.[0];
-      return locale?.replace('_', '-') || 'en-US';
-    }
-    
-    // Androidの場合
-    if (Platform.OS === 'android') {
-      const locale = NativeModules.I18nManager?.getConstants()?.localeIdentifier;
-      return locale?.replace('_', '-') || 'en-US';
-    }
-    
-    return 'en-US';
-  };
-
-  // 音声認識サポート確認と自動開始
-  useEffect(() => {
-    const initializeSpeechRecognition = async () => {
-      try {
-        // 音声認識がサポートされているか確認
-        const supported = await ExpoSpeechRecognitionModule.isRecognitionAvailable();
-        setIsSupported(supported);
-        
-        if (supported) {
-          console.log('音声認識をサポートしています');
-          // 自動で音声認識を開始
-          await startRecognition();
-        } else {
-          console.log('音声認識はサポートされていません');
-        }
-      } catch (error) {
-        console.error('音声認識の初期化エラー:', error);
-      }
-    };
-
-    initializeSpeechRecognition();
-
-    // クリーンアップ関数
-    return () => {
-      if (recognizing) {
-        setIsIntentionallyStopped(true);
-        setIsProcessingKeyword(true);
-        stopRecognition();
-      }
-      
-      // タイマーのクリーンアップ
-      if (activityTimerRef.current) {
-        clearTimeout(activityTimerRef.current);
-        activityTimerRef.current = null;
-      }
-    };
-  }, []);
-
-  // 音声認識開始
-  const startRecognition = async () => {
-    try {
-      // マイクの権限をリクエスト
-      const { granted } = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
-      
-      if (!granted) {
-        console.log('マイクの使用許可が拒否されました');
-        return;
-      }
-
-      // OSの言語設定を取得
-      const deviceLanguage = getDeviceLanguage();
-      console.log('音声認識開始、言語:', deviceLanguage);
-
-      // 音声認識を開始
-      await ExpoSpeechRecognitionModule.start({
-        lang: deviceLanguage, // デバイスの言語設定を使用
-        interimResults: true, // 途中結果も取得
-        maxAlternatives: 5,
-        continuous: true, // 継続的な認識を有効化
-      });
-
-      setRecognizing(true);
-      
-      // 音声認識開始時に活動監視タイマーを開始
-      resetActivityTimer();
-    } catch (error) {
-      console.error('音声認識開始エラー:', error);
-    }
-  };
-
-  // 音声認識停止
-  const stopRecognition = async () => {
-    // 既に処理中または停止済みの場合は何もしない
-    if (isProcessingKeyword || !recognizing) {
-      console.log('音声認識停止処理をスキップ（処理中または停止済み）');
-      return;
-    }
-
-    try {
-      await ExpoSpeechRecognitionModule.stop();
-      setRecognizing(false);
-      console.log('音声認識を停止しました');
-      
-      // 活動監視タイマーをクリア
-      if (activityTimerRef.current) {
-        clearTimeout(activityTimerRef.current);
-        activityTimerRef.current = null;
-      }
-    } catch (error) {
-      console.error('音声認識停止エラー:', error);
-    }
-  };
-
   // 戻るボタンのハンドラー（音声認識を停止してから戻る）
   const handleGoBack = async () => {
     // 音声認識を停止
-    if (recognizing) {
-      setIsIntentionallyStopped(true);
-      setIsProcessingKeyword(true);
-      await stopRecognition();
-    }
-    
-    // 活動監視タイマーをクリア
-    if (activityTimerRef.current) {
-      clearTimeout(activityTimerRef.current);
-      activityTimerRef.current = null;
-    }
+    await speechRecognition.stop();
     
     // 元の戻る処理を実行
     onGoBack();
