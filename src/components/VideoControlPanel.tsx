@@ -88,6 +88,11 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
             onFasterSpeed();
           }
           break;
+        case 'はじめから':
+        case '初めから':
+        case '始めから':
+          onRestartFromBeginning();
+          break;
       }
     },
   });
