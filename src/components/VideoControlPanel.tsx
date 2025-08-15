@@ -59,6 +59,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   const [recognizing, setRecognizing] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
   const [isIntentionallyStopped, setIsIntentionallyStopped] = useState(false);
+  const [isProcessingKeyword, setIsProcessingKeyword] = useState(false);
 
   // アニメーション用のrefs
   const nextButtonScale = useRef(new Animated.Value(1)).current;
@@ -72,7 +73,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   // 音声認識の結果を受け取るイベントリスナー
   useSpeechRecognitionEvent('result', (event) => {
     const transcript = event.results[0]?.transcript || '';
-    if (transcript) {
+    if (transcript && !isProcessingKeyword) {
       console.log('音声認識結果:', transcript);
       
       // 指定のキーワードを検出した場合、一時的に音声認識を停止
@@ -81,6 +82,10 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       
       if (matchedKeyword) {
         console.log('キーワード検出:', matchedKeyword);
+        
+        // 処理中フラグを設定（連続処理を防ぐ）
+        setIsProcessingKeyword(true);
+        
         // 音声認識を一時停止（意図的な停止フラグを設定）
         setIsIntentionallyStopped(true);
         stopRecognition();
@@ -89,9 +94,10 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
         setTimeout(() => {
           if (isSupported) {
             setIsIntentionallyStopped(false);
+            setIsProcessingKeyword(false);
             startRecognition();
           }
-        }, 1000); // 1秒後に再開
+        }, 1500); // 1.5秒後に再開（処理時間を長めに設定）
       }
     }
   });
@@ -161,6 +167,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
     return () => {
       if (recognizing) {
         setIsIntentionallyStopped(true);
+        setIsProcessingKeyword(true);
         stopRecognition();
       }
     };
@@ -197,6 +204,12 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
 
   // 音声認識停止
   const stopRecognition = async () => {
+    // 既に処理中または停止済みの場合は何もしない
+    if (isProcessingKeyword || !recognizing) {
+      console.log('音声認識停止処理をスキップ（処理中または停止済み）');
+      return;
+    }
+
     try {
       await ExpoSpeechRecognitionModule.stop();
       setRecognizing(false);
