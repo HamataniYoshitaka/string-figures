@@ -270,6 +270,25 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
     }
   };
 
+  // 戻るボタンのハンドラー（音声認識を停止してから戻る）
+  const handleGoBack = async () => {
+    // 音声認識を停止
+    if (recognizing) {
+      setIsIntentionallyStopped(true);
+      setIsProcessingKeyword(true);
+      await stopRecognition();
+    }
+    
+    // 活動監視タイマーをクリア
+    if (activityTimerRef.current) {
+      clearTimeout(activityTimerRef.current);
+      activityTimerRef.current = null;
+    }
+    
+    // 元の戻る処理を実行
+    onGoBack();
+  };
+
   // アニメーションヘルパー関数
   const createPressInHandler = (scale: Animated.Value) => () => {
     Animated.spring(scale, {
@@ -293,7 +312,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
     <View style={[styles.leftPanel, { left: isSmallScreen ? 16 : isLargeScreen ? 52 : 36 }]}>
       {/* 戻るボタン */}
       <TouchableWithoutFeedback 
-        onPress={onGoBack}
+        onPress={handleGoBack}
         onPressIn={createPressInHandler(backButtonScale)}
         onPressOut={createPressOutHandler(backButtonScale)}
       >
