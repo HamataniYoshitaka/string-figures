@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -29,8 +29,6 @@ interface Props {
   currentLanguage: 'ja' | 'en';
 }
 
-const { height: screenHeight } = Dimensions.get('window');
-
 const DetailBottomSheet: React.FC<Props> = ({
   isVisible,
   item,
@@ -38,21 +36,36 @@ const DetailBottomSheet: React.FC<Props> = ({
   onPlayVideo,
   currentLanguage,
 }) => {
-  const translateY = useSharedValue(screenHeight);
-  const isSmallScreen = screenHeight <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
+  const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
+  const translateY = useSharedValue(screenDimensions.height);
+  const isSmallScreen = screenDimensions.height <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
   };
 
+  // 画面サイズ変更の監視
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setScreenDimensions(window);
+    });
+
+    return () => subscription?.remove();
+  }, []);
+
+  // translateYの初期値を画面サイズ変更時に更新
+  useEffect(() => {
+    translateY.value = screenDimensions.height;
+  }, [screenDimensions.height]);
+
   React.useEffect(() => {
     if (isVisible) {
       translateY.value = withTiming(0, { duration: 300 });
     } else {
-      translateY.value = withTiming(screenHeight, { duration: 300 });
+      translateY.value = withTiming(screenDimensions.height, { duration: 300 });
     }
-  }, [isVisible]);
+  }, [isVisible, screenDimensions.height]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }],
@@ -60,7 +73,8 @@ const DetailBottomSheet: React.FC<Props> = ({
 
   const dynamicBottomSheetStyle = {
     ...styles.bottomSheet,
-    minHeight: isSmallScreen ? screenHeight * 0.75 : screenHeight * 0.6,
+    minHeight: isSmallScreen ? screenDimensions.height * 0.75 : screenDimensions.height * 0.6,
+    maxHeight: screenDimensions.height * 0.8,
   };
 
   const handlePlayPress = () => {
@@ -97,6 +111,7 @@ const DetailBottomSheet: React.FC<Props> = ({
       visible={isVisible}
       animationType="none"
       onRequestClose={onClose}
+      supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
     >
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.overlay}>
@@ -199,7 +214,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    maxHeight: screenHeight * 0.8,
     overflow: 'hidden',
     position: 'relative',
   },
