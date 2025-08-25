@@ -36,6 +36,7 @@ const DropDownMenu: React.FC<Props> = ({
       visible={isVisible}
       animationType="fade"
       onRequestClose={onClose}
+      supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
     >
       <TouchableWithoutFeedback onPress={onClose}>
         <View style={styles.overlay}>
