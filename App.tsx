@@ -17,7 +17,7 @@ export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
   useEffect(() => {
-    // フォントとスクリーンオリエンテーションの設定
+    // フォントの設定
     const loadResources = async () => {
       try {
         // フォントをロード
@@ -25,9 +25,6 @@ export default function App() {
           'KleeOne-Regular': require('./assets/fonts/Klee_One/KleeOne-Regular.ttf'),
           'KleeOne-SemiBold': require('./assets/fonts/Klee_One/KleeOne-SemiBold.ttf'),
         });
-        
-        // アプリ起動時にポートレートモードに固定
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
         
         setFontLoaded(true);
       } catch (error) {
