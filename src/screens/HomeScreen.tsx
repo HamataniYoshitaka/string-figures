@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
   Platform,
+  Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
@@ -45,9 +46,35 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   // 現在の言語設定の状態
   const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
 
+  // 画面幅の状態
+  const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+
+  // 段組み数を決定する関数
+  const getColumnsCount = (width: number): number => {
+    if (width < 600) { // スマホ縦
+      return 2;
+    } else if (width < 900) { // スマホ横, タブレット縦
+      return 3;
+    } else { // タブレット横
+      return 4;
+    }
+  };
+
+  const [columnsCount, setColumnsCount] = useState(getColumnsCount(screenWidth));
+
   // アプリ起動時に保存された言語設定を読み込む
   useEffect(() => {
     loadLanguageSetting();
+  }, []);
+
+  // 画面サイズ変更の監視
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setScreenWidth(window.width);
+      setColumnsCount(getColumnsCount(window.width));
+    });
+
+    return () => subscription?.remove();
   }, []);
 
   const loadLanguageSetting = async () => {
@@ -97,20 +124,16 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     });
   };
 
-  // マソンリーレイアウト用に2つのカラムに分ける
-  const organizeIntoColumns = (items: StringFigure[]) => {
-    const leftColumn: StringFigure[] = [];
-    const rightColumn: StringFigure[] = [];
+  // マルチカラムレイアウト用にカラムに分ける
+  const organizeIntoColumns = (items: StringFigure[], numColumns: number) => {
+    const columns: StringFigure[][] = Array.from({ length: numColumns }, () => []);
     
     items.forEach((item, index) => {
-      if (index % 2 === 0) {
-        leftColumn.push(item);
-      } else {
-        rightColumn.push(item);
-      }
+      const columnIndex = index % numColumns;
+      columns[columnIndex].push(item);
     });
     
-    return { leftColumn, rightColumn };
+    return columns;
   };
 
   // フィルターされたデータを取得
@@ -120,15 +143,17 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         selectedFilters.includes(item.difficulty as 'easy' | 'medium' | 'hard')
       );
 
-  const { leftColumn, rightColumn } = organizeIntoColumns(filteredStringFigures);
+  const columns = organizeIntoColumns(filteredStringFigures, columnsCount);
 
   const renderCard = (item: StringFigure) => {
     const imageInfo = imageDimensions[item.id];
     let calculatedHeight = 200; // デフォルト高さ
     
     if (imageInfo) {
-      // カードの幅を取得（画面幅の約45%と仮定）
-      const cardWidth = 160; // 概算値
+      // カードの幅を取得（画面幅を段組み数で割った値から余白を引く）
+      const totalHorizontalPadding = 40; // 左右のpadding 20px × 2
+      const gapBetweenColumns = (columnsCount - 1) * 15; // カラム間のgap
+      const cardWidth = (screenWidth - totalHorizontalPadding - gapBetweenColumns) / columnsCount;
       calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
       // 最大高さを制限
       calculatedHeight = Math.min(calculatedHeight, 300);
@@ -272,12 +297,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
         {/* あやとり一覧 */}
         <View style={styles.gridContainer}>
-          <View style={styles.column}>
-            {leftColumn.map(renderCard)}
-          </View>
-          <View style={styles.column}>
-            {rightColumn.map(renderCard)}
-          </View>
+          {columns.map((column, index) => (
+            <View key={index} style={styles.column}>
+              {column.map(renderCard)}
+            </View>
+          ))}
         </View>
       </ScrollView>
 
