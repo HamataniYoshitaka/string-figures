@@ -87,8 +87,8 @@ const DetailBottomSheet: React.FC<Props> = ({
     transform: [{ translateY: translateY.value }],
   }));
 
-  // iPadかどうかを判定（画面サイズで判定）
-  const isTablet = screenDimensions.width >= 768 || screenDimensions.height >= 768;
+  // iPadかどうかを判定（より大きな画面サイズで判定）
+  const isTablet = Math.max(screenDimensions.width, screenDimensions.height) >= 1024;
   
   const dynamicBottomSheetStyle = {
     ...styles.bottomSheet,
