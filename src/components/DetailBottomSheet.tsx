@@ -87,19 +87,26 @@ const DetailBottomSheet: React.FC<Props> = ({
     transform: [{ translateY: translateY.value }],
   }));
 
+  // iPadかどうかを判定（画面サイズで判定）
+  const isTablet = screenDimensions.width >= 768 || screenDimensions.height >= 768;
+  
   const dynamicBottomSheetStyle = {
     ...styles.bottomSheet,
     minHeight: orientation === 'landscape' 
-      ? Platform.OS === 'android' 
-        ? safeHeight * 0.8  // AndroidでもiPhoneと同じ85%に
-        : safeHeight * 0.8 
+      ? isTablet
+        ? safeHeight * 0.5  // iPadの場合は画面高さの50%
+        : Platform.OS === 'android' 
+          ? safeHeight * 0.8  // AndroidでもiPhoneと同じ80%に
+          : safeHeight * 0.8 
       : isSmallScreen 
         ? safeHeight * 0.75 
         : safeHeight * 0.6,
     maxHeight: orientation === 'landscape' 
-      ? Platform.OS === 'android'
-        ? safeHeight * 0.9   // AndroidでもiPhoneと同じ90%に
-        : safeHeight * 0.9 
+      ? isTablet
+        ? safeHeight * 0.55  // iPadの場合は画面高さの55%
+        : Platform.OS === 'android'
+          ? safeHeight * 0.9   // AndroidでもiPhoneと同じ90%に
+          : safeHeight * 0.9 
       : safeHeight * 0.8,
     // Androidのlandscapeモードでは下部のマージンを削除
     ...(Platform.OS === 'android' && orientation === 'landscape' && {
