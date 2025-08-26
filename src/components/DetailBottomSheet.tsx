@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   Image,
+  Platform,
 } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -17,6 +18,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { StringFigure } from '../types';
 import { EasyIcon, NormalIcon, HardIcon, PlayIcon } from './icons';
@@ -38,9 +40,21 @@ const DetailBottomSheet: React.FC<Props> = ({
   currentLanguage,
 }) => {
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
-  const translateY = useSharedValue(screenDimensions.height);
   const orientation = useOrientation();
   const isSmallScreen = screenDimensions.height <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
+  const insets = useSafeAreaInsets();
+
+  // Android landscape時の安全な高さを計算
+  const getSafeHeight = () => {
+    if (Platform.OS === 'android' && orientation === 'landscape') {
+      // Androidのlandscapeモードでは画面全体の高さを使用
+      return screenDimensions.height;
+    }
+    return screenDimensions.height;
+  };
+
+  const safeHeight = getSafeHeight();
+  const translateY = useSharedValue(safeHeight);
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
@@ -58,16 +72,16 @@ const DetailBottomSheet: React.FC<Props> = ({
 
   // translateYの初期値を画面サイズ変更時に更新
   useEffect(() => {
-    translateY.value = screenDimensions.height;
-  }, [screenDimensions.height]);
+    translateY.value = safeHeight;
+  }, [safeHeight]);
 
   React.useEffect(() => {
     if (isVisible) {
       translateY.value = withTiming(0, { duration: 300 });
     } else {
-      translateY.value = withTiming(screenDimensions.height, { duration: 300 });
+      translateY.value = withTiming(safeHeight, { duration: 300 });
     }
-  }, [isVisible, screenDimensions.height]);
+  }, [isVisible, safeHeight]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }],
@@ -76,13 +90,23 @@ const DetailBottomSheet: React.FC<Props> = ({
   const dynamicBottomSheetStyle = {
     ...styles.bottomSheet,
     minHeight: orientation === 'landscape' 
-      ? screenDimensions.height * 0.85 
+      ? Platform.OS === 'android' 
+        ? safeHeight * 0.8  // AndroidでもiPhoneと同じ85%に
+        : safeHeight * 0.8 
       : isSmallScreen 
-        ? screenDimensions.height * 0.75 
-        : screenDimensions.height * 0.6,
+        ? safeHeight * 0.75 
+        : safeHeight * 0.6,
     maxHeight: orientation === 'landscape' 
-      ? screenDimensions.height * 0.9 
-      : screenDimensions.height * 0.8,
+      ? Platform.OS === 'android'
+        ? safeHeight * 0.9   // AndroidでもiPhoneと同じ90%に
+        : safeHeight * 0.9 
+      : safeHeight * 0.8,
+    // Androidのlandscapeモードでは下部のマージンを削除
+    ...(Platform.OS === 'android' && orientation === 'landscape' && {
+      marginBottom: 0,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+    }),
   };
 
   const handlePlayPress = () => {
@@ -120,9 +144,17 @@ const DetailBottomSheet: React.FC<Props> = ({
       animationType="none"
       onRequestClose={onClose}
       supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
+      // AndroidのstatusBarTranslucentを設定してfullscreenで表示
+      statusBarTranslucent={Platform.OS === 'android'}
     >
       <TouchableWithoutFeedback onPress={onClose}>
-        <View style={styles.overlay}>
+        <View style={[
+          styles.overlay,
+          // AndroidのlandscapeモードではpaddingBottomを削除
+          Platform.OS === 'android' && orientation === 'landscape' && {
+            paddingBottom: 0,
+          }
+        ]}>
           <TouchableWithoutFeedback>
             <Animated.View style={[dynamicBottomSheetStyle, animatedStyle]}>
               {/* ハンドル */}
