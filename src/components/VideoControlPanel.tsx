@@ -210,7 +210,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
               <View style={[
                 styles.chapterBalloon,
                 styles.speedButtonTop,
-                currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonDisabled
+                currentChapterIndex === stringFigure.chapters.length - 1 && styles.balloonDisabled
               ]}>
                 <Text style={[
                   currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonTextDisabled
@@ -250,7 +250,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
             <View style={[
               styles.chapterBalloon,
               styles.speedButtonTop,
-              currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonDisabled
+              currentChapterIndex === 0 && playbackPosition === 0 && styles.balloonDisabled
             ]}>
               <Text style={[
                 currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonTextDisabled
@@ -289,7 +289,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
             <View style={[
               styles.chapterBalloon,
               styles.speedButtonTop,
-              currentChapterIndex === 0 && styles.speedButtonDisabled
+              currentChapterIndex === 0 && styles.balloonDisabled
             ]}>
               <Text style={[
                 currentChapterIndex === 0 && styles.speedButtonTextDisabled
@@ -449,6 +449,9 @@ const styles = StyleSheet.create({
   },
   speedButtonBottom: {
     borderTopLeftRadius: 0,
+  },
+  balloonDisabled: {
+    display: 'none',
   },
   speedButtonText: {
     fontSize: 12,

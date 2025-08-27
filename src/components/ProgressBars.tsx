@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
 
 interface Chapter {
   videoUrl: string | any;
@@ -17,8 +17,11 @@ const ProgressBars: React.FC<ProgressBarsProps> = ({
   currentChapterIndex,
   getChapterProgress,
 }) => {
+  const windowHeight = Dimensions.get('window').height;
+  const progressBarWidth = ((windowHeight - 60) / 9) * 16;
+
   return (
-    <View style={styles.progressContainer}>
+    <View style={[styles.progressContainer, { width: progressBarWidth }]}>
       <View style={styles.progressBarsContainer}>
         {chapters.map((_, index) => {
           const progress = getChapterProgress(index);
@@ -52,7 +55,7 @@ const ProgressBars: React.FC<ProgressBarsProps> = ({
 
 const styles = StyleSheet.create({
   progressContainer: {
-    paddingHorizontal: 20,
+    // width: 'calc((100vh - 40px)/9*16)',
     paddingVertical: 16,
   },
   progressBarsContainer: {

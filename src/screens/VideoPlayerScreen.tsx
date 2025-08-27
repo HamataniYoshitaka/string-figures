@@ -45,8 +45,8 @@ const getPlaybackRateDisplay = (rate: number): string => {
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
   
-  // iPhoneSE2のような小さい画面かどうかを判定
-  const isSmallScreen = screenHeight <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
+  // 画面サイズ判定
+  const isSmallScreen = screenHeight <= 667; // iPhoneSE2の高さは667px
   const isLargeScreen = screenHeight >= 852;
 
   // ステート管理
@@ -248,120 +248,99 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.outerContainer}>
-      <View style={styles.rotatedContainer}>
-        {/* 右側の動画エリア（absoluteで配置） */}
-        <View style={[styles.videoArea, { paddingBottom: isSmallScreen ? 32 : 0 }]}>
-          <View style={styles.videoPlayer}>
-            <Video
-              key={`chapter-${currentChapterIndex}`}
-              ref={videoRef}
-              source={typeof stringFigure.chapters[currentChapterIndex].videoUrl === 'string' 
-                ? { uri: stringFigure.chapters[currentChapterIndex].videoUrl } 
-                : stringFigure.chapters[currentChapterIndex].videoUrl
-              }
-              style={styles.video}
-              resizeMode={ResizeMode.COVER}
-              shouldPlay={false}
-              isLooping={false}
-              isMuted={true}
-              useNativeControls={false}
-              rate={playbackRate}
-              onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-              onLoad={handleVideoLoad}
-            />
-            
-            {/* 字幕エリア - 動画の上に重ねて表示 */}
-            <View style={styles.subtitleArea}>
-              <Text style={styles.subtitleText}>
-                {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
-              </Text>
-            </View>
-          </View>
-
-          {/* 進捗バー */}
-          <ProgressBars 
-            chapters={stringFigure.chapters}
-            currentChapterIndex={currentChapterIndex}
-            getChapterProgress={getChapterProgress}
+    <View style={styles.container}>
+      {/* 動画エリア */}
+      <View style={styles.videoArea}>
+        <View style={[styles.videoPlayer, { marginBottom: isSmallScreen ? 0 : 0 }]}>
+          <Video
+            key={`chapter-${currentChapterIndex}`}
+            ref={videoRef}
+            source={typeof stringFigure.chapters[currentChapterIndex].videoUrl === 'string' 
+              ? { uri: stringFigure.chapters[currentChapterIndex].videoUrl } 
+              : stringFigure.chapters[currentChapterIndex].videoUrl
+            }
+            style={styles.video}
+            resizeMode={ResizeMode.COVER}
+            shouldPlay={false}
+            isLooping={false}
+            isMuted={true}
+            useNativeControls={false}
+            rate={playbackRate}
+            onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+            onLoad={handleVideoLoad}
           />
+          
+          {/* 字幕エリア - 動画の上に重ねて表示 */}
+          <View style={styles.subtitleArea}>
+            <Text style={styles.subtitleText}>
+              {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
+            </Text>
+          </View>
         </View>
 
-        {/* 左側のコントロールエリア（動画の上に重ねて表示） */}
-        <VideoControlPanel
-          stringFigure={stringFigure}
+        {/* 進捗バー */}
+        <ProgressBars 
+          chapters={stringFigure.chapters}
           currentChapterIndex={currentChapterIndex}
-          playbackPosition={playbackPosition}
-          isLastChapterCompleted={isLastChapterCompleted}
-          playbackRate={playbackRate}
-          PLAYBACK_RATES={PLAYBACK_RATES}
-          isSmallScreen={isSmallScreen}
-          isLargeScreen={isLargeScreen}
-          currentLanguage={currentLanguage}
-          onGoBack={handleGoBack}
-          onNextChapter={handleNextChapter}
-          onReplay={handleReplay}
-          onPreviousChapter={handlePreviousChapter}
-          onRestartFromBeginning={handleRestartFromBeginning}
-          onSlowerSpeed={handleSlowerSpeed}
-          onFasterSpeed={handleFasterSpeed}
-          getPlaybackRateDisplay={getPlaybackRateDisplay}
+          getChapterProgress={getChapterProgress}
         />
       </View>
+
+      {/* コントロールエリア */}
+      <VideoControlPanel
+        stringFigure={stringFigure}
+        currentChapterIndex={currentChapterIndex}
+        playbackPosition={playbackPosition}
+        isLastChapterCompleted={isLastChapterCompleted}
+        playbackRate={playbackRate}
+        PLAYBACK_RATES={PLAYBACK_RATES}
+        isSmallScreen={isSmallScreen}
+        isLargeScreen={isLargeScreen}
+        currentLanguage={currentLanguage}
+        onGoBack={handleGoBack}
+        onNextChapter={handleNextChapter}
+        onReplay={handleReplay}
+        onPreviousChapter={handlePreviousChapter}
+        onRestartFromBeginning={handleRestartFromBeginning}
+        onSlowerSpeed={handleSlowerSpeed}
+        onFasterSpeed={handleFasterSpeed}
+        getPlaybackRateDisplay={getPlaybackRateDisplay}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  outerContainer: {
+  container: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  rotatedContainer: {
-    width: screenHeight,
-    height: screenWidth,
-    transform: [{ rotate: '90deg' }],
-    position: 'relative',
   },
   videoArea: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'flex-end',
+    flex: 1,
+    alignItems: 'flex-end',
     paddingTop: 12,
-    paddingEnd: 12,
+    paddingBottom: 12,
+    paddingRight: 12,
   },
   videoPlayer: {
     flex: 1,
     backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    aspectRatio: 16 / 9,
     position: 'relative',
     borderRadius: 32,
     overflow: 'hidden',
-    width: '100%',
   },
   video: {
     width: '100%',
     height: '100%',
-  },
-  videoPlaceholder: {
-    fontSize: 18,
-    color: '#999',
-    marginBottom: 8,
-  },
-  videoTitle: {
-    fontSize: 16,
-    color: 'white',
-    fontWeight: 'bold',
+    aspectRatio: 16 / 9,
   },
   subtitleArea: {
     position: 'absolute',
-    bottom: 0, // 進捗バーの上に配置
+    bottom: 0,
     left: 20,
     right: 20,
     backgroundColor: 'transparent',
@@ -377,17 +356,6 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 3,
     fontWeight: '500',
-  },
-  progressBar: {
-    height: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 2,
-    overflow: 'hidden',
-  },
-  progressFill: {
-    width: '30%',
-    height: '100%',
-    backgroundColor: '#2196F3',
   },
 });
 
