@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,10 +6,12 @@ import {
   Animated,
   TouchableWithoutFeedback,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon, SkipBackwardIcon } from './icons';
 import PlaySpeedIcon from './icons/PlaySpeed';
 import SpeedButtonTail from './icons/SpeedButtonTail';
+import LandScapeIcon from './icons/LandScape';
 import { StringFigure } from '../types';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 
@@ -52,9 +54,39 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onFasterSpeed,
   getPlaybackRateDisplay,
 }) => {
+  // isLandscape状態の管理
+  const [isLandscape, setIsLandscape] = useState(false);
+
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
+  };
+
+  // コンポーネントマウント時にAsyncStorageからisLandscapeを読み込み
+  useEffect(() => {
+    const loadLandscapeState = async () => {
+      try {
+        const storedValue = await AsyncStorage.getItem('isLandscape');
+        if (storedValue !== null) {
+          setIsLandscape(JSON.parse(storedValue));
+        }
+      } catch (error) {
+        console.error('AsyncStorageからisLandscapeの読み込みに失敗:', error);
+      }
+    };
+    
+    loadLandscapeState();
+  }, []);
+
+  // LandScapeボタンのハンドラー
+  const handleLandscapeToggle = async () => {
+    try {
+      const newIsLandscape = !isLandscape;
+      setIsLandscape(newIsLandscape);
+      await AsyncStorage.setItem('isLandscape', JSON.stringify(newIsLandscape));
+    } catch (error) {
+      console.error('AsyncStorageへのisLandscape保存に失敗:', error);
+    }
   };
 
   // 音声認識のカスタムフック
@@ -110,6 +142,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   const previousButtonScale = useRef(new Animated.Value(1)).current;
   const restartButtonScale = useRef(new Animated.Value(1)).current;
   const backButtonScale = useRef(new Animated.Value(1)).current;
+  const landscapeButtonScale = useRef(new Animated.Value(1)).current;
   const slowerSpeedScale = useRef(new Animated.Value(1)).current;
   const fasterSpeedScale = useRef(new Animated.Value(1)).current;
 
@@ -143,21 +176,44 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
 
   return (
     <View style={[styles.leftPanel, { left: isSmallScreen ? 16 : isLargeScreen ? 52 : 36 }]}>
-      {/* 戻るボタン */}
-      <TouchableWithoutFeedback 
-        onPress={handleGoBack}
-        onPressIn={createPressInHandler(backButtonScale)}
-        onPressOut={createPressOutHandler(backButtonScale)}
-      >
-        <Animated.View 
-          style={[
-            styles.backButton,
-            { transform: [{ scale: backButtonScale }] }
-          ]}
+      {/* 上部ボタンコンテナ */}
+      <View style={styles.topButtonsContainer}>
+        {/* 戻るボタン */}
+        <TouchableWithoutFeedback 
+          onPress={handleGoBack}
+          onPressIn={createPressInHandler(backButtonScale)}
+          onPressOut={createPressOutHandler(backButtonScale)}
         >
-          <CloseIcon width={32} height={32} fillColor="#79716B" />
-        </Animated.View>
-      </TouchableWithoutFeedback>
+          <Animated.View 
+            style={[
+              styles.backButton,
+              { transform: [{ scale: backButtonScale }] }
+            ]}
+          >
+            <CloseIcon width={32} height={32} fillColor="#79716B" />
+          </Animated.View>
+        </TouchableWithoutFeedback>
+
+        {/* LandScapeボタン */}
+        <TouchableWithoutFeedback 
+          onPress={handleLandscapeToggle}
+          onPressIn={createPressInHandler(landscapeButtonScale)}
+          onPressOut={createPressOutHandler(landscapeButtonScale)}
+        >
+          <Animated.View 
+            style={[
+              styles.landscapeButton,
+              { transform: [{ scale: landscapeButtonScale }] }
+            ]}
+          >
+            <LandScapeIcon 
+              width={32} 
+              height={32} 
+              fillColor={isLandscape ? "#1862cfff" : "#2d2b29ff"} 
+            />
+          </Animated.View>
+        </TouchableWithoutFeedback>
+      </View>
 
       {/* コントロールボタン */}
       <View style={styles.controlsContainer}>
@@ -376,13 +432,22 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
+  topButtonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 24,
+    marginLeft: 8,
+    marginBottom: 20,
+  },
   backButton: {
-    alignSelf: 'flex-start',
     padding: 8,
     backgroundColor: 'rgba(0, 0, 0, 0)',
     borderRadius: 20,
-    marginLeft: 8,
-    marginBottom: 20,
+  },
+  landscapeButton: {
+    padding: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    borderRadius: 20,
   },
   controlsContainer: {
     flex: 1,
