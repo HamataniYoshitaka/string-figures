@@ -44,7 +44,7 @@ export interface VideoPlayerSharedProps {
   videoDuration: number;
   isLastChapterCompleted: boolean;
   playbackRate: number;
-  videoRef: React.RefObject<Video | null>;
+  videoRef: React.RefObject<Video>;
   isSmallScreen: boolean;
   isLargeScreen: boolean;
   PLAYBACK_RATES: number[];
@@ -64,11 +64,6 @@ export interface VideoPlayerSharedProps {
 
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
-  
-  // デバッグ用ログ
-  console.log('VideoPlayerScreen - stringFigure:', stringFigure);
-  console.log('VideoPlayerScreen - route.params:', route.params);
-  
   const orientation = useOrientation();
   
   // 画面サイズ判定

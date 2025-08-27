@@ -1,0 +1,311 @@
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
+import { Video, ResizeMode } from 'expo-av';
+import { Ionicons } from '@expo/vector-icons';
+
+import { VideoPlayerSharedProps } from './VideoPlayerScreen';
+import ProgressBars from '../components/ProgressBars';
+
+const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
+  stringFigure,
+  currentChapterIndex,
+  playbackRate,
+  videoRef,
+  playbackPosition,
+  isLastChapterCompleted,
+  onPlaybackStatusUpdate,
+  onVideoLoad,
+  onGoBack,
+  onNextChapter,
+  onReplay,
+  onPreviousChapter,
+  onRestartFromBeginning,
+  onSlowerSpeed,
+  onFasterSpeed,
+  getLocalizedText,
+  getChapterProgress,
+  getPlaybackRateDisplay,
+}) => {
+    
+  // stringFigureが未定義の場合の早期リターン
+  if (!stringFigure || !stringFigure.chapters || !stringFigure.chapters[currentChapterIndex]) {
+    console.error('VideoPlayerPortrait - Invalid stringFigure or chapter data');
+    return (
+      <SafeAreaView style={styles.container}>
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>データを読み込み中...</Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
+  
+  // ボタンテキストの判定
+  const getNextButtonText = () => {
+    if (currentChapterIndex === 0 && playbackPosition === 0) {
+      return getLocalizedText({ ja: 'はじめる', en: 'Start' });
+    } else if (currentChapterIndex === stringFigure.chapters.length - 1) {
+      return getLocalizedText({ ja: 'もういちど', en: 'Again' });
+    } else {
+      return getLocalizedText({ ja: 'つぎ', en: 'Next' });
+    }
+  };
+
+  const handleMainButtonPress = () => {
+    if (currentChapterIndex === stringFigure.chapters.length - 1) {
+      onReplay();
+    } else {
+      onNextChapter();
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* ヘッダー */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={onGoBack} style={styles.backButton}>
+          <Ionicons name="chevron-back" size={24} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.title} numberOfLines={1}>
+          {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
+        </Text>
+        <TouchableOpacity style={styles.shareButton}>
+          <Ionicons name="share-outline" size={24} color="#000" />
+        </TouchableOpacity>
+      </View>
+
+      {/* 動画エリア */}
+      <View style={styles.videoArea}>
+        <View style={styles.videoPlayer}>
+          <Video
+            key={`chapter-${currentChapterIndex}`}
+            ref={videoRef}
+            source={typeof stringFigure.chapters[currentChapterIndex].videoUrl === 'string' 
+              ? { uri: stringFigure.chapters[currentChapterIndex].videoUrl } 
+              : stringFigure.chapters[currentChapterIndex].videoUrl
+            }
+            style={styles.video}
+            resizeMode={ResizeMode.COVER}
+            shouldPlay={false}
+            isLooping={false}
+            isMuted={true}
+            useNativeControls={false}
+            rate={playbackRate}
+            onPlaybackStatusUpdate={onPlaybackStatusUpdate}
+            onLoad={onVideoLoad}
+          />
+        </View>
+
+        {/* 進捗バー */}
+        <View style={styles.progressContainer}>
+          <ProgressBars 
+            chapters={stringFigure.chapters}
+            currentChapterIndex={currentChapterIndex}
+            getChapterProgress={getChapterProgress}
+          />
+        </View>
+
+        {/* 再生速度コントロール */}
+        <View style={styles.speedControlContainer}>
+          <TouchableOpacity 
+            onPress={onSlowerSpeed}
+            style={styles.speedButton}
+          >
+            <Text style={styles.speedButtonText}>ゆっくり</Text>
+          </TouchableOpacity>
+          
+          <View style={styles.speedDisplay}>
+            <Ionicons name="play" size={20} color="#666" />
+            <Text style={styles.speedText}>{getPlaybackRateDisplay(playbackRate)}</Text>
+          </View>
+          
+          <TouchableOpacity 
+            onPress={onFasterSpeed}
+            style={styles.speedButton}
+          >
+            <Text style={styles.speedButtonText}>はやく</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* 字幕エリア */}
+      <View style={styles.subtitleContainer}>
+        <Text style={styles.subtitleText}>
+          {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
+        </Text>
+      </View>
+
+      {/* コントロールボタンエリア */}
+      <View style={styles.controlsContainer}>
+        <View style={styles.mainControls}>
+          {/* まえボタン */}
+          <TouchableOpacity 
+            onPress={onPreviousChapter}
+            style={[styles.controlButton, currentChapterIndex === 0 && styles.disabledButton]}
+            disabled={currentChapterIndex === 0}
+          >
+            <Ionicons name="play-skip-back" size={24} color={currentChapterIndex === 0 ? "#ccc" : "#555"} />
+            <Text style={[styles.controlButtonText, currentChapterIndex === 0 && styles.disabledText]}>
+              まえ
+            </Text>
+          </TouchableOpacity>
+
+          {/* もういちど/はじめからボタン */}
+          <TouchableOpacity 
+            onPress={isLastChapterCompleted ? onRestartFromBeginning : onReplay}
+            style={styles.controlButton}
+          >
+            <Ionicons name="refresh" size={24} color="#555" />
+            <Text style={styles.controlButtonText}>
+              {isLastChapterCompleted ? 'はじめから' : 'もういちど'}
+            </Text>
+          </TouchableOpacity>
+
+          {/* つぎ/はじめる/もういちどボタン */}
+          <TouchableOpacity 
+            onPress={handleMainButtonPress}
+            style={styles.controlButton}
+          >
+            <Ionicons name="play-skip-forward" size={24} color="#555" />
+            <Text style={styles.controlButtonText}>
+              {getNextButtonText()}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    color: '#666',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  backButton: {
+    padding: 4,
+  },
+  title: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginHorizontal: 16,
+  },
+  shareButton: {
+    padding: 4,
+  },
+  videoArea: {
+    paddingHorizontal: 16,
+    paddingTop: 16,
+  },
+  videoPlayer: {
+    aspectRatio: 16 / 9,
+    backgroundColor: '#000',
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  video: {
+    width: '100%',
+    height: '100%',
+  },
+  progressContainer: {
+    marginTop: 16,
+  },
+  speedControlContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16,
+    gap: 24,
+  },
+  speedButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 20,
+  },
+  speedButtonText: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '500',
+  },
+  speedDisplay: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f8f8',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    gap: 4,
+  },
+  speedText: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '600',
+  },
+  subtitleContainer: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+    justifyContent: 'center',
+  },
+  subtitleText: {
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+    lineHeight: 24,
+    fontWeight: '500',
+  },
+  controlsContainer: {
+    paddingHorizontal: 24,
+    paddingBottom: 32,
+  },
+  mainControls: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  controlButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 80,
+    paddingVertical: 12,
+  },
+  controlButtonText: {
+    fontSize: 12,
+    color: '#555',
+    marginTop: 4,
+    fontWeight: '500',
+  },
+  disabledButton: {
+    opacity: 0.5,
+  },
+  disabledText: {
+    color: '#ccc',
+  },
+});
+
+export default VideoPlayerPortrait;
