@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
+import { useOrientation } from '../hooks/useOrientation';
 
 interface Chapter {
   videoUrl: string | any;
@@ -17,8 +18,14 @@ const ProgressBars: React.FC<ProgressBarsProps> = ({
   currentChapterIndex,
   getChapterProgress,
 }) => {
+  const orientation = useOrientation();
   const windowHeight = Dimensions.get('window').height;
-  const progressBarWidth = ((windowHeight - 60) / 9) * 16;
+  const windowWidth = Dimensions.get('window').width;
+  
+  // Portrait表示の場合は画面幅と同じ、Landscape表示の場合は従来の計算式
+  const progressBarWidth = orientation === 'portrait' 
+    ? windowWidth -32
+    : ((windowHeight - 60) / 9) * 16;
 
   return (
     <View style={[styles.progressContainer, { width: progressBarWidth }]}>
@@ -55,7 +62,6 @@ const ProgressBars: React.FC<ProgressBarsProps> = ({
 
 const styles = StyleSheet.create({
   progressContainer: {
-    // width: 'calc((100vh - 40px)/9*16)',
     paddingVertical: 16,
   },
   progressBarsContainer: {

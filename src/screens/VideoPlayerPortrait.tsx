@@ -11,7 +11,7 @@ import {
 import { Video, ResizeMode } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CloseIcon } from '../components/icons';
+import { CloseIcon, SkipPreviousIcon, SkipNextIcon, SkipBackwardIcon, ReplayIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
@@ -101,17 +101,6 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       </SafeAreaView>
     );
   }
-  
-  // ボタンテキストの判定
-  const getNextButtonText = () => {
-    if (currentChapterIndex === 0 && playbackPosition === 0) {
-      return getLocalizedText({ ja: 'はじめる', en: 'Start' });
-    } else if (currentChapterIndex === stringFigure.chapters.length - 1) {
-      return getLocalizedText({ ja: 'もういちど', en: 'Again' });
-    } else {
-      return getLocalizedText({ ja: 'つぎ', en: 'Next' });
-    }
-  };
 
   const handleMainButtonPress = () => {
     if (currentChapterIndex === stringFigure.chapters.length - 1) {
@@ -229,10 +218,20 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           {/* まえボタン */}
           <TouchableOpacity 
             onPress={onPreviousChapter}
-            style={[styles.controlButton, currentChapterIndex === 0 && styles.disabledButton]}
+            style={styles.controlButton}
             disabled={currentChapterIndex === 0}
           >
-            <Ionicons name="play-skip-back" size={24} color={currentChapterIndex === 0 ? "#ccc" : "#555"} />
+            <View style={[
+              styles.floatingButton,
+              currentChapterIndex === 0 && styles.disabledButton
+            ]}>
+              <SkipPreviousIcon 
+                width={24} 
+                height={24} 
+                fillColor={"white"}
+                strokeColor='transparent'
+              />
+            </View>
             <Text style={[styles.controlButtonText, currentChapterIndex === 0 && styles.disabledText]}>
               まえ
             </Text>
@@ -243,20 +242,45 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             onPress={isLastChapterCompleted ? onRestartFromBeginning : onReplay}
             style={styles.controlButton}
           >
-            <Ionicons name="refresh" size={24} color="#555" />
+            <View style={styles.floatingButton}>
+              <ReplayIcon 
+                width={24} 
+                height={24} 
+                fillColor={"white"}
+                strokeColor='transparent'
+              />
+            </View>
             <Text style={styles.controlButtonText}>
               {isLastChapterCompleted ? 'はじめから' : 'もういちど'}
             </Text>
           </TouchableOpacity>
 
-          {/* つぎ/はじめる/もういちどボタン */}
+          {/* つぎ/はじめる/もういちど/はじめからボタン */}
           <TouchableOpacity 
-            onPress={handleMainButtonPress}
+            onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
             style={styles.controlButton}
           >
-            <Ionicons name="play-skip-forward" size={24} color="#555" />
+            <View style={styles.floatingButton}>
+              {isLastChapterCompleted ? (
+                <SkipBackwardIcon 
+                  width={24} 
+                  height={24} 
+                  fillColor="white"
+                />
+              ) : (
+                <SkipNextIcon 
+                  width={24} 
+                  height={24} 
+                  fillColor="white" 
+                  strokeColor='transparent' 
+                />
+              )}
+            </View>
             <Text style={styles.controlButtonText}>
-              {getNextButtonText()}
+              {isLastChapterCompleted 
+                ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
+                : getLocalizedText({ ja: 'つぎ', en: 'Next' })
+              }
             </Text>
           </TouchableOpacity>
         </View>
@@ -381,6 +405,22 @@ const styles = StyleSheet.create({
     minWidth: 80,
     paddingVertical: 12,
   },
+  floatingButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#57534D',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 8,
+  },
   controlButtonText: {
     fontSize: 12,
     color: '#555',
@@ -388,7 +428,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   disabledButton: {
-    opacity: 0.5,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    shadowOpacity: 0.1,
+    elevation: 0,
   },
   disabledText: {
     color: '#ccc',
