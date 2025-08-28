@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   SafeAreaView,
+  Animated,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CloseIcon } from '../components/icons';
+import LandScapeIcon from '../components/icons/LandScape';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressBars from '../components/ProgressBars';
@@ -32,6 +37,58 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   getChapterProgress,
   getPlaybackRateDisplay,
 }) => {
+  // アニメーション用のスケール値
+  const backButtonScale = useRef(new Animated.Value(1)).current;
+  const shareButtonScale = useRef(new Animated.Value(1)).current;
+  
+  // isLandscape状態の管理
+  const [isLandscape, setIsLandscape] = useState(false);
+  
+  // コンポーネントマウント時にAsyncStorageからisLandscapeを読み込み
+  useEffect(() => {
+    const loadLandscapeState = async () => {
+      try {
+        const storedValue = await AsyncStorage.getItem('isLandscape');
+        if (storedValue !== null) {
+          setIsLandscape(JSON.parse(storedValue));
+        }
+      } catch (error) {
+        console.error('AsyncStorageからisLandscapeの読み込みに失敗:', error);
+      }
+    };
+    
+    loadLandscapeState();
+  }, []);
+  
+  // LandScapeボタンのハンドラー
+  const handleLandscapeToggle = async () => {
+    try {
+      const newIsLandscape = !isLandscape;
+      setIsLandscape(newIsLandscape);
+      await AsyncStorage.setItem('isLandscape', JSON.stringify(newIsLandscape));
+    } catch (error) {
+      console.error('AsyncStorageへのisLandscape保存に失敗:', error);
+    }
+  };
+  
+  // アニメーションヘルパー関数
+  const createPressInHandler = (scale: Animated.Value) => () => {
+    Animated.spring(scale, {
+      toValue: 0.95,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 8,
+    }).start();
+  };
+
+  const createPressOutHandler = (scale: Animated.Value) => () => {
+    Animated.spring(scale, {
+      toValue: 1,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 8,
+    }).start();
+  };
     
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !stringFigure.chapters || !stringFigure.chapters[currentChapterIndex]) {
@@ -68,15 +125,41 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
     <SafeAreaView style={styles.container}>
       {/* ヘッダー */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={onGoBack} style={styles.backButton}>
-          <Ionicons name="chevron-back" size={24} color="#000" />
-        </TouchableOpacity>
+        <TouchableWithoutFeedback 
+          onPress={onGoBack}
+          onPressIn={createPressInHandler(backButtonScale)}
+          onPressOut={createPressOutHandler(backButtonScale)}
+        >
+          <Animated.View 
+            style={[
+              styles.backButton,
+              { transform: [{ scale: backButtonScale }] }
+            ]}
+          >
+            <CloseIcon width={24} height={24} fillColor="#79716B" />
+          </Animated.View>
+        </TouchableWithoutFeedback>
         <Text style={styles.title} numberOfLines={1}>
           {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
         </Text>
-        <TouchableOpacity style={styles.shareButton}>
-          <Ionicons name="share-outline" size={24} color="#000" />
-        </TouchableOpacity>
+        <TouchableWithoutFeedback 
+          onPress={handleLandscapeToggle}
+          onPressIn={createPressInHandler(shareButtonScale)}
+          onPressOut={createPressOutHandler(shareButtonScale)}
+        >
+          <Animated.View 
+            style={[
+              styles.shareButton,
+              { transform: [{ scale: shareButtonScale }] }
+            ]}
+          >
+            <LandScapeIcon 
+              width={24} 
+              height={24} 
+              fillColor={isLandscape ? "#1862cfff" : "#79716B"}
+            />
+          </Animated.View>
+        </TouchableWithoutFeedback>
       </View>
 
       {/* 動画エリア */}
@@ -205,7 +288,9 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f0f0f0',
   },
   backButton: {
-    padding: 4,
+    padding: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    borderRadius: 20,
   },
   title: {
     flex: 1,
@@ -215,7 +300,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   shareButton: {
-    padding: 4,
+    padding: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    borderRadius: 20,
   },
   videoArea: {
     paddingHorizontal: 16,

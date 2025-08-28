@@ -64,11 +64,7 @@ export interface VideoPlayerSharedProps {
 
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
-  
-  // デバッグ用ログ
-  console.log('VideoPlayerScreen - stringFigure:', stringFigure);
-  console.log('VideoPlayerScreen - route.params:', route.params);
-  
+    
   const orientation = useOrientation();
   
   // 画面サイズ判定
