@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CloseIcon, SkipPreviousIcon, SkipNextIcon, SkipBackwardIcon, ReplayIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
 import PlaySpeedIcon from '../components/icons/PlaySpeed';
+import SpeedButtonTail from '../components/icons/SpeedButtonTail';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressBars from '../components/ProgressBars';
@@ -41,6 +42,8 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   // アニメーション用のスケール値
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const shareButtonScale = useRef(new Animated.Value(1)).current;
+  const slowerSpeedScale = useRef(new Animated.Value(1)).current;
+  const fasterSpeedScale = useRef(new Animated.Value(1)).current;
   
   // isLandscape状態の管理
   const [isLandscape, setIsLandscape] = useState(false);
@@ -185,24 +188,52 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
 
         {/* 再生速度コントロール */}
         <View style={styles.speedControlContainer}>
-          <TouchableOpacity 
+          <TouchableWithoutFeedback 
             onPress={onSlowerSpeed}
-            style={styles.speedButton}
+            onPressIn={createPressInHandler(slowerSpeedScale)}
+            onPressOut={createPressOutHandler(slowerSpeedScale)}
           >
-            <Text style={styles.speedButtonText}>ゆっくり</Text>
-          </TouchableOpacity>
+            <Animated.View 
+              style={[
+                styles.speedButton, 
+                styles.speedButtonBottomRight,
+                { transform: [{ scale: slowerSpeedScale }] }
+              ]}
+            >
+              <Text style={styles.speedButtonText}>ゆっくり</Text>
+              <SpeedButtonTail 
+                fillColor="rgba(208, 205, 205, 0.5)"
+                isBottom={true}
+                isRight={true}
+              />
+            </Animated.View>
+          </TouchableWithoutFeedback>
           
           <View style={styles.speedDisplay}>
             <PlaySpeedIcon width={32} height={32} fillColor="#292524" strokeColor="#57534D" />
             <Text style={styles.speedText}>{getPlaybackRateDisplay(playbackRate)}x</Text>
           </View>
           
-          <TouchableOpacity 
+          <TouchableWithoutFeedback 
             onPress={onFasterSpeed}
-            style={styles.speedButton}
+            onPressIn={createPressInHandler(fasterSpeedScale)}
+            onPressOut={createPressOutHandler(fasterSpeedScale)}
           >
-            <Text style={styles.speedButtonText}>はやく</Text>
-          </TouchableOpacity>
+            <Animated.View 
+              style={[
+                styles.speedButton, 
+                styles.speedButtonBottomLeft,
+                { transform: [{ scale: fasterSpeedScale }] }
+              ]}
+            >
+              <Text style={styles.speedButtonText}>はやく</Text>
+              <SpeedButtonTail 
+                fillColor="rgba(208, 205, 205, 0.5)"
+                isBottom={true}
+                isRight={false}
+              />
+            </Animated.View>
+          </TouchableWithoutFeedback>
         </View>
       </View>
 
@@ -233,9 +264,17 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
                 strokeColor='transparent'
               />
             </View>
-            <Text style={[styles.controlButtonText, currentChapterIndex === 0 && styles.disabledText]}>
-              まえ
-            </Text>
+            <View style={[styles.speedButton, styles.speedButtonTopLeft]}>
+              <Text style={[styles.controlButtonText, currentChapterIndex === 0 && styles.disabledText]}>
+                まえ
+              </Text>
+              <SpeedButtonTail 
+                fillColor="rgba(208, 205, 205, 0.5)"
+                isBottom={false}
+                isRight={false}
+                isUp={true}
+              />
+            </View>
           </TouchableOpacity>
 
           {/* もういちど/はじめからボタン */}
@@ -251,9 +290,17 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
                 strokeColor='transparent'
               />
             </View>
-            <Text style={styles.controlButtonText}>
-              {isLastChapterCompleted ? 'はじめから' : 'もういちど'}
-            </Text>
+            <View style={[styles.speedButton, styles.speedButtonTopLeft]}>
+              <Text style={styles.controlButtonText}>
+                もういちど
+              </Text>
+              <SpeedButtonTail 
+                fillColor="rgba(208, 205, 205, 0.5)"
+                isBottom={false}
+                isRight={false}
+                isUp={true}
+              />
+            </View>
           </TouchableOpacity>
 
           {/* つぎ/はじめる/もういちど/はじめからボタン */}
@@ -277,12 +324,20 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
                 />
               )}
             </View>
-            <Text style={styles.controlButtonText}>
-              {isLastChapterCompleted 
-                ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
-                : getLocalizedText({ ja: 'つぎ', en: 'Next' })
-              }
-            </Text>
+            <View style={[styles.speedButton, styles.speedButtonTopLeft]}>
+              <Text style={styles.controlButtonText}>
+                {isLastChapterCompleted 
+                  ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
+                  : getLocalizedText({ ja: 'つぎ', en: 'Next' })
+                }
+              </Text>
+              <SpeedButtonTail 
+                fillColor="rgba(208, 205, 205, 0.5)"
+                isBottom={false}
+                isRight={false}
+                isUp={true}
+              />
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -354,15 +409,28 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   speedButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 20,
+    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    position: 'relative',
+  },
+  speedButtonBottomRight: {
+    borderBottomRightRadius: 0,
+  },
+  speedButtonBottomLeft: {
+    borderBottomLeftRadius: 0,
+  },
+  speedButtonTopLeft: {
+    borderTopLeftRadius: 0,
+  },
+  speedButtonBottom: {
+    borderTopLeftRadius: 0,
   },
   speedButtonText: {
     fontSize: 14,
-    color: '#666',
-    fontWeight: '500',
+    color: '#57534D',
+    fontWeight: '400',
   },
   speedDisplay: {
     flexDirection: 'column',
@@ -401,6 +469,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minWidth: 80,
     paddingVertical: 12,
+    gap: 10,
   },
   floatingButton: {
     width: 48,
@@ -419,7 +488,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   controlButtonText: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#555',
     marginTop: 4,
     fontWeight: '500',
