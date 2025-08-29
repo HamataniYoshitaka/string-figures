@@ -13,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CloseIcon, SkipPreviousIcon, SkipNextIcon, SkipBackwardIcon, ReplayIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
+import PlaySpeedIcon from '../components/icons/PlaySpeed';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressBars from '../components/ProgressBars';
@@ -192,8 +193,8 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           </TouchableOpacity>
           
           <View style={styles.speedDisplay}>
-            <Ionicons name="play" size={20} color="#666" />
-            <Text style={styles.speedText}>{getPlaybackRateDisplay(playbackRate)}</Text>
+            <PlaySpeedIcon width={32} height={32} fillColor="#292524" strokeColor="#57534D" />
+            <Text style={styles.speedText}>{getPlaybackRateDisplay(playbackRate)}x</Text>
           </View>
           
           <TouchableOpacity 
@@ -364,16 +365,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   speedDisplay: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#f8f8f8',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
     gap: 4,
   },
   speedText: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#666',
     fontWeight: '600',
   },
