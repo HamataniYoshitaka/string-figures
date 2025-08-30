@@ -13,8 +13,8 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CloseIcon, SkipPreviousIcon, SkipNextIcon, SkipBackwardIcon, ReplayIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
-import PlaySpeedIcon from '../components/icons/PlaySpeed';
 import SpeedButtonTail from '../components/icons/SpeedButtonTail';
+import SpeedControlPortrait from '../components/SpeedControlPortrait';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressBars from '../components/ProgressBars';
@@ -43,8 +43,6 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   // アニメーション用のスケール値
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const shareButtonScale = useRef(new Animated.Value(1)).current;
-  const slowerSpeedScale = useRef(new Animated.Value(1)).current;
-  const fasterSpeedScale = useRef(new Animated.Value(1)).current;
   
   // isLandscape状態の管理
   const [isLandscapeMode, setIsLandscapeMode] = useState(false);
@@ -195,63 +193,25 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           />
         </View>
 
-        {/* 再生速度コントロール */}
-        <View style={styles.speedControlContainer}>
-          <TouchableWithoutFeedback 
-            onPress={onSlowerSpeed}
-            onPressIn={createPressInHandler(slowerSpeedScale)}
-            onPressOut={createPressOutHandler(slowerSpeedScale)}
-          >
-            <Animated.View 
-              style={[
-                styles.speedButton, 
-                styles.speedButtonBottomRight,
-                { transform: [{ scale: slowerSpeedScale }] }
-              ]}
-            >
-              <Text style={styles.speedButtonText}>ゆっくり</Text>
-              <SpeedButtonTail 
-                fillColor="rgba(208, 205, 205, 0.5)"
-                isBottom={true}
-                isRight={true}
-              />
-            </Animated.View>
-          </TouchableWithoutFeedback>
-          
-          <View style={styles.speedDisplay}>
-            <PlaySpeedIcon width={32} height={32} fillColor="#292524" strokeColor="#57534D" />
-            <Text style={styles.speedText}>{getPlaybackRateDisplay(playbackRate)}x</Text>
-          </View>
-          
-          <TouchableWithoutFeedback 
-            onPress={onFasterSpeed}
-            onPressIn={createPressInHandler(fasterSpeedScale)}
-            onPressOut={createPressOutHandler(fasterSpeedScale)}
-          >
-            <Animated.View 
-              style={[
-                styles.speedButton, 
-                styles.speedButtonBottomLeft,
-                { transform: [{ scale: fasterSpeedScale }] }
-              ]}
-            >
-              <Text style={styles.speedButtonText}>はやく</Text>
-              <SpeedButtonTail 
-                fillColor="rgba(208, 205, 205, 0.5)"
-                isBottom={true}
-                isRight={false}
-              />
-            </Animated.View>
-          </TouchableWithoutFeedback>
-        </View>
+        {/* 再生速度コントロール - デバイスがランドスケープの場合は非表示 */}
+        {!isDeviceLandscape && (
+          <SpeedControlPortrait
+            playbackRate={playbackRate}
+            onSlowerSpeed={onSlowerSpeed}
+            onFasterSpeed={onFasterSpeed}
+            getPlaybackRateDisplay={getPlaybackRateDisplay}
+          />
+        )}
       </View>
 
-      {/* 字幕エリア */}
-      <View style={styles.subtitleContainer}>
-        <Text style={styles.subtitleText}>
-          {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
-        </Text>
-      </View>
+      {/* 字幕エリア - デバイスがランドスケープの場合は非表示 */}
+      {!isDeviceLandscape && (
+        <View style={styles.subtitleContainer}>
+          <Text style={styles.subtitleText}>
+            {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
+          </Text>
+        </View>
+      )}
 
       {/* コントロールボタンエリア */}
       <View style={styles.controlsContainer}>
@@ -413,13 +373,6 @@ const styles = StyleSheet.create({
   progressContainer: {
     marginTop: 16,
   },
-  speedControlContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 16,
-    gap: 24,
-  },
   speedButton: {
     backgroundColor: 'rgba(208, 205, 205, 0.5)',
     paddingHorizontal: 10,
@@ -427,32 +380,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     position: 'relative',
   },
-  speedButtonBottomRight: {
-    borderBottomRightRadius: 0,
-  },
-  speedButtonBottomLeft: {
-    borderBottomLeftRadius: 0,
-  },
   speedButtonTopLeft: {
     borderTopLeftRadius: 0,
-  },
-  speedButtonBottom: {
-    borderTopLeftRadius: 0,
-  },
-  speedButtonText: {
-    fontSize: 14,
-    color: '#57534D',
-    fontWeight: '400',
-  },
-  speedDisplay: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: 4,
-  },
-  speedText: {
-    fontSize: 16,
-    color: '#666',
-    fontWeight: '600',
   },
   subtitleContainer: {
     flex: 1,

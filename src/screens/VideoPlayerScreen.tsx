@@ -6,7 +6,7 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import { Dimensions } from 'react-native';
 
 import { RootStackParamList } from '../types';
-import { useOrientation } from '../hooks/useOrientation';
+import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import VideoPlayerLandscape from './VideoPlayerLandscape';
 import VideoPlayerPortrait from './VideoPlayerPortrait';
 
@@ -22,9 +22,6 @@ interface Props {
 }
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-
-// 画面の短辺を取得
-const shortSide = Math.min(screenWidth, screenHeight);
 
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
@@ -68,7 +65,7 @@ export interface VideoPlayerSharedProps {
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
     
-  const orientation = useOrientation();
+  const { isTablet, isDeviceLandscape } = useDeviceInfo();
   
   // 画面サイズ判定
   const isSmallScreen = screenHeight <= 667; // iPhoneSE2の高さは667px
@@ -298,9 +295,9 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   // 画面向きに応じてコンポーネントを出し分け
-  // スマホでlandscape状態のときはVideoPlayerLandscape（短辺が600以下かつlandscape状態）
+  // タブレット以外でランドスケープの時はVideoPlayerLandscape（!isTablet && isDeviceLandscape）
   // それ以外はVideoPlayerPortrait
-  const shouldUseLandscape = shortSide <= 600 && orientation === 'landscape';
+  const shouldUseLandscape = !isTablet && isDeviceLandscape;
   
   return shouldUseLandscape ? (
     <VideoPlayerLandscape {...sharedProps} />
