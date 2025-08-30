@@ -8,10 +8,14 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { SkipNextIcon, SkipPreviousIcon, ReplayIcon, CloseIcon, SkipBackwardIcon } from './icons';
+import { CloseIcon } from './icons';
 import PlaySpeedIcon from './icons/PlaySpeed';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import LandScapeIcon from './icons/LandScape';
+import RestartButton from './RestartButton';
+import NextChapterLandscapeButton from './NextChapterLandscapeButton';
+import ReplayLandscapeButton from './ReplayLandscapeButton';
+import PreviousChapterLandscapeButton from './PreviousChapterLandscapeButton';
 import { StringFigure } from '../types';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 
@@ -137,10 +141,6 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   });
   
   // アニメーション用のrefs
-  const nextButtonScale = useRef(new Animated.Value(1)).current;
-  const replayButtonScale = useRef(new Animated.Value(1)).current;
-  const previousButtonScale = useRef(new Animated.Value(1)).current;
-  const restartButtonScale = useRef(new Animated.Value(1)).current;
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const landscapeButtonScale = useRef(new Animated.Value(1)).current;
   const slowerSpeedScale = useRef(new Animated.Value(1)).current;
@@ -218,145 +218,31 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       {/* コントロールボタン */}
       <View style={styles.controlsContainer}>
         {isLastChapterCompleted ? (
-          <TouchableWithoutFeedback 
+          <RestartButton
             onPress={onRestartFromBeginning}
-            onPressIn={createPressInHandler(restartButtonScale)}
-            onPressOut={createPressOutHandler(restartButtonScale)}
-          >
-            <Animated.View 
-              style={[
-                styles.controlButton,
-                { transform: [{ scale: restartButtonScale }] }
-              ]}
-            >
-              <View style={styles.floatingButton}>
-                <SkipBackwardIcon width={24} height={24} fillColor="white" />
-              </View>
-              <View style={[
-                styles.chapterBalloon,
-                styles.speedButtonTop
-              ]}>
-                <Text>{getLocalizedText({ ja: 'はじめから', en: 'Restart' })}</Text>
-                <SpeedButtonTail 
-                  fillColor={'rgba(208, 205, 205, 0.5)'}
-                  isBottom={true}
-                />
-              </View>
-            </Animated.View>
-          </TouchableWithoutFeedback>
+            getLocalizedText={getLocalizedText}
+          />
         ) : (
-          <TouchableWithoutFeedback 
-            onPress={currentChapterIndex < stringFigure.chapters.length - 1 ? onNextChapter : undefined}
-            onPressIn={currentChapterIndex < stringFigure.chapters.length - 1 ? createPressInHandler(nextButtonScale) : undefined}
-            onPressOut={currentChapterIndex < stringFigure.chapters.length - 1 ? createPressOutHandler(nextButtonScale) : undefined}
-            disabled={currentChapterIndex === stringFigure.chapters.length - 1}
-          >
-            <Animated.View 
-              style={[
-                styles.controlButton,
-                { transform: [{ scale: nextButtonScale }] }
-              ]}
-            >
-              <View style={[
-                styles.floatingButton,
-                currentChapterIndex === stringFigure.chapters.length - 1 && styles.disabledButton
-              ]}>
-                <SkipNextIcon width={24} height={24} fillColor="white" strokeColor='transparent' />
-              </View>
-              <View style={[
-                styles.chapterBalloon,
-                styles.speedButtonTop,
-                currentChapterIndex === stringFigure.chapters.length - 1 && styles.balloonDisabled
-              ]}>
-                <Text style={[
-                  currentChapterIndex === stringFigure.chapters.length - 1 && styles.speedButtonTextDisabled
-                ]}>{getLocalizedText({ ja: 'つぎ', en: 'Next' })}</Text>
-                <SpeedButtonTail 
-                  fillColor={currentChapterIndex === stringFigure.chapters.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
-                  isBottom={true}
-                />
-              </View>
-            </Animated.View>
-          </TouchableWithoutFeedback>
+          <NextChapterLandscapeButton
+            onPress={onNextChapter}
+            stringFigure={stringFigure}
+            currentChapterIndex={currentChapterIndex}
+            getLocalizedText={getLocalizedText}
+          />
         )}
 
-        <TouchableWithoutFeedback 
-          onPress={currentChapterIndex === 0 && playbackPosition === 0 ? undefined : onReplay}
-          onPressIn={currentChapterIndex === 0 && playbackPosition === 0 ? undefined : createPressInHandler(replayButtonScale)}
-          onPressOut={currentChapterIndex === 0 && playbackPosition === 0 ? undefined : createPressOutHandler(replayButtonScale)}
-          disabled={currentChapterIndex === 0 && playbackPosition === 0}
-        >
-          <Animated.View 
-            style={[
-              styles.controlButton,
-              { transform: [{ scale: replayButtonScale }] }
-            ]}
-          >
-            <View style={[
-              styles.floatingButton,
-              currentChapterIndex === 0 && playbackPosition === 0 && styles.disabledButton
-            ]}>
-              <ReplayIcon 
-                width={24} 
-                height={24} 
-                fillColor={"white"}
-                strokeColor='transparent'
-              />
-            </View>
-            <View style={[
-              styles.chapterBalloon,
-              styles.speedButtonTop,
-              currentChapterIndex === 0 && playbackPosition === 0 && styles.balloonDisabled
-            ]}>
-              <Text style={[
-                currentChapterIndex === 0 && playbackPosition === 0 && styles.speedButtonTextDisabled
-              ]}>{getLocalizedText({ ja: 'もういちど', en: 'Replay' })}</Text>
-              <SpeedButtonTail 
-                fillColor={currentChapterIndex === 0 && playbackPosition === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
-                isBottom={true}
-              />
-            </View>
-          </Animated.View>
-        </TouchableWithoutFeedback>
+        <ReplayLandscapeButton
+          onPress={onReplay}
+          currentChapterIndex={currentChapterIndex}
+          playbackPosition={playbackPosition}
+          getLocalizedText={getLocalizedText}
+        />
 
-        <TouchableWithoutFeedback 
-          onPress={currentChapterIndex > 0 ? onPreviousChapter : undefined}
-          onPressIn={currentChapterIndex > 0 ? createPressInHandler(previousButtonScale) : undefined}
-          onPressOut={currentChapterIndex > 0 ? createPressOutHandler(previousButtonScale) : undefined}
-          disabled={currentChapterIndex === 0}
-        >
-          <Animated.View 
-            style={[
-              styles.controlButton,
-              { transform: [{ scale: previousButtonScale }] }
-            ]}
-          >
-            <View style={[
-              styles.floatingButton,
-              currentChapterIndex === 0 && styles.disabledButton
-            ]}>
-              <SkipPreviousIcon 
-                width={24} 
-                height={24} 
-                fillColor={"white"}
-                strokeColor='transparent'
-              />
-            </View>
-            <View style={[
-              styles.chapterBalloon,
-              styles.speedButtonTop,
-              currentChapterIndex === 0 && styles.balloonDisabled
-            ]}>
-              <Text style={[
-                currentChapterIndex === 0 && styles.speedButtonTextDisabled
-              ]}>{getLocalizedText({ ja: 'まえ', en: 'Previous' })}</Text>
-              <SpeedButtonTail 
-                fillColor={currentChapterIndex === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
-                isBottom={true}
-              />
-            </View>
-          </Animated.View>
-        </TouchableWithoutFeedback>
+        <PreviousChapterLandscapeButton
+          onPress={onPreviousChapter}
+          currentChapterIndex={currentChapterIndex}
+          getLocalizedText={getLocalizedText}
+        />
       </View>
 
       {/* 再生速度 */}
@@ -453,33 +339,6 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 4,
   },
-  controlButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-    gap: 12,
-  },
-  floatingButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#57534D',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 8,
-  },
-  disabledButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    shadowOpacity: 0.1,
-    elevation: 0,
-  },
   speedContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -499,24 +358,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     position: 'relative',
   },
-  chapterBalloon: {
-    backgroundColor: 'rgba(208, 205, 205, 0.5)',
-    fontSize: 14,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 8,
-    position: 'relative',
-    color: '#57534D',
-    fontWeight: '400',
-  },
   speedButtonTop: {
     borderBottomLeftRadius: 0,
   },
   speedButtonBottom: {
     borderTopLeftRadius: 0,
-  },
-  balloonDisabled: {
-    display: 'none',
   },
   speedButtonText: {
     fontSize: 12,

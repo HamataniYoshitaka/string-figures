@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   SafeAreaView,
   Animated,
@@ -11,10 +10,15 @@ import {
 import { Video, ResizeMode } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CloseIcon, SkipPreviousIcon, SkipNextIcon, SkipBackwardIcon, ReplayIcon } from '../components/icons';
+import { CloseIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
-import SpeedButtonTail from '../components/icons/SpeedButtonTail';
 import SpeedControlPortrait from '../components/SpeedControlPortrait';
+import PreviousChapterButton from '../components/PreviousChapterButton';
+import PreviousChapterLandscapeButton from '../components/PreviousChapterLandscapeButton';
+import ReplayButton from '../components/ReplayButton';
+import ReplayLandscapeButton from '../components/ReplayLandscapeButton';
+import NextChapterButton from '../components/NextChapterButton';
+import NextChapterLandscapeButton from '../components/NextChapterLandscapeButton';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressBars from '../components/ProgressBars';
@@ -220,97 +224,49 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       <View style={styles.controlsContainer}>
         <View style={styles.mainControls}>
           {/* まえボタン */}
-          <TouchableOpacity 
-            onPress={onPreviousChapter}
-            style={styles.controlButton}
-            disabled={currentChapterIndex === 0}
-          >
-            <View style={[
-              styles.floatingButton,
-              currentChapterIndex === 0 && styles.disabledButton
-            ]}>
-              <SkipPreviousIcon 
-                width={24} 
-                height={24} 
-                fillColor={"white"}
-                strokeColor='transparent'
-              />
-            </View>
-            <View style={[styles.speedButton, styles.speedButtonTopLeft]}>
-              <Text style={[styles.controlButtonText, currentChapterIndex === 0 && styles.disabledText]}>
-                まえ
-              </Text>
-              <SpeedButtonTail 
-                fillColor="rgba(208, 205, 205, 0.5)"
-                isBottom={false}
-                isRight={false}
-                isUp={true}
-              />
-            </View>
-          </TouchableOpacity>
+          {isDeviceLandscape ? (
+            <PreviousChapterLandscapeButton
+              onPress={onPreviousChapter}
+              currentChapterIndex={currentChapterIndex}
+              getLocalizedText={getLocalizedText}
+            />
+          ) : (
+            <PreviousChapterButton
+              onPress={onPreviousChapter}
+              disabled={currentChapterIndex === 0}
+            />
+          )}
 
-          {/* もういちど/はじめからボタン */}
-          <TouchableOpacity 
-            onPress={isLastChapterCompleted ? onRestartFromBeginning : onReplay}
-            style={styles.controlButton}
-          >
-            <View style={styles.floatingButton}>
-              <ReplayIcon 
-                width={24} 
-                height={24} 
-                fillColor={"white"}
-                strokeColor='transparent'
-              />
-            </View>
-            <View style={[styles.speedButton, styles.speedButtonTopLeft]}>
-              <Text style={styles.controlButtonText}>
-                もういちど
-              </Text>
-              <SpeedButtonTail 
-                fillColor="rgba(208, 205, 205, 0.5)"
-                isBottom={false}
-                isRight={false}
-                isUp={true}
-              />
-            </View>
-          </TouchableOpacity>
+          {/* もういちど */}
+          {isDeviceLandscape ? (
+            <ReplayLandscapeButton
+              onPress={isLastChapterCompleted ? onRestartFromBeginning : onReplay}
+              currentChapterIndex={currentChapterIndex}
+              playbackPosition={playbackPosition}
+              getLocalizedText={getLocalizedText}
+            />
+          ) : (
+            <ReplayButton
+              onPress={isLastChapterCompleted ? onRestartFromBeginning : onReplay}
+              isLastChapterCompleted={isLastChapterCompleted}
+            />
+          )}
 
-          {/* つぎ/はじめる/もういちど/はじめからボタン */}
-          <TouchableOpacity 
-            onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
-            style={styles.controlButton}
-          >
-            <View style={styles.floatingButton}>
-              {isLastChapterCompleted ? (
-                <SkipBackwardIcon 
-                  width={24} 
-                  height={24} 
-                  fillColor="white"
-                />
-              ) : (
-                <SkipNextIcon 
-                  width={24} 
-                  height={24} 
-                  fillColor="white" 
-                  strokeColor='transparent' 
-                />
-              )}
-            </View>
-            <View style={[styles.speedButton, styles.speedButtonTopLeft]}>
-              <Text style={styles.controlButtonText}>
-                {isLastChapterCompleted 
-                  ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
-                  : getLocalizedText({ ja: 'つぎ', en: 'Next' })
-                }
-              </Text>
-              <SpeedButtonTail 
-                fillColor="rgba(208, 205, 205, 0.5)"
-                isBottom={false}
-                isRight={false}
-                isUp={true}
-              />
-            </View>
-          </TouchableOpacity>
+          {/* つぎボタン */}
+          {isDeviceLandscape ? (
+            <NextChapterLandscapeButton
+              onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
+              stringFigure={stringFigure}
+              currentChapterIndex={currentChapterIndex}
+              getLocalizedText={getLocalizedText}
+            />
+          ) : (
+            <NextChapterButton
+              onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
+              isLastChapterCompleted={isLastChapterCompleted}
+              getLocalizedText={getLocalizedText}
+            />
+          )}
         </View>
       </View>
     </SafeAreaView>
@@ -410,43 +366,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-  },
-  controlButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: 80,
-    paddingVertical: 12,
-    gap: 10,
-  },
-  floatingButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#57534D',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 8,
-  },
-  controlButtonText: {
-    fontSize: 14,
-    color: '#555',
-    marginTop: 4,
-    fontWeight: '500',
-  },
-  disabledButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    shadowOpacity: 0.1,
-    elevation: 0,
-  },
-  disabledText: {
-    color: '#ccc',
   },
 });
 
