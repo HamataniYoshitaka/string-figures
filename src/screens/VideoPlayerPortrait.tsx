@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
   SafeAreaView,
   Animated,
-  Dimensions,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
@@ -19,6 +18,7 @@ import SpeedButtonTail from '../components/icons/SpeedButtonTail';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressBars from '../components/ProgressBars';
+import { useDeviceInfo } from '../hooks/useDeviceInfo';
 
 const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -47,45 +47,33 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   const fasterSpeedScale = useRef(new Animated.Value(1)).current;
   
   // isLandscape状態の管理
-  const [isLandscape, setIsLandscape] = useState(false);
-  
-  // 画面サイズの状態管理
-  const [screenData, setScreenData] = useState(Dimensions.get('window'));
-  const screenShortSide = Math.min(screenData.width, screenData.height);
-  const isTablet = screenShortSide >= 600;
-  const isDeviceLandscape = screenData.width > screenData.height;
+  const [isLandscapeMode, setIsLandscapeMode] = useState(false);
+
+  // デバイス情報を取得
+  const { isTablet, isDeviceLandscape } = useDeviceInfo();
   
   // コンポーネントマウント時にAsyncStorageからisLandscapeを読み込み
   useEffect(() => {
     const loadLandscapeState = async () => {
       try {
-        const storedValue = await AsyncStorage.getItem('isLandscape');
+        const storedValue = await AsyncStorage.getItem('isLandscapeMode');
         if (storedValue !== null) {
-          setIsLandscape(JSON.parse(storedValue));
+          setIsLandscapeMode(JSON.parse(storedValue));
         }
       } catch (error) {
-        console.error('AsyncStorageからisLandscapeの読み込みに失敗:', error);
+        console.error('AsyncStorageからisLandscapeModeの読み込みに失敗:', error);
       }
     };
     
     loadLandscapeState();
   }, []);
   
-  // 画面サイズの変更を監視
-  useEffect(() => {
-    const subscription = Dimensions.addEventListener('change', ({ window }) => {
-      setScreenData(window);
-    });
-    
-    return () => subscription?.remove();
-  }, []);
-  
   // LandScapeボタンのハンドラー
   const handleLandscapeToggle = async () => {
     try {
-      const newIsLandscape = !isLandscape;
-      setIsLandscape(newIsLandscape);
-      await AsyncStorage.setItem('isLandscape', JSON.stringify(newIsLandscape));
+      const newIsLandscapeMode = !isLandscapeMode;
+      setIsLandscapeMode(newIsLandscapeMode);
+      await AsyncStorage.setItem('isLandscapeMode', JSON.stringify(newIsLandscapeMode));
     } catch (error) {
       console.error('AsyncStorageへのisLandscape保存に失敗:', error);
     }
@@ -166,7 +154,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               <LandScapeIcon 
                 width={24} 
                 height={24} 
-                fillColor={isLandscape ? "#1862cfff" : "#79716B"}
+                fillColor={isLandscapeMode ? "#1862cfff" : "#79716B"}
               />
             </Animated.View>
           </TouchableWithoutFeedback>
@@ -174,7 +162,10 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       )}
 
       {/* 動画エリア */}
-      <View style={styles.videoArea}>
+      <View style={[
+        styles.videoArea,
+        (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape
+      ]}>
         <View style={styles.videoPlayer}>
           <Video
             key={`chapter-${currentChapterIndex}`}
@@ -405,6 +396,9 @@ const styles = StyleSheet.create({
   videoArea: {
     paddingHorizontal: 16,
     paddingTop: 16,
+  },
+  videoAreaTabletLandscape: {
+    paddingTop: 0,
   },
   videoPlayer: {
     aspectRatio: 16 / 9,

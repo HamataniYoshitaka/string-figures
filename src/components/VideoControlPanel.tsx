@@ -55,23 +55,23 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   getPlaybackRateDisplay,
 }) => {
   // isLandscape状態の管理
-  const [isLandscape, setIsLandscape] = useState(false);
+  const [isLandscapeMode, setIsLandscapeMode] = useState(false);
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
   };
 
-  // コンポーネントマウント時にAsyncStorageからisLandscapeを読み込み
+  // コンポーネントマウント時にAsyncStorageからisLandscapeModeを読み込み
   useEffect(() => {
     const loadLandscapeState = async () => {
       try {
-        const storedValue = await AsyncStorage.getItem('isLandscape');
+        const storedValue = await AsyncStorage.getItem('isLandscapeMode');
         if (storedValue !== null) {
-          setIsLandscape(JSON.parse(storedValue));
+          setIsLandscapeMode(JSON.parse(storedValue));
         }
       } catch (error) {
-        console.error('AsyncStorageからisLandscapeの読み込みに失敗:', error);
+        console.error('AsyncStorageからisLandscapeModeの読み込みに失敗:', error);
       }
     };
     
@@ -81,11 +81,11 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   // LandScapeボタンのハンドラー
   const handleLandscapeToggle = async () => {
     try {
-      const newIsLandscape = !isLandscape;
-      setIsLandscape(newIsLandscape);
-      await AsyncStorage.setItem('isLandscape', JSON.stringify(newIsLandscape));
+      const newIsLandscapeMode = !isLandscapeMode;
+      setIsLandscapeMode(newIsLandscapeMode);
+      await AsyncStorage.setItem('isLandscapeMode', JSON.stringify(newIsLandscapeMode));
     } catch (error) {
-      console.error('AsyncStorageへのisLandscape保存に失敗:', error);
+      console.error('AsyncStorageへのisLandscapeMode保存に失敗:', error);
     }
   };
 
@@ -209,7 +209,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
             <LandScapeIcon 
               width={32} 
               height={32} 
-              fillColor={isLandscape ? "#1862cfff" : "#2d2b29ff"} 
+              fillColor={isLandscapeMode ? "#1862cfff" : "#2d2b29ff"}
             />
           </Animated.View>
         </TouchableWithoutFeedback>
