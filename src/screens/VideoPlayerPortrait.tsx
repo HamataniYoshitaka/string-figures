@@ -185,7 +185,10 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         </View>
 
         {/* 進捗バー */}
-        <View style={styles.progressContainer}>
+        <View style={[
+          styles.progressContainer,
+          isDeviceLandscape && styles.progressContainerLandscape
+        ]}>
           <ProgressBars 
             chapters={stringFigure.chapters}
             currentChapterIndex={currentChapterIndex}
@@ -372,6 +375,9 @@ const styles = StyleSheet.create({
   },
   progressContainer: {
     marginTop: 16,
+  },
+  progressContainerLandscape: {
+    marginTop: 0,
   },
   speedButton: {
     backgroundColor: 'rgba(208, 205, 205, 0.5)',

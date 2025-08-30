@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-import { useOrientation } from '../hooks/useOrientation';
+import { useDeviceInfo } from '../hooks/useDeviceInfo';
 
 interface Chapter {
   videoUrl: string | any;
@@ -18,14 +18,17 @@ const ProgressBars: React.FC<ProgressBarsProps> = ({
   currentChapterIndex,
   getChapterProgress,
 }) => {
-  const orientation = useOrientation();
+  const { isTablet, isDeviceLandscape } = useDeviceInfo();
   const windowHeight = Dimensions.get('window').height;
   const windowWidth = Dimensions.get('window').width;
   
-  // Portrait表示の場合は画面幅と同じ、Landscape表示の場合は従来の計算式
-  const progressBarWidth = orientation === 'portrait' 
-    ? windowWidth -32
-    : ((windowHeight - 60) / 9) * 16;
+  // isTablet の場合、progressBarWidthはwindowWidth-32
+  // !isTablet の場合、isDeviceLandscapeの場合は ((windowHeight - 60) / 9) * 16, それ以外は windowWidth-32
+  const progressBarWidth = isTablet
+    ? windowWidth - 32
+    : isDeviceLandscape
+    ? ((windowHeight - 60) / 9) * 16
+    : windowWidth - 32;
 
   return (
     <View style={[styles.progressContainer, { width: progressBarWidth }]}>
