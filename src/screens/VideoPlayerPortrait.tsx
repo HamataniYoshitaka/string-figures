@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   SafeAreaView,
   Animated,
+  Dimensions,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
@@ -48,6 +49,12 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   // isLandscape状態の管理
   const [isLandscape, setIsLandscape] = useState(false);
   
+  // 画面サイズの状態管理
+  const [screenData, setScreenData] = useState(Dimensions.get('window'));
+  const screenShortSide = Math.min(screenData.width, screenData.height);
+  const isTablet = screenShortSide >= 600;
+  const isDeviceLandscape = screenData.width > screenData.height;
+  
   // コンポーネントマウント時にAsyncStorageからisLandscapeを読み込み
   useEffect(() => {
     const loadLandscapeState = async () => {
@@ -62,6 +69,15 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
     };
     
     loadLandscapeState();
+  }, []);
+  
+  // 画面サイズの変更を監視
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setScreenData(window);
+    });
+    
+    return () => subscription?.remove();
   }, []);
   
   // LandScapeボタンのハンドラー
@@ -116,44 +132,46 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* ヘッダー */}
-      <View style={styles.header}>
-        <TouchableWithoutFeedback 
-          onPress={onGoBack}
-          onPressIn={createPressInHandler(backButtonScale)}
-          onPressOut={createPressOutHandler(backButtonScale)}
-        >
-          <Animated.View 
-            style={[
-              styles.backButton,
-              { transform: [{ scale: backButtonScale }] }
-            ]}
+      {/* ヘッダー - タブレット（短辺600以上）でランドスケープの場合は非表示 */}
+      {!(isTablet && isDeviceLandscape) && (
+        <View style={styles.header}>
+          <TouchableWithoutFeedback 
+            onPress={onGoBack}
+            onPressIn={createPressInHandler(backButtonScale)}
+            onPressOut={createPressOutHandler(backButtonScale)}
           >
-            <CloseIcon width={24} height={24} fillColor="#79716B" />
-          </Animated.View>
-        </TouchableWithoutFeedback>
-        <Text style={styles.title} numberOfLines={1}>
-          {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
-        </Text>
-        <TouchableWithoutFeedback 
-          onPress={handleLandscapeToggle}
-          onPressIn={createPressInHandler(shareButtonScale)}
-          onPressOut={createPressOutHandler(shareButtonScale)}
-        >
-          <Animated.View 
-            style={[
-              styles.shareButton,
-              { transform: [{ scale: shareButtonScale }] }
-            ]}
+            <Animated.View 
+              style={[
+                styles.backButton,
+                { transform: [{ scale: backButtonScale }] }
+              ]}
+            >
+              <CloseIcon width={24} height={24} fillColor="#79716B" />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+          <Text style={styles.title} numberOfLines={1}>
+            {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
+          </Text>
+          <TouchableWithoutFeedback 
+            onPress={handleLandscapeToggle}
+            onPressIn={createPressInHandler(shareButtonScale)}
+            onPressOut={createPressOutHandler(shareButtonScale)}
           >
-            <LandScapeIcon 
-              width={24} 
-              height={24} 
-              fillColor={isLandscape ? "#1862cfff" : "#79716B"}
-            />
-          </Animated.View>
-        </TouchableWithoutFeedback>
-      </View>
+            <Animated.View 
+              style={[
+                styles.shareButton,
+                { transform: [{ scale: shareButtonScale }] }
+              ]}
+            >
+              <LandScapeIcon 
+                width={24} 
+                height={24} 
+                fillColor={isLandscape ? "#1862cfff" : "#79716B"}
+              />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+        </View>
+      )}
 
       {/* 動画エリア */}
       <View style={styles.videoArea}>

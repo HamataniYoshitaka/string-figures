@@ -23,6 +23,9 @@ interface Props {
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
+// 画面の短辺を取得
+const shortSide = Math.min(screenWidth, screenHeight);
+
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
@@ -295,7 +298,11 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   };
 
   // 画面向きに応じてコンポーネントを出し分け
-  return orientation === 'landscape' ? (
+  // スマホでlandscape状態のときはVideoPlayerLandscape（短辺が600以下かつlandscape状態）
+  // それ以外はVideoPlayerPortrait
+  const shouldUseLandscape = shortSide <= 600 && orientation === 'landscape';
+  
+  return shouldUseLandscape ? (
     <VideoPlayerLandscape {...sharedProps} />
   ) : (
     <VideoPlayerPortrait {...sharedProps} />
