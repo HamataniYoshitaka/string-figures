@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   SafeAreaView,
   Animated,
+  Dimensions,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
@@ -168,7 +169,10 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         styles.videoArea,
         (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape
       ]}>
-        <View style={styles.videoPlayer}>
+        <View style={[
+          styles.videoPlayer,
+          (isTablet && isDeviceLandscape) && { height: Dimensions.get('window').height * 0.73 }
+        ]}>
           <Video
             key={`chapter-${currentChapterIndex}`}
             ref={videoRef}
@@ -318,6 +322,9 @@ const styles = StyleSheet.create({
   },
   videoAreaTabletLandscape: {
     paddingTop: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   videoPlayer: {
     aspectRatio: 16 / 9,
