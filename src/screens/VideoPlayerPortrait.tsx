@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CloseIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
 import SpeedControlPortrait from '../components/SpeedControlPortrait';
+import SpeedControlLandscape from '../components/SpeedControlLandscape';
 import PreviousChapterButton from '../components/PreviousChapterButton';
 import PreviousChapterLandscapeButton from '../components/PreviousChapterLandscapeButton';
 import ReplayButton from '../components/ReplayButton';
@@ -32,6 +33,8 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   videoRef,
   playbackPosition,
   isLastChapterCompleted,
+  currentLanguage,
+  PLAYBACK_RATES,
   onPlaybackStatusUpdate,
   onVideoLoad,
   onGoBack,
@@ -204,8 +207,8 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           />
         </View>
 
-        {/* 再生速度コントロール - デバイスがランドスケープの場合は非表示 */}
-        {!isDeviceLandscape && (
+        {/* 再生速度コントロール - タブレットかつランドスケープの場合のみ非表示 */}
+        {!(isTablet && isDeviceLandscape) && (
           <SpeedControlPortrait
             playbackRate={playbackRate}
             onSlowerSpeed={onSlowerSpeed}
@@ -269,6 +272,17 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
               isLastChapterCompleted={isLastChapterCompleted}
               getLocalizedText={getLocalizedText}
+            />
+          )}
+          {/* 再生速度コントロール - タブレットかつランドスケープの場合のみ表示 */}
+          {(isTablet && isDeviceLandscape) && (
+            <SpeedControlLandscape
+              playbackRate={playbackRate}
+              PLAYBACK_RATES={PLAYBACK_RATES}
+              currentLanguage={currentLanguage}
+              onSlowerSpeed={onSlowerSpeed}
+              onFasterSpeed={onFasterSpeed}
+              getPlaybackRateDisplay={getPlaybackRateDisplay}
             />
           )}
         </View>
