@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Platform, NativeModules } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   ExpoSpeechRecognitionModule,
   useSpeechRecognitionEvent,
@@ -55,24 +56,6 @@ export const useSpeechRecognition = ({
   // 音声認識活動監視用のタイマー
   const activityTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // デバイスの言語を取得する関数
-  const getDeviceLanguage = () => {
-    // iOSの場合
-    if (Platform.OS === 'ios') {
-      const locale = NativeModules.SettingsManager?.getConstants()?.settings?.AppleLocale ||
-                     NativeModules.SettingsManager?.getConstants()?.settings?.AppleLanguages?.[0];
-      return locale?.replace('_', '-') || 'en-US';
-    }
-    
-    // Androidの場合
-    if (Platform.OS === 'android') {
-      const locale = NativeModules.I18nManager?.getConstants()?.localeIdentifier;
-      return locale?.replace('_', '-') || 'en-US';
-    }
-    
-    return 'en-US';
-  };
-
   // 活動監視タイマーをリセットする関数
   const resetActivityTimer = () => {
     if (activityTimerRef.current) {
@@ -114,8 +97,9 @@ export const useSpeechRecognition = ({
         return;
       }
 
-      // OSの言語設定を取得
-      const deviceLanguage = getDeviceLanguage();
+      // AsyncStorageから言語設定を取得
+      const savedLanguage = await AsyncStorage.getItem('app_language');
+      const deviceLanguage = savedLanguage === 'ja' ? 'ja-JP' : 'en-US';
       console.log('音声認識開始、言語:', deviceLanguage);
 
       // 音声認識を開始
