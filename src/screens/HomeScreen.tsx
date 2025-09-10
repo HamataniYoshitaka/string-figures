@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
@@ -21,6 +22,7 @@ import FilterButtons from '../components/FilterButtons';
 import StringFigureCard from '../components/StringFigureCard';
 import DropDownMenu from '../components/DropDownMenu';
 import { dummyStringFigures } from '../data/dummyData';
+import { useDeviceInfo } from '../hooks/useDeviceInfo';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -33,6 +35,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     isVisible: false,
     selectedItem: null,
   });
+  const { isTablet } = useDeviceInfo();
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
   
@@ -62,9 +65,16 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const [columnsCount, setColumnsCount] = useState(getColumnsCount(screenWidth));
 
-  // アプリ起動時に保存された言語設定を読み込む
+  // アプリ起動時に保存された言語設定を読み込む & 画面を縦向きに設定
   useEffect(() => {
-    loadLanguageSetting();
+    const initializeSettings = async () => {
+      await loadLanguageSetting();
+      // スマホの場合、HomeScreen表示時は常に縦向きに設定
+      if (!isTablet) {
+        ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+      }
+    };
+    initializeSettings();
   }, []);
 
   // 画面サイズ変更の監視

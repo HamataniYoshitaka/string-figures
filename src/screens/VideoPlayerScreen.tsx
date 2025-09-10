@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import { Dimensions } from 'react-native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
@@ -84,6 +85,17 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // アプリ起動時に保存された言語設定を読み込む
   useEffect(() => {
     loadLanguageSetting();
+    // スマホの場合、VideoPlayerScreen表示時は向き判定を行う
+    if (!isTablet) {
+      loadOrientationSetting();
+    }
+    
+    // クリーンアップ: スマホの場合はアンマウント時に画面の向きをportraitに戻す
+    return () => {
+      if (!isTablet) {
+        ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+      }
+    };
   }, []);
 
   const loadLanguageSetting = async () => {
@@ -94,6 +106,18 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       }
     } catch (error) {
       console.error('言語設定の読み込みに失敗しました:', error);
+    }
+  };
+
+  const loadOrientationSetting = async () => {
+    try {
+      const isLandscapeMode = await AsyncStorage.getItem('isLandscapeMode');
+      if (isLandscapeMode === 'true') {
+        // 横向きモードが有効な場合、画面を横向きに設定
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+      }
+    } catch (error) {
+      console.error('画面向き設定の読み込みに失敗しました:', error);
     }
   };
 
@@ -163,8 +187,21 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  const handleGoBack = () => {
+  const handleGoBack = async () => {
     console.log('handleGoBack');
+    
+    try {
+      // isLandscapeModeが有効な場合、明示的に縦向きに設定
+      const isLandscapeMode = await AsyncStorage.getItem('isLandscapeMode');
+      if (isLandscapeMode === 'true') {
+        // 明示的に縦向きに設定（HomeScreenと同じ設定）
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+        // 300ms待機してから戻る
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+    } catch (error) {
+      console.error('画面向きの設定に失敗しました:', error);
+    }
     navigation.goBack();
   };
 
