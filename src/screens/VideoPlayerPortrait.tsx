@@ -35,6 +35,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   playbackPosition,
   isLastChapterCompleted,
   currentLanguage,
+  isLandscapeMode,
   PLAYBACK_RATES,
   onPlaybackStatusUpdate,
   onVideoLoad,
@@ -45,6 +46,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   onRestartFromBeginning,
   onSlowerSpeed,
   onFasterSpeed,
+  onLandscapeToggle,
   getLocalizedText,
   getChapterProgress,
   getPlaybackRateDisplay,
@@ -52,9 +54,6 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   // アニメーション用のスケール値
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const shareButtonScale = useRef(new Animated.Value(1)).current;
-  
-  // isLandscape状態の管理
-  const [isLandscapeMode, setIsLandscapeMode] = useState(false);
 
   // デバイス情報を取得
   const { isTablet, isDeviceLandscape } = useDeviceInfo();
@@ -105,33 +104,6 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       }
     },
   });
-  
-  // コンポーネントマウント時にAsyncStorageからisLandscapeを読み込み
-  useEffect(() => {
-    const loadLandscapeState = async () => {
-      try {
-        const storedValue = await AsyncStorage.getItem('isLandscapeMode');
-        if (storedValue !== null) {
-          setIsLandscapeMode(JSON.parse(storedValue));
-        }
-      } catch (error) {
-        console.error('AsyncStorageからisLandscapeModeの読み込みに失敗:', error);
-      }
-    };
-    
-    loadLandscapeState();
-  }, []);
-  
-  // LandScapeボタンのハンドラー
-  const handleLandscapeToggle = async () => {
-    try {
-      const newIsLandscapeMode = !isLandscapeMode;
-      setIsLandscapeMode(newIsLandscapeMode);
-      await AsyncStorage.setItem('isLandscapeMode', JSON.stringify(newIsLandscapeMode));
-    } catch (error) {
-      console.error('AsyncStorageへのisLandscape保存に失敗:', error);
-    }
-  };
   
   // アニメーションヘルパー関数
   const createPressInHandler = (scale: Animated.Value) => () => {
@@ -198,24 +170,26 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           <Text style={styles.title} numberOfLines={1}>
             {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
           </Text>
-          <TouchableWithoutFeedback 
-            onPress={handleLandscapeToggle}
-            onPressIn={createPressInHandler(shareButtonScale)}
-            onPressOut={createPressOutHandler(shareButtonScale)}
-          >
-            <Animated.View 
-              style={[
-                styles.shareButton,
-                { transform: [{ scale: shareButtonScale }] }
-              ]}
+          {!isTablet && (
+            <TouchableWithoutFeedback 
+              onPress={onLandscapeToggle}
+              onPressIn={createPressInHandler(shareButtonScale)}
+              onPressOut={createPressOutHandler(shareButtonScale)}
             >
-              <LandScapeIcon 
-                width={24} 
-                height={24} 
-                fillColor={isLandscapeMode ? "#1862cfff" : "#79716B"}
-              />
-            </Animated.View>
-          </TouchableWithoutFeedback>
+              <Animated.View 
+                style={[
+                  styles.shareButton,
+                  { transform: [{ scale: shareButtonScale }] }
+                ]}
+              >
+                <LandScapeIcon 
+                  width={24} 
+                  height={24} 
+                  fillColor={isLandscapeMode ? "#1862cfff" : "#79716B"}
+                />
+              </Animated.View>
+            </TouchableWithoutFeedback>
+          )}
         </View>
       )}
 

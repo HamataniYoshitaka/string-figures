@@ -48,6 +48,7 @@ export interface VideoPlayerSharedProps {
   videoRef: React.RefObject<Video | null>;
   isSmallScreen: boolean;
   isLargeScreen: boolean;
+  isLandscapeMode: boolean;
   PLAYBACK_RATES: number[];
   onPlaybackStatusUpdate: (status: AVPlaybackStatus) => void;
   onVideoLoad: () => Promise<void>;
@@ -58,6 +59,7 @@ export interface VideoPlayerSharedProps {
   onRestartFromBeginning: () => Promise<void>;
   onSlowerSpeed: () => Promise<void>;
   onFasterSpeed: () => Promise<void>;
+  onLandscapeToggle: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
   getLocalizedText: (textObj: { ja: string; en: string }) => string;
   getChapterProgress: (chapterIndex: number) => number;
@@ -80,6 +82,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [videoDuration, setVideoDuration] = useState(0);
   const [isLastChapterCompleted, setIsLastChapterCompleted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1.0);
+  const [isLandscapeMode, setIsLandscapeMode] = useState(false);
   const videoRef = useRef<Video>(null);
 
   // アプリ起動時に保存された言語設定を読み込む
@@ -111,10 +114,13 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const loadOrientationSetting = async () => {
     try {
-      const isLandscapeMode = await AsyncStorage.getItem('isLandscapeMode');
-      if (isLandscapeMode === 'true') {
+      const savedIsLandscapeMode = await AsyncStorage.getItem('isLandscapeMode');
+      if (savedIsLandscapeMode === 'true') {
+        setIsLandscapeMode(true);
         // 横向きモードが有効な場合、画面を横向きに設定
         await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+      } else {
+        setIsLandscapeMode(false);
       }
     } catch (error) {
       console.error('画面向き設定の読み込みに失敗しました:', error);
@@ -303,6 +309,26 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
+  // LandScapeボタンのハンドラー
+  const handleLandscapeToggle = async () => {
+    if (isTablet) return; // タブレットでは何もしない
+    
+    try {
+      const newIsLandscapeMode = !isLandscapeMode;
+      setIsLandscapeMode(newIsLandscapeMode);
+      await AsyncStorage.setItem('isLandscapeMode', JSON.stringify(newIsLandscapeMode));
+      
+      // 画面の向きを変更
+      if (newIsLandscapeMode) {
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+      } else {
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+      }
+    } catch (error) {
+      console.error('AsyncStorageへのisLandscape保存に失敗:', error);
+    }
+  };
+
   // 共通プロパティ
   const sharedProps: VideoPlayerSharedProps = {
     stringFigure,
@@ -316,6 +342,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     videoRef,
     isSmallScreen,
     isLargeScreen,
+    isLandscapeMode,
     PLAYBACK_RATES,
     onPlaybackStatusUpdate: handlePlaybackStatusUpdate,
     onVideoLoad: handleVideoLoad,
@@ -326,6 +353,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     onRestartFromBeginning: handleRestartFromBeginning,
     onSlowerSpeed: handleSlowerSpeed,
     onFasterSpeed: handleFasterSpeed,
+    onLandscapeToggle: handleLandscapeToggle,
     getPlaybackRateDisplay,
     getLocalizedText,
     getChapterProgress,
