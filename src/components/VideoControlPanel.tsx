@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   Animated,
   TouchableWithoutFeedback,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { CloseIcon } from './icons';
 import LandScapeIcon from './icons/LandScape';
@@ -27,6 +26,7 @@ interface VideoControlPanelProps {
   PLAYBACK_RATES: number[];
   isSmallScreen: boolean;
   isLargeScreen: boolean;
+  isLandscapeMode: boolean;
   currentLanguage: 'ja' | 'en';
   onGoBack: () => void;
   onNextChapter: () => void;
@@ -35,6 +35,7 @@ interface VideoControlPanelProps {
   onRestartFromBeginning: () => void;
   onSlowerSpeed: () => void;
   onFasterSpeed: () => void;
+  onLandscapeToggle: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
 }
 
@@ -47,6 +48,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   PLAYBACK_RATES,
   isSmallScreen,
   isLargeScreen,
+  isLandscapeMode,
   currentLanguage,
   onGoBack,
   onNextChapter,
@@ -55,41 +57,13 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onRestartFromBeginning,
   onSlowerSpeed,
   onFasterSpeed,
+  onLandscapeToggle,
   getPlaybackRateDisplay,
 }) => {
-  // isLandscape状態の管理
-  const [isLandscapeMode, setIsLandscapeMode] = useState(false);
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
-  };
-
-  // コンポーネントマウント時にAsyncStorageからisLandscapeModeを読み込み
-  useEffect(() => {
-    const loadLandscapeState = async () => {
-      try {
-        const storedValue = await AsyncStorage.getItem('isLandscapeMode');
-        if (storedValue !== null) {
-          setIsLandscapeMode(JSON.parse(storedValue));
-        }
-      } catch (error) {
-        console.error('AsyncStorageからisLandscapeModeの読み込みに失敗:', error);
-      }
-    };
-    
-    loadLandscapeState();
-  }, []);
-
-  // LandScapeボタンのハンドラー
-  const handleLandscapeToggle = async () => {
-    try {
-      const newIsLandscapeMode = !isLandscapeMode;
-      setIsLandscapeMode(newIsLandscapeMode);
-      await AsyncStorage.setItem('isLandscapeMode', JSON.stringify(newIsLandscapeMode));
-    } catch (error) {
-      console.error('AsyncStorageへのisLandscapeMode保存に失敗:', error);
-    }
   };
 
   // 音声認識のカスタムフック
@@ -193,7 +167,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
 
         {/* LandScapeボタン */}
         <TouchableWithoutFeedback 
-          onPress={handleLandscapeToggle}
+          onPress={onLandscapeToggle}
           onPressIn={createPressInHandler(landscapeButtonScale)}
           onPressOut={createPressOutHandler(landscapeButtonScale)}
         >

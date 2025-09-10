@@ -87,6 +87,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         PLAYBACK_RATES={restProps.PLAYBACK_RATES}
         isSmallScreen={isSmallScreen}
         isLargeScreen={restProps.isLargeScreen}
+        isLandscapeMode={restProps.isLandscapeMode}
         currentLanguage={restProps.currentLanguage}
         onGoBack={restProps.onGoBack}
         onNextChapter={restProps.onNextChapter}
@@ -95,6 +96,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         onRestartFromBeginning={restProps.onRestartFromBeginning}
         onSlowerSpeed={restProps.onSlowerSpeed}
         onFasterSpeed={restProps.onFasterSpeed}
+        onLandscapeToggle={restProps.onLandscapeToggle}
         getPlaybackRateDisplay={restProps.getPlaybackRateDisplay}
       />
     </View>
