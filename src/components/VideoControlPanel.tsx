@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Animated,
   TouchableWithoutFeedback,
+  Dimensions,
 } from 'react-native';
 
 import { CloseIcon } from './icons';
@@ -22,8 +23,6 @@ interface VideoControlPanelProps {
   isLastChapterCompleted: boolean;
   playbackRate: number;
   PLAYBACK_RATES: number[];
-  isSmallScreen: boolean;
-  isLargeScreen: boolean;
   isLandscapeMode: boolean;
   currentLanguage: 'ja' | 'en';
   recognizing: boolean;
@@ -45,8 +44,6 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   isLastChapterCompleted,
   playbackRate,
   PLAYBACK_RATES,
-  isSmallScreen,
-  isLargeScreen,
   isLandscapeMode,
   currentLanguage,
   recognizing,
@@ -88,9 +85,16 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       friction: 8,
     }).start();
   };
+  
+  const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
+  // 画面サイズ判定
+  const isSmallScreen = screenWidth <= 667; // iPhoneSE2の高さは667px
+  const isLargeScreen = screenWidth >= 852;
+  
 
   return (
-    <View style={[styles.leftPanel, { left: isSmallScreen ? 16 : isLargeScreen ? 52 : 36 }]}>
+    <View style={[styles.leftPanel, { left: isSmallScreen ? 16 : isLargeScreen ? 60 : 48 }]}>
       {/* 上部ボタンコンテナ */}
       <View style={styles.topButtonsContainer}>
         {/* 戻るボタン */}

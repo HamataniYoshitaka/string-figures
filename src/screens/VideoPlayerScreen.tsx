@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { Video, AVPlaybackStatus } from 'expo-av';
-import { Dimensions } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { RootStackParamList } from '../types';
@@ -22,8 +21,6 @@ interface Props {
   navigation: VideoPlayerScreenNavigationProp;
   route: VideoPlayerScreenRouteProp;
 }
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
@@ -47,8 +44,6 @@ export interface VideoPlayerSharedProps {
   isLastChapterCompleted: boolean;
   playbackRate: number;
   videoRef: React.RefObject<Video | null>;
-  isSmallScreen: boolean;
-  isLargeScreen: boolean;
   isLandscapeMode: boolean;
   PLAYBACK_RATES: number[];
   recognizing: boolean;
@@ -73,9 +68,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     
   const { isTablet, isDeviceLandscape } = useDeviceInfo();
   
-  // 画面サイズ判定
-  const isSmallScreen = screenHeight <= 667; // iPhoneSE2の高さは667px
-  const isLargeScreen = screenHeight >= 852;
 
   // ステート管理
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
@@ -147,7 +139,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       if (savedIsLandscapeMode === 'true') {
         setIsLandscapeMode(true);
         // 横向きモードが有効な場合、画面を横向きに設定
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
       } else {
         setIsLandscapeMode(false);
       }
@@ -354,7 +346,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       
       // 画面の向きを変更
       if (newIsLandscapeMode) {
-        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
       } else {
         await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
       }
@@ -374,8 +366,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     isLastChapterCompleted,
     playbackRate,
     videoRef,
-    isSmallScreen,
-    isLargeScreen,
     isLandscapeMode,
     PLAYBACK_RATES,
     recognizing,

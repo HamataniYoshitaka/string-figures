@@ -252,7 +252,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const dropDownItems = [
     {
       id: 'language',
-      label: '言語',
+      label: currentLanguage === 'ja' ? '言語' : 'Language',
       value: currentLanguage === 'ja' ? '日本語' : 'English',
       onPress: () => {
         handleCloseDropDown();
@@ -264,8 +264,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     },
     {
       id: 'subtitles',
-      label: '動画の字幕',
-      value: 'あり',
+      label: currentLanguage === 'ja' ? '動画の字幕' : 'Subtitles',
+      value: currentLanguage === 'ja' ? 'あり' : 'On',
       onPress: () => {
         // TODO: 字幕設定の切り替え
         console.log('字幕設定');
@@ -273,7 +273,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     },
     {
       id: 'restore',
-      label: '購入情報を復元',
+      label: currentLanguage === 'ja' ? '購入情報を復元' : 'Restore Purchase Information',
       onPress: () => {
         // TODO: 購入情報復元処理
         console.log('購入情報復元');

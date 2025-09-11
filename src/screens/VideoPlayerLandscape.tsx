@@ -15,7 +15,6 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   currentChapterIndex,
   playbackRate,
   videoRef,
-  isSmallScreen,
   onPlaybackStatusUpdate,
   onVideoLoad,
   getLocalizedText,
@@ -42,7 +41,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
     <View style={styles.container}>
       {/* 動画エリア */}
       <View style={styles.videoArea}>
-        <View style={[styles.videoPlayer, { marginBottom: isSmallScreen ? 0 : 0 }]}>
+        <View style={[styles.videoPlayer]}>
           <Video
             key={`chapter-${currentChapterIndex}`}
             ref={videoRef}
@@ -85,8 +84,6 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         isLastChapterCompleted={restProps.isLastChapterCompleted}
         playbackRate={playbackRate}
         PLAYBACK_RATES={restProps.PLAYBACK_RATES}
-        isSmallScreen={isSmallScreen}
-        isLargeScreen={restProps.isLargeScreen}
         isLandscapeMode={restProps.isLandscapeMode}
         currentLanguage={restProps.currentLanguage}
         recognizing={restProps.recognizing}
