@@ -89,6 +89,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         isLargeScreen={restProps.isLargeScreen}
         isLandscapeMode={restProps.isLandscapeMode}
         currentLanguage={restProps.currentLanguage}
+        recognizing={restProps.recognizing}
         onGoBack={restProps.onGoBack}
         onNextChapter={restProps.onNextChapter}
         onReplay={restProps.onReplay}
@@ -97,6 +98,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         onSlowerSpeed={restProps.onSlowerSpeed}
         onFasterSpeed={restProps.onFasterSpeed}
         onLandscapeToggle={restProps.onLandscapeToggle}
+        onStopRecognition={restProps.onStopRecognition}
         getPlaybackRateDisplay={restProps.getPlaybackRateDisplay}
       />
     </View>

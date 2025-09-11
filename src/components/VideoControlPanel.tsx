@@ -14,7 +14,6 @@ import ReplayLandscapeButton from './ReplayLandscapeButton';
 import PreviousChapterLandscapeButton from './PreviousChapterLandscapeButton';
 import SpeedControlLandscape from './SpeedControlLandscape';
 import { StringFigure } from '../types';
-import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 
 interface VideoControlPanelProps {
   stringFigure: StringFigure;
@@ -27,6 +26,7 @@ interface VideoControlPanelProps {
   isLargeScreen: boolean;
   isLandscapeMode: boolean;
   currentLanguage: 'ja' | 'en';
+  recognizing: boolean;
   onGoBack: () => void;
   onNextChapter: () => void;
   onReplay: () => void;
@@ -35,6 +35,7 @@ interface VideoControlPanelProps {
   onSlowerSpeed: () => void;
   onFasterSpeed: () => void;
   onLandscapeToggle: () => Promise<void>;
+  onStopRecognition: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
 }
 
@@ -49,6 +50,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   isLargeScreen,
   isLandscapeMode,
   currentLanguage,
+  recognizing,
   onGoBack,
   onNextChapter,
   onReplay,
@@ -57,6 +59,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onSlowerSpeed,
   onFasterSpeed,
   onLandscapeToggle,
+  onStopRecognition,
   getPlaybackRateDisplay,
 }) => {
 
@@ -65,53 +68,6 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
     return textObj[currentLanguage];
   };
 
-  // 音声認識のカスタムフック
-  const speechRecognition = useSpeechRecognition({
-    onKeywordDetected: (keyword) => {
-      console.log('キーワード検出:', keyword);
-      // キーワードに応じてアクションを実行
-      switch (keyword) {
-        case 'つぎ':
-        case '次':
-          if (isLastChapterCompleted) {
-            onRestartFromBeginning();
-          } else if (currentChapterIndex < stringFigure.chapters.length - 1) {
-            onNextChapter();
-          }
-          break;
-        case 'まえ':
-        case '前':
-          if (currentChapterIndex > 0) {
-            onPreviousChapter();
-          }
-          break;
-        case 'もういちど':
-        case 'もう一度':
-          if (!(currentChapterIndex === 0 && playbackPosition === 0)) {
-            onReplay();
-          }
-          break;
-        case 'ゆっくり':
-          if (PLAYBACK_RATES.indexOf(playbackRate) > 0) {
-            onSlowerSpeed();
-          }
-          break;
-        case 'はやく':
-        case '早く':
-        case '速く':
-          if (PLAYBACK_RATES.indexOf(playbackRate) < PLAYBACK_RATES.length - 1) {
-            onFasterSpeed();
-          }
-          break;
-        case 'はじめから':
-        case '初めから':
-        case '始めから':
-          onRestartFromBeginning();
-          break;
-      }
-    },
-  });
-  
   // アニメーション用のrefs
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const landscapeButtonScale = useRef(new Animated.Value(1)).current;
@@ -119,7 +75,9 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   // 戻るボタンのハンドラー（音声認識を停止してから戻る）
   const handleGoBack = async () => {
     // 音声認識を停止
-    await speechRecognition.stop();
+    if (recognizing) {
+      await onStopRecognition();
+    }
     
     // 元の戻る処理を実行
     onGoBack();
