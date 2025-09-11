@@ -24,7 +24,6 @@ import NextChapterLandscapeButton from '../components/NextChapterLandscapeButton
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressBars from '../components/ProgressBars';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
-import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 
 const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -36,6 +35,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   currentLanguage,
   isLandscapeMode,
   PLAYBACK_RATES,
+  recognizing,
   onPlaybackStatusUpdate,
   onVideoLoad,
   onGoBack,
@@ -46,6 +46,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   onSlowerSpeed,
   onFasterSpeed,
   onLandscapeToggle,
+  onStopRecognition,
   getLocalizedText,
   getChapterProgress,
   getPlaybackRateDisplay,
@@ -60,57 +61,13 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   // 戻るボタンのハンドラー（音声認識を停止してから戻る）
   const handleGoBack = async () => {
     // 音声認識を停止
-    await speechRecognition.stop();
+    if (recognizing) {
+      await onStopRecognition();
+    }
     
     // 元の戻る処理を実行
     onGoBack();
   };
-  // 音声認識のカスタムフック
-  const speechRecognition = useSpeechRecognition({
-    onKeywordDetected: (keyword) => {
-      console.log('キーワード検出:', keyword);
-      // キーワードに応じてアクションを実行
-      switch (keyword) {
-        case 'つぎ':
-        case '次':
-          if (isLastChapterCompleted) {
-            onRestartFromBeginning();
-          } else if (currentChapterIndex < stringFigure.chapters.length - 1) {
-            onNextChapter();
-          }
-          break;
-        case 'まえ':
-        case '前':
-          if (currentChapterIndex > 0) {
-            onPreviousChapter();
-          }
-          break;
-        case 'もういちど':
-        case 'もう一度':
-          if (!(currentChapterIndex === 0 && playbackPosition === 0)) {
-            onReplay();
-          }
-          break;
-        case 'ゆっくり':
-          if (PLAYBACK_RATES.indexOf(playbackRate) > 0) {
-            onSlowerSpeed();
-          }
-          break;
-        case 'はやく':
-        case '早く':
-        case '速く':
-          if (PLAYBACK_RATES.indexOf(playbackRate) < PLAYBACK_RATES.length - 1) {
-            onFasterSpeed();
-          }
-          break;
-        case 'はじめから':
-        case '初めから':
-        case '始めから':
-          onRestartFromBeginning();
-          break;
-      }
-    },
-  });
   
   // アニメーションヘルパー関数
   const createPressInHandler = (scale: Animated.Value) => () => {

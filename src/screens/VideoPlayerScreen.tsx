@@ -8,6 +8,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
+import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import VideoPlayerLandscape from './VideoPlayerLandscape';
 import VideoPlayerPortrait from './VideoPlayerPortrait';
 
@@ -50,6 +51,8 @@ export interface VideoPlayerSharedProps {
   isLargeScreen: boolean;
   isLandscapeMode: boolean;
   PLAYBACK_RATES: number[];
+  recognizing: boolean;
+  isRecognitionSupported: boolean;
   onPlaybackStatusUpdate: (status: AVPlaybackStatus) => void;
   onVideoLoad: () => Promise<void>;
   onNextChapter: () => Promise<void>;
@@ -60,6 +63,8 @@ export interface VideoPlayerSharedProps {
   onSlowerSpeed: () => Promise<void>;
   onFasterSpeed: () => Promise<void>;
   onLandscapeToggle: () => Promise<void>;
+  onStartRecognition: () => Promise<void>;
+  onStopRecognition: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
   getLocalizedText: (textObj: { ja: string; en: string }) => string;
   getChapterProgress: (chapterIndex: number) => number;
@@ -84,6 +89,31 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [isLandscapeMode, setIsLandscapeMode] = useState(false);
   const videoRef = useRef<Video>(null);
+
+  // 音声認識フック
+  const {
+    recognizing,
+    isSupported: isRecognitionSupported,
+    start: startRecognition,
+    stop: stopRecognition,
+  } = useSpeechRecognition({
+    onKeywordDetected: async (keyword) => {
+      // キーワードに応じたアクションを実行
+      if (keyword === 'つぎ' || keyword === '次') {
+        await handleNextChapter();
+      } else if (keyword === 'まえ' || keyword === '前') {
+        await handlePreviousChapter();
+      } else if (keyword === 'もういちど' || keyword === 'もう一度') {
+        await handleReplay();
+      } else if (keyword === 'ゆっくり') {
+        await handleSlowerSpeed();
+      } else if (keyword === 'はやく' || keyword === '早く' || keyword === '速く') {
+        await handleFasterSpeed();
+      } else if (keyword === 'はじめから' || keyword === '初めから' || keyword === '始めから') {
+        await handleRestartFromBeginning();
+      }
+    },
+  });
 
   // アプリ起動時に保存された言語設定を読み込む
   useEffect(() => {
@@ -344,6 +374,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     isLargeScreen,
     isLandscapeMode,
     PLAYBACK_RATES,
+    recognizing,
+    isRecognitionSupported,
     onPlaybackStatusUpdate: handlePlaybackStatusUpdate,
     onVideoLoad: handleVideoLoad,
     onNextChapter: handleNextChapter,
@@ -354,6 +386,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     onSlowerSpeed: handleSlowerSpeed,
     onFasterSpeed: handleFasterSpeed,
     onLandscapeToggle: handleLandscapeToggle,
+    onStartRecognition: startRecognition,
+    onStopRecognition: stopRecognition,
     getPlaybackRateDisplay,
     getLocalizedText,
     getChapterProgress,
