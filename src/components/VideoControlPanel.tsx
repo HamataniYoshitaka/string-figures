@@ -35,7 +35,6 @@ interface VideoControlPanelProps {
   onSlowerSpeed: () => void;
   onFasterSpeed: () => void;
   onLandscapeToggle: () => Promise<void>;
-  onStopRecognition: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
 }
 
@@ -59,7 +58,6 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onSlowerSpeed,
   onFasterSpeed,
   onLandscapeToggle,
-  onStopRecognition,
   getPlaybackRateDisplay,
 }) => {
 
@@ -71,17 +69,6 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   // アニメーション用のrefs
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const landscapeButtonScale = useRef(new Animated.Value(1)).current;
-
-  // 戻るボタンのハンドラー（音声認識を停止してから戻る）
-  const handleGoBack = async () => {
-    // 音声認識を停止
-    if (recognizing) {
-      await onStopRecognition();
-    }
-    
-    // 元の戻る処理を実行
-    onGoBack();
-  };
 
   // アニメーションヘルパー関数
   const createPressInHandler = (scale: Animated.Value) => () => {
@@ -108,7 +95,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       <View style={styles.topButtonsContainer}>
         {/* 戻るボタン */}
         <TouchableWithoutFeedback 
-          onPress={handleGoBack}
+          onPress={onGoBack}
           onPressIn={createPressInHandler(backButtonScale)}
           onPressOut={createPressOutHandler(backButtonScale)}
         >

@@ -98,7 +98,6 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         onSlowerSpeed={restProps.onSlowerSpeed}
         onFasterSpeed={restProps.onFasterSpeed}
         onLandscapeToggle={restProps.onLandscapeToggle}
-        onStopRecognition={restProps.onStopRecognition}
         getPlaybackRateDisplay={restProps.getPlaybackRateDisplay}
       />
     </View>

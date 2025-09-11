@@ -63,8 +63,6 @@ export interface VideoPlayerSharedProps {
   onSlowerSpeed: () => Promise<void>;
   onFasterSpeed: () => Promise<void>;
   onLandscapeToggle: () => Promise<void>;
-  onStartRecognition: () => Promise<void>;
-  onStopRecognition: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
   getLocalizedText: (textObj: { ja: string; en: string }) => string;
   getChapterProgress: (chapterIndex: number) => number;
@@ -391,8 +389,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     onSlowerSpeed: handleSlowerSpeed,
     onFasterSpeed: handleFasterSpeed,
     onLandscapeToggle: handleLandscapeToggle,
-    onStartRecognition: startRecognition,
-    onStopRecognition: stopRecognition,
     getPlaybackRateDisplay,
     getLocalizedText,
     getChapterProgress,
