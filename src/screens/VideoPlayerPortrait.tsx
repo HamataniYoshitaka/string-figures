@@ -191,7 +191,29 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           )}
         </View>
       )}
-
+      {/* タブレットかつランドスケープの場合のみ表示 閉じるボタン */}
+      {(isTablet && isDeviceLandscape) && (
+        <View style={styles.tabletLandscapeCloseButtonContainer}>
+          <TouchableWithoutFeedback 
+            onPress={async () => {
+              // 音声認識を停止してから戻る
+              await speechRecognition.stop();
+              onGoBack();
+            }}
+            onPressIn={createPressInHandler(backButtonScale)}
+            onPressOut={createPressOutHandler(backButtonScale)}
+          >
+            <Animated.View 
+              style={[
+                styles.tabletLandscapeCloseButton,
+                { transform: [{ scale: backButtonScale }] }
+              ]}
+            >
+              <CloseIcon width={32} height={32} fillColor="#ffffff" strokeColor="none" />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+        </View>
+      )}
       {/* 動画エリア */}
       <View style={[
         styles.videoArea,
@@ -337,6 +359,17 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
+  },
+  tabletLandscapeCloseButtonContainer: {
+    position: 'absolute',
+    top: 16,
+    left: 8,
+    padding: 8,
+  },
+  tabletLandscapeCloseButton: {
+    padding: 8,
+    backgroundColor: 'rgba(100, 100, 100, 0.5)',
+    borderRadius: 24,
   },
   backButton: {
     padding: 8,
