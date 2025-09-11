@@ -226,6 +226,11 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const handleGoBack = async () => {
     console.log('handleGoBack');
     
+    // 音声認識を停止
+    if (recognizing) {
+      await stopRecognition();
+    }
+    
     try {
       // isLandscapeModeが有効な場合、明示的に縦向きに設定
       const isLandscapeMode = await AsyncStorage.getItem('isLandscapeMode');

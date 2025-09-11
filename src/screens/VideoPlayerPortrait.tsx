@@ -9,7 +9,6 @@ import {
   Dimensions,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
-import { Ionicons } from '@expo/vector-icons';
 import { CloseIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
 import SpeedControlPortrait from '../components/SpeedControlPortrait';
@@ -46,7 +45,6 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   onSlowerSpeed,
   onFasterSpeed,
   onLandscapeToggle,
-  onStopRecognition,
   getLocalizedText,
   getChapterProgress,
   getPlaybackRateDisplay,
@@ -57,17 +55,6 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
 
   // デバイス情報を取得
   const { isTablet, isDeviceLandscape } = useDeviceInfo();
-
-  // 戻るボタンのハンドラー（音声認識を停止してから戻る）
-  const handleGoBack = async () => {
-    // 音声認識を停止
-    if (recognizing) {
-      await onStopRecognition();
-    }
-    
-    // 元の戻る処理を実行
-    onGoBack();
-  };
   
   // アニメーションヘルパー関数
   const createPressInHandler = (scale: Animated.Value) => () => {
@@ -114,7 +101,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       {!(isTablet && isDeviceLandscape) && (
         <View style={styles.header}>
           <TouchableWithoutFeedback 
-            onPress={handleGoBack}
+            onPress={onGoBack}
             onPressIn={createPressInHandler(backButtonScale)}
             onPressOut={createPressOutHandler(backButtonScale)}
           >
@@ -156,7 +143,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       {(isTablet && isDeviceLandscape) && (
         <View style={styles.tabletLandscapeCloseButtonContainer}>
           <TouchableWithoutFeedback 
-            onPress={handleGoBack}
+            onPress={onGoBack}
             onPressIn={createPressInHandler(backButtonScale)}
             onPressOut={createPressOutHandler(backButtonScale)}
           >
