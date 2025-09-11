@@ -6,11 +6,13 @@ import SpeedButtonTail from './icons/SpeedButtonTail';
 interface PreviousChapterButtonProps {
   onPress: () => void;
   disabled: boolean;
+  getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
 const PreviousChapterButton: React.FC<PreviousChapterButtonProps> = ({
   onPress,
   disabled,
+  getLocalizedText,
 }) => {
   return (
     <TouchableOpacity 
@@ -29,12 +31,12 @@ const PreviousChapterButton: React.FC<PreviousChapterButtonProps> = ({
           strokeColor='transparent'
         />
       </View>
-      <View style={[styles.speedButton, styles.speedButtonTopLeft]}>
+      <View style={[styles.speedButton, styles.speedButtonTopLeft, disabled && styles.balloonDisabled]}>
         <Text style={[styles.controlButtonText, disabled && styles.disabledText]}>
-          まえ
+          {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
         </Text>
         <SpeedButtonTail 
-          fillColor="rgba(208, 205, 205, 0.5)"
+          fillColor="rgba(205, 205, 205, 0.5)"
           isBottom={false}
           isRight={false}
           isUp={true}
@@ -89,8 +91,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     elevation: 0,
   },
+  balloonDisabled: {
+    backgroundColor: 'rgba(205, 205, 205, 0)',
+  },
   disabledText: {
-    color: '#ccc',
+    color: '#fff',
   },
 });
 

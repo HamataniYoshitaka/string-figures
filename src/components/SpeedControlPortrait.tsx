@@ -14,6 +14,7 @@ interface SpeedControlPortraitProps {
   onSlowerSpeed: () => void;
   onFasterSpeed: () => void;
   getPlaybackRateDisplay: (rate: number) => string;
+  getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
 const SpeedControlPortrait: React.FC<SpeedControlPortraitProps> = ({
@@ -21,6 +22,7 @@ const SpeedControlPortrait: React.FC<SpeedControlPortraitProps> = ({
   onSlowerSpeed,
   onFasterSpeed,
   getPlaybackRateDisplay,
+  getLocalizedText,
 }) => {
   // アニメーション用のスケール値
   const slowerSpeedScale = useRef(new Animated.Value(1)).current;
@@ -59,7 +61,7 @@ const SpeedControlPortrait: React.FC<SpeedControlPortraitProps> = ({
             { transform: [{ scale: slowerSpeedScale }] }
           ]}
         >
-          <Text style={styles.speedButtonText}>ゆっくり</Text>
+          <Text style={styles.speedButtonText}>{getLocalizedText({ ja: 'ゆっくり', en: 'Slower' })}</Text>
           <SpeedButtonTail 
             fillColor="rgba(208, 205, 205, 0.5)"
             isBottom={true}
@@ -85,7 +87,7 @@ const SpeedControlPortrait: React.FC<SpeedControlPortraitProps> = ({
             { transform: [{ scale: fasterSpeedScale }] }
           ]}
         >
-          <Text style={styles.speedButtonText}>はやく</Text>
+          <Text style={styles.speedButtonText}>{getLocalizedText({ ja: 'はやく', en: 'Faster' })}</Text>
           <SpeedButtonTail 
             fillColor="rgba(208, 205, 205, 0.5)"
             isBottom={true}

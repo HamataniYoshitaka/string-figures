@@ -57,6 +57,14 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   // デバイス情報を取得
   const { isTablet, isDeviceLandscape } = useDeviceInfo();
 
+  // 戻るボタンのハンドラー（音声認識を停止してから戻る）
+  const handleGoBack = async () => {
+    // 音声認識を停止
+    await speechRecognition.stop();
+    
+    // 元の戻る処理を実行
+    onGoBack();
+  };
   // 音声認識のカスタムフック
   const speechRecognition = useSpeechRecognition({
     onKeywordDetected: (keyword) => {
@@ -149,11 +157,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       {!(isTablet && isDeviceLandscape) && (
         <View style={styles.header}>
           <TouchableWithoutFeedback 
-            onPress={async () => {
-              // 音声認識を停止してから戻る
-              await speechRecognition.stop();
-              onGoBack();
-            }}
+            onPress={handleGoBack}
             onPressIn={createPressInHandler(backButtonScale)}
             onPressOut={createPressOutHandler(backButtonScale)}
           >
@@ -195,11 +199,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       {(isTablet && isDeviceLandscape) && (
         <View style={styles.tabletLandscapeCloseButtonContainer}>
           <TouchableWithoutFeedback 
-            onPress={async () => {
-              // 音声認識を停止してから戻る
-              await speechRecognition.stop();
-              onGoBack();
-            }}
+            onPress={handleGoBack}
             onPressIn={createPressInHandler(backButtonScale)}
             onPressOut={createPressOutHandler(backButtonScale)}
           >
@@ -261,6 +261,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             onSlowerSpeed={onSlowerSpeed}
             onFasterSpeed={onFasterSpeed}
             getPlaybackRateDisplay={getPlaybackRateDisplay}
+            getLocalizedText={getLocalizedText}
           />
         )}
       </View>
@@ -288,21 +289,24 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             <PreviousChapterButton
               onPress={onPreviousChapter}
               disabled={currentChapterIndex === 0}
+              getLocalizedText={getLocalizedText}
             />
           )}
 
           {/* もういちど */}
           {isDeviceLandscape ? (
             <ReplayLandscapeButton
-              onPress={isLastChapterCompleted ? onRestartFromBeginning : onReplay}
+              onPress={onReplay}
               currentChapterIndex={currentChapterIndex}
               playbackPosition={playbackPosition}
               getLocalizedText={getLocalizedText}
             />
           ) : (
             <ReplayButton
-              onPress={isLastChapterCompleted ? onRestartFromBeginning : onReplay}
-              isLastChapterCompleted={isLastChapterCompleted}
+              onPress={onReplay}
+              currentChapterIndex={currentChapterIndex}
+              playbackPosition={playbackPosition}
+              getLocalizedText={getLocalizedText}
             />
           )}
 

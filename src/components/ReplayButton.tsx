@@ -5,19 +5,28 @@ import SpeedButtonTail from './icons/SpeedButtonTail';
 
 interface ReplayButtonProps {
   onPress: () => void;
-  isLastChapterCompleted: boolean;
+  currentChapterIndex: number;
+  playbackPosition: number;
+  getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
 const ReplayButton: React.FC<ReplayButtonProps> = ({
   onPress,
-  isLastChapterCompleted,
+  currentChapterIndex,
+  playbackPosition,
+  getLocalizedText,
 }) => {
+  const isDisabled = currentChapterIndex === 0 && playbackPosition === 0;
   return (
     <TouchableOpacity 
-      onPress={onPress}
+      onPress={!isDisabled ? onPress : undefined}
       style={styles.controlButton}
+      disabled={isDisabled}
     >
-      <View style={styles.floatingButton}>
+      <View style={[
+        styles.floatingButton,
+        isDisabled && styles.disabledButton
+      ]}>
         <ReplayIcon 
           width={24} 
           height={24} 
@@ -25,12 +34,19 @@ const ReplayButton: React.FC<ReplayButtonProps> = ({
           strokeColor='transparent'
         />
       </View>
-      <View style={[styles.speedButton, styles.speedButtonTopLeft]}>
-        <Text style={styles.controlButtonText}>
-          もういちど
+      <View style={[
+        styles.speedButton, 
+        styles.speedButtonTopLeft,
+        isDisabled && styles.balloonDisabled
+      ]}>
+        <Text style={[
+          styles.controlButtonText,
+          isDisabled && styles.textDisabled
+        ]}>
+          {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
         </Text>
         <SpeedButtonTail 
-          fillColor="rgba(208, 205, 205, 0.5)"
+          fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
           isBottom={false}
           isRight={false}
           isUp={true}
@@ -79,6 +95,17 @@ const styles = StyleSheet.create({
     color: '#555',
     marginTop: 4,
     fontWeight: '500',
+  },
+  disabledButton: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    shadowOpacity: 0.1,
+    elevation: 0,
+  },
+  balloonDisabled: {
+    backgroundColor: 'rgba(208, 205, 205, 0)',
+  },
+  textDisabled: {
+    color: '#fff',
   },
 });
 
