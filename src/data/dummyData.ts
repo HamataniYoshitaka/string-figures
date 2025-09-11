@@ -3,12 +3,12 @@ import { StringFigure } from '../types';
 export const dummyStringFigures: StringFigure[] = [
   {
     id: '1',
-    name: { ja: 'アムワンギョ', en: 'Amwangyo' },
-    difficulty: 'medium',
+    name: { ja: '星', en: 'Star' },
+    difficulty: 'easy',
     thumbnail: require('../../assets/string-figures/dummy1/thumbnail.jpg'),
     patternImage: require('../../assets/string-figures/dummy1/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy2/preview.mp4'),
-    description: { ja: 'アムワンギョの説明文です。', en: 'Description for Amwangyo.' },
+    description: { ja: '手のひらにかわいい星ができます。短め、太めの紐を使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
     isBookmarked: false,
     premiumCourseId: 0, // 無料
     chapters: [

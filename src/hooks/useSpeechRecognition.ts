@@ -9,8 +9,8 @@ import {
 interface UseSpeechRecognitionProps {
   /** 音声認識でキーワードが検出された時のコールバック */
   onKeywordDetected?: (keyword: string) => void;
-  /** 検出対象のキーワード一覧（デフォルト: ['まえ', '前', 'つぎ', '次', 'もういちど', 'もう一度', 'ゆっくり', 'はやく', '早く', '速く', 'はじめから', '初めから', '始めから']） */
-  keywords?: string[];
+  /** アプリの言語設定 */
+  language?: 'ja' | 'en';
   /** 音声認識の無活動時間（ミリ秒）。この時間経過後に自動再起動（デフォルト: 20000） */
   inactivityTimeout?: number;
   /** キーワード検出後の一時停止時間（ミリ秒）（デフォルト: 1500） */
@@ -43,10 +43,41 @@ interface UseSpeechRecognitionReturn {
  */
 export const useSpeechRecognition = ({
   onKeywordDetected,
-  keywords = ['まえ', '前', 'つぎ', '次', 'もういちど', 'もう一度', 'ゆっくり', 'はやく', '早く', '速く', 'はじめから', '初めから', '始めから'],
+  language = 'ja',
   inactivityTimeout = 20000,
   pauseAfterKeywordMs = 1500,
 }: UseSpeechRecognitionProps = {}): UseSpeechRecognitionReturn => {
+  // 言語に応じたキーワードマッピング
+  const keywordMap = {
+    ja: {
+      next: ['つぎ', '次'],
+      previous: ['まえ', '前'],
+      replay: ['もういちど', 'もう一度'],
+      slower: ['ゆっくり'],
+      faster: ['はやく', '早く', '速く'],
+      restart: ['はじめから', '初めから', '始めから'],
+    },
+    en: {
+      next: ['next'],
+      previous: ['previous'],
+      replay: ['replay'],
+      slower: ['slower'],
+      faster: ['faster'],
+      restart: ['restart'],
+    },
+  };
+
+  // 現在の言語のキーワードを取得
+  const currentKeywords = keywordMap[language];
+  const keywords = [
+    ...currentKeywords.next,
+    ...currentKeywords.previous,
+    ...currentKeywords.replay,
+    ...currentKeywords.slower,
+    ...currentKeywords.faster,
+    ...currentKeywords.restart,
+  ];
+
   // 音声認識の状態管理
   const [recognizing, setRecognizing] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
@@ -97,9 +128,8 @@ export const useSpeechRecognition = ({
         return;
       }
 
-      // AsyncStorageから言語設定を取得
-      const savedLanguage = await AsyncStorage.getItem('app_language');
-      const deviceLanguage = savedLanguage === 'ja' ? 'ja-JP' : 'en-US';
+      // 言語設定に基づいて音声認識の言語を設定
+      const deviceLanguage = language === 'ja' ? 'ja-JP' : 'en-US';
       console.log('音声認識開始、言語:', deviceLanguage);
 
       // 音声認識を開始
@@ -176,7 +206,10 @@ export const useSpeechRecognition = ({
       console.log('音声認識結果:', transcript);
       
       // 指定のキーワードを検出した場合、一時的に音声認識を停止
-      const matchedKeyword = keywords.find(keyword => transcript.includes(keyword));
+      const transcriptLower = transcript.toLowerCase();
+      const matchedKeyword = keywords.find(keyword => 
+        transcriptLower.includes(keyword.toLowerCase())
+      );
       
       if (matchedKeyword) {
         console.log('キーワード検出:', matchedKeyword);
@@ -188,8 +221,24 @@ export const useSpeechRecognition = ({
         setIsIntentionallyStopped(true);
         stopRecognition();
         
+        // 検出されたキーワードがどのアクションに対応するか判定
+        let actionKeyword = matchedKeyword;
+        if (currentKeywords.next.includes(matchedKeyword)) {
+          actionKeyword = language === 'ja' ? 'つぎ' : 'next';
+        } else if (currentKeywords.previous.includes(matchedKeyword)) {
+          actionKeyword = language === 'ja' ? 'まえ' : 'previous';
+        } else if (currentKeywords.replay.includes(matchedKeyword)) {
+          actionKeyword = language === 'ja' ? 'もういちど' : 'replay';
+        } else if (currentKeywords.slower.includes(matchedKeyword)) {
+          actionKeyword = language === 'ja' ? 'ゆっくり' : 'slower';
+        } else if (currentKeywords.faster.includes(matchedKeyword)) {
+          actionKeyword = language === 'ja' ? 'はやく' : 'faster';
+        } else if (currentKeywords.restart.includes(matchedKeyword)) {
+          actionKeyword = language === 'ja' ? 'はじめから' : 'restart';
+        }
+        
         // コールバックを呼び出し
-        onKeywordDetected?.(matchedKeyword);
+        onKeywordDetected?.(actionKeyword);
         
         // 少し遅延してから再開（ユーザーのアクションが完了するのを待つ）
         setTimeout(() => {
@@ -260,7 +309,7 @@ export const useSpeechRecognition = ({
         activityTimerRef.current = null;
       }
     };
-  }, []);
+  }, [language]); // languageが変更されたら再初期化
 
   return {
     recognizing,

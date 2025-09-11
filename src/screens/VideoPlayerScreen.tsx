@@ -95,19 +95,20 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     start: startRecognition,
     stop: stopRecognition,
   } = useSpeechRecognition({
+    language: currentLanguage,
     onKeywordDetected: async (keyword) => {
       // キーワードに応じたアクションを実行
-      if (keyword === 'つぎ' || keyword === '次') {
+      if (keyword === 'つぎ' || keyword === 'next') {
         await handleNextChapter();
-      } else if (keyword === 'まえ' || keyword === '前') {
+      } else if (keyword === 'まえ' || keyword === 'previous') {
         await handlePreviousChapter();
-      } else if (keyword === 'もういちど' || keyword === 'もう一度') {
+      } else if (keyword === 'もういちど' || keyword === 'replay') {
         await handleReplay();
-      } else if (keyword === 'ゆっくり') {
+      } else if (keyword === 'ゆっくり' || keyword === 'slower') {
         await handleSlowerSpeed();
-      } else if (keyword === 'はやく' || keyword === '早く' || keyword === '速く') {
+      } else if (keyword === 'はやく' || keyword === 'faster') {
         await handleFasterSpeed();
-      } else if (keyword === 'はじめから' || keyword === '初めから' || keyword === '始めから') {
+      } else if (keyword === 'はじめから' || keyword === 'restart') {
         await handleRestartFromBeginning();
       }
     },
