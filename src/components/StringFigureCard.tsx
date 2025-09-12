@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, BookmarkIcon } from './icons';
 
 interface Props {
   item: StringFigure;
@@ -103,10 +103,16 @@ const StringFigureCard: React.FC<Props> = ({
               <Text style={styles.cardImageText}>画像</Text>
             </View>
           )}
-          {/* ブックマークアイコン */}
+          {/* ブックマークアイコン - ブックマーク済みの場合のみ表示 */}
           {bookmarked && (
             <View style={styles.bookmarkContainer}>
-              <Text style={styles.bookmarkIcon}>🔖</Text>
+              <BookmarkIcon
+                width={24}
+                height={24}
+                strokeColor="#FB2C36"
+                fillColor="#FB2C36"
+                strokeWidth={1.5}
+              />
             </View>
           )}
         </View>
@@ -165,12 +171,9 @@ const styles = StyleSheet.create({
   },
   bookmarkContainer: {
     position: 'absolute',
-    top: 8,
+    top: -6,
     right: 8,
     zIndex: 1,
-  },
-  bookmarkIcon: {
-    fontSize: 20,
   },
   cardContent: {
     paddingHorizontal: 0,
