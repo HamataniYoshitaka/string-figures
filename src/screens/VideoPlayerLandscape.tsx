@@ -3,12 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressBars from '../components/ProgressBars';
 import VideoControlPanel from '../components/VideoControlPanel';
+import { BookmarkIcon } from '../components/icons';
 
 const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -25,6 +27,13 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   // デバッグ用ログ
   console.log('VideoPlayerLandscape - stringFigure:', stringFigure);
   
+  // ダミーのブックマーク状態とハンドラー（後で実装）
+  const [isBookmarked, setIsBookmarked] = React.useState(false);
+  const handleToggleBookmark = () => {
+    setIsBookmarked(!isBookmarked);
+    console.log('Bookmark toggled:', !isBookmarked);
+  };
+  
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !stringFigure.chapters || !stringFigure.chapters[currentChapterIndex]) {
     console.error('VideoPlayerLandscape - Invalid stringFigure or chapter data');
@@ -39,6 +48,20 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   
   return (
     <View style={styles.container}>
+      {/* ブックマークボタン */}
+      <TouchableOpacity
+        style={styles.bookmarkButton}
+        onPress={handleToggleBookmark}
+      >
+        <BookmarkIcon
+          width={24}
+          height={24}
+          strokeColor={isBookmarked ? '#DC2626' : '#A6A09B'}
+          fillColor={isBookmarked ? '#DC2626' : 'transparent'}
+          strokeWidth={1.5}
+        />
+      </TouchableOpacity>
+
       {/* 動画エリア */}
       <View style={styles.videoArea}>
         <View style={[styles.videoPlayer]}>
@@ -107,6 +130,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     backgroundColor: '#fff',
+    position: 'relative',
+  },
+  bookmarkButton: {
+    position: 'absolute',
+    top: -10,
+    right: 12,
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 101,
   },
   errorContainer: {
     flex: 1,
