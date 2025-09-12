@@ -9,7 +9,6 @@ export const dummyStringFigures: StringFigure[] = [
     patternImage: require('../../assets/string-figures/dummy1/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy2/preview.mp4'),
     description: { ja: '手のひらにかわいい星ができます。短め、太めの紐を使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
-    isBookmarked: false,
     premiumCourseId: 0, // 無料
     chapters: [
       {
@@ -38,7 +37,6 @@ export const dummyStringFigures: StringFigure[] = [
     patternImage: require('../../assets/string-figures/dummy2/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy2/preview.mp4'),
     description: { ja: 'ふたつの星の説明文です。', en: 'Description for Two Stars.' },
-    isBookmarked: true,
     premiumCourseId: 0, // 無料
     chapters: [
       {
@@ -67,7 +65,6 @@ export const dummyStringFigures: StringFigure[] = [
     patternImage: require('../../assets/string-figures/dummy3/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy3/preview.mp4'),
     description: { ja: 'シベリアの家の説明文です。', en: 'Description for Siberian House.' },
-    isBookmarked: false,
     premiumCourseId: 1, // 有料コース1
     chapters: [
       {
@@ -96,7 +93,6 @@ export const dummyStringFigures: StringFigure[] = [
     patternImage: require('../../assets/string-figures/dummy4/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy4/preview.mp4'),
     description: { ja: 'イヌイットの網の説明文です。伝統的な漁網のパターンを模したあやとりです。', en: 'Description for Inuit Net. Traditional fishing net pattern string figure.' },
-    isBookmarked: false,
     premiumCourseId: 2, // 有料コース2
     chapters: [
       {

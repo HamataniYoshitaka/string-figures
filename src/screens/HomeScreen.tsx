@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
-  Image,
   Alert,
   Platform,
   Dimensions,
@@ -49,6 +48,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   // 現在の言語設定の状態
   const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
 
+  // ブックマーク済みIDのリスト
+  const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
+
   // 画面幅の状態
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
@@ -69,6 +71,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     const initializeSettings = async () => {
       await loadLanguageSetting();
+      await loadBookmarkedIds();
       // スマホの場合、HomeScreen表示時は常に縦向きに設定
       if (!isTablet) {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
@@ -117,9 +120,24 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  // 多言語対応のヘルパー関数
-  const getLocalizedText = (textObj: { ja: string; en: string }) => {
-    return textObj[currentLanguage];
+  const loadBookmarkedIds = async () => {
+    try {
+      const savedBookmarks = await AsyncStorage.getItem('bookmarkedIds');
+      if (savedBookmarks) {
+        setBookmarkedIds(JSON.parse(savedBookmarks));
+      }
+    } catch (error) {
+      console.error('ブックマークの読み込みに失敗しました:', error);
+    }
+  };
+
+  const saveBookmarkedIds = async (ids: string[]) => {
+    try {
+      await AsyncStorage.setItem('bookmarkedIds', JSON.stringify(ids));
+      setBookmarkedIds(ids);
+    } catch (error) {
+      console.error('ブックマークの保存に失敗しました:', error);
+    }
   };
 
   const toggleFilter = (filter: 'easy' | 'medium' | 'hard') => {
@@ -169,10 +187,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       calculatedHeight = Math.min(calculatedHeight, 300);
     }
     
+    // bookmarkedIdsとitem.idを突合してブックマーク状態を判定
+    const isBookmarked = bookmarkedIds.includes(item.id);
+    
     return (
       <StringFigureCard
         key={item.id}
         item={item}
+        bookmarked={isBookmarked}
         calculatedHeight={calculatedHeight}
         currentLanguage={currentLanguage}
         onPress={handleItemPress}

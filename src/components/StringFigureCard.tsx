@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   Image,
   Platform,
   Animated,
@@ -14,6 +13,7 @@ import { EasyIcon, NormalIcon, HardIcon } from './icons';
 
 interface Props {
   item: StringFigure;
+  bookmarked: boolean;
   calculatedHeight: number;
   currentLanguage: 'ja' | 'en';
   onPress: (item: StringFigure) => void;
@@ -22,6 +22,7 @@ interface Props {
 
 const StringFigureCard: React.FC<Props> = ({
   item,
+  bookmarked,
   calculatedHeight,
   currentLanguage,
   onPress,
@@ -103,7 +104,7 @@ const StringFigureCard: React.FC<Props> = ({
             </View>
           )}
           {/* ブックマークアイコン */}
-          {item.isBookmarked && (
+          {bookmarked && (
             <View style={styles.bookmarkContainer}>
               <Text style={styles.bookmarkIcon}>🔖</Text>
             </View>

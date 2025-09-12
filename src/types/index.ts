@@ -8,7 +8,6 @@ export interface StringFigure {
   patternImage: ImageSourcePropType | string;
   previewUrl: string;
   description: { ja: string; en: string };
-  isBookmarked: boolean;
   premiumCourseId: number; // 0=無料、0以外のID=有料コース
   chapters: {
     subtitle: { ja: string; en: string };
