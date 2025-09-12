@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
-import { CloseIcon } from '../components/icons';
+import { CloseIcon, BookmarkIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
 import SpeedControlPortrait from '../components/SpeedControlPortrait';
 import SpeedControlLandscape from '../components/SpeedControlLandscape';
@@ -45,12 +45,15 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   onSlowerSpeed,
   onFasterSpeed,
   onLandscapeToggle,
+  onToggleBookmark,
+  bookmarked,
   getLocalizedText,
   getChapterProgress,
   getPlaybackRateDisplay,
 }) => {
   // アニメーション用のスケール値
   const backButtonScale = useRef(new Animated.Value(1)).current;
+  const bookmarkButtonScale = useRef(new Animated.Value(1)).current;
   const shareButtonScale = useRef(new Animated.Value(1)).current;
 
   // デバイス情報を取得
@@ -117,6 +120,26 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           <Text style={styles.title} numberOfLines={1}>
             {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
           </Text>
+          <TouchableWithoutFeedback 
+            onPress={onToggleBookmark}
+            onPressIn={createPressInHandler(bookmarkButtonScale)}
+            onPressOut={createPressOutHandler(bookmarkButtonScale)}
+          >
+            <Animated.View 
+              style={[
+                styles.bookmarkButton,
+                { transform: [{ scale: bookmarkButtonScale }] }
+              ]}
+            >
+              <BookmarkIcon 
+                width={24} 
+                height={24} 
+                strokeColor="#57534D"
+                fillColor={bookmarked ? "#57534D" : "transparent"}
+                strokeWidth={1.5}
+              />
+            </Animated.View>
+          </TouchableWithoutFeedback>
           {!isTablet && (
             <TouchableWithoutFeedback 
               onPress={onLandscapeToggle}
@@ -320,6 +343,11 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   backButton: {
+    padding: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    borderRadius: 20,
+  },
+  bookmarkButton: {
     padding: 8,
     backgroundColor: 'rgba(0, 0, 0, 0)',
     borderRadius: 20,

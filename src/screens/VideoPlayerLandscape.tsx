@@ -21,18 +21,13 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   onVideoLoad,
   getLocalizedText,
   getChapterProgress,
+  bookmarked,
+  onToggleBookmark,
   ...restProps
 }) => {
   
   // デバッグ用ログ
   console.log('VideoPlayerLandscape - stringFigure:', stringFigure);
-  
-  // ダミーのブックマーク状態とハンドラー（後で実装）
-  const [isBookmarked, setIsBookmarked] = React.useState(false);
-  const handleToggleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    console.log('Bookmark toggled:', !isBookmarked);
-  };
   
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !stringFigure.chapters || !stringFigure.chapters[currentChapterIndex]) {
@@ -51,13 +46,13 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
       {/* ブックマークボタン */}
       <TouchableOpacity
         style={styles.bookmarkButton}
-        onPress={handleToggleBookmark}
+        onPress={onToggleBookmark}
       >
         <BookmarkIcon
           width={24}
           height={24}
-          strokeColor={isBookmarked ? '#DC2626' : '#A6A09B'}
-          fillColor={isBookmarked ? '#DC2626' : 'transparent'}
+          strokeColor={bookmarked ? '#DC2626' : '#A6A09B'}
+          fillColor={bookmarked ? '#DC2626' : 'transparent'}
           strokeWidth={1.5}
         />
       </TouchableOpacity>

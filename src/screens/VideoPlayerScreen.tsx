@@ -48,6 +48,7 @@ export interface VideoPlayerSharedProps {
   PLAYBACK_RATES: number[];
   recognizing: boolean;
   isRecognitionSupported: boolean;
+  bookmarked: boolean;
   onPlaybackStatusUpdate: (status: AVPlaybackStatus) => void;
   onVideoLoad: () => Promise<void>;
   onNextChapter: () => Promise<void>;
@@ -58,6 +59,7 @@ export interface VideoPlayerSharedProps {
   onSlowerSpeed: () => Promise<void>;
   onFasterSpeed: () => Promise<void>;
   onLandscapeToggle: () => Promise<void>;
+  onToggleBookmark: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
   getLocalizedText: (textObj: { ja: string; en: string }) => string;
   getChapterProgress: (chapterIndex: number) => number;
@@ -78,6 +80,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isLastChapterCompleted, setIsLastChapterCompleted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [isLandscapeMode, setIsLandscapeMode] = useState(false);
+  const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const videoRef = useRef<Video>(null);
 
   // 音声認識フック
@@ -109,6 +112,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // アプリ起動時に保存された言語設定を読み込む
   useEffect(() => {
     loadLanguageSetting();
+    loadBookmarkedIds();
     // スマホの場合、VideoPlayerScreen表示時は向き判定を行う
     if (!isTablet) {
       loadOrientationSetting();
@@ -133,6 +137,17 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
+  const loadBookmarkedIds = async () => {
+    try {
+      const savedBookmarkedIds = await AsyncStorage.getItem('bookmarkedIds');
+      if (savedBookmarkedIds) {
+        setBookmarkedIds(JSON.parse(savedBookmarkedIds));
+      }
+    } catch (error) {
+      console.error('ブックマーク設定の読み込みに失敗しました:', error);
+    }
+  };
+
   const loadOrientationSetting = async () => {
     try {
       const savedIsLandscapeMode = await AsyncStorage.getItem('isLandscapeMode');
@@ -145,6 +160,27 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       }
     } catch (error) {
       console.error('画面向き設定の読み込みに失敗しました:', error);
+    }
+  };
+
+  // ブックマークの切り替え処理
+  const handleToggleBookmark = async () => {
+    try {
+      const isCurrentlyBookmarked = bookmarkedIds.includes(stringFigure.id);
+      let newBookmarkedIds: string[];
+      
+      if (isCurrentlyBookmarked) {
+        // ブックマークから削除
+        newBookmarkedIds = bookmarkedIds.filter(id => id !== stringFigure.id);
+      } else {
+        // ブックマークに追加
+        newBookmarkedIds = [...bookmarkedIds, stringFigure.id];
+      }
+      
+      setBookmarkedIds(newBookmarkedIds);
+      await AsyncStorage.setItem('bookmarkedIds', JSON.stringify(newBookmarkedIds));
+    } catch (error) {
+      console.error('ブックマークの更新に失敗しました:', error);
     }
   };
 
@@ -370,6 +406,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     PLAYBACK_RATES,
     recognizing,
     isRecognitionSupported,
+    bookmarked: bookmarkedIds.includes(stringFigure.id),
     onPlaybackStatusUpdate: handlePlaybackStatusUpdate,
     onVideoLoad: handleVideoLoad,
     onNextChapter: handleNextChapter,
@@ -380,6 +417,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     onSlowerSpeed: handleSlowerSpeed,
     onFasterSpeed: handleFasterSpeed,
     onLandscapeToggle: handleLandscapeToggle,
+    onToggleBookmark: handleToggleBookmark,
     getPlaybackRateDisplay,
     getLocalizedText,
     getChapterProgress,
