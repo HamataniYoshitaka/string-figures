@@ -134,8 +134,8 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               <BookmarkIcon 
                 width={24} 
                 height={24} 
-                strokeColor="#57534D"
-                fillColor={bookmarked ? "#57534D" : "transparent"}
+                strokeColor="#ffffff"
+                fillColor={bookmarked ? "#FB2C36" : "#aaa"}
                 strokeWidth={1.5}
               />
             </Animated.View>
