@@ -49,10 +49,10 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         onPress={onToggleBookmark}
       >
         <BookmarkIcon
-          width={24}
-          height={24}
-          strokeColor={bookmarked ? '#DC2626' : '#A6A09B'}
-          fillColor={bookmarked ? '#DC2626' : 'transparent'}
+          width={40}
+          height={40}
+          strokeColor={bookmarked ? 'transparent' : '#ffffff'}
+          fillColor={bookmarked ? '#FB2C36' : '#aaa'}
           strokeWidth={1.5}
         />
       </TouchableOpacity>
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
   },
   bookmarkButton: {
     position: 'absolute',
-    top: -10,
-    right: 12,
+    top: -8,
+    right: 16,
     width: 48,
     height: 48,
     justifyContent: 'center',
