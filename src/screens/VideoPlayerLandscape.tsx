@@ -181,10 +181,10 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     lineHeight: 24,
-    textShadowColor: 'black',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 3,
-    fontWeight: '500',
+    textShadowColor: 'rgba(0, 0, 0, 1)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,  
+    fontFamily: 'KleeOne-SemiBold',
   },
 });
 

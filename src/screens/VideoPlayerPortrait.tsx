@@ -407,6 +407,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   subtitleText: {
+    fontFamily: 'KleeOne-Regular',
     fontSize: 16,
     color: '#333',
     textAlign: 'center',
