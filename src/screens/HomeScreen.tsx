@@ -14,6 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
 import DetailBottomSheet from '../components/DetailBottomSheet';
@@ -79,6 +80,13 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     };
     initializeSettings();
   }, []);
+
+  // 画面にフォーカスが戻ってきた時にブックマーク情報を再読み込み
+  useFocusEffect(
+    React.useCallback(() => {
+      loadBookmarkedIds();
+    }, [])
+  );
 
   // 画面サイズ変更の監視
   useEffect(() => {
