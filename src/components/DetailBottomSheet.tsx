@@ -18,31 +18,33 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, PlayIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon } from './icons';
 import { useOrientation } from '../hooks/useOrientation';
 
 interface Props {
   isVisible: boolean;
   item: StringFigure | null;
+  isBookmarked: boolean;
   onClose: () => void;
   onPlayVideo: (item: StringFigure) => void;
+  onToggleBookmark: () => void;
   currentLanguage: 'ja' | 'en';
 }
 
 const DetailBottomSheet: React.FC<Props> = ({
   isVisible,
   item,
+  isBookmarked,
   onClose,
   onPlayVideo,
+  onToggleBookmark,
   currentLanguage,
 }) => {
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
   const isSmallScreen = screenDimensions.height <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
-  const insets = useSafeAreaInsets();
 
   // Android landscape時の安全な高さを計算
   const getSafeHeight = () => {
@@ -166,6 +168,20 @@ const DetailBottomSheet: React.FC<Props> = ({
             <Animated.View style={[dynamicBottomSheetStyle, animatedStyle]}>
               {/* ハンドル */}
               <View style={styles.handle} />
+              
+              {/* ブックマークボタン */}
+              <TouchableOpacity
+                style={styles.bookmarkButton}
+                onPress={onToggleBookmark}
+              >
+                <BookmarkIcon
+                  width={24}
+                  height={24}
+                  strokeColor={isBookmarked ? '#A6A09B' : '#A6A09B'}
+                  fillColor={isBookmarked ? '#A6A09B' : 'transparent'}
+                  strokeWidth={1.5}
+                />
+              </TouchableOpacity>
 
               {/* コンテンツ */}
               <View style={orientation === 'landscape' ? styles.contentLandscape : styles.content}>
@@ -560,6 +576,16 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     textAlign: 'left',
     fontFamily: 'KleeOne-Regular',
+  },
+  bookmarkButton: {
+    position: 'absolute',
+    top: 12,
+    right: 20,
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 101,
   },
 });
 

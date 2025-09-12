@@ -232,6 +232,17 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     navigation.navigate('VideoPlayer', { stringFigure: item });
   };
 
+  const toggleBookmark = () => {
+    if (!bottomSheet.selectedItem) return;
+    
+    const itemId = bottomSheet.selectedItem.id;
+    const newBookmarkedIds = bookmarkedIds.includes(itemId)
+      ? bookmarkedIds.filter(id => id !== itemId)
+      : [...bookmarkedIds, itemId];
+    
+    saveBookmarkedIds(newBookmarkedIds);
+  };
+
   // メニューボタンの処理
   const handleMenuPress = () => {
     if (menuButtonRef.current) {
@@ -341,8 +352,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       <DetailBottomSheet
         isVisible={bottomSheet.isVisible}
         item={bottomSheet.selectedItem}
+        isBookmarked={bottomSheet.selectedItem ? bookmarkedIds.includes(bottomSheet.selectedItem.id) : false}
         onClose={handleCloseBottomSheet}
         onPlayVideo={handlePlayVideo}
+        onToggleBookmark={toggleBookmark}
         currentLanguage={currentLanguage}
       />
 
