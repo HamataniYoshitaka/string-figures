@@ -94,7 +94,7 @@ const DetailBottomSheet: React.FC<Props> = ({
   
   const dynamicBottomSheetStyle = {
     ...styles.bottomSheet,
-    ...(isTablet ? { width: 420 } : { width: '100%' }),  // タブレットの場合のみwidthを420に設定
+    ...(isTablet ? { width: 420 } : { width: screenDimensions.width }),  // タブレットの場合のみwidthを420に設定
     minHeight: orientation === 'landscape' 
       ? isTablet
         ? safeHeight * 0.75  // iPadの場合は画面高さの50%
