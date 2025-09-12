@@ -94,18 +94,19 @@ const DetailBottomSheet: React.FC<Props> = ({
   
   const dynamicBottomSheetStyle = {
     ...styles.bottomSheet,
+    ...(isTablet ? { width: 420 } : { width: '100%' }),  // タブレットの場合のみwidthを420に設定
     minHeight: orientation === 'landscape' 
       ? isTablet
-        ? safeHeight * 0.5  // iPadの場合は画面高さの50%
+        ? safeHeight * 0.75  // iPadの場合は画面高さの50%
         : Platform.OS === 'android' 
           ? safeHeight * 0.8  // AndroidでもiPhoneと同じ80%に
           : safeHeight * 0.8 
       : isSmallScreen 
-        ? safeHeight * 0.75 
-        : safeHeight * 0.6,
+        ? safeHeight * 0.8 
+        : safeHeight * 0.65,
     maxHeight: orientation === 'landscape' 
       ? isTablet
-        ? safeHeight * 0.55  // iPadの場合は画面高さの55%
+        ? safeHeight * 0.75  // iPadの場合は画面高さの55%
         : Platform.OS === 'android'
           ? safeHeight * 0.9   // AndroidでもiPhoneと同じ90%に
           : safeHeight * 0.9 
@@ -184,167 +185,80 @@ const DetailBottomSheet: React.FC<Props> = ({
               </TouchableOpacity>
 
               {/* コンテンツ */}
-              <View style={orientation === 'landscape' ? styles.contentLandscape : styles.content}>
-                {/* Portrait: 縦並びレイアウト */}
-                {orientation === 'portrait' ? (
-                  <>
-                    {/* プレビュー動画エリア */}
-                    <View style={styles.imageContainer}>
-                      {item.previewUrl ? (
-                        <Video
-                          source={typeof item.previewUrl === 'string' 
-                            ? { uri: item.previewUrl } 
-                            : item.previewUrl
-                          }
-                          style={styles.videoPreview}
-                          shouldPlay={true}
-                          isLooping={true}
-                          isMuted={true}
-                          resizeMode={ResizeMode.COVER}
-                          useNativeControls={false}
-                        />
-                      ) : (
-                        <View style={styles.imagePlaceholder}>
-                          <Text style={styles.imageText}>
-                            {getLocalizedText({ ja: '動画プレビュー', en: 'Video Preview' })}
-                          </Text>
-                        </View>
-                      )}
-                      
-                      {/* 白のグラデーション */}
-                      <LinearGradient
-                        colors={['rgba(255,255,255,0.4)','rgba(255,255,255,0.4)', 'rgba(255,255,255,1.0)']}
-                        style={styles.gradientOverlay}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 0, y: 1 }}
+              <View style={styles.content}>
+                {/* プレビュー動画エリア */}
+                <View style={styles.imageContainer}>
+                  {item.previewUrl ? (
+                    <Video
+                      source={typeof item.previewUrl === 'string' 
+                        ? { uri: item.previewUrl } 
+                        : item.previewUrl
+                      }
+                      style={styles.videoPreview}
+                      shouldPlay={true}
+                      isLooping={true}
+                      isMuted={true}
+                      resizeMode={ResizeMode.COVER}
+                      useNativeControls={false}
+                    />
+                  ) : (
+                    <View style={styles.imagePlaceholder}>
+                      <Text style={styles.imageText}>
+                        {getLocalizedText({ ja: '動画プレビュー', en: 'Video Preview' })}
+                      </Text>
+                    </View>
+                  )}
+                  
+                  {/* 白のグラデーション */}
+                  <LinearGradient
+                    colors={['rgba(255,255,255,0.4)','rgba(255,255,255,0.4)', 'rgba(255,255,255,1.0)']}
+                    style={styles.gradientOverlay}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                  />
+                  
+                  <TouchableOpacity
+                    style={styles.playButton}
+                    onPress={handlePlayPress}
+                  >
+                    <PlayIcon width={24} height={28} strokeWidth={3} />
+                  </TouchableOpacity>
+                </View>
+
+                {/* サムネイル - プレビュー動画エリアに重ねる */}
+                <View style={styles.thumbnailContainer}>
+                  <View style={styles.thumbnail}>
+                    {item.patternImage ? (
+                      <Image 
+                        source={typeof item.patternImage === 'string' 
+                          ? { uri: item.patternImage } 
+                          : item.patternImage
+                        } 
+                        style={styles.thumbnailImage}
+                        resizeMode="cover"
                       />
-                      
-                      <TouchableOpacity
-                        style={styles.playButton}
-                        onPress={handlePlayPress}
-                      >
-                        <PlayIcon width={24} height={28} strokeWidth={3} />
-                      </TouchableOpacity>
-                    </View>
+                    ) : (
+                      <Text style={styles.thumbnailText}>
+                        {getLocalizedText({ ja: '完成図', en: 'Pattern' })}
+                      </Text>
+                    )}
+                  </View>
+                </View>
 
-                    {/* サムネイル - プレビュー動画エリアに重ねる */}
-                    <View style={styles.thumbnailContainer}>
-                      <View style={styles.thumbnail}>
-                        {item.patternImage ? (
-                          <Image 
-                            source={typeof item.patternImage === 'string' 
-                              ? { uri: item.patternImage } 
-                              : item.patternImage
-                            } 
-                            style={styles.thumbnailImage}
-                            resizeMode="cover"
-                          />
-                        ) : (
-                          <Text style={styles.thumbnailText}>
-                            {getLocalizedText({ ja: '完成図', en: 'Pattern' })}
-                          </Text>
-                        )}
-                      </View>
-                    </View>
-
-                    {/* 作品情報 */}
-                    <View style={styles.infoContainer}>
-                      <Text style={styles.title}>{getLocalizedText(item.name)}</Text>
-                      <View style={styles.difficultyContainer}>
-                        {(() => {
-                          const IconComponent = getDifficultyIcon(item.difficulty);
-                          return <IconComponent width={28} height={28} strokeColor="#666" />;
-                        })()}
-                        <Text style={styles.difficultyText}>
-                          {getDifficultyText(item.difficulty)}
-                        </Text>
-                      </View>
-                      <Text style={styles.description}>{getLocalizedText(item.description)}</Text>
-                    </View>
-                  </>
-                ) : (
-                  /* Landscape: 横並びレイアウト */
-                  <>
-                    {/* 左側: 作品情報エリア */}
-                    <View style={styles.infoAreaLandscape}>
-                      <View style={styles.infoTopSectionLandscape}>
-                        {/* サムネイル */}
-                        <View style={styles.thumbnailLandscape}>
-                          {item.patternImage ? (
-                            <Image 
-                              source={typeof item.patternImage === 'string' 
-                                ? { uri: item.patternImage } 
-                                : item.patternImage
-                              } 
-                              style={styles.thumbnailImage}
-                              resizeMode="cover"
-                            />
-                          ) : (
-                            <Text style={styles.thumbnailText}>
-                              {getLocalizedText({ ja: '完成図', en: 'Pattern' })}
-                            </Text>
-                          )}
-                        </View>
-
-                        {/* タイトルと難易度 */}
-                        <View style={styles.titleSectionLandscape}>
-                          <Text style={styles.titleLandscape}>{getLocalizedText(item.name)}</Text>
-                          <View style={[styles.difficultyContainer, { alignSelf: 'flex-start' }]}>
-                            {(() => {
-                              const IconComponent = getDifficultyIcon(item.difficulty);
-                              return <IconComponent width={24} height={24} strokeColor="#666" />;
-                            })()}
-                            <Text style={styles.difficultyText}>
-                              {getDifficultyText(item.difficulty)}
-                            </Text>
-                          </View>
-                        </View>
-                      </View>
-
-                      {/* 説明文 */}
-                      <Text style={styles.descriptionLandscape}>{getLocalizedText(item.description)}</Text>
-                    </View>
-
-                    {/* 右側: プレビュー動画エリア */}
-                    <View style={styles.videoAreaLandscape}>
-                      {item.previewUrl ? (
-                        <Video
-                          source={typeof item.previewUrl === 'string' 
-                            ? { uri: item.previewUrl } 
-                            : item.previewUrl
-                          }
-                          style={styles.videoPreviewLandscape}
-                          shouldPlay={true}
-                          isLooping={true}
-                          isMuted={true}
-                          resizeMode={ResizeMode.COVER}
-                          useNativeControls={false}
-                        />
-                      ) : (
-                        <View style={styles.imagePlaceholderLandscape}>
-                          <Text style={styles.imageText}>
-                            {getLocalizedText({ ja: '動画プレビュー', en: 'Video Preview' })}
-                          </Text>
-                        </View>
-                      )}
-                      
-                      {/* 白のグラデーション */}
-                      <LinearGradient
-                        colors={['rgba(255,255,255,0.55)', 'rgba(255,255,255,0.55)']}
-                        style={styles.gradientOverlayLandscape}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                      />
-                      
-                      <TouchableOpacity
-                        style={styles.playButtonLandscape}
-                        onPress={handlePlayPress}
-                      >
-                        <PlayIcon width={24} height={28} strokeWidth={3} />
-                      </TouchableOpacity>
-                    </View>
-                  </>
-                )}
+                {/* 作品情報 */}
+                <View style={styles.infoContainer}>
+                  <Text style={styles.title}>{getLocalizedText(item.name)}</Text>
+                  <View style={styles.difficultyContainer}>
+                    {(() => {
+                      const IconComponent = getDifficultyIcon(item.difficulty);
+                      return <IconComponent width={28} height={28} strokeColor="#666" />;
+                    })()}
+                    <Text style={styles.difficultyText}>
+                      {getDifficultyText(item.difficulty)}
+                    </Text>
+                  </View>
+                  <Text style={styles.description}>{getLocalizedText(item.description)}</Text>
+                </View>
               </View>
             </Animated.View>
           </TouchableWithoutFeedback>
@@ -366,6 +280,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     overflow: 'hidden',
     position: 'relative',
+    alignSelf: 'center',
   },
   handle: {
     position: 'absolute',

@@ -254,7 +254,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   // メニューボタンの処理
   const handleMenuPress = () => {
     if (menuButtonRef.current) {
-      menuButtonRef.current.measure((x, y, width, height, pageX, pageY) => {
+      menuButtonRef.current.measure((_x, _y, _width, _height, pageX, pageY) => {
         setMenuButtonPosition({ x: pageX, y: pageY });
         setIsDropDownVisible(true);
       });
