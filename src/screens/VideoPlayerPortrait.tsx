@@ -207,6 +207,14 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             onPlaybackStatusUpdate={onPlaybackStatusUpdate}
             onLoad={onVideoLoad}
           />
+          {/* 字幕エリア - 動画の上に重ねて表示 */}
+          {isTablet && isDeviceLandscape && (
+            <View style={styles.subtitleContainerTabletLandscape}>
+              <Text style={styles.subtitleTextTabletLandscape}>
+                {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
+              </Text>
+            </View>
+          )}
         </View>
 
         {/* 進捗バー */}
@@ -399,6 +407,26 @@ const styles = StyleSheet.create({
   },
   speedButtonTopLeft: {
     borderTopLeftRadius: 0,
+  },
+  subtitleContainerTabletLandscape: {
+    position: 'absolute',
+    bottom: 0,
+    left: 20,
+    right: 20,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
+  subtitleTextTabletLandscape: {
+    fontSize: 18,
+    color: 'white',
+    textAlign: 'center',
+    lineHeight: 24,
+    fontWeight: '500',
+    textShadowColor: 'rgba(0, 0, 0, 1)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,  
+    fontFamily: 'KleeOne-SemiBold',
   },
   subtitleContainer: {
     flex: 1,
