@@ -23,8 +23,9 @@ const NextChapterButton: React.FC<NextChapterButtonProps> = ({
 
   return (
     <TouchableOpacity 
-      onPress={onPress}
+      onPress={!isDisabled ? onPress : undefined}
       style={styles.controlButton}
+      disabled={isDisabled}
     >
         {isLastChapterCompleted ? (
           <View style={styles.floatingButton}>

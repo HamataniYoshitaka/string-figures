@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
   },
   balloonDisabled: {
-    display: 'none',
+    opacity: 0.0,
   },
   speedButtonTextDisabled: {
     color: '#999',

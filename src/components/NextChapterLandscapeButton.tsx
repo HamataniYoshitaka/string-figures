@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
-import { PlayIcon } from './icons';
+import { PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import { StringFigure } from '../types';
 
@@ -8,6 +8,7 @@ interface NextChapterLandscapeButtonProps {
   onPress: () => void;
   stringFigure: StringFigure;
   currentChapterIndex: number;
+  isLastChapterCompleted: boolean;
   getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
@@ -15,10 +16,11 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
   onPress,
   stringFigure,
   currentChapterIndex,
+  isLastChapterCompleted,
   getLocalizedText,
 }) => {
   const nextButtonScale = useRef(new Animated.Value(1)).current;
-  const isDisabled = currentChapterIndex === stringFigure.chapters.length - 1;
+  const isDisabled = currentChapterIndex === stringFigure.chapters.length - 1 && !isLastChapterCompleted;
 
   const createPressInHandler = () => {
     if (!isDisabled) {
@@ -55,13 +57,19 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
           { transform: [{ scale: nextButtonScale }] }
         ]}
       >
-        <View style={[
-          styles.floatingButton,
-          isDisabled && styles.disabledButton,
-          { paddingLeft: 2 }
-        ]}>
-          <PlayIcon width={20} height={20} fillColor="white" strokeColor='transparent' />
-        </View>
+        {isLastChapterCompleted ? (
+          <View style={[styles.floatingButton, isDisabled && styles.disabledButton]}>
+            <SkipBackwardIcon width={26} height={26} fillColor="white" />
+          </View>
+        ) : (
+          <View style={[
+            styles.floatingButton,
+            isDisabled && styles.disabledButton,
+            { paddingLeft: 2 }
+          ]}>
+            <PlayIcon width={20} height={20} fillColor="white" strokeColor='transparent' />
+          </View>
+        )}
         <View style={[
           styles.chapterBalloon,
           styles.speedButtonTop,
@@ -69,7 +77,10 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
         ]}>
           <Text style={[
             isDisabled && styles.speedButtonTextDisabled
-          ]}>{getLocalizedText({ ja: 'つぎ', en: 'Next' })}</Text>
+          ]}>{isLastChapterCompleted 
+            ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
+            : getLocalizedText({ ja: 'つぎ', en: 'Next' })
+          }</Text>
           <SpeedButtonTail 
             fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
             isBottom={true}
@@ -122,7 +133,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
   },
   balloonDisabled: {
-    display: 'none',
+    opacity: 0.0,
   },
   speedButtonTextDisabled: {
     color: '#999',
