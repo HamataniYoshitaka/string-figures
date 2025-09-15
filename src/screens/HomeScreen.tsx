@@ -23,6 +23,7 @@ import StringFigureCard from '../components/StringFigureCard';
 import DropDownMenu from '../components/DropDownMenu';
 import { dummyStringFigures } from '../data/dummyData';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
+import { DotsVerticalIcon } from '../components/icons';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -326,8 +327,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         {/* ヘッダー */}
-        <View style={styles.header}>
-          <Text style={styles.title}>
+        <View style={[styles.header, isTablet && styles.headerTablet]}>
+          <Text style={[styles.title, isTablet && styles.titleTablet]}>
             {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
           </Text>
           <TouchableOpacity 
@@ -335,7 +336,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             style={styles.menuButton}
             onPress={handleMenuPress}
           >
-            <Text style={styles.menuIcon}>⋮</Text>
+            <DotsVerticalIcon width={28} height={28} strokeColor="none" fillColor="#5D4037" />
           </TouchableOpacity>
         </View>
 
@@ -419,6 +420,14 @@ const styles = StyleSheet.create({
   column: {
     flex: 1,
     gap: 15,
+  },
+  headerTablet: {
+    paddingVertical: 28,
+    paddingTop: 32,
+  },
+  titleTablet: {
+    fontSize: 48,
+    lineHeight: 56,
   },
 });
 
