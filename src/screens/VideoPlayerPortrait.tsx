@@ -117,7 +117,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               <CloseIcon width={24} height={24} fillColor="#79716B" />
             </Animated.View>
           </TouchableWithoutFeedback>
-          <Text style={styles.title} numberOfLines={1}>
+          <Text style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
             {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
           </Text>
           <TouchableWithoutFeedback 
@@ -296,6 +296,8 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           ) : (
             <NextChapterButton
               onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
+              stringFigure={stringFigure}
+              currentChapterIndex={currentChapterIndex}
               isLastChapterCompleted={isLastChapterCompleted}
               getLocalizedText={getLocalizedText}
             />
@@ -361,6 +363,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   title: {
+    fontFamily: 'KleeOne-SemiBold',
     flex: 1,
     fontSize: 18,
     fontWeight: '600',

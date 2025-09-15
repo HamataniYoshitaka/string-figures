@@ -1,41 +1,50 @@
 import React from 'react';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import { SkipNextIcon, SkipBackwardIcon } from './icons';
+import { PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
+import { StringFigure } from '../types';
 
 interface NextChapterButtonProps {
   onPress: () => void;
   isLastChapterCompleted: boolean;
+  stringFigure: StringFigure;
+  currentChapterIndex: number;
   getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
 const NextChapterButton: React.FC<NextChapterButtonProps> = ({
   onPress,
   isLastChapterCompleted,
+  stringFigure,
+  currentChapterIndex,
   getLocalizedText,
 }) => {
+  const isDisabled = currentChapterIndex === stringFigure.chapters.length - 1 && !isLastChapterCompleted;
+
   return (
     <TouchableOpacity 
       onPress={onPress}
       style={styles.controlButton}
     >
-      <View style={styles.floatingButton}>
         {isLastChapterCompleted ? (
-          <SkipBackwardIcon 
-            width={24} 
-            height={24} 
-            fillColor="white"
-          />
+          <View style={styles.floatingButton}>
+            <SkipBackwardIcon 
+              width={26} 
+              height={26} 
+              fillColor="white"
+            />
+          </View>
         ) : (
-          <SkipNextIcon 
-            width={24} 
-            height={24} 
-            fillColor="white" 
-            strokeColor='transparent' 
-          />
+          <View style={[styles.floatingButton, { paddingLeft: 2 }, isDisabled && styles.disabledButton]}>
+            <PlayIcon 
+              width={20} 
+              height={20} 
+              fillColor="white" 
+              strokeColor='transparent' 
+            />
+          </View>
         )}
-      </View>
-      <View style={[styles.speedButton, styles.speedButtonTopLeft]}>
+      <View style={[styles.speedButton, styles.speedButtonTopLeft, isDisabled && styles.balloonDisabled]}>
         <Text style={styles.controlButtonText}>
           {isLastChapterCompleted 
             ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
@@ -92,6 +101,14 @@ const styles = StyleSheet.create({
     color: '#555',
     marginTop: 4,
     fontWeight: '500',
+  },
+  disabledButton: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    shadowOpacity: 0.1,
+    elevation: 0,
+  },
+  balloonDisabled: {
+    opacity: 0.0,
   },
 });
 

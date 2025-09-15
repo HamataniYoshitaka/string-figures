@@ -97,20 +97,20 @@ const DetailBottomSheet: React.FC<Props> = ({
     ...(isTablet ? { width: 420 } : { width: screenDimensions.width }),  // タブレットの場合のみwidthを420に設定
     minHeight: orientation === 'landscape' 
       ? isTablet
-        ? safeHeight * 0.75  // iPadの場合は画面高さの50%
-        : Platform.OS === 'android' 
-          ? safeHeight * 0.8  // AndroidでもiPhoneと同じ80%に
-          : safeHeight * 0.8 
-      : isSmallScreen 
-        ? safeHeight * 0.8 
-        : safeHeight * 0.65,
-    maxHeight: orientation === 'landscape' 
-      ? isTablet
-        ? safeHeight * 0.75  // iPadの場合は画面高さの55%
-        : Platform.OS === 'android'
-          ? safeHeight * 0.9   // AndroidでもiPhoneと同じ90%に
-          : safeHeight * 0.9 
-      : safeHeight * 0.8,
+        ? 540 // タブレットの場合は540
+        : safeHeight * 0.8 // スマホの場合は80%
+      : isTablet 
+        ? 540 // タブレットの場合は540
+        : isSmallScreen 
+          ? safeHeight * 0.8 // 小さい画面(iPhoneSE2)の場合は80%
+          : safeHeight * 0.65, // それ以外は65%
+    // maxHeight: orientation === 'landscape' 
+    //   ? isTablet
+    //     ? safeHeight * 0.75  // iPadの場合は画面高さの55%
+    //     : Platform.OS === 'android'
+    //       ? safeHeight * 0.9   // AndroidでもiPhoneと同じ90%に
+    //       : safeHeight * 0.9 
+    //   : safeHeight * 0.8,
     // Androidのlandscapeモードでは下部のマージンを削除
     ...(Platform.OS === 'android' && orientation === 'landscape' && {
       marginBottom: 0,

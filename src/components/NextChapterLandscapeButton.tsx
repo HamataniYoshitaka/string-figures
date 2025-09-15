@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
-import { SkipNextIcon } from './icons';
+import { PlayIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import { StringFigure } from '../types';
 
@@ -57,9 +57,10 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
       >
         <View style={[
           styles.floatingButton,
-          isDisabled && styles.disabledButton
+          isDisabled && styles.disabledButton,
+          { paddingLeft: 2 }
         ]}>
-          <SkipNextIcon width={24} height={24} fillColor="white" strokeColor='transparent' />
+          <PlayIcon width={20} height={20} fillColor="white" strokeColor='transparent' />
         </View>
         <View style={[
           styles.chapterBalloon,
