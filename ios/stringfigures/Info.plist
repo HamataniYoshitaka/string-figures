@@ -6,19 +6,19 @@
     <true/>
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
-    <key>CFBundleLocalizations</key>
-    <array>
-      <string>en</string>
-      <string>ja</string>
-    </array>
     <key>CFBundleDisplayName</key>
-    <string>string-figures</string>
+    <string>あやとり</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
     <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+      <string>en</string>
+      <string>ja</string>
+    </array>
     <key>CFBundleName</key>
     <string>$(PRODUCT_NAME)</string>
     <key>CFBundlePackageType</key>
@@ -50,9 +50,9 @@
       <true/>
     </dict>
     <key>NSMicrophoneUsageDescription</key>
-    <string>This app needs access to the microphone for speech recognition.</string>
+    <string>このアプリは、音声認識のためにマイクへのアクセスが必要です。</string>
     <key>NSSpeechRecognitionUsageDescription</key>
-    <string>This app uses speech recognition to control video playback with voice commands.</string>
+    <string>このアプリは、動画の操作を音声で行うために音声認識機能を使用します。</string>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
     <key>UIRequiredDeviceCapabilities</key>
@@ -67,8 +67,6 @@
     <array>
       <string>UIInterfaceOrientationPortrait</string>
       <string>UIInterfaceOrientationPortraitUpsideDown</string>
-      <string>UIInterfaceOrientationLandscapeLeft</string>
-      <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
     <key>UISupportedInterfaceOrientations~ipad</key>
     <array>
