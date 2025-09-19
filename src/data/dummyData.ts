@@ -108,27 +108,27 @@ export const dummyStringFigures: StringFigure[] = [
     premiumCourseId: 1, // 有料コース1
     chapters: [
       {
-        subtitle: { ja: '第1章', en: 'Chapter 1' },
+        subtitle: { ja: '人差し指の構えから始めます。両手の親指で小指の手前の糸を取ります', en: 'Chapter 1' },
         videoUrl: require('../../assets/string-figures/dummy3/chapters/1.mp4'),
       },
       {
-        subtitle: { ja: '第2章', en: 'Chapter 2' },
+        subtitle: { ja: '両手の人差し指を、人差し指の前にある三角の輪に上から差し入れます', en: 'Chapter 2' },
         videoUrl: require('../../assets/string-figures/dummy3/chapters/2.mp4'),
       },
       {
-        subtitle: { ja: '第3章', en: 'Chapter 3' },
+        subtitle: { ja: '小指の糸を外し、人差し指を広げます', en: 'Chapter 3' },
         videoUrl: require('../../assets/string-figures/dummy3/chapters/3.mp4'),
       },
       {
-        subtitle: { ja: '第4章', en: 'Chapter 4' },
+        subtitle: { ja: '人差し指の糸を中指に移します', en: 'Chapter 4' },
         videoUrl: require('../../assets/string-figures/dummy3/chapters/4.mp4'),
       },
       {
-        subtitle: { ja: '第5章', en: 'Chapter 5' },
+        subtitle: { ja: '両手の親指の間に掛かっている糸だけを外します（ナバホ取り）', en: 'Chapter 5' },
         videoUrl: require('../../assets/string-figures/dummy3/chapters/5.mp4'),
       },
       {
-        subtitle: { ja: '第6章', en: 'Chapter 6' },
+        subtitle: { ja: '両手の親指の前にある三角の輪に親指を差し入れます', en: 'Chapter 6' },
         videoUrl: require('../../assets/string-figures/dummy3/chapters/6.mp4'),
       }
     ]

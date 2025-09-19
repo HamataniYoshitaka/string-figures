@@ -304,7 +304,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // はじめからボタンの処理
   const handleRestartFromBeginning = async () => {
     try {
-      setShouldAutoPlay(true);
+      setShouldAutoPlay(false);
       setCurrentChapterIndex(0);
       setPlaybackPosition(0);
       setIsLastChapterCompleted(false);
