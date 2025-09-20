@@ -135,12 +135,12 @@ export const dummyStringFigures: StringFigure[] = [
   },
   {
     id: '4',
-    name: { ja: 'イヌイットの網', en: 'Inuit Net' },
+    name: { ja: '火山', en: 'Volcano' },
     difficulty: 'medium',
     thumbnail: require('../../assets/string-figures/dummy4/thumbnail.jpg'),
     patternImage: require('../../assets/string-figures/dummy4/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/dummy4/preview.mp4'),
-    description: { ja: 'イヌイットの網の説明文です。伝統的な漁網のパターンを模したあやとりです。', en: 'Description for Inuit Net. Traditional fishing net pattern string figure.' },
+    description: { ja: '火山の説明文です。', en: 'Description for Volcano.' },
     premiumCourseId: 2, // 有料コース2
     chapters: [
       {
@@ -159,6 +159,39 @@ export const dummyStringFigures: StringFigure[] = [
         subtitle: { ja: '第4章', en: 'Chapter 4' },
         videoUrl: require('../../assets/string-figures/dummy4/chapters/4.mp4'),
       },
+      {
+        subtitle: { ja: '第5章', en: 'Chapter 5' },
+        videoUrl: require('../../assets/string-figures/dummy4/chapters/5.mp4'),
+      },
+      {
+        subtitle: { ja: '第6章', en: 'Chapter 6' },
+        videoUrl: require('../../assets/string-figures/dummy4/chapters/6.mp4'),
+      },
+      {
+        subtitle: { ja: '第7章', en: 'Chapter 7' },
+        videoUrl: require('../../assets/string-figures/dummy4/chapters/7.mp4'),
+      },
+      {
+        subtitle: { ja: '第8章', en: 'Chapter 8' },
+        videoUrl: require('../../assets/string-figures/dummy4/chapters/8.mp4'),
+      },
+      {
+        subtitle: { ja: '第9章', en: 'Chapter 9' },
+        videoUrl: require('../../assets/string-figures/dummy4/chapters/9.mp4'),
+      },
+      {
+        subtitle: { ja: '第10章', en: 'Chapter 10' },
+        videoUrl: require('../../assets/string-figures/dummy4/chapters/10.mp4'),
+      },
+      {
+        subtitle: { ja: '第11章', en: 'Chapter 11' },
+        videoUrl: require('../../assets/string-figures/dummy4/chapters/11.mp4'),
+      },
+      {
+        subtitle: { ja: '第12章', en: 'Chapter 12' },
+        videoUrl: require('../../assets/string-figures/dummy4/chapters/12.mp4'),
+      }
+
     ]
   },
 ];
