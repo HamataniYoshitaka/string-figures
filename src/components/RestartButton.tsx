@@ -45,7 +45,7 @@ const RestartButton: React.FC<RestartButtonProps> = ({
         ]}
       >
         <View style={styles.floatingButton}>
-          <SkipBackwardIcon width={24} height={24} fillColor="white" />
+          <SkipBackwardIcon width={24} height={24} fillColor="#57534D" />
         </View>
         <View style={[
           styles.chapterBalloon,
@@ -73,17 +73,19 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#57534D',
+    backgroundColor: '#F7F6F2',
+    borderWidth: 2,
+    borderColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 8,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+    // elevation: 8,
   },
   chapterBalloon: {
     backgroundColor: 'rgba(208, 205, 205, 0.5)',

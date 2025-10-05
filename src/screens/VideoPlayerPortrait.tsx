@@ -323,7 +323,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F7F6F2',
   },
   errorContainer: {
     flex: 1,

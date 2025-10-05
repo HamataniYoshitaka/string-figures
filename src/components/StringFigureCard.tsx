@@ -130,7 +130,6 @@ const StringFigureCard: React.FC<Props> = ({
 const styles = StyleSheet.create({
   card: {
     width: '100%',
-    backgroundColor: 'white',
     padding: 0,
     marginBottom: 15,
   },

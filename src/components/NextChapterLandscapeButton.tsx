@@ -67,7 +67,7 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
             isDisabled && styles.disabledButton,
             { paddingLeft: 2 }
           ]}>
-            <PlayIcon width={20} height={20} fillColor="white" strokeColor='transparent' />
+            <PlayIcon width={20} height={20} fillColor="#57534D" strokeColor='transparent' />
           </View>
         )}
         <View style={[
@@ -102,17 +102,19 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#57534D',
+    backgroundColor: '#F7F6F2',
+    borderWidth: 2,
+    borderColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 8,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
+    // elevation: 8,
   },
   disabledButton: {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
