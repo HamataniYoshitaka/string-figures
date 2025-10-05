@@ -63,7 +63,7 @@ const SpeedControlPortrait: React.FC<SpeedControlPortraitProps> = ({
         >
           <Text style={styles.speedButtonText}>{getLocalizedText({ ja: 'ゆっくり', en: 'Slower' })}</Text>
           <SpeedButtonTail 
-            fillColor="rgba(208, 205, 205, 0.5)"
+            fillColor="rgba(209, 200, 194, 0.5)"
             isBottom={true}
             isRight={true}
           />
@@ -89,7 +89,7 @@ const SpeedControlPortrait: React.FC<SpeedControlPortraitProps> = ({
         >
           <Text style={styles.speedButtonText}>{getLocalizedText({ ja: 'はやく', en: 'Faster' })}</Text>
           <SpeedButtonTail 
-            fillColor="rgba(208, 205, 205, 0.5)"
+            fillColor="rgba(209, 200, 194, 0.5)"
             isBottom={true}
             isRight={false}
           />
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   speedButton: {
-    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,

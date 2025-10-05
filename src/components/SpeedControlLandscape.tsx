@@ -81,7 +81,7 @@ const SpeedControlLandscape: React.FC<SpeedControlLandscapeProps> = ({
               PLAYBACK_RATES.indexOf(playbackRate) === 0 && styles.speedButtonTextDisabled
             ]}>{getLocalizedText({ ja: 'ゆっくり', en: 'Slower' })}</Text>
             <SpeedButtonTail 
-              fillColor={PLAYBACK_RATES.indexOf(playbackRate) === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+              fillColor={PLAYBACK_RATES.indexOf(playbackRate) === 0 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
               isBottom={true}
             />
           </Animated.View>
@@ -105,7 +105,7 @@ const SpeedControlLandscape: React.FC<SpeedControlLandscapeProps> = ({
               PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 && styles.speedButtonTextDisabled
             ]}>{getLocalizedText({ ja: 'はやく', en: 'Faster' })}</Text>
             <SpeedButtonTail 
-              fillColor={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+              fillColor={PLAYBACK_RATES.indexOf(playbackRate) === PLAYBACK_RATES.length - 1 ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
               isBottom={false}
             />
           </Animated.View>
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   speedButton: {
-    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,

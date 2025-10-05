@@ -230,7 +230,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         </View>
 
         {/* 再生速度コントロール - タブレットかつランドスケープの場合のみ非表示 */}
-        {!(isTablet && isDeviceLandscape) && (
+        {/* {!(isTablet && isDeviceLandscape) && (
           <SpeedControlPortrait
             playbackRate={playbackRate}
             onSlowerSpeed={onSlowerSpeed}
@@ -238,7 +238,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             getPlaybackRateDisplay={getPlaybackRateDisplay}
             getLocalizedText={getLocalizedText}
           />
-        )}
+        )} */}
       </View>
 
       {/* 字幕エリア - デバイスがランドスケープの場合は非表示 */}
@@ -304,7 +304,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             />
           )}
           {/* 再生速度コントロール - タブレットかつランドスケープの場合のみ表示 */}
-          {(isTablet && isDeviceLandscape) && (
+          {/* {(isTablet && isDeviceLandscape) && (
             <SpeedControlLandscape
               playbackRate={playbackRate}
               PLAYBACK_RATES={PLAYBACK_RATES}
@@ -313,7 +313,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               onFasterSpeed={onFasterSpeed}
               getPlaybackRateDisplay={getPlaybackRateDisplay}
             />
-          )}
+          )} */}
         </View>
       </View>
     </SafeAreaView>
@@ -403,7 +403,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   speedButton: {
-    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,

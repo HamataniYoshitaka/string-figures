@@ -13,7 +13,7 @@ interface SpeedButtonTailProps {
 const SpeedButtonTail: React.FC<SpeedButtonTailProps> = ({
   width = 8,
   height = 8,
-  fillColor = 'rgba(208, 205, 205, 0.5)',
+  fillColor = 'rgba(209, 200, 194, 0.5)',
   isBottom = false,
   isRight = false,
   isUp = false,

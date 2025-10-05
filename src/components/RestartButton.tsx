@@ -53,7 +53,7 @@ const RestartButton: React.FC<RestartButtonProps> = ({
         ]}>
           <Text>{getLocalizedText({ ja: 'はじめから', en: 'Restart' })}</Text>
           <SpeedButtonTail 
-            fillColor={'rgba(208, 205, 205, 0.5)'}
+            fillColor={'rgba(209, 200, 194, 0.5)'}
             isBottom={true}
           />
         </View>
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     // elevation: 8,
   },
   chapterBalloon: {
-    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    backgroundColor: 'rgba(209, 200, 194, 0.5)',
     fontSize: 14,
     paddingHorizontal: 12,
     paddingVertical: 8,

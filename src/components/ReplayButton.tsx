@@ -46,7 +46,7 @@ const ReplayButton: React.FC<ReplayButtonProps> = ({
           {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
         </Text>
         <SpeedButtonTail 
-          fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+          fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
           isBottom={false}
           isRight={false}
           isUp={true}
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     // elevation: 8,
   },
   speedButton: {
-    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,

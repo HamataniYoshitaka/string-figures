@@ -146,6 +146,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
             onPress={onNextChapter}
             stringFigure={stringFigure}
             currentChapterIndex={currentChapterIndex}
+            isLastChapterCompleted={isLastChapterCompleted}
             getLocalizedText={getLocalizedText}
           />
         )}
@@ -165,14 +166,14 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       </View>
 
       {/* 再生速度 */}
-      <SpeedControlLandscape
+      {/* <SpeedControlLandscape
         playbackRate={playbackRate}
         PLAYBACK_RATES={PLAYBACK_RATES}
         currentLanguage={currentLanguage}
         onSlowerSpeed={onSlowerSpeed}
         onFasterSpeed={onFasterSpeed}
         getPlaybackRateDisplay={getPlaybackRateDisplay}
-      />
+      /> */}
     </View>
   );
 };

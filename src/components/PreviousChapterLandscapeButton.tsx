@@ -72,7 +72,7 @@ const PreviousChapterLandscapeButton: React.FC<PreviousChapterLandscapeButtonPro
             isDisabled && styles.speedButtonTextDisabled
           ]}>{getLocalizedText({ ja: 'まえ', en: 'Previous' })}</Text>
           <SpeedButtonTail 
-            fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(208, 205, 205, 0.5)'}
+            fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
             isBottom={true}
           />
         </View>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   chapterBalloon: {
-    backgroundColor: 'rgba(208, 205, 205, 0.5)',
+    backgroundColor: 'rgba(209, 200, 194, 0.5)',
     fontSize: 14,
     paddingHorizontal: 12,
     paddingVertical: 8,
