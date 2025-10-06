@@ -45,30 +45,30 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
   };
 
   return (
-    <TouchableWithoutFeedback 
+    <TouchableWithoutFeedback
       onPress={!isDisabled ? onPress : undefined}
       onPressIn={!isDisabled ? createPressInHandler : undefined}
       onPressOut={!isDisabled ? createPressOutHandler : undefined}
       disabled={isDisabled}
     >
-      <Animated.View 
-        style={[
-          styles.controlButton,
-          { transform: [{ scale: nextButtonScale }] }
-        ]}
-      >
+      <View style={styles.controlButton}>
         {isLastChapterCompleted ? (
-          <View style={[styles.floatingButton, isDisabled && styles.disabledButton]}>
-            <SkipBackwardIcon width={26} height={26} fillColor="white" />
-          </View>
-        ) : (
-          <View style={[
+          <Animated.View style={[
             styles.floatingButton,
             isDisabled && styles.disabledButton,
-            { paddingLeft: 2 }
+            { transform: [{ scale: nextButtonScale }] }
+          ]}>
+            <SkipBackwardIcon width={26} height={26} fillColor="white" />
+          </Animated.View>
+        ) : (
+          <Animated.View style={[
+            styles.floatingButton,
+            isDisabled && styles.disabledButton,
+            { paddingLeft: 2 },
+            { transform: [{ scale: nextButtonScale }] }
           ]}>
             <PlayIcon width={20} height={20} fillColor="#57534D" strokeColor='transparent' />
-          </View>
+          </Animated.View>
         )}
         <View style={[
           styles.chapterBalloon,
@@ -77,16 +77,16 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
         ]}>
           <Text style={[
             isDisabled && styles.speedButtonTextDisabled
-          ]}>{isLastChapterCompleted 
+          ]}>{isLastChapterCompleted
             ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
             : getLocalizedText({ ja: 'つぎ', en: 'Next' })
           }</Text>
-          <SpeedButtonTail 
+          <SpeedButtonTail
             fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
             isBottom={true}
           />
         </View>
-      </Animated.View>
+      </View>
     </TouchableWithoutFeedback>
   );
 };

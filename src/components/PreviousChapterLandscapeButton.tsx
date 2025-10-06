@@ -40,29 +40,25 @@ const PreviousChapterLandscapeButton: React.FC<PreviousChapterLandscapeButtonPro
   };
 
   return (
-    <TouchableWithoutFeedback 
+    <TouchableWithoutFeedback
       onPress={!isDisabled ? onPress : undefined}
       onPressIn={!isDisabled ? createPressInHandler : undefined}
       onPressOut={!isDisabled ? createPressOutHandler : undefined}
       disabled={isDisabled}
     >
-      <Animated.View 
-        style={[
-          styles.controlButton,
-          { transform: [{ scale: previousButtonScale }] }
-        ]}
-      >
-        <View style={[
+      <View style={styles.controlButton}>
+        <Animated.View style={[
           styles.floatingButton,
-          isDisabled && styles.disabledButton
+          isDisabled && styles.disabledButton,
+          { transform: [{ scale: previousButtonScale }] }
         ]}>
-          <SkipPreviousIcon 
-            width={24} 
-            height={24} 
+          <SkipPreviousIcon
+            width={24}
+            height={24}
             fillColor="#57534D"
             strokeColor='transparent'
           />
-        </View>
+        </Animated.View>
         <View style={[
           styles.chapterBalloon,
           styles.speedButtonTop,
@@ -71,12 +67,12 @@ const PreviousChapterLandscapeButton: React.FC<PreviousChapterLandscapeButtonPro
           <Text style={[
             isDisabled && styles.speedButtonTextDisabled
           ]}>{getLocalizedText({ ja: 'まえ', en: 'Previous' })}</Text>
-          <SpeedButtonTail 
+          <SpeedButtonTail
             fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
             isBottom={true}
           />
         </View>
-      </Animated.View>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
