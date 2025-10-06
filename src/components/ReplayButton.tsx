@@ -1,5 +1,5 @@
-import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
 import { ReplayIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 
@@ -17,42 +17,68 @@ const ReplayButton: React.FC<ReplayButtonProps> = ({
   getLocalizedText,
 }) => {
   const isDisabled = currentChapterIndex === 0 && playbackPosition === 0;
+  const [scaleAnim] = useState(new Animated.Value(1));
+
+  const handlePressIn = () => {
+    if (!isDisabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 0.95,
+        useNativeDriver: true,
+        tension: 300,
+        friction: 8,  
+      }).start();
+    }
+  };
+
+  const handlePressOut = () => {
+    if (!isDisabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+      }).start();
+    }
+  };
+
   return (
-    <TouchableOpacity 
+    <TouchableWithoutFeedback
       onPress={!isDisabled ? onPress : undefined}
-      style={styles.controlButton}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       disabled={isDisabled}
     >
-      <View style={[
-        styles.floatingButton,
-        isDisabled && styles.disabledButton
-      ]}>
-        <ReplayIcon 
-          width={24} 
-          height={24} 
-          fillColor="#57534D"
-          strokeColor='transparent'
-        />
-      </View>
-      <View style={[
-        styles.speedButton, 
-        styles.speedButtonTopLeft,
-        isDisabled && styles.balloonDisabled
-      ]}>
-        <Text style={[
-          styles.controlButtonText,
-          isDisabled && styles.textDisabled
+      <View style={styles.controlButton}>
+        <Animated.View style={[
+          styles.floatingButton,
+          isDisabled && styles.disabledButton,
+          { transform: [{ scale: scaleAnim }] }
         ]}>
-          {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
-        </Text>
-        <SpeedButtonTail 
-          fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
-          isBottom={false}
-          isRight={false}
-          isUp={true}
-        />
+          <ReplayIcon
+            width={24}
+            height={24}
+            fillColor="#57534D"
+            strokeColor='transparent'
+          />
+        </Animated.View>
+        <View style={[
+          styles.speedButton,
+          styles.speedButtonTopLeft,
+          isDisabled && styles.balloonDisabled
+        ]}>
+          <Text style={[
+            styles.controlButtonText,
+            isDisabled && styles.textDisabled
+          ]}>
+            {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
+          </Text>
+          <SpeedButtonTail
+            fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
+            isBottom={false}
+            isRight={false}
+            isUp={true}
+          />
+        </View>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -73,14 +99,6 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
-    // elevation: 8,
   },
   speedButton: {
     backgroundColor: 'rgba(209, 200, 194, 0.5)',

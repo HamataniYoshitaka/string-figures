@@ -1,5 +1,5 @@
-import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
 import { PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import { StringFigure } from '../types';
@@ -20,46 +20,80 @@ const NextChapterButton: React.FC<NextChapterButtonProps> = ({
   getLocalizedText,
 }) => {
   const isDisabled = currentChapterIndex === stringFigure.chapters.length - 1 && !isLastChapterCompleted;
+  const [scaleAnim] = useState(new Animated.Value(1));
+
+  const handlePressIn = () => {
+    if (!isDisabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 0.95,
+        useNativeDriver: true,
+        tension: 300,
+        friction: 8,
+      }).start();
+    }
+  };
+
+  const handlePressOut = () => {
+    if (!isDisabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+        tension: 300,
+        friction: 8,
+      }).start();
+    }
+  };
 
   return (
-    <TouchableOpacity 
+    <TouchableWithoutFeedback
       onPress={!isDisabled ? onPress : undefined}
-      style={styles.controlButton}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       disabled={isDisabled}
     >
+      <View style={styles.controlButton}>
         {isLastChapterCompleted ? (
-          <View style={styles.floatingButton}>
-            <SkipBackwardIcon 
-              width={26} 
-              height={26} 
-              fillColor="white"
+          <Animated.View style={[
+            styles.floatingButton,
+            { transform: [{ scale: scaleAnim }] }
+          ]}>
+            <SkipBackwardIcon
+              width={26}
+              height={26}
+              fillColor="#57534D"
             />
-          </View>
+          </Animated.View>
         ) : (
-          <View style={[styles.floatingButton, { paddingLeft: 2 }, isDisabled && styles.disabledButton]}>
-            <PlayIcon 
-              width={20} 
-              height={20} 
-              fillColor="#57534D" 
-              strokeColor='transparent' 
+          <Animated.View style={[
+            styles.floatingButton,
+            { paddingLeft: 2 },
+            isDisabled && styles.disabledButton,
+            { transform: [{ scale: scaleAnim }] }
+          ]}>
+            <PlayIcon
+              width={20}
+              height={20}
+              fillColor="#57534D"
+              strokeColor='transparent'
             />
-          </View>
+          </Animated.View>
         )}
-      <View style={[styles.speedButton, styles.speedButtonTopLeft, isDisabled && styles.balloonDisabled]}>
-        <Text style={styles.controlButtonText}>
-          {isLastChapterCompleted 
-            ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
-            : getLocalizedText({ ja: 'つぎ', en: 'Next' })
-          }
-        </Text>
-        <SpeedButtonTail 
-          fillColor="rgba(209, 200, 194, 0.5)"
-          isBottom={false}
-          isRight={false}
-          isUp={true}
-        />
+        <View style={[styles.speedButton, styles.speedButtonTopLeft, isDisabled && styles.balloonDisabled]}>
+          <Text style={styles.controlButtonText}>
+            {isLastChapterCompleted
+              ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
+              : getLocalizedText({ ja: 'つぎ', en: 'Next' })
+            }
+          </Text>
+          <SpeedButtonTail
+            fillColor="rgba(209, 200, 194, 0.5)"
+            isBottom={false}
+            isRight={false}
+            isUp={true}
+          />
+        </View>
       </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 

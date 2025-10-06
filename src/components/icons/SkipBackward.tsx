@@ -14,7 +14,7 @@ const SkipBackwardIcon: React.FC<SkipBackwardIconProps> = ({
   height = 32,
   strokeColor = '#57534D',
   fillColor = 'white',
-  strokeWidth = 1,
+  strokeWidth = 0,
 }) => {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">

@@ -1,5 +1,5 @@
-import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
 import { SkipPreviousIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 
@@ -14,35 +14,63 @@ const PreviousChapterButton: React.FC<PreviousChapterButtonProps> = ({
   disabled,
   getLocalizedText,
 }) => {
+  const [scaleAnim] = useState(new Animated.Value(1));
+
+  const handlePressIn = () => {
+    if (!disabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 0.95,
+        useNativeDriver: true,
+        tension: 300,
+        friction: 8,
+      }).start();
+    }
+  };
+
+  const handlePressOut = () => {
+    if (!disabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+        tension: 300,
+        friction: 8,
+      }).start();
+    }
+  };
+
   return (
-    <TouchableOpacity 
+    <TouchableWithoutFeedback
       onPress={onPress}
-      style={styles.controlButton}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
       disabled={disabled}
     >
-      <View style={[
-        styles.floatingButton,
-        disabled && styles.disabledButton
-      ]}>
-        <SkipPreviousIcon 
-          width={24} 
-          height={24} 
-          fillColor="#57534D"
-          strokeColor='transparent'
-        />
+      <View style={styles.controlButton}>
+        <Animated.View style={[
+          styles.floatingButton,
+          disabled && styles.disabledButton,
+          { transform: [{ scale: scaleAnim }] }
+        ]}>
+          <SkipPreviousIcon
+            width={24}
+            height={24}
+            fillColor="#57534D"
+            strokeColor='transparent'
+          />
+        </Animated.View>
+        <View style={[styles.speedButton, styles.speedButtonTopLeft, disabled && styles.balloonDisabled]}>
+          <Text style={[styles.controlButtonText, disabled && styles.disabledText]}>
+            {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
+          </Text>
+          <SpeedButtonTail
+            fillColor="rgba(205, 205, 205, 0.5)"
+            isBottom={false}
+            isRight={false}
+            isUp={true}
+          />
+        </View>
       </View>
-      <View style={[styles.speedButton, styles.speedButtonTopLeft, disabled && styles.balloonDisabled]}>
-        <Text style={[styles.controlButtonText, disabled && styles.disabledText]}>
-          {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
-        </Text>
-        <SpeedButtonTail 
-          fillColor="rgba(205, 205, 205, 0.5)"
-          isBottom={false}
-          isRight={false}
-          isUp={true}
-        />
-      </View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 
