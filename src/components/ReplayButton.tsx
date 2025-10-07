@@ -167,9 +167,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   disabledButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    shadowOpacity: 0.1,
-    elevation: 0,
+    opacity: 0.5,
   },
   balloonDisabled: {
     backgroundColor: 'rgba(208, 205, 205, 0)',
