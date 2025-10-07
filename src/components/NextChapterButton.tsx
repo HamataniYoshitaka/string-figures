@@ -27,6 +27,7 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));
+  const [balloonColorAnim] = useState(new Animated.Value(0));
 
   const handlePressIn = () => {
     if (!isDisabled) {
@@ -43,6 +44,7 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
     if (!isDisabled) {
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
+      balloonColorAnim.setValue(1);
       Animated.parallel([
         Animated.timing(rippleAnim, {
           toValue: 1,
@@ -53,6 +55,11 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
           toValue: 0,
           duration: 400,
           useNativeDriver: true,
+        }),
+        Animated.timing(balloonColorAnim, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: false,
         }),
       ]).start();
     }
@@ -77,6 +84,11 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
   const rippleScale = rippleAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 1.5],
+  });
+
+  const balloonBackgroundColor = balloonColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
   });
 
   return (
@@ -126,7 +138,12 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
             </Animated.View>
           )}
         </View>
-        <View style={[styles.balloon, styles.balloonTopLeft, isDisabled && styles.balloonDisabled]}>
+        <Animated.View style={[
+          styles.balloon,
+          styles.balloonTopLeft,
+          isDisabled && styles.balloonDisabled,
+          { backgroundColor: balloonBackgroundColor }
+        ]}>
           <Text style={styles.controlButtonText}>
             {isLastChapterCompleted
               ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
@@ -139,7 +156,7 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
             isRight={false}
             isUp={true}
           />
-        </View>
+        </Animated.View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -178,7 +195,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   balloon: {
-    backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,

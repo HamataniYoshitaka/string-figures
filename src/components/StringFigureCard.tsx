@@ -131,24 +131,23 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     padding: 0,
-    marginBottom: 15,
   },
   cardImageContainer: {
     position: 'relative',
     width: '100%',
     backgroundColor: 'transparent',
     borderRadius: 12,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.15,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 8,
-      },
-    }),
+    // ...Platform.select({
+    //   ios: {
+    //     shadowColor: '#000',
+    //     shadowOffset: { width: 0, height: 6 },
+    //     shadowOpacity: 0.15,
+    //     shadowRadius: 4,
+    //   },
+    //   android: {
+    //     elevation: 8,
+    //   },
+    // }),
   },
   cardImage: {
     width: '100%',
