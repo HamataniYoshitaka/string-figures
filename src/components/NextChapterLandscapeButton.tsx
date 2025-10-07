@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
 import { PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
@@ -12,13 +12,17 @@ interface NextChapterLandscapeButtonProps {
   getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
-const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
+export interface NextChapterLandscapeButtonRef {
+  triggerRipple: () => void;
+}
+
+const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, NextChapterLandscapeButtonProps>(({
   onPress,
   stringFigure,
   currentChapterIndex,
   isLastChapterCompleted,
   getLocalizedText,
-}) => {
+}, ref) => {
   const nextButtonScale = useRef(new Animated.Value(1)).current;
   const rippleAnim = useRef(new Animated.Value(0)).current;
   const rippleOpacity = useRef(new Animated.Value(0)).current;
@@ -35,14 +39,8 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
     }
   };
 
-  const createPressOutHandler = () => {
+  const triggerRippleEffect = () => {
     if (!isDisabled) {
-      Animated.spring(nextButtonScale, {
-        toValue: 1,
-        useNativeDriver: true,
-      }).start();
-
-      // リップルエフェクト開始
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
       Animated.parallel([
@@ -59,6 +57,22 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
       ]).start();
     }
   };
+
+  const createPressOutHandler = () => {
+    if (!isDisabled) {
+      Animated.spring(nextButtonScale, {
+        toValue: 1,
+        useNativeDriver: true,
+      }).start();
+
+      // リップルエフェクト開始
+      triggerRippleEffect();
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    triggerRipple: triggerRippleEffect,
+  }));
 
   const rippleScale = rippleAnim.interpolate({
     inputRange: [0, 1],
@@ -123,7 +137,7 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
       </View>
     </TouchableWithoutFeedback>
   );
-};
+});
 
 const styles = StyleSheet.create({
   controlButton: {

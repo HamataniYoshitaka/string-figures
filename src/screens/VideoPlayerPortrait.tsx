@@ -18,7 +18,7 @@ import PreviousChapterLandscapeButton from '../components/PreviousChapterLandsca
 import ReplayButton, { ReplayButtonRef } from '../components/ReplayButton';
 import ReplayLandscapeButton from '../components/ReplayLandscapeButton';
 import NextChapterButton, { NextChapterButtonRef } from '../components/NextChapterButton';
-import NextChapterLandscapeButton from '../components/NextChapterLandscapeButton';
+import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from '../components/NextChapterLandscapeButton';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressBars from '../components/ProgressBars';
@@ -293,6 +293,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           {/* つぎボタン */}
           {isDeviceLandscape ? (
             <NextChapterLandscapeButton
+              ref={nextChapterButtonRef as React.RefObject<NextChapterLandscapeButtonRef>}
               onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
               stringFigure={stringFigure}
               currentChapterIndex={currentChapterIndex}
