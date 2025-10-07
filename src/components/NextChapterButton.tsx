@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
 import { PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
@@ -12,13 +12,17 @@ interface NextChapterButtonProps {
   getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
-const NextChapterButton: React.FC<NextChapterButtonProps> = ({
+export interface NextChapterButtonRef {
+  triggerRipple: () => void;
+}
+
+const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProps>(({
   onPress,
   isLastChapterCompleted,
   stringFigure,
   currentChapterIndex,
   getLocalizedText,
-}) => {
+}, ref) => {
   const isDisabled = currentChapterIndex === stringFigure.chapters.length - 1 && !isLastChapterCompleted;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
@@ -35,14 +39,8 @@ const NextChapterButton: React.FC<NextChapterButtonProps> = ({
     }
   };
 
-  const handlePressOut = () => {
+  const triggerRippleEffect = () => {
     if (!isDisabled) {
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        useNativeDriver: true,
-      }).start();
-
-      // リップルエフェクト開始
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
       Animated.parallel([
@@ -59,6 +57,22 @@ const NextChapterButton: React.FC<NextChapterButtonProps> = ({
       ]).start();
     }
   };
+
+  const handlePressOut = () => {
+    if (!isDisabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+      }).start();
+
+      // リップルエフェクト開始
+      triggerRippleEffect();
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    triggerRipple: triggerRippleEffect,
+  }));
 
   const rippleScale = rippleAnim.interpolate({
     inputRange: [0, 1],
@@ -129,7 +143,7 @@ const NextChapterButton: React.FC<NextChapterButtonProps> = ({
       </View>
     </TouchableWithoutFeedback>
   );
-};
+});
 
 const styles = StyleSheet.create({
   controlButton: {

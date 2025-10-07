@@ -10,6 +10,7 @@ import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import VideoPlayerLandscape from './VideoPlayerLandscape';
 import VideoPlayerPortrait from './VideoPlayerPortrait';
+import { NextChapterButtonRef } from '../components/NextChapterButton';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -44,6 +45,7 @@ export interface VideoPlayerSharedProps {
   isLastChapterCompleted: boolean;
   playbackRate: number;
   videoRef: React.RefObject<Video | null>;
+  nextChapterButtonRef: React.RefObject<NextChapterButtonRef | null>;
   isLandscapeMode: boolean;
   PLAYBACK_RATES: number[];
   recognizing: boolean;
@@ -82,6 +84,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isLandscapeMode, setIsLandscapeMode] = useState(false);
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const videoRef = useRef<Video>(null);
+  const nextChapterButtonRef = useRef<NextChapterButtonRef>(null);
 
   // 音声認識フック
   const {
@@ -230,19 +233,23 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
     try {
       const status = await videoRef.current.getStatusAsync();
-      
+
       if (status.isLoaded) {
         const currentPosition = status.positionMillis || 0;
-        
+
         // chapter0で動画の再生時間が0秒の場合はそのまま再生
         if (currentChapterIndex === 0 && currentPosition === 0) {
           await videoRef.current.playAsync();
-        } 
+          // リップルエフェクトを発火
+          nextChapterButtonRef.current?.triggerRipple();
+        }
         // それ以外の場合は次のchapterへ進む
         else if (currentChapterIndex < stringFigure.chapters.length - 1) {
           setShouldAutoPlay(true);
           setCurrentChapterIndex(prev => prev + 1);
           setPlaybackPosition(0); // 新しいチャプターの開始時は進捗をリセット
+          // リップルエフェクトを発火
+          nextChapterButtonRef.current?.triggerRipple();
         }
       }
     } catch (error) {
@@ -402,6 +409,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     isLastChapterCompleted,
     playbackRate,
     videoRef,
+    nextChapterButtonRef,
     isLandscapeMode,
     PLAYBACK_RATES,
     recognizing,

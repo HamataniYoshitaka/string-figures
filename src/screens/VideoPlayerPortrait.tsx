@@ -17,7 +17,7 @@ import PreviousChapterButton from '../components/PreviousChapterButton';
 import PreviousChapterLandscapeButton from '../components/PreviousChapterLandscapeButton';
 import ReplayButton from '../components/ReplayButton';
 import ReplayLandscapeButton from '../components/ReplayLandscapeButton';
-import NextChapterButton from '../components/NextChapterButton';
+import NextChapterButton, { NextChapterButtonRef } from '../components/NextChapterButton';
 import NextChapterLandscapeButton from '../components/NextChapterLandscapeButton';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
@@ -29,6 +29,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   currentChapterIndex,
   playbackRate,
   videoRef,
+  nextChapterButtonRef,
   playbackPosition,
   isLastChapterCompleted,
   currentLanguage,
@@ -296,6 +297,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             />
           ) : (
             <NextChapterButton
+              ref={nextChapterButtonRef}
               onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
               stringFigure={stringFigure}
               currentChapterIndex={currentChapterIndex}
