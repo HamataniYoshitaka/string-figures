@@ -126,7 +126,7 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
             </Animated.View>
           )}
         </View>
-        <View style={[styles.speedButton, styles.speedButtonTopLeft, isDisabled && styles.balloonDisabled]}>
+        <View style={[styles.balloon, styles.balloonTopLeft, isDisabled && styles.balloonDisabled]}>
           <Text style={styles.controlButtonText}>
             {isLastChapterCompleted
               ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
@@ -176,23 +176,15 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
-    // elevation: 8,
   },
-  speedButton: {
+  balloon: {
     backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
     position: 'relative',
   },
-  speedButtonTopLeft: {
+  balloonTopLeft: {
     borderTopLeftRadius: 0,
   },
   controlButtonText: {

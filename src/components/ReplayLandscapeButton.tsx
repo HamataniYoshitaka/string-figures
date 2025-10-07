@@ -97,11 +97,11 @@ const ReplayLandscapeButton: React.FC<ReplayLandscapeButtonProps> = ({
         </View>
         <View style={[
           styles.chapterBalloon,
-          styles.speedButtonTop,
+          styles.balloonTop,
           isDisabled && styles.balloonDisabled
         ]}>
           <Text style={[
-            isDisabled && styles.speedButtonTextDisabled
+            isDisabled && styles.balloonTextDisabled
           ]}>{getLocalizedText({ ja: 'もういちど', en: 'Replay' })}</Text>
           <SpeedButtonTail
             fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
@@ -157,13 +157,13 @@ const styles = StyleSheet.create({
     color: '#57534D',
     fontWeight: '400',
   },
-  speedButtonTop: {
+  balloonTop: {
     borderBottomLeftRadius: 0,
   },
   balloonDisabled: {
     opacity: 0.0,
   },
-  speedButtonTextDisabled: {
+  balloonTextDisabled: {
     color: '#999',
   },
 });

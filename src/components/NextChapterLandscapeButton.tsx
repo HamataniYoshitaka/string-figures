@@ -106,11 +106,11 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
         </View>
         <View style={[
           styles.chapterBalloon,
-          styles.speedButtonTop,
+          styles.balloonTop,
           isDisabled && styles.balloonDisabled
         ]}>
           <Text style={[
-            isDisabled && styles.speedButtonTextDisabled
+            isDisabled && styles.balloonTextDisabled
           ]}>{isLastChapterCompleted
             ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
             : getLocalizedText({ ja: 'つぎ', en: 'Next' })
@@ -169,13 +169,13 @@ const styles = StyleSheet.create({
     color: '#57534D',
     fontWeight: '400',
   },
-  speedButtonTop: {
+  balloonTop: {
     borderBottomLeftRadius: 0,
   },
   balloonDisabled: {
     opacity: 0.0,
   },
-  speedButtonTextDisabled: {
+  balloonTextDisabled: {
     color: '#999',
   },
 });

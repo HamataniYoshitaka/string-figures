@@ -110,8 +110,8 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
           </Animated.View>
         </View>
         <View style={[
-          styles.speedButton,
-          styles.speedButtonTopLeft,
+          styles.balloon,
+          styles.balloonTopLeft,
           isDisabled && styles.balloonDisabled
         ]}>
           <Text style={[
@@ -164,14 +164,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  speedButton: {
+  balloon: {
     backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
     position: 'relative',
   },
-  speedButtonTopLeft: {
+  balloonTopLeft: {
     borderTopLeftRadius: 0,
   },
   controlButtonText: {

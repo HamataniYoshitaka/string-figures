@@ -106,7 +106,7 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
             />
           </Animated.View>
         </View>
-        <View style={[styles.speedButton, styles.speedButtonTopLeft, disabled && styles.balloonDisabled]}>
+        <View style={[styles.balloon, styles.balloonTopLeft, disabled && styles.balloonDisabled]}>
           <Text style={[styles.controlButtonText, disabled && styles.disabledText]}>
             {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
           </Text>
@@ -162,14 +162,14 @@ const styles = StyleSheet.create({
     // shadowRadius: 4,
     // elevation: 8,
   },
-  speedButton: {
+  balloon: {
     backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
     position: 'relative',
   },
-  speedButtonTopLeft: {
+  balloonTopLeft: {
     borderTopLeftRadius: 0,
   },
   controlButtonText: {
