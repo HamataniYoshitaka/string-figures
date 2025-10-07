@@ -11,6 +11,7 @@ import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import VideoPlayerLandscape from './VideoPlayerLandscape';
 import VideoPlayerPortrait from './VideoPlayerPortrait';
 import { NextChapterButtonRef } from '../components/NextChapterButton';
+import { ReplayButtonRef } from '../components/ReplayButton';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -46,6 +47,7 @@ export interface VideoPlayerSharedProps {
   playbackRate: number;
   videoRef: React.RefObject<Video | null>;
   nextChapterButtonRef: React.RefObject<NextChapterButtonRef | null>;
+  replayButtonRef: React.RefObject<ReplayButtonRef | null>;
   isLandscapeMode: boolean;
   PLAYBACK_RATES: number[];
   recognizing: boolean;
@@ -85,6 +87,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const videoRef = useRef<Video>(null);
   const nextChapterButtonRef = useRef<NextChapterButtonRef>(null);
+  const replayButtonRef = useRef<ReplayButtonRef>(null);
 
   // 音声認識フック
   const {
@@ -288,6 +291,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       await videoRef.current.setPositionAsync(0);
       setPlaybackPosition(0);
       await videoRef.current.playAsync();
+      // リップルエフェクトを発火
+      replayButtonRef.current?.triggerRipple();
     } catch (error) {
       console.error('Error replaying video:', error);
     }
@@ -410,6 +415,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     playbackRate,
     videoRef,
     nextChapterButtonRef,
+    replayButtonRef,
     isLandscapeMode,
     PLAYBACK_RATES,
     recognizing,

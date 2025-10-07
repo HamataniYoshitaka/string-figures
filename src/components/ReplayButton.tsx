@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
 import { ReplayIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
@@ -10,12 +10,16 @@ interface ReplayButtonProps {
   getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
-const ReplayButton: React.FC<ReplayButtonProps> = ({
+export interface ReplayButtonRef {
+  triggerRipple: () => void;
+}
+
+const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
   onPress,
   currentChapterIndex,
   playbackPosition,
   getLocalizedText,
-}) => {
+}, ref) => {
   const isDisabled = currentChapterIndex === 0 && playbackPosition === 0;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
@@ -32,14 +36,8 @@ const ReplayButton: React.FC<ReplayButtonProps> = ({
     }
   };
 
-  const handlePressOut = () => {
+  const triggerRippleEffect = () => {
     if (!isDisabled) {
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        useNativeDriver: true,
-      }).start();
-
-      // リップルエフェクト開始
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
       Animated.parallel([
@@ -56,6 +54,22 @@ const ReplayButton: React.FC<ReplayButtonProps> = ({
       ]).start();
     }
   };
+
+  const handlePressOut = () => {
+    if (!isDisabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+      }).start();
+
+      // リップルエフェクト開始
+      triggerRippleEffect();
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    triggerRipple: triggerRippleEffect,
+  }));
 
   const rippleScale = rippleAnim.interpolate({
     inputRange: [0, 1],
@@ -116,7 +130,7 @@ const ReplayButton: React.FC<ReplayButtonProps> = ({
       </View>
     </TouchableWithoutFeedback>
   );
-};
+});
 
 const styles = StyleSheet.create({
   controlButton: {
