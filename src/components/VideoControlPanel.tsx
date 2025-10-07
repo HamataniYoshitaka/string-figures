@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import {
   View,
   StyleSheet,
@@ -10,9 +10,9 @@ import {
 import { CloseIcon } from './icons';
 import LandScapeIcon from './icons/LandScape';
 import RestartButton from './RestartButton';
-import NextChapterLandscapeButton from './NextChapterLandscapeButton';
-import ReplayLandscapeButton from './ReplayLandscapeButton';
-import PreviousChapterLandscapeButton from './PreviousChapterLandscapeButton';
+import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
+import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
+import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
 import SpeedControlLandscape from './SpeedControlLandscape';
 import { StringFigure } from '../types';
 
@@ -26,6 +26,9 @@ interface VideoControlPanelProps {
   isLandscapeMode: boolean;
   currentLanguage: 'ja' | 'en';
   recognizing: boolean;
+  nextChapterButtonRef: React.RefObject<NextChapterLandscapeButtonRef | null>;
+  replayButtonRef: React.RefObject<ReplayLandscapeButtonRef | null>;
+  previousChapterButtonRef: React.RefObject<PreviousChapterLandscapeButtonRef | null>;
   onGoBack: () => void;
   onNextChapter: () => void;
   onReplay: () => void;
@@ -47,6 +50,9 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   isLandscapeMode,
   currentLanguage,
   recognizing,
+  nextChapterButtonRef,
+  replayButtonRef,
+  previousChapterButtonRef,
   onGoBack,
   onNextChapter,
   onReplay,
@@ -137,6 +143,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       {/* コントロールボタン */}
       <View style={styles.controlsContainer}>
         <NextChapterLandscapeButton
+          ref={nextChapterButtonRef}
           onPress={isLastChapterCompleted ? onRestartFromBeginning : onNextChapter}
           stringFigure={stringFigure}
           currentChapterIndex={currentChapterIndex}
@@ -145,6 +152,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
         />
 
         <ReplayLandscapeButton
+          ref={replayButtonRef}
           onPress={onReplay}
           currentChapterIndex={currentChapterIndex}
           playbackPosition={playbackPosition}
@@ -152,6 +160,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
         />
 
         <PreviousChapterLandscapeButton
+          ref={previousChapterButtonRef}
           onPress={onPreviousChapter}
           currentChapterIndex={currentChapterIndex}
           getLocalizedText={getLocalizedText}
