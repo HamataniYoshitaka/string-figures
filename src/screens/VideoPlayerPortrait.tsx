@@ -16,7 +16,7 @@ import SpeedControlLandscape from '../components/SpeedControlLandscape';
 import PreviousChapterButton, { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
 import PreviousChapterLandscapeButton from '../components/PreviousChapterLandscapeButton';
 import ReplayButton, { ReplayButtonRef } from '../components/ReplayButton';
-import ReplayLandscapeButton from '../components/ReplayLandscapeButton';
+import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from '../components/ReplayLandscapeButton';
 import NextChapterButton, { NextChapterButtonRef } from '../components/NextChapterButton';
 import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from '../components/NextChapterLandscapeButton';
 
@@ -275,6 +275,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           {/* もういちど */}
           {isDeviceLandscape ? (
             <ReplayLandscapeButton
+              ref={replayButtonRef as React.RefObject<ReplayLandscapeButtonRef>}
               onPress={onReplay}
               currentChapterIndex={currentChapterIndex}
               playbackPosition={playbackPosition}
