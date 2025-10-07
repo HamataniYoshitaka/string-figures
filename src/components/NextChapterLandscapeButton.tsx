@@ -91,7 +91,7 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
               isDisabled && styles.disabledButton,
               { transform: [{ scale: nextButtonScale }] }
             ]}>
-              <SkipBackwardIcon width={26} height={26} fillColor="white" />
+              <SkipBackwardIcon width={26} height={26} fillColor="#57534D" />
             </Animated.View>
           ) : (
             <Animated.View style={[

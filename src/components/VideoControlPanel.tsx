@@ -136,20 +136,13 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
 
       {/* コントロールボタン */}
       <View style={styles.controlsContainer}>
-        {isLastChapterCompleted ? (
-          <RestartButton
-            onPress={onRestartFromBeginning}
-            getLocalizedText={getLocalizedText}
-          />
-        ) : (
-          <NextChapterLandscapeButton
-            onPress={onNextChapter}
-            stringFigure={stringFigure}
-            currentChapterIndex={currentChapterIndex}
-            isLastChapterCompleted={isLastChapterCompleted}
-            getLocalizedText={getLocalizedText}
-          />
-        )}
+        <NextChapterLandscapeButton
+          onPress={isLastChapterCompleted ? onRestartFromBeginning : onNextChapter}
+          stringFigure={stringFigure}
+          currentChapterIndex={currentChapterIndex}
+          isLastChapterCompleted={isLastChapterCompleted}
+          getLocalizedText={getLocalizedText}
+        />
 
         <ReplayLandscapeButton
           onPress={onReplay}
