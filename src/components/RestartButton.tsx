@@ -13,6 +13,8 @@ const RestartButton: React.FC<RestartButtonProps> = ({
   getLocalizedText,
 }) => {
   const restartButtonScale = useRef(new Animated.Value(1)).current;
+  const rippleAnim = useRef(new Animated.Value(0)).current;
+  const rippleOpacity = useRef(new Animated.Value(0)).current;
 
   const createPressInHandler = () => {
     Animated.spring(restartButtonScale, {
@@ -27,10 +29,29 @@ const RestartButton: React.FC<RestartButtonProps> = ({
     Animated.spring(restartButtonScale, {
       toValue: 1,
       useNativeDriver: true,
-      tension: 300,
-      friction: 8,
     }).start();
+
+    // リップルエフェクト開始
+    rippleAnim.setValue(0);
+    rippleOpacity.setValue(1);
+    Animated.parallel([
+      Animated.timing(rippleAnim, {
+        toValue: 1,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+      Animated.timing(rippleOpacity, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+      }),
+    ]).start();
   };
+
+  const rippleScale = rippleAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.5],
+  });
 
   return (
     <TouchableWithoutFeedback 
@@ -38,26 +59,39 @@ const RestartButton: React.FC<RestartButtonProps> = ({
       onPressIn={createPressInHandler}
       onPressOut={createPressOutHandler}
     >
-      <Animated.View 
-        style={[
-          styles.controlButton,
-          { transform: [{ scale: restartButtonScale }] }
-        ]}
-      >
-        <View style={styles.floatingButton}>
-          <SkipBackwardIcon width={24} height={24} fillColor="#57534D" />
+      <View style={styles.controlButton}>
+        <View style={styles.buttonContainer}>
+          {/* リップルエフェクト */}
+          <Animated.View
+            style={[
+              styles.ripple,
+              {
+                opacity: rippleOpacity,
+                transform: [{ scale: rippleScale }],
+              },
+            ]}
+          />
+          {/* ボタン本体 */}
+          <Animated.View
+            style={[
+              styles.floatingButton,
+              { transform: [{ scale: restartButtonScale }] }
+            ]}
+          >
+            <SkipBackwardIcon width={24} height={24} fillColor="#57534D" />
+          </Animated.View>
         </View>
         <View style={[
           styles.chapterBalloon,
           styles.speedButtonTop
         ]}>
           <Text>{getLocalizedText({ ja: 'はじめから', en: 'Restart' })}</Text>
-          <SpeedButtonTail 
+          <SpeedButtonTail
             fillColor={'rgba(209, 200, 194, 0.5)'}
             isBottom={true}
           />
         </View>
-      </Animated.View>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -68,6 +102,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     gap: 12,
+  },
+  buttonContainer: {
+    position: 'relative',
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  ripple: {
+    position: 'absolute',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#c2410c',
   },
   floatingButton: {
     width: 48,
