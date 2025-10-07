@@ -12,6 +12,7 @@ import VideoPlayerLandscape from './VideoPlayerLandscape';
 import VideoPlayerPortrait from './VideoPlayerPortrait';
 import { NextChapterButtonRef } from '../components/NextChapterButton';
 import { ReplayButtonRef } from '../components/ReplayButton';
+import { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -48,6 +49,7 @@ export interface VideoPlayerSharedProps {
   videoRef: React.RefObject<Video | null>;
   nextChapterButtonRef: React.RefObject<NextChapterButtonRef | null>;
   replayButtonRef: React.RefObject<ReplayButtonRef | null>;
+  previousChapterButtonRef: React.RefObject<PreviousChapterButtonRef | null>;
   isLandscapeMode: boolean;
   PLAYBACK_RATES: number[];
   recognizing: boolean;
@@ -88,6 +90,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const videoRef = useRef<Video>(null);
   const nextChapterButtonRef = useRef<NextChapterButtonRef>(null);
   const replayButtonRef = useRef<ReplayButtonRef>(null);
+  const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
 
   // 音声認識フック
   const {
@@ -307,6 +310,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         setShouldAutoPlay(true);
         setCurrentChapterIndex(prev => prev - 1);
         setPlaybackPosition(0);
+        // リップルエフェクトを発火
+        previousChapterButtonRef.current?.triggerRipple();
       }
     } catch (error) {
       console.error('Error handling previous chapter:', error);
@@ -416,6 +421,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     videoRef,
     nextChapterButtonRef,
     replayButtonRef,
+    previousChapterButtonRef,
     isLandscapeMode,
     PLAYBACK_RATES,
     recognizing,

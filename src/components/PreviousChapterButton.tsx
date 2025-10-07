@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
 import { SkipPreviousIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
@@ -9,11 +9,15 @@ interface PreviousChapterButtonProps {
   getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
-const PreviousChapterButton: React.FC<PreviousChapterButtonProps> = ({
+export interface PreviousChapterButtonRef {
+  triggerRipple: () => void;
+}
+
+const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapterButtonProps>(({
   onPress,
   disabled,
   getLocalizedText,
-}) => {
+}, ref) => {
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));
@@ -29,14 +33,8 @@ const PreviousChapterButton: React.FC<PreviousChapterButtonProps> = ({
     }
   };
 
-  const handlePressOut = () => {
+  const triggerRippleEffect = () => {
     if (!disabled) {
-      Animated.spring(scaleAnim, {
-        toValue: 1,
-        useNativeDriver: true,
-      }).start();
-
-      // リップルエフェクト開始
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
       Animated.parallel([
@@ -53,6 +51,22 @@ const PreviousChapterButton: React.FC<PreviousChapterButtonProps> = ({
       ]).start();
     }
   };
+
+  const handlePressOut = () => {
+    if (!disabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+      }).start();
+
+      // リップルエフェクト開始
+      triggerRippleEffect();
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    triggerRipple: triggerRippleEffect,
+  }));
 
   const rippleScale = rippleAnim.interpolate({
     inputRange: [0, 1],
@@ -106,7 +120,7 @@ const PreviousChapterButton: React.FC<PreviousChapterButtonProps> = ({
       </View>
     </TouchableWithoutFeedback>
   );
-};
+});
 
 const styles = StyleSheet.create({
   controlButton: {

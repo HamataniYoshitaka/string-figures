@@ -13,7 +13,7 @@ import { CloseIcon, BookmarkIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
 import SpeedControlPortrait from '../components/SpeedControlPortrait';
 import SpeedControlLandscape from '../components/SpeedControlLandscape';
-import PreviousChapterButton from '../components/PreviousChapterButton';
+import PreviousChapterButton, { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
 import PreviousChapterLandscapeButton from '../components/PreviousChapterLandscapeButton';
 import ReplayButton, { ReplayButtonRef } from '../components/ReplayButton';
 import ReplayLandscapeButton from '../components/ReplayLandscapeButton';
@@ -31,6 +31,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   videoRef,
   nextChapterButtonRef,
   replayButtonRef,
+  previousChapterButtonRef,
   playbackPosition,
   isLastChapterCompleted,
   currentLanguage,
@@ -264,6 +265,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             />
           ) : (
             <PreviousChapterButton
+              ref={previousChapterButtonRef}
               onPress={onPreviousChapter}
               disabled={currentChapterIndex === 0}
               getLocalizedText={getLocalizedText}
