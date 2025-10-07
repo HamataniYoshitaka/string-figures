@@ -20,6 +20,8 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
   getLocalizedText,
 }) => {
   const nextButtonScale = useRef(new Animated.Value(1)).current;
+  const rippleAnim = useRef(new Animated.Value(0)).current;
+  const rippleOpacity = useRef(new Animated.Value(0)).current;
   const isDisabled = currentChapterIndex === stringFigure.chapters.length - 1 && !isLastChapterCompleted;
 
   const createPressInHandler = () => {
@@ -38,11 +40,30 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
       Animated.spring(nextButtonScale, {
         toValue: 1,
         useNativeDriver: true,
-        tension: 300,
-        friction: 8,
       }).start();
+
+      // リップルエフェクト開始
+      rippleAnim.setValue(0);
+      rippleOpacity.setValue(1);
+      Animated.parallel([
+        Animated.timing(rippleAnim, {
+          toValue: 1,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+        Animated.timing(rippleOpacity, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+      ]).start();
     }
   };
+
+  const rippleScale = rippleAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 1.5],
+  });
 
   return (
     <TouchableWithoutFeedback
@@ -52,24 +73,37 @@ const NextChapterLandscapeButton: React.FC<NextChapterLandscapeButtonProps> = ({
       disabled={isDisabled}
     >
       <View style={styles.controlButton}>
-        {isLastChapterCompleted ? (
-          <Animated.View style={[
-            styles.floatingButton,
-            isDisabled && styles.disabledButton,
-            { transform: [{ scale: nextButtonScale }] }
-          ]}>
-            <SkipBackwardIcon width={26} height={26} fillColor="white" />
-          </Animated.View>
-        ) : (
-          <Animated.View style={[
-            styles.floatingButton,
-            isDisabled && styles.disabledButton,
-            { paddingLeft: 2 },
-            { transform: [{ scale: nextButtonScale }] }
-          ]}>
-            <PlayIcon width={20} height={20} fillColor="#57534D" strokeColor='transparent' />
-          </Animated.View>
-        )}
+        <View style={styles.buttonContainer}>
+          {/* リップルエフェクト */}
+          <Animated.View
+            style={[
+              styles.ripple,
+              {
+                opacity: rippleOpacity,
+                transform: [{ scale: rippleScale }],
+              },
+            ]}
+          />
+          {/* ボタン本体 */}
+          {isLastChapterCompleted ? (
+            <Animated.View style={[
+              styles.floatingButton,
+              isDisabled && styles.disabledButton,
+              { transform: [{ scale: nextButtonScale }] }
+            ]}>
+              <SkipBackwardIcon width={26} height={26} fillColor="white" />
+            </Animated.View>
+          ) : (
+            <Animated.View style={[
+              styles.floatingButton,
+              isDisabled && styles.disabledButton,
+              { paddingLeft: 2 },
+              { transform: [{ scale: nextButtonScale }] }
+            ]}>
+              <PlayIcon width={20} height={20} fillColor="#57534D" strokeColor='transparent' />
+            </Animated.View>
+          )}
+        </View>
         <View style={[
           styles.chapterBalloon,
           styles.speedButtonTop,
@@ -97,6 +131,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     gap: 12,
+  },
+  buttonContainer: {
+    position: 'relative',
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  ripple: {
+    position: 'absolute',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#c2410c',
   },
   floatingButton: {
     width: 48,
