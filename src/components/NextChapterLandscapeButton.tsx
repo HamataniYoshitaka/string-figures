@@ -155,19 +155,9 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
-    // elevation: 8,
   },
   disabledButton: {
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    shadowOpacity: 0.1,
-    elevation: 0,
+    opacity: 0.5,
   },
   chapterBalloon: {
     backgroundColor: 'rgba(209, 200, 194, 0.5)',
