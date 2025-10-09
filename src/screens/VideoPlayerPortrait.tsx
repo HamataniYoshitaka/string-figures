@@ -13,11 +13,11 @@ import { CloseIcon, BookmarkIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
 import SpeedControlPortrait from '../components/SpeedControlPortrait';
 import SpeedControlLandscape from '../components/SpeedControlLandscape';
-import PreviousChapterButton, { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
+import PreviousChapterButton from '../components/PreviousChapterButton';
 import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from '../components/PreviousChapterLandscapeButton';
-import ReplayButton, { ReplayButtonRef } from '../components/ReplayButton';
+import ReplayButton from '../components/ReplayButton';
 import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from '../components/ReplayLandscapeButton';
-import NextChapterButton, { NextChapterButtonRef } from '../components/NextChapterButton';
+import NextChapterButton from '../components/NextChapterButton';
 import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from '../components/NextChapterLandscapeButton';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
@@ -187,10 +187,12 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       {/* 動画エリア */}
       <View style={[
         styles.videoArea,
+        !isTablet && { paddingHorizontal: 0 },
         (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape
       ]}>
         <View style={[
           styles.videoPlayer,
+          !isTablet && { borderRadius: 0 },
           (isTablet && isDeviceLandscape) && { height: Dimensions.get('window').height * 0.73 }
         ]}>
           <Video
