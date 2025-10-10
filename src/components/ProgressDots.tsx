@@ -1,5 +1,6 @@
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Animated, Dimensions, StyleSheet, View } from "react-native";
 import { useDeviceInfo } from "../hooks/useDeviceInfo";
+import { useEffect, useRef } from "react";
 
 interface Chapter {
 videoUrl: string | any;
@@ -28,6 +29,22 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({
       : isDeviceLandscape
       ? ((windowHeight - 60) / 9) * 16
       : windowWidth - 32;
+    
+    // 各チャプターのwidth用のアニメーション値
+    const animatedWidths = useRef(
+      chapters.map(() => new Animated.Value(8))
+    ).current;
+    
+    // currentChapterIndexが変更されたときにアニメーション実行
+    useEffect(() => {
+      chapters.forEach((_, index) => {
+        Animated.timing(animatedWidths[index], {
+          toValue: index === currentChapterIndex ? 40 : 8,
+          duration: 300,
+          useNativeDriver: false,
+        }).start();
+      });
+    }, [currentChapterIndex, chapters]);
       
       return (
         <View style={[styles.progressContainer, { width: progressBarWidth }]}>
@@ -38,7 +55,7 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({
               const isActive = index === currentChapterIndex;
 
               return (
-                <View key={index} style={styles.itemContainer}>
+                <Animated.View key={index} style={{ width: animatedWidths[index] }}>
                   {isActive ? (
                     <View style={styles.progressBarWrapper}>
                       <View style={styles.progressBarBackground} />
@@ -55,7 +72,7 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({
                       isCompleted && styles.dotCompleted
                     ]} />
                   )}
-                </View>
+                </Animated.View>
               );
             })}
           </View>
@@ -69,11 +86,9 @@ const styles = StyleSheet.create({
     },
     progressBarsContainer: {
       flexDirection: 'row',
-      gap: 4,
+      gap: 8,
       alignItems: 'center',
-    },
-    itemContainer: {
-      flex: 1,
+      justifyContent: 'center',
     },
     progressBarWrapper: {
       height: 8,
@@ -95,7 +110,7 @@ const styles = StyleSheet.create({
       borderRadius: 4,
     },
     dot: {
-      width: 8,
+      width: '100%',
       height: 8,
       borderRadius: 4,
       backgroundColor: '#E0E0E0',
