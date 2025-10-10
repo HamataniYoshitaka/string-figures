@@ -21,8 +21,8 @@ import NextChapterButton from '../components/NextChapterButton';
 import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from '../components/NextChapterLandscapeButton';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
-import ProgressBars from '../components/ProgressBars';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
+import ProgressDots from '../components/ProgressDots';
 
 const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -227,7 +227,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           styles.progressContainer,
           isDeviceLandscape && styles.progressContainerLandscape
         ]}>
-          <ProgressBars 
+          <ProgressDots 
             chapters={stringFigure.chapters}
             currentChapterIndex={currentChapterIndex}
             getChapterProgress={getChapterProgress}
