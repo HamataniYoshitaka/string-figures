@@ -64,7 +64,7 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({
     }, [chapters.map((_, index) => getChapterProgress(index)).join(',')]);
       
       return (
-        <View style={[styles.progressContainer, { width: progressBarWidth }]}>
+        <View style={ { width: progressBarWidth }}>
           <View style={styles.progressBarsContainer}>
             {chapters.map((_, index) => {
               const progress = getChapterProgress(index);
@@ -103,9 +103,6 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({
 }
 
 const styles = StyleSheet.create({
-    progressContainer: {
-      paddingVertical: 16,
-    },
     progressBarsContainer: {
       flexDirection: 'row',
       gap: 8,
@@ -122,23 +119,23 @@ const styles = StyleSheet.create({
       position: 'absolute',
       width: '100%',
       height: '100%',
-      backgroundColor: '#E0E0E0',
+      backgroundColor: '#a8a29e',
       borderRadius: 4,
     },
     progressBarFill: {
       position: 'absolute',
       height: '100%',
-      backgroundColor: '#000',
+      backgroundColor: '#44403c',
       borderRadius: 4,
     },
     dot: {
       width: '100%',
       height: 8,
       borderRadius: 4,
-      backgroundColor: '#E0E0E0',
+      backgroundColor: '#a8a29e',
     },
     dotCompleted: {
-      backgroundColor: '#000',
+      backgroundColor: '#44403c',
     },
 });
 

@@ -8,7 +8,7 @@ import {
 import { Video, ResizeMode } from 'expo-av';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
-import ProgressBars from '../components/ProgressBars';
+import ProgressDots from '../components/ProgressDots';
 import VideoControlPanel from '../components/VideoControlPanel';
 import { BookmarkIcon } from '../components/icons';
 
@@ -87,11 +87,13 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         </View>
 
         {/* 進捗バー */}
-        <ProgressBars 
+        <View style={styles.progressContainer}>
+        <ProgressDots 
           chapters={stringFigure.chapters}
-          currentChapterIndex={currentChapterIndex}
-          getChapterProgress={getChapterProgress}
-        />
+            currentChapterIndex={currentChapterIndex}
+            getChapterProgress={getChapterProgress}
+          />
+        </View>
       </View>
 
       {/* コントロールエリア */}
@@ -188,6 +190,10 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,  
     fontFamily: 'KleeOne-SemiBold',
+  },
+  progressContainer: {
+    paddingVertical: 16,
+    paddingLeft: 16,
   },
 });
 

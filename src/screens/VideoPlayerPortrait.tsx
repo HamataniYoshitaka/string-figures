@@ -409,6 +409,7 @@ const styles = StyleSheet.create({
   },
   progressContainer: {
     marginTop: 16,
+    paddingLeft: 16,
   },
   progressContainerLandscape: {
     marginTop: 0,
