@@ -24,6 +24,7 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));
+  const [balloonColorAnim] = useState(new Animated.Value(0));
 
   const handlePressIn = () => {
     if (!isDisabled) {
@@ -40,6 +41,7 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
     if (!isDisabled) {
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
+      balloonColorAnim.setValue(1);
       Animated.parallel([
         Animated.timing(rippleAnim, {
           toValue: 1,
@@ -50,6 +52,11 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
           toValue: 0,
           duration: 400,
           useNativeDriver: true,
+        }),
+        Animated.timing(balloonColorAnim, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: false,
         }),
       ]).start();
     }
@@ -74,6 +81,11 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
   const rippleScale = rippleAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 1.5],
+  });
+
+  const balloonColor = balloonColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
   });
 
   return (
@@ -109,10 +121,11 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
             />
           </Animated.View>
         </View>
-        <View style={[
+        <Animated.View style={[
           styles.balloon,
           styles.balloonTopLeft,
-          isDisabled && styles.balloonDisabled
+          isDisabled && styles.balloonDisabled,
+          !isDisabled && { backgroundColor: balloonColor }
         ]}>
           <Text style={[
             styles.controlButtonText,
@@ -126,7 +139,7 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
             isRight={false}
             isUp={true}
           />
-        </View>
+        </Animated.View>
       </View>
     </TouchableWithoutFeedback>
   );

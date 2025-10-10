@@ -21,6 +21,7 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));
+  const [balloonColorAnim] = useState(new Animated.Value(0));
 
   const handlePressIn = () => {
     if (!disabled) {
@@ -37,6 +38,7 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
     if (!disabled) {
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
+      balloonColorAnim.setValue(1);
       Animated.parallel([
         Animated.timing(rippleAnim, {
           toValue: 1,
@@ -47,6 +49,11 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
           toValue: 0,
           duration: 400,
           useNativeDriver: true,
+        }),
+        Animated.timing(balloonColorAnim, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: false,
         }),
       ]).start();
     }
@@ -71,6 +78,11 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
   const rippleScale = rippleAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 1.5],
+  });
+
+  const balloonColor = balloonColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
   });
 
   return (
@@ -106,7 +118,12 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
             />
           </Animated.View>
         </View>
-        <View style={[styles.balloon, styles.balloonTopLeft, disabled && styles.balloonDisabled]}>
+        <Animated.View style={[
+          styles.balloon,
+          styles.balloonTopLeft,
+          disabled && styles.balloonDisabled,
+          !disabled && { backgroundColor: balloonColor }
+        ]}>
           <Text style={[styles.controlButtonText, disabled && styles.disabledText]}>
             {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
           </Text>
@@ -116,7 +133,7 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
             isRight={false}
             isUp={true}
           />
-        </View>
+        </Animated.View>
       </View>
     </TouchableWithoutFeedback>
   );
