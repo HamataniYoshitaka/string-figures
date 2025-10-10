@@ -23,6 +23,7 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
   const replayButtonScale = useRef(new Animated.Value(1)).current;
   const rippleAnim = useRef(new Animated.Value(0)).current;
   const rippleOpacity = useRef(new Animated.Value(0)).current;
+  const balloonColorAnim = useRef(new Animated.Value(0)).current;
   const isDisabled = currentChapterIndex === 0 && playbackPosition === 0;
 
   const createPressInHandler = () => {
@@ -40,6 +41,7 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
     if (!isDisabled) {
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
+      balloonColorAnim.setValue(1);
       Animated.parallel([
         Animated.timing(rippleAnim, {
           toValue: 1,
@@ -50,6 +52,11 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
           toValue: 0,
           duration: 400,
           useNativeDriver: true,
+        }),
+        Animated.timing(balloonColorAnim, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: false,
         }),
       ]).start();
     }
@@ -74,6 +81,11 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
   const rippleScale = rippleAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 1.5],
+  });
+
+  const balloonColor = balloonColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
   });
 
   return (
@@ -109,10 +121,11 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
             />
           </Animated.View>
         </View>
-        <View style={[
-          styles.chapterBalloon,
+        <Animated.View style={[
+          styles.balloon,
           styles.balloonTop,
-          isDisabled && styles.balloonDisabled
+          isDisabled && styles.balloonDisabled,
+          !isDisabled && { backgroundColor: balloonColor }
         ]}>
           <Text style={[
             isDisabled && styles.balloonTextDisabled
@@ -121,7 +134,7 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
             fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
             isBottom={true}
           />
-        </View>
+        </Animated.View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -161,7 +174,7 @@ const styles = StyleSheet.create({
   disabledButton: {
     opacity: 0.5,
   },
-  chapterBalloon: {
+  balloon: {
     backgroundColor: 'rgba(209, 200, 194, 0.5)',
     fontSize: 14,
     paddingHorizontal: 12,
