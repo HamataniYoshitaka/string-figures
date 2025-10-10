@@ -34,7 +34,12 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({
     const animatedWidths = useRef(
       chapters.map(() => new Animated.Value(8))
     ).current;
-    
+
+    // 各チャプターのprogress用のアニメーション値
+    const animatedProgress = useRef(
+      chapters.map(() => new Animated.Value(0))
+    ).current;
+
     // currentChapterIndexが変更されたときにアニメーション実行
     useEffect(() => {
       chapters.forEach((_, index) => {
@@ -45,6 +50,18 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({
         }).start();
       });
     }, [currentChapterIndex, chapters]);
+
+    // progressが変更されたときにアニメーション実行
+    useEffect(() => {
+      chapters.forEach((_, index) => {
+        const progress = getChapterProgress(index);
+        Animated.timing(animatedProgress[index], {
+          toValue: progress,
+          duration: 600,
+          useNativeDriver: false,
+        }).start();
+      });
+    }, [chapters.map((_, index) => getChapterProgress(index)).join(',')]);
       
       return (
         <View style={[styles.progressContainer, { width: progressBarWidth }]}>
@@ -59,10 +76,15 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({
                   {isActive ? (
                     <View style={styles.progressBarWrapper}>
                       <View style={styles.progressBarBackground} />
-                      <View
+                      <Animated.View
                         style={[
                           styles.progressBarFill,
-                          { width: `${progress * 100}%` }
+                          {
+                            width: animatedProgress[index].interpolate({
+                              inputRange: [0, 1],
+                              outputRange: ['0%', '100%']
+                            })
+                          }
                         ]}
                       />
                     </View>
