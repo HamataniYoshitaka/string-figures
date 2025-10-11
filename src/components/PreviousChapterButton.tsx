@@ -5,7 +5,7 @@ import SpeedButtonTail from './icons/SpeedButtonTail';
 
 interface PreviousChapterButtonProps {
   onPress: () => void;
-  disabled: boolean;
+  currentChapterIndex: number;
   getLocalizedText: (text: { ja: string; en: string }) => string;
 }
 
@@ -15,16 +15,17 @@ export interface PreviousChapterButtonRef {
 
 const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapterButtonProps>(({
   onPress,
-  disabled,
+  currentChapterIndex,
   getLocalizedText,
 }, ref) => {
+  const isDisabled = currentChapterIndex === 0;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));
   const [balloonColorAnim] = useState(new Animated.Value(0));
 
   const handlePressIn = () => {
-    if (!disabled) {
+    if (!isDisabled) {
       Animated.spring(scaleAnim, {
         toValue: 0.95,
         useNativeDriver: true,
@@ -35,7 +36,7 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
   };
 
   const triggerRippleEffect = () => {
-    if (!disabled) {
+    if (currentChapterIndex > 1) {
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
       balloonColorAnim.setValue(1);
@@ -56,11 +57,15 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
           useNativeDriver: false,
         }),
       ]).start();
+    } else {
+      rippleAnim.setValue(0);
+      rippleOpacity.setValue(0);
+      balloonColorAnim.setValue(0);
     }
   };
 
   const handlePressOut = () => {
-    if (!disabled) {
+    if (!isDisabled) {
       Animated.spring(scaleAnim, {
         toValue: 1,
         useNativeDriver: true,
@@ -90,7 +95,7 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
       onPress={onPress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      disabled={disabled}
+      disabled={isDisabled}
     >
       <View style={styles.controlButton}>
         <View style={styles.buttonContainer}>
@@ -107,7 +112,7 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
           {/* ボタン本体 */}
           <Animated.View style={[
             styles.floatingButton,
-            disabled && styles.disabledButton,
+            isDisabled && styles.disabledButton,
             { transform: [{ scale: scaleAnim }] }
           ]}>
             <SkipPreviousIcon
@@ -121,14 +126,14 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
         <Animated.View style={[
           styles.balloon,
           styles.balloonTopLeft,
-          disabled && styles.balloonDisabled,
-          !disabled && { backgroundColor: balloonColor }
+          isDisabled && styles.balloonDisabled,
+          !isDisabled && { backgroundColor: balloonColor }
         ]}>
-          <Text style={[styles.controlButtonText, disabled && styles.disabledText]}>
+          <Text style={[styles.controlButtonText]}>
             {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
           </Text>
           <SpeedButtonTail
-            fillColor="rgba(205, 205, 205, 0.5)"
+            fillColor="rgba(209, 200, 194, 0.5)"
             isBottom={false}
             isRight={false}
             isUp={true}
@@ -170,17 +175,8 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
-    // elevation: 8,
   },
   balloon: {
-    backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
@@ -199,10 +195,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   balloonDisabled: {
-    backgroundColor: 'rgba(205, 205, 205, 0)',
-  },
-  disabledText: {
-    color: '#fff',
+    opacity: 0.0,
   },
 });
 

@@ -59,6 +59,10 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
           useNativeDriver: false,
         }),
       ]).start();
+    } else {
+      rippleAnim.setValue(0);
+      rippleOpacity.setValue(0);
+      balloonColorAnim.setValue(0);
     }
   };
 
@@ -128,8 +132,7 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
           !isDisabled && { backgroundColor: balloonColor }
         ]}>
           <Text style={[
-            styles.controlButtonText,
-            isDisabled && styles.textDisabled
+            styles.controlButtonText
           ]}>
             {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
           </Text>
@@ -178,7 +181,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   balloon: {
-    backgroundColor: 'rgba(209, 200, 194, 0.5)',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
@@ -197,11 +199,8 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   balloonDisabled: {
-    backgroundColor: 'rgba(208, 205, 205, 0)',
-  },
-  textDisabled: {
-    color: '#fff',
-  },
+    opacity: 0.0,
+  }
 });
 
 export default ReplayButton;

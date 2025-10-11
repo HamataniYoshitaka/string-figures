@@ -11,8 +11,9 @@ import {
 import { Video, ResizeMode } from 'expo-av';
 import { CloseIcon, BookmarkIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
-import SpeedControlPortrait from '../components/SpeedControlPortrait';
-import SpeedControlLandscape from '../components/SpeedControlLandscape';
+// 速度コントロール(未使用)
+// import SpeedControlPortrait from '../components/SpeedControlPortrait';
+// import SpeedControlLandscape from '../components/SpeedControlLandscape';
 import PreviousChapterButton from '../components/PreviousChapterButton';
 import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from '../components/PreviousChapterLandscapeButton';
 import ReplayButton from '../components/ReplayButton';
@@ -45,14 +46,14 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   onReplay,
   onPreviousChapter,
   onRestartFromBeginning,
-  onSlowerSpeed,
-  onFasterSpeed,
+  // onSlowerSpeed,
+  // onFasterSpeed,
   onLandscapeToggle,
   onToggleBookmark,
   bookmarked,
   getLocalizedText,
   getChapterProgress,
-  getPlaybackRateDisplay,
+  // getPlaybackRateDisplay,
 }) => {
   // アニメーション用のスケール値
   const backButtonScale = useRef(new Animated.Value(1)).current;
@@ -270,7 +271,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             <PreviousChapterButton
               ref={previousChapterButtonRef}
               onPress={onPreviousChapter}
-              disabled={currentChapterIndex === 0}
+              currentChapterIndex={currentChapterIndex}
               getLocalizedText={getLocalizedText}
             />
           )}
