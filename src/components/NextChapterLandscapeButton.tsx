@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
 import { PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
@@ -18,19 +18,20 @@ export interface NextChapterLandscapeButtonRef {
 
 const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, NextChapterLandscapeButtonProps>(({
   onPress,
+  isLastChapterCompleted,
   stringFigure,
   currentChapterIndex,
-  isLastChapterCompleted,
   getLocalizedText,
 }, ref) => {
-  const nextButtonScale = useRef(new Animated.Value(1)).current;
-  const rippleAnim = useRef(new Animated.Value(0)).current;
-  const rippleOpacity = useRef(new Animated.Value(0)).current;
   const isDisabled = currentChapterIndex === stringFigure.chapters.length - 1 && !isLastChapterCompleted;
+  const [scaleAnim] = useState(new Animated.Value(1));
+  const [rippleAnim] = useState(new Animated.Value(0));
+  const [rippleOpacity] = useState(new Animated.Value(0));
+  const [balloonColorAnim] = useState(new Animated.Value(0));
 
-  const createPressInHandler = () => {
+  const handlePressIn = () => {
     if (!isDisabled) {
-      Animated.spring(nextButtonScale, {
+      Animated.spring(scaleAnim, {
         toValue: 0.95,
         useNativeDriver: true,
         tension: 300,
@@ -43,6 +44,7 @@ const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, Nex
     if (!isDisabled) {
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
+      balloonColorAnim.setValue(1);
       Animated.parallel([
         Animated.timing(rippleAnim, {
           toValue: 1,
@@ -54,13 +56,18 @@ const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, Nex
           duration: 400,
           useNativeDriver: true,
         }),
+        Animated.timing(balloonColorAnim, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: false,
+        }),
       ]).start();
     }
   };
 
-  const createPressOutHandler = () => {
+  const handlePressOut = () => {
     if (!isDisabled) {
-      Animated.spring(nextButtonScale, {
+      Animated.spring(scaleAnim, {
         toValue: 1,
         useNativeDriver: true,
       }).start();
@@ -79,11 +86,17 @@ const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, Nex
     outputRange: [1, 1.5],
   });
 
+  const balloonBackgroundColor = balloonColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
+  });
+
+
   return (
     <TouchableWithoutFeedback
       onPress={!isDisabled ? onPress : undefined}
-      onPressIn={!isDisabled ? createPressInHandler : undefined}
-      onPressOut={!isDisabled ? createPressOutHandler : undefined}
+      onPressIn={!isDisabled ? handlePressIn : undefined}
+      onPressOut={!isDisabled ? handlePressOut : undefined}
       disabled={isDisabled}
     >
       <View style={styles.controlButton}>
@@ -103,7 +116,7 @@ const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, Nex
             <Animated.View style={[
               styles.floatingButton,
               isDisabled && styles.disabledButton,
-              { transform: [{ scale: nextButtonScale }] }
+              { transform: [{ scale: scaleAnim }] }
             ]}>
               <SkipBackwardIcon width={26} height={26} fillColor="#57534D" />
             </Animated.View>
@@ -112,28 +125,29 @@ const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, Nex
               styles.floatingButton,
               isDisabled && styles.disabledButton,
               { paddingLeft: 2 },
-              { transform: [{ scale: nextButtonScale }] }
+              { transform: [{ scale: scaleAnim }] }
             ]}>
               <PlayIcon width={20} height={20} fillColor="#57534D" strokeColor='transparent' />
             </Animated.View>
           )}
         </View>
-        <View style={[
+        <Animated.View style={[
           styles.chapterBalloon,
           styles.balloonTop,
-          isDisabled && styles.balloonDisabled
+          isDisabled && styles.balloonDisabled,
+          { backgroundColor: balloonBackgroundColor }
         ]}>
           <Text style={[
-            isDisabled && styles.balloonTextDisabled
+            styles.controlButtonText,
           ]}>{isLastChapterCompleted
             ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
             : getLocalizedText({ ja: 'つぎ', en: 'Next' })
           }</Text>
           <SpeedButtonTail
-            fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
+            fillColor="rgba(209, 200, 194, 0.5)"
             isBottom={true}
           />
-        </View>
+        </Animated.View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -189,8 +203,11 @@ const styles = StyleSheet.create({
   balloonDisabled: {
     opacity: 0.0,
   },
-  balloonTextDisabled: {
-    color: '#999',
+  controlButtonText: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 4,
+    fontWeight: '500',
   },
 });
 
