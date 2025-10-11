@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
 import { SkipPreviousIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
@@ -18,14 +18,15 @@ const PreviousChapterLandscapeButton = forwardRef<PreviousChapterLandscapeButton
   currentChapterIndex,
   getLocalizedText,
 }, ref) => {
-  const previousButtonScale = useRef(new Animated.Value(1)).current;
-  const rippleAnim = useRef(new Animated.Value(0)).current;
-  const rippleOpacity = useRef(new Animated.Value(0)).current;
   const isDisabled = currentChapterIndex === 0;
+  const [scaleAnim] = useState(new Animated.Value(1));
+  const [rippleAnim] = useState(new Animated.Value(0));
+  const [rippleOpacity] = useState(new Animated.Value(0));
+  const [balloonColorAnim] = useState(new Animated.Value(0));
 
-  const createPressInHandler = () => {
+  const handlePressIn = () => {
     if (!isDisabled) {
-      Animated.spring(previousButtonScale, {
+      Animated.spring(scaleAnim, {
         toValue: 0.95,
         useNativeDriver: true,
         tension: 300,
@@ -35,9 +36,10 @@ const PreviousChapterLandscapeButton = forwardRef<PreviousChapterLandscapeButton
   };
 
   const triggerRippleEffect = () => {
-    if (!isDisabled) {
+    if (currentChapterIndex > 1) {
       rippleAnim.setValue(0);
       rippleOpacity.setValue(1);
+      balloonColorAnim.setValue(1);
       Animated.parallel([
         Animated.timing(rippleAnim, {
           toValue: 1,
@@ -49,13 +51,22 @@ const PreviousChapterLandscapeButton = forwardRef<PreviousChapterLandscapeButton
           duration: 400,
           useNativeDriver: true,
         }),
+        Animated.timing(balloonColorAnim, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: false,
+        }),
       ]).start();
+    } else {
+      rippleAnim.setValue(0);
+      rippleOpacity.setValue(0);
+      balloonColorAnim.setValue(0);
     }
   };
 
-  const createPressOutHandler = () => {
+  const handlePressOut = () => {
     if (!isDisabled) {
-      Animated.spring(previousButtonScale, {
+      Animated.spring(scaleAnim, {
         toValue: 1,
         useNativeDriver: true,
       }).start();
@@ -74,11 +85,16 @@ const PreviousChapterLandscapeButton = forwardRef<PreviousChapterLandscapeButton
     outputRange: [1, 1.5],
   });
 
+  const balloonColor = balloonColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
+  });
+
   return (
     <TouchableWithoutFeedback
       onPress={!isDisabled ? onPress : undefined}
-      onPressIn={!isDisabled ? createPressInHandler : undefined}
-      onPressOut={!isDisabled ? createPressOutHandler : undefined}
+      onPressIn={!isDisabled ? handlePressIn : undefined}
+      onPressOut={!isDisabled ? handlePressOut : undefined}
       disabled={isDisabled}
     >
       <View style={styles.controlButton}>
@@ -97,7 +113,7 @@ const PreviousChapterLandscapeButton = forwardRef<PreviousChapterLandscapeButton
           <Animated.View style={[
             styles.floatingButton,
             isDisabled && styles.disabledButton,
-            { transform: [{ scale: previousButtonScale }] }
+            { transform: [{ scale: scaleAnim }] }
           ]}>
             <SkipPreviousIcon
               width={24}
@@ -107,19 +123,18 @@ const PreviousChapterLandscapeButton = forwardRef<PreviousChapterLandscapeButton
             />
           </Animated.View>
         </View>
-        <View style={[
+        <Animated.View style={[
           styles.chapterBalloon,
           styles.balloonTop,
-          isDisabled && styles.balloonDisabled
+          isDisabled && styles.balloonDisabled,
+          { backgroundColor: balloonColor }
         ]}>
-          <Text style={[
-            isDisabled && styles.balloonTextDisabled
-          ]}>{getLocalizedText({ ja: 'まえ', en: 'Previous' })}</Text>
+          <Text style={[styles.controlButtonText]}>{getLocalizedText({ ja: 'まえ', en: 'Previous' })}</Text>
           <SpeedButtonTail
-            fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
+            fillColor="rgba(209, 200, 194, 0.5)"
             isBottom={true}
           />
-        </View>
+        </Animated.View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -177,6 +192,12 @@ const styles = StyleSheet.create({
   },
   balloonTextDisabled: {
     color: '#999',
+  },
+  controlButtonText: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 4,
+    fontWeight: '500',
   },
 });
 

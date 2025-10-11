@@ -58,6 +58,10 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
           useNativeDriver: false,
         }),
       ]).start();
+    } else {
+      rippleAnim.setValue(0);
+      rippleOpacity.setValue(0);
+      balloonColorAnim.setValue(0);
     }
   };
 

@@ -9,11 +9,10 @@ import {
 
 import { CloseIcon } from './icons';
 import LandScapeIcon from './icons/LandScape';
-import RestartButton from './RestartButton';
 import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
 import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
 import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
-import SpeedControlLandscape from './SpeedControlLandscape';
+// import SpeedControlLandscape from './SpeedControlLandscape';
 import { StringFigure } from '../types';
 
 interface VideoControlPanelProps {
@@ -134,7 +133,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
             <LandScapeIcon 
               width={32} 
               height={32} 
-              fillColor={isLandscapeMode ? "#1862cfff" : "#2d2b29ff"}
+              fillColor={isLandscapeMode ? "#c2410c" : "#2d2b29ff"}
             />
           </Animated.View>
         </TouchableWithoutFeedback>
