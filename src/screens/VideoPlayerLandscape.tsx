@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    backgroundColor: '#F7F6F2',
+    backgroundColor: '#e8e6e0',
     position: 'relative',
   },
   bookmarkButton: {

@@ -50,7 +50,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
         <EasyIcon 
           width={28} 
           height={28} 
-          strokeColor={selectedFilters.includes('easy') ? '#F7F6F2' : '#57534D'} 
+          strokeColor={selectedFilters.includes('easy') ? '#e8e6e0' : '#57534D'} 
           strokeWidth={1}
         />
         <Text style={[
@@ -70,7 +70,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
         <NormalIcon
           width={28}
           height={28}
-          strokeColor={selectedFilters.includes('medium') ? '#F7F6F2' : '#57534D'}
+          strokeColor={selectedFilters.includes('medium') ? '#e8e6e0' : '#57534D'}
           strokeWidth={1}
         />
         <Text style={[
@@ -90,7 +90,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
         <HardIcon
           width={28}
           height={28}
-          strokeColor={selectedFilters.includes('hard') ? '#F7F6F2' : '#57534D'}
+          strokeColor={selectedFilters.includes('hard') ? '#e8e6e0' : '#57534D'}
           strokeWidth={1}
         />
         <Text style={[
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
   },
   filterButtonUnselected: {
-    backgroundColor: '#F7F6F2',
+    backgroundColor: '#e8e6e0',
     borderWidth: 1,
     borderColor: '#57534D',
   },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   filterTextSelected: {
-    color: '#F7F6F2',
+    color: '#e8e6e0',
   },
   filterTextUnselected: {
     color: '#57534D',
