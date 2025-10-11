@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
   progressContainerLandscape: {
-    marginTop: 0,
+    marginBottom: 16,
   },
   speedButton: {
     backgroundColor: 'rgba(209, 200, 194, 0.5)',

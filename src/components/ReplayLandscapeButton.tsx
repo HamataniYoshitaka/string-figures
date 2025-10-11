@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
 import { ReplayIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
@@ -20,15 +20,15 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
   playbackPosition,
   getLocalizedText,
 }, ref) => {
-  const replayButtonScale = useRef(new Animated.Value(1)).current;
+  const isDisabled = currentChapterIndex === 0 && playbackPosition === 0;
+  const [scaleAnim] = useState(new Animated.Value(1));
   const rippleAnim = useRef(new Animated.Value(0)).current;
   const rippleOpacity = useRef(new Animated.Value(0)).current;
   const balloonColorAnim = useRef(new Animated.Value(0)).current;
-  const isDisabled = currentChapterIndex === 0 && playbackPosition === 0;
 
-  const createPressInHandler = () => {
+  const handlePressIn = () => {
     if (!isDisabled) {
-      Animated.spring(replayButtonScale, {
+      Animated.spring(scaleAnim, {
         toValue: 0.95,
         useNativeDriver: true,
         tension: 300,
@@ -36,7 +36,6 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
       }).start();
     }
   };
-
   const triggerRippleEffect = () => {
     if (!isDisabled) {
       rippleAnim.setValue(0);
@@ -62,9 +61,9 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
     }
   };
 
-  const createPressOutHandler = () => {
+  const handlePressOut = () => {
     if (!isDisabled) {
-      Animated.spring(replayButtonScale, {
+      Animated.spring(scaleAnim, {
         toValue: 1,
         useNativeDriver: true,
       }).start();
@@ -91,8 +90,8 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
   return (
     <TouchableWithoutFeedback
       onPress={!isDisabled ? onPress : undefined}
-      onPressIn={!isDisabled ? createPressInHandler : undefined}
-      onPressOut={!isDisabled ? createPressOutHandler : undefined}
+      onPressIn={!isDisabled ? handlePressIn : undefined}
+      onPressOut={!isDisabled ? handlePressOut : undefined}
       disabled={isDisabled}
     >
       <View style={styles.controlButton}>
@@ -111,7 +110,7 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
           <Animated.View style={[
             styles.floatingButton,
             isDisabled && styles.disabledButton,
-            { transform: [{ scale: replayButtonScale }] }
+            { transform: [{ scale: scaleAnim }] }
           ]}>
             <ReplayIcon
               width={24}
