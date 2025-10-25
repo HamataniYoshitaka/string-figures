@@ -24,6 +24,7 @@ import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from '../co
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import ProgressDots from '../components/ProgressDots';
+import { CHAPTER_VIDEOS } from '../data/chapterVideos';
 
 const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -200,10 +201,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           <Video
             key={`chapter-${currentChapterIndex}`}
             ref={videoRef}
-            source={typeof stringFigure.chapters[currentChapterIndex].videoUrl === 'string' 
-              ? { uri: stringFigure.chapters[currentChapterIndex].videoUrl } 
-              : stringFigure.chapters[currentChapterIndex].videoUrl
-            }
+            source={CHAPTER_VIDEOS[stringFigure.directory]?.[currentChapterIndex + 1]}
             style={styles.video}
             resizeMode={ResizeMode.COVER}
             shouldPlay={false}
