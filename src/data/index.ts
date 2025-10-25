@@ -1,4 +1,5 @@
 import { StringFigure } from '../types';
+
 const stringFiguresDirectory = '../../assets/string-figures';
 export const stringFigures: StringFigure[] = [
   {

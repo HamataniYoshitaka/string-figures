@@ -14,6 +14,7 @@ import VideoPlayerPortrait from './VideoPlayerPortrait';
 import { NextChapterButtonRef } from '../components/NextChapterButton';
 import { ReplayButtonRef } from '../components/ReplayButton';
 import { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
+import { CHAPTERS_MAP } from '../data/chaptersMap';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -28,15 +29,6 @@ interface Props {
 
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
-
-// チャプターデータのマッピング
-const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
-  '1_star': require('../../assets/string-figures/1_star/chapters.json'),
-  '2_jacobs-ladder': require('../../assets/string-figures/2_jacobs-ladder/chapters.json'),
-  '3_spiderweb': require('../../assets/string-figures/3_spiderweb/chapters.json'),
-  '4_volcano': require('../../assets/string-figures/4_volcano/chapters.json'),
-  '5_many-stars': require('../../assets/string-figures/5_many-stars/chapters.json'),
-};
 
 // 再生速度の表示文字列を取得する関数
 const getPlaybackRateDisplay = (rate: number): string => {
