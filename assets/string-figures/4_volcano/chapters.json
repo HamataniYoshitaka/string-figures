@@ -1,1 +1,38 @@
-[]
+[
+          {
+        "subtitle": { "ja": "第1章", "en": "Chapter 1" }
+      },
+      {
+        "subtitle": { "ja": "第2章", "en": "Chapter 2" }
+      },
+      {
+        "subtitle": { "ja": "第3章", "en": "Chapter 3" }
+      },
+      {
+        "subtitle": { "ja": "第4章", "en": "Chapter 4" }
+      },
+      {
+        "subtitle": { "ja": "第5章", "en": "Chapter 5" }
+      },
+      {
+        "subtitle": { "ja": "第6章", "en": "Chapter 6" }
+      },
+      {
+        "subtitle": { "ja": "第7章", "en": "Chapter 7" }
+      },
+      {
+        "subtitle": { "ja": "第8章", "en": "Chapter 8" }
+      },
+      {
+        "subtitle": { "ja": "第9章", "en": "Chapter 9" }
+      },
+      {
+        "subtitle": { "ja": "第10章", "en": "Chapter 10" }
+      },
+      {
+        "subtitle": { "ja": "第11章", "en": "Chapter 11" }
+      },
+      {
+        "subtitle": { "ja": "第12章", "en": "Chapter 12" }
+      }
+]
