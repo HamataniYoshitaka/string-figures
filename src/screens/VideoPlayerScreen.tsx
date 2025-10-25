@@ -41,6 +41,7 @@ const getPlaybackRateDisplay = (rate: number): string => {
 
 export interface VideoPlayerSharedProps {
   stringFigure: any;
+  chapters: Chapter[];
   currentChapterIndex: number;
   shouldAutoPlay: boolean;
   currentLanguage: 'ja' | 'en';
@@ -93,7 +94,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const nextChapterButtonRef = useRef<NextChapterButtonRef>(null);
   const replayButtonRef = useRef<ReplayButtonRef>(null);
   const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
-  const [chapters, setChapters] = useState<Chapter[]>(stringFigure.chapters);
+  const [chapters, setChapters] = useState<Chapter[]>([]);
 
   // 音声認識フック
   const {
@@ -232,7 +233,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         console.log('Video finished');
         
         // 最後のチャプターが完了した場合
-        if (currentChapterIndex === stringFigure.chapters.length - 1) {
+        if (currentChapterIndex === chapters.length - 1) {
           setIsLastChapterCompleted(true);
         }
       }
@@ -273,7 +274,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
           nextChapterButtonRef.current?.triggerRipple();
         }
         // それ以外の場合は次のchapterへ進む
-        else if (currentChapterIndex < stringFigure.chapters.length - 1) {
+        else if (currentChapterIndex < chapters.length - 1) {
           setShouldAutoPlay(true);
           setCurrentChapterIndex(prev => prev + 1);
           setPlaybackPosition(0); // 新しいチャプターの開始時は進捗をリセット
@@ -434,6 +435,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // 共通プロパティ
   const sharedProps: VideoPlayerSharedProps = {
     stringFigure,
+    chapters,
     currentChapterIndex,
     shouldAutoPlay,
     currentLanguage,

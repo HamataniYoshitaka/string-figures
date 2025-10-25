@@ -3,7 +3,6 @@ import { useDeviceInfo } from "../hooks/useDeviceInfo";
 import { useEffect, useRef } from "react";
 
 interface Chapter {
-videoUrl: string | any;
 subtitle: { ja: string; en: string };
 }
 

@@ -14,6 +14,7 @@ import { BookmarkIcon } from '../components/icons';
 
 const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
+  chapters,
   currentChapterIndex,
   playbackRate,
   videoRef,
@@ -30,7 +31,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   console.log('VideoPlayerLandscape - stringFigure:', stringFigure);
   
   // stringFigureが未定義の場合の早期リターン
-  if (!stringFigure || !stringFigure.chapters || !stringFigure.chapters[currentChapterIndex]) {
+  if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
     console.error('VideoPlayerLandscape - Invalid stringFigure or chapter data');
     return (
       <View style={styles.container}>
@@ -81,7 +82,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           {/* 字幕エリア - 動画の上に重ねて表示 */}
           <View style={styles.subtitleArea}>
             <Text style={styles.subtitleText}>
-              {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
+              {getLocalizedText(chapters[currentChapterIndex].subtitle)}
             </Text>
           </View>
         </View>
@@ -89,7 +90,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         {/* 進捗バー */}
         <View style={styles.progressContainer}>
         <ProgressDots 
-          chapters={stringFigure.chapters}
+          chapters={chapters}
             currentChapterIndex={currentChapterIndex}
             getChapterProgress={getChapterProgress}
           />

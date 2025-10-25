@@ -27,6 +27,7 @@ import ProgressDots from '../components/ProgressDots';
 
 const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
+  chapters,
   currentChapterIndex,
   playbackRate,
   videoRef,
@@ -83,7 +84,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   };
     
   // stringFigureが未定義の場合の早期リターン
-  if (!stringFigure || !stringFigure.chapters || !stringFigure.chapters[currentChapterIndex]) {
+  if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
     console.error('VideoPlayerPortrait - Invalid stringFigure or chapter data');
     return (
       <SafeAreaView style={styles.container}>
@@ -95,7 +96,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   }
 
   const handleMainButtonPress = () => {
-    if (currentChapterIndex === stringFigure.chapters.length - 1) {
+    if (currentChapterIndex === chapters.length - 1) {
       onReplay();
     } else {
       onNextChapter();
@@ -217,7 +218,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           {isTablet && isDeviceLandscape && (
             <View style={styles.subtitleContainerTabletLandscape}>
               <Text style={styles.subtitleTextTabletLandscape}>
-                {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
+                {getLocalizedText(chapters[currentChapterIndex].subtitle)}
               </Text>
             </View>
           )}
@@ -229,7 +230,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           isDeviceLandscape && styles.progressContainerLandscape
         ]}>
           <ProgressDots 
-            chapters={stringFigure.chapters}
+            chapters={chapters}
             currentChapterIndex={currentChapterIndex}
             getChapterProgress={getChapterProgress}
           />
