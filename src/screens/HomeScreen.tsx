@@ -21,7 +21,7 @@ import DetailBottomSheet from '../components/DetailBottomSheet';
 import FilterButtons from '../components/FilterButtons';
 import StringFigureCard from '../components/StringFigureCard';
 import DropDownMenu from '../components/DropDownMenu';
-import { dummyStringFigures } from '../data/dummyData';
+import { stringFigures } from '../data/index';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { DotsVerticalIcon } from '../components/icons';
 
@@ -175,8 +175,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   // フィルターされたデータを取得
   const filteredStringFigures = selectedFilters.length === 0 
-    ? dummyStringFigures // 全て非選択の場合は全データを表示
-    : dummyStringFigures.filter(item => 
+    ? stringFigures // 全て非選択の場合は全データを表示
+    : stringFigures.filter(item => 
         selectedFilters.includes(item.difficulty as 'easy' | 'medium' | 'hard')
       );
 

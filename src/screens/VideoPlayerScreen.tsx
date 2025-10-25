@@ -4,8 +4,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 
-import { RootStackParamList } from '../types';
+import { RootStackParamList, Chapter } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import VideoPlayerLandscape from './VideoPlayerLandscape';
@@ -126,12 +127,17 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     if (!isTablet) {
       loadOrientationSetting();
     }
-    
+
+    // 画面スリープを防止
+    activateKeepAwakeAsync();
+
     // クリーンアップ: スマホの場合はアンマウント時に画面の向きをportraitに戻す
     return () => {
       if (!isTablet) {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
       }
+      // 画面スリープ防止を解除
+      deactivateKeepAwake();
     };
   }, []);
 

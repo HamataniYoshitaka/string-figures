@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install expo-keep-awake)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

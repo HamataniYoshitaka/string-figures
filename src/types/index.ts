@@ -4,6 +4,7 @@ export interface StringFigure {
   id: string;
   name: { ja: string; en: string };
   difficulty: 'easy' | 'medium' | 'hard';
+  directory: string;
   thumbnail: ImageSourcePropType | string;
   patternImage: ImageSourcePropType | string;
   previewUrl: string;
@@ -13,6 +14,11 @@ export interface StringFigure {
     subtitle: { ja: string; en: string };
     videoUrl: string;
   }[];
+}
+
+export interface Chapter {
+  subtitle: { ja: string; en: string };
+  videoUrl: string;
 }
 
 export interface AppSettings {
