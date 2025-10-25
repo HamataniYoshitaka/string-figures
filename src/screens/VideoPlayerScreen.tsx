@@ -29,6 +29,15 @@ interface Props {
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
+// チャプターデータのマッピング
+const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
+  '1_star': require('../../assets/string-figures/1_star/chapters.json'),
+  '2_jacobs-ladder': require('../../assets/string-figures/2_jacobs-ladder/chapters.json'),
+  '3_spiderweb': require('../../assets/string-figures/3_spiderweb/chapters.json'),
+  '4_volcano': require('../../assets/string-figures/4_volcano/chapters.json'),
+  '5_many-stars': require('../../assets/string-figures/5_many-stars/chapters.json'),
+};
+
 // 再生速度の表示文字列を取得する関数
 const getPlaybackRateDisplay = (rate: number): string => {
   if (rate === 2.0) return '2.0';
@@ -92,6 +101,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const nextChapterButtonRef = useRef<NextChapterButtonRef>(null);
   const replayButtonRef = useRef<ReplayButtonRef>(null);
   const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
+  const [chapters, setChapters] = useState<Chapter[]>(stringFigure.chapters);
 
   // 音声認識フック
   const {
@@ -121,6 +131,10 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   // アプリ起動時に保存された言語設定を読み込む
   useEffect(() => {
+    console.log('stringFigure.directory', stringFigure.directory);
+    // chaptersを読み込み
+    loadChapters();
+
     loadLanguageSetting();
     loadBookmarkedIds();
     // スマホの場合、VideoPlayerScreen表示時は向き判定を行う
@@ -140,6 +154,17 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       deactivateKeepAwake();
     };
   }, []);
+
+  const loadChapters = () => {
+    try {
+      const chaptersData = CHAPTERS_MAP[stringFigure.directory];
+      if (chaptersData) {
+        setChapters(chaptersData);
+      }
+    } catch (error) {
+      console.error('チャプターの読み込みに失敗しました:', error);
+    }
+  };
 
   const loadLanguageSetting = async () => {
     try {

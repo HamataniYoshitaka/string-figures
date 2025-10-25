@@ -18,7 +18,6 @@ export interface StringFigure {
 
 export interface Chapter {
   subtitle: { ja: string; en: string };
-  videoUrl: string;
 }
 
 export interface AppSettings {
