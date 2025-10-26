@@ -6,11 +6,12 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseIcon } from '../components/icons';
+import { CloseIcon, PlayIcon } from '../components/icons';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import ProgressDots from '../components/ProgressDots';
 import NextChapterButton from '../components/NextChapterButton';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
+import SpeedButtonTail from '../components/icons/SpeedButtonTail';
 
 type IntroVoiceScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -140,38 +141,6 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };    
 
-    const onNextChapter = async () => {
-        if (currentChapterIndex === 0) {
-            setCurrentChapterIndex(1);
-            try {
-                // 動画を最初の位置（0秒）にセットしてから再生
-                await videoRef.current?.setPositionAsync(0);
-                await videoRef.current?.playAsync();
-            } catch (error) {
-                console.error('Error playing video:', error);
-            }
-        } else if (currentChapterIndex === 1) {
-            // マイクと音声認識の許可を求める
-            try {
-                const { granted } = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
-
-                if (!granted) {
-                    Alert.alert(
-                        'マイクへのアクセスが必要です',
-                        '音声認識機能を使用するには、マイクへのアクセス許可が必要です。設定からマイクの使用を許可してください。',
-                        [{ text: 'OK' }]
-                    );
-                    return;
-                }
-
-                // 権限が許可された場合、次の処理へ
-                console.log('マイクと音声認識の許可が付与されました');
-                // TODO: 次のチャプターまたはホーム画面への遷移処理
-            } catch (error) {
-                console.error('音声認識の許可リクエストエラー:', error);
-            }
-        }
-    }
 
     return (    
         <SafeAreaView style={styles.container}>
@@ -238,22 +207,44 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             {/* 字幕エリア */}
             {!isDeviceLandscape && (
                 <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                </Text>
+                    <Text style={styles.subtitleText}>
+                        {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                    </Text>
                 </View>
             )}
 
             {/* コントロールボタンエリア */}
             <View style={styles.controlsContainer}>
-                <NextChapterButton
-                    ref={nextChapterButtonRef}
-                    chapters={chapters}
-                    onPress={onNextChapter}
-                    currentChapterIndex={currentChapterIndex}
-                    isLastChapterCompleted={false}
-                    getLocalizedText={getLocalizedText}
-                />
+                <View style={styles.controlButton}>
+                    <View style={styles.buttonContainer}>
+                        <View style={[
+                            styles.floatingButton,
+                            { paddingLeft: 2 },
+                        ]}>
+                            <PlayIcon
+                                width={20}
+                                height={20}
+                                fillColor="#57534D"
+                                strokeColor='transparent'
+                            />
+                        </View>
+                        <View style={[
+                            styles.balloon,
+                            styles.balloonTopLeft,
+                            { backgroundColor: 'rgba(209, 200, 194, 0.5)' }
+                        ]}>
+                            <Text style={styles.controlButtonText}>
+                                {getLocalizedText({ ja: 'つぎ', en: 'Next' })}
+                            </Text>
+                            <SpeedButtonTail
+                                fillColor="rgba(209, 200, 194, 0.5)"
+                                isBottom={false}
+                                isRight={false}
+                                isUp={true}
+                            />
+                        </View>
+                    </View>
+                </View>
             </View>
             
         </SafeAreaView>
@@ -329,7 +320,46 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         paddingBottom: 32,
     },
-
+    controlButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: 80,
+        paddingVertical: 12,
+        gap: 10,
+    },
+    buttonContainer: {
+        position: 'relative',
+        width: 48,
+        height: 48,
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 12,
+    },
+    floatingButton: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: '#e8e6e0',
+        borderWidth: 2,
+        borderColor: '#57534D',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    balloon: {
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 8,
+        position: 'relative',
+    },
+    balloonTopLeft: {
+        borderTopLeftRadius: 0,
+    },
+    controlButtonText: {
+        fontSize: 14,
+        color: '#555',
+        marginTop: 4,
+        fontWeight: '500',
+    },
 });
 
 export default IntroVideoScreen;
