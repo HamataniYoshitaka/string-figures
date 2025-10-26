@@ -23,8 +23,22 @@ interface Props {
 }
 
 const chapters = [
-    { subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に紐がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' } },
-    { subtitle: { ja: '音声認識とマイクの使用確認画面が出ますのでどちらも許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow both the voice recognition and microphone usage confirmation screens to appear.\n(No voice recording or collection is performed.)' } },
+    {
+        subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に紐がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
+        video: require('../../assets/string-figures/0_introduction/intro1.mp4')
+    },
+    {
+        subtitle: { ja: '音声認識とマイクの使用確認画面が出ますのでどちらも許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow both the voice recognition and microphone usage confirmation screens to appear.\n(No voice recording or collection is performed.)' },
+        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+    },
+    {
+        subtitle: { ja: '', en: '' },
+        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+    },
+    {
+        subtitle: { ja: '', en: '' },
+        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+    },
 ];  
 
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
@@ -125,13 +139,19 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };    
 
-    const onPress = async () => {
-        try {
-            // 動画を最初の位置（0秒）にセットしてから再生
-            await videoRef.current?.setPositionAsync(0);
-            await videoRef.current?.playAsync();
-        } catch (error) {
-            console.error('Error playing video:', error);
+    const onNextChapter = async () => {
+        if (currentChapterIndex === 0) {
+            setCurrentChapterIndex(1);
+            try {
+                // 動画を最初の位置（0秒）にセットしてから再生
+                await videoRef.current?.setPositionAsync(0);
+                await videoRef.current?.playAsync();
+            } catch (error) {
+                console.error('Error playing video:', error);
+            }
+        } else if (currentChapterIndex === 1) {
+            // マイクと音声認識の許可を求めるalertを表示
+            
         }
     }
 
@@ -170,7 +190,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 <Video
                     key={`chapter-${currentChapterIndex}`}
                     ref={videoRef}
-                    source={require('../../assets/string-figures/0_introduction/intro1.mp4')}
+                    source={chapters[currentChapterIndex].video}
                     style={styles.video}
                     resizeMode={ResizeMode.COVER}
                     shouldPlay={false}
@@ -211,7 +231,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 <NextChapterButton
                     ref={nextChapterButtonRef}
                     chapters={chapters}
-                    onPress={onPress}
+                    onPress={onNextChapter}
                     currentChapterIndex={currentChapterIndex}
                     isLastChapterCompleted={false}
                     getLocalizedText={getLocalizedText}
@@ -291,63 +311,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         paddingBottom: 32,
     },
-    mainControls: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    },
-    controlButton: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: 80,
-        paddingVertical: 12,
-        gap: 10,
-    },
-    buttonContainer: {
-        position: 'relative',
-        width: 48,
-        height: 48,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    ripple: {
-        position: 'absolute',
-        width: 48,
-        height: 48,
-        borderRadius: 24,
-        backgroundColor: '#c2410c',
-    },
-    floatingButton: {
-        width: 48,
-        height: 48,
-        borderRadius: 24,
-        backgroundColor: '#e8e6e0',
-        borderWidth: 2,
-        borderColor: '#57534D',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    balloon: {
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        borderRadius: 8,
-        position: 'relative',
-    },
-    balloonTopLeft: {
-        borderTopLeftRadius: 0,
-    },
-    controlButtonText: {
-        fontSize: 14,
-        color: '#555',
-        marginTop: 4,
-        fontWeight: '500',
-    },
-    disabledButton: {
-        opacity: 0.5,
-    },
-    balloonDisabled: {
-        opacity: 0.0,
-    },
+
 });
 
 export default IntroVideoScreen;
