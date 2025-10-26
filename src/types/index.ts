@@ -31,6 +31,7 @@ export interface DropdownMenuState {
 export type RootStackParamList = {
   Intro: undefined;
   IntroVideo: undefined;
+  IntroVoice: undefined;
   Home: undefined;
   VideoPlayer: { stringFigure: StringFigure };
 };
