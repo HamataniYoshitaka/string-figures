@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon } from '../components/icons';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import ProgressDots from '../components/ProgressDots';
+import NextChapterButton from '../components/NextChapterButton';
 
 type IntroVideoScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -21,9 +22,15 @@ interface Props {
   route: IntroVideoScreenRouteProp;
 }
 
+const chapters = [
+    { subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に紐がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' } },
+    { subtitle: { ja: '音声認識とマイクの使用確認画面が出ますのでどちらも許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow both the voice recognition and microphone usage confirmation screens to appear.\n(No voice recording or collection is performed.)' } },
+];  
+
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
     const videoRef = useRef<Video>(null);
+    const nextChapterButtonRef = useRef<any>(null);
     const [playbackRate, setPlaybackRate] = useState<number>(1.0);
     const [currentChapterIndex, setCurrentChapterIndex] = useState<number>(0);
     const [playbackPosition, setPlaybackPosition] = useState(0);
@@ -82,6 +89,10 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             if (status.didJustFinish) {
                 // 動画が終了した場合
                 console.log('Video finished');
+                // 最初に戻してループ再生
+                setPlaybackPosition(0);
+                videoRef.current?.setPositionAsync(0);
+                videoRef.current?.playAsync();
             }
         }
     };
@@ -89,9 +100,12 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const handleVideoLoad = async () => {
         setPlaybackPosition(0); // 新しい動画読み込み時は進捗をリセット
         try {
+            // videoRef.currentがnullでないことを確認してからメソッドを呼ぶ
+            const video = videoRef.current;
+            if (!video) return;
             // 動画を最初の位置（0秒）にセットしてから再生
-            await videoRef.current.setPositionAsync(0);
-            await videoRef.current.playAsync();
+            await video.setPositionAsync(0);
+            await video.playAsync();
         } catch (error) {
             console.error('Error auto-playing video:', error);
         }
@@ -109,7 +123,18 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         // 未開始のチャプター
         return 0;
         }
-    };
+    };    
+
+    const onPress = async () => {
+        try {
+            // 動画を最初の位置（0秒）にセットしてから再生
+            await videoRef.current?.setPositionAsync(0);
+            await videoRef.current?.playAsync();
+        } catch (error) {
+            console.error('Error playing video:', error);
+        }
+    }
+
     return (    
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -164,17 +189,35 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     styles.progressContainer,
                 ]}>
                 <ProgressDots 
-                    chapters={[
-                        { subtitle: { ja: '操作方法', en: 'How to use' } },
-                        { subtitle: { ja: 'あやとりを見る', en: 'Viewing String Figures' } },
-                        { subtitle: { ja: 'コースについて', en: 'About Courses' } },
-                    ]}
+                    chapters={chapters}
                     currentChapterIndex={currentChapterIndex}
                     getChapterProgress={getChapterProgress}
                 />
                 </View>
 
             </View>
+
+            {/* 字幕エリア */}
+            {!isDeviceLandscape && (
+                <View style={styles.subtitleContainer}>
+                <Text style={styles.subtitleText}>
+                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                </View>
+            )}
+
+            {/* コントロールボタンエリア */}
+            <View style={styles.controlsContainer}>
+                <NextChapterButton
+                    ref={nextChapterButtonRef}
+                    chapters={chapters}
+                    onPress={onPress}
+                    currentChapterIndex={currentChapterIndex}
+                    isLastChapterCompleted={false}
+                    getLocalizedText={getLocalizedText}
+                />
+            </View>
+            
         </SafeAreaView>
         
     );
@@ -230,7 +273,81 @@ const styles = StyleSheet.create({
         marginTop: 16,
         paddingLeft: 16,
     },
-
+    subtitleContainer: {
+        flex: 1,
+        paddingHorizontal: 24,
+        paddingVertical: 6,
+        justifyContent: 'center',
+    },
+    subtitleText: {
+        fontFamily: 'KleeOne-Regular',
+        fontSize: 16,
+        color: '#333',
+        textAlign: 'center',
+        lineHeight: 24,
+        fontWeight: '500',
+    },
+    controlsContainer: {
+        paddingHorizontal: 24,
+        paddingBottom: 32,
+    },
+    mainControls: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    controlButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        minWidth: 80,
+        paddingVertical: 12,
+        gap: 10,
+    },
+    buttonContainer: {
+        position: 'relative',
+        width: 48,
+        height: 48,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    ripple: {
+        position: 'absolute',
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: '#c2410c',
+    },
+    floatingButton: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: '#e8e6e0',
+        borderWidth: 2,
+        borderColor: '#57534D',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    balloon: {
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 8,
+        position: 'relative',
+    },
+    balloonTopLeft: {
+        borderTopLeftRadius: 0,
+    },
+    controlButtonText: {
+        fontSize: 14,
+        color: '#555',
+        marginTop: 4,
+        fontWeight: '500',
+    },
+    disabledButton: {
+        opacity: 0.5,
+    },
+    balloonDisabled: {
+        opacity: 0.0,
+    },
 });
 
 export default IntroVideoScreen;

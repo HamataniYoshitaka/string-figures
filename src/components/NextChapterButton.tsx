@@ -8,7 +8,6 @@ interface NextChapterButtonProps {
   onPress: () => void;
   chapters: Chapter[];
   isLastChapterCompleted: boolean;
-  stringFigure: StringFigure;
   currentChapterIndex: number;
   getLocalizedText: (text: { ja: string; en: string }) => string;
 }
@@ -21,7 +20,6 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
   onPress,
   chapters,
   isLastChapterCompleted,
-  stringFigure,
   currentChapterIndex,
   getLocalizedText,
 }, ref) => {

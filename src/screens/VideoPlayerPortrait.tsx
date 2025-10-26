@@ -310,7 +310,6 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               ref={nextChapterButtonRef}
               chapters={chapters}
               onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
-              stringFigure={stringFigure}
               currentChapterIndex={currentChapterIndex}
               isLastChapterCompleted={isLastChapterCompleted}
               getLocalizedText={getLocalizedText}
