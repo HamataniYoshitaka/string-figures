@@ -10,10 +10,6 @@ export interface StringFigure {
   previewUrl: string;
   description: { ja: string; en: string };
   premiumCourseId: number; // 0=無料、0以外のID=有料コース
-  // chapters: {
-  //   subtitle: { ja: string; en: string };
-  //   videoUrl: string;
-  // }[];
 }
 
 export interface Chapter {
@@ -24,6 +20,7 @@ export interface AppSettings {
   language: 'ja' | 'en';
   subtitlesEnabled: boolean;
   purchasedItems: string[];
+  introductionCompleted: boolean;
 }
 
 export interface DropdownMenuState {
@@ -32,6 +29,7 @@ export interface DropdownMenuState {
 }
 
 export type RootStackParamList = {
+  Intro: undefined;
   Home: undefined;
   VideoPlayer: { stringFigure: StringFigure };
 };
