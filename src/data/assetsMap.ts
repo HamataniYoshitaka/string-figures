@@ -1,0 +1,33 @@
+export const ASSETS_MAP: {
+  [key: string]: {
+    thumbnail: any;
+    patternImage: any;
+    previewUrl: any;
+  };
+} = {
+  '1_star': {
+    thumbnail: require('../../assets/string-figures/1_star/giphy.gif'),
+    patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
+  },
+  '2_jacobs-ladder': {
+    thumbnail: require('../../assets/string-figures/2_jacobs-ladder/thumbnail.jpg'),
+    patternImage: require('../../assets/string-figures/2_jacobs-ladder/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/2_jacobs-ladder/preview.mp4'),
+  },
+  '3_spiderweb': {
+    thumbnail: require('../../assets/string-figures/3_spiderweb/thumbnail.jpg'),
+    patternImage: require('../../assets/string-figures/3_spiderweb/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/3_spiderweb/preview.mp4'),
+  },
+  '4_volcano': {
+    thumbnail: require('../../assets/string-figures/4_volcano/thumbnail.jpg'),
+    patternImage: require('../../assets/string-figures/4_volcano/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/4_volcano/preview.mp4'),
+  },
+  '5_many-stars': {
+    thumbnail: require('../../assets/string-figures/5_many-stars/thumbnail.jpg'),
+    patternImage: require('../../assets/string-figures/5_many-stars/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/5_many-stars/preview.mp4'),
+  },
+};
