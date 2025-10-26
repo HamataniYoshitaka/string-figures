@@ -16,6 +16,7 @@ interface Props {
   bookmarked: boolean;
   calculatedHeight: number;
   currentLanguage: 'ja' | 'en';
+  disabled?: boolean;
   onPress: (item: StringFigure) => void;
   onImageLoad: (itemId: string, event: any) => void;
 }
@@ -25,6 +26,7 @@ const StringFigureCard: React.FC<Props> = ({
   bookmarked,
   calculatedHeight,
   currentLanguage,
+  disabled = false,
   onPress,
   onImageLoad,
 }) => {
@@ -78,12 +80,14 @@ const StringFigureCard: React.FC<Props> = ({
       onPress={() => onPress(item)}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
+      disabled={disabled}
     >
       <Animated.View
         style={[
           styles.card,
           {
             transform: [{ scale: scaleAnim }],
+            opacity: disabled ? 0.5 : 1,
           },
         ]}
       >

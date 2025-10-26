@@ -10,6 +10,7 @@ import 'react-native-gesture-handler';
 
 import { RootStackParamList } from './src/types';
 import IntroScreen from './src/screens/IntroScreen';
+import IntroVideoScreen from './src/screens/IntroVideoScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 
@@ -62,6 +63,7 @@ export default function App() {
         }}
       >
         <Stack.Screen name="Intro" component={IntroScreen} />
+        <Stack.Screen name="IntroVideo" component={IntroVideoScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen
           name="VideoPlayer"

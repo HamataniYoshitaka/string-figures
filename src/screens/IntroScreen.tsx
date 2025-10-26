@@ -87,7 +87,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const renderCard = (item: StringFigure) => {
+  const renderCard = (item: StringFigure, disabled: boolean) => {
     const imageInfo = imageDimensions[item.id];
     let calculatedHeight = 200; // デフォルト高さ
     
@@ -104,6 +104,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
     return (
       <StringFigureCard
         key={item.id}
+        disabled={disabled}
         item={item}
         bookmarked={false}
         calculatedHeight={calculatedHeight}
@@ -123,7 +124,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleItemPress = (item: StringFigure) => {
-    // navigation.navigate('Detail', { stringFigureId: item.id });
+    navigation.navigate('IntroVideo');
   }
 
 
@@ -141,13 +142,13 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
 
   const filteredStringFigures: StringFigure[] = [
     { id: '1',
-      name: { ja: '星', en: 'Star' },
+      name: { ja: 'はじめに', en: 'Introduction' },
       difficulty: 'easy',
-      directory: '1_star',
-      thumbnail: require('../../assets/string-figures/1_star/thumbnail.jpg'),
+      directory: '0_introduction',
+      thumbnail: require('../../assets/string-figures/0_introduction/thumbnail.jpg'),
       patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
       previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
-      description: { ja: '手のひらにかわいい星ができます。短め、太めの紐を使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
+      description: { ja: 'このアプリの操作方法の紹介です', en: 'Introduction to the operation of this app.' },
       premiumCourseId: 0,
     },
     {
@@ -211,7 +212,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       <View style={styles.gridContainer}>
         {columns.map((column, index) => (
           <View key={index} style={styles.column}>
-            {column.map(renderCard)}
+            {column.map((item, index2) => renderCard(item, (index > 0 || index2 > 0))) /* 最初の以外はdisabled*/}
           </View>
         ))}
       </View>
@@ -231,7 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingVertical: 25,
     paddingTop: Platform.OS === 'android' ? 32 : 8, // Android用に12pt追加
   },
   headerTablet: {
