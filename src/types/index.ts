@@ -10,10 +10,10 @@ export interface StringFigure {
   previewUrl: string;
   description: { ja: string; en: string };
   premiumCourseId: number; // 0=無料、0以外のID=有料コース
-  chapters: {
-    subtitle: { ja: string; en: string };
-    videoUrl: string;
-  }[];
+  // chapters: {
+  //   subtitle: { ja: string; en: string };
+  //   videoUrl: string;
+  // }[];
 }
 
 export interface Chapter {

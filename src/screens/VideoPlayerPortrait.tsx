@@ -250,7 +250,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       {!isDeviceLandscape && (
         <View style={styles.subtitleContainer}>
           <Text style={styles.subtitleText}>
-            {getLocalizedText(stringFigure.chapters[currentChapterIndex].subtitle)}
+            {getLocalizedText(chapters[currentChapterIndex].subtitle)}
           </Text>
         </View>
       )}
@@ -298,6 +298,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           {isDeviceLandscape ? (
             <NextChapterLandscapeButton
               ref={nextChapterButtonRef as React.RefObject<NextChapterLandscapeButtonRef>}
+              chapters={chapters}
               onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
               stringFigure={stringFigure}
               currentChapterIndex={currentChapterIndex}
@@ -307,6 +308,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           ) : (
             <NextChapterButton
               ref={nextChapterButtonRef}
+              chapters={chapters}
               onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
               stringFigure={stringFigure}
               currentChapterIndex={currentChapterIndex}

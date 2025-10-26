@@ -2,10 +2,11 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
 import { PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
-import { StringFigure } from '../types';
+import { Chapter, StringFigure } from '../types';
 
 interface NextChapterLandscapeButtonProps {
   onPress: () => void;
+  chapters: Chapter[];
   stringFigure: StringFigure;
   currentChapterIndex: number;
   isLastChapterCompleted: boolean;
@@ -18,12 +19,13 @@ export interface NextChapterLandscapeButtonRef {
 
 const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, NextChapterLandscapeButtonProps>(({
   onPress,
+  chapters,
   isLastChapterCompleted,
   stringFigure,
   currentChapterIndex,
   getLocalizedText,
 }, ref) => {
-  const isDisabled = currentChapterIndex === stringFigure.chapters.length - 1 && !isLastChapterCompleted;
+  const isDisabled = currentChapterIndex === chapters.length - 1 && !isLastChapterCompleted;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));

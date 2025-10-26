@@ -11,6 +11,7 @@ import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressDots from '../components/ProgressDots';
 import VideoControlPanel from '../components/VideoControlPanel';
 import { BookmarkIcon } from '../components/icons';
+import { CHAPTER_VIDEOS } from '../data/chapterVideos';
 
 const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -64,10 +65,12 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           <Video
             key={`chapter-${currentChapterIndex}`}
             ref={videoRef}
-            source={typeof stringFigure.chapters[currentChapterIndex].videoUrl === 'string' 
-              ? { uri: stringFigure.chapters[currentChapterIndex].videoUrl } 
-              : stringFigure.chapters[currentChapterIndex].videoUrl
-            }
+            source={CHAPTER_VIDEOS[stringFigure.directory]?.[currentChapterIndex + 1]}
+            
+            // source={typeof stringFigure.chapters[currentChapterIndex].videoUrl === 'string' 
+            //   ? { uri: stringFigure.chapters[currentChapterIndex].videoUrl } 
+            //   : stringFigure.chapters[currentChapterIndex].videoUrl
+            // }
             style={styles.video}
             resizeMode={ResizeMode.COVER}
             shouldPlay={false}
@@ -98,29 +101,32 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
       </View>
 
       {/* コントロールエリア */}
-      <VideoControlPanel
-        stringFigure={stringFigure}
-        currentChapterIndex={currentChapterIndex}
-        playbackPosition={restProps.playbackPosition}
-        isLastChapterCompleted={restProps.isLastChapterCompleted}
-        playbackRate={playbackRate}
-        PLAYBACK_RATES={restProps.PLAYBACK_RATES}
-        isLandscapeMode={restProps.isLandscapeMode}
-        currentLanguage={restProps.currentLanguage}
-        recognizing={restProps.recognizing}
-        nextChapterButtonRef={restProps.nextChapterButtonRef as React.RefObject<any>}
-        replayButtonRef={restProps.replayButtonRef as React.RefObject<any>}
-        previousChapterButtonRef={restProps.previousChapterButtonRef as React.RefObject<any>}
-        onGoBack={restProps.onGoBack}
-        onNextChapter={restProps.onNextChapter}
-        onReplay={restProps.onReplay}
-        onPreviousChapter={restProps.onPreviousChapter}
-        onRestartFromBeginning={restProps.onRestartFromBeginning}
-        onSlowerSpeed={restProps.onSlowerSpeed}
-        onFasterSpeed={restProps.onFasterSpeed}
-        onLandscapeToggle={restProps.onLandscapeToggle}
-        getPlaybackRateDisplay={restProps.getPlaybackRateDisplay}
-      />
+      {chapters.length > 0 && 
+        <VideoControlPanel
+          stringFigure={stringFigure}
+          chapters={chapters}
+          currentChapterIndex={currentChapterIndex}
+          playbackPosition={restProps.playbackPosition}
+          isLastChapterCompleted={restProps.isLastChapterCompleted}
+          playbackRate={playbackRate}
+          PLAYBACK_RATES={restProps.PLAYBACK_RATES}
+          isLandscapeMode={restProps.isLandscapeMode}
+          currentLanguage={restProps.currentLanguage}
+          recognizing={restProps.recognizing}
+          nextChapterButtonRef={restProps.nextChapterButtonRef as React.RefObject<any>}
+          replayButtonRef={restProps.replayButtonRef as React.RefObject<any>}
+          previousChapterButtonRef={restProps.previousChapterButtonRef as React.RefObject<any>}
+          onGoBack={restProps.onGoBack}
+          onNextChapter={restProps.onNextChapter}
+          onReplay={restProps.onReplay}
+          onPreviousChapter={restProps.onPreviousChapter}
+          onRestartFromBeginning={restProps.onRestartFromBeginning}
+          onSlowerSpeed={restProps.onSlowerSpeed}
+          onFasterSpeed={restProps.onFasterSpeed}
+          onLandscapeToggle={restProps.onLandscapeToggle}
+          getPlaybackRateDisplay={restProps.getPlaybackRateDisplay}
+        />
+      }
     </View>
   );
 };

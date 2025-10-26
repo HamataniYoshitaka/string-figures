@@ -13,10 +13,11 @@ import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from './Nex
 import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
 import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
 // import SpeedControlLandscape from './SpeedControlLandscape';
-import { StringFigure } from '../types';
+import { Chapter, StringFigure } from '../types';
 
 interface VideoControlPanelProps {
   stringFigure: StringFigure;
+  chapters: Chapter[];
   currentChapterIndex: number;
   playbackPosition: number;
   isLastChapterCompleted: boolean;
@@ -41,6 +42,7 @@ interface VideoControlPanelProps {
 
 const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   stringFigure,
+  chapters,
   currentChapterIndex,
   playbackPosition,
   isLastChapterCompleted,
@@ -143,6 +145,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       <View style={styles.controlsContainer}>
         <NextChapterLandscapeButton
           ref={nextChapterButtonRef}
+          chapters={chapters}
           onPress={isLastChapterCompleted ? onRestartFromBeginning : onNextChapter}
           stringFigure={stringFigure}
           currentChapterIndex={currentChapterIndex}

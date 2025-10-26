@@ -88,7 +88,7 @@ const StringFigureCard: React.FC<Props> = ({
         ]}
       >
         <View style={styles.cardImageContainer}>
-          {item.directory ? (
+          {item.thumbnail ? (
             <Image 
               source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail}
               style={[
