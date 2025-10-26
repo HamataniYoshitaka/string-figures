@@ -14,6 +14,7 @@ import IntroVideoScreen from './src/screens/IntroVideoScreen';
 import IntroVoiceScreen from './src/screens/IntroVoiceScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
+import IntroCompleteScreen from './src/screens/IntroCompleteScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -66,6 +67,7 @@ export default function App() {
         <Stack.Screen name="Intro" component={IntroScreen} />
         <Stack.Screen name="IntroVideo" component={IntroVideoScreen} />
         <Stack.Screen name="IntroVoice" component={IntroVoiceScreen} />
+        <Stack.Screen name="IntroComplete" component={IntroCompleteScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen
           name="VideoPlayer"

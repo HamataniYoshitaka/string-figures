@@ -25,7 +25,7 @@ interface Props {
 
 const chapters = [
     {
-        subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に紐がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
+        subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に糸がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
         video: require('../../assets/string-figures/0_introduction/intro1.mp4')
     },
     {

@@ -32,6 +32,7 @@ export type RootStackParamList = {
   Intro: undefined;
   IntroVideo: undefined;
   IntroVoice: undefined;
+  IntroComplete: undefined;
   Home: undefined;
   VideoPlayer: { stringFigure: StringFigure };
 };

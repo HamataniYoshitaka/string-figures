@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -9,9 +9,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon, PlayIcon } from '../components/icons';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import ProgressDots from '../components/ProgressDots';
-import NextChapterButton from '../components/NextChapterButton';
-import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 import SpeedButtonTail from '../components/icons/SpeedButtonTail';
+import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
+import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 
 type IntroVoiceScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -52,6 +52,51 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const [playbackPosition, setPlaybackPosition] = useState(0);
     const [videoDuration, setVideoDuration] = useState(0);
 
+
+    // 音声認識フック
+    const {
+        recognizing,
+        isSupported: isRecognitionSupported,
+        start: startRecognition,
+        stop: stopRecognition,
+      } = useSpeechRecognition({
+        language: currentLanguage,
+        onKeywordDetected: async (keyword) => {
+          // キーワードに応じたアクションを実行
+          if (keyword === 'つぎ' || keyword === 'next') {
+            await handleNextScreen();
+          } 
+        },
+    });
+
+    // アプリ起動時に保存された言語設定を読み込む
+    useEffect(() => {
+
+        loadLanguageSetting();
+    
+        // 画面スリープを防止
+        activateKeepAwakeAsync();
+    
+        // クリーンアップ: スマホの場合はアンマウント時に画面の向きをportraitに戻す
+        return () => {
+        //   if (!isTablet) {
+        //     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+        //   }
+          // 画面スリープ防止を解除
+          deactivateKeepAwake();
+          
+        };
+    }, []);
+
+    const handleNextScreen = async () => {
+        // 音声認識を停止
+        if (recognizing) {
+            await stopRecognition();
+        }
+
+        navigation.navigate('IntroComplete');
+    }
+
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
     
@@ -66,6 +111,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             friction: 8,
         }).start();
     };
+
     const createPressOutHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {
             toValue: 1,
@@ -77,6 +123,10 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
     const onGoBack = async () => {
         console.log('onGoBack');
+        // 音声認識を停止
+        if (recognizing) {
+            await stopRecognition();
+        }
         navigation.goBack();
     };
 
