@@ -86,7 +86,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
     
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
-    console.error('VideoPlayerPortrait - Invalid stringFigure or chapter data');
+    // console.log('VideoPlayerPortrait - Invalid stringFigure or chapter data');
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
@@ -351,8 +351,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
   },
   tabletLandscapeCloseButtonContainer: {
     position: 'absolute',

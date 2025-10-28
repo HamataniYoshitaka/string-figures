@@ -33,7 +33,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
-    console.error('VideoPlayerLandscape - Invalid stringFigure or chapter data');
+    // console.log('VideoPlayerLandscape - Invalid stringFigure or chapter data');
     return (
       <View style={styles.container}>
         <View style={styles.errorContainer}>
