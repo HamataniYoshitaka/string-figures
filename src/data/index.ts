@@ -18,7 +18,7 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'basic',
     directory: '6_tieup',
     ...ASSETS_MAP['6_tieup'],
-    description: { ja: '紐の結びかたの説明文です。', en: 'Description for How to Tie Strings.' },
+    description: { ja: 'まずはあやとりに使う紐の結び方を学びましょう', en: 'First, learn how to tie the strings used for string figures.' },
     premiumCourseId: 0, // 無料
 
   },
@@ -72,5 +72,14 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
 
   },
+  {
+    id: '7',
+    name: { ja: 'カタツムリ', en: 'Snail' },
+    difficulty: 'easy',
+    directory: '7_snail',
+    ...ASSETS_MAP['7_snail'],
+    description: { ja: '小さなかわいいカタツムリが出来上がります', en: 'A small and cute snail is completed.' },
+    premiumCourseId: 0, // 無料
 
+  },
 ];

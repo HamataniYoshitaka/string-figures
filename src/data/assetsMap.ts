@@ -35,4 +35,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/6_tieup/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/6_tieup/preview.mp4'),
   },
+  '7_snail': {
+    thumbnail: require('../../assets/string-figures/7_snail/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/7_snail/pattern.png'),
+    previewUrl: require('../../assets/string-figures/7_snail/preview.mp4'),
+  },
 };
