@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { EasyIcon, NormalIcon, HardIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, TutorialIcon } from './icons';
 
 interface FilterButtonsProps {
-  selectedFilters: ('easy' | 'medium' | 'hard')[];
-  onToggleFilter: (filter: 'easy' | 'medium' | 'hard') => void;
+  selectedFilters: ('tutorial' | 'easy' | 'medium' | 'hard')[];
+  onToggleFilter: (filter: 'tutorial' | 'easy' | 'medium' | 'hard') => void;
   currentLanguage: 'ja' | 'en';
 }
 
@@ -25,8 +25,9 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
   };
 
   // 難易度テキストを取得
-  const getDifficultyText = (difficulty: 'easy' | 'medium' | 'hard') => {
+  const getDifficultyText = (difficulty: 'tutorial' | 'easy' | 'medium' | 'hard') => {
     const difficultyTexts = {
+      tutorial: { ja: 'きほん', en: 'Basic' },
       easy: { ja: 'かんたん', en: 'Easy' },
       medium: { ja: 'ふつう', en: 'Normal' },
       hard: { ja: 'むずかしい', en: 'Hard' },
@@ -40,6 +41,26 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
       contentContainerStyle={styles.filterContainer}
       style={styles.filterScrollView}
     >
+      <TouchableOpacity 
+        style={[
+          styles.filterButton, 
+          selectedFilters.includes('tutorial') ? styles.filterButtonSelected : styles.filterButtonUnselected
+        ]}
+        onPress={() => onToggleFilter('tutorial')}
+      >
+        <TutorialIcon 
+          width={28} 
+          height={28} 
+          strokeColor={selectedFilters.includes('tutorial') ? '#e8e6e0' : '#57534D'} 
+          strokeWidth={1}
+        />
+        <Text style={[
+          styles.filterText, 
+          selectedFilters.includes('tutorial') ? styles.filterTextSelected : styles.filterTextUnselected
+        ]}>
+          {getDifficultyText('tutorial')}
+        </Text>
+      </TouchableOpacity>
       <TouchableOpacity 
         style={[
           styles.filterButton, 

@@ -10,3 +10,4 @@ export { default as PlaySpeedIcon } from './PlaySpeed';
 export { default as CloseIcon } from './Close';
 export { default as SkipBackwardIcon } from './SkipBackward';
 export { default as DotsVerticalIcon } from './DotsVertical';
+export { default as TutorialIcon } from './Tutorial';
