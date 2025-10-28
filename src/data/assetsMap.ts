@@ -30,4 +30,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/5_many-stars/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/5_many-stars/preview.mp4'),
   },
+  '6_tieup': {  
+    thumbnail: require('../../assets/string-figures/6_tieup/thumbnail.jpg'),
+    patternImage: require('../../assets/string-figures/6_tieup/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/6_tieup/preview.mp4'),
+  },
 };

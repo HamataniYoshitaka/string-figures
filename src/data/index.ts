@@ -13,6 +13,16 @@ import { ASSETS_MAP } from './assetsMap';
 
 export const stringFigures: StringFigure[] = [
   {
+    id: '6',
+    name: { ja: '紐の結びかた', en: 'How to Tie Strings' },
+    difficulty: 'basic',
+    directory: '6_tieup',
+    ...ASSETS_MAP['6_tieup'],
+    description: { ja: '紐の結びかたの説明文です。', en: 'Description for How to Tie Strings.' },
+    premiumCourseId: 0, // 無料
+
+  },
+  {
     id: '1',
     name: { ja: '星', en: 'Star' },
     difficulty: 'easy',
@@ -62,4 +72,5 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
 
   },
+
 ];

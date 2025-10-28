@@ -20,7 +20,7 @@ import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon } from './icons';
 import { useOrientation } from '../hooks/useOrientation';
 
 interface Props {
@@ -127,6 +127,7 @@ const DetailBottomSheet: React.FC<Props> = ({
 
   const getDifficultyIcon = (difficulty: string) => {
     switch (difficulty) {
+      case 'basic': return TutorialIcon;
       case 'easy': return EasyIcon;
       case 'medium': return NormalIcon;
       case 'hard': return HardIcon;
@@ -136,6 +137,7 @@ const DetailBottomSheet: React.FC<Props> = ({
 
   const getDifficultyText = (difficulty: string) => {
     const difficultyTexts = {
+      basic: { ja: 'きほん', en: 'Basic' },
       easy: { ja: 'かんたん', en: 'Easy' },
       medium: { ja: 'ふつう', en: 'Normal' },
       hard: { ja: 'むずかしい', en: 'Hard' },

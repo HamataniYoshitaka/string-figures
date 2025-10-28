@@ -9,8 +9,8 @@ import {
 import { EasyIcon, NormalIcon, HardIcon, TutorialIcon } from './icons';
 
 interface FilterButtonsProps {
-  selectedFilters: ('tutorial' | 'easy' | 'medium' | 'hard')[];
-  onToggleFilter: (filter: 'tutorial' | 'easy' | 'medium' | 'hard') => void;
+  selectedFilters: ('basic' | 'easy' | 'medium' | 'hard')[];
+  onToggleFilter: (filter: 'basic' | 'easy' | 'medium' | 'hard') => void;
   currentLanguage: 'ja' | 'en';
 }
 
@@ -25,9 +25,9 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
   };
 
   // 難易度テキストを取得
-  const getDifficultyText = (difficulty: 'tutorial' | 'easy' | 'medium' | 'hard') => {
+  const getDifficultyText = (difficulty: 'basic' | 'easy' | 'medium' | 'hard') => {
     const difficultyTexts = {
-      tutorial: { ja: 'きほん', en: 'Basic' },
+      basic: { ja: 'きほん', en: 'Basic' },
       easy: { ja: 'かんたん', en: 'Easy' },
       medium: { ja: 'ふつう', en: 'Normal' },
       hard: { ja: 'むずかしい', en: 'Hard' },
@@ -44,21 +44,21 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
       <TouchableOpacity 
         style={[
           styles.filterButton, 
-          selectedFilters.includes('tutorial') ? styles.filterButtonSelected : styles.filterButtonUnselected
+          selectedFilters.includes('basic') ? styles.filterButtonSelected : styles.filterButtonUnselected
         ]}
-        onPress={() => onToggleFilter('tutorial')}
+        onPress={() => onToggleFilter('basic')}
       >
         <TutorialIcon 
           width={28} 
           height={28} 
-          strokeColor={selectedFilters.includes('tutorial') ? '#e8e6e0' : '#57534D'} 
+          strokeColor={selectedFilters.includes('basic') ? '#e8e6e0' : '#57534D'} 
           strokeWidth={1}
         />
         <Text style={[
           styles.filterText, 
-          selectedFilters.includes('tutorial') ? styles.filterTextSelected : styles.filterTextUnselected
+          selectedFilters.includes('basic') ? styles.filterTextSelected : styles.filterTextUnselected
         ]}>
-          {getDifficultyText('tutorial')}
+          {getDifficultyText('basic')}
         </Text>
       </TouchableOpacity>
       <TouchableOpacity 

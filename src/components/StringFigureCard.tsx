@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, BookmarkIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, BookmarkIcon, TutorialIcon } from './icons';
 
 interface Props {
   item: StringFigure;
@@ -64,6 +64,8 @@ const StringFigureCard: React.FC<Props> = ({
     };
 
     switch (difficulty) {
+      case 'basic':
+        return <TutorialIcon {...iconProps} />;
       case 'easy':
         return <EasyIcon {...iconProps} />;
       case 'medium':
