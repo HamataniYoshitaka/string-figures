@@ -102,6 +102,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     isSupported: isRecognitionSupported,
     start: startRecognition,
     stop: stopRecognition,
+    cleanup: cleanupRecognition,
   } = useSpeechRecognition({
     language: currentLanguage,
     onKeywordDetected: async (keyword) => {
@@ -294,6 +295,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     if (recognizing) {
       await stopRecognition();
     }
+    // クリーンアップ
+    cleanupRecognition();
     
     try {
       // isLandscapeModeが有効な場合、明示的に縦向きに設定

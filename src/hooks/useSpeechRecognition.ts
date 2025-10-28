@@ -26,6 +26,8 @@ interface UseSpeechRecognitionReturn {
   start: () => Promise<void>;
   /** 音声認識を手動で停止する関数 */
   stop: () => Promise<void>;
+  /** すべてのタイマーをキャンセルして完全に停止する関数 */
+  cleanup: () => void;
   /** 意図的に停止されているかどうか（内部処理用） */
   isIntentionallyStopped: boolean;
   /** キーワード処理中かどうか（内部処理用） */
@@ -86,6 +88,8 @@ export const useSpeechRecognition = ({
   
   // 音声認識活動監視用のタイマー
   const activityTimerRef = useRef<NodeJS.Timeout | null>(null);
+  // キーワード検出後の再開用タイマー
+  const keywordRestartTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 活動監視タイマーをリセットする関数
   const resetActivityTimer = () => {
@@ -188,11 +192,41 @@ export const useSpeechRecognition = ({
     setIsIntentionallyStopped(true);
     setIsProcessingKeyword(true);
     await stopRecognition();
-    
+
     // 活動監視タイマーをクリア
     if (activityTimerRef.current) {
       clearTimeout(activityTimerRef.current);
       activityTimerRef.current = null;
+    }
+
+    // キーワード再開タイマーをクリア
+    if (keywordRestartTimerRef.current) {
+      clearTimeout(keywordRestartTimerRef.current);
+      keywordRestartTimerRef.current = null;
+    }
+  };
+
+  // すべてのタイマーをキャンセルして完全に停止する関数
+  const cleanup = () => {
+    setIsIntentionallyStopped(true);
+    setIsProcessingKeyword(true);
+
+    // すべてのタイマーをクリア
+    if (activityTimerRef.current) {
+      clearTimeout(activityTimerRef.current);
+      activityTimerRef.current = null;
+    }
+    if (keywordRestartTimerRef.current) {
+      clearTimeout(keywordRestartTimerRef.current);
+      keywordRestartTimerRef.current = null;
+    }
+
+    // 音声認識を停止（非同期だが待たない）
+    if (recognizing) {
+      Promise.resolve(ExpoSpeechRecognitionModule.stop()).catch((error) => {
+        console.error('クリーンアップ時の音声認識停止エラー:', error);
+      });
+      setRecognizing(false);
     }
   };
 
@@ -241,7 +275,7 @@ export const useSpeechRecognition = ({
         onKeywordDetected?.(actionKeyword);
         
         // 少し遅延してから再開（ユーザーのアクションが完了するのを待つ）
-        setTimeout(() => {
+        keywordRestartTimerRef.current = setTimeout(() => {
           if (isSupported) {
             setIsIntentionallyStopped(false);
             setIsProcessingKeyword(false);
@@ -297,17 +331,7 @@ export const useSpeechRecognition = ({
 
     // クリーンアップ関数
     return () => {
-      if (recognizing) {
-        setIsIntentionallyStopped(true);
-        setIsProcessingKeyword(true);
-        stopRecognition();
-      }
-      
-      // タイマーのクリーンアップ
-      if (activityTimerRef.current) {
-        clearTimeout(activityTimerRef.current);
-        activityTimerRef.current = null;
-      }
+      cleanup();
     };
   }, [language]); // languageが変更されたら再初期化
 
@@ -316,6 +340,7 @@ export const useSpeechRecognition = ({
     isSupported,
     start,
     stop,
+    cleanup,
     isIntentionallyStopped,
     isProcessingKeyword,
   };
