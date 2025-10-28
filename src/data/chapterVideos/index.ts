@@ -5,6 +5,7 @@ import { FIGURE_4_VOLCANO_VIDEOS } from './figure-4_volcano';
 import { FIGURE_5_MANY_STARS_VIDEOS } from './figure-5_many-stars';
 import { FIGURE_6_TIEUP_VIDEOS } from './figure-6_tieup';
 import { FIGURE_7_SNAIL_VIDEOS } from './figure-7_snail';
+import { FIGURE_8_ELASTIC_BAND_VIDEOS } from './figure-8_elastic-band';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -14,4 +15,5 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '5_many-stars': FIGURE_5_MANY_STARS_VIDEOS,
   '6_tieup': FIGURE_6_TIEUP_VIDEOS,
   '7_snail': FIGURE_7_SNAIL_VIDEOS,
+  '8_elastic-band': FIGURE_8_ELASTIC_BAND_VIDEOS,
 };

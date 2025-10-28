@@ -40,4 +40,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/7_snail/pattern.png'),
     previewUrl: require('../../assets/string-figures/7_snail/preview.mp4'),
   },
+  '8_elastic-band': {
+    thumbnail: require('../../assets/string-figures/8_elastic-band/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/8_elastic-band/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/8_elastic-band/preview.mp4'),
+  },
 };

@@ -80,6 +80,14 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['7_snail'],
     description: { ja: '小さなかわいいカタツムリが出来上がります', en: 'A small and cute snail is completed.' },
     premiumCourseId: 0, // 無料
-
+  },
+  {
+    id: '8',
+    name: { ja: 'ゴム', en: 'Elastic Band' },
+    difficulty: 'easy',
+    directory: '8_elastic-band',
+    ...ASSETS_MAP['8_elastic-band'],
+    description: { ja: 'ゴムの説明文です。', en: 'Description for Elastic Band.' },
+    premiumCourseId: 0, // 無料
   },
 ];
