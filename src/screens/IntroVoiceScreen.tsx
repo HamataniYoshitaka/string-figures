@@ -59,6 +59,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         isSupported: isRecognitionSupported,
         start: startRecognition,
         stop: stopRecognition,
+        cleanup,
       } = useSpeechRecognition({
         language: currentLanguage,
         onKeywordDetected: async (keyword) => {
@@ -93,6 +94,9 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         if (recognizing) {
             await stopRecognition();
         }
+        cleanup();
+        // 300ms待機してから進む
+        await new Promise(resolve => setTimeout(resolve, 300));
 
         navigation.navigate('IntroComplete');
     }
@@ -127,6 +131,9 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         if (recognizing) {
             await stopRecognition();
         }
+        cleanup();
+        // 300ms待機してから戻る
+        await new Promise(resolve => setTimeout(resolve, 300));
         navigation.goBack();
     };
 

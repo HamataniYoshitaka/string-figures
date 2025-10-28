@@ -14,7 +14,7 @@ interface UseSpeechRecognitionProps {
   /** 音声認識の無活動時間（ミリ秒）。この時間経過後に自動再起動（デフォルト: 20000） */
   inactivityTimeout?: number;
   /** キーワード検出後の一時停止時間（ミリ秒）（デフォルト: 1500） */
-  pauseAfterKeywordMs?: number;
+  pauseAfterKeywords?: number;
 }
 
 interface UseSpeechRecognitionReturn {
@@ -47,7 +47,7 @@ export const useSpeechRecognition = ({
   onKeywordDetected,
   language = 'ja',
   inactivityTimeout = 20000,
-  pauseAfterKeywordMs = 1500,
+  pauseAfterKeywords = 1500,
 }: UseSpeechRecognitionProps = {}): UseSpeechRecognitionReturn => {
   // 言語に応じたキーワードマッピング
   const keywordMap = {
@@ -107,6 +107,7 @@ export const useSpeechRecognition = ({
         
         // 音声認識を一時停止（意図的な停止フラグを設定）
         setIsIntentionallyStopped(true);
+        console.log('settimeout 音声認識を一時停止します');
         stopRecognition();
         
         // 少し遅延してから再開（ユーザーのアクションが完了するのを待つ）
@@ -116,7 +117,7 @@ export const useSpeechRecognition = ({
             setIsProcessingKeyword(false);
             startRecognition();
           }
-        }, pauseAfterKeywordMs);
+        }, pauseAfterKeywords);
       }
     }, inactivityTimeout);
   };
@@ -191,6 +192,7 @@ export const useSpeechRecognition = ({
   const stop = async () => {
     setIsIntentionallyStopped(true);
     setIsProcessingKeyword(true);
+    console.log('stop called');
     await stopRecognition();
 
     // 活動監視タイマーをクリア
@@ -253,6 +255,7 @@ export const useSpeechRecognition = ({
         
         // 音声認識を一時停止（意図的な停止フラグを設定）
         setIsIntentionallyStopped(true);
+        console.log('keyword match. 音声認識を一時停止します');
         stopRecognition();
         
         // 検出されたキーワードがどのアクションに対応するか判定
@@ -281,7 +284,7 @@ export const useSpeechRecognition = ({
             setIsProcessingKeyword(false);
             startRecognition();
           }
-        }, pauseAfterKeywordMs);
+        }, pauseAfterKeywords);
       }
     }
   });

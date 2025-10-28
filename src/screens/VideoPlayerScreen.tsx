@@ -297,7 +297,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
     // クリーンアップ
     cleanupRecognition();
-    
+    // 300ms待機してから戻る
+    await new Promise(resolve => setTimeout(resolve, 300));
     try {
       // isLandscapeModeが有効な場合、明示的に縦向きに設定
       const isLandscapeMode = await AsyncStorage.getItem('isLandscapeMode');
