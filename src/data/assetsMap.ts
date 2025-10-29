@@ -60,4 +60,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/11_wink/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/11_wink/preview.mp4'),
   },
+  '12_9-diamonds': {
+    thumbnail: require('../../assets/string-figures/12_9-diamonds/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/12_9-diamonds/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/12_9-diamonds/preview.mp4'),
+  },
 };
