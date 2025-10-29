@@ -90,4 +90,13 @@ export const stringFigures: StringFigure[] = [
     description: { ja: 'ゴムの説明文です。', en: 'Description for Elastic Band.' },
     premiumCourseId: 0, // 無料
   },
+  {
+    id: '9',
+    name: { ja: '菊', en: 'Chrysanthemum' },
+    difficulty: 'easy',
+    directory: '9_chrysanthemum',
+    ...ASSETS_MAP['9_chrysanthemum'],
+    description: { ja: '菊の説明文です。', en: 'Description for Chrysanthemum.' },
+    premiumCourseId: 0, // 無料
+  },
 ];

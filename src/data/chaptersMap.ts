@@ -9,4 +9,5 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '6_tieup': require('../../assets/string-figures/6_tieup/chapters.json'),
   '7_snail': require('../../assets/string-figures/7_snail/chapters.json'),
   '8_elastic-band': require('../../assets/string-figures/8_elastic-band/chapters.json'),
+  '9_chrysanthemum': require('../../assets/string-figures/9_chrysanthemum/chapters.json'),
 };
