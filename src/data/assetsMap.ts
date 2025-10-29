@@ -55,4 +55,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/10_magic-fingers/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/10_magic-fingers/preview.mp4'),
   },
+  '11_wink': {
+    thumbnail: require('../../assets/string-figures/11_wink/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/11_wink/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/11_wink/preview.mp4'),
+  },
 };
