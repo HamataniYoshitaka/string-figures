@@ -7,6 +7,7 @@ import { FIGURE_6_TIEUP_VIDEOS } from './figure-6_tieup';
 import { FIGURE_7_SNAIL_VIDEOS } from './figure-7_snail';
 import { FIGURE_8_ELASTIC_BAND_VIDEOS } from './figure-8_elastic-band';
 import { FIGURE_9_CHRYSANTHEMUM_VIDEOS } from './figure-9_chrysanthemum'; 
+import { FIGURE_10_MAGIC_FINGERS_VIDEOS } from './figure-10_magic-fingers';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -18,4 +19,5 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '7_snail': FIGURE_7_SNAIL_VIDEOS,
   '8_elastic-band': FIGURE_8_ELASTIC_BAND_VIDEOS,
   '9_chrysanthemum': FIGURE_9_CHRYSANTHEMUM_VIDEOS,
+  '10_magic-fingers': FIGURE_10_MAGIC_FINGERS_VIDEOS,
 };

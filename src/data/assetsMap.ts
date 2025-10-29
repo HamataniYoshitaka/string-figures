@@ -50,4 +50,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/9_chrysanthemum/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/9_chrysanthemum/preview.mp4'),
   },
+  '10_magic-fingers': {
+    thumbnail: require('../../assets/string-figures/10_magic-fingers/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/10_magic-fingers/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/10_magic-fingers/preview.mp4'),
+  },
 };
