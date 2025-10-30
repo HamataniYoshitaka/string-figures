@@ -24,6 +24,7 @@ import DropDownMenu from '../components/DropDownMenu';
 import { stringFigures } from '../data/index';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { DotsVerticalIcon } from '../components/icons';
+import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -46,6 +47,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
   const [menuButtonPosition, setMenuButtonPosition] = useState({ x: 0, y: 0 });
   const menuButtonRef = useRef<View>(null);
+  const [showCallout, setShowCallout] = useState(false);
 
   // 現在の言語設定の状態
   const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
@@ -80,6 +82,19 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       }
     };
     initializeSettings();
+
+    // マイクと音声認識の許可を求める
+    const requestMicrophonePermissions = async () => {
+      try {
+          const { granted } = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+          if (!granted) {
+              setShowCallout(true);
+          }
+      } catch (error) {
+          console.error('マイクの使用許可のリクエスト中にエラーが発生しました:', error);
+      }
+    };
+    requestMicrophonePermissions();
   }, []);
 
   // 画面にフォーカスが戻ってきた時にブックマーク情報を再読み込み
@@ -340,6 +355,20 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
+        {showCallout && (
+          <View style={{paddingHorizontal: 16, marginBottom: 16}}>
+            <TouchableOpacity 
+              onPress={() => navigation.navigate('IntroError')}
+              activeOpacity={0.8}
+              style={{ borderRadius: 8, padding: 12, borderWidth: 2, borderColor: '#cc7000ff'}}
+            >
+              <Text style={{ color: '#533000ff' }}>
+                {currentLanguage === 'ja' ? '音声認識機が有効化されていません。このままでもアプリをご利用いただけますが、有効化することで「声」で操作できるようになり便利です' : 'The speech recognition feature is not enabled. You can still use the app as is, but enabling it will allow you to control the app with your voice.'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        
+        )}
         {/* フィルターボタン */}
         <FilterButtons 
           selectedFilters={selectedFilters}
