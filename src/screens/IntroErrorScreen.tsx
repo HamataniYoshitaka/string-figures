@@ -6,8 +6,7 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseIcon, PlayIcon } from '../components/icons';
-import SpeedButtonTail from '../components/icons/SpeedButtonTail';
+import { CloseIcon } from '../components/icons';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 
 type IntroErrorScreenNavigationProp = StackNavigationProp<
@@ -24,7 +23,15 @@ interface Props {
 
 const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
-
+    
+    const setCompleted = async () => {
+        try {
+            await AsyncStorage.setItem('introduction_completed', 'true');
+        } catch (error) {
+            console.error('イントロ完了状態の保存に失敗しました:', error);
+        }
+    }
+    
     // アプリ起動時に保存された言語設定を読み込む
     useEffect(() => {
 
@@ -32,8 +39,9 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
     
         // 画面スリープを防止
         activateKeepAwakeAsync();
-    
-        // クリーンアップ: スマホの場合はアンマウント時に画面の向きをportraitに戻す
+        setCompleted();
+
+        // クリーンアップ
         return () => {
           // 画面スリープ防止を解除
           deactivateKeepAwake();
@@ -65,8 +73,10 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     const onGoBack = async () => {
-
-        navigation.goBack();
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+        });
     };
 
     const onOpenSettings = async () => {
@@ -75,15 +85,6 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
         } catch (e) {
             console.error('設定アプリを開けませんでした:', e);
         }
-    };
-
-    const onStartAnyway = async () => {
-        try {
-            await AsyncStorage.setItem('introduction_completed', 'true');
-        } catch (error) {
-            console.error('イントロ完了状態の保存に失敗しました:', error);
-        }
-        navigation.reset({ index: 0, routes: [{ name: 'Home' }] });
     };
 
     // 多言語対応のヘルパー関数
@@ -164,7 +165,7 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
                     </Pressable>
 
                     <Pressable
-                        onPress={onStartAnyway}
+                        onPress={onGoBack}
                         style={({ pressed }) => [styles.textButton, pressed && { opacity: 0.6 }]}
                     >
                         <Text style={styles.textButtonLabel}>
