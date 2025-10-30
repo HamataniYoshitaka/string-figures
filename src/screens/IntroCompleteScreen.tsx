@@ -40,6 +40,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
+    const startButtonScale = useRef(new Animated.Value(1)).current;
     
     const { isTablet, isDeviceLandscape } = useDeviceInfo();
 
@@ -102,7 +103,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         { transform: [{ scale: backButtonScale }] }
                     ]}
                     >
-                    <CloseIcon width={24} height={24} fillColor="#79716B" />
+                    <CloseIcon width={24} height={24} fillColor="#222" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
                 <Text style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
@@ -115,8 +116,12 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             {/* 字幕エリア */}
             {!isDeviceLandscape && (
                 <View style={styles.subtitleContainer}>
+                    <Text style={styles.titleText}>
+                        {getLocalizedText({ ja: '準備が完了しました！', en: 'Preparation is complete!' })}
+                    </Text>
+
                     <Text style={styles.subtitleText}>
-                        {getLocalizedText({ ja: '完了！これはイントロダクションビデオの字幕です。ここに説明文が表示されます。', en: 'This is the subtitle for the introduction video. Explanatory text will be displayed here.' })}
+                        {getLocalizedText({ ja: '世界中に伝承されている\n「あやとり」をお楽しみ下さい!', en: 'Enjoy the string figures that have been passed down through generations around the world!' })}
                     </Text>
                 </View>
             )}
@@ -125,18 +130,22 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             <View style={styles.controlsContainer}>
                 <View style={styles.controlButton}>
                     <View style={styles.buttonContainer}>
-                        <View style={[
-                            styles.floatingButton,
-                            { paddingLeft: 2 },
-                        ]}>
-                            <PlayIcon
-                                width={20}
-                                height={20}
-                                fillColor="#57534D"
-                                strokeColor='transparent'
-                            />
-                        </View>
-                        
+                        <TouchableWithoutFeedback
+                            onPress={onGoBack}
+                            onPressIn={createPressInHandler(startButtonScale)}
+                            onPressOut={createPressOutHandler(startButtonScale)}
+                        >
+                            <Animated.View
+                                style={[
+                                    styles.startButton,
+                                    { transform: [{ scale: startButtonScale }] },
+                                ]}
+                            >
+                                <Text style={styles.startButtonText}>
+                                    {getLocalizedText({ ja: 'はじめる', en: 'Start' })}
+                                </Text>
+                            </Animated.View>
+                        </TouchableWithoutFeedback>
                     </View>
                 </View>
             </View>
@@ -149,7 +158,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e8e6e0',
+        backgroundColor: '#FFB86A',
     },
     header: {
         flexDirection: 'row',
@@ -172,16 +181,25 @@ const styles = StyleSheet.create({
     },
     subtitleContainer: {
         flex: 1,
-        paddingHorizontal: 24,
+        paddingHorizontal: 0,
         paddingVertical: 6,
         justifyContent: 'center',
+        gap: 20
+    },
+    titleText: {
+        fontFamily: 'KleeOne-Regular',
+        fontSize: 32,
+        color: '#333',
+        textAlign: 'center',
+        // lineHeight: 24,
+        fontWeight: '600',
     },
     subtitleText: {
         fontFamily: 'KleeOne-Regular',
-        fontSize: 16,
+        fontSize: 20,
         color: '#333',
         textAlign: 'center',
-        lineHeight: 24,
+        lineHeight: 32,
         fontWeight: '500',
     },
     controlsContainer: {
@@ -197,11 +215,26 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         position: 'relative',
-        width: 48,
-        height: 48,
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 12,
+        paddingVertical: 8,
+    },
+    startButton: {
+        backgroundColor: '#FF6A00',
+        borderRadius: 9999,
+        borderWidth: 3,
+        borderColor: '#FFFFFF',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        alignSelf: 'stretch',
+    },
+    startButtonText: {
+        fontWeight: '600',
+        fontSize: 20,
+        color: '#FFFFFF',
+        textAlign: 'center',
+        letterSpacing: 1,
     },
     floatingButton: {
         width: 48,
