@@ -12,6 +12,7 @@ import { RootStackParamList } from './src/types';
 import IntroScreen from './src/screens/IntroScreen';
 import IntroVideoScreen from './src/screens/IntroVideoScreen';
 import IntroVoiceScreen from './src/screens/IntroVoiceScreen';
+import IntroErrorScreen from './src/screens/IntroErrorScreen';  
 import HomeScreen from './src/screens/HomeScreen';
 import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 import IntroCompleteScreen from './src/screens/IntroCompleteScreen';
@@ -68,6 +69,7 @@ export default function App() {
         <Stack.Screen name="IntroVideo" component={IntroVideoScreen} />
         <Stack.Screen name="IntroVoice" component={IntroVoiceScreen} />
         <Stack.Screen name="IntroComplete" component={IntroCompleteScreen} />
+        <Stack.Screen name="IntroError" component={IntroErrorScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen
           name="VideoPlayer"

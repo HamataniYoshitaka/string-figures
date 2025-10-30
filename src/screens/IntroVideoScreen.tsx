@@ -156,11 +156,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 const { granted } = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
 
                 if (!granted) {
-                    Alert.alert(
-                        'マイクへのアクセスが必要です',
-                        '音声認識機能を使用するには、マイクへのアクセス許可が必要です。設定からマイクの使用を許可してください。',
-                        [{ text: 'OK' }]
-                    );
+                    // IntroErrorScreenへ遷移
+                    navigation.replace('IntroError');
                     return;
                 }
 
