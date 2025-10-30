@@ -46,7 +46,6 @@ const chapters = [
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
     const videoRef = useRef<Video>(null);
-    const nextChapterButtonRef = useRef<any>(null);
     const [playbackRate, setPlaybackRate] = useState<number>(1.0);
     const [currentChapterIndex, setCurrentChapterIndex] = useState<number>(2);
     const [playbackPosition, setPlaybackPosition] = useState(0);
@@ -80,12 +79,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     
         // クリーンアップ: スマホの場合はアンマウント時に画面の向きをportraitに戻す
         return () => {
-        //   if (!isTablet) {
-        //     ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
-        //   }
           // 画面スリープ防止を解除
           deactivateKeepAwake();
-          
         };
     }, []);
 
@@ -262,13 +257,11 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             </View>
 
             {/* 字幕エリア */}
-            {!isDeviceLandscape && (
-                <View style={styles.subtitleContainer}>
-                    <Text style={styles.subtitleText}>
-                        {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                    </Text>
-                </View>
-            )}
+            <View style={styles.subtitleContainer}>
+                <Text style={styles.subtitleText}>
+                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+            </View>
 
             {/* コントロールボタンエリア */}
             <View style={styles.controlsContainer}>
@@ -342,6 +335,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        height: 340,
     },
     videoPlayer: {
         aspectRatio: 16 / 9,
