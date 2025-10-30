@@ -43,6 +43,9 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
     );
   }
   
+  // 各章の字幕テキストを一度だけ取り出し
+  const subtitle = getLocalizedText(chapters[currentChapterIndex].subtitle);
+
   return (
     <View style={styles.container}>
       {/* ブックマークボタン */}
@@ -84,9 +87,21 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           
           {/* 字幕エリア - 動画の上に重ねて表示 */}
           <View style={styles.subtitleArea}>
-            <Text style={styles.subtitleText}>
-              {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-            </Text>
+            <View style={styles.subtitleStack} pointerEvents="none">
+              {/* 影だけを同じ位置に重ねる（回数で濃さ調整） */}
+              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+
+              {/* 本体テキスト */}
+              <Text style={styles.subtitleText}>{subtitle}</Text>
+            </View>
           </View>
         </View>
 
@@ -188,15 +203,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
+  // 重ね描き用のコンテナ（重ねテキストの基準位置）
+  subtitleStack: {
+    position: 'relative',
+    alignItems: 'center',
+  },
   subtitleText: {
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
     lineHeight: 24,
-    textShadowColor: 'rgba(0, 0, 0, 1)',
+    textShadowColor: 'rgba(60, 60, 60, 1)',
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,  
     fontFamily: 'KleeOne-SemiBold',
+  },
+  // 影用テキスト（同じ位置に配置して影だけを重ねる）
+  subtitleShadow: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    // color: 'transparent',                 // 本体色は表示しない
+    textShadowColor: 'rgba(60, 60, 60, 1)',  // 影のみ
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,                  // 影の広がり（好みで調整）
   },
   progressContainer: {
     paddingVertical: 16,
