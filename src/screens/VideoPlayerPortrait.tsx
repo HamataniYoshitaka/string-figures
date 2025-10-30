@@ -212,9 +212,41 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           {/* 字幕エリア - 動画の上に重ねて表示 */}
           {isTablet && isDeviceLandscape && (
             <View style={styles.subtitleContainerTabletLandscape}>
-              <Text style={styles.subtitleTextTabletLandscape}>
-                {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-              </Text>
+              <View style={styles.subtitleStackTabletLandscape} pointerEvents="none">
+                {/* 影だけを同じ位置に重ねる（回数で濃さ調整） */}
+                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+
+                {/* 本体テキスト */}
+                <Text style={styles.subtitleTextTabletLandscape}>
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+              </View>
             </View>
           )}
         </View>
@@ -429,6 +461,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
+  // 重ね描き用のコンテナ（重ねテキストの基準位置）
+  subtitleStackTabletLandscape: {
+    position: 'relative',
+    alignItems: 'center',
+  },
   subtitleTextTabletLandscape: {
     fontSize: 18,
     color: 'white',
@@ -439,6 +476,16 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,  
     fontFamily: 'KleeOne-SemiBold',
+  },
+  // 影用テキスト（同じ位置に配置して影だけを重ねる）
+  subtitleShadowTabletLandscape: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    // color: 'transparent',
+    textShadowColor: 'rgba(60, 60, 60, 1)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 5,
   },
   subtitleContainer: {
     flex: 1,
