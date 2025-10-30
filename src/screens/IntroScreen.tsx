@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   SafeAreaView,
-  TouchableOpacity,
   Platform,
   Dimensions,
 } from 'react-native';
@@ -48,9 +47,22 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
     const initializeSettings = async () => {
       await loadLanguageSetting();
       // IntroScreen表示時は常に縦向きに設定
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+      if (!isTablet) {
+        ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+      }
     };
     initializeSettings();
+
+  }, []);
+  
+  // 画面サイズ変更の監視
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setScreenWidth(window.width);
+      setColumnsCount(getColumnsCount(window.width));
+    });
+
+    return () => subscription?.remove();
   }, []);
 
   const loadLanguageSetting = async () => {
@@ -73,19 +85,6 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       setCurrentLanguage('en');
     }
   };
-  
-  const handleComplete = async () => {
-    try {
-      // イントロ完了フラグをAsyncStorageに保存
-      await AsyncStorage.setItem('introduction_completed', 'true');
-      // HomeScreenへ遷移
-      navigation.replace('Home');
-    } catch (error) {
-      console.error('イントロ完了状態の保存に失敗しました:', error);
-      // エラーが発生してもHomeScreenへ遷移
-      navigation.replace('Home');
-    }
-  };
 
   const renderCard = (item: StringFigure, disabled: boolean) => {
     const imageInfo = imageDimensions[item.id];
@@ -97,8 +96,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       const gapBetweenColumns = (columnsCount - 1) * 15; // カラム間のgap
       const cardWidth = (screenWidth - totalHorizontalPadding - gapBetweenColumns) / columnsCount;
       calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
-      // 最大高さを制限
-      calculatedHeight = Math.min(calculatedHeight, 300);
+
     }
         
     return (
@@ -143,7 +141,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
   const filteredStringFigures: StringFigure[] = [
     { id: '1',
       name: { ja: 'はじめに', en: 'Introduction' },
-      difficulty: 'easy',
+      difficulty: 'basic',
       directory: '0_introduction',
       thumbnail: require('../../assets/string-figures/0_introduction/thumbnail.jpg'),
       patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),

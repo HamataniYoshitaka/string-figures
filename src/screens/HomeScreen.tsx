@@ -40,7 +40,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
   
-  const [selectedFilters, setSelectedFilters] = useState<('easy' | 'medium' | 'hard')[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<('basic' | 'easy' | 'medium' | 'hard')[]>([]);
 
   // ドロップダウンメニューの状態
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
@@ -149,7 +149,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const toggleFilter = (filter: 'easy' | 'medium' | 'hard') => {
+  const toggleFilter = (filter: 'basic' | 'easy' | 'medium' | 'hard') => {
     setSelectedFilters(prev => {
       if (prev.includes(filter)) {
         // フィルターが既に選択されている場合は削除
@@ -193,7 +193,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       const cardWidth = (screenWidth - totalHorizontalPadding - gapBetweenColumns) / columnsCount;
       calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
       // 最大高さを制限
-      calculatedHeight = Math.min(calculatedHeight, 300);
+      // calculatedHeight = Math.min(calculatedHeight, 300);
     }
     
     // bookmarkedIdsとitem.idを突合してブックマーク状態を判定

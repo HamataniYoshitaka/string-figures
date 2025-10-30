@@ -237,13 +237,12 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             </View>
 
             {/* 字幕エリア */}
-            {!isDeviceLandscape && (
-                <View style={styles.subtitleContainer}>
+
+            <View style={styles.subtitleContainer}>
                 <Text style={styles.subtitleText}>
                     {getLocalizedText(chapters[currentChapterIndex].subtitle)}
                 </Text>
-                </View>
-            )}
+            </View>
 
             {/* コントロールボタンエリア */}
             <View style={styles.controlsContainer}>
@@ -295,6 +294,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        height: 340,
     },
     videoPlayer: {
         aspectRatio: 16 / 9,
