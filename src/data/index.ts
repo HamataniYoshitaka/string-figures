@@ -144,4 +144,13 @@ export const stringFigures: StringFigure[] = [
     description: { ja: 'バナナの説明文です。', en: 'Description for Banana.' },
     premiumCourseId: 0, // 無料
   },
+  {
+    id: '16',
+    name: { ja: 'せんす', en: 'Sensu' },
+    difficulty: 'easy',
+    directory: '16_sensu',
+    ...ASSETS_MAP['16_sensu'],
+    description: { ja: '扇子の説明文です。', en: 'Description for Sensu.' },
+    premiumCourseId: 0, // 無料
+  },
 ];
