@@ -80,4 +80,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/16_sensu/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/16_sensu/preview.mp4'),
   },
+  '17_broom': {
+    thumbnail: require('../../assets/string-figures/17_broom/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/17_broom/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/17_broom/preview.mp4'),
+  },
 };

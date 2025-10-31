@@ -16,4 +16,5 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '13_easy-broom': require('../../assets/string-figures/13_easy-broom/chapters.json'),
   '15_banana': require('../../assets/string-figures/15_banana/chapters.json'),
   '16_sensu': require('../../assets/string-figures/16_sensu/chapters.json'),
+  '17_broom': require('../../assets/string-figures/17_broom/chapters.json'),
 };

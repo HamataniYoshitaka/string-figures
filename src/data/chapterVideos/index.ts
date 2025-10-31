@@ -13,6 +13,7 @@ import { FIGURE_12_9DIAMONDS_VIDEOS } from './figure-12_9-diamonds';
 import { FIGURE_13_EASY_BROOM_VIDEOS } from './figure-13_easy-broom';
 import { FIGURE_15_BANANA_VIDEOS } from './figure-15_banana';
 import { FIGURE_16_SENSU_VIDEOS } from './figure-16_sensu';
+import { FIGURE_17_BROOM_VIDEOS } from './figure-17_broom';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -29,5 +30,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '12_9-diamonds': FIGURE_12_9DIAMONDS_VIDEOS,
   '13_easy-broom': FIGURE_13_EASY_BROOM_VIDEOS,
   '15_banana': FIGURE_15_BANANA_VIDEOS,
-  '16_sensu': FIGURE_16_SENSU_VIDEOS
+  '16_sensu': FIGURE_16_SENSU_VIDEOS,
+  '17_broom': FIGURE_17_BROOM_VIDEOS,
 };
