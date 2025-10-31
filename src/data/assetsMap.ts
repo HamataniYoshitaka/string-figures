@@ -85,4 +85,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/17_broom/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/17_broom/preview.mp4'),
   },
+  '18_mt-fuji': {
+    thumbnail: require('../../assets/string-figures/18_mt-fuji/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/18_mt-fuji/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/18_mt-fuji/preview.mp4'),
+  },
 };

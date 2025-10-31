@@ -162,4 +162,13 @@ export const stringFigures: StringFigure[] = [
     description: { ja: 'ほうきの説明文です。', en: 'Description for Broom.' },
     premiumCourseId: 0, // 無料
   },
+  {
+    id: '18',
+    name: { ja: '富士山', en: 'Mt. Fuji' },
+    difficulty: 'easy',
+    directory: '18_mt-fuji',
+    ...ASSETS_MAP['18_mt-fuji'],
+    description: { ja: '富士山の説明文です。', en: 'Description for Mt. Fuji.' },
+    premiumCourseId: 0, // 無料
+  },
 ];
