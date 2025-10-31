@@ -70,4 +70,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/13_easy-broom/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/13_easy-broom/preview.mp4'),
   },
+  '15_banana': {
+    thumbnail: require('../../assets/string-figures/15_banana/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/15_banana/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/15_banana/preview.mp4'),
+  },
 };

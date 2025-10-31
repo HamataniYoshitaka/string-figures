@@ -135,4 +135,13 @@ export const stringFigures: StringFigure[] = [
     description: { ja: 'かんたんほうきの説明文です。', en: 'Description for Easy Broom.' },
     premiumCourseId: 0, // 無料
   },
+  {
+    id: '15',
+    name: { ja: 'バナナ', en: 'Banana' },
+    difficulty: 'easy',
+    directory: '15_banana',
+    ...ASSETS_MAP['15_banana'],
+    description: { ja: 'バナナの説明文です。', en: 'Description for Banana.' },
+    premiumCourseId: 0, // 無料
+  },
 ];
