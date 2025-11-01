@@ -136,6 +136,15 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
   },
   {
+    id: '14',
+    name: { ja: '足あと', en: 'Footprint' },
+    difficulty: 'easy',
+    directory: '14_footprint',
+    ...ASSETS_MAP['14_footprint'],
+    description: { ja: '足あとの説明文です。', en: 'Description for Footprint.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
     id: '15',
     name: { ja: 'バナナ', en: 'Banana' },
     difficulty: 'easy',
