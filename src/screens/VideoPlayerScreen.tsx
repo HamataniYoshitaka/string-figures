@@ -87,7 +87,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [playbackPosition, setPlaybackPosition] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
   const [isLastChapterCompleted, setIsLastChapterCompleted] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(1.0);
+  const [playbackRate, setPlaybackRate] = useState(0.6);
   const [isLandscapeMode, setIsLandscapeMode] = useState(false);
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const videoRef = useRef<Video>(null);
