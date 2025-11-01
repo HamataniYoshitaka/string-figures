@@ -180,4 +180,13 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '富士山の説明文です。', en: 'Description for Mt. Fuji.' },
     premiumCourseId: 0, // 無料
   },
+  {
+    id: '19',
+    name: { ja: '二人の首長', en: 'Two Chiefs' },
+    difficulty: 'easy',
+    directory: '19_two-chiefs',
+    ...ASSETS_MAP['19_two-chiefs'],
+    description: { ja: '二人の首長の説明文です。', en: 'Description for Two Chiefs.' },
+    premiumCourseId: 0, // 無料
+  },
 ];
