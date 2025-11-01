@@ -110,4 +110,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/21_kikusui/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/21_kikusui/preview.mp4'),
   },
+  '22_spear': {
+    thumbnail: require('../../assets/string-figures/22_spear/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/22_spear/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/22_spear/preview.mp4'),
+  },
 };
