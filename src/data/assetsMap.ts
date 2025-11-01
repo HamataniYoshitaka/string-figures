@@ -105,4 +105,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/20_tuzumi/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/20_tuzumi/preview.mp4'),
   },
+  '21_kikusui': {
+    thumbnail: require('../../assets/string-figures/21_kikusui/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/21_kikusui/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/21_kikusui/preview.mp4'),
+  },
 };
