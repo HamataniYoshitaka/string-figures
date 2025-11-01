@@ -17,6 +17,7 @@ import { FIGURE_16_SENSU_VIDEOS } from './figure-16_sensu';
 import { FIGURE_17_BROOM_VIDEOS } from './figure-17_broom';
 import { FIGURE_18_MT_FUJI_VIDEOS } from './figure-18_mt-fuji';
 import { FIGURE_19_TWO_CHIEFS_VIDEOS } from './figure-19_two-chiefs';
+import { FIGURE_20_TUZUMI_VIDEOS } from './figure-20_tuzumi';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -38,4 +39,5 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '17_broom': FIGURE_17_BROOM_VIDEOS,
   '18_mt-fuji': FIGURE_18_MT_FUJI_VIDEOS,
   '19_two-chiefs': FIGURE_19_TWO_CHIEFS_VIDEOS,
+  '20_tuzumi': FIGURE_20_TUZUMI_VIDEOS,
 };

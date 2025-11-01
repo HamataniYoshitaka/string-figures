@@ -100,4 +100,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/19_two-chiefs/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/19_two-chiefs/preview.mp4'),
   },
+  '20_tuzumi': {
+    thumbnail: require('../../assets/string-figures/20_tuzumi/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/20_tuzumi/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/20_tuzumi/preview.mp4'),
+  },
 };
