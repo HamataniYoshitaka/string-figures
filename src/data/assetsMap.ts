@@ -115,4 +115,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/22_spear/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/22_spear/preview.mp4'),
   },
+  '23_finger-stroll': {
+    thumbnail: require('../../assets/string-figures/23_finger-stroll/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/23_finger-stroll/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/23_finger-stroll/preview.mp4'),
+  },
 };

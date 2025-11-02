@@ -23,4 +23,5 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '20_tuzumi': require('../../assets/string-figures/20_tuzumi/chapters.json'),
   '21_kikusui': require('../../assets/string-figures/21_kikusui/chapters.json'),
   '22_spear': require('../../assets/string-figures/22_spear/chapters.json'),
+  '23_finger-stroll': require('../../assets/string-figures/23_finger-stroll/chapters.json')
 };
