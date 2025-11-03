@@ -233,5 +233,14 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['24_shooting-star'],
     description: { ja: '流れ星の説明文です。', en: 'Description for Shooting Star.' },
     premiumCourseId: 0, // 無料
-  }
+  },
+  {
+    id: '25',
+    name: { ja: '指ぬき', en: 'Fingers Magic' },
+    difficulty: 'easy',
+    directory: '25_fingers-magic',
+    ...ASSETS_MAP['25_fingers-magic'],
+    description: { ja: '指ぬきの説明文です。', en: 'Description for Fingers Magic.' },
+    premiumCourseId: 0, // 無料
+  },
 ];

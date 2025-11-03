@@ -125,4 +125,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/24_shooting-star/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/24_shooting-star/preview.mp4'),
   },
+  '25_fingers-magic': {
+    thumbnail: require('../../assets/string-figures/25_fingers-magic/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/25_fingers-magic/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/25_fingers-magic/preview.mp4'),
+  },
 };

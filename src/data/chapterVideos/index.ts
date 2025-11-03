@@ -22,6 +22,7 @@ import { FIGURE_21_KIKUSUI_VIDEOS } from './figure-21_kikusui';
 import { FIGURE_22_SPEAR_VIDEOS } from './figure-22_spear';
 import { FIGURE_23_FINGER_STROLL_VIDEOS } from './figure-23_finger-stroll';
 import { FIGURE_24_SHOOTING_STAR_VIDEOS } from './figure-24_shooting-star';
+import { FIGURE_25_FINGERS_MAGIC_VIDEOS } from './figure-25_fingers-magic';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -47,5 +48,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '21_kikusui': FIGURE_21_KIKUSUI_VIDEOS,
   '22_spear': FIGURE_22_SPEAR_VIDEOS,
   '23_finger-stroll': FIGURE_23_FINGER_STROLL_VIDEOS,
-  '24_shooting-star': FIGURE_24_SHOOTING_STAR_VIDEOS
+  '24_shooting-star': FIGURE_24_SHOOTING_STAR_VIDEOS,
+  '25_fingers-magic': FIGURE_25_FINGERS_MAGIC_VIDEOS
 };
