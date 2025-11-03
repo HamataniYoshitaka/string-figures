@@ -135,4 +135,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/26_hammock/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/26_hammock/preview.mp4'),
   },
+  '27_fish': {
+    thumbnail: require('../../assets/string-figures/27_fish/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/27_fish/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/27_fish/preview.mp4'),
+  },
 };
