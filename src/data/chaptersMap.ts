@@ -28,5 +28,6 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '25_fingers-magic': require('../../assets/string-figures/25_fingers-magic/chapters.json'),
   '26_hammock': require('../../assets/string-figures/26_hammock/chapters.json'),
   '27_fish': require('../../assets/string-figures/27_fish/chapters.json'),
-  '28_atanua-house': require('../../assets/string-figures/28_atanua-house/chapters.json')
+  '28_atanua-house': require('../../assets/string-figures/28_atanua-house/chapters.json'),
+  '29_two-fishes': require('../../assets/string-figures/29_two-fishes/chapters.json')
 };

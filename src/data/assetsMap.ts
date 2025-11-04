@@ -144,5 +144,10 @@ export const ASSETS_MAP: {
     thumbnail: require('../../assets/string-figures/28_atanua-house/thumbnail.png'),
     patternImage: require('../../assets/string-figures/28_atanua-house/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/28_atanua-house/preview.mp4'),
+  },
+  '29_two-fishes': {
+    thumbnail: require('../../assets/string-figures/29_two-fishes/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/29_two-fishes/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/29_two-fishes/preview.mp4'),
   }
 };

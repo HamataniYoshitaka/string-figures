@@ -269,5 +269,14 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['28_atanua-house'],
     description: { ja: 'アタヌアの家の説明文です。', en: 'Description for Atanua House.' },
     premiumCourseId: 0, // 無料
+  },
+  {
+    id: '29',
+    name: { ja: '二匹の魚', en: 'Two Fishes' },
+    difficulty: 'easy',
+    directory: '29_two-fishes',
+    ...ASSETS_MAP['29_two-fishes'],
+    description: { ja: '二匹の魚の説明文です。', en: 'Description for Two Fishes.' },
+    premiumCourseId: 0, // 無料
   }
 ];

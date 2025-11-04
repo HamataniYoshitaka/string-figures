@@ -26,6 +26,7 @@ import { FIGURE_25_FINGERS_MAGIC_VIDEOS } from './figure-25_fingers-magic';
 import { FIGURE_26_HAMMOCK_VIDEOS } from './figure-26_hammock';
 import { FIGURE_27_FISH_VIDEOS } from './figure-27_fish';
 import { FIGURE_28_ATANUA_HOUSE_VIDEOS } from './figure-28_atanua-house';
+import { FIGURE_29_TWO_FISHES_VIDEOS } from './figure-29_two-fishes';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -55,5 +56,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '25_fingers-magic': FIGURE_25_FINGERS_MAGIC_VIDEOS,
   '26_hammock': FIGURE_26_HAMMOCK_VIDEOS,
   '27_fish': FIGURE_27_FISH_VIDEOS,
-  '28_atanua-house': FIGURE_28_ATANUA_HOUSE_VIDEOS
+  '28_atanua-house': FIGURE_28_ATANUA_HOUSE_VIDEOS,
+  '29_two-fishes': FIGURE_29_TWO_FISHES_VIDEOS
 };
