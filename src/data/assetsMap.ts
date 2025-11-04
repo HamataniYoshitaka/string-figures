@@ -16,7 +16,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/2_jacobs-ladder/preview.mp4'),
   },
   '3_spiderweb': {
-    thumbnail: require('../../assets/string-figures/3_spiderweb/thumbnail.jpg'),
+    thumbnail: require('../../assets/string-figures/3_spiderweb/thumbnail.png'),
     patternImage: require('../../assets/string-figures/3_spiderweb/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/3_spiderweb/preview.mp4'),
   },
@@ -26,12 +26,12 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/4_volcano/preview.mp4'),
   },
   '5_many-stars': {
-    thumbnail: require('../../assets/string-figures/5_many-stars/thumbnail.jpg'),
+    thumbnail: require('../../assets/string-figures/5_many-stars/thumbnail.png'),
     patternImage: require('../../assets/string-figures/5_many-stars/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/5_many-stars/preview.mp4'),
   },
   '6_tieup': {  
-    thumbnail: require('../../assets/string-figures/6_tieup/thumbnail.jpg'),
+    thumbnail: require('../../assets/string-figures/6_tieup/thumbnail.png'),
     patternImage: require('../../assets/string-figures/6_tieup/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/6_tieup/preview.mp4'),
   },

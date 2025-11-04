@@ -165,7 +165,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       name: { ja: '蜘蛛の巣', en: 'Spiderweb' },
       difficulty: 'easy',
       directory: '3_spiderweb',
-      thumbnail: require('../../assets/string-figures/3_spiderweb/thumbnail.jpg'),
+      thumbnail: require('../../assets/string-figures/3_spiderweb/thumbnail.png'),
       patternImage: require('../../assets/string-figures/3_spiderweb/pattern.jpg'),
       previewUrl: require('../../assets/string-figures/3_spiderweb/preview.mp4'),
       description: { ja: '蜘蛛の巣の説明文です。', en: 'Description for Spiderweb.' },
