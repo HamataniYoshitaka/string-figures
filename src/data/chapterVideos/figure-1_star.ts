@@ -1,6 +1,5 @@
 export const FIGURE_1_STAR_VIDEOS = {
-  1: require('../../../assets/string-figures/1_star/chapters/1.mp4'),
-  2: require('../../../assets/string-figures/1_star/chapters/2.mp4'),
-  3: require('../../../assets/string-figures/1_star/chapters/3.mp4'),
-  4: require('../../../assets/string-figures/1_star/chapters/4.mp4'),
+  1: require('../../../assets/string-figures/1_star/chapters/01.mp4'),
+  2: require('../../../assets/string-figures/1_star/chapters/02.mp4'),
+  3: require('../../../assets/string-figures/1_star/chapters/03.mp4')
 };
