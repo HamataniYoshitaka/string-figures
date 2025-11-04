@@ -176,7 +176,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       name: { ja: '火山', en: 'Volcano' },
       difficulty: 'medium',
       directory: '4_volcano',
-      thumbnail: require('../../assets/string-figures/4_volcano/thumbnail.jpg'),
+      thumbnail: require('../../assets/string-figures/4_volcano/thumbnail.png'),
       patternImage: require('../../assets/string-figures/4_volcano/pattern.jpg'),
       previewUrl: require('../../assets/string-figures/4_volcano/preview.mp4'),
       description: { ja: '火山の説明文です。', en: 'Description for Volcano.' },

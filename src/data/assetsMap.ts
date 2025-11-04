@@ -21,7 +21,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/3_spiderweb/preview.mp4'),
   },
   '4_volcano': {
-    thumbnail: require('../../assets/string-figures/4_volcano/thumbnail.jpg'),
+    thumbnail: require('../../assets/string-figures/4_volcano/thumbnail.png'),
     patternImage: require('../../assets/string-figures/4_volcano/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/4_volcano/preview.mp4'),
   },
