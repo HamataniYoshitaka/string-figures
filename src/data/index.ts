@@ -278,5 +278,14 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['29_two-fishes'],
     description: { ja: '二匹の魚の説明文です。', en: 'Description for Two Fishes.' },
     premiumCourseId: 0, // 無料
-  }
+  },
+  {
+    id: '39',
+    name: { ja: '太陽', en: 'The Sun' },
+    difficulty: 'easy',
+    directory: '39_the-sun',
+    ...ASSETS_MAP['39_the-sun'],
+    description: { ja: '太陽の説明文です。', en: 'Description for The Sun.' },
+    premiumCourseId: 0, // 無料
+  },
 ];

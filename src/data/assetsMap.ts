@@ -149,5 +149,10 @@ export const ASSETS_MAP: {
     thumbnail: require('../../assets/string-figures/29_two-fishes/thumbnail.gif'),
     patternImage: require('../../assets/string-figures/29_two-fishes/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/29_two-fishes/preview.mp4'),
-  }
+  },
+  '39_the-sun': {
+    thumbnail: require('../../assets/string-figures/39_the-sun/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/39_the-sun/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/39_the-sun/preview.mp4'),
+  },
 };
