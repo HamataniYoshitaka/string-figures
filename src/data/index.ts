@@ -280,6 +280,15 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
   },
   {
+    id: '30',
+    name: { ja: '星', en: 'Star' },
+    difficulty: 'easy',
+    directory: '30_star',
+    ...ASSETS_MAP['30_star'],
+    description: { ja: '星の説明文です。', en: 'Description for Star.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
     id: '39',
     name: { ja: '太陽', en: 'The Sun' },
     difficulty: 'easy',
