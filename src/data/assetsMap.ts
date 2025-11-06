@@ -160,6 +160,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/31_weaving/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/31_weaving/preview.mp4'),
   },
+  '35_jacobs-ladder1': {
+    thumbnail: require('../../assets/string-figures/35_jacobs-ladder1/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/35_jacobs-ladder1/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/35_jacobs-ladder1/preview.mp4'),
+  },
   '38_dance-stage': {
     thumbnail: require('../../assets/string-figures/38_dance-stage/thumbnail.png'),
     patternImage: require('../../assets/string-figures/38_dance-stage/pattern.jpg'),

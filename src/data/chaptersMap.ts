@@ -32,6 +32,7 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '29_two-fishes': require('../../assets/string-figures/29_two-fishes/chapters.json'),
   '30_star': require('../../assets/string-figures/30_star/chapters.json'),
   '31_weaving': require('../../assets/string-figures/31_weaving/chapters.json'),
+  '35_jacobs-ladder1': require('../../assets/string-figures/35_jacobs-ladder1/chapters.json'),
   '38_dance-stage': require('../../assets/string-figures/38_dance-stage/chapters.json'),
   '39_the-sun': require('../../assets/string-figures/39_the-sun/chapters.json'),
   '40_moon-over-mountain': require('../../assets/string-figures/40_moon-over-mountain/chapters.json'),
