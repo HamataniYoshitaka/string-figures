@@ -155,6 +155,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/30_star/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/30_star/preview.mp4'),
   },
+  '31_weaving': { 
+    thumbnail: require('../../assets/string-figures/31_weaving/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/31_weaving/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/31_weaving/preview.mp4'),
+  },
   '39_the-sun': {
     thumbnail: require('../../assets/string-figures/39_the-sun/thumbnail.png'),
     patternImage: require('../../assets/string-figures/39_the-sun/pattern.jpg'),

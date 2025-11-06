@@ -289,6 +289,15 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
   },
   {
+    id: '31',
+    name: { ja: 'はたおり', en: 'Weaving' },
+    difficulty: 'easy',
+    directory: '31_weaving',
+    ...ASSETS_MAP['31_weaving'],
+    description: { ja: 'はたおりの説明文です。', en: 'Description for Weaving.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
     id: '39',
     name: { ja: '太陽', en: 'The Sun' },
     difficulty: 'easy',
