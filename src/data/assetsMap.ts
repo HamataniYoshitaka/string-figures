@@ -170,4 +170,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/40_moon-over-mountain/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/40_moon-over-mountain/preview.mp4'),
   },
+  '41_dandelion': {
+    thumbnail: require('../../assets/string-figures/41_dandelion/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/41_dandelion/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/41_dandelion/preview.mp4'),
+  },
 };

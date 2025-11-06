@@ -31,6 +31,7 @@ import { FIGURE_30_STAR_VIDEOS } from './figure-30_star';
 import { FIGURE_31_WEAVING_VIDEOS } from './figure-31_weaving';
 import { FIGURE_39_THE_SUN_VIDEOS } from './figure-39_the-sun';
 import { FIGURE_40_MOON_OVER_MOUNTAIN_VIDEOS } from './figure-40_moon-over-mountain';
+import { FIGURE_41_DANDELION_VIDEOS } from './figure-41_dandelion';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -65,5 +66,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '30_star': FIGURE_30_STAR_VIDEOS,
   '31_weaving': FIGURE_31_WEAVING_VIDEOS,
   '39_the-sun': FIGURE_39_THE_SUN_VIDEOS,
-  '40_moon-over-mountain': FIGURE_40_MOON_OVER_MOUNTAIN_VIDEOS
+  '40_moon-over-mountain': FIGURE_40_MOON_OVER_MOUNTAIN_VIDEOS,
+  '41_dandelion': FIGURE_41_DANDELION_VIDEOS
 };

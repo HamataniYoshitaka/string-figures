@@ -315,4 +315,13 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '山の上の月の説明文です。', en: 'Description for Moon Over Mountain.' },
     premiumCourseId: 0, // 無料
   },
+  { 
+    id: '41',
+    name: { ja: 'たんぽぽ', en: 'Dandelion' },
+    difficulty: 'easy',
+    directory: '41_dandelion',
+    ...ASSETS_MAP['41_dandelion'],
+    description: { ja: 'たんぽぽの説明文です。', en: 'Description for Dandelion.' },
+    premiumCourseId: 0, // 無料
+  },
 ];
