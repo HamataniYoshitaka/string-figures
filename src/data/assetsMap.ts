@@ -165,4 +165,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/39_the-sun/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/39_the-sun/preview.mp4'),
   },
+  '40_moon-over-mountain': {
+    thumbnail: require('../../assets/string-figures/40_moon-over-mountain/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/40_moon-over-mountain/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/40_moon-over-mountain/preview.mp4'),
+  },
 };

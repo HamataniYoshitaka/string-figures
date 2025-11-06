@@ -28,8 +28,9 @@ import { FIGURE_27_FISH_VIDEOS } from './figure-27_fish';
 import { FIGURE_28_ATANUA_HOUSE_VIDEOS } from './figure-28_atanua-house';
 import { FIGURE_29_TWO_FISHES_VIDEOS } from './figure-29_two-fishes';
 import { FIGURE_30_STAR_VIDEOS } from './figure-30_star';
-import { FIGURE_39_THE_SUN_VIDEOS } from './figure-39_the-sun';
 import { FIGURE_31_WEAVING_VIDEOS } from './figure-31_weaving';
+import { FIGURE_39_THE_SUN_VIDEOS } from './figure-39_the-sun';
+import { FIGURE_40_MOON_OVER_MOUNTAIN_VIDEOS } from './figure-40_moon-over-mountain';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -62,6 +63,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '28_atanua-house': FIGURE_28_ATANUA_HOUSE_VIDEOS,
   '29_two-fishes': FIGURE_29_TWO_FISHES_VIDEOS,
   '30_star': FIGURE_30_STAR_VIDEOS,
+  '31_weaving': FIGURE_31_WEAVING_VIDEOS,
   '39_the-sun': FIGURE_39_THE_SUN_VIDEOS,
-  '31_weaving': FIGURE_31_WEAVING_VIDEOS
+  '40_moon-over-mountain': FIGURE_40_MOON_OVER_MOUNTAIN_VIDEOS
 };
