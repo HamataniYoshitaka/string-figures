@@ -160,6 +160,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/31_weaving/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/31_weaving/preview.mp4'),
   },
+  '38_dance-stage': {
+    thumbnail: require('../../assets/string-figures/38_dance-stage/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/38_dance-stage/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/38_dance-stage/preview.mp4'),
+  },
   '39_the-sun': {
     thumbnail: require('../../assets/string-figures/39_the-sun/thumbnail.png'),
     patternImage: require('../../assets/string-figures/39_the-sun/pattern.jpg'),
@@ -175,4 +180,5 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/41_dandelion/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/41_dandelion/preview.mp4'),
   },
+
 };

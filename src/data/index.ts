@@ -298,6 +298,15 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
   },
   {
+    id: '38',
+    name: { ja: 'ダンスの舞台', en: 'Dance Stage' },
+    difficulty: 'easy',
+    directory: '38_dance-stage',
+    ...ASSETS_MAP['38_dance-stage'],
+    description: { ja: 'ダンスの舞台の説明文です。', en: 'Description for Dance Stage.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
     id: '39',
     name: { ja: '太陽', en: 'The Sun' },
     difficulty: 'easy',
