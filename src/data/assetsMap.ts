@@ -205,5 +205,10 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/41_dandelion/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/41_dandelion/preview.mp4'),
   },
+  '42_apaches-door': {
+    thumbnail: require('../../assets/string-figures/42_apaches-door/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/42_apaches-door/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/42_apaches-door/preview.mp4'),
+  },
 
 };

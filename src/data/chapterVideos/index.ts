@@ -29,6 +29,8 @@ import { FIGURE_28_ATANUA_HOUSE_VIDEOS } from './figure-28_atanua-house';
 import { FIGURE_29_TWO_FISHES_VIDEOS } from './figure-29_two-fishes';
 import { FIGURE_30_STAR_VIDEOS } from './figure-30_star';
 import { FIGURE_31_WEAVING_VIDEOS } from './figure-31_weaving';
+import { FIGURE_32_CANOE_VIDEOS } from './figure-32_canoe';
+import { FIGURE_33_CRUB_VIDEOS } from './figure-33_crub';
 import { FIGURE_35_JACOBS_LADDER1_VIDEOS } from './figure-35_jacobs-ladder1';
 import { FIGURE_36_JACOBS_LADDER2_VIDEOS } from './figure-36_jacobs-ladder2';
 import { FIGURE_37_JACOBS_LADDER3_VIDEOS } from './figure-37_jacobs-ladder3';
@@ -36,8 +38,7 @@ import { FIGURE_38_DANCE_STAGE_VIDEOS } from './figure-38_dance-stage';
 import { FIGURE_39_THE_SUN_VIDEOS } from './figure-39_the-sun';
 import { FIGURE_40_MOON_OVER_MOUNTAIN_VIDEOS } from './figure-40_moon-over-mountain';
 import { FIGURE_41_DANDELION_VIDEOS } from './figure-41_dandelion';
-import { FIGURE_32_CANOE_VIDEOS } from './figure-32_canoe';
-import { FIGURE_33_CRUB_VIDEOS } from './figure-33_crub';
+import { FIGURE_42_APACHES_DOOR_VIDEOS } from './figure-42_apaches-door';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -79,5 +80,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '38_dance-stage': FIGURE_38_DANCE_STAGE_VIDEOS,
   '39_the-sun': FIGURE_39_THE_SUN_VIDEOS,
   '40_moon-over-mountain': FIGURE_40_MOON_OVER_MOUNTAIN_VIDEOS,
-  '41_dandelion': FIGURE_41_DANDELION_VIDEOS
+  '41_dandelion': FIGURE_41_DANDELION_VIDEOS,
+  '42_apaches-door': FIGURE_42_APACHES_DOOR_VIDEOS
 };
