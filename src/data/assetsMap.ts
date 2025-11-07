@@ -210,5 +210,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/42_apaches-door/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/42_apaches-door/preview.mp4'),
   },
-
+  '43_trampoline': {
+    thumbnail: require('../../assets/string-figures/43_trampoline/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/43_trampoline/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/43_trampoline/preview.mp4'),
+  },
 };
