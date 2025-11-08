@@ -36,9 +36,9 @@ export const stringFigures: StringFigure[] = [
     id: '2',
     name: { ja: '四段ばしご', en: 'Jacob\'s Ladder' },
     difficulty: 'easy',
-    directory: '2_jacobs-ladder',
-    ...ASSETS_MAP['2_jacobs-ladder'],
-    description: { ja: '日本では中指を主に使う「四段ばしご」、世界では人差し指を使う「ヤコブの梯子」という名前で知られています。ここでは人差し指を使ってとる方法を紹介します。', en: 'Description for Jacob\'s Ladder.' },
+    directory: '2_jacobs-ladder4',
+    ...ASSETS_MAP['2_jacobs-ladder4'],
+    description: { ja: '日本では中指を主に使う「四段ばしご」、世界では人差し指を使う「ヤコブの梯子」という名前で知られています。ここでは中指を使って取る方法を紹介します', en: 'Description for Jacob\'s Ladder.' },
     premiumCourseId: 0, // 無料
 
   },

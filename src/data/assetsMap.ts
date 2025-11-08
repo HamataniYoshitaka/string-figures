@@ -10,10 +10,10 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
   },
-  '2_jacobs-ladder': {
-    thumbnail: require('../../assets/string-figures/2_jacobs-ladder/thumbnail.jpg'),
-    patternImage: require('../../assets/string-figures/2_jacobs-ladder/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/2_jacobs-ladder/preview.mp4'),
+  '2_jacobs-ladder4': {
+    thumbnail: require('../../assets/string-figures/2_jacobs-ladder4/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/2_jacobs-ladder4/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/2_jacobs-ladder4/preview.mp4'),
   },
   '3_spiderweb': {
     thumbnail: require('../../assets/string-figures/3_spiderweb/thumbnail.png'),
