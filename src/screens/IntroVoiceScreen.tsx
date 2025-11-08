@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Animated, Text, Dimensions, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -263,38 +263,21 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 </Text>
             </View>
 
-            {/* コントロールボタンエリア */}
-            <View style={styles.controlsContainer}>
-                <View style={styles.controlButton}>
-                    <View style={styles.buttonContainer}>
-                        <View style={[
-                            styles.floatingButton,
-                            { paddingLeft: 2 },
-                        ]}>
-                            <PlayIcon
-                                width={20}
-                                height={20}
-                                fillColor="#57534D"
-                                strokeColor='transparent'
-                            />
-                        </View>
-                        <View style={[
-                            styles.balloon,
-                            styles.balloonTopLeft,
-                            { backgroundColor: 'rgba(209, 200, 194, 0.5)' }
-                        ]}>
-                            <Text style={styles.controlButtonText}>
-                                {getLocalizedText({ ja: 'つぎ', en: 'Next' })}
-                            </Text>
-                            <SpeedButtonTail
-                                fillColor="rgba(209, 200, 194, 0.5)"
-                                isBottom={false}
-                                isRight={false}
-                                isUp={true}
-                            />
-                        </View>
-                    </View>
+            <View style={styles.voiceFallbackCard}>
+                <View style={styles.voiceFallbackHeader}>
+                    <View style={styles.voiceFallbackDivider} />
+                    <Text style={styles.voiceFallbackHeaderText}>または</Text>
+                    <View style={styles.voiceFallbackDivider} />
                 </View>
+
+                <View style={styles.voiceFallbackDescription}>
+                    <Text style={styles.voiceFallbackDescriptionText}>あなたの声に反応しないですか？</Text>
+                    <Text style={styles.voiceFallbackDescriptionText}>このアプリは音声認識無しでも楽しむことができます</Text>
+                </View>
+
+                <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={() => {}}>
+                    <Text style={styles.voiceFallbackButtonText}>このまま次に進む</Text>
+                </TouchableOpacity>
             </View>
             
         </SafeAreaView>
@@ -408,6 +391,54 @@ const styles = StyleSheet.create({
         color: '#555',
         marginTop: 4,
         fontWeight: '500',
+    },
+    voiceFallbackCard: {
+        marginHorizontal: 24,
+        marginBottom: 32,
+        alignItems: 'center',
+    },
+    voiceFallbackHeader: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    voiceFallbackDivider: {
+        flex: 1,
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: '#79716B',
+    },
+    voiceFallbackHeaderText: {
+        fontFamily: 'KleeOne-SemiBold',
+        fontSize: 16,
+        lineHeight: 32,
+        color: '#79716B',
+        textAlign: 'center',
+        marginHorizontal: 12,
+    },
+    voiceFallbackDescription: {
+        marginTop: 16,
+        alignItems: 'center',
+    },
+    voiceFallbackDescriptionText: {
+        fontFamily: 'KleeOne-SemiBold',
+        fontSize: 16,
+        lineHeight: 32,
+        color: '#57534D',
+        textAlign: 'center',
+    },
+    voiceFallbackButton: {
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 24,
+    },
+    voiceFallbackButtonText: {
+        fontFamily: 'KleeOne-SemiBold',
+        fontSize: 18,
+        lineHeight: 32,
+        color: '#292524',
+        textDecorationLine: 'underline',
+        textAlign: 'center',
     },
 });
 
