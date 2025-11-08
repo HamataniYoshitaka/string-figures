@@ -35,7 +35,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '2',
     name: { ja: '四段ばしご', en: 'Jacob\'s Ladder' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '2_jacobs-ladder4',
     ...ASSETS_MAP['2_jacobs-ladder4'],
     description: { ja: '日本では中指を主に使う「四段ばしご」、世界では人差し指を使う「ヤコブの梯子」という名前で知られています。ここでは中指を使って取る方法を紹介します', en: 'Description for Jacob\'s Ladder.' },
@@ -55,7 +55,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '4',
     name: { ja: '火山', en: 'Volcano' },
-    difficulty: 'medium',
+    difficulty: 'hard',
     directory: '4_volcano',
     ...ASSETS_MAP['4_volcano'],
     description: { ja: '火山の説明文です。', en: 'Description for Volcano.' },
@@ -65,7 +65,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '5',
     name: { ja: 'たくさんの星', en: 'Many Stars' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '5_many-stars',
     ...ASSETS_MAP['5_many-stars'],
     description: { ja: 'たくさんの星の説明文です。', en: 'Description for Many Stars.' },
@@ -93,7 +93,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '9',
     name: { ja: '菊', en: 'Chrysanthemum' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '9_chrysanthemum',
     ...ASSETS_MAP['9_chrysanthemum'],
     description: { ja: '菊の説明文です。', en: 'Description for Chrysanthemum.' },
@@ -183,7 +183,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '19',
     name: { ja: '二人の首長', en: 'Two Chiefs' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '19_two-chiefs',
     ...ASSETS_MAP['19_two-chiefs'],
     description: { ja: '二人の首長の説明文です。', en: 'Description for Two Chiefs.' },
@@ -201,7 +201,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '21',
     name: { ja: '菊水', en: 'Kikusui' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '21_kikusui',
     ...ASSETS_MAP['21_kikusui'],
     description: { ja: '菊水の説明文です。', en: 'Description for Kikusui.' },
@@ -228,7 +228,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '24',
     name: { ja: '流れ星', en: 'Shooting Star' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '24_shooting-star',
     ...ASSETS_MAP['24_shooting-star'],
     description: { ja: '流れ星の説明文です。', en: 'Description for Shooting Star.' },
@@ -255,7 +255,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '27',
     name: { ja: 'さかな', en: 'Fish' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '27_fish',
     ...ASSETS_MAP['27_fish'],
     description: { ja: 'さかなの説明文です。', en: 'Description for Fish.' },
@@ -273,7 +273,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '29',
     name: { ja: '二匹の魚', en: 'Two Fishes' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '29_two-fishes',
     ...ASSETS_MAP['29_two-fishes'],
     description: { ja: '二匹の魚の説明文です。', en: 'Description for Two Fishes.' },
@@ -309,25 +309,25 @@ export const stringFigures: StringFigure[] = [
   {
     id: '33',
     name: { ja: 'かに', en: 'Crub' },
-    difficulty: 'easy',
+    difficulty: 'hard',
     directory: '33_crub',
     ...ASSETS_MAP['33_crub'],
     description: { ja: 'かにの説明文です。', en: 'Description for Crub.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // コレクション1
   },
   {
     id: '34',
     name: { ja: 'アムワンギヨ', en: 'Amwangiyo' },
-    difficulty: 'easy',
+    difficulty: 'hard',
     directory: '34_amwangiyo',
     ...ASSETS_MAP['34_amwangiyo'],
     description: { ja: 'アムワンギヨの説明文です。', en: 'Description for Amwangiyo.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // コレクション1
   },
   {
     id: '35',
     name: { ja: '1段ばしご', en: '1 Ladder' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '35_jacobs-ladder1',
     ...ASSETS_MAP['35_jacobs-ladder1'],
     description: { ja: '1段ばしごの説明文です。', en: 'Description for 1 Ladder.' },
@@ -336,7 +336,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '36',
     name: { ja: '2段ばしご', en: '2 Ladder' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '36_jacobs-ladder2',
     ...ASSETS_MAP['36_jacobs-ladder2'],
     description: { ja: '2段ばしごの説明文です。', en: 'Description for 2 Ladder.' },
@@ -345,7 +345,7 @@ export const stringFigures: StringFigure[] = [
   { 
     id: '37',
     name: { ja: '3段ばしご', en: '3 Ladder' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '37_jacobs-ladder3',
     ...ASSETS_MAP['37_jacobs-ladder3'],
     description: { ja: '3段ばしごの説明文です。', en: 'Description for 3 Ladder.' },
@@ -354,16 +354,16 @@ export const stringFigures: StringFigure[] = [
   { 
     id: '38',
     name: { ja: 'ダンスの舞台', en: 'Dance Stage' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '38_dance-stage',
     ...ASSETS_MAP['38_dance-stage'],
     description: { ja: 'ダンスの舞台の説明文です。', en: 'Description for Dance Stage.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // コレクション1
   },
   {
     id: '39',
     name: { ja: '太陽', en: 'The Sun' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '39_the-sun',
     ...ASSETS_MAP['39_the-sun'],
     description: { ja: '太陽の説明文です。', en: 'Description for The Sun.' },
@@ -372,7 +372,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '40',
     name: { ja: '山の上の月', en: 'Moon Over Mountain' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '40_moon-over-mountain',
     ...ASSETS_MAP['40_moon-over-mountain'],
     description: { ja: '山の上の月の説明文です。', en: 'Description for Moon Over Mountain.' },
@@ -381,7 +381,7 @@ export const stringFigures: StringFigure[] = [
   { 
     id: '41',
     name: { ja: 'たんぽぽ', en: 'Dandelion' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '41_dandelion',
     ...ASSETS_MAP['41_dandelion'],
     description: { ja: 'たんぽぽの説明文です。', en: 'Description for Dandelion.' },
@@ -390,7 +390,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '42',
     name: { ja: 'アパッチの扉', en: 'Apache Door' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '42_apaches-door',
     ...ASSETS_MAP['42_apaches-door'],
     description: { ja: 'アパッチの扉の説明文です。', en: 'Description for Apache Door.' },
@@ -399,7 +399,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '43',
     name: { ja: 'トランポリン', en: 'Trampoline' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '43_trampoline',
     ...ASSETS_MAP['43_trampoline'],
     description: { ja: 'トランポリンの説明文です。', en: 'Description for Trampoline.' },
