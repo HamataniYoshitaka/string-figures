@@ -170,6 +170,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/33_crub/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/33_crub/preview.mp4'),
   },
+  '34_amwangiyo': {
+    thumbnail: require('../../assets/string-figures/34_amwangiyo/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/34_amwangiyo/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/34_amwangiyo/preview.mp4'),
+  },
   '35_jacobs-ladder1': {
     thumbnail: require('../../assets/string-figures/35_jacobs-ladder1/thumbnail.png'),
     patternImage: require('../../assets/string-figures/35_jacobs-ladder1/pattern.jpg'),

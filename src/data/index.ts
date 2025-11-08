@@ -316,6 +316,15 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
   },
   {
+    id: '34',
+    name: { ja: 'アムワンギヨ', en: 'Amwangiyo' },
+    difficulty: 'easy',
+    directory: '34_amwangiyo',
+    ...ASSETS_MAP['34_amwangiyo'],
+    description: { ja: 'アムワンギヨの説明文です。', en: 'Description for Amwangiyo.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
     id: '35',
     name: { ja: '1段ばしご', en: '1 Ladder' },
     difficulty: 'easy',
