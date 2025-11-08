@@ -160,11 +160,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/31_weaving/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/31_weaving/preview.mp4'),
   },
-  // '32_canoe': {
-  //   thumbnail: require('../../assets/string-figures/32_canoe/thumbnail.png'),
-  //   patternImage: require('../../assets/string-figures/32_canoe/pattern.jpg'),
-  //   previewUrl: require('../../assets/string-figures/32_canoe/preview.mp4'),
-  // },
+  '32_canoe': {
+    thumbnail: require('../../assets/string-figures/32_canoe/thumbnail.png'),
+    patternImage: require('../../assets/string-figures/32_canoe/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/32_canoe/preview.mp4'),
+  },
   '33_crub': {
     thumbnail: require('../../assets/string-figures/33_crub/thumbnail.png'),
     patternImage: require('../../assets/string-figures/33_crub/pattern.jpg'),

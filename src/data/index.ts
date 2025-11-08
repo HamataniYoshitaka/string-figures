@@ -297,15 +297,15 @@ export const stringFigures: StringFigure[] = [
     description: { ja: 'はたおりの説明文です。', en: 'Description for Weaving.' },
     premiumCourseId: 0, // 無料
   },
-  // {
-  //   id: '32',
-  //   name: { ja: 'カヌー', en: 'Canoe' },
-  //   difficulty: 'easy',
-  //   directory: '32_canoe',
-  //   ...ASSETS_MAP['32_canoe'],
-  //   description: { ja: 'カヌーの説明文です。', en: 'Description for Canoe.' },
-  //   premiumCourseId: 0, // 無料
-  // },
+  {
+    id: '32',
+    name: { ja: 'カヌー', en: 'Canoe' },
+    difficulty: 'easy',
+    directory: '32_canoe',
+    ...ASSETS_MAP['32_canoe'],
+    description: { ja: 'カヌーの説明文です。', en: 'Description for Canoe.' },
+    premiumCourseId: 0, // 無料
+  },
   {
     id: '33',
     name: { ja: 'かに', en: 'Crub' },
