@@ -40,6 +40,7 @@ import { FIGURE_40_MOON_OVER_MOUNTAIN_VIDEOS } from './figure-40_moon-over-mount
 import { FIGURE_41_DANDELION_VIDEOS } from './figure-41_dandelion';
 import { FIGURE_42_APACHES_DOOR_VIDEOS } from './figure-42_apaches-door';
 import { FIGURE_43_TRAMPOLINE_VIDEOS } from './figure-43_trampoline';
+import { FIGURE_44_BUTTERFLY_VIDEOS } from './figure-44_butterfly';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -83,5 +84,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '40_moon-over-mountain': FIGURE_40_MOON_OVER_MOUNTAIN_VIDEOS,
   '41_dandelion': FIGURE_41_DANDELION_VIDEOS,
   '42_apaches-door': FIGURE_42_APACHES_DOOR_VIDEOS,
-  '43_trampoline': FIGURE_43_TRAMPOLINE_VIDEOS
+  '43_trampoline': FIGURE_43_TRAMPOLINE_VIDEOS,
+  '44_butterfly': FIGURE_44_BUTTERFLY_VIDEOS
 };

@@ -215,4 +215,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/43_trampoline/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/43_trampoline/preview.mp4'),
   },
+  '44_butterfly': {
+    thumbnail: require('../../assets/string-figures/44_butterfly/thumbnail.gif'),
+    patternImage: require('../../assets/string-figures/44_butterfly/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/44_butterfly/preview.mp4'),
+  },
 };
