@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -42,6 +42,25 @@ const chapters = [
     },
 ];  
 
+const chapters_android = [
+    {
+        subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に糸がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
+        video: require('../../assets/string-figures/0_introduction/intro1.mp4')
+    },
+    {
+        subtitle: { ja: 'マイクの使用確認画面が出ますので許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow the microphone usage confirmation screen to appear.\n(No voice recording or collection is performed.)' },
+        video: require('../../assets/string-figures/0_introduction/intro2-android.mp4')
+    },
+    {
+        subtitle: { ja: '', en: '' },
+        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+    },
+    {
+        subtitle: { ja: '', en: '' },
+        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+    },
+];  
+
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
     const videoRef = useRef<Video>(null);
@@ -55,7 +74,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const backButtonScale = useRef(new Animated.Value(1)).current;
     
     const { isTablet, isDeviceLandscape } = useDeviceInfo();
-
+    const isAndroid = Platform.OS === 'android';
+    console.log('isAndroid', isAndroid);
     // アニメーションヘルパー関数
     const createPressInHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {
@@ -206,7 +226,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 <Video
                     key={`chapter-${currentChapterIndex}`}
                     ref={videoRef}
-                    source={chapters[currentChapterIndex].video}
+                    source={isAndroid ? chapters_android[currentChapterIndex].video : chapters[currentChapterIndex].video}
                     style={styles.video}
                     resizeMode={ResizeMode.COVER}
                     shouldPlay={false}
@@ -237,7 +257,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
             <View style={styles.subtitleContainer}>
                 <Text style={styles.subtitleText}>
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                    {getLocalizedText(isAndroid ? chapters_android[currentChapterIndex].subtitle : chapters[currentChapterIndex].subtitle)}
                 </Text>
             </View>
 
