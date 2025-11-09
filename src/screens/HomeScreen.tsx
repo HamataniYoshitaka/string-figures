@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
-  Alert,
   Platform,
   Dimensions,
 } from 'react-native';
@@ -24,6 +23,7 @@ import DropDownMenu from '../components/DropDownMenu';
 import { stringFigures } from '../data/index';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { DotsVerticalIcon } from '../components/icons';
+import { showLanguageSelectionDialog } from '../components/LanguageSwitchButton';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -341,26 +341,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   // 言語選択ActionSheetを表示
   const showLanguageActionSheet = () => {
-    // iOS/Android共通のAlert実装に統一
-    Alert.alert(
-      currentLanguage === 'ja' ? '言語を選択してください' : 'Select Language',
-      '',
-      [
-        {
-          text: '日本語',
-          onPress: () => saveLanguageSetting('ja'),
-        },
-        {
-          text: 'English',
-          onPress: () => saveLanguageSetting('en'),
-        },
-        {
-          text: currentLanguage === 'ja' ? 'キャンセル' : 'Cancel',
-          style: 'cancel',
-        },
-      ],
-      { cancelable: true }
-    );
+    showLanguageSelectionDialog(currentLanguage, saveLanguageSetting);
   };
 
   // ドロップダウンメニューの項目
