@@ -6,7 +6,7 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseIcon, PlayIcon } from '../components/icons';
+import { CheckCircleOutlineIcon, CloseIcon } from '../components/icons';
 
 type IntroCompleteScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -114,17 +114,18 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             
 
             {/* 字幕エリア */}
-            {!isDeviceLandscape && (
-                <View style={styles.subtitleContainer}>
-                    <Text style={styles.titleText}>
-                        {getLocalizedText({ ja: '準備が完了しました！', en: 'Preparation is complete!' })}
-                    </Text>
-
-                    <Text style={styles.subtitleText}>
-                        {getLocalizedText({ ja: '世界中に伝承されている\n「あやとり」をお楽しみ下さい!', en: 'Enjoy the string figures that have been passed down through generations around the world!' })}
-                    </Text>
+            <View style={styles.subtitleContainer}>
+                <View style={styles.checkCircleContainer}>
+                    <CheckCircleOutlineIcon width={80} height={80} fillColor="#333" />
                 </View>
-            )}
+                <Text style={styles.titleText}>
+                    {getLocalizedText({ ja: '準備が完了\nしました!', en: 'Preparation is complete!' })}
+                </Text>
+
+                <Text style={styles.subtitleText}>
+                    {getLocalizedText({ ja: '世界中に伝承されている\n「あやとり」をお楽しみ下さい!', en: 'Enjoy the string figures that have been passed down through generations around the world!' })}
+                </Text>
+            </View>
 
             {/* コントロールボタンエリア */}
             <View style={styles.controlsContainer}>
@@ -186,9 +187,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 20
     },
+    checkCircleContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     titleText: {
         fontFamily: 'KleeOne-Regular',
-        fontSize: 32,
+        fontSize: 40,
         color: '#333',
         textAlign: 'center',
         // lineHeight: 24,

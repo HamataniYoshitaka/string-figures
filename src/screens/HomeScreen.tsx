@@ -32,6 +32,8 @@ interface Props {
   navigation: HomeScreenNavigationProp;
 }
 
+const DEFAULT_SELECTED_FILTERS: ('basic' | 'easy' | 'medium' | 'hard')[] = ['basic', 'easy'];
+
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [bottomSheet, setBottomSheet] = useState<BottomSheetState>({
     isVisible: false,
@@ -41,7 +43,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
   
-  const [selectedFilters, setSelectedFilters] = useState<('basic' | 'easy' | 'medium' | 'hard')[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<('basic' | 'easy' | 'medium' | 'hard')[]>(DEFAULT_SELECTED_FILTERS);
   const [isBookmarkFilterActive, setIsBookmarkFilterActive] = useState(false);
 
   // ドロップダウンメニューの状態
@@ -161,16 +163,20 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     try {
       const savedFilters = await AsyncStorage.getItem('selectedFilters');
       if (!savedFilters) {
+        setSelectedFilters(DEFAULT_SELECTED_FILTERS);
+        saveSelectedFilters(DEFAULT_SELECTED_FILTERS);
         return;
       }
       const parsedFilters = JSON.parse(savedFilters);
       if (!Array.isArray(parsedFilters)) {
+        setSelectedFilters(DEFAULT_SELECTED_FILTERS);
+        saveSelectedFilters(DEFAULT_SELECTED_FILTERS);
         return;
       }
       const validFilters = parsedFilters.filter((filter: unknown): filter is 'basic' | 'easy' | 'medium' | 'hard' =>
         filter === 'basic' || filter === 'easy' || filter === 'medium' || filter === 'hard'
       );
-      setSelectedFilters(validFilters);
+      setSelectedFilters(validFilters.length > 0 ? validFilters : []);
     } catch (error) {
       console.error('フィルターの読み込みに失敗しました:', error);
     }
