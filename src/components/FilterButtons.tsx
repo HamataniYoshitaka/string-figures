@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { EasyIcon, NormalIcon, HardIcon, TutorialIcon } from './icons';
+import { BookmarkIcon, EasyIcon, NormalIcon, HardIcon, TutorialIcon } from './icons';
 
 interface FilterButtonsProps {
   selectedFilters: ('basic' | 'easy' | 'medium' | 'hard')[];
@@ -41,6 +41,17 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
       contentContainerStyle={styles.filterContainer}
       style={styles.filterScrollView}
     >
+      <TouchableOpacity 
+        style={styles.bookmarkButton}
+        onPress={() => {}}
+      >
+        <BookmarkIcon 
+          width={24} 
+          height={24} 
+          strokeColor="#57534D" 
+          fillColor="transparent"
+        />
+      </TouchableOpacity>
       <TouchableOpacity 
         style={[
           styles.filterButton, 
@@ -161,6 +172,16 @@ const styles = StyleSheet.create({
   },
   filterTextUnselected: {
     color: '#57534D',
+  },
+  bookmarkButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#57534D',
+    backgroundColor: '#e8e6e0',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
