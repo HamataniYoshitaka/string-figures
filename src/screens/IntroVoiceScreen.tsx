@@ -132,6 +132,19 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         navigation.goBack();
     };
 
+    const onSkip = async () => {
+        console.log('onSkip to HomeScreen');
+        try {
+            await AsyncStorage.setItem('introduction_completed', 'true');
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home' }],
+            });
+        } catch (error) {
+            console.error('イントロ完了状態の保存に失敗しました:', error);
+        }
+    };
+
     // 多言語対応のヘルパー関数
     const getLocalizedText = (textObj: { ja: string; en: string }) => {
         return textObj[currentLanguage];
@@ -275,7 +288,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     <Text style={styles.voiceFallbackDescriptionText}>このアプリは音声認識無しでも楽しむことができます</Text>
                 </View>
 
-                <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={() => {}}>
+                <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={onSkip}>
                     <Text style={styles.voiceFallbackButtonText}>このまま次に進む</Text>
                 </TouchableOpacity>
             </View>
