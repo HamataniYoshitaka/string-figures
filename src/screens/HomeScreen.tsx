@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -42,6 +42,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
   
   const [selectedFilters, setSelectedFilters] = useState<('basic' | 'easy' | 'medium' | 'hard')[]>([]);
+  const [isBookmarkFilterActive, setIsBookmarkFilterActive] = useState(false);
 
   // ドロップダウンメニューの状態
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
@@ -165,6 +166,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const toggleFilter = (filter: 'basic' | 'easy' | 'medium' | 'hard') => {
+    setIsBookmarkFilterActive(false);
     setSelectedFilters(prev => {
       if (prev.includes(filter)) {
         // フィルターが既に選択されている場合は削除
@@ -188,12 +190,27 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     return columns;
   };
 
+  const handleBookmarkFilterToggle = () => {
+    setSelectedFilters([]);
+    setIsBookmarkFilterActive(prev => !prev);
+  };
+
   // フィルターされたデータを取得
-  const filteredStringFigures = selectedFilters.length === 0 
-    ? stringFigures // 全て非選択の場合は全データを表示
-    : stringFigures.filter(item => 
+  const filteredStringFigures = useMemo(() => {
+    let figures = stringFigures;
+
+    if (isBookmarkFilterActive) {
+      figures = figures.filter(item => bookmarkedIds.includes(item.id));
+    }
+
+    if (selectedFilters.length > 0) {
+      figures = figures.filter(item =>
         selectedFilters.includes(item.difficulty as 'easy' | 'medium' | 'hard')
       );
+    }
+
+    return figures;
+  }, [bookmarkedIds, isBookmarkFilterActive, selectedFilters]);
 
   const columns = organizeIntoColumns(filteredStringFigures, columnsCount);
 
@@ -374,6 +391,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           selectedFilters={selectedFilters}
           onToggleFilter={toggleFilter}
           currentLanguage={currentLanguage}
+          isBookmarkFilterActive={isBookmarkFilterActive}
+          onToggleBookmarkFilter={handleBookmarkFilterToggle}
+          showBookmarkButton={bookmarkedIds.length > 0}
         />
 
         {/* あやとり一覧 */}

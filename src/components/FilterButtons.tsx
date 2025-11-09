@@ -12,12 +12,18 @@ interface FilterButtonsProps {
   selectedFilters: ('basic' | 'easy' | 'medium' | 'hard')[];
   onToggleFilter: (filter: 'basic' | 'easy' | 'medium' | 'hard') => void;
   currentLanguage: 'ja' | 'en';
+  isBookmarkFilterActive: boolean;
+  onToggleBookmarkFilter: () => void;
+  showBookmarkButton: boolean;
 }
 
 const FilterButtons: React.FC<FilterButtonsProps> = ({
   selectedFilters,
   onToggleFilter,
   currentLanguage,
+  isBookmarkFilterActive,
+  onToggleBookmarkFilter,
+  showBookmarkButton,
 }) => {
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
@@ -41,17 +47,22 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
       contentContainerStyle={styles.filterContainer}
       style={styles.filterScrollView}
     >
-      <TouchableOpacity 
-        style={styles.bookmarkButton}
-        onPress={() => {}}
-      >
-        <BookmarkIcon 
-          width={24} 
-          height={24} 
-          strokeColor="#57534D" 
-          fillColor="transparent"
-        />
-      </TouchableOpacity>
+      {showBookmarkButton && (
+        <TouchableOpacity 
+          style={[
+            styles.bookmarkButton,
+            isBookmarkFilterActive ? styles.bookmarkButtonSelected : styles.bookmarkButtonUnselected,
+          ]}
+          onPress={onToggleBookmarkFilter}
+        >
+          <BookmarkIcon 
+            width={24} 
+            height={24} 
+            strokeColor={isBookmarkFilterActive ? '#e8e6e0' : '#57534D'} 
+            fillColor={isBookmarkFilterActive ? '#57534D' : 'transparent'}
+          />
+        </TouchableOpacity>
+      )}
       <TouchableOpacity 
         style={[
           styles.filterButton, 
@@ -177,11 +188,18 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#57534D',
-    backgroundColor: '#e8e6e0',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bookmarkButtonSelected: {
+    backgroundColor: '#57534D',
+    borderWidth: 1,
+    borderColor: '#57534D',
+  },
+  bookmarkButtonUnselected: {
+    backgroundColor: '#e8e6e0',
+    borderWidth: 1,
+    borderColor: '#57534D',
   },
 });
 
