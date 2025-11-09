@@ -6,10 +6,7 @@
         "subtitle": { "ja": "利き手側で持っている紐を結びます", "en": "Tie the string held in the dominant hand." }
     },
     {
-        "subtitle": { "ja": "紐を左右の手で持ち替えます", "en": "Switch the string between your hands." }
-    },
-    {
-        "subtitle": { "ja": "残っている紐を結びます", "en": "Tie the remaining string." }
+        "subtitle": { "ja": "紐を左右の手で持ち替え、残っている紐を結びます", "en": "Switch the string between your hands and tie the remaining string." }
     },
     {
         "subtitle": { "ja": "両手で紐を強く引っ張って紐の完成です", "en": "Pull the string tightly with both hands to complete the knot." }
