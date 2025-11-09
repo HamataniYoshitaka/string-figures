@@ -282,6 +282,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       : [...bookmarkedIds, itemId];
     
     saveBookmarkedIds(newBookmarkedIds);
+    if (newBookmarkedIds.length === 0 && isBookmarkFilterActive) {
+      setIsBookmarkFilterActive(false);
+    }
   };
 
   // メニューボタンの処理
@@ -443,7 +446,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    color: '#5D4037',
+    color: '#57534D',
     fontFamily: Platform.OS === 'ios' ? 'KleeOne-SemiBold' : 'KleeOne-SemiBold',
     fontWeight: Platform.OS === 'android' ? '600' : 'normal', // Androidでのフォント重み調整
     lineHeight: Platform.OS === 'android' ? 34 : 32, // Androidでより大きなlineHeight
