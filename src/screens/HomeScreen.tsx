@@ -76,7 +76,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     const initializeSettings = async () => {
       await loadLanguageSetting();
-      await loadBookmarkedIds();
+      await Promise.all([loadBookmarkedIds(), loadSelectedFilters()]);
       // スマホの場合、HomeScreen表示時は常に縦向きに設定
       if (!isTablet) {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
@@ -102,6 +102,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       loadBookmarkedIds();
+      loadSelectedFilters();
     }, [])
   );
 
@@ -156,6 +157,25 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
+  const loadSelectedFilters = async () => {
+    try {
+      const savedFilters = await AsyncStorage.getItem('selectedFilters');
+      if (!savedFilters) {
+        return;
+      }
+      const parsedFilters = JSON.parse(savedFilters);
+      if (!Array.isArray(parsedFilters)) {
+        return;
+      }
+      const validFilters = parsedFilters.filter((filter: unknown): filter is 'basic' | 'easy' | 'medium' | 'hard' =>
+        filter === 'basic' || filter === 'easy' || filter === 'medium' || filter === 'hard'
+      );
+      setSelectedFilters(validFilters);
+    } catch (error) {
+      console.error('フィルターの読み込みに失敗しました:', error);
+    }
+  };
+
   const saveBookmarkedIds = async (ids: string[]) => {
     try {
       await AsyncStorage.setItem('bookmarkedIds', JSON.stringify(ids));
@@ -165,16 +185,27 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
+  const saveSelectedFilters = async (filters: ('basic' | 'easy' | 'medium' | 'hard')[]) => {
+    try {
+      await AsyncStorage.setItem('selectedFilters', JSON.stringify(filters));
+    } catch (error) {
+      console.error('フィルターの保存に失敗しました:', error);
+    }
+  };
+
   const toggleFilter = (filter: 'basic' | 'easy' | 'medium' | 'hard') => {
     setIsBookmarkFilterActive(false);
     setSelectedFilters(prev => {
+      let updatedFilters: ('basic' | 'easy' | 'medium' | 'hard')[];
       if (prev.includes(filter)) {
         // フィルターが既に選択されている場合は削除
-        return prev.filter(f => f !== filter);
+        updatedFilters = prev.filter(f => f !== filter);
       } else {
         // フィルターが選択されていない場合は追加
-        return [...prev, filter];
+        updatedFilters = [...prev, filter];
       }
+      saveSelectedFilters(updatedFilters);
+      return updatedFilters;
     });
   };
 
@@ -192,6 +223,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const handleBookmarkFilterToggle = () => {
     setSelectedFilters([]);
+    saveSelectedFilters([]);
     setIsBookmarkFilterActive(prev => !prev);
   };
 
