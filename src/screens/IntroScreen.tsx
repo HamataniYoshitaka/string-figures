@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   Platform,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -15,6 +16,7 @@ import { RootStackParamList, StringFigure } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import StringFigureCard from '../components/StringFigureCard';
 import { ASSETS_MAP } from '../data/assetsMap';
+import { TranslateIcon } from '../components/icons';
 
 type IntroScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Intro'>;
 
@@ -412,6 +414,22 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
         <Text style={[styles.title, isTablet && styles.titleTablet]}>
           {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
         </Text>
+        <TouchableOpacity
+          style={[styles.languageButton, isTablet && styles.languageButtonTablet]}
+          activeOpacity={0.8}
+          onPress={() => {}}
+        >
+          <TranslateIcon
+            width={isTablet ? 28 : 20}
+            height={isTablet ? 28 : 20}
+            fillColor="#F3EEE8"
+            strokeColor="#5D4037"
+            strokeWidth={0.8}
+          />
+          <Text style={[styles.languageButtonText, isTablet && styles.languageButtonTextTablet]}>
+            {currentLanguage === 'ja' ? '日本語' : 'English'}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {/* あやとり一覧 */}
@@ -444,6 +462,30 @@ const styles = StyleSheet.create({
   headerTablet: {
     paddingVertical: 28,
     paddingTop: 32,
+  },
+  languageButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#5D4037',
+  },
+  languageButtonTablet: {
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+  },
+  languageButtonText: {
+    marginLeft: 8,
+    fontSize: 14,
+    color: '#5D4037',
+    fontFamily: Platform.OS === 'ios' ? 'KleeOne-SemiBold' : 'KleeOne-SemiBold',
+    fontWeight: Platform.OS === 'android' ? '600' : 'normal',
+  },
+  languageButtonTextTablet: {
+    fontSize: 18,
   },
   title: {
     fontSize: 28,

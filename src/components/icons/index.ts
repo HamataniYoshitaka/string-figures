@@ -12,3 +12,4 @@ export { default as SkipBackwardIcon } from './SkipBackward';
 export { default as DotsVerticalIcon } from './DotsVertical';
 export { default as TutorialIcon } from './Tutorial';
 export { default as CheckCircleOutlineIcon } from './CheckCircleOutline';
+export { default as TranslateIcon } from './Translate';
