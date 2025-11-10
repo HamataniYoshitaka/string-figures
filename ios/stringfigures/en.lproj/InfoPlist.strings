@@ -1,4 +1,0 @@
-/* Localized versions of Info.plist keys */
-
-NSMicrophoneUsageDescription = "This app needs access to the microphone for speech recognition.";
-NSSpeechRecognitionUsageDescription = "This app uses speech recognition to control video playback with voice commands.";

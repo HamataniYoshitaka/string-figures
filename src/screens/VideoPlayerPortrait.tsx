@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   Animated,
   Dimensions,
+  Platform,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { CloseIcon, BookmarkIcon } from '../components/icons';
@@ -86,6 +87,25 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
     // console.log('VideoPlayerPortrait - Invalid stringFigure or chapter data');
     return (
       <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <TouchableWithoutFeedback 
+            onPress={onGoBack}
+            onPressIn={createPressInHandler(backButtonScale)}
+            onPressOut={createPressOutHandler(backButtonScale)}
+          >
+            <Animated.View 
+              style={[
+                styles.backButton,
+                { transform: [{ scale: backButtonScale }] }
+              ]}
+            >
+              <CloseIcon width={24} height={24} fillColor="#79716B" />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+          <Text style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
+            {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
+          </Text>
+        </View>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>データを読み込み中...</Text>
         </View>
@@ -365,6 +385,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#e8e6e0',
+    paddingTop: Platform.OS === 'android' ? 16 : 0,
   },
   errorContainer: {
     flex: 1,

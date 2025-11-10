@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Animated,
+  Platform,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import ProgressDots from '../components/ProgressDots';
 import VideoControlPanel from '../components/VideoControlPanel';
-import { BookmarkIcon } from '../components/icons';
+import { BookmarkIcon, CloseIcon } from '../components/icons';
 import { CHAPTER_VIDEOS } from '../data/chapterVideos';
 
 const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
@@ -30,12 +33,58 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   
   // デバッグ用ログ
   console.log('VideoPlayerLandscape - stringFigure:', stringFigure);
+
+  const backButtonScale = useRef(new Animated.Value(1)).current;
+
+  const createPressInHandler = (scale: Animated.Value) => () => {
+    Animated.spring(scale, {
+      toValue: 0.95,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 8,
+    }).start();
+  };
+
+  const createPressOutHandler = (scale: Animated.Value) => () => {
+    Animated.spring(scale, {
+      toValue: 1,
+      useNativeDriver: true,
+      tension: 300,
+      friction: 8,
+    }).start();
+  };
   
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
     // console.log('VideoPlayerLandscape - Invalid stringFigure or chapter data');
+    const fallbackTitle = stringFigure
+      ? getLocalizedText({
+          ja: stringFigure.name.ja,
+          en: stringFigure.name.en,
+        })
+      : '読み込み中...';
+
     return (
-      <View style={styles.container}>
+      <View style={styles.fallbackContainer}>
+        <View style={styles.header}>
+          <TouchableWithoutFeedback
+            onPress={restProps.onGoBack}
+            onPressIn={createPressInHandler(backButtonScale)}
+            onPressOut={createPressOutHandler(backButtonScale)}
+          >
+            <Animated.View
+              style={[
+                styles.backButton,
+                { transform: [{ scale: backButtonScale }] },
+              ]}
+            >
+              <CloseIcon width={24} height={24} fillColor="#79716B" />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+          <Text style={styles.title} numberOfLines={1}>
+            {fallbackTitle}
+          </Text>
+        </View>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>データを読み込み中...</Text>
         </View>
@@ -153,6 +202,32 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     backgroundColor: '#e8e6e0',
     position: 'relative',
+    paddingTop: Platform.OS === 'android' ? 16 : 0,
+  },
+  fallbackContainer: {
+    flex: 1,
+    backgroundColor: '#e8e6e0',
+    paddingTop: Platform.OS === 'android' ? 16 : 0,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  backButton: {
+    padding: 8,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+    borderRadius: 20,
+  },
+  title: {
+    fontFamily: 'KleeOne-SemiBold',
+    flex: 1,
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginHorizontal: 16,
+    color: '#2c2c2c',
   },
   bookmarkButton: {
     position: 'absolute',
