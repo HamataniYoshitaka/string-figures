@@ -93,7 +93,12 @@ const StringFigureCard: React.FC<Props> = ({
           },
         ]}
       >
-        <View style={styles.cardImageContainer}>
+        <View
+          style={[
+            styles.cardImageContainer,
+            disabled && styles.cardImageContainerDisabled,
+          ]}
+        >
           {item.thumbnail ? (
             <Image 
               source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail}
@@ -151,7 +156,20 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
       },
       android: {
-        elevation: 8,
+        elevation: 3,
+      },
+    }),
+  },
+  cardImageContainerDisabled: {
+    ...Platform.select({
+      ios: {
+        shadowColor: 'transparent',
+        shadowOffset: { width: 0, height: 0 },
+        shadowOpacity: 0,
+        shadowRadius: 0,
+      },
+      android: {
+        elevation: 0,
       },
     }),
   },

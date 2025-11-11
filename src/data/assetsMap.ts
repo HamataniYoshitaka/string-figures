@@ -41,7 +41,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/7_snail/preview.mp4'),
   },
   '8_elastic-band': {
-    thumbnail: require('../../assets/string-figures/8_elastic-band/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/8_elastic-band/thumbnail-kraft-s.gif'),
     patternImage: require('../../assets/string-figures/8_elastic-band/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/8_elastic-band/preview.mp4'),
   },
@@ -56,7 +56,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/10_magic-fingers/preview.mp4'),
   },
   '11_wink': {
-    thumbnail: require('../../assets/string-figures/11_wink/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/11_wink/thumbnail-kraft-s.gif'),
     patternImage: require('../../assets/string-figures/11_wink/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/11_wink/preview.mp4'),
   },
@@ -126,7 +126,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/24_shooting-star/preview.mp4'),
   },
   '25_fingers-magic': {
-    thumbnail: require('../../assets/string-figures/25_fingers-magic/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/25_fingers-magic/thumbnail-kraft-s.gif'),
     patternImage: require('../../assets/string-figures/25_fingers-magic/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/25_fingers-magic/preview.mp4'),
   },
@@ -146,7 +146,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/28_atanua-house/preview.mp4'),
   },
   '29_two-fishes': {
-    thumbnail: require('../../assets/string-figures/29_two-fishes/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/29_two-fishes/thumbnail-kraft-s.gif'),
     patternImage: require('../../assets/string-figures/29_two-fishes/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/29_two-fishes/preview.mp4'),
   },
@@ -156,7 +156,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/30_star/preview.mp4'),
   },
   '31_weaving': { 
-    thumbnail: require('../../assets/string-figures/31_weaving/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/31_weaving/thumbnail-kraft-s.gif'),
     patternImage: require('../../assets/string-figures/31_weaving/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/31_weaving/preview.mp4'),
   },
@@ -201,7 +201,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/39_the-sun/preview.mp4'),
   },
   '40_moon-over-mountain': {
-    thumbnail: require('../../assets/string-figures/40_moon-over-mountain/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/40_moon-over-mountain/thumbnail-kraft-s.gif'),
     patternImage: require('../../assets/string-figures/40_moon-over-mountain/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/40_moon-over-mountain/preview.mp4'),
   },
@@ -221,7 +221,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/43_trampoline/preview.mp4'),
   },
   '44_butterfly': {
-    thumbnail: require('../../assets/string-figures/44_butterfly/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/44_butterfly/thumbnail-kraft-s.gif'),
     patternImage: require('../../assets/string-figures/44_butterfly/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/44_butterfly/preview.mp4'),
   },

@@ -253,7 +253,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     outlinedButtonText: {
-        fontFamily: 'KleeOne-SemiBold',
+        // fontFamily: 'KleeOne-SemiBold',
+        fontWeight: '600',
         fontSize: 18,
         color: '#57534D',
     },
@@ -263,7 +264,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
     },
     textButtonLabel: {
-        fontFamily: 'KleeOne-SemiBold',
+        // fontFamily: 'KleeOne-SemiBold',
+        fontWeight: '600',
         fontSize: 18,
         color: '#57534D',
     },
