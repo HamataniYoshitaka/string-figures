@@ -1,7 +1,11 @@
 {
   "expo": {
-    "name": "あやとり",
+    "name": "String Figures",
     "slug": "string-figures",
+    "locales": {
+      "en": "./locales/en.json",
+      "ja": "./locales/ja.json"
+    },
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

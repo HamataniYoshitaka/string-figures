@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Image, Linking, Pressable } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Image, Linking, Pressable, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon } from '../components/icons';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
+import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 
 type IntroErrorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -23,7 +24,9 @@ interface Props {
 
 const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
-    
+    const isAndroid = Platform.OS === 'android';
+    const videoRef = useRef<Video>(null);
+
     const setCompleted = async () => {
         try {
             await AsyncStorage.setItem('introduction_completed', 'true');
@@ -103,6 +106,19 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
+    // 動画がロードされた時の処理
+    const handleVideoLoad = async () => {
+        try {
+            // videoRef.currentがnullでないことを確認してからメソッドを呼ぶ
+            const video = videoRef.current;
+            if (!video) return;
+            // 動画を最初の位置（0秒）にセットしてから再生
+            await video.setPositionAsync(0);
+            await video.playAsync();
+        } catch (error) {
+            console.error('Error auto-playing video:', error);
+        }
+    };
 
     return (    
         <SafeAreaView style={styles.container}>
@@ -129,13 +145,28 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
             {/* 画像エリア */}
             <View style={styles.imageContainer}>
                 <View style={styles.imageWrapper}>
+                    {isAndroid ? (
+                        <Video
+                            key={`intro-error`}
+                            ref={videoRef}
+                            source={currentLanguage === 'ja' ? require('../../assets/introduction/android-settings-ja.mp4') : require('../../assets/introduction/android-settings-en.mp4')}
+                            style={styles.video}
+                            resizeMode={ResizeMode.COVER}
+                            shouldPlay={true}
+                            isLooping={true}
+                            isMuted={true}
+                            useNativeControls={false}
+                            onLoad={handleVideoLoad}
+                        />
+                    ) : (
                     <Image
-                        source={require('../../assets/introduction/setting-ja.webp')}
+                        source={currentLanguage === 'ja' ? require('../../assets/introduction/setting-ja.webp') : require('../../assets/introduction/setting-en.jpg')}
                         style={[
                             styles.errorImage
                         ]}
                         resizeMode="contain"
                     />
+                    )}
                 </View>
             </View>
 
@@ -277,16 +308,22 @@ const styles = StyleSheet.create({
     imageWrapper: {
         width: '100%',
         maxWidth: 400,
-        height: 'auto',
+        aspectRatio: 16 / 9,
         borderColor: '#ccc',
         borderWidth: 2,
         borderRadius: 8,
-        // overflow: 'hidden',
+        overflow: 'hidden',
         backgroundColor: '#fff',
     },
     errorImage: {
         width: '100%',
-        height: 260,
+        height: undefined,
+        aspectRatio: 16 / 9,
+    },
+    video: {
+        width: '100%',
+        height: undefined,
+        aspectRatio: 16 / 9,
     },
 
 });
