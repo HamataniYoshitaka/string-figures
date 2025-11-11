@@ -143,17 +143,17 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'transparent',
     borderRadius: 12,
-    // ...Platform.select({
-    //   ios: {
-    //     shadowColor: '#000',
-    //     shadowOffset: { width: 0, height: 6 },
-    //     shadowOpacity: 0.15,
-    //     shadowRadius: 4,
-    //   },
-    //   android: {
-    //     elevation: 8,
-    //   },
-    // }),
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 8,
+      },
+    }),
   },
   cardImage: {
     width: '100%',

@@ -453,7 +453,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e8e6e0',
+    backgroundColor: '#fafafa',
   },
   header: {
     flexDirection: 'row',

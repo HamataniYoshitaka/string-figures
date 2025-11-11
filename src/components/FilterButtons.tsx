@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
   },
   filterButtonUnselected: {
-    backgroundColor: '#e8e6e0',
+    backgroundColor: '#fafafa',
     borderWidth: 1,
     borderColor: '#57534D',
   },
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   filterTextSelected: {
-    color: '#e8e6e0',
+    color: '#fafafa',
   },
   filterTextUnselected: {
     color: '#57534D',
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
   },
   bookmarkButtonUnselected: {
-    backgroundColor: '#e8e6e0',
+    backgroundColor: '#fafafa',
     borderWidth: 1,
     borderColor: '#57534D',
   },
