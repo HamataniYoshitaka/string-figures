@@ -11,9 +11,11 @@ import { LockOpenIcon } from './icons';
 
 interface PurchaseButtonProps {
   onPress?: () => void;
+  collectionId: string;
+  backgroundColor?: string;
 }
 
-const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress }) => {
+const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, backgroundColor }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -41,7 +43,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress }) => {
   // 定数
   const COLLECTION_NAME = 'コレクション2';
   const PURCHASE_TEXT = 'を購入する';
-  const PRICE = '¥480';
+  const PRICE = '¥000';
 
   return (
     <TouchableWithoutFeedback
@@ -53,6 +55,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress }) => {
         style={[
           styles.button,
           { transform: [{ scale: scaleAnim }] },
+          { backgroundColor: backgroundColor },
         ]}
       >
         {/* 左側: アイコン */}
@@ -60,9 +63,9 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress }) => {
           <LockOpenIcon
             width={32}
             height={32}
-            strokeColor="#FFFFFF"
-            fillColor="transparent"
-            strokeWidth={1.5}
+            strokeColor="transparent"
+            fillColor="#ffffff"
+            strokeWidth={0}
           />
         </View>
 
@@ -86,8 +89,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#E17100',
     borderRadius: 8,
-    paddingHorizontal: 20,
-    paddingVertical: 0,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -115,21 +118,18 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   collectionName: {
-    fontFamily: 'KleeOne-SemiBold',
     fontSize: 20,
     lineHeight: 20,
     color: '#FFFFFF',
     fontWeight: '600',
   },
   purchaseText: {
-    fontFamily: 'KleeOne-SemiBold',
     fontSize: 14,
     lineHeight: 14,
     color: 'rgba(255, 255, 255, 0.8)',
     fontWeight: '600',
   },
   price: {
-    fontFamily: 'KleeOne-SemiBold',
     fontSize: 24,
     lineHeight: 24,
     color: '#FFFFFF',

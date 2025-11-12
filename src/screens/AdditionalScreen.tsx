@@ -75,11 +75,11 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
 
     // コレクション1のサムネイルデータ（仮データ）
     const collectionThumbnails = [
-        { id: 1, image: require('../../assets/purchase/dummy-card1.jpg'), name: 'イヌイットの家' },
-        { id: 2, image: require('../../assets/purchase/dummy-card1.jpg'), name: '2階建のイヌイットの家' },
-        { id: 3, image: require('../../assets/purchase/dummy-card1.jpg'), name: 'イヌイットの家' },
-        { id: 4, image: require('../../assets/purchase/dummy-card1.jpg'), name: 'イヌイットの家' },
-        { id: 5, image: require('../../assets/purchase/dummy-card1.jpg'), name: 'イヌイットの家' },
+        { id: 1, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
+        { id: 2, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
+        { id: 3, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
+        { id: 4, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
+        { id: 5, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
     ];
 
     const handlePurchasePress = () => {
@@ -147,7 +147,11 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                     </ScrollView>
 
                     <View style={styles.purchaseButtonContainer}>
-                        <PurchaseButton onPress={handlePurchasePress} />
+                        <PurchaseButton 
+                            onPress={handlePurchasePress} 
+                            collectionId="1" 
+                            backgroundColor="#2B7FFF" 
+                        />
                     </View>
                 </View>
             </ScrollView>
