@@ -164,7 +164,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e8e6e0',
+        backgroundColor: '#F7F5F2',
     },
     header: {
         flexDirection: 'row',

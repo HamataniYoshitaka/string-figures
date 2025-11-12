@@ -208,7 +208,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     <CloseIcon width={24} height={24} fillColor="#79716B" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
-                <Text style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
+                <Text style={[styles.title, { fontSize: isTablet ? 22 : 22 }]} numberOfLines={1}>
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
             </View>
@@ -281,7 +281,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e8e6e0',
+        backgroundColor: '#F7F5F2',
     },
     header: {
         flexDirection: 'row',
@@ -297,7 +297,6 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: 'KleeOne-SemiBold',
         flex: 1,
-        fontSize: 18,
         fontWeight: '600',
         textAlign: 'center',
         marginHorizontal: 16,
@@ -334,12 +333,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     subtitleText: {
-        fontFamily: 'KleeOne-Regular',
+        fontFamily: 'KleeOne-SemiBold',
         fontSize: 16,
-        color: '#333',
+        color: '#222',
         textAlign: 'center',
         lineHeight: 24,
-        fontWeight: '500',
+        fontWeight: '600',
     },
     controlsContainer: {
         paddingHorizontal: 24,

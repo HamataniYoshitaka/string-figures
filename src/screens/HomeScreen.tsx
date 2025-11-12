@@ -9,6 +9,7 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -398,8 +399,15 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+    <LinearGradient
+      colors={['#e0e0e0', '#ffffff', '#EBE6D8']}
+      style={styles.container}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      locations={[0, 0.5, 1]}
+    >
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView style={styles.scrollView}>
         {/* ヘッダー */}
         <View style={[styles.header, isTablet && styles.headerTablet]}>
           <Text style={[styles.title, isTablet && styles.titleTablet]}>
@@ -477,14 +485,17 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         items={dropDownItems}
         buttonPosition={menuButtonPosition}
       />
-    </SafeAreaView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+  },
+  safeArea: {
+    flex: 1,
   },
   header: {
     flexDirection: 'row',

@@ -200,13 +200,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    backgroundColor: '#e8e6e0',
+    backgroundColor: '#F7F5F2',
     position: 'relative',
     paddingTop: Platform.OS === 'android' ? 16 : 0,
   },
   fallbackContainer: {
     flex: 1,
-    backgroundColor: '#e8e6e0',
+    backgroundColor: '#F7F5F2',
     paddingTop: Platform.OS === 'android' ? 16 : 0,
   },
   header: {

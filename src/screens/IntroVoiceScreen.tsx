@@ -301,7 +301,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e8e6e0',
+        backgroundColor: '#F7F5F2',
     },
     header: {
         flexDirection: 'row',
@@ -354,12 +354,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     subtitleText: {
-        fontFamily: 'KleeOne-Regular',
+        fontFamily: 'KleeOne-SemiBold',
         fontSize: 16,
-        color: '#333',
+        color: '#222',
         textAlign: 'center',
         lineHeight: 24,
-        fontWeight: '500',
+        fontWeight: '600',
     },
     controlsContainer: {
         paddingHorizontal: 24,
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 24,
-        backgroundColor: '#e8e6e0',
+        backgroundColor: '#F7F5F2',
         borderWidth: 2,
         borderColor: '#57534D',
         justifyContent: 'center',
@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
         fontFamily: 'KleeOne-SemiBold',
         fontSize: 16,
         lineHeight: 32,
-        color: '#57534D',
+        color: '#222',
         textAlign: 'center',
     },
     voiceFallbackButton: {

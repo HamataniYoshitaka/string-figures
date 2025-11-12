@@ -210,10 +210,10 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
+    fontWeight: '600',
+    color: '#222',
     flex: 1,
-    fontFamily: 'KleeOne-Regular',
+    fontFamily: 'KleeOne-SemiBold',
   },
   difficultyIcon: {
     width: 24,

@@ -58,7 +58,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           <BookmarkIcon 
             width={24} 
             height={24} 
-            strokeColor={isBookmarkFilterActive ? '#e8e6e0' : '#57534D'} 
+            strokeColor={isBookmarkFilterActive ? '#F7F5F2' : '#57534D'} 
             fillColor={isBookmarkFilterActive ? '#57534D' : 'transparent'}
           />
         </TouchableOpacity>
@@ -73,7 +73,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
         <TutorialIcon 
           width={28} 
           height={28} 
-          strokeColor={selectedFilters.includes('basic') ? '#e8e6e0' : '#57534D'} 
+          strokeColor={selectedFilters.includes('basic') ? '#F7F5F2' : '#57534D'} 
           strokeWidth={1}
         />
         <Text style={[
@@ -93,7 +93,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
         <EasyIcon 
           width={28} 
           height={28} 
-          strokeColor={selectedFilters.includes('easy') ? '#e8e6e0' : '#57534D'} 
+          strokeColor={selectedFilters.includes('easy') ? '#F7F5F2' : '#57534D'} 
           strokeWidth={1}
         />
         <Text style={[
@@ -113,7 +113,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
         <NormalIcon
           width={28}
           height={28}
-          strokeColor={selectedFilters.includes('medium') ? '#e8e6e0' : '#57534D'}
+          strokeColor={selectedFilters.includes('medium') ? '#F7F5F2' : '#57534D'}
           strokeWidth={1}
         />
         <Text style={[
@@ -133,7 +133,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
         <HardIcon
           width={28}
           height={28}
-          strokeColor={selectedFilters.includes('hard') ? '#e8e6e0' : '#57534D'}
+          strokeColor={selectedFilters.includes('hard') ? '#F7F5F2' : '#57534D'}
           strokeWidth={1}
         />
         <Text style={[
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
   },
   filterButtonUnselected: {
-    backgroundColor: '#fafafa',
+    backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: '#57534D',
   },
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
   },
   bookmarkButtonUnselected: {
-    backgroundColor: '#fafafa',
+    backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: '#57534D',
   },

@@ -214,7 +214,7 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e8e6e0',
+        backgroundColor: '#F7F5F2',
     },
     header: {
         flexDirection: 'row',
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: '#57534D',
         borderRadius: 28,
-        backgroundColor: '#e8e6e0',
+        backgroundColor: '#F7F5F2',
         paddingVertical: 12,
         paddingHorizontal: 16,
         alignItems: 'center',

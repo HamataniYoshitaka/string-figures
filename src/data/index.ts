@@ -66,7 +66,7 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '5_many-stars',
     ...ASSETS_MAP['5_many-stars'],
-    description: { ja: 'たくさんの星の説明文です。', en: 'Description for Many Stars.' },
+    description: { ja: '複雑な模様が、満天の星のきらめきを美しく表現します。', en: 'A complex pattern beautifully represents the sparkle of a star-filled sky.' },
     premiumCourseId: 0, // 無料
 
   },
@@ -85,7 +85,7 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '8_elastic-band',
     ...ASSETS_MAP['8_elastic-band'],
-    description: { ja: 'ゴムの説明文です。', en: 'Description for Elastic Band.' },
+    description: { ja: '糸が伸び縮みしているように見えるあやとりです', en: 'A string figure that looks like a rubber band is stretched and contracted.' },
     premiumCourseId: 0, // 無料
   },
   {
@@ -94,7 +94,7 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '9_chrysanthemum',
     ...ASSETS_MAP['9_chrysanthemum'],
-    description: { ja: '菊の説明文です。', en: 'Description for Chrysanthemum.' },
+    description: { ja: '日本人にとって古くから親しまれている菊の花の形です', en: 'A chrysanthemum is a traditional Japanese symbol of longevity and beauty.' },
     premiumCourseId: 0, // 無料
   },
   {
@@ -103,7 +103,7 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '10_magic-fingers',
     ...ASSETS_MAP['10_magic-fingers'],
-    description: { ja: '指ぬきの説明文です。', en: 'Description for Magic Fingers.' },
+    description: { ja: '世界中で親しまれているあやとりのトリックです', en: 'A world-renowned string figure trick.' },
     premiumCourseId: 0, // 無料
   },
   {
@@ -130,7 +130,7 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '13_easy-broom',
     ...ASSETS_MAP['13_easy-broom'],
-    description: { ja: 'かんたんほうきの説明文です。', en: 'Description for Easy Broom.' },
+    description: { ja: '一瞬でほうきの形が出来上がります', en: 'A broom that can be made easily.' },
     premiumCourseId: 0, // 無料
   },
   {
@@ -139,7 +139,10 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '14_footprint',
     ...ASSETS_MAP['14_footprint'],
-    description: { ja: '足あとの説明文です。', en: 'Description for Footprint.' },
+    description: { 
+      ja: 'かわいい足跡ができます。大きさや色を変えて何個か並べるとより面白いでしょう', 
+      en: 'You can make cute footprints with this string figure. Lining up several of them with different sizes and colors will make it even more fun.' 
+    },
     premiumCourseId: 0, // 無料
   },
   {
