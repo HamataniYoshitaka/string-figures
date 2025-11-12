@@ -36,7 +36,10 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '2_jacobs-ladder4',
     ...ASSETS_MAP['2_jacobs-ladder4'],
-    description: { ja: '日本では中指を主に使う「四段ばしご」、世界では人差し指を使う「ヤコブの梯子」という名前で知られています。ここでは中指を使って取る方法を紹介します', en: 'Description for Jacob\'s Ladder.' },
+    description: { 
+      ja: '日本では中指を主に使う「四段ばしご」、世界では主に人差し指を使い「ヤコブの梯子」など様々な名前で知られています。ここでは中指を使って取る方法を紹介します', 
+      en: 'This is a famous string figure widely known all over the world. Here, we introduce the method using the middle fingers, which is common in Japan.' 
+    },
     premiumCourseId: 0, // 無料
 
   },
@@ -56,7 +59,7 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'hard',
     directory: '4_volcano',
     ...ASSETS_MAP['4_volcano'],
-    description: { ja: '火山の説明文です。', en: 'Description for Volcano.' },
+    description: { ja: '噴火する火山を立体的に表現した見事なあやとりです', en: 'A beautiful string figure that represents a volcano erupting.' },
     premiumCourseId: 2, // 有料コース2
 
   },
