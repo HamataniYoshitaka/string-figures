@@ -10,6 +10,7 @@ export interface StringFigure {
   previewUrl: string;
   description: { ja: string; en: string };
   premiumCourseId: number; // 0=無料、0以外のID=有料コース
+  directNavigationDestination?: string;
 }
 
 export interface Chapter {
@@ -36,6 +37,7 @@ export type RootStackParamList = {
   IntroError: undefined;
   Home: undefined;
   VideoPlayer: { stringFigure: StringFigure };
+  Additional: undefined;  
 };
 
 export type BottomSheetState = {

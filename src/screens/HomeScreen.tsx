@@ -35,6 +35,19 @@ interface Props {
 
 const DEFAULT_SELECTED_FILTERS: ('basic' | 'easy' | 'medium' | 'hard')[] = ['basic', 'easy'];
 
+const CommercialCollection1: StringFigure = { 
+  id: '99998',
+  name: { ja: '追加コレクションを見る', en: 'See Additional Collection' },
+  difficulty: 'basic',
+  directory: '99998_additional-collection',
+  thumbnail: require('../../assets/purchase/dummy-card1.jpg'),
+  patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
+  previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
+  description: { ja: '追加コレクションを見る', en: 'See Additional Collection.' },
+  premiumCourseId: 1,
+  directNavigationDestination: 'Additional',
+};
+
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [bottomSheet, setBottomSheet] = useState<BottomSheetState>({
     isVisible: false,
@@ -294,6 +307,12 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleItemPress = (item: StringFigure) => {
+    if (item.directNavigationDestination) {
+      if (item.directNavigationDestination === 'Additional') {
+        navigation.navigate('Additional');
+      }
+      return;
+    }
     setBottomSheet({
       isVisible: true,
       selectedItem: item,
@@ -434,6 +453,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           {columns.map((column, index) => (
             <View key={index} style={styles.column}>
               {column.map(renderCard)}
+              {index === 0 && renderCard(CommercialCollection1)}
             </View>
           ))}
         </View>
@@ -497,6 +517,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: 'row',
     paddingHorizontal: 20,
+    paddingBottom: 60,
     gap: 15,
   },
   column: {

@@ -21,7 +21,8 @@
       "bundleIdentifier": "com.anonymous.string-figures",
       "infoPlist": {
         "NSSpeechRecognitionUsageDescription": "このアプリは、動画の操作を音声で行うために音声認識機能を使用します。",
-        "NSMicrophoneUsageDescription": "このアプリは、音声認識のためにマイクへのアクセスが必要です。"
+        "NSMicrophoneUsageDescription": "このアプリは、音声認識のためにマイクへのアクセスが必要です。",
+        "CFBundleAllowMixedLocalizations": true
       }
     },
     "android": {

@@ -20,7 +20,6 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['6_tieup'],
     description: { ja: 'まずはあやとりに使う紐の結び方を学びましょう', en: 'First, learn how to tie the strings used for string figures.' },
     premiumCourseId: 0, // 無料
-
   },
   {
     id: '1',

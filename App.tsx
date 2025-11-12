@@ -16,6 +16,7 @@ import IntroErrorScreen from './src/screens/IntroErrorScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 import IntroCompleteScreen from './src/screens/IntroCompleteScreen';
+import AdditionalScreen from './src/screens/AdditionalScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -78,6 +79,7 @@ export default function App() {
             gestureEnabled: true,
           }}
         />
+        <Stack.Screen name="Additional" component={AdditionalScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,12 +1,4 @@
 {
-  "expo": {
-    "name": "あやとり",
-    "ios": {
-      "infoPlist": {
-        "CFBundleDisplayName": "あやとり"
-      }
-    }
-  },
-  "app_name": "あやとり"
+  "ios": { "CFBundleDisplayName": "あやとり" },
+  "android": { "app_name": "あやとり" }
 }
-

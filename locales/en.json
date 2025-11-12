@@ -1,12 +1,4 @@
 {
-  "expo": {
-    "name": "String Figures",
-    "ios": {
-      "infoPlist": {
-        "CFBundleDisplayName": "String Figures"
-      }
-    }
-  },
-  "app_name": "String Figures"
+  "ios": { "CFBundleDisplayName": "String Figures" },
+  "android": { "app_name": "String Figures" }
 }
-

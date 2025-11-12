@@ -130,7 +130,8 @@ const StringFigureCard: React.FC<Props> = ({
         <View style={styles.cardContent}>
           <View style={styles.titleContainer}>
             <Text style={styles.cardTitle}>{getLocalizedText(item.name)}</Text>
-            {getDifficultyIcon(item.difficulty, 24)}
+            {!item.directNavigationDestination && getDifficultyIcon(item.difficulty, 24)}
+            {}
           </View>
         </View>
       </Animated.View>
