@@ -23,6 +23,7 @@ import DropDownMenu from '../components/DropDownMenu';
 import { stringFigures } from '../data/index';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { DotsVerticalIcon } from '../components/icons';
+import MicrophoneQuestionIcon from '../components/icons/MicrophoneQuestion';
 import { showLanguageSelectionDialog } from '../components/LanguageSwitchButton';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
@@ -358,15 +359,15 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         }, 300);
       },
     },
-    {
-      id: 'subtitles',
-      label: currentLanguage === 'ja' ? '動画の字幕' : 'Subtitles',
-      value: currentLanguage === 'ja' ? 'あり' : 'On',
-      onPress: () => {
-        // TODO: 字幕設定の切り替え
-        console.log('字幕設定');
-      },
-    },
+    // {
+    //   id: 'subtitles',
+    //   label: currentLanguage === 'ja' ? '動画の字幕' : 'Subtitles',
+    //   value: currentLanguage === 'ja' ? 'あり' : 'On',
+    //   onPress: () => {
+    //     // TODO: 字幕設定の切り替え
+    //     console.log('字幕設定');
+    //   },
+    // },
     {
       id: 'restore',
       label: currentLanguage === 'ja' ? '購入情報を復元' : 'Restore Purchase Information',
@@ -395,15 +396,25 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         </View>
 
         {showCallout && (
-          <View style={{paddingHorizontal: 16, marginBottom: 16}}>
+          <View style={{ paddingHorizontal: 16, marginBottom: 16 }}>
             <TouchableOpacity 
               onPress={() => navigation.navigate('IntroError')}
               activeOpacity={0.8}
-              style={{ borderRadius: 8, padding: 12, borderWidth: 2, borderColor: '#cc7000ff'}}
+              style={{
+                borderRadius: 8,
+                padding: 12,
+                borderWidth: 2,
+                borderColor: '#cc7000ff',
+              }}
             >
-              <Text style={{ color: '#533000ff' }}>
-                {currentLanguage === 'ja' ? '音声認識機が有効化されていません。このままでもアプリをご利用いただけますが、有効化することで「声」で操作できるようになり便利です' : 'The speech recognition feature is not enabled. You can still use the app as is, but enabling it will allow you to control the app with your voice.'}
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <MicrophoneQuestionIcon width={24} height={24} fillColor="#533000ff" />
+                <Text style={{ color: '#533000ff', marginLeft: 8, flex: 1 }}>
+                  {currentLanguage === 'ja'
+                    ? '音声認識が有効化されていません。このままでもアプリをご利用いただけますが、有効化することで「声」で操作できるようになり便利です'
+                    : 'The speech recognition is not enabled. You can still use the app as is, but enabling it will allow you to control the app with your voice.'}
+                </Text>
+              </View>
             </TouchableOpacity>
           </View>
         

@@ -1,5 +1,12 @@
 {
-  "CFBundleDisplayName": "String Figures",
+  "expo": {
+    "name": "String Figures",
+    "ios": {
+      "infoPlist": {
+        "CFBundleDisplayName": "String Figures"
+      }
+    }
+  },
   "app_name": "String Figures"
 }
 
