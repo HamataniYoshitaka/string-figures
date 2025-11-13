@@ -62,7 +62,7 @@ export const useSpeechRecognition = ({
     en: {
       next: ['next'],
       previous: ['previous'],
-      replay: ['replay'],
+      replay: ['replay', 'reply'],
       slower: ['slower'],
       faster: ['faster'],
       restart: ['restart'],

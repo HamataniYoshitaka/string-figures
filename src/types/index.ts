@@ -36,7 +36,7 @@ export type RootStackParamList = {
   IntroComplete: undefined;
   IntroError: undefined;
   Home: undefined;
-  VideoPlayer: { stringFigure: StringFigure };
+  VideoPlayer: { stringFigure: StringFigure, currentLanguage: 'ja' | 'en' };
   Additional: undefined;  
 };
 

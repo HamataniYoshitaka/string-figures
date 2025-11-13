@@ -76,6 +76,7 @@ export interface VideoPlayerSharedProps {
 
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
+  const { currentLanguage } = route.params;
     
   const { isTablet, isDeviceLandscape } = useDeviceInfo();
   
@@ -83,7 +84,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // ステート管理
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
   const [playbackPosition, setPlaybackPosition] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
   const [isLastChapterCompleted, setIsLastChapterCompleted] = useState(false);
@@ -129,7 +129,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     // chaptersを読み込み
     loadChapters();
 
-    loadLanguageSetting();
     loadBookmarkedIds();
     // スマホの場合、VideoPlayerScreen表示時は向き判定を行う
     if (!isTablet) {
@@ -160,16 +159,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  const loadLanguageSetting = async () => {
-    try {
-      const savedLanguage = await AsyncStorage.getItem('app_language');
-      if (savedLanguage && (savedLanguage === 'ja' || savedLanguage === 'en')) {
-        setCurrentLanguage(savedLanguage);
-      }
-    } catch (error) {
-      console.error('言語設定の読み込みに失敗しました:', error);
-    }
-  };
 
   const loadBookmarkedIds = async () => {
     try {

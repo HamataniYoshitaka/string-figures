@@ -329,7 +329,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const handlePlayVideo = (item: StringFigure) => {
     handleCloseBottomSheet();
-    navigation.navigate('VideoPlayer', { stringFigure: item });
+    navigation.navigate('VideoPlayer', { stringFigure: item, currentLanguage: currentLanguage });
   };
 
   const toggleBookmark = () => {
