@@ -26,11 +26,11 @@ interface Props {
 const chapters = [
     {
         subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に糸がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
-        video: require('../../assets/string-figures/0_introduction/intro1.mp4')
+        video: {ja: require('../../assets/string-figures/0_introduction/intro1.mp4'), en: require('../../assets/string-figures/0_introduction/intro1-en.mp4')}
     },
     {
         subtitle: { ja: '音声認識とマイクの使用確認画面が出ますのでどちらも許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow both the voice recognition and microphone usage confirmation screens to appear.\n(No voice recording or collection is performed.)' },
-        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+        video: {ja: require('../../assets/string-figures/0_introduction/intro2.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-en.mp4')}
     },
     {
         subtitle: { ja: '', en: '' },
@@ -45,11 +45,11 @@ const chapters = [
 const chapters_android = [
     {
         subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に糸がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
-        video: require('../../assets/string-figures/0_introduction/intro1.mp4')
+        video: {ja: require('../../assets/string-figures/0_introduction/intro1.mp4'), en: require('../../assets/string-figures/0_introduction/intro1-en.mp4')}
     },
     {
         subtitle: { ja: 'マイクの使用確認画面が出ますので許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow the microphone usage confirmation screen to appear.\n(No voice recording or collection is performed.)' },
-        video: require('../../assets/string-figures/0_introduction/intro2-android.mp4')
+        video: {ja: require('../../assets/string-figures/0_introduction/intro2-android.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-android-en.mp4')}
     },
     {
         subtitle: { ja: '', en: '' },
@@ -215,7 +215,9 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 <Video
                     key={`chapter-${currentChapterIndex}`}
                     ref={videoRef}
-                    source={isAndroid ? chapters_android[currentChapterIndex].video : chapters[currentChapterIndex].video}
+                    source={isAndroid ? 
+                        currentLanguage === 'ja' ? chapters_android[currentChapterIndex].video.ja : chapters_android[currentChapterIndex].video.en : 
+                        currentLanguage === 'ja' ? chapters[currentChapterIndex].video.ja : chapters[currentChapterIndex].video.en }
                     style={styles.video}
                     resizeMode={ResizeMode.COVER}
                     shouldPlay={false}

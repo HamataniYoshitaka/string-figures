@@ -173,10 +173,10 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
             {/* 字幕エリア */}
             <View style={styles.subtitleContainer}>
                 <Text style={styles.subtitleText}>
-                    {getLocalizedText({ ja: '音声認識とマイクが使用できませんでした。\nこのままでもアプリをお楽しみいただけますが、\n「設定」アプリからアクセスを許可することをおすすめめします。', en: 'An error has occurred.' })}
+                    {getLocalizedText({ ja: '音声認識とマイクが使用できませんでした。\nこのままでもアプリをお楽しみいただけますが、\n「設定」アプリからアクセスを許可することをおすすめめします。', en: 'Voice recognition and microphone are not available. You can still enjoy the app, but we recommend allowing access from the "Settings" app.' })}
                 </Text>
                 <Text style={[styles.subtitleText, { marginTop: 12, fontSize: 14 }]}>
-                    {getLocalizedText({ ja: '（音声の保存・収集は一切行なっておりません）', en: 'An error has occurred.' })}
+                    {getLocalizedText({ ja: '（音声の保存・収集は一切行なっておりません）', en: '(No voice recording or collection is performed.)' })}
                 </Text>
             </View>
 
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     subtitleText: {
         fontFamily: 'KleeOne-Regular',
         fontSize: 16,
-        color: '#333',
+        color: '#222',
         textAlign: 'center',
         lineHeight: 24,
         fontWeight: '500',

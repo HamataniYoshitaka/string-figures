@@ -1,4 +1,8 @@
 {
-  "ios": { "CFBundleDisplayName": "あやとり" },
+  "ios": { 
+    "CFBundleDisplayName": "あやとり",
+    "NSSpeechRecognitionUsageDescription": "このアプリは、動画の操作を音声で行うために音声認識機能を使用します。",
+    "NSMicrophoneUsageDescription": "このアプリは、音声認識のためにマイクへのアクセスが必要です。"
+  },
   "android": { "app_name": "あやとり" }
 }

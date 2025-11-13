@@ -107,7 +107,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           </Text>
         </View>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>データを読み込み中...</Text>
+          <Text style={styles.errorText}>Now Loading...</Text>
         </View>
       </SafeAreaView>
     );

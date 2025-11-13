@@ -52,7 +52,7 @@ export default function App() {
   if (!fontLoaded || introductionCompleted === null) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>読み込み中...</Text>
+        <Text>Now Loading...</Text>
       </View>
     );
   }

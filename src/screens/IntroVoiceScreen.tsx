@@ -6,10 +6,9 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseIcon, PlayIcon } from '../components/icons';
+import { CloseIcon } from '../components/icons';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import ProgressDots from '../components/ProgressDots';
-import SpeedButtonTail from '../components/icons/SpeedButtonTail';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 
@@ -35,7 +34,7 @@ const chapters = [
     },
     {
         subtitle: { ja: '「つぎ」と話しかけて下さい', en: 'Please say "next"' },
-        video: require('../../assets/string-figures/0_introduction/intro3.mp4')
+        video: {ja: require('../../assets/string-figures/0_introduction/intro3.mp4'), en: require('../../assets/string-figures/0_introduction/intro3-en.mp4')}
     },
     {
         subtitle: { ja: 'このアプリを使う準備が完了しました!\n世界中に伝承されている\n「あやとり」をお楽しみ下さい!', en: 'The preparation for using this app is complete!\nEnjoy the "String figures" that have been passed down through generations around the world!' },
@@ -230,7 +229,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 <Video
                     key={`chapter-${currentChapterIndex}`}
                     ref={videoRef}
-                    source={chapters[currentChapterIndex].video}
+                    source={ currentLanguage === 'ja' ? chapters[currentChapterIndex].video.ja : chapters[currentChapterIndex].video.en }
                     style={styles.video}
                     resizeMode={ResizeMode.COVER}
                     shouldPlay={false}
