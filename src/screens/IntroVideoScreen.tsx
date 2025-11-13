@@ -62,7 +62,7 @@ const chapters_android = [
 ];  
 
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
-    const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
+    const { currentLanguage } = route.params;
     const videoRef = useRef<Video>(null);
     const nextChapterButtonRef = useRef<any>(null);
     const [playbackRate, setPlaybackRate] = useState<number>(1.0);
@@ -102,17 +102,6 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     // 多言語対応のヘルパー関数
     const getLocalizedText = (textObj: { ja: string; en: string }) => {
         return textObj[currentLanguage];
-    };
-
-    const loadLanguageSetting = async () => {
-        try {
-            const savedLanguage = await AsyncStorage.getItem('app_language');
-            if (savedLanguage && (savedLanguage === 'ja' || savedLanguage === 'en')) {
-                setCurrentLanguage(savedLanguage);
-            }
-        } catch (error) {
-            console.error('言語設定の読み込みに失敗しました:', error);
-        }
     };
 
     // 動画の再生状況を監視
@@ -184,7 +173,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 // 権限が許可された場合、次の処理へ
                 console.log('マイクと音声認識の許可が付与されました');
                 // 遷移処理
-                navigation.replace('IntroVoice');
+                navigation.replace('IntroVoice', { currentLanguage: currentLanguage });
             } catch (error) {
                 console.error('音声認識の許可リクエストエラー:', error);
             }

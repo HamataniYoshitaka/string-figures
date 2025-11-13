@@ -133,7 +133,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleItemPress = (item: StringFigure) => {
-    navigation.navigate('IntroVideo');
+    navigation.navigate('IntroVideo', { currentLanguage: currentLanguage });
   }
 
 

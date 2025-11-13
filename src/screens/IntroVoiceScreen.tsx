@@ -44,7 +44,7 @@ const chapters = [
 ];  
 
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
-    const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
+    const { currentLanguage } = route.params;
     const videoRef = useRef<Video>(null);
     const [playbackRate, setPlaybackRate] = useState<number>(1.0);
     const [currentChapterIndex, setCurrentChapterIndex] = useState<number>(2);
@@ -71,8 +71,6 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
     // アプリ起動時に保存された言語設定を読み込む
     useEffect(() => {
-
-        loadLanguageSetting();
     
         // 画面スリープを防止
         activateKeepAwakeAsync();
@@ -150,16 +148,6 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         return textObj[currentLanguage];
     };
 
-    const loadLanguageSetting = async () => {
-        try {
-            const savedLanguage = await AsyncStorage.getItem('app_language');
-            if (savedLanguage && (savedLanguage === 'ja' || savedLanguage === 'en')) {
-                setCurrentLanguage(savedLanguage);
-            }
-        } catch (error) {
-            console.error('言語設定の読み込みに失敗しました:', error);
-        }
-    };
 
     // 動画の再生状況を監視
     const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
@@ -279,17 +267,17 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             <View style={styles.voiceFallbackCard}>
                 <View style={styles.voiceFallbackHeader}>
                     <View style={styles.voiceFallbackDivider} />
-                    <Text style={styles.voiceFallbackHeaderText}>または</Text>
+                    <Text style={styles.voiceFallbackHeaderText}>{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
                     <View style={styles.voiceFallbackDivider} />
                 </View>
 
                 <View style={styles.voiceFallbackDescription}>
-                    <Text style={styles.voiceFallbackDescriptionText}>あなたの声に反応しないですか？</Text>
-                    <Text style={styles.voiceFallbackDescriptionText}>このアプリは音声認識無しでも楽しむことができます</Text>
+                    <Text style={styles.voiceFallbackDescriptionText}>{getLocalizedText({ja: 'あなたの声に反応しないですか？', en: 'Is your voice not responding?'})}</Text>
+                    <Text style={styles.voiceFallbackDescriptionText}>{getLocalizedText({ja: 'このアプリは音声認識無しでも楽しむことができます', en: 'This app can be enjoyed without voice recognition'})}</Text>
                 </View>
 
                 <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={onSkip}>
-                    <Text style={styles.voiceFallbackButtonText}>このまま次に進む</Text>
+                    <Text style={styles.voiceFallbackButtonText}>{getLocalizedText({ja: 'このまま次に進む', en: 'Skip to next'})}</Text>
                 </TouchableOpacity>
             </View>
             
@@ -355,7 +343,7 @@ const styles = StyleSheet.create({
     },
     subtitleText: {
         fontFamily: 'KleeOne-SemiBold',
-        fontSize: 16,
+        fontSize: 22,
         color: '#222',
         textAlign: 'center',
         lineHeight: 24,

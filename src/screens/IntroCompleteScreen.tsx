@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     },
     subtitleContainer: {
         flex: 1,
-        paddingHorizontal: 0,
+        paddingHorizontal: 16,
         paddingVertical: 6,
         justifyContent: 'center',
         gap: 20

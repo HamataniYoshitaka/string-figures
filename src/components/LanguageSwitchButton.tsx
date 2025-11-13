@@ -25,12 +25,12 @@ export const showLanguageSelectionDialog = (
     '',
     [
       {
-        text: '日本語',
-        onPress: () => onSelectLanguage('ja'),
-      },
-      {
         text: 'English',
         onPress: () => onSelectLanguage('en'),
+      },
+      {
+        text: '日本語',
+        onPress: () => onSelectLanguage('ja'),
       },
       {
         text: currentLanguage === 'ja' ? 'キャンセル' : 'Cancel',
