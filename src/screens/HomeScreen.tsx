@@ -410,7 +410,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         <ScrollView style={styles.scrollView}>
         {/* ヘッダー */}
         <View style={[styles.header, isTablet && styles.headerTablet]}>
-          <Text style={[styles.title, isTablet && styles.titleTablet]}>
+          <Text style={[
+            styles.title, 
+            isTablet && styles.titleTablet,
+            { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+          ]}>
             {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
           </Text>
           <TouchableOpacity 
@@ -509,7 +513,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: '#57534D',
     fontFamily: 'KleeOne-SemiBold',
-    fontWeight: '600', // Androidでのフォント重み調整
+    fontWeight: '600',
     lineHeight: Platform.OS === 'android' ? 34 : 32, // Androidでより大きなlineHeight
     includeFontPadding: false, // Androidの余分なパディングを削除
     textAlignVertical: Platform.OS === 'android' ? 'center' : 'auto', // Android用の垂直配置

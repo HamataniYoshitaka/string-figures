@@ -249,7 +249,10 @@ const DetailBottomSheet: React.FC<Props> = ({
 
                 {/* 作品情報 */}
                 <View style={styles.infoContainer}>
-                  <Text style={styles.title}>{getLocalizedText(item.name)}</Text>
+                  <Text style={[
+                    styles.title,
+                    { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+                  ]}>{getLocalizedText(item.name)}</Text>
                   <View style={styles.difficultyContainer}>
                     {(() => {
                       const IconComponent = getDifficultyIcon(item.difficulty);
@@ -483,15 +486,9 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 14,
-    color: '#666',
+    color: '#333',
     lineHeight: 20,
     textAlign: 'center',
-  },
-  descriptionLandscape: {
-    fontSize: 16,
-    color: '#79716B',
-    lineHeight: 28,
-    textAlign: 'left',
     fontFamily: 'KleeOne-Regular',
   },
   bookmarkButton: {
