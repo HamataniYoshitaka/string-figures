@@ -138,18 +138,18 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           <View style={styles.subtitleArea}>
             <View style={styles.subtitleStack} pointerEvents="none">
               {/* 影だけを同じ位置に重ねる（回数で濃さ調整） */}
-              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
 
               {/* 本体テキスト */}
-              <Text style={styles.subtitleText}>{subtitle}</Text>
+              <Text style={[styles.subtitleText, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
             </View>
           </View>
         </View>
@@ -288,9 +288,9 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     lineHeight: 24,
-    textShadowColor: 'rgba(60, 60, 60, 1)',
+    textShadowColor: 'rgba(45, 45, 45, 1)',
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 5,  
+    textShadowRadius: 7,  
     fontFamily: 'KleeOne-SemiBold',
   },
   // 影用テキスト（同じ位置に配置して影だけを重ねる）
@@ -299,9 +299,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     // color: 'transparent',                 // 本体色は表示しない
-    textShadowColor: 'rgba(60, 60, 60, 1)',  // 影のみ
+    textShadowColor: 'rgba(45, 45, 45, 1)',  // 影のみ
     textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 5,                  // 影の広がり（好みで調整）
+    textShadowRadius: 7,                  // 影の広がり（好みで調整）
   },
   progressContainer: {
     paddingVertical: 16,
