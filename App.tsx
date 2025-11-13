@@ -32,6 +32,7 @@ export default function App() {
         await Font.loadAsync({
           'KleeOne-Regular': require('./assets/fonts/Klee_One/KleeOne-Regular.ttf'),
           'KleeOne-SemiBold': require('./assets/fonts/Klee_One/KleeOne-SemiBold.ttf'),
+          'Merriweather-SemiBold': require('./assets/fonts/Merriweather/Merriweather-SemiBold.ttf'),
         });
 
         // イントロ完了状態を読み込む

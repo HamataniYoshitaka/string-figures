@@ -508,8 +508,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     color: '#57534D',
-    fontFamily: Platform.OS === 'ios' ? 'KleeOne-SemiBold' : 'KleeOne-SemiBold',
-    fontWeight: Platform.OS === 'android' ? '600' : 'normal', // Androidでのフォント重み調整
+    fontFamily: 'KleeOne-SemiBold',
+    fontWeight: '600', // Androidでのフォント重み調整
     lineHeight: Platform.OS === 'android' ? 34 : 32, // Androidでより大きなlineHeight
     includeFontPadding: false, // Androidの余分なパディングを削除
     textAlignVertical: Platform.OS === 'android' ? 'center' : 'auto', // Android用の垂直配置
