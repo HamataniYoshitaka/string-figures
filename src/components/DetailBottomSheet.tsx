@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -45,6 +45,8 @@ const DetailBottomSheet: React.FC<Props> = ({
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
   const isSmallScreen = screenDimensions.height <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [internalVisible, setInternalVisible] = useState(false);
 
   // Android landscape時の安全な高さを計算
   const getSafeHeight = () => {
@@ -77,13 +79,49 @@ const DetailBottomSheet: React.FC<Props> = ({
     translateY.value = safeHeight;
   }, [safeHeight]);
 
+  // アニメーション完了後に親に通知する関数
+  const handleAnimationComplete = useCallback(() => {
+    setIsAnimating(false);
+    setInternalVisible(false);
+    onClose();
+  }, [onClose]);
+
+  // 閉じるアニメーションを開始する関数
+  const startCloseAnimation = useCallback(() => {
+    if (!isAnimating && internalVisible) {
+      setIsAnimating(true);
+      translateY.value = withTiming(safeHeight, { duration: 300 }, (finished) => {
+        if (finished) {
+          runOnJS(handleAnimationComplete)();
+        }
+      });
+    }
+  }, [isAnimating, internalVisible, safeHeight, handleAnimationComplete]);
+
   React.useEffect(() => {
     if (isVisible) {
-      translateY.value = withTiming(0, { duration: 300 });
-    } else {
-      translateY.value = withTiming(safeHeight, { duration: 300 });
+      setInternalVisible(true);
+      setIsAnimating(true);
+      translateY.value = withTiming(0, { duration: 300 }, (finished) => {
+        if (finished) {
+          runOnJS(setIsAnimating)(false);
+        }
+      });
+    } else if (internalVisible) {
+      // 閉じるアニメーションを開始（既にアニメーション中でない場合のみ）
+      setIsAnimating(prev => {
+        if (!prev) {
+          translateY.value = withTiming(safeHeight, { duration: 300 }, (finished) => {
+            if (finished) {
+              runOnJS(handleAnimationComplete)();
+            }
+          });
+          return true;
+        }
+        return prev;
+      });
     }
-  }, [isVisible, safeHeight]);
+  }, [isVisible, safeHeight, internalVisible, handleAnimationComplete]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }],
@@ -147,19 +185,19 @@ const DetailBottomSheet: React.FC<Props> = ({
     return textObj ? getLocalizedText(textObj) : '';
   };
 
-  if (!isVisible || !item) return null;
+  if (!internalVisible || !item) return null;
 
   return (
     <Modal
       transparent
-      visible={isVisible}
+      visible={internalVisible}
       animationType="none"
-      onRequestClose={onClose}
+      onRequestClose={startCloseAnimation}
       supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
       // AndroidのstatusBarTranslucentを設定してfullscreenで表示
       statusBarTranslucent={Platform.OS === 'android'}
     >
-      <TouchableWithoutFeedback onPress={onClose}>
+      <TouchableWithoutFeedback onPress={startCloseAnimation}>
         <View style={[
           styles.overlay,
           // AndroidのlandscapeモードではpaddingBottomを削除
