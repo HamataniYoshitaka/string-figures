@@ -294,11 +294,11 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '31',
-    name: { ja: 'はたおり', en: 'Weaving' },
+    name: { ja: 'はたおり', en: 'Loom' },
     difficulty: 'easy',
     directory: '31_weaving',
     ...ASSETS_MAP['31_weaving'],
-    description: { ja: 'はたおりの説明文です。', en: 'Description for Weaving.' },
+    description: { ja: 'はたおりの説明文です。', en: 'Description for Loom.' },
     premiumCourseId: 0, // 無料
   },
   {
