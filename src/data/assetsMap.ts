@@ -225,4 +225,24 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/44_butterfly/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/44_butterfly/preview.mp4'),
   },
+  '45_hammock': {
+    thumbnail: require('../../assets/string-figures/45_hammock/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/45_hammock/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/45_hammock/preview.mp4'),
+  },
+  '46_rabit': {
+    thumbnail: require('../../assets/string-figures/46_rabit/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/46_rabit/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/46_rabit/preview.mp4'),
+  },
+  '47_turtle': {
+    thumbnail: require('../../assets/string-figures/47_turtle/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/47_turtle/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/47_turtle/preview.mp4'),
+  },
+  '48_shovel': {
+    thumbnail: require('../../assets/string-figures/48_shovel/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/48_shovel/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/48_shovel/preview.mp4'),
+  },
 };

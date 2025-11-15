@@ -31,6 +31,7 @@ import { FIGURE_30_STAR_VIDEOS } from './figure-30_star';
 import { FIGURE_31_WEAVING_VIDEOS } from './figure-31_weaving';
 import { FIGURE_32_CANOE_VIDEOS } from './figure-32_canoe';
 import { FIGURE_33_CRUB_VIDEOS } from './figure-33_crub';
+import { FIGURE_34_AMWANGIYO_VIDEOS } from './figure-34_amwangiyo';
 import { FIGURE_35_JACOBS_LADDER1_VIDEOS } from './figure-35_jacobs-ladder1';
 import { FIGURE_36_JACOBS_LADDER2_VIDEOS } from './figure-36_jacobs-ladder2';
 import { FIGURE_37_JACOBS_LADDER3_VIDEOS } from './figure-37_jacobs-ladder3';
@@ -41,7 +42,10 @@ import { FIGURE_41_DANDELION_VIDEOS } from './figure-41_dandelion';
 import { FIGURE_42_APACHES_DOOR_VIDEOS } from './figure-42_apaches-door';
 import { FIGURE_43_TRAMPOLINE_VIDEOS } from './figure-43_trampoline';
 import { FIGURE_44_BUTTERFLY_VIDEOS } from './figure-44_butterfly';
-import { FIGURE_34_AMWANGIYO_VIDEOS } from './figure-34_amwangiyo';
+import { FIGURE_45_HAMMOCK_VIDEOS } from './figure-45_hammock';
+import { FIGURE_46_RABIT_VIDEOS } from './figure-46_rabit';
+import { FIGURE_47_TURTLE_VIDEOS } from './figure-47_turtle';
+import { FIGURE_48_SHOVEL_VIDEOS } from './figure-48_shovel';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -87,5 +91,9 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '41_dandelion': FIGURE_41_DANDELION_VIDEOS,
   '42_apaches-door': FIGURE_42_APACHES_DOOR_VIDEOS,
   '43_trampoline': FIGURE_43_TRAMPOLINE_VIDEOS,
-  '44_butterfly': FIGURE_44_BUTTERFLY_VIDEOS
+  '44_butterfly': FIGURE_44_BUTTERFLY_VIDEOS,
+  '45_hammock': FIGURE_45_HAMMOCK_VIDEOS,
+  '46_rabit': FIGURE_46_RABIT_VIDEOS,
+  '47_turtle': FIGURE_47_TURTLE_VIDEOS,
+  '48_shovel': FIGURE_48_SHOVEL_VIDEOS
 };

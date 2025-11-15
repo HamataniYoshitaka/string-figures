@@ -418,4 +418,40 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '蝶の説明文です。', en: 'Description for Butterfly.' },
     premiumCourseId: 0, // 無料
   },
+  {
+    id: '45',
+    name: { ja: 'ハンモック', en: 'Hammock' },
+    difficulty: 'easy',
+    directory: '45_hammock',
+    ...ASSETS_MAP['45_hammock'],
+    description: { ja: 'ハンモックの説明文です。', en: 'Description for Hammock.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
+    id: '46',
+    name: { ja: 'ウサギ', en: 'Rabbit' },
+    difficulty: 'medium',
+    directory: '46_rabit',
+    ...ASSETS_MAP['46_rabit'],
+    description: { ja: 'ウサギの説明文です。', en: 'Description for Rabbit.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
+    id: '47',
+    name: { ja: 'かめ', en: 'Turtle' },
+    difficulty: 'medium',
+    directory: '47_turtle',
+    ...ASSETS_MAP['47_turtle'],
+    description: { ja: 'かめの説明文です。', en: 'Description for Turtle.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
+    id: '48',
+    name: { ja: 'シャベル', en: 'Shovel' },
+    difficulty: 'easy',
+    directory: '48_shovel',
+    ...ASSETS_MAP['48_shovel'],
+    description: { ja: 'シャベルの説明文です。', en: 'Description for Shovel.' },
+    premiumCourseId: 0, // 無料
+  },
 ];
