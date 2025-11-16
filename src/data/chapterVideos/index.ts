@@ -46,6 +46,8 @@ import { FIGURE_45_HAMMOCK_VIDEOS } from './figure-45_hammock';
 import { FIGURE_46_RABIT_VIDEOS } from './figure-46_rabit';
 import { FIGURE_47_TURTLE_VIDEOS } from './figure-47_turtle';
 import { FIGURE_48_SHOVEL_VIDEOS } from './figure-48_shovel';
+import { FIGURE_51_SEAGULL_VIDEOS } from './figure-51_seagull';
+import { FIGURE_52_MOUTH_VIDEOS } from './figure-52_mouth';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -95,5 +97,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '45_hammock': FIGURE_45_HAMMOCK_VIDEOS,
   '46_rabit': FIGURE_46_RABIT_VIDEOS,
   '47_turtle': FIGURE_47_TURTLE_VIDEOS,
-  '48_shovel': FIGURE_48_SHOVEL_VIDEOS
+  '48_shovel': FIGURE_48_SHOVEL_VIDEOS,
+  '51_seagull': FIGURE_51_SEAGULL_VIDEOS,
+  '52_mouth': FIGURE_52_MOUTH_VIDEOS
 };

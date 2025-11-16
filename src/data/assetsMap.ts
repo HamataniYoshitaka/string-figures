@@ -245,4 +245,14 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/48_shovel/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/48_shovel/preview.mp4'),
   },
+  '51_seagull': {
+    thumbnail: require('../../assets/string-figures/51_seagull/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/51_seagull/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/51_seagull/preview.mp4'),
+  },
+  '52_mouth': {
+    thumbnail: require('../../assets/string-figures/52_mouth/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/52_mouth/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/52_mouth/preview.mp4'),
+  },
 };
