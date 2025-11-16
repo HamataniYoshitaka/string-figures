@@ -472,4 +472,13 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '口の説明文です。', en: 'Description for Mouth.' },
     premiumCourseId: 0, // 無料
   },
+  {
+    id: '53',
+    name: { ja: '2匹のカリブー', en: 'Two Caribous' },
+    difficulty: 'hard',
+    directory: '53_caribous',
+    ...ASSETS_MAP['53_caribous'],
+    description: { ja: '2匹のカリブーの説明文です。', en: 'Description for Two Caribous.' },
+    premiumCourseId: 0, // 無料
+  },
 ];

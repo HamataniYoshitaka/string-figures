@@ -255,4 +255,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/52_mouth/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/52_mouth/preview.mp4'),
   },
+  '53_caribous': {
+    thumbnail: require('../../assets/string-figures/53_caribous/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/53_caribous/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/53_caribous/preview.mp4'),
+  },
 };
