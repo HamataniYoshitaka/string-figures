@@ -270,4 +270,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/53_caribous/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/53_caribous/preview.mp4'),
   },
+  '57_thunder': {
+    thumbnail: require('../../assets/string-figures/57_thunder/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/57_thunder/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/57_thunder/preview.mp4'),
+  },
 };
