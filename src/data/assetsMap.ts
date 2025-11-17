@@ -245,6 +245,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/48_shovel/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/48_shovel/preview.mp4'),
   },
+  '49_caribou': {
+    thumbnail: require('../../assets/string-figures/49_caribou/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/49_caribou/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/49_caribou/preview.mp4'),
+  },
   '50_2story-siberian-house': {
     thumbnail: require('../../assets/string-figures/50_2story-siberian-house/thumbnail-kraft.gif'),
     patternImage: require('../../assets/string-figures/50_2story-siberian-house/pattern.jpg'),

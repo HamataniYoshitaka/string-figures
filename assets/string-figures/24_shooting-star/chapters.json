@@ -6,7 +6,10 @@
         "subtitle": { "ja": "右手の中指の糸を半回転させます。中指は下を向きます", "en": "Give the right middle-finger loop a half twist; the middle finger will point downward." }
     },
     {
-        "subtitle": { "ja": "右手の中指で、右手のひらの2本の糸を上からとり、中指を上に向けます。中指にかかっていた1本の糸は自然に外れます", "en": "With the right middle finger, move over and pick down the two palm strings of the right hand, then point the middle finger upward. The single string that was on the middle finger will be released automatically." }
+        "subtitle": { 
+            "ja": "右手の中指で、右手のひらの2本の糸を下からとり、中指を上に向けます。中指にかかっていた1本の糸は自然に外れます", 
+            "en": "With the right middle finger, pick up from below the two palm strings and turn the finger upward; the original middle-finger loop falls away naturally."
+        }
     },
     {
         "subtitle": { "ja": "右手の親指と小指の糸を全て外します。", "en": "Release all strings from the right thumb and little finger." }

@@ -456,11 +456,11 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '49',
-    name: { ja: 'カモメ', en: 'Seagull' },
+    name: { ja: 'カリブー', en: 'Caribou' },
     difficulty: 'medium',
-    directory: '51_seagull',
-    ...ASSETS_MAP['51_seagull'],
-    description: { ja: 'カモメの説明文です。', en: 'Description for Seagull.' },
+    directory: '49_caribou',
+    ...ASSETS_MAP['49_caribou'],
+    description: { ja: 'カリブーの説明文です。', en: 'Description for Caribou.' },
     premiumCourseId: 0, // 無料
   },
   {
@@ -473,7 +473,16 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料 
   },
   {
-    id: '50',
+    id: '51',
+    name: { ja: 'カモメ', en: 'Seagull' },
+    difficulty: 'medium',
+    directory: '51_seagull',
+    ...ASSETS_MAP['51_seagull'],
+    description: { ja: 'カモメの説明文です。', en: 'Description for Seagull.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
+    id: '52',
     name: { ja: '口', en: 'Mouth' },
     difficulty: 'medium',
     directory: '52_mouth',
