@@ -465,6 +465,15 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '50',
+    name: { ja: '2階建てのシベリアの家', en: '2-Story Siberian House' },
+    difficulty: 'medium',
+    directory: '50_2story-siberian-house',
+    ...ASSETS_MAP['50_2story-siberian-house'],
+    description: { ja: '2階建てのシベリアの家の説明文です。', en: 'Description for 2-Story Siberian House.' },
+    premiumCourseId: 0, // 無料 
+  },
+  {
+    id: '50',
     name: { ja: '口', en: 'Mouth' },
     difficulty: 'medium',
     directory: '52_mouth',

@@ -269,6 +269,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const renderCard = (item: StringFigure) => {
     const imageInfo = imageDimensions[item.id];
+    console.log('imageInfo', imageInfo);
     let calculatedHeight = 200; // デフォルト高さ
     
     if (imageInfo) {
@@ -277,6 +278,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       const gapBetweenColumns = (columnsCount - 1) * 15; // カラム間のgap
       const cardWidth = (screenWidth - totalHorizontalPadding - gapBetweenColumns) / columnsCount;
       calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
+      console.log('calculatedHeight', calculatedHeight);
       // 最大高さを制限
       // calculatedHeight = Math.min(calculatedHeight, 300);
     }
