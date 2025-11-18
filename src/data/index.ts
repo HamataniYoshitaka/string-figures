@@ -500,6 +500,15 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
   },
   {
+    id: '54',
+    name: { ja: '藪の中のカリブー', en: 'Caribou in the Bush' },
+    difficulty: 'hard',
+    directory: '54_caribou-in-bush',
+    ...ASSETS_MAP['54_caribou-in-bush'],
+    description: { ja: '藪の中のカリブーの説明文です。', en: 'Description for Caribou in the Bush.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
     id: '57',
     name: { ja: '雷', en: 'Thunder' },
     difficulty: 'medium',
