@@ -275,6 +275,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/54_caribou-in-bush/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/54_caribou-in-bush/preview.mp4'),
   },
+  '56_teepee': {
+    thumbnail: require('../../assets/string-figures/56_teepee/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/56_teepee/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/56_teepee/preview.mp4'),
+  },
   '57_thunder': {
     thumbnail: require('../../assets/string-figures/57_thunder/thumbnail-kraft.jpg'),
     patternImage: require('../../assets/string-figures/57_thunder/pattern.jpg'),

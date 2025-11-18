@@ -31,19 +31,6 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
   },
   {
-    id: '2',
-    name: { ja: '四段ばしご', en: 'Jacob\'s Ladder' },
-    difficulty: 'medium',
-    directory: '2_jacobs-ladder4',
-    ...ASSETS_MAP['2_jacobs-ladder4'],
-    description: { 
-      ja: '日本では中指を主に使う「四段ばしご」、世界では主に人差し指を使い「ヤコブの梯子」など様々な名前で知られています。ここでは中指を使って取る方法を紹介します', 
-      en: 'This is a famous string figure widely known all over the world. Here, we introduce the method using the middle fingers, which is common in Japan.' 
-    },
-    premiumCourseId: 0, // 無料
-
-  },
-  {
     id: '3',
     name: { ja: '蜘蛛の巣', en: 'Spiderweb' },
     difficulty: 'easy',
@@ -320,15 +307,6 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // コレクション1
   },
   {
-    id: '34',
-    name: { ja: 'アムワンギヨ', en: 'Amwangiyo' },
-    difficulty: 'hard',
-    directory: '34_amwangiyo',
-    ...ASSETS_MAP['34_amwangiyo'],
-    description: { ja: 'アムワンギヨの説明文です。', en: 'Description for Amwangiyo.' },
-    premiumCourseId: 1, // コレクション1
-  },
-  {
     id: '35',
     name: { ja: '1段ばしご', en: '1 Ladder' },
     difficulty: 'medium',
@@ -355,6 +333,18 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '3段ばしごの説明文です。', en: 'Description for 3 Ladder.' },
     premiumCourseId: 0, // 無料
   },
+  {
+    id: '2',
+    name: { ja: '4段ばしご', en: 'Jacob\'s Ladder' },
+    difficulty: 'medium',
+    directory: '2_jacobs-ladder4',
+    ...ASSETS_MAP['2_jacobs-ladder4'],
+    description: { 
+      ja: '日本では中指を主に使う「4段ばしご」、世界では主に人差し指を使い「ヤコブの梯子」など様々な名前で知られています。ここでは中指を使って取る方法を紹介します', 
+      en: 'This is a famous string figure widely known all over the world. Here, we introduce the method using the middle fingers, which is common in Japan.' 
+    },
+    premiumCourseId: 0, // 無料
+  },
   { 
     id: '38',
     name: { ja: 'ダンスの舞台', en: 'Dance Stage' },
@@ -362,6 +352,15 @@ export const stringFigures: StringFigure[] = [
     directory: '38_dance-stage',
     ...ASSETS_MAP['38_dance-stage'],
     description: { ja: 'ダンスの舞台の説明文です。', en: 'Description for Dance Stage.' },
+    premiumCourseId: 1, // コレクション1
+  },
+  {
+    id: '34',
+    name: { ja: 'アムワンギヨ', en: 'Amwangiyo' },
+    difficulty: 'hard',
+    directory: '34_amwangiyo',
+    ...ASSETS_MAP['34_amwangiyo'],
+    description: { ja: 'アムワンギヨの説明文です。', en: 'Description for Amwangiyo.' },
     premiumCourseId: 1, // コレクション1
   },
   {
@@ -403,7 +402,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '43',
     name: { ja: 'トランポリン', en: 'Trampoline' },
-    difficulty: 'medium',
+    difficulty: 'hard',
     directory: '43_trampoline',
     ...ASSETS_MAP['43_trampoline'],
     description: { ja: 'トランポリンの説明文です。', en: 'Description for Trampoline.' },
@@ -421,7 +420,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '45',
     name: { ja: 'ハンモック', en: 'Hammock' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '45_hammock',
     ...ASSETS_MAP['45_hammock'],
     description: { ja: 'ハンモックの説明文です。', en: 'Description for Hammock.' },
@@ -429,11 +428,11 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '46',
-    name: { ja: 'ウサギ', en: 'Rabbit' },
+    name: { ja: 'うさぎ', en: 'Rabbit' },
     difficulty: 'medium',
     directory: '46_rabit',
     ...ASSETS_MAP['46_rabit'],
-    description: { ja: 'ウサギの説明文です。', en: 'Description for Rabbit.' },
+    description: { ja: 'うさぎの説明文です。', en: 'Description for Rabbit.' },
     premiumCourseId: 0, // 無料
   },
   {
@@ -474,20 +473,20 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '51',
-    name: { ja: 'カモメ', en: 'Seagull' },
+    name: { ja: 'かもめ', en: 'Seagull' },
     difficulty: 'medium',
     directory: '51_seagull',
     ...ASSETS_MAP['51_seagull'],
-    description: { ja: 'カモメの説明文です。', en: 'Description for Seagull.' },
+    description: { ja: 'かもめの説明文です。', en: 'Description for Seagull.' },
     premiumCourseId: 0, // 無料
   },
   {
     id: '52',
-    name: { ja: '口', en: 'Mouth' },
+    name: { ja: 'くち', en: 'Mouth' },
     difficulty: 'medium',
     directory: '52_mouth',
     ...ASSETS_MAP['52_mouth'],
-    description: { ja: '口の説明文です。', en: 'Description for Mouth.' },
+    description: { ja: 'くちの説明文です。', en: 'Description for Mouth.' },
     premiumCourseId: 0, // 無料
   },
   {
@@ -506,6 +505,15 @@ export const stringFigures: StringFigure[] = [
     directory: '54_caribou-in-bush',
     ...ASSETS_MAP['54_caribou-in-bush'],
     description: { ja: '藪の中のカリブーの説明文です。', en: 'Description for Caribou in the Bush.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
+    id: '56',
+    name: { ja: 'ティーピー', en: 'Teepee' },
+    difficulty: 'easy',
+    directory: '56_teepee',
+    ...ASSETS_MAP['56_teepee'],
+    description: { ja: 'ティーピーの説明文です。', en: 'Description for Teepee.' },
     premiumCourseId: 0, // 無料
   },
   {
