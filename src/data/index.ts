@@ -492,11 +492,11 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '53',
-    name: { ja: '2匹のカリブー', en: 'Two Caribous' },
+    name: { ja: '2匹の子鹿', en: 'Two Fawns' },
     difficulty: 'hard',
-    directory: '53_caribous',
-    ...ASSETS_MAP['53_caribous'],
-    description: { ja: '2匹のカリブーの説明文です。', en: 'Description for Two Caribous.' },
+    directory: '53_2fawns',
+    ...ASSETS_MAP['53_2fawns'],
+    description: { ja: '2匹の子鹿の説明文です。', en: 'Description for Two Fawns.' },
     premiumCourseId: 0, // 無料
   },
   {
@@ -506,6 +506,15 @@ export const stringFigures: StringFigure[] = [
     directory: '57_thunder',
     ...ASSETS_MAP['57_thunder'],
     description: { ja: '雷の説明文です。', en: 'Description for Thunder.' },
+    premiumCourseId: 0, // 無料
+  },
+  {
+    id: '59',
+    name: { ja: 'カヤックをこぐ人', en: 'Paddler' },
+    difficulty: 'hard',
+    directory: '59_paddler',
+    ...ASSETS_MAP['59_paddler'],
+    description: { ja: 'カヤックをこぐ人の説明文です。', en: 'Description for Paddler.' },
     premiumCourseId: 0, // 無料
   },
 ];

@@ -412,7 +412,11 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       {/* ヘッダー */}
       <View style={[styles.header, isTablet && styles.headerTablet]}>
-        <Text style={[styles.title, isTablet && styles.titleTablet]}>
+        <Text style={[
+          styles.title, 
+          isTablet && styles.titleTablet,
+          { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+        ]}>
           {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
         </Text>
         <LanguageSwitchButton
@@ -456,8 +460,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     color: '#57534D',
-    fontFamily: Platform.OS === 'ios' ? 'KleeOne-SemiBold' : 'KleeOne-SemiBold',
-    fontWeight: Platform.OS === 'android' ? '600' : 'normal', // Androidでのフォント重み調整
     lineHeight: Platform.OS === 'android' ? 34 : 32, // Androidでより大きなlineHeight
     includeFontPadding: false, // Androidの余分なパディングを削除
     textAlignVertical: Platform.OS === 'android' ? 'center' : 'auto', // Android用の垂直配置

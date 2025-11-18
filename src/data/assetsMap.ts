@@ -265,14 +265,19 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/52_mouth/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/52_mouth/preview.mp4'),
   },
-  '53_caribous': {
-    thumbnail: require('../../assets/string-figures/53_caribous/thumbnail-kraft.jpg'),
-    patternImage: require('../../assets/string-figures/53_caribous/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/53_caribous/preview.mp4'),
+  '53_2fawns': {
+    thumbnail: require('../../assets/string-figures/53_2fawns/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/53_2fawns/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/53_2fawns/preview.mp4'),
   },
   '57_thunder': {
     thumbnail: require('../../assets/string-figures/57_thunder/thumbnail-kraft.jpg'),
     patternImage: require('../../assets/string-figures/57_thunder/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/57_thunder/preview.mp4'),
+  },
+  '59_paddler': {
+    thumbnail: require('../../assets/string-figures/59_paddler/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/59_paddler/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/59_paddler/preview.mp4'),
   },
 };

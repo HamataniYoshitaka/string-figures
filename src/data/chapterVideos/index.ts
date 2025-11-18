@@ -50,8 +50,9 @@ import { FIGURE_49_CARIBOU_VIDEOS } from './figure-49_caribou';
 import { FIGURE_50_2STORY_SIBERIAN_HOUSE_VIDEOS } from './figure-50_2story-siberian-house';
 import { FIGURE_51_SEAGULL_VIDEOS } from './figure-51_seagull';
 import { FIGURE_52_MOUTH_VIDEOS } from './figure-52_mouth';
-import { FIGURE_53_CARIBOUS_VIDEOS } from './figure-53_caribous';
+import { FIGURE_53_2FAWNS_VIDEOS } from './figure-53_2fawns';
 import { FIGURE_57_THUNDER_VIDEOS } from './figure-57_thunder';
+import { FIGURE_59_PADDLER_VIDEOS } from './figure-59_paddler';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -106,6 +107,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '50_2story-siberian-house': FIGURE_50_2STORY_SIBERIAN_HOUSE_VIDEOS,
   '51_seagull': FIGURE_51_SEAGULL_VIDEOS,
   '52_mouth': FIGURE_52_MOUTH_VIDEOS,
-  '53_caribous': FIGURE_53_CARIBOUS_VIDEOS,
-  '57_thunder': FIGURE_57_THUNDER_VIDEOS
+  '53_2fawns': FIGURE_53_2FAWNS_VIDEOS,
+  '57_thunder': FIGURE_57_THUNDER_VIDEOS,
+  '59_paddler': FIGURE_59_PADDLER_VIDEOS
 };

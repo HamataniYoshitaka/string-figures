@@ -39,6 +39,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   playbackPosition,
   isLastChapterCompleted,
   isLandscapeMode,
+  currentLanguage,
   onPlaybackStatusUpdate,
   onVideoLoad,
   onGoBack,
@@ -102,7 +103,13 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               <CloseIcon width={24} height={24} fillColor="#79716B" />
             </Animated.View>
           </TouchableWithoutFeedback>
-          <Text style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
+          <Text style={[
+            styles.title, 
+            { 
+              fontSize: isTablet ? 22 : 18,
+              fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+            }
+          ]} numberOfLines={1}>
             {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
           </Text>
         </View>
@@ -140,7 +147,13 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               <CloseIcon width={24} height={24} fillColor="#79716B" />
             </Animated.View>
           </TouchableWithoutFeedback>
-          <Text style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
+          <Text style={[
+            styles.title, 
+            { 
+              fontSize: isTablet ? 22 : 18,
+              fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+            }
+          ]} numberOfLines={1}>
             {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
           </Text>
           <TouchableWithoutFeedback 

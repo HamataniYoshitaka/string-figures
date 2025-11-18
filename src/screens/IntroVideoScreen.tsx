@@ -197,7 +197,13 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     <CloseIcon width={24} height={24} fillColor="#79716B" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
-                <Text style={[styles.title, { fontSize: isTablet ? 22 : 22 }]} numberOfLines={1}>
+                <Text style={[
+                    styles.title, 
+                    { 
+                        fontSize: isTablet ? 22 : 18,
+                        fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                    }
+                ]} numberOfLines={1}>
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
             </View>
@@ -286,9 +292,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     title: {
-        fontFamily: 'KleeOne-SemiBold',
         flex: 1,
-        fontWeight: '600',
         textAlign: 'center',
         marginHorizontal: 16,
     },
