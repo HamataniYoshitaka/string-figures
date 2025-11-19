@@ -39,8 +39,3 @@ export type RootStackParamList = {
   VideoPlayer: { stringFigure: StringFigure, currentLanguage: 'ja' | 'en' };
   Additional: undefined;  
 };
-
-export type BottomSheetState = {
-  isVisible: boolean;
-  selectedItem: StringFigure | null;
-};

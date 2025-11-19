@@ -16,8 +16,8 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { RootStackParamList, StringFigure, BottomSheetState } from '../types';
-import DetailBottomSheet from '../components/DetailBottomSheet';
+import { RootStackParamList, StringFigure } from '../types';
+import DetailBottomSheet, { DetailBottomSheetRef } from '../components/DetailBottomSheet';
 import FilterButtons from '../components/FilterButtons';
 import StringFigureCard from '../components/StringFigureCard';
 import DropDownMenu from '../components/DropDownMenu';
@@ -50,10 +50,8 @@ const CommercialCollection1: StringFigure = {
 };
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
-  const [bottomSheet, setBottomSheet] = useState<BottomSheetState>({
-    isVisible: false,
-    selectedItem: null,
-  });
+  const bottomSheetRef = useRef<DetailBottomSheetRef>(null);
+  const [selectedItem, setSelectedItem] = useState<StringFigure | null>(null);
   const { isTablet } = useDeviceInfo();
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
@@ -314,17 +312,19 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       }
       return;
     }
-    setBottomSheet({
-      isVisible: true,
-      selectedItem: item,
-    });
+    setSelectedItem(item);
   };
 
+  // selectedItemが設定されたときに自動的にBottomSheetを表示
+  useEffect(() => {
+    if (selectedItem) {
+      bottomSheetRef.current?.present();
+    }
+  }, [selectedItem]);
+
   const handleCloseBottomSheet = () => {
-    setBottomSheet({
-      isVisible: false,
-      selectedItem: null,
-    });
+    bottomSheetRef.current?.dismiss();
+    setSelectedItem(null);
   };
 
   const handlePlayVideo = (item: StringFigure) => {
@@ -333,9 +333,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const toggleBookmark = () => {
-    if (!bottomSheet.selectedItem) return;
+    if (!selectedItem) return;
     
-    const itemId = bottomSheet.selectedItem.id;
+    const itemId = selectedItem.id;
     const newBookmarkedIds = bookmarkedIds.includes(itemId)
       ? bookmarkedIds.filter(id => id !== itemId)
       : [...bookmarkedIds, itemId];
@@ -473,9 +473,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
       {/* 詳細ボトムシート */}
       <DetailBottomSheet
-        isVisible={bottomSheet.isVisible}
-        item={bottomSheet.selectedItem}
-        isBookmarked={bottomSheet.selectedItem ? bookmarkedIds.includes(bottomSheet.selectedItem.id) : false}
+        ref={bottomSheetRef}
+        item={selectedItem}
+        isBookmarked={selectedItem ? bookmarkedIds.includes(selectedItem.id) : false}
         onClose={handleCloseBottomSheet}
         onPlayVideo={handlePlayVideo}
         onToggleBookmark={toggleBookmark}

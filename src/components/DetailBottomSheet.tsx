@@ -1,21 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useImperativeHandle, forwardRef } from 'react';
 import {
   View,
   Text,
-  Modal,
   StyleSheet,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Dimensions,
   Image,
   Platform,
 } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  runOnJS,
-} from 'react-native-reanimated';
+import {
+  BottomSheetModal,
+  BottomSheetView,
+  BottomSheetBackdrop,
+} from '@gorhom/bottom-sheet';
 import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -24,7 +21,6 @@ import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon } 
 import { useOrientation } from '../hooks/useOrientation';
 
 interface Props {
-  isVisible: boolean;
   item: StringFigure | null;
   isBookmarked: boolean;
   onClose: () => void;
@@ -33,37 +29,55 @@ interface Props {
   currentLanguage: 'ja' | 'en';
 }
 
-const DetailBottomSheet: React.FC<Props> = ({
-  isVisible,
+export interface DetailBottomSheetRef {
+  present: () => void;
+  dismiss: () => void;
+}
+
+const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   item,
   isBookmarked,
   onClose,
   onPlayVideo,
   onToggleBookmark,
   currentLanguage,
-}) => {
+}, ref) => {
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
-  const isSmallScreen = screenDimensions.height <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [internalVisible, setInternalVisible] = useState(false);
+  const isSmallScreen = screenDimensions.height <= 667;
+  
+  // iPadかどうかを判定
+  const isTablet = Math.max(screenDimensions.width, screenDimensions.height) >= 1024;
 
-  // Android landscape時の安全な高さを計算
-  const getSafeHeight = () => {
-    if (Platform.OS === 'android' && orientation === 'landscape') {
-      // Androidのlandscapeモードでは画面全体の高さを使用
-      return screenDimensions.height;
+  // 動的スナップポイントを計算
+  const getSnapPoints = useCallback(() => {
+    const safeHeight = screenDimensions.height;
+    if (orientation === 'landscape') {
+      if (isTablet) {
+        return [540];
+      }
+      return [safeHeight * 0.8];
     }
-    return screenDimensions.height;
-  };
+    if (isTablet) {
+      return [540];
+    }
+    if (isSmallScreen) {
+      return [safeHeight * 0.8];
+    }
+    return [safeHeight * 0.65];
+  }, [screenDimensions.height, orientation, isTablet, isSmallScreen]);
 
-  const safeHeight = getSafeHeight();
-  const translateY = useSharedValue(safeHeight);
+  const snapPoints = getSnapPoints();
+  const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
 
-  // 多言語対応のヘルパー関数
-  const getLocalizedText = (textObj: { ja: string; en: string }) => {
-    return textObj[currentLanguage];
-  };
+  useImperativeHandle(ref, () => ({
+    present: () => {
+      bottomSheetModalRef.current?.present();
+    },
+    dismiss: () => {
+      bottomSheetModalRef.current?.dismiss();
+    },
+  }));
 
   // 画面サイズ変更の監視
   useEffect(() => {
@@ -74,87 +88,9 @@ const DetailBottomSheet: React.FC<Props> = ({
     return () => subscription?.remove();
   }, []);
 
-  // translateYの初期値を画面サイズ変更時に更新
-  useEffect(() => {
-    translateY.value = safeHeight;
-  }, [safeHeight]);
-
-  // アニメーション完了後に親に通知する関数
-  const handleAnimationComplete = useCallback(() => {
-    setIsAnimating(false);
-    setInternalVisible(false);
-    onClose();
-  }, [onClose]);
-
-  // 閉じるアニメーションを開始する関数
-  const startCloseAnimation = useCallback(() => {
-    if (!isAnimating && internalVisible) {
-      setIsAnimating(true);
-      translateY.value = withTiming(safeHeight, { duration: 300 }, (finished) => {
-        if (finished) {
-          runOnJS(handleAnimationComplete)();
-        }
-      });
-    }
-  }, [isAnimating, internalVisible, safeHeight, handleAnimationComplete]);
-
-  React.useEffect(() => {
-    if (isVisible) {
-      setInternalVisible(true);
-      setIsAnimating(true);
-      translateY.value = withTiming(0, { duration: 300 }, (finished) => {
-        if (finished) {
-          runOnJS(setIsAnimating)(false);
-        }
-      });
-    } else if (internalVisible) {
-      // 閉じるアニメーションを開始（既にアニメーション中でない場合のみ）
-      setIsAnimating(prev => {
-        if (!prev) {
-          translateY.value = withTiming(safeHeight, { duration: 300 }, (finished) => {
-            if (finished) {
-              runOnJS(handleAnimationComplete)();
-            }
-          });
-          return true;
-        }
-        return prev;
-      });
-    }
-  }, [isVisible, safeHeight, internalVisible, handleAnimationComplete]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }],
-  }));
-
-  // iPadかどうかを判定（より大きな画面サイズで判定）
-  const isTablet = Math.max(screenDimensions.width, screenDimensions.height) >= 1024;
-  
-  const dynamicBottomSheetStyle = {
-    ...styles.bottomSheet,
-    ...(isTablet ? { width: 420 } : { width: screenDimensions.width }),  // タブレットの場合のみwidthを420に設定
-    minHeight: orientation === 'landscape' 
-      ? isTablet
-        ? 540 // タブレットの場合は540
-        : safeHeight * 0.8 // スマホの場合は80%
-      : isTablet 
-        ? 540 // タブレットの場合は540
-        : isSmallScreen 
-          ? safeHeight * 0.8 // 小さい画面(iPhoneSE2)の場合は80%
-          : safeHeight * 0.65, // それ以外は65%
-    // maxHeight: orientation === 'landscape' 
-    //   ? isTablet
-    //     ? safeHeight * 0.75  // iPadの場合は画面高さの55%
-    //     : Platform.OS === 'android'
-    //       ? safeHeight * 0.9   // AndroidでもiPhoneと同じ90%に
-    //       : safeHeight * 0.9 
-    //   : safeHeight * 0.8,
-    // Androidのlandscapeモードでは下部のマージンを削除
-    ...(Platform.OS === 'android' && orientation === 'landscape' && {
-      marginBottom: 0,
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-    }),
+  // 多言語対応のヘルパー関数
+  const getLocalizedText = (textObj: { ja: string; en: string }) => {
+    return textObj[currentLanguage];
   };
 
   const handlePlayPress = () => {
@@ -162,6 +98,12 @@ const DetailBottomSheet: React.FC<Props> = ({
       onPlayVideo(item);
     }
   };
+
+  const handleSheetChanges = useCallback((index: number) => {
+    if (index === -1) {
+      onClose();
+    }
+  }, [onClose]);
 
   const getDifficultyIcon = (difficulty: string) => {
     switch (difficulty) {
@@ -185,166 +127,146 @@ const DetailBottomSheet: React.FC<Props> = ({
     return textObj ? getLocalizedText(textObj) : '';
   };
 
-  if (!internalVisible || !item) return null;
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+        opacity={0.5}
+      />
+    ),
+    []
+  );
+
+  if (!item) return null;
 
   return (
-    <Modal
-      transparent
-      visible={internalVisible}
-      animationType="none"
-      onRequestClose={startCloseAnimation}
-      supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
-      // AndroidのstatusBarTranslucentを設定してfullscreenで表示
-      statusBarTranslucent={Platform.OS === 'android'}
+    <BottomSheetModal
+      ref={bottomSheetModalRef}
+      snapPoints={snapPoints}
+      onChange={handleSheetChanges}
+      backdropComponent={renderBackdrop}
+      enablePanDownToClose
+      style={isTablet ? styles.tabletStyle : undefined}
+      handleIndicatorStyle={styles.handleIndicator}
     >
-      <TouchableWithoutFeedback onPress={startCloseAnimation}>
-        <View style={[
-          styles.overlay,
-          // AndroidのlandscapeモードではpaddingBottomを削除
-          Platform.OS === 'android' && orientation === 'landscape' && {
-            paddingBottom: 0,
-          }
-        ]}>
-          <TouchableWithoutFeedback>
-            <Animated.View style={[dynamicBottomSheetStyle, animatedStyle]}>
-              {/* ハンドル */}
-              <View style={styles.handle} />
-              
-              {/* ブックマークボタン */}
-              <TouchableOpacity
-                style={styles.bookmarkButton}
-                onPress={onToggleBookmark}
-              >
-                <BookmarkIcon
-                  width={32}
-                  height={32}
-                  strokeColor={isBookmarked ? '#DC2626' : '#ffffff'}
-                  fillColor={isBookmarked ? '#DC2626' : '#aaa'}
-                  strokeWidth={1.5}
-                />
-              </TouchableOpacity>
+      <BottomSheetView style={styles.contentContainer}>
+        {/* ブックマークボタン */}
+        <TouchableOpacity
+          style={styles.bookmarkButton}
+          onPress={onToggleBookmark}
+        >
+          <BookmarkIcon
+            width={32}
+            height={32}
+            strokeColor={isBookmarked ? '#DC2626' : '#ffffff'}
+            fillColor={isBookmarked ? '#DC2626' : '#aaa'}
+            strokeWidth={1.5}
+          />
+        </TouchableOpacity>
 
-              {/* コンテンツ */}
-              <View style={styles.content}>
-                {/* プレビュー動画エリア */}
-                <View style={styles.imageContainer}>
-                  {item.previewUrl ? (
-                    <Video
-                      source={typeof item.previewUrl === 'string' 
-                        ? { uri: item.previewUrl } 
-                        : item.previewUrl
-                      }
-                      style={styles.videoPreview}
-                      shouldPlay={true}
-                      isLooping={true}
-                      isMuted={true}
-                      resizeMode={ResizeMode.COVER}
-                      useNativeControls={false}
-                    />
-                  ) : (
-                    <View style={styles.imagePlaceholder}>
-                      <Text style={styles.imageText}>
-                        {getLocalizedText({ ja: '動画プレビュー', en: 'Video Preview' })}
-                      </Text>
-                    </View>
-                  )}
-                  
-                  {/* 白のグラデーション */}
-                  <LinearGradient
-                    colors={['rgba(255,255,255,0.4)','rgba(255,255,255,0.4)', 'rgba(255,255,255,1.0)']}
-                    style={styles.gradientOverlay}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 1 }}
-                  />
-                  
-                  <TouchableOpacity
-                    style={styles.playButton}
-                    onPress={handlePlayPress}
-                  >
-                    <PlayIcon width={24} height={28} strokeWidth={3} />
-                  </TouchableOpacity>
-                </View>
-
-                {/* サムネイル - プレビュー動画エリアに重ねる */}
-                <View style={styles.thumbnailContainer}>
-                  <View style={styles.thumbnail}>
-                    {item.patternImage ? (
-                      <Image 
-                        source={typeof item.patternImage === 'string' 
-                          ? { uri: item.patternImage } 
-                          : item.patternImage
-                        } 
-                        style={styles.thumbnailImage}
-                        resizeMode="cover"
-                      />
-                    ) : (
-                      <Text style={styles.thumbnailText}>
-                        {getLocalizedText({ ja: '完成図', en: 'Pattern' })}
-                      </Text>
-                    )}
-                  </View>
-                </View>
-
-                {/* 作品情報 */}
-                <View style={styles.infoContainer}>
-                  <Text style={[
-                    styles.title,
-                    { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
-                  ]}>{getLocalizedText(item.name)}</Text>
-                  <View style={styles.difficultyContainer}>
-                    {(() => {
-                      const IconComponent = getDifficultyIcon(item.difficulty);
-                      return <IconComponent width={28} height={28} strokeColor="#666" />;
-                    })()}
-                    <Text style={styles.difficultyText}>
-                      {getDifficultyText(item.difficulty)}
-                    </Text>
-                  </View>
-                  <Text style={styles.description}>{getLocalizedText(item.description)}</Text>
-                </View>
+        {/* コンテンツ */}
+        <View style={styles.content}>
+          {/* プレビュー動画エリア */}
+          <View style={styles.imageContainer}>
+            {item.previewUrl ? (
+              <Video
+                source={typeof item.previewUrl === 'string' 
+                  ? { uri: item.previewUrl } 
+                  : item.previewUrl
+                }
+                style={styles.videoPreview}
+                shouldPlay={true}
+                isLooping={true}
+                isMuted={true}
+                resizeMode={ResizeMode.COVER}
+                useNativeControls={false}
+              />
+            ) : (
+              <View style={styles.imagePlaceholder}>
+                <Text style={styles.imageText}>
+                  {getLocalizedText({ ja: '動画プレビュー', en: 'Video Preview' })}
+                </Text>
               </View>
-            </Animated.View>
-          </TouchableWithoutFeedback>
+            )}
+            
+            {/* 白のグラデーション */}
+            <LinearGradient
+              colors={['rgba(255,255,255,0.4)','rgba(255,255,255,0.4)', 'rgba(255,255,255,1.0)']}
+              style={styles.gradientOverlay}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+            />
+            
+            <TouchableOpacity
+              style={styles.playButton}
+              onPress={handlePlayPress}
+            >
+              <PlayIcon width={24} height={28} strokeWidth={3} />
+            </TouchableOpacity>
+          </View>
+
+          {/* サムネイル - プレビュー動画エリアに重ねる */}
+          <View style={styles.thumbnailContainer}>
+            <View style={styles.thumbnail}>
+              {item.patternImage ? (
+                <Image 
+                  source={typeof item.patternImage === 'string' 
+                    ? { uri: item.patternImage } 
+                    : item.patternImage
+                  } 
+                  style={styles.thumbnailImage}
+                  resizeMode="cover"
+                />
+              ) : (
+                <Text style={styles.thumbnailText}>
+                  {getLocalizedText({ ja: '完成図', en: 'Pattern' })}
+                </Text>
+              )}
+            </View>
+          </View>
+
+          {/* 作品情報 */}
+          <View style={styles.infoContainer}>
+            <Text style={[
+              styles.title,
+              { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+            ]}>{getLocalizedText(item.name)}</Text>
+            <View style={styles.difficultyContainer}>
+              {(() => {
+                const IconComponent = getDifficultyIcon(item.difficulty);
+                return <IconComponent width={28} height={28} strokeColor="#666" />;
+              })()}
+              <Text style={styles.difficultyText}>
+                {getDifficultyText(item.difficulty)}
+              </Text>
+            </View>
+            <Text style={styles.description}>{getLocalizedText(item.description)}</Text>
+          </View>
         </View>
-      </TouchableWithoutFeedback>
-    </Modal>
+      </BottomSheetView>
+    </BottomSheetModal>
   );
-};
+});
+
+DetailBottomSheet.displayName = 'DetailBottomSheet';
 
 const styles = StyleSheet.create({
-  overlay: {
+  contentContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end',
-  },
-  bottomSheet: {
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    overflow: 'hidden',
     position: 'relative',
-    alignSelf: 'center',
   },
-  handle: {
-    position: 'absolute',
-    top: 14,
-    left: '50%',
-    transform: [{ translateX: -30 }],
-    width: 60,
-    height: 5,
+  tabletStyle: {
+    width: 420,
+    alignSelf: 'center' as const,
+  },
+  handleIndicator: {
     backgroundColor: '#000000',
     opacity: 0.5,
-    borderRadius: 3,
-    alignSelf: 'center',
-    zIndex: 100,
   },
   content: {
     flex: 1,
-    paddingBottom: 20,
-  },
-  contentLandscape: {
-    flex: 1,
-    flexDirection: 'row',
     paddingBottom: 20,
   },
   imageContainer: {
@@ -359,20 +281,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  imagePlaceholderLandscape: {
-    height: '100%',
-    width: '100%',
-    backgroundColor: '#F5F5F5',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   videoPreview: {
     height: 240,
-    width: '100%',
-    backgroundColor: '#F5F5F5',
-  },
-  videoPreviewLandscape: {
-    height: '100%',
     width: '100%',
     backgroundColor: '#F5F5F5',
   },
@@ -383,34 +293,11 @@ const styles = StyleSheet.create({
     right: 0,
     height: 240,
   },
-  gradientOverlayLandscape: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
   imageText: {
     color: '#9E9E9E',
     fontSize: 16,
   },
   playButton: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -35,
-    marginLeft: -35,
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    borderWidth: 2,
-    borderColor: 'white',
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingStart: 4,
-  },
-  playButtonLandscape: {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -443,17 +330,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     overflow: 'hidden',
   },
-  thumbnailLandscape: {
-    width: 120,
-    height: 120,
-    backgroundColor: '#F5F5F5',
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: '#79716B',
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-  },
   thumbnailImage: {
     width: '100%',
     height: '100%',
@@ -467,42 +343,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 40,
   },
-  infoAreaLandscape: {
-    flex: 1,
-    padding: 24,
-    paddingTop: 32,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-  },
-  infoTopSectionLandscape: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 18,
-    gap: 24,
-  },
-  titleSectionLandscape: {
-    flex: 1,
-    flexDirection: 'column',
-    gap: 12,
-  },
-  videoAreaLandscape: {
-    width: 548,
-    height: '100%',
-    position: 'relative',
-  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 12,
     textAlign: 'center',
-    fontFamily: 'KleeOne-SemiBold',
-  },
-  titleLandscape: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#57534D',
-    textAlign: 'left',
     fontFamily: 'KleeOne-SemiBold',
   },
   difficultyContainer: {
