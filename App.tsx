@@ -6,6 +6,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Font from 'expo-font';
 import { View, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-gesture-handler';
 
 import { RootStackParamList } from './src/types';
@@ -59,29 +60,31 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <StatusBar style="auto" />
-      <Stack.Navigator
-        initialRouteName={introductionCompleted ? 'Home' : 'Intro'}
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Intro" component={IntroScreen} />
-        <Stack.Screen name="IntroVideo" component={IntroVideoScreen} />
-        <Stack.Screen name="IntroVoice" component={IntroVoiceScreen} />
-        <Stack.Screen name="IntroComplete" component={IntroCompleteScreen} />
-        <Stack.Screen name="IntroError" component={IntroErrorScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen
-          name="VideoPlayer"
-          component={VideoPlayerScreen}
-          options={{
-            gestureEnabled: true,
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <StatusBar style="auto" />
+        <Stack.Navigator
+          initialRouteName={introductionCompleted ? 'Home' : 'Intro'}
+          screenOptions={{
+            headerShown: false,
           }}
-        />
-        <Stack.Screen name="Additional" component={AdditionalScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+        >
+          <Stack.Screen name="Intro" component={IntroScreen} />
+          <Stack.Screen name="IntroVideo" component={IntroVideoScreen} />
+          <Stack.Screen name="IntroVoice" component={IntroVoiceScreen} />
+          <Stack.Screen name="IntroComplete" component={IntroCompleteScreen} />
+          <Stack.Screen name="IntroError" component={IntroErrorScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name="VideoPlayer"
+            component={VideoPlayerScreen}
+            options={{
+              gestureEnabled: true,
+            }}
+          />
+          <Stack.Screen name="Additional" component={AdditionalScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }

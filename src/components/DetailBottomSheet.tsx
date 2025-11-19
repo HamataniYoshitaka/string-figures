@@ -1,21 +1,14 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
   View,
   Text,
-  Modal,
   StyleSheet,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   Dimensions,
   Image,
   Platform,
 } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  runOnJS,
-} from 'react-native-reanimated';
+import BottomSheet, { BottomSheetView, BottomSheetBackdrop, BottomSheetBackdropProps } from '@gorhom/bottom-sheet';
 import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -45,8 +38,7 @@ const DetailBottomSheet: React.FC<Props> = ({
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
   const isSmallScreen = screenDimensions.height <= 667; // iPhoneSE2の高さは667px (横向きなので高さが幅になる)
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [internalVisible, setInternalVisible] = useState(false);
+  const bottomSheetRef = useRef<BottomSheet>(null);
 
   // Android landscape時の安全な高さを計算
   const getSafeHeight = () => {
@@ -58,7 +50,6 @@ const DetailBottomSheet: React.FC<Props> = ({
   };
 
   const safeHeight = getSafeHeight();
-  const translateY = useSharedValue(safeHeight);
 
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
@@ -74,66 +65,12 @@ const DetailBottomSheet: React.FC<Props> = ({
     return () => subscription?.remove();
   }, []);
 
-  // translateYの初期値を画面サイズ変更時に更新
-  useEffect(() => {
-    translateY.value = safeHeight;
-  }, [safeHeight]);
-
-  // アニメーション完了後に親に通知する関数
-  const handleAnimationComplete = useCallback(() => {
-    setIsAnimating(false);
-    setInternalVisible(false);
-    onClose();
-  }, [onClose]);
-
-  // 閉じるアニメーションを開始する関数
-  const startCloseAnimation = useCallback(() => {
-    if (!isAnimating && internalVisible) {
-      setIsAnimating(true);
-      translateY.value = withTiming(safeHeight, { duration: 300 }, (finished) => {
-        if (finished) {
-          runOnJS(handleAnimationComplete)();
-        }
-      });
-    }
-  }, [isAnimating, internalVisible, safeHeight, handleAnimationComplete]);
-
-  React.useEffect(() => {
-    if (isVisible) {
-      setInternalVisible(true);
-      setIsAnimating(true);
-      translateY.value = withTiming(0, { duration: 300 }, (finished) => {
-        if (finished) {
-          runOnJS(setIsAnimating)(false);
-        }
-      });
-    } else if (internalVisible) {
-      // 閉じるアニメーションを開始（既にアニメーション中でない場合のみ）
-      setIsAnimating(prev => {
-        if (!prev) {
-          translateY.value = withTiming(safeHeight, { duration: 300 }, (finished) => {
-            if (finished) {
-              runOnJS(handleAnimationComplete)();
-            }
-          });
-          return true;
-        }
-        return prev;
-      });
-    }
-  }, [isVisible, safeHeight, internalVisible, handleAnimationComplete]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }],
-  }));
-
   // iPadかどうかを判定（より大きな画面サイズで判定）
   const isTablet = Math.max(screenDimensions.width, screenDimensions.height) >= 1024;
   
-  const dynamicBottomSheetStyle = {
-    ...styles.bottomSheet,
-    ...(isTablet ? { width: 420 } : { width: screenDimensions.width }),  // タブレットの場合のみwidthを420に設定
-    minHeight: orientation === 'landscape' 
+  // snapPointsを計算
+  const snapPoints = useMemo(() => {
+    const minHeight = orientation === 'landscape' 
       ? isTablet
         ? 540 // タブレットの場合は540
         : safeHeight * 0.8 // スマホの場合は80%
@@ -141,21 +78,40 @@ const DetailBottomSheet: React.FC<Props> = ({
         ? 540 // タブレットの場合は540
         : isSmallScreen 
           ? safeHeight * 0.8 // 小さい画面(iPhoneSE2)の場合は80%
-          : safeHeight * 0.65, // それ以外は65%
-    // maxHeight: orientation === 'landscape' 
-    //   ? isTablet
-    //     ? safeHeight * 0.75  // iPadの場合は画面高さの55%
-    //     : Platform.OS === 'android'
-    //       ? safeHeight * 0.9   // AndroidでもiPhoneと同じ90%に
-    //       : safeHeight * 0.9 
-    //   : safeHeight * 0.8,
-    // Androidのlandscapeモードでは下部のマージンを削除
-    ...(Platform.OS === 'android' && orientation === 'landscape' && {
-      marginBottom: 0,
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-    }),
-  };
+          : safeHeight * 0.65; // それ以外は65%
+    
+    return [minHeight];
+  }, [orientation, isTablet, safeHeight, isSmallScreen]);
+
+  // isVisibleの変化に応じてBottomSheetを開閉
+  useEffect(() => {
+    if (isVisible && item) {
+      bottomSheetRef.current?.snapToIndex(0);
+    } else {
+      bottomSheetRef.current?.close();
+    }
+  }, [isVisible, item]);
+
+  // BottomSheetの状態変化を処理
+  const handleSheetChanges = useCallback((index: number) => {
+    if (index === -1) {
+      // BottomSheetが閉じられた
+      onClose();
+    }
+  }, [onClose]);
+
+  // バックドロップのレンダリング
+  const renderBackdrop = useCallback(
+    (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+        opacity={0.5}
+      />
+    ),
+    []
+  );
 
   const handlePlayPress = () => {
     if (item) {
@@ -185,47 +141,47 @@ const DetailBottomSheet: React.FC<Props> = ({
     return textObj ? getLocalizedText(textObj) : '';
   };
 
-  if (!internalVisible || !item) return null;
+  if (!item) return null;
+
+  const dynamicBottomSheetStyle = {
+    ...(isTablet ? { width: 420 } : { width: screenDimensions.width }),  // タブレットの場合のみwidthを420に設定
+    // Androidのlandscapeモードでは下部のマージンを削除
+    ...(Platform.OS === 'android' && orientation === 'landscape' && {
+      marginBottom: 0,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+    }),
+  };
 
   return (
-    <Modal
-      transparent
-      visible={internalVisible}
-      animationType="none"
-      onRequestClose={startCloseAnimation}
-      supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
-      // AndroidのstatusBarTranslucentを設定してfullscreenで表示
-      statusBarTranslucent={Platform.OS === 'android'}
+    <BottomSheet
+      ref={bottomSheetRef}
+      index={-1}
+      snapPoints={snapPoints}
+      onChange={handleSheetChanges}
+      enablePanDownToClose={true}
+      backdropComponent={renderBackdrop}
+      backgroundStyle={styles.bottomSheet}
+      handleIndicatorStyle={styles.handleIndicator}
+      style={dynamicBottomSheetStyle}
     >
-      <TouchableWithoutFeedback onPress={startCloseAnimation}>
-        <View style={[
-          styles.overlay,
-          // AndroidのlandscapeモードではpaddingBottomを削除
-          Platform.OS === 'android' && orientation === 'landscape' && {
-            paddingBottom: 0,
-          }
-        ]}>
-          <TouchableWithoutFeedback>
-            <Animated.View style={[dynamicBottomSheetStyle, animatedStyle]}>
-              {/* ハンドル */}
-              <View style={styles.handle} />
-              
-              {/* ブックマークボタン */}
-              <TouchableOpacity
-                style={styles.bookmarkButton}
-                onPress={onToggleBookmark}
-              >
-                <BookmarkIcon
-                  width={32}
-                  height={32}
-                  strokeColor={isBookmarked ? '#DC2626' : '#ffffff'}
-                  fillColor={isBookmarked ? '#DC2626' : '#aaa'}
-                  strokeWidth={1.5}
-                />
-              </TouchableOpacity>
+      <BottomSheetView style={styles.content}>
+        {/* ブックマークボタン */}
+        <TouchableOpacity
+          style={styles.bookmarkButton}
+          onPress={onToggleBookmark}
+        >
+          <BookmarkIcon
+            width={32}
+            height={32}
+            strokeColor={isBookmarked ? '#DC2626' : '#ffffff'}
+            fillColor={isBookmarked ? '#DC2626' : '#aaa'}
+            strokeWidth={1.5}
+          />
+        </TouchableOpacity>
 
-              {/* コンテンツ */}
-              <View style={styles.content}>
+        {/* コンテンツ */}
+        <View style={styles.contentInner}>
                 {/* プレビュー動画エリア */}
                 <View style={styles.imageContainer}>
                   {item.previewUrl ? (
@@ -302,21 +258,13 @@ const DetailBottomSheet: React.FC<Props> = ({
                   </View>
                   <Text style={styles.description}>{getLocalizedText(item.description)}</Text>
                 </View>
-              </View>
-            </Animated.View>
-          </TouchableWithoutFeedback>
         </View>
-      </TouchableWithoutFeedback>
-    </Modal>
+      </BottomSheetView>
+    </BottomSheet>
   );
 };
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end',
-  },
   bottomSheet: {
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
@@ -325,22 +273,20 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignSelf: 'center',
   },
-  handle: {
-    position: 'absolute',
-    top: 14,
-    left: '50%',
-    transform: [{ translateX: -30 }],
+  handleIndicator: {
     width: 60,
     height: 5,
     backgroundColor: '#000000',
     opacity: 0.5,
     borderRadius: 3,
-    alignSelf: 'center',
-    zIndex: 100,
   },
   content: {
     flex: 1,
     paddingBottom: 20,
+    position: 'relative',
+  },
+  contentInner: {
+    flex: 1,
   },
   contentLandscape: {
     flex: 1,
