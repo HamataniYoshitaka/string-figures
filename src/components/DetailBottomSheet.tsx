@@ -205,11 +205,17 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 </Text>
               </View>
             )}
-            
+            {/* 白のグラデーション */}
+            <LinearGradient
+              colors={['rgba(255,255,255,1.0)','rgba(255,255,255,0.4)', 'rgba(255,255,255,0.4)']}
+              style={styles.gradientOverlayTop}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+            />
             {/* 白のグラデーション */}
             <LinearGradient
               colors={['rgba(255,255,255,0.4)','rgba(255,255,255,0.4)', 'rgba(255,255,255,1.0)']}
-              style={styles.gradientOverlay}
+              style={styles.gradientOverlayBottom}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
             />
@@ -274,6 +280,8 @@ const styles = StyleSheet.create({
   scrollContentContainer: {
     position: 'relative',
     paddingBottom: 20,
+    marginTop: 0,
+    // zIndex: 100,
   },
   handleIndicator: {
     backgroundColor: '#000000',
@@ -299,12 +307,19 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#F5F5F5',
   },
-  gradientOverlay: {
+  gradientOverlayTop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 100,
+  },
+  gradientOverlayBottom: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    height: 240,
+    height: 140,
   },
   imageText: {
     color: '#9E9E9E',
@@ -395,7 +410,7 @@ const styles = StyleSheet.create({
     height: 48,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 101,
+    zIndex: 1001,
   },
 });
 
