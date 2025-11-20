@@ -70,6 +70,18 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   const snapPoints = getSnapPoints();
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
 
+  // タブレット時の動的スタイルを計算
+  const getTabletStyle = useCallback(() => {
+    if (!isTablet) return undefined;
+    const sheetWidth = 420;
+    const marginHorizontal = (screenDimensions.width - sheetWidth) / 2;
+    return {
+      width: sheetWidth,
+      alignSelf: 'center' as const,
+      marginHorizontal: Math.max(0, marginHorizontal), // 負の値にならないように
+    };
+  }, [isTablet, screenDimensions.width]);
+
   useImperativeHandle(ref, () => ({
     present: () => {
       bottomSheetModalRef.current?.present();
@@ -148,7 +160,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
       onChange={handleSheetChanges}
       backdropComponent={renderBackdrop}
       enablePanDownToClose
-      style={isTablet ? styles.tabletStyle : undefined}
+      style={getTabletStyle()}
       handleIndicatorStyle={styles.handleIndicator}
     >
       <BottomSheetView style={styles.contentContainer}>
@@ -256,10 +268,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     position: 'relative',
-  },
-  tabletStyle: {
-    width: 420,
-    alignSelf: 'center' as const,
   },
   handleIndicator: {
     backgroundColor: '#000000',
