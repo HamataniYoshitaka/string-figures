@@ -290,4 +290,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/59_paddler/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/59_paddler/preview.mp4'),
   },
+  '64_a-man-flexing-his-biceps': {
+    thumbnail: require('../../assets/string-figures/64_a-man-flexing-his-biceps/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/64_a-man-flexing-his-biceps/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/64_a-man-flexing-his-biceps/preview.mp4'),
+  },
 };

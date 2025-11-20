@@ -55,6 +55,7 @@ import { FIGURE_54_CARIBOU_IN_BUSH_VIDEOS } from './figure-54_caribou-in-bush';
 import { FIGURE_56_TEEPEE_VIDEOS } from './figure-56_teepee';
 import { FIGURE_57_THUNDER_VIDEOS } from './figure-57_thunder';
 import { FIGURE_59_PADDLER_VIDEOS } from './figure-59_paddler';
+import { FIGURE_64_A_MAN_FLEXING_HIS_BICEPS_VIDEOS } from './figure-64_a-man-flexing-his-biceps';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -113,5 +114,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '54_caribou-in-bush': FIGURE_54_CARIBOU_IN_BUSH_VIDEOS,
   '56_teepee': FIGURE_56_TEEPEE_VIDEOS,
   '57_thunder': FIGURE_57_THUNDER_VIDEOS,
-  '59_paddler': FIGURE_59_PADDLER_VIDEOS
+  '59_paddler': FIGURE_59_PADDLER_VIDEOS,
+  '64_a-man-flexing-his-biceps': FIGURE_64_A_MAN_FLEXING_HIS_BICEPS_VIDEOS
 };

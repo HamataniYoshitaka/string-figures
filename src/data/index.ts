@@ -537,4 +537,13 @@ export const stringFigures: StringFigure[] = [
     description: { ja: 'カヤックをこぐ人の説明文です。', en: 'Description for Paddler.' },
     premiumCourseId: 0, // 無料
   },
+  {
+    id: '64',
+    name: { ja: '上腕二頭筋を動かす男', en: 'Man Flexing His Biceps' },
+    difficulty: 'hard',
+    directory: '64_a-man-flexing-his-biceps',
+    ...ASSETS_MAP['64_a-man-flexing-his-biceps'],
+    description: { ja: '上腕二頭筋を動かす男の説明文です。', en: 'Description for Man Flexing His Biceps.' },
+    premiumCourseId: 0, // 無料
+  },
 ];
