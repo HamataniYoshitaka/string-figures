@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {
   BottomSheetModal,
-  BottomSheetView,
+  BottomSheetScrollView,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
 import { Video, ResizeMode } from 'expo-av';
@@ -163,7 +163,10 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
       style={getTabletStyle()}
       handleIndicatorStyle={styles.handleIndicator}
     >
-      <BottomSheetView style={styles.contentContainer}>
+      <BottomSheetScrollView 
+        style={styles.contentContainer}
+        contentContainerStyle={styles.scrollContentContainer}
+      >
         {/* ブックマークボタン */}
         <TouchableOpacity
           style={styles.bookmarkButton}
@@ -257,7 +260,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
             <Text style={styles.description}>{getLocalizedText(item.description)}</Text>
           </View>
         </View>
-      </BottomSheetView>
+      </BottomSheetScrollView>
     </BottomSheetModal>
   );
 });
@@ -267,15 +270,17 @@ DetailBottomSheet.displayName = 'DetailBottomSheet';
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
+  },
+  scrollContentContainer: {
     position: 'relative',
+    paddingBottom: 20,
   },
   handleIndicator: {
     backgroundColor: '#000000',
     opacity: 0.5,
   },
   content: {
-    flex: 1,
-    paddingBottom: 20,
+    // flex: 1 を削除（スクロール可能なコンテンツでは不要）
   },
   imageContainer: {
     position: 'relative',
@@ -347,7 +352,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   infoContainer: {
-    flex: 1,
     paddingHorizontal: 20,
     marginTop: 40,
   },
