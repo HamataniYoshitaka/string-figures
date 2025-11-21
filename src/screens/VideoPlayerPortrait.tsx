@@ -21,6 +21,7 @@ import ReplayButton from '../components/ReplayButton';
 import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from '../components/ReplayLandscapeButton';
 import NextChapterButton from '../components/NextChapterButton';
 import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from '../components/NextChapterLandscapeButton';
+import ChapterNavigationBar from '../components/ChapterNavigationBar';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
@@ -296,16 +297,6 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           />
         </View>
 
-        {/* 再生速度コントロール - タブレットかつランドスケープの場合のみ非表示 */}
-        {/* {!(isTablet && isDeviceLandscape) && (
-          <SpeedControlPortrait
-            playbackRate={playbackRate}
-            onSlowerSpeed={onSlowerSpeed}
-            onFasterSpeed={onFasterSpeed}
-            getPlaybackRateDisplay={getPlaybackRateDisplay}
-            getLocalizedText={getLocalizedText}
-          />
-        )} */}
       </View>
 
       {/* 字幕エリア - デバイスがランドスケープの場合は非表示 */}
@@ -317,79 +308,20 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         </View>
       )}
 
-      {/* コントロールボタンエリア */}
-      <View style={styles.controlsContainer}>
-        <View style={styles.mainControls}>
-          {/* まえボタン */}
-          {isDeviceLandscape ? (
-            <PreviousChapterLandscapeButton
-              ref={previousChapterButtonRef as React.RefObject<PreviousChapterLandscapeButtonRef>}
-              onPress={onPreviousChapter}
-              currentChapterIndex={currentChapterIndex}
-              getLocalizedText={getLocalizedText}
-            />
-          ) : (
-            <PreviousChapterButton
-              ref={previousChapterButtonRef}
-              onPress={onPreviousChapter}
-              currentChapterIndex={currentChapterIndex}
-              getLocalizedText={getLocalizedText}
-            />
-          )}
-
-          {/* もういちど */}
-          {isDeviceLandscape ? (
-            <ReplayLandscapeButton
-              ref={replayButtonRef as React.RefObject<ReplayLandscapeButtonRef>}
-              onPress={onReplay}
-              currentChapterIndex={currentChapterIndex}
-              playbackPosition={playbackPosition}
-              getLocalizedText={getLocalizedText}
-            />
-          ) : (
-            <ReplayButton
-              ref={replayButtonRef}
-              onPress={onReplay}
-              currentChapterIndex={currentChapterIndex}
-              playbackPosition={playbackPosition}
-              getLocalizedText={getLocalizedText}
-            />
-          )}
-
-          {/* つぎボタン */}
-          {isDeviceLandscape ? (
-            <NextChapterLandscapeButton
-              ref={nextChapterButtonRef as React.RefObject<NextChapterLandscapeButtonRef>}
-              chapters={chapters}
-              onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
-              stringFigure={stringFigure}
-              currentChapterIndex={currentChapterIndex}
-              isLastChapterCompleted={isLastChapterCompleted}
-              getLocalizedText={getLocalizedText}
-            />
-          ) : (
-            <NextChapterButton
-              ref={nextChapterButtonRef}
-              chapters={chapters}
-              onPress={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
-              currentChapterIndex={currentChapterIndex}
-              isLastChapterCompleted={isLastChapterCompleted}
-              getLocalizedText={getLocalizedText}
-            />
-          )}
-          {/* 再生速度コントロール - タブレットかつランドスケープの場合のみ表示 */}
-          {/* {(isTablet && isDeviceLandscape) && (
-            <SpeedControlLandscape
-              playbackRate={playbackRate}
-              PLAYBACK_RATES={PLAYBACK_RATES}
-              currentLanguage={currentLanguage}
-              onSlowerSpeed={onSlowerSpeed}
-              onFasterSpeed={onFasterSpeed}
-              getPlaybackRateDisplay={getPlaybackRateDisplay}
-            />
-          )} */}
-        </View>
-      </View>
+      {/* チャプターナビゲーションバー */}
+      <ChapterNavigationBar
+        chapters={chapters}
+        currentChapterIndex={currentChapterIndex}
+        onPreviousChapter={onPreviousChapter}
+        onReplay={onReplay}
+        onNextChapter={isLastChapterCompleted ? onRestartFromBeginning : handleMainButtonPress}
+        getLocalizedText={getLocalizedText}
+        previousChapterButtonRef={previousChapterButtonRef}
+        replayButtonRef={replayButtonRef}
+        nextChapterButtonRef={nextChapterButtonRef}
+        playbackPosition={playbackPosition}
+        isLastChapterCompleted={isLastChapterCompleted}
+      />
     </SafeAreaView>
   );
 };
