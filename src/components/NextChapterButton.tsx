@@ -153,7 +153,7 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
           <SpeedButtonTail
             fillColor="rgba(209, 200, 194, 0.5)"
             isBottom={false}
-            isRight={false}
+            isRight={true}
             isUp={true}
           />
         </Animated.View>
@@ -164,9 +164,9 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
 
 const styles = StyleSheet.create({
   controlButton: {
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
-    minWidth: 80,
+    minWidth: 60,
     paddingVertical: 12,
     gap: 10,
   },

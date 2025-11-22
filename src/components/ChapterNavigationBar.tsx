@@ -186,16 +186,13 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
     paddingBottom: 32,
   },
   navigationRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 0,
-    borderRadius: 16,
   },
   buttonContainer: {
     position: 'relative',

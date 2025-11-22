@@ -146,11 +146,11 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
 
 const styles = StyleSheet.create({
   controlButton: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
-    minWidth: 80,
-    paddingVertical: 12,
-    gap: 10,
+    minWidth: 60,
+    // paddingVertical: 12,
+    // gap: 10,
   },
   buttonContainer: {
     position: 'relative',
