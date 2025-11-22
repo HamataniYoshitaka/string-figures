@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
   controlButton: {
     alignItems: 'flex-start',
     justifyContent: 'center',
-    minWidth: 60,
+    minWidth: 48,
+    position: 'relative',
     // paddingVertical: 12,
     // gap: 10,
   },
@@ -180,7 +181,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
-    position: 'relative',
+    position: 'absolute',
+    left: 0,
+    bottom: -44,
   },
   balloonTopLeft: {
     borderTopLeftRadius: 0,

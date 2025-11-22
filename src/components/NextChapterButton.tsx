@@ -138,25 +138,27 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
             </Animated.View>
           )}
         </View>
-        <Animated.View style={[
-          styles.balloon,
-          styles.balloonTopLeft,
-          isDisabled && styles.balloonDisabled,
-          { backgroundColor: balloonBackgroundColor }
-        ]}>
-          <Text style={styles.controlButtonText}>
-            {isLastChapterCompleted
-              ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
-              : getLocalizedText({ ja: 'つぎ', en: 'Next' })
-            }
-          </Text>
-          <SpeedButtonTail
-            fillColor="rgba(209, 200, 194, 0.5)"
-            isBottom={false}
-            isRight={true}
-            isUp={true}
-          />
-        </Animated.View>
+        <View style={styles.balloonContainer}>
+          <Animated.View style={[
+            styles.balloon,
+            styles.balloonTopLeft,
+            isDisabled && styles.balloonDisabled,
+            { backgroundColor: balloonBackgroundColor }
+          ]}>
+            <Text style={styles.controlButtonText}>
+              {isLastChapterCompleted
+                ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
+                : getLocalizedText({ ja: 'つぎ', en: 'Next' })
+              }
+            </Text>
+            <SpeedButtonTail
+              fillColor="rgba(209, 200, 194, 0.5)"
+              isBottom={false}
+              isRight={true}
+              isUp={true}
+            />
+          </Animated.View>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -166,9 +168,10 @@ const styles = StyleSheet.create({
   controlButton: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-    minWidth: 60,
-    paddingVertical: 12,
-    gap: 10,
+    minWidth: 48,
+    position: 'relative',
+    // paddingVertical: 12,
+    // gap: 10,
   },
   buttonContainer: {
     position: 'relative',
@@ -194,11 +197,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  balloonContainer: {
+    position: 'absolute',
+    right: 0,
+    bottom: -44,
+    width: 100,
+    height: 32,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
   balloon: {
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
-    position: 'relative',
   },
   balloonTopLeft: {
     borderTopLeftRadius: 0,
@@ -208,6 +219,7 @@ const styles = StyleSheet.create({
     color: '#555',
     marginTop: 4,
     fontWeight: '500',
+    textAlign: 'right',
   },
   disabledButton: {
     opacity: 0.5,
