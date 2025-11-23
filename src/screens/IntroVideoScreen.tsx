@@ -6,7 +6,7 @@ import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseIcon } from '../components/icons';
+import { CloseIcon, SkipNextIcon } from '../components/icons';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import ProgressDots from '../components/ProgressDots';
 import NextChapterButton from '../components/NextChapterButton';
@@ -25,18 +25,22 @@ interface Props {
 
 const chapters = [
     {
+        title: { ja: 'このアプリの特徴', en: 'Features of this app' },
         subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に糸がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
         video: {ja: require('../../assets/string-figures/0_introduction/intro1.mp4'), en: require('../../assets/string-figures/0_introduction/intro1-en.mp4')}
     },
     {
-        subtitle: { ja: '音声認識とマイクの使用確認画面が出ますのでどちらも許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow both the voice recognition and microphone usage confirmation screens to appear.\n(No voice recording or collection is performed.)' },
+        title: { ja: '音声認識について', en: 'About voice recognition' },
+        subtitle: { ja: '音声認識とマイクの使用確認画面が出ますので、どちらも許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow both the voice recognition and microphone usage confirmation screens to appear.\n(No voice recording or collection is performed.)' },
         video: {ja: require('../../assets/string-figures/0_introduction/intro2.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-en.mp4')}
     },
     {
+        title: { ja: 'マイクの利用許可', en: 'Permission to use microphone' },
         subtitle: { ja: '', en: '' },
         video: require('../../assets/string-figures/0_introduction/intro2.mp4')
     },
     {
+        title: { ja: '', en: '' },
         subtitle: { ja: '', en: '' },
         video: require('../../assets/string-figures/0_introduction/intro2.mp4')
     },
@@ -44,18 +48,22 @@ const chapters = [
 
 const chapters_android = [
     {
+        title: { ja: 'このアプリの特徴', en: 'Features of this app' },
         subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に糸がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
         video: {ja: require('../../assets/string-figures/0_introduction/intro1.mp4'), en: require('../../assets/string-figures/0_introduction/intro1-en.mp4')}
     },
     {
+        title: { ja: '音声認識について', en: 'About voice recognition'  },
         subtitle: { ja: 'マイクの使用確認画面が出ますので許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow the microphone usage confirmation screen to appear.\n(No voice recording or collection is performed.)' },
         video: {ja: require('../../assets/string-figures/0_introduction/intro2-android.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-android-en.mp4')}
     },
     {
+        title: { ja: 'マイクの利用許可', en: 'Permission to use microphone' },
         subtitle: { ja: '', en: '' },
         video: require('../../assets/string-figures/0_introduction/intro2.mp4')
     },
     {
+        title: { ja: '', en: '' },
         subtitle: { ja: '', en: '' },
         video: require('../../assets/string-figures/0_introduction/intro2.mp4')
     },
@@ -251,23 +259,59 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             </View>
 
             {/* 字幕エリア */}
-
             <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>
-                    {getLocalizedText(isAndroid ? chapters_android[currentChapterIndex].subtitle : chapters[currentChapterIndex].subtitle)}
-                </Text>
+                {(() => {
+                    const currentChapter = isAndroid ? chapters_android[currentChapterIndex] : chapters[currentChapterIndex];
+                    const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
+                    const subtitle = getLocalizedText(currentChapter.subtitle);
+                    
+                    return (
+                        <>
+                            {title && (
+                                <View style={styles.titleContainer}>
+                                    <Text style={styles.stepNumber}>
+                                        Step. {currentChapterIndex + 1}
+                                    </Text>
+                                    <Text style={styles.stepTitle}>
+                                        {title}
+                                    </Text>
+                                </View>
+                            )}
+                            {subtitle && (
+                                <Text style={styles.subtitleText}>
+                                    {subtitle}
+                                </Text>
+                            )}
+                        </>
+                    );
+                })()}
             </View>
 
             {/* コントロールボタンエリア */}
             <View style={styles.controlsContainer}>
-                <NextChapterButton
-                    ref={nextChapterButtonRef}
-                    chapters={chapters}
-                    onPress={onNextChapter}
-                    currentChapterIndex={currentChapterIndex}
-                    isLastChapterCompleted={false}
-                    getLocalizedText={getLocalizedText}
-                />
+                <TouchableWithoutFeedback onPress={onNextChapter}>
+                    <View style={styles.nextStepButton}>
+                        <Text style={styles.nextStepLabel}>
+                            Next Step
+                        </Text>
+                        {(() => {
+                            const currentChapter = isAndroid ? chapters_android[currentChapterIndex+1] : chapters[currentChapterIndex+1];
+                            const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
+                            return title ? (
+                                <Text style={styles.nextStepTitle} numberOfLines={1}>
+                                    {title}
+                                </Text>
+                            ) : null;
+                        })()}
+                        <SkipNextIcon
+                            width={27}
+                            height={27}
+                            fillColor="#FFFFFF"
+                            strokeColor="#FFFFFF"
+                            strokeWidth={0}
+                        />
+                    </View>
+                </TouchableWithoutFeedback>
             </View>
             
         </SafeAreaView>
@@ -323,21 +367,74 @@ const styles = StyleSheet.create({
     },
     subtitleContainer: {
         flex: 1,
-        paddingHorizontal: 24,
-        paddingVertical: 6,
+        paddingHorizontal: 16,
+        paddingVertical: 24,
         justifyContent: 'center',
+    },
+    titleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+        paddingBottom: 12,
+    },
+    stepNumber: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 40,
+        color: '#292524',
+        lineHeight: 40,
+        marginRight: 12,
+    },
+    stepTitle: {
+        flex: 1,
+        fontSize: 18,
+        color: '#000',
+        fontWeight: '600',
+        lineHeight: 18,
     },
     subtitleText: {
         fontFamily: 'KleeOne-SemiBold',
         fontSize: 16,
-        color: '#222',
-        textAlign: 'center',
-        lineHeight: 24,
+        color: '#57534d',
+        lineHeight: 32,
         fontWeight: '600',
+        textAlign: 'left',
     },
     controlsContainer: {
-        paddingHorizontal: 24,
+        paddingHorizontal: 16,
         paddingBottom: 32,
+    },
+    nextStepButton: {
+        backgroundColor: '#57534d',
+        borderRadius: 12,
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        // gap: 8,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.35,
+        shadowRadius: 3,
+        elevation: 3,
+    },
+    nextStepLabel: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 24,
+        color: '#FFFFFF',
+        lineHeight: 32,
+    },
+    nextStepTitle: {
+        flex: 1,
+        fontFamily: Platform.OS === 'ios' ? 'Hiragino Kaku Gothic ProN' : 'Roboto',
+        fontSize: 15,
+        color: '#FFFFFF',
+        lineHeight: 15,
+        textAlign: 'center',
+        fontWeight: '600',
     },
 
 });

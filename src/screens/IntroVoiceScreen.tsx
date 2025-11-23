@@ -25,18 +25,22 @@ interface Props {
 
 const chapters = [
     {
+        title: { ja: '', en: '' },
         subtitle: { ja: '', en: '' },
         video: require('../../assets/string-figures/0_introduction/intro2.mp4')
     },
     {
+        title: { ja: '', en: '' },
         subtitle: { ja: '', en: '' },
         video: require('../../assets/string-figures/0_introduction/intro2.mp4')
     },
     {
+        title: { ja: '音声テスト', en: 'Voice test' },
         subtitle: { ja: '「つぎ」と話しかけて下さい', en: 'Please say "next"' },
         video: {ja: require('../../assets/string-figures/0_introduction/intro3.mp4'), en: require('../../assets/string-figures/0_introduction/intro3-en.mp4')}
     },
     {
+        title: { ja: '', en: '' },
         subtitle: { ja: 'このアプリを使う準備が完了しました!\n世界中に伝承されている\n「あやとり」をお楽しみ下さい!', en: 'The preparation for using this app is complete!\nEnjoy the "String figures" that have been passed down through generations around the world!' },
         video: require('../../assets/string-figures/0_introduction/intro3.mp4')
     }
@@ -264,9 +268,31 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
             {/* 字幕エリア */}
             <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                </Text>
+                {(() => {
+                    const currentChapter = chapters[currentChapterIndex];
+                    const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
+                    const subtitle = getLocalizedText(currentChapter.subtitle);
+                    
+                    return (
+                        <>
+                            {title && (
+                                <View style={styles.titleContainer}>
+                                    <Text style={styles.stepNumber}>
+                                        Step. {currentChapterIndex + 1}
+                                    </Text>
+                                    <Text style={styles.stepTitle}>
+                                        {title}
+                                    </Text>
+                                </View>
+                            )}
+                            {subtitle && (
+                                <Text style={styles.subtitleText}>
+                                    {subtitle}
+                                </Text>
+                            )}
+                        </>
+                    );
+                })()}
             </View>
 
             <View style={styles.voiceFallbackCard}>
@@ -340,17 +366,37 @@ const styles = StyleSheet.create({
     },
     subtitleContainer: {
         flex: 1,
-        paddingHorizontal: 24,
-        paddingVertical: 6,
+        paddingHorizontal: 16,
+        paddingVertical: 24,
         justifyContent: 'center',
+    },
+    titleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+        paddingBottom: 12,
+    },
+    stepNumber: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 40,
+        color: '#292524',
+        lineHeight: 40,
+        marginRight: 12,
+    },
+    stepTitle: {
+        flex: 1,
+        fontSize: 18,
+        color: '#000',
+        fontWeight: '600',
+        lineHeight: 18,
     },
     subtitleText: {
         fontFamily: 'KleeOne-SemiBold',
-        fontSize: 22,
-        color: '#222',
-        textAlign: 'center',
-        lineHeight: 24,
+        fontSize: 24,
+        color: '#57534d',
+        lineHeight: 32,
         fontWeight: '600',
+        textAlign: 'center',
     },
     controlsContainer: {
         paddingHorizontal: 24,
