@@ -20,6 +20,7 @@ interface ChapterNavigationVerticalBarProps {
   previousChapterButtonRef: React.RefObject<PreviousChapterLandscapeButtonRef | null>;
   replayButtonRef: React.RefObject<ReplayLandscapeButtonRef | null>;
   nextChapterButtonRef: React.RefObject<NextChapterLandscapeButtonRef | null>;
+  getChapterProgress: (chapterIndex: number) => number;
 }
 
 export interface ChapterNavigationVerticalBarRef {
@@ -40,6 +41,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
   previousChapterButtonRef,
   replayButtonRef,
   nextChapterButtonRef,
+  getChapterProgress,
 }, ref) => {
   
   useImperativeHandle(ref, () => ({}));
@@ -122,6 +124,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
           currentChapterIndex={currentChapterIndex}
           playbackPosition={playbackPosition}
           getLocalizedText={getLocalizedText}
+          getChapterProgress={getChapterProgress}
         />
       </View>
 

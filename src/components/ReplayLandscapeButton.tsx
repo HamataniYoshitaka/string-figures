@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
+import { Svg, Circle } from 'react-native-svg';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 
 interface ReplayLandscapeButtonProps {
@@ -7,6 +8,7 @@ interface ReplayLandscapeButtonProps {
   currentChapterIndex: number;
   playbackPosition: number;
   getLocalizedText: (text: { ja: string; en: string }) => string;
+  getChapterProgress: (chapterIndex: number) => number;
 }
 
 export interface ReplayLandscapeButtonRef {
@@ -18,6 +20,7 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
   currentChapterIndex,
   playbackPosition,
   getLocalizedText,
+  getChapterProgress,
 }, ref) => {
   const isDisabled = currentChapterIndex === 0 && playbackPosition === 0;
   const [scaleAnim] = useState(new Animated.Value(1));
@@ -31,6 +34,10 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
   const [displayChapterIndex, setDisplayChapterIndex] = useState(currentChapterIndex);
   const previousChapterIndexRef = useRef(currentChapterIndex);
   const isInitialMount = useRef(true);
+
+  // 円形プログレスアニメーション用
+  const animatedProgress = useRef(new Animated.Value(0)).current;
+  const [progressValue, setProgressValue] = useState(0);
 
   // チャプター番号のアニメーション（Y方向）
   useEffect(() => {
@@ -89,6 +96,26 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
     }
     previousChapterIndexRef.current = currentChapterIndex;
   }, [currentChapterIndex]);
+
+  // プログレスのアニメーション
+  useEffect(() => {
+    const progress = getChapterProgress(currentChapterIndex) * 1.1;
+    Animated.timing(animatedProgress, {
+      toValue: progress > 1 ? 1 : progress,
+      duration: 900,
+      useNativeDriver: false,
+    }).start();
+  }, [currentChapterIndex, playbackPosition, getChapterProgress]);
+
+  // プログレス値の監視
+  useEffect(() => {
+    const listenerId = animatedProgress.addListener(({ value }) => {
+      setProgressValue(value);
+    });
+    return () => {
+      animatedProgress.removeListener(listenerId);
+    };
+  }, []);
 
   const handlePressIn = () => {
     if (!isDisabled) {
@@ -180,6 +207,33 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
             isDisabled && styles.disabledButton,
             { transform: [{ scale: scaleAnim }] }
           ]}>
+            {/* 円形プログレスインジケーター */}
+            <View style={styles.progressContainer}>
+              <Svg width={48} height={48} style={styles.progressSvg}>
+                {/* 背景円 */}
+                <Circle
+                  cx={24}
+                  cy={24}
+                  r={23}
+                  stroke="#a8a29e"
+                  strokeWidth={2}
+                  fill="none"
+                />
+                {/* プログレス円 */}
+                <Circle
+                  cx={24}
+                  cy={24}
+                  r={23}
+                  stroke="#44403c"
+                  strokeWidth={2}
+                  fill="none"
+                  strokeDasharray={23 * 2 * Math.PI}
+                  strokeDashoffset={23 * 2 * Math.PI * (1 - progressValue)}
+                  strokeLinecap="round"
+                  transform="rotate(-90 24 24)"
+                />
+              </Svg>
+            </View>
             <Animated.View
               style={[
                 styles.chapterNumberContainer,
@@ -240,10 +294,19 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 24,
     backgroundColor: '#F7F5F2',
-    borderWidth: 2,
-    borderColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+  },
+  progressContainer: {
+    position: 'absolute',
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  progressSvg: {
+    position: 'absolute',
   },
   chapterNumberContainer: {
     alignItems: 'center',

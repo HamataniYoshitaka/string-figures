@@ -39,6 +39,7 @@ interface VideoControlPanelProps {
   onFasterSpeed: () => void;
   onLandscapeToggle: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
+  getChapterProgress: (chapterIndex: number) => number;
 }
 
 const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
@@ -64,6 +65,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onFasterSpeed,
   onLandscapeToggle,
   getPlaybackRateDisplay,
+  getChapterProgress,
 }) => {
 
   // 多言語対応のヘルパー関数
@@ -158,6 +160,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
           previousChapterButtonRef={previousChapterButtonRef}
           replayButtonRef={replayButtonRef}
           nextChapterButtonRef={nextChapterButtonRef}
+          getChapterProgress={getChapterProgress}
         />
       </View>
 

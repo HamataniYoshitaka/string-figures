@@ -99,9 +99,9 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
 
   // プログレスのアニメーション
   useEffect(() => {
-    const progress = getChapterProgress(currentChapterIndex);
+    const progress = getChapterProgress(currentChapterIndex) * 1.1;
     Animated.timing(animatedProgress, {
-      toValue: progress,
+      toValue: progress > 1 ? 1 : progress,
       duration: 600,
       useNativeDriver: false,
     }).start();
@@ -215,21 +215,21 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
                 <Circle
                   cx={24}
                   cy={24}
-                  r={20}
+                  r={23}
                   stroke="#a8a29e"
-                  strokeWidth={4}
+                  strokeWidth={2}
                   fill="none"
                 />
                 {/* プログレス円 */}
                 <Circle
                   cx={24}
                   cy={24}
-                  r={20}
+                  r={23}
                   stroke="#44403c"
-                  strokeWidth={4}
+                  strokeWidth={2}
                   fill="none"
-                  strokeDasharray={125.6}
-                  strokeDashoffset={125.6 * (1 - progressValue)}
+                  strokeDasharray={23 * 2 * Math.PI}
+                  strokeDashoffset={23 * 2 * Math.PI * (1 - progressValue)}
                   strokeLinecap="round"
                   transform="rotate(-90 24 24)"
                 />
