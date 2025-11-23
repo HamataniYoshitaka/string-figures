@@ -125,24 +125,26 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
             />
           </Animated.View>
         </View>
-        <Animated.View style={[
-          styles.balloon,
-          styles.balloonTopLeft,
-          isDisabled && styles.balloonDisabled,
-          !isDisabled && { backgroundColor: balloonColor }
-        ]}>
-          <Text style={[
-            styles.controlButtonText
+        <View style={styles.balloonContainer}>
+          <Animated.View style={[
+            styles.balloon,
+            styles.balloonTopLeft,
+            isDisabled && styles.balloonDisabled,
+            !isDisabled && { backgroundColor: balloonColor }
           ]}>
-            {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
-          </Text>
-          <SpeedButtonTail
-            fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
-            isBottom={false}
-            isRight={false}
-            isUp={true}
-          />
-        </Animated.View>
+            <Text style={[
+              styles.controlButtonText
+            ]}>
+              {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
+            </Text>
+            <SpeedButtonTail
+              fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
+              isBottom={false}
+              isRight={false}
+              isUp={true}
+            />
+          </Animated.View>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -152,9 +154,8 @@ const styles = StyleSheet.create({
   controlButton: {
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: 80,
-    paddingVertical: 12,
-    gap: 10,
+    minWidth: 48,
+    position: 'relative',
   },
   buttonContainer: {
     position: 'relative',
@@ -179,6 +180,15 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  balloonContainer: {
+    position: 'absolute',
+    left: -50,
+    bottom: -44,
+    width: 148,
+    height: 32,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
   balloon: {
     paddingHorizontal: 10,

@@ -187,7 +187,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
-    paddingBottom: 32,
+    paddingBottom: 52,
   },
   navigationRow: {
     flexDirection: 'row',
