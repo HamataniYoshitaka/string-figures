@@ -21,6 +21,7 @@ interface ChapterNavigationBarProps {
   // 追加のprops
   playbackPosition: number;
   isLastChapterCompleted: boolean;
+  getChapterProgress: (chapterIndex: number) => number;
 }
 
 export interface ChapterNavigationBarRef {
@@ -39,6 +40,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
   nextChapterButtonRef,
   playbackPosition,
   isLastChapterCompleted,
+  getChapterProgress,
 }, ref) => {
 
   // デバイス情報を取得
@@ -143,6 +145,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
             currentChapterIndex={currentChapterIndex}
             playbackPosition={playbackPosition}
             getLocalizedText={getLocalizedText}
+            getChapterProgress={getChapterProgress}
           />
         </View>
 

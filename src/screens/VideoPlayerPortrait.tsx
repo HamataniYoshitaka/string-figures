@@ -278,6 +278,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         nextChapterButtonRef={nextChapterButtonRef}
         playbackPosition={playbackPosition}
         isLastChapterCompleted={isLastChapterCompleted}
+        getChapterProgress={getChapterProgress}
       />
     </SafeAreaView>
   );
