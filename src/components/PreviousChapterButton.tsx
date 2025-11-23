@@ -123,22 +123,24 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
             />
           </Animated.View>
         </View>
-        <Animated.View style={[
-          styles.balloon,
-          styles.balloonTopLeft,
-          isDisabled && styles.balloonDisabled,
-          !isDisabled && { backgroundColor: balloonColor }
-        ]}>
-          <Text style={[styles.controlButtonText]}>
-            {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
-          </Text>
-          <SpeedButtonTail
-            fillColor="rgba(209, 200, 194, 0.5)"
-            isBottom={false}
-            isRight={false}
-            isUp={true}
-          />
-        </Animated.View>
+        <View style={styles.balloonContainer}>
+          <Animated.View style={[
+            styles.balloon,
+            styles.balloonTopLeft,
+            isDisabled && styles.balloonDisabled,
+            !isDisabled && { backgroundColor: balloonColor }
+          ]}>
+            <Text style={[styles.controlButtonText]}>
+              {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
+            </Text>
+            <SpeedButtonTail
+              fillColor="rgba(209, 200, 194, 0.5)"
+              isBottom={false}
+              isRight={false}
+              isUp={true}
+            />
+          </Animated.View>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -177,13 +179,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  balloonContainer: {
+    position: 'absolute',
+    left: 0,
+    bottom: -44,
+    width: 100,
+    height: 32,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
   balloon: {
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
-    position: 'absolute',
-    left: 0,
-    bottom: -44,
   },
   balloonTopLeft: {
     borderTopLeftRadius: 0,
