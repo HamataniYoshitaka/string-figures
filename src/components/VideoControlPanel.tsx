@@ -181,8 +181,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 24,
-    marginLeft: 8,
-    marginBottom: 4,
+    marginLeft: 0,
+    marginBottom: 8,
   },
   backButton: {
     padding: 8,

@@ -4,6 +4,7 @@ import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } fro
 import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
 import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
 import { Chapter, StringFigure } from '../types';
+import { DotsVerticalIcon } from './icons';
 
 interface ChapterNavigationVerticalBarProps {
   chapters: Chapter[];
@@ -105,7 +106,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
     if (isEllipsis) {
       return (
         <View style={styles.chapterContainer}>
-          <Text style={styles.ellipsisText}>...</Text>
+          <DotsVerticalIcon width={14} height={14} strokeColor="none" fillColor="#57534D" />
         </View>
       );
     }
@@ -114,7 +115,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
     
     return (
       <View style={styles.chapterContainer}>
-        <Text style={[styles.chapterText, isPrevious ? styles.previousChapterText : styles.nextChapterText]}>
+        <Text style={styles.chapterText}>
           {chapterNumber}
         </Text>
       </View>
@@ -157,7 +158,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
 
       {/* 後の章番号（最大3つ、最後が3点リーダーに置き換わる場合あり） */}
       {nextChapters.map((chapterIndex, index) => (
-        <View key={`next-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={styles.chapterNumberWrapper}>
+        <View key={`next-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={[styles.chapterNumberWrapper, {opacity: 0.5}]}>
           {renderChapterNumber(
             chapterIndex, 
             false,
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
   },
   chapterNumberWrapper: {
     width: 48,
-    // height: 48,
+    height: 14,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -211,12 +212,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'center',
     fontFamily: 'Roboto-Medium',
-  },
-  previousChapterText: {
-    color: '#57534D', // 前の章番号の色（ダークグレー）
-  },
-  nextChapterText: {
-    color: '#A6A09B', // 後の章番号の色（ライトグレー）
+    color: '#57534D'
   },
   emptyChapterContainer: {
     width: 48,
