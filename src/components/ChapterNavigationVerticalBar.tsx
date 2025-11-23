@@ -43,61 +43,69 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
   
   useImperativeHandle(ref, () => ({}));
 
-  // 表示する章番号を計算
+  // 表示する章番号を計算（ChapterNavigationBar.tsxのロジックを参考）
   const getPreviousChapters = () => {
     const result = [];
     
-    // 現在の章より前の章を最大2つ取得
-    if (currentChapterIndex >= 2) {
-      // 2つ以上前の章がある場合
+    if (currentChapterIndex <= 2) {
+      // 最初の方の章の場合：空白で埋めて、現在章より前を表示
+      for (let i = 0; i < currentChapterIndex; i++) {
+        result.push(i);
+      }
+      // 3つに満たない場合は null で埋める（空白表示用）
+      while (result.length < 3) {
+        result.unshift(null);
+      }
+    } else {
+      // 中間以降の章の場合：現在章の直前3つを表示
+      result.push(currentChapterIndex - 3);
       result.push(currentChapterIndex - 2);
       result.push(currentChapterIndex - 1);
-    } else if (currentChapterIndex === 1) {
-      // 1つ前の章のみ
-      result.push(null);
-      result.push(currentChapterIndex - 1);
-    } else {
-      // 前の章がない
-      result.push(null);
-      result.push(null);
     }
     
-    return result;
+    return result.slice(-3); // 最後の3つを取得
   };
 
   const getNextChapters = () => {
     const result = [];
     
-    // 現在の章より後の章を最大2つ取得
-    if (currentChapterIndex <= chapters.length - 3) {
-      // 2つ以上後の章がある場合
+    if (currentChapterIndex >= chapters.length - 4) {
+      // 最後の方の章の場合：現在章より後をすべて表示
+      for (let i = currentChapterIndex + 1; i < chapters.length; i++) {
+        result.push(i);
+      }
+      // 3つに満たない場合は null で埋める（空白表示用）
+      while (result.length < 3) {
+        result.push(null);
+      }
+    } else {
+      // 中間の章の場合：現在章の直後3つを表示
       result.push(currentChapterIndex + 1);
       result.push(currentChapterIndex + 2);
-    } else if (currentChapterIndex === chapters.length - 2) {
-      // 1つ後の章のみ
-      result.push(currentChapterIndex + 1);
-      result.push(null);
-    } else {
-      // 後の章がない
-      result.push(null);
-      result.push(null);
+      result.push(currentChapterIndex + 3);
     }
     
-    return result;
+    return result.slice(0, 3); // 最初の3つを取得
   };
 
   const previousChapters = getPreviousChapters();
   const nextChapters = getNextChapters();
-  
-  // 3点リーダーを表示するかどうか（前の章が3つ以上ある場合）
-  const showEllipsisBefore = currentChapterIndex >= 3;
 
-  const renderChapterNumber = (chapterIndex: number | null, isPrevious: boolean) => {
+  const renderChapterNumber = (chapterIndex: number | null, isPrevious: boolean, isEllipsis: boolean = false) => {
     // chapterIndexがnullの場合は空白を表示
     if (chapterIndex === null) {
       return (
         <View style={styles.emptyChapterContainer}>
           {/* 空白 */}
+        </View>
+      );
+    }
+    
+    // 3点リーダーの場合
+    if (isEllipsis) {
+      return (
+        <View style={styles.chapterContainer}>
+          <Text style={styles.ellipsisText}>...</Text>
         </View>
       );
     }
@@ -109,14 +117,6 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
         <Text style={[styles.chapterText, isPrevious ? styles.previousChapterText : styles.nextChapterText]}>
           {chapterNumber}
         </Text>
-      </View>
-    );
-  };
-
-  const renderEllipsis = () => {
-    return (
-      <View style={styles.ellipsisContainer}>
-        <Text style={styles.ellipsisText}>...</Text>
       </View>
     );
   };
@@ -133,17 +133,14 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
         />
       </View>
 
-      {/* 3点リーダー（必要に応じて） */}
-      {showEllipsisBefore && (
-        <View style={styles.ellipsisWrapper}>
-          {renderEllipsis()}
-        </View>
-      )}
-
-      {/* 前の章番号（最大2つ） */}
+      {/* 前の章番号（最大3つ、先頭が3点リーダーに置き換わる場合あり） */}
       {previousChapters.map((chapterIndex, index) => (
         <View key={`prev-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={styles.chapterNumberWrapper}>
-          {renderChapterNumber(chapterIndex, true)}
+          {renderChapterNumber(
+            chapterIndex, 
+            true,
+            index === 0 && chapterIndex !== null && currentChapterIndex > 3
+          )}
         </View>
       ))}
 
@@ -158,10 +155,14 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
         />
       </View>
 
-      {/* 後の章番号（最大2つ） */}
+      {/* 後の章番号（最大3つ、最後が3点リーダーに置き換わる場合あり） */}
       {nextChapters.map((chapterIndex, index) => (
         <View key={`next-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={styles.chapterNumberWrapper}>
-          {renderChapterNumber(chapterIndex, false)}
+          {renderChapterNumber(
+            chapterIndex, 
+            false,
+            index === 2 && chapterIndex !== null && currentChapterIndex < chapters.length - 4
+          )}
         </View>
       ))}
 
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
     // height: 48,
   },
   chapterText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '500',
     textAlign: 'center',
     fontFamily: 'Roboto-Medium',
@@ -223,18 +224,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  ellipsisWrapper: {
-    width: 48,
-    // height: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ellipsisContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   ellipsisText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#57534D',
     textAlign: 'center',
   },
