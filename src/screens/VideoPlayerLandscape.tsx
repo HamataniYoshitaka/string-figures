@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Animated,
   Platform,
+  Dimensions,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 
@@ -30,9 +31,11 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   ...restProps
 }) => {
   
-  // デバッグ用ログ
-  console.log('VideoPlayerLandscape - stringFigure:', stringFigure);
+  const { width: screenWidth } = Dimensions.get('window');
 
+  // 画面サイズ判定
+  const isSmallScreen = screenWidth <= 667; // iPhoneSE2の高さは667px
+  
   const backButtonScale = useRef(new Animated.Value(1)).current;
 
   const createPressInHandler = (scale: Animated.Value) => () => {
@@ -111,7 +114,13 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
       </TouchableOpacity>
 
       {/* 動画エリア */}
-      <View style={styles.videoArea}>
+      <View style={[
+        styles.videoArea,
+        isSmallScreen && {
+          paddingTop: 40,
+          paddingBottom: 40,
+        },
+      ]}>
         <View style={[styles.videoPlayer]}>
           <Video
             key={`chapter-${currentChapterIndex}`}
