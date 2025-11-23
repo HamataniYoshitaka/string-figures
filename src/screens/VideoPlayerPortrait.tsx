@@ -122,93 +122,72 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* ヘッダー - タブレット（短辺600以上）でランドスケープの場合は非表示 */}
-      {!(isTablet && isDeviceLandscape) && (
-        <View style={styles.header}>
+      <View style={styles.header}>
+        <TouchableWithoutFeedback 
+          onPress={onGoBack}
+          onPressIn={createPressInHandler(backButtonScale)}
+          onPressOut={createPressOutHandler(backButtonScale)}
+        >
+          <Animated.View 
+            style={[
+              styles.backButton,
+              { transform: [{ scale: backButtonScale }] }
+            ]}
+          >
+            <CloseIcon width={24} height={24} fillColor="#79716B" />
+          </Animated.View>
+        </TouchableWithoutFeedback>
+        <Text style={[
+          styles.title, 
+          { 
+            fontSize: isTablet ? 22 : 18,
+            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+          }
+        ]} numberOfLines={1}>
+          {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
+        </Text>
+        <TouchableWithoutFeedback 
+          onPress={onToggleBookmark}
+          onPressIn={createPressInHandler(bookmarkButtonScale)}
+          onPressOut={createPressOutHandler(bookmarkButtonScale)}
+        >
+          <Animated.View 
+            style={[
+              styles.bookmarkButton,
+              { transform: [{ scale: bookmarkButtonScale }] }
+            ]}
+          >
+            <BookmarkIcon 
+              width={24} 
+              height={24} 
+              strokeColor="#ffffff"
+              fillColor={bookmarked ? "#FB2C36" : "#aaa"}
+              strokeWidth={1.5}
+            />
+          </Animated.View>
+        </TouchableWithoutFeedback>
+        {!isTablet && (
           <TouchableWithoutFeedback 
-            onPress={onGoBack}
-            onPressIn={createPressInHandler(backButtonScale)}
-            onPressOut={createPressOutHandler(backButtonScale)}
+            onPress={onLandscapeToggle}
+            onPressIn={createPressInHandler(shareButtonScale)}
+            onPressOut={createPressOutHandler(shareButtonScale)}
           >
             <Animated.View 
               style={[
-                styles.backButton,
-                { transform: [{ scale: backButtonScale }] }
+                styles.shareButton,
+                { transform: [{ scale: shareButtonScale }] }
               ]}
             >
-              <CloseIcon width={24} height={24} fillColor="#79716B" />
-            </Animated.View>
-          </TouchableWithoutFeedback>
-          <Text style={[
-            styles.title, 
-            { 
-              fontSize: isTablet ? 22 : 18,
-              fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
-            }
-          ]} numberOfLines={1}>
-            {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
-          </Text>
-          <TouchableWithoutFeedback 
-            onPress={onToggleBookmark}
-            onPressIn={createPressInHandler(bookmarkButtonScale)}
-            onPressOut={createPressOutHandler(bookmarkButtonScale)}
-          >
-            <Animated.View 
-              style={[
-                styles.bookmarkButton,
-                { transform: [{ scale: bookmarkButtonScale }] }
-              ]}
-            >
-              <BookmarkIcon 
+              <LandScapeIcon 
                 width={24} 
                 height={24} 
-                strokeColor="#ffffff"
-                fillColor={bookmarked ? "#FB2C36" : "#aaa"}
-                strokeWidth={1.5}
+                fillColor={isLandscapeMode ? "#1862cfff" : "#79716B"}
               />
             </Animated.View>
           </TouchableWithoutFeedback>
-          {!isTablet && (
-            <TouchableWithoutFeedback 
-              onPress={onLandscapeToggle}
-              onPressIn={createPressInHandler(shareButtonScale)}
-              onPressOut={createPressOutHandler(shareButtonScale)}
-            >
-              <Animated.View 
-                style={[
-                  styles.shareButton,
-                  { transform: [{ scale: shareButtonScale }] }
-                ]}
-              >
-                <LandScapeIcon 
-                  width={24} 
-                  height={24} 
-                  fillColor={isLandscapeMode ? "#1862cfff" : "#79716B"}
-                />
-              </Animated.View>
-            </TouchableWithoutFeedback>
-          )}
-        </View>
-      )}
-      {/* タブレットかつランドスケープの場合のみ表示 閉じるボタン */}
-      {(isTablet && isDeviceLandscape) && (
-        <View style={styles.tabletLandscapeCloseButtonContainer}>
-          <TouchableWithoutFeedback 
-            onPress={onGoBack}
-            onPressIn={createPressInHandler(backButtonScale)}
-            onPressOut={createPressOutHandler(backButtonScale)}
-          >
-            <Animated.View 
-              style={[
-                styles.tabletLandscapeCloseButton,
-                { transform: [{ scale: backButtonScale }] }
-              ]}
-            >
-              <CloseIcon width={32} height={32} fillColor="#ffffff" strokeColor="none" />
-            </Animated.View>
-          </TouchableWithoutFeedback>
-        </View>
-      )}
+        )}
+      </View>
+      
       {/* 動画エリア */}
       <View style={[
         styles.videoArea,
@@ -218,7 +197,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         <View style={[
           styles.videoPlayer,
           !isTablet && { borderRadius: 0 },
-          (isTablet && isDeviceLandscape) && { height: Dimensions.get('window').height * 0.73 }
+          (isTablet && isDeviceLandscape) && { height: Dimensions.get('window').height * 0.63 }
         ]}>
           <Video
             key={`chapter-${currentChapterIndex}`}
@@ -365,9 +344,11 @@ const styles = StyleSheet.create({
   },
   videoAreaTabletLandscape: {
     paddingTop: 0,
+    flex: 1,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   videoPlayer: {
     aspectRatio: 16 / 9,
