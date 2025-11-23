@@ -1,8 +1,9 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import PreviousChapterButton, { PreviousChapterButtonRef } from './PreviousChapterButton';
 import ReplayButton, { ReplayButtonRef } from './ReplayButton';
 import NextChapterButton, { NextChapterButtonRef } from './NextChapterButton';
+import AnimatedChapterNumber from './AnimatedChapterNumber';
 import { Chapter } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 
@@ -108,34 +109,6 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
   const leftChapters = getLeftChapters();
   const rightChapters = getRightChapters();
 
-  const renderChapterNumber = (chapterIndex: number | null, isActive: boolean, isEllipsis: boolean = false) => {
-    // chapterIndexがnullの場合は空白を表示
-    if (chapterIndex === null) {
-      return (
-        <View style={styles.emptyChapterContainer}>
-          {/* 空白 */}
-        </View>
-      );
-    }
-    
-    // 3点リーダーの場合
-    if (isEllipsis) {
-      return (
-        <View style={styles.chapterContainer}>
-          <Text style={styles.chapterText}>...</Text>
-        </View>
-      );
-    }
-    
-    const chapterNumber = chapterIndex + 1;
-    
-    return (
-      <View style={styles.chapterContainer}>
-        <Text style={styles.chapterText}>{chapterNumber}</Text>
-      </View>
-    );
-  };
-
 
   return (
     <View style={styles.container}>
@@ -153,12 +126,11 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
         {/* 左側の数字 */}
         <View style={styles.chaptersContainer}>
           {leftChapters.map((chapterIndex, index) => (
-            <View key={`left-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={styles.chapterNumberWrapper}>
-              {renderChapterNumber(
-                chapterIndex, 
-                chapterIndex === currentChapterIndex,
-                index === 0 && chapterIndex !== null && currentChapterIndex > chaptersCount
-              )}
+            <View key={`left-${index}`} style={styles.chapterNumberWrapper}>
+              <AnimatedChapterNumber
+                chapterIndex={chapterIndex}
+                isEllipsis={index === 0 && chapterIndex !== null && currentChapterIndex > chaptersCount}
+              />
             </View>
           ))}
         </View>
@@ -177,12 +149,12 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
         {/* 右側の数字 */}
         <View style={styles.chaptersContainer}>
           {rightChapters.map((chapterIndex, index) => (
-            <View key={`right-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={[styles.chapterNumberWrapper, {opacity: 0.4}]}>
-              {renderChapterNumber(
-                chapterIndex, 
-                chapterIndex === currentChapterIndex,
-                index === chaptersCount - 1 && chapterIndex !== null && currentChapterIndex < chapters.length - (chaptersCount + 1)
-              )}
+            <View key={`right-${index}`} style={styles.chapterNumberWrapper}>
+              <AnimatedChapterNumber
+                chapterIndex={chapterIndex}
+                isEllipsis={index === chaptersCount - 1 && chapterIndex !== null && currentChapterIndex < chapters.length - (chaptersCount + 1)}
+                defaultOpacity={0.4}
+              />
             </View>
           ))}
         </View>
@@ -227,23 +199,6 @@ const styles = StyleSheet.create({
   chapterNumberWrapper: {
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: 16,
-  },
-  chapterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 60,
-  },
-  chapterText: {
-    fontSize: 16,
-    fontWeight: '500',
-    textAlign: 'center',
-    fontFamily: 'Roboto-Medium',
-  },
-  emptyChapterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 60,
     minWidth: 16,
   },
 });
