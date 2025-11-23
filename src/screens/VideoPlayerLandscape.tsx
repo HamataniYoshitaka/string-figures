@@ -11,7 +11,6 @@ import {
 import { Video, ResizeMode } from 'expo-av';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
-import ProgressDots from '../components/ProgressDots';
 import VideoControlPanel from '../components/VideoControlPanel';
 import { BookmarkIcon, CloseIcon } from '../components/icons';
 import { CHAPTER_VIDEOS } from '../data/chapterVideos';
@@ -153,15 +152,6 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
             </View>
           </View>
         </View>
-
-        {/* 進捗バー */}
-        <View style={styles.progressContainer}>
-        <ProgressDots 
-          chapters={chapters}
-            currentChapterIndex={currentChapterIndex}
-            getChapterProgress={getChapterProgress}
-          />
-        </View>
       </View>
 
       {/* コントロールエリア */}
@@ -251,9 +241,9 @@ const styles = StyleSheet.create({
   videoArea: {
     flex: 1,
     alignItems: 'flex-end',
-    paddingTop: 12,
-    paddingBottom: 12,
-    paddingRight: 12,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingRight: 20,
   },
   videoPlayer: {
     flex: 1,

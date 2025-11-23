@@ -12,20 +12,11 @@ import {
 import { Video, ResizeMode } from 'expo-av';
 import { CloseIcon, BookmarkIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
-// 速度コントロール(未使用)
-// import SpeedControlPortrait from '../components/SpeedControlPortrait';
-// import SpeedControlLandscape from '../components/SpeedControlLandscape';
-import PreviousChapterButton from '../components/PreviousChapterButton';
-import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from '../components/PreviousChapterLandscapeButton';
-import ReplayButton from '../components/ReplayButton';
-import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from '../components/ReplayLandscapeButton';
-import NextChapterButton from '../components/NextChapterButton';
-import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from '../components/NextChapterLandscapeButton';
 import ChapterNavigationBar from '../components/ChapterNavigationBar';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
-import ProgressDots from '../components/ProgressDots';
+// import ProgressDots from '../components/ProgressDots';
 import { CHAPTER_VIDEOS } from '../data/chapterVideos';
 
 const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
@@ -284,19 +275,6 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             </View>
           )}
         </View>
-
-        {/* 進捗バー */}
-        <View style={[
-          styles.progressContainer,
-          isDeviceLandscape && styles.progressContainerLandscape
-        ]}>
-          <ProgressDots 
-            chapters={chapters}
-            currentChapterIndex={currentChapterIndex}
-            getChapterProgress={getChapterProgress}
-          />
-        </View>
-
       </View>
 
       {/* 字幕エリア - デバイスがランドスケープの場合は非表示 */}
