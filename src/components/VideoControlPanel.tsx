@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,6 +12,7 @@ import LandScapeIcon from './icons/LandScape';
 import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
 import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
 import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
+import ChapterNavigationVerticalBar from './ChapterNavigationVerticalBar';
 // import SpeedControlLandscape from './SpeedControlLandscape';
 import { Chapter, StringFigure } from '../types';
 
@@ -143,41 +144,23 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
 
       {/* コントロールボタン */}
       <View style={styles.controlsContainer}>
-        <NextChapterLandscapeButton
-          ref={nextChapterButtonRef}
+        <ChapterNavigationVerticalBar
           chapters={chapters}
-          onPress={isLastChapterCompleted ? onRestartFromBeginning : onNextChapter}
-          stringFigure={stringFigure}
           currentChapterIndex={currentChapterIndex}
-          isLastChapterCompleted={isLastChapterCompleted}
-          getLocalizedText={getLocalizedText}
-        />
-
-        <ReplayLandscapeButton
-          ref={replayButtonRef}
-          onPress={onReplay}
-          currentChapterIndex={currentChapterIndex}
+          onPreviousChapter={onPreviousChapter}
+          onReplay={onReplay}
+          onNextChapter={onNextChapter}
+          onRestartFromBeginning={onRestartFromBeginning}
           playbackPosition={playbackPosition}
+          isLastChapterCompleted={isLastChapterCompleted}
+          stringFigure={stringFigure}
           getLocalizedText={getLocalizedText}
-        />
-
-        <PreviousChapterLandscapeButton
-          ref={previousChapterButtonRef}
-          onPress={onPreviousChapter}
-          currentChapterIndex={currentChapterIndex}
-          getLocalizedText={getLocalizedText}
+          previousChapterButtonRef={previousChapterButtonRef}
+          replayButtonRef={replayButtonRef}
+          nextChapterButtonRef={nextChapterButtonRef}
         />
       </View>
 
-      {/* 再生速度 */}
-      {/* <SpeedControlLandscape
-        playbackRate={playbackRate}
-        PLAYBACK_RATES={PLAYBACK_RATES}
-        currentLanguage={currentLanguage}
-        onSlowerSpeed={onSlowerSpeed}
-        onFasterSpeed={onFasterSpeed}
-        getPlaybackRateDisplay={getPlaybackRateDisplay}
-      /> */}
     </View>
   );
 };
@@ -189,7 +172,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: 150,
     zIndex: 10,
-    paddingVertical: 16,
+    paddingVertical: 12,
     paddingHorizontal: 0,
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -199,7 +182,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     gap: 24,
     marginLeft: 8,
-    marginBottom: 20,
+    marginBottom: 4,
   },
   backButton: {
     padding: 8,
@@ -214,6 +197,7 @@ const styles = StyleSheet.create({
   controlsContainer: {
     flex: 1,
     gap: 4,
+    justifyContent: 'space-between',
   },
 });
 

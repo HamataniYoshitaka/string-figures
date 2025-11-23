@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   controlButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 8,
+    // padding: 8,
     gap: 12,
   },
   buttonContainer: {
