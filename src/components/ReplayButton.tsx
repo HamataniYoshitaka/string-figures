@@ -2,6 +2,7 @@ import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
 import { ReplayIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
+import BalloonTail from './icons/BalloonTail';
 
 interface ReplayButtonProps {
   onPress: () => void;
@@ -128,7 +129,6 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
         <View style={styles.balloonContainer}>
           <Animated.View style={[
             styles.balloon,
-            styles.balloonTopLeft,
             isDisabled && styles.balloonDisabled,
             !isDisabled && { backgroundColor: balloonColor }
           ]}>
@@ -137,11 +137,9 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
             ]}>
               {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
             </Text>
-            <SpeedButtonTail
+            <BalloonTail
               fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
-              isBottom={false}
-              isRight={false}
-              isUp={true}
+              position="topcenter"
             />
           </Animated.View>
         </View>
@@ -196,14 +194,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     position: 'relative',
   },
-  balloonTopLeft: {
-    borderTopLeftRadius: 0,
-  },
   controlButtonText: {
     fontSize: 14,
     color: '#555',
     marginTop: 4,
     fontWeight: '500',
+    lineHeight: 14,
   },
   disabledButton: {
     opacity: 0.5,

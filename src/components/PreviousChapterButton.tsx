@@ -2,6 +2,7 @@ import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
 import { SkipPreviousIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
+import BalloonTail from './icons/BalloonTail';
 
 interface PreviousChapterButtonProps {
   onPress: () => void;
@@ -133,11 +134,9 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
             <Text style={[styles.controlButtonText]}>
               {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
             </Text>
-            <SpeedButtonTail
+            <BalloonTail
               fillColor="rgba(209, 200, 194, 0.5)"
-              isBottom={false}
-              isRight={false}
-              isUp={true}
+              position="topleft"
             />
           </Animated.View>
         </View>
@@ -201,6 +200,7 @@ const styles = StyleSheet.create({
     color: '#555',
     marginTop: 4,
     fontWeight: '500',
+    lineHeight: 14,
   },
   disabledButton: {
     opacity: 0.5,

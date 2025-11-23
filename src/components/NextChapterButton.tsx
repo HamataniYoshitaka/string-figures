@@ -3,6 +3,7 @@ import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'reac
 import { PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import { Chapter, StringFigure } from '../types';
+import BalloonTail from './icons/BalloonTail';
 
 interface NextChapterButtonProps {
   onPress: () => void;
@@ -141,7 +142,7 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
         <View style={styles.balloonContainer}>
           <Animated.View style={[
             styles.balloon,
-            styles.balloonTopLeft,
+            styles.balloonTopRight,
             isDisabled && styles.balloonDisabled,
             { backgroundColor: balloonBackgroundColor }
           ]}>
@@ -151,11 +152,9 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
                 : getLocalizedText({ ja: 'つぎ', en: 'Next' })
               }
             </Text>
-            <SpeedButtonTail
+            <BalloonTail
               fillColor="rgba(209, 200, 194, 0.5)"
-              isBottom={false}
-              isRight={true}
-              isUp={true}
+              position="topright"
             />
           </Animated.View>
         </View>
@@ -211,8 +210,8 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 8,
   },
-  balloonTopLeft: {
-    borderTopLeftRadius: 0,
+  balloonTopRight: {
+    borderTopRightRadius: 0,
   },
   controlButtonText: {
     fontSize: 14,
@@ -220,6 +219,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontWeight: '500',
     textAlign: 'right',
+    lineHeight: 14,
   },
   disabledButton: {
     opacity: 0.5,

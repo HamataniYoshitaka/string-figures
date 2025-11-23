@@ -102,8 +102,8 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
     // 3点リーダーの場合
     if (isEllipsis) {
       return (
-        <View style={styles.inactiveChapterContainer}>
-          <Text style={styles.inactiveChapterText}>...</Text>
+        <View style={styles.chapterContainer}>
+          <Text style={styles.chapterText}>...</Text>
         </View>
       );
     }
@@ -111,8 +111,8 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
     const chapterNumber = chapterIndex + 1;
     
     return (
-      <View style={styles.inactiveChapterContainer}>
-        <Text style={styles.inactiveChapterText}>{chapterNumber}</Text>
+      <View style={styles.chapterContainer}>
+        <Text style={styles.chapterText}>{chapterNumber}</Text>
       </View>
     );
   };
@@ -158,7 +158,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
         {/* 右側の3つの数字 */}
         <View style={styles.chaptersContainer}>
           {rightChapters.map((chapterIndex, index) => (
-            <View key={`right-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={styles.chapterNumberWrapper}>
+            <View key={`right-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={[styles.chapterNumberWrapper, {opacity: 0.4}]}>
               {renderChapterNumber(
                 chapterIndex, 
                 chapterIndex === currentChapterIndex,
@@ -209,17 +209,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minWidth: 16,
   },
-  inactiveChapterContainer: {
+  chapterContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 60,
   },
-  inactiveChapterText: {
+  chapterText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#A6A09B', // stone/400
     textAlign: 'center',
-    lineHeight: 14,
   },
   emptyChapterContainer: {
     alignItems: 'center',
