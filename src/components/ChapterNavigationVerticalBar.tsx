@@ -1,10 +1,10 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
 import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
 import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
+import AnimatedChapterNumberVertical from './AnimatedChapterNumberVertical';
 import { Chapter, StringFigure } from '../types';
-import { DotsVerticalIcon } from './icons';
 
 interface ChapterNavigationVerticalBarProps {
   chapters: Chapter[];
@@ -92,36 +92,6 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
   const previousChapters = getPreviousChapters();
   const nextChapters = getNextChapters();
 
-  const renderChapterNumber = (chapterIndex: number | null, isPrevious: boolean, isEllipsis: boolean = false) => {
-    // chapterIndexがnullの場合は空白を表示
-    if (chapterIndex === null) {
-      return (
-        <View style={styles.emptyChapterContainer}>
-          {/* 空白 */}
-        </View>
-      );
-    }
-    
-    // 3点リーダーの場合
-    if (isEllipsis) {
-      return (
-        <View style={styles.chapterContainer}>
-          <DotsVerticalIcon width={14} height={14} strokeColor="none" fillColor="#57534D" />
-        </View>
-      );
-    }
-    
-    const chapterNumber = chapterIndex + 1;
-    
-    return (
-      <View style={styles.chapterContainer}>
-        <Text style={styles.chapterText}>
-          {chapterNumber}
-        </Text>
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
       {/* まえボタン */}
@@ -136,12 +106,11 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
 
       {/* 前の章番号（最大3つ、先頭が3点リーダーに置き換わる場合あり） */}
       {previousChapters.map((chapterIndex, index) => (
-        <View key={`prev-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={styles.chapterNumberWrapper}>
-          {renderChapterNumber(
-            chapterIndex, 
-            true,
-            index === 0 && chapterIndex !== null && currentChapterIndex > 3
-          )}
+        <View key={`prev-${index}`} style={styles.chapterNumberWrapper}>
+          <AnimatedChapterNumberVertical
+            chapterIndex={chapterIndex}
+            isEllipsis={index === 0 && chapterIndex !== null && currentChapterIndex > 3}
+          />
         </View>
       ))}
 
@@ -158,12 +127,12 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
 
       {/* 後の章番号（最大3つ、最後が3点リーダーに置き換わる場合あり） */}
       {nextChapters.map((chapterIndex, index) => (
-        <View key={`next-${chapterIndex !== null ? chapterIndex : `empty-${index}`}`} style={[styles.chapterNumberWrapper, {opacity: 0.5}]}>
-          {renderChapterNumber(
-            chapterIndex, 
-            false,
-            index === 2 && chapterIndex !== null && currentChapterIndex < chapters.length - 4
-          )}
+        <View key={`next-${index}`} style={styles.chapterNumberWrapper}>
+          <AnimatedChapterNumberVertical
+            chapterIndex={chapterIndex}
+            isEllipsis={index === 2 && chapterIndex !== null && currentChapterIndex < chapters.length - 4}
+            defaultOpacity={0.5}
+          />
         </View>
       ))}
 
@@ -200,30 +169,6 @@ const styles = StyleSheet.create({
     height: 14,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  chapterContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 48,
-    // height: 48,
-  },
-  chapterText: {
-    fontSize: 14,
-    fontWeight: '500',
-    textAlign: 'center',
-    fontFamily: 'Roboto-Medium',
-    color: '#57534D'
-  },
-  emptyChapterContainer: {
-    width: 48,
-    // height: 52,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  ellipsisText: {
-    fontSize: 14,
-    color: '#57534D',
-    textAlign: 'center',
   },
 });
 
