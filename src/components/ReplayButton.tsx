@@ -1,7 +1,5 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
-import { ReplayIcon } from './icons';
-import SpeedButtonTail from './icons/SpeedButtonTail';
 import BalloonTail from './icons/BalloonTail';
 
 interface ReplayButtonProps {
@@ -118,12 +116,9 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
             isDisabled && styles.disabledButton,
             { transform: [{ scale: scaleAnim }] }
           ]}>
-            <ReplayIcon
-              width={24}
-              height={24}
-              fillColor="#57534D"
-              strokeColor='transparent'
-            />
+            <Text style={[styles.labelText]}>
+              {currentChapterIndex + 1}
+            </Text>
           </Animated.View>
         </View>
         <View style={styles.balloonContainer}>
@@ -193,6 +188,11 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: 8,
     position: 'relative',
+  },
+  labelText: {
+    fontSize: 24,
+    fontWeight: '500',
+    // lineHeight: 24,
   },
   controlButtonText: {
     fontSize: 14,
