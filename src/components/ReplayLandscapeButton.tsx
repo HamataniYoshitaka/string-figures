@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, useImperativeHandle, useState } from 'react';
+import React, { useEffect, useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 
@@ -24,6 +24,71 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
   const rippleAnim = useRef(new Animated.Value(0)).current;
   const rippleOpacity = useRef(new Animated.Value(0)).current;
   const balloonColorAnim = useRef(new Animated.Value(0)).current;
+  
+  // チャプター番号アニメーション用（Y方向）
+  const translateY = useRef(new Animated.Value(0)).current;
+  const opacity = useRef(new Animated.Value(1)).current;
+  const [displayChapterIndex, setDisplayChapterIndex] = useState(currentChapterIndex);
+  const previousChapterIndexRef = useRef(currentChapterIndex);
+  const isInitialMount = useRef(true);
+
+  // チャプター番号のアニメーション（Y方向）
+  useEffect(() => {
+    // 初回マウント時は何もしない（既に表示されている）
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      previousChapterIndexRef.current = currentChapterIndex;
+      return;
+    }
+
+    // currentChapterIndexが変更された場合のみアニメーションを実行
+    const previousChapterIndex = previousChapterIndexRef.current;
+    const hasChanged = currentChapterIndex !== previousChapterIndex;
+    
+    if (hasChanged && previousChapterIndex !== null && currentChapterIndex !== null) {
+      // 増減を判定（増える場合は正の値、減る場合は負の値）
+      const isIncreasing = currentChapterIndex > previousChapterIndex;
+      
+      // フェーズ1の移動方向と距離（Y方向）
+      const phase1TranslateY = isIncreasing ? -10 : 10;
+      // フェーズ2の初期位置（フェーズ1の逆方向）
+      const phase2TranslateY = isIncreasing ? 10 : -10;
+      
+      // フェーズ1: 現在の数字を移動、opacity: 0に（0.15s）
+      Animated.parallel([
+        Animated.timing(translateY, {
+          toValue: phase1TranslateY,
+          duration: 150,
+          useNativeDriver: true,
+        }),
+        Animated.timing(opacity, {
+          toValue: 0,
+          duration: 150,
+          useNativeDriver: true,
+        }),
+      ]).start(() => {
+        // フェーズ2: 数字を新しい値に更新、位置を逆方向に設定
+        setDisplayChapterIndex(currentChapterIndex);
+        translateY.setValue(phase2TranslateY);
+        opacity.setValue(0);
+
+        // フェーズ3: 逆方向 → 0pt、opacity: 1にアニメーション（0.15s）
+        Animated.parallel([
+          Animated.timing(translateY, {
+            toValue: 0,
+            duration: 150,
+            useNativeDriver: true,
+          }),
+          Animated.timing(opacity, {
+            toValue: 1,
+            duration: 150,
+            useNativeDriver: true,
+          }),
+        ]).start();
+      });
+    }
+    previousChapterIndexRef.current = currentChapterIndex;
+  }, [currentChapterIndex]);
 
   const handlePressIn = () => {
     if (!isDisabled) {
@@ -115,9 +180,19 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
             isDisabled && styles.disabledButton,
             { transform: [{ scale: scaleAnim }] }
           ]}>
-            <Text style={[styles.labelText]}>
-              {currentChapterIndex + 1}
-            </Text>
+            <Animated.View
+              style={[
+                styles.chapterNumberContainer,
+                {
+                  transform: [{ translateY }],
+                  opacity,
+                },
+              ]}
+            >
+              <Text style={[styles.labelText]}>
+                {displayChapterIndex + 1}
+              </Text>
+            </Animated.View>
           </Animated.View>
         </View>
         <Animated.View style={[
@@ -169,6 +244,10 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  chapterNumberContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   disabledButton: {
     opacity: 0.5,
