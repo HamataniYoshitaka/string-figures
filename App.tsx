@@ -33,6 +33,8 @@ export default function App() {
           'KleeOne-Regular': require('./assets/fonts/Klee_One/KleeOne-Regular.ttf'),
           'KleeOne-SemiBold': require('./assets/fonts/Klee_One/KleeOne-SemiBold.ttf'),
           'Merriweather-SemiBold': require('./assets/fonts/Merriweather/Merriweather-SemiBold.ttf'),
+          'Roboto-Medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
+          'Montserrat-SemiBold': require('./assets/fonts/Montserrat/Montserrat-SemiBold.ttf'),
         });
 
         // イントロ完了状態を読み込む

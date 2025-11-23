@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '500',
     // lineHeight: 24,
+    fontFamily: 'Roboto-Medium',
   },
   controlButtonText: {
     fontSize: 14,

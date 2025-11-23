@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     textAlign: 'center',
+    fontFamily: 'Roboto-Medium',
   },
   emptyChapterContainer: {
     alignItems: 'center',
