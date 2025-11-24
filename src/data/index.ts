@@ -546,4 +546,16 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '上腕二頭筋を動かす男の説明文です。', en: 'Description for Man Flexing His Biceps.' },
     premiumCourseId: 0, // 無料
   },
+  { id: '99999',
+    name: { ja: 'このアプリについて', en: 'About this app' },
+    difficulty: 'basic',
+    directory: '0_introduction',
+    thumbnail: require('../../assets/string-figures/0_introduction/thumbnail.jpg'),
+    patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
+    description: { ja: 'このアプリの操作方法の紹介です', en: 'Introduction to the operation of this app.' },
+    premiumCourseId: 0,
+    directNavigationDestination: 'Intro',
+  }  
+  
 ];

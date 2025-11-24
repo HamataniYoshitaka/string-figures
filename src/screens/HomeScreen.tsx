@@ -310,6 +310,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       if (item.directNavigationDestination === 'Additional') {
         navigation.navigate('Additional');
       }
+      if (item.directNavigationDestination === 'Intro') {
+        navigation.navigate('IntroVideo', { currentLanguage: currentLanguage });
+      }
       return;
     }
     setSelectedItem(item);
@@ -379,15 +382,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         }, 300);
       },
     },
-    // {
-    //   id: 'subtitles',
-    //   label: currentLanguage === 'ja' ? '動画の字幕' : 'Subtitles',
-    //   value: currentLanguage === 'ja' ? 'あり' : 'On',
-    //   onPress: () => {
-    //     // TODO: 字幕設定の切り替え
-    //     console.log('字幕設定');
-    //   },
-    // },
     {
       id: 'restore',
       label: currentLanguage === 'ja' ? '購入情報を復元' : 'Restore Purchase Information',
