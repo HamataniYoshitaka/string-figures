@@ -11,6 +11,12 @@ export interface StringFigure {
   description: { ja: string; en: string };
   premiumCourseId: number; // 0=無料、0以外のID=有料コース
   directNavigationDestination?: string;
+  data: {
+    region: { ja: string; en: string } | null;
+    source: string | null;
+    author: { ja: string; en: string } | null;
+    references: { ja: string; en: string }[] | null;
+  } | null;
 }
 
 export interface Chapter {

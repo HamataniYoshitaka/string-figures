@@ -21,3 +21,4 @@ export { default as ArrowUpIcon } from './ArrowUp';
 export { default as ArrowDownIcon } from './ArrowDown';
 export { default as ChevronRightIcon } from './ChevronRight';
 export { default as ChevronLeftIcon } from './ChevronLeft';
+export { default as ExternalLinkIcon } from './ExternalLink';

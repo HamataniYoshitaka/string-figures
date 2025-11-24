@@ -17,7 +17,7 @@ import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon } from './icons';
 import { useOrientation } from '../hooks/useOrientation';
 
 interface Props {
@@ -264,6 +264,75 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
               </Text>
             </View>
             <Text style={styles.description}>{getLocalizedText(item.description)}</Text>
+            
+            {/* 参考情報セクション */}
+            {item.data && (
+              <View style={styles.referenceContainer}>
+                {item.data.region && (
+                <View style={styles.referenceRow}>
+                  <Text style={styles.referenceLabel}>
+                    {getLocalizedText({ ja: '地域', en: 'Region' })}
+                  </Text>
+                  <Text style={styles.referenceValue}>
+                    {getLocalizedText(item.data.region)}
+                  </Text>
+                </View>
+                )}
+                {/* <View style={styles.referenceDivider} /> */}
+                {item.data.author && (
+                  <View style={styles.referenceRow}>
+                    <Text style={styles.referenceLabel}>
+                      {getLocalizedText({ ja: '作者', en: 'Author' })}
+                    </Text>
+                    <Text style={styles.referenceValue}>
+                      {getLocalizedText(item.data.author)}
+                    </Text>
+                  </View>
+                )}
+                
+                {/* 出典 */}
+                {item.data.source && (
+                  <View style={styles.referenceRow}>
+                    <Text style={styles.referenceLabel}>
+                      {getLocalizedText({ ja: '出典', en: 'Source' })}
+                    </Text>
+                    <Text style={[styles.referenceValue, styles.referenceValueItalic]}>
+                      {item.data.source && (
+                        <Text>
+                          {item.data.source.split(/(<i>.*?<\/i>)/g).map((part, idx) => {
+                            if (part.startsWith('<i>') && part.endsWith('</i>')) {
+                              return (
+                                <Text key={idx} style={{ fontStyle: 'italic' }}>
+                                  {part.replace('<i>', '').replace('</i>', '')}
+                                </Text>
+                              );
+                            }
+                            return part;
+                          })}
+                        </Text>
+                      )}
+                    </Text>
+                  </View>
+                )}
+                {/* <View style={styles.referenceDivider} /> */}
+                
+                {item.data.references && (
+                  <View style={styles.referenceRow}>
+                    <Text style={styles.referenceLabel}>
+                      {getLocalizedText({ ja: '参考', en: 'Reference' })}
+                    </Text>
+                    <View style={styles.referenceValueContainer}>
+                      <Text style={[styles.referenceValue, styles.referenceValueItalic]}>
+                        World of String figures
+                      </Text>
+                      <View style={styles.externalLinkIconContainer}>
+                        <ExternalLinkIcon width={18} height={18} strokeColor="#57534D" />
+                      </View>
+                    </View>
+                  </View>
+                )}
+              </View>
+            )}
           </View>
         </View>
       </BottomSheetScrollView>
@@ -368,7 +437,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     paddingHorizontal: 20,
-    marginTop: 40,
+    marginTop: 48,
   },
   title: {
     fontSize: 24,
@@ -411,6 +480,50 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1001,
+  },
+  referenceContainer: {
+    backgroundColor: '#D6D3D1',
+    borderRadius: 16,
+    marginTop: 20,
+    overflow: 'hidden',
+    flexDirection: 'column',
+    gap: 1,
+  },
+  referenceRow: {
+    backgroundColor: '#F5F5F4',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  referenceLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#57534D',
+    width: 80,
+  },
+  referenceValue: {
+    flex: 1,
+    fontSize: 13,
+    color: '#57534D',
+    textAlign: 'right',
+  },
+  referenceValueItalic: {
+    fontStyle: 'italic',
+  },
+  referenceValueContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  externalLinkIconContainer: {
+    marginLeft: 10,
+  },
+  referenceDivider: {
+    height: 1,
+    backgroundColor: '#D6D3D1',
+    marginLeft: 16,
   },
 });
 

@@ -23,6 +23,7 @@ export const stringFigures: StringFigure[] = [
       en: 'First, learn how to tie the strings used for string figures.' 
     },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '1',
@@ -32,6 +33,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['1_star'],
     description: { ja: '手のひらにかわいい星ができます。短め、太めの紐を使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '3',
@@ -41,7 +43,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['3_spiderweb'],
     description: { ja: '蜘蛛の巣の説明文です。', en: 'Description for Spiderweb.' },
     premiumCourseId: 1, // 有料コース1
-
+    data: null
   },
   {
     id: '4',
@@ -51,7 +53,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['4_volcano'],
     description: { ja: '噴火する火山を立体的に表現した見事なあやとりです', en: 'A beautiful string figure that represents a volcano erupting.' },
     premiumCourseId: 2, // 有料コース2
-
+    data: null
   },
   {
     id: '5',
@@ -61,7 +63,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['5_many-stars'],
     description: { ja: '複雑な模様が、満天の星のきらめきを美しく表現します。', en: 'A complex pattern beautifully represents the sparkle of a star-filled sky.' },
     premiumCourseId: 0, // 無料
-
+    data: null
   },
   {
     id: '7',
@@ -71,6 +73,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['7_snail'],
     description: { ja: '小さなかわいいカタツムリが出来上がります', en: 'A small and cute snail is completed.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '8',
@@ -80,6 +83,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['8_elastic-band'],
     description: { ja: '糸が伸び縮みしているように見えるあやとりです', en: 'A string figure that looks like a rubber band is stretched and contracted.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '9',
@@ -89,6 +93,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['9_chrysanthemum'],
     description: { ja: '日本人にとって古くから親しまれている菊の花の形です', en: 'A chrysanthemum is a traditional Japanese symbol of longevity and beauty.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '10',
@@ -98,6 +103,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['10_magic-fingers'],
     description: { ja: '世界中で親しまれているあやとりのトリックです', en: 'A world-renowned string figure trick.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '11',
@@ -107,6 +113,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['11_wink'],
     description: { ja: 'ウインクの説明文です。', en: 'Description for Wink.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '12',
@@ -116,6 +123,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['12_9-diamonds'],
     description: { ja: '9つダイヤの説明文です。', en: 'Description for Nine Diamonds.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '13',
@@ -125,6 +133,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['13_easy-broom'],
     description: { ja: '一瞬でほうきの形が出来上がります', en: 'A broom that can be made easily.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '14',
@@ -137,7 +146,13 @@ export const stringFigures: StringFigure[] = [
       en: 'You can make cute footprints with this string figure. Lining up several of them with different sizes and colors will make it even more fun.' 
     },
     premiumCourseId: 0, // 無料
-  },
+    data: {
+      region: { ja: 'ボリビア', en: 'Bolivia' },
+      source: 'S. Rydén, <i>South American String Figures</i>, 1934',
+      author: null,
+      references: null
+    }
+    },
   {
     id: '15',
     name: { ja: 'バナナ', en: 'Banana' },
@@ -146,7 +161,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['15_banana'],
     description: { ja: 'バナナの説明文です。', en: 'Description for Banana.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '16',
     name: { ja: 'せんす', en: 'Sensu' },
@@ -155,7 +171,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['16_sensu'],
     description: { ja: '扇子の説明文です。', en: 'Description for Sensu.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '17',
     name: { ja: 'ほうき', en: 'Broom' },
@@ -164,7 +181,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['17_broom'],
     description: { ja: 'ほうきの説明文です。', en: 'Description for Broom.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '18',
     name: { ja: '富士山', en: 'Mt. Fuji' },
@@ -173,7 +191,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['18_mt-fuji'],
     description: { ja: '富士山の説明文です。', en: 'Description for Mt. Fuji.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '19',
     name: { ja: '二人の首長', en: 'Two Chiefs' },
@@ -182,7 +201,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['19_two-chiefs'],
     description: { ja: '二人の首長の説明文です。', en: 'Description for Two Chiefs.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '20',
     name: { ja: 'つづみ', en: 'Tuzumi' },
@@ -191,7 +211,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['20_tuzumi'],
     description: { ja: 'つづみの説明文です。', en: 'Description for Tuzumi.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '21',
     name: { ja: '菊水', en: 'Kikusui' },
@@ -200,7 +221,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['21_kikusui'],
     description: { ja: '菊水の説明文です。', en: 'Description for Kikusui.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '22',
     name: { ja: 'やり投げ', en: 'Spear' },
@@ -209,6 +231,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['22_spear'],
     description: { ja: 'やり投げの説明文です。', en: 'Description for Spear.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '23',
@@ -218,7 +241,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['23_finger-stroll'],
     description: { ja: '指の散歩の説明文です。', en: 'Description for Finger Stroll.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '24',
     name: { ja: '流れ星', en: 'Shooting Star' },
@@ -227,6 +251,12 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['24_shooting-star'],
     description: { ja: '流れ星の説明文です。', en: 'Description for Shooting Star.' },
     premiumCourseId: 0, // 無料
+    data: {
+      region: null,
+      source: 'SHISHIDO Y, <i>Geometrical Figures</i>, 1980',
+      author: { ja: 'SHISHIDO Yukio', en: 'SHISHIDO Yukio' },
+      references: null
+    }
   },
   {
     id: '25',
@@ -236,6 +266,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['25_fingers-magic'],
     description: { ja: '指ぬきの説明文です。', en: 'Description for Fingers Magic.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '26',
@@ -245,6 +276,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['26_hammock'],
     description: { ja: 'ハンモックの説明文です。', en: 'Description for Hammock.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '27',
@@ -254,6 +286,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['27_fish'],
     description: { ja: 'さかなの説明文です。', en: 'Description for Fish.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '28',
@@ -263,7 +296,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['28_atanua-house'],
     description: { ja: 'アタヌアの家の説明文です。', en: 'Description for Atanua House.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '29',
     name: { ja: '二匹の魚', en: 'Two Fishes' },
@@ -272,7 +306,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['29_two-fishes'],
     description: { ja: '二匹の魚の説明文です。', en: 'Description for Two Fishes.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '30',
     name: { ja: '星', en: 'Star' },
@@ -281,7 +316,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['30_star'],
     description: { ja: '星の説明文です。', en: 'Description for Star.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '31',
     name: { ja: 'はたおり', en: 'Loom' },
@@ -290,7 +326,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['31_weaving'],
     description: { ja: 'はたおりの説明文です。', en: 'Description for Loom.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '32',
     name: { ja: 'カヌー', en: 'Canoe' },
@@ -299,7 +336,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['32_canoe'],
     description: { ja: 'カヌーの説明文です。', en: 'Description for Canoe.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '33',
     name: { ja: 'かに', en: 'Crub' },
@@ -308,7 +346,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['33_crub'],
     description: { ja: 'かにの説明文です。', en: 'Description for Crub.' },
     premiumCourseId: 1, // コレクション1
-  },
+    data: null
+    },
   {
     id: '35',
     name: { ja: '1段ばしご', en: '1 Ladder' },
@@ -317,7 +356,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['35_jacobs-ladder1'],
     description: { ja: '1段ばしごの説明文です。', en: 'Description for 1 Ladder.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '36',
     name: { ja: '2段ばしご', en: '2 Ladder' },
@@ -326,7 +366,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['36_jacobs-ladder2'],
     description: { ja: '2段ばしごの説明文です。', en: 'Description for 2 Ladder.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   { 
     id: '37',
     name: { ja: '3段ばしご', en: '3 Ladder' },
@@ -335,7 +376,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['37_jacobs-ladder3'],
     description: { ja: '3段ばしごの説明文です。', en: 'Description for 3 Ladder.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '2',
     name: { ja: '4段ばしご', en: 'Jacob\'s Ladder' },
@@ -347,7 +389,8 @@ export const stringFigures: StringFigure[] = [
       en: 'This is a famous string figure widely known all over the world. Here, we introduce the method using the middle fingers, which is common in Japan.' 
     },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   { 
     id: '38',
     name: { ja: 'ダンスの舞台', en: 'Dance Stage' },
@@ -356,7 +399,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['38_dance-stage'],
     description: { ja: 'ダンスの舞台の説明文です。', en: 'Description for Dance Stage.' },
     premiumCourseId: 1, // コレクション1
-  },
+    data: null
+    },
   {
     id: '34',
     name: { ja: 'アムワンギヨ', en: 'Amwangiyo' },
@@ -365,7 +409,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['34_amwangiyo'],
     description: { ja: 'アムワンギヨの説明文です。', en: 'Description for Amwangiyo.' },
     premiumCourseId: 1, // コレクション1
-  },
+    data: null
+    },
   {
     id: '39',
     name: { ja: '太陽', en: 'The Sun' },
@@ -374,7 +419,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['39_the-sun'],
     description: { ja: '太陽の説明文です。', en: 'Description for The Sun.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '40',
     name: { ja: '山の上の月', en: 'Moon Over Mountain' },
@@ -383,7 +429,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['40_moon-over-mountain'],
     description: { ja: '山の上の月の説明文です。', en: 'Description for Moon Over Mountain.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   { 
     id: '41',
     name: { ja: 'たんぽぽ', en: 'Dandelion' },
@@ -392,7 +439,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['41_dandelion'],
     description: { ja: 'たんぽぽの説明文です。', en: 'Description for Dandelion.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '42',
     name: { ja: 'アパッチの扉', en: 'Apache Door' },
@@ -401,7 +449,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['42_apaches-door'],
     description: { ja: 'アパッチの扉の説明文です。', en: 'Description for Apache Door.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '43',
     name: { ja: 'トランポリン', en: 'Trampoline' },
@@ -410,7 +459,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['43_trampoline'],
     description: { ja: 'トランポリンの説明文です。', en: 'Description for Trampoline.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '44',
     name: { ja: '蝶', en: 'Butterfly' },
@@ -419,6 +469,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['44_butterfly'],
     description: { ja: '蝶の説明文です。', en: 'Description for Butterfly.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '45',
@@ -428,6 +479,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['45_hammock'],
     description: { ja: 'ハンモックの説明文です。', en: 'Description for Hammock.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '46',
@@ -437,6 +489,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['46_rabit'],
     description: { ja: 'うさぎの説明文です。', en: 'Description for Rabbit.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '47',
@@ -446,6 +499,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['47_turtle'],
     description: { ja: 'かめの説明文です。', en: 'Description for Turtle.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '48',
@@ -455,7 +509,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['48_shovel'],
     description: { ja: 'シャベルの説明文です。', en: 'Description for Shovel.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '49',
     name: { ja: 'カリブー', en: 'Caribou' },
@@ -464,7 +519,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['49_caribou'],
     description: { ja: 'カリブーの説明文です。', en: 'Description for Caribou.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '50',
     name: { ja: '2階建てのシベリアの家', en: '2-Story Siberian House' },
@@ -473,7 +529,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['50_2story-siberian-house'],
     description: { ja: '2階建てのシベリアの家の説明文です。', en: 'Description for 2-Story Siberian House.' },
     premiumCourseId: 0, // 無料 
-  },
+    data: null
+    },
   {
     id: '51',
     name: { ja: 'かもめ', en: 'Seagull' },
@@ -482,7 +539,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['51_seagull'],
     description: { ja: 'かもめの説明文です。', en: 'Description for Seagull.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '52',
     name: { ja: 'くち', en: 'Mouth' },
@@ -491,7 +549,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['52_mouth'],
     description: { ja: 'くちの説明文です。', en: 'Description for Mouth.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '53',
     name: { ja: '2匹の子鹿', en: 'Two Fawns' },
@@ -500,7 +559,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['53_2fawns'],
     description: { ja: '2匹の子鹿の説明文です。', en: 'Description for Two Fawns.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '54',
     name: { ja: '藪の中のカリブー', en: 'Caribou in the Bush' },
@@ -509,7 +569,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['54_caribou-in-bush'],
     description: { ja: '藪の中のカリブーの説明文です。', en: 'Description for Caribou in the Bush.' },
     premiumCourseId: 0, // 無料
-  },
+    data: null
+    },
   {
     id: '56',
     name: { ja: 'ティーピー', en: 'Teepee' },
@@ -518,6 +579,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['56_teepee'],
     description: { ja: 'ティーピーの説明文です。', en: 'Description for Teepee.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '57',
@@ -527,6 +589,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['57_thunder'],
     description: { ja: '雷の説明文です。', en: 'Description for Thunder.' },
     premiumCourseId: 0, // 無料
+    data: null
   },
   {
     id: '59',
@@ -536,15 +599,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['59_paddler'],
     description: { ja: 'カヤックをこぐ人の説明文です。', en: 'Description for Paddler.' },
     premiumCourseId: 0, // 無料
-  },
-  {
-    id: '64',
-    name: { ja: '上腕二頭筋を動かす男', en: 'Man Flexing His Biceps' },
-    difficulty: 'hard',
-    directory: '64_a-man-flexing-his-biceps',
-    ...ASSETS_MAP['64_a-man-flexing-his-biceps'],
-    description: { ja: '上腕二頭筋を動かす男の説明文です。', en: 'Description for Man Flexing His Biceps.' },
-    premiumCourseId: 0, // 無料
+    data: null
   },
   { id: '99999',
     name: { ja: 'このアプリについて', en: 'About this app' },
@@ -555,7 +610,6 @@ export const stringFigures: StringFigure[] = [
     previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
     description: { ja: 'このアプリの操作方法の紹介です', en: 'Introduction to the operation of this app.' },
     premiumCourseId: 0,
-    directNavigationDestination: 'Intro',
-  }  
-  
+    data: null
+  },
 ];
