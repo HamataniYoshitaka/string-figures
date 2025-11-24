@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
-import { PlayIcon, SkipBackwardIcon } from './icons';
+import { ArrowDownIcon, PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import { Chapter, StringFigure } from '../types';
 
@@ -129,7 +129,7 @@ const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, Nex
               { paddingLeft: 2 },
               { transform: [{ scale: scaleAnim }] }
             ]}>
-              <PlayIcon width={20} height={20} fillColor="#57534D" strokeColor='transparent' />
+              <ArrowDownIcon width={36} height={36} fillColor="#44403c" strokeColor='transparent' />
             </Animated.View>
           )}
         </View>

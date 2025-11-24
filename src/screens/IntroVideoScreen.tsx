@@ -506,6 +506,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.35,
         shadowRadius: 3,
         elevation: 3,
+        gap: 4
     },
     nextStepLabel: {
         fontFamily: 'Montserrat-SemiBold',

@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
-import { SkipPreviousIcon } from './icons';
+import { ArrowLeftIcon, SkipPreviousIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import BalloonTail from './icons/BalloonTail';
 
@@ -116,10 +116,10 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
             isDisabled && styles.disabledButton,
             { transform: [{ scale: scaleAnim }] }
           ]}>
-            <SkipPreviousIcon
-              width={24}
-              height={24}
-              fillColor="#57534D"
+            <ArrowLeftIcon
+              width={36}
+              height={36}
+              fillColor="#44403c"
               strokeColor='transparent'
             />
           </Animated.View>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     backgroundColor: '#F7F5F2',
     borderWidth: 2,
-    borderColor: '#57534D',
+    borderColor: '#44403c',
     justifyContent: 'center',
     alignItems: 'center',
   },

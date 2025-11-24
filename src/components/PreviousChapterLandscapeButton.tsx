@@ -1,6 +1,6 @@
 import React, { useRef, forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
-import { SkipPreviousIcon } from './icons';
+import { ArrowUpIcon, SkipPreviousIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 
 interface PreviousChapterLandscapeButtonProps {
@@ -115,10 +115,10 @@ const PreviousChapterLandscapeButton = forwardRef<PreviousChapterLandscapeButton
             isDisabled && styles.disabledButton,
             { transform: [{ scale: scaleAnim }] }
           ]}>
-            <SkipPreviousIcon
-              width={24}
-              height={24}
-              fillColor="#57534D"
+            <ArrowUpIcon
+              width={36}
+              height={36}
+              fillColor="#44403c"
               strokeColor='transparent'
             />
           </Animated.View>

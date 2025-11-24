@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
-import { PlayIcon, SkipBackwardIcon } from './icons';
+import { ArrowRightIcon, PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import { Chapter, StringFigure } from '../types';
 import BalloonTail from './icons/BalloonTail';
@@ -120,7 +120,7 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
               <SkipBackwardIcon
                 width={26}
                 height={26}
-                fillColor="#57534D"
+                fillColor="#44403c"
               />
             </Animated.View>
           ) : (
@@ -130,9 +130,9 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
               isDisabled && styles.disabledButton,
               { transform: [{ scale: scaleAnim }] }
             ]}>
-              <PlayIcon
-                width={20}
-                height={20}
+              <ArrowRightIcon
+                width={36}
+                height={36}
                 fillColor="#57534D"
                 strokeColor='transparent'
               />
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     backgroundColor: '#F7F5F2',
     borderWidth: 2,
-    borderColor: '#57534D',
+    borderColor: '#44403c',
     justifyContent: 'center',
     alignItems: 'center',
   },
