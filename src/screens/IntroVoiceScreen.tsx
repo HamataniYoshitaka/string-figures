@@ -278,7 +278,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                             {title && (
                                 <View style={styles.titleContainer}>
                                     <Text style={styles.stepNumber}>
-                                        Step. {currentChapterIndex + 1}
+                                        Step {currentChapterIndex + 1}
                                     </Text>
                                     <Text style={styles.stepTitle}>
                                         {title}

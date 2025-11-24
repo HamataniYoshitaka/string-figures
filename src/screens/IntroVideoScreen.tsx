@@ -1,15 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CloseIcon, SkipNextIcon } from '../components/icons';
+import { ChevronRightIcon, CloseIcon } from '../components/icons';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import ProgressDots from '../components/ProgressDots';
-import NextChapterButton from '../components/NextChapterButton';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
 type IntroVideoScreenNavigationProp = StackNavigationProp<
@@ -72,7 +70,6 @@ const chapters_android = [
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
     const videoRef = useRef<Video>(null);
-    const nextChapterButtonRef = useRef<any>(null);
     const [playbackRate, setPlaybackRate] = useState<number>(1.0);
     const [currentChapterIndex, setCurrentChapterIndex] = useState<number>(0);
     const [playbackPosition, setPlaybackPosition] = useState(0);
@@ -80,6 +77,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
+    const nextStepButtonScale = useRef(new Animated.Value(1)).current;
     
     const { isTablet, isDeviceLandscape } = useDeviceInfo();
     const isAndroid = Platform.OS === 'android';
@@ -270,7 +268,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                             {title && (
                                 <View style={styles.titleContainer}>
                                     <Text style={styles.stepNumber}>
-                                        Step. {currentChapterIndex + 1}
+                                        Step {currentChapterIndex + 1}
                                     </Text>
                                     <Text style={styles.stepTitle}>
                                         {title}
@@ -289,28 +287,43 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
             {/* コントロールボタンエリア */}
             <View style={styles.controlsContainer}>
-                <TouchableWithoutFeedback onPress={onNextChapter}>
-                    <View style={styles.nextStepButton}>
-                        <Text style={styles.nextStepLabel}>
+                <TouchableWithoutFeedback 
+                    onPress={onNextChapter}
+                    onPressIn={createPressInHandler(nextStepButtonScale)}
+                    onPressOut={createPressOutHandler(nextStepButtonScale)}
+                >
+                    <Animated.View 
+                        style={[
+                            styles.nextStepButton,
+                            { transform: [{ scale: nextStepButtonScale }] }
+                        ]}
+                    >
+                        <Text style={[
+                            styles.nextStepLabel,
+                            { fontSize: currentLanguage === 'ja' ? 24 : 22 }
+                        ]}>
                             Next Step
                         </Text>
                         {(() => {
                             const currentChapter = isAndroid ? chapters_android[currentChapterIndex+1] : chapters[currentChapterIndex+1];
                             const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
                             return title ? (
-                                <Text style={styles.nextStepTitle} numberOfLines={1}>
+                                <Text style={[
+                                    styles.nextStepTitle,
+                                    { fontSize: currentLanguage === 'ja' ? 15 : 14 }
+                                ]} numberOfLines={2}>
                                     {title}
                                 </Text>
                             ) : null;
                         })()}
-                        <SkipNextIcon
+                        <ChevronRightIcon
                             width={27}
                             height={27}
                             fillColor="#FFFFFF"
                             strokeColor="#FFFFFF"
                             strokeWidth={0}
                         />
-                    </View>
+                    </Animated.View>
                 </TouchableWithoutFeedback>
             </View>
             
@@ -406,12 +419,12 @@ const styles = StyleSheet.create({
     nextStepButton: {
         backgroundColor: '#57534d',
         borderRadius: 12,
-        paddingHorizontal: 16,
+        paddingLeft: 16,
+        paddingRight: 8,
         paddingVertical: 12,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        // gap: 8,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -423,16 +436,14 @@ const styles = StyleSheet.create({
     },
     nextStepLabel: {
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 24,
         color: '#FFFFFF',
         lineHeight: 32,
     },
     nextStepTitle: {
         flex: 1,
         fontFamily: Platform.OS === 'ios' ? 'Hiragino Kaku Gothic ProN' : 'Roboto',
-        fontSize: 15,
         color: '#FFFFFF',
-        lineHeight: 15,
+        lineHeight: 16,
         textAlign: 'center',
         fontWeight: '600',
     },
