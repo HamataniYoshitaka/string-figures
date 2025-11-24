@@ -268,6 +268,13 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
             {/* 参考情報セクション */}
             {item.data && (
               <View style={styles.referenceContainer}>
+                <LinearGradient
+                  colors={['#F5F5F4', '#F5F5F4', '#D6D3D1', '#D6D3D1']}
+                  locations={[0, 0.05, 0.05, 1]}
+                  style={StyleSheet.absoluteFill}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                />
                 {item.data.region && (
                 <View style={styles.referenceRow}>
                   <Text style={styles.referenceLabel}>
@@ -482,12 +489,12 @@ const styles = StyleSheet.create({
     zIndex: 1001,
   },
   referenceContainer: {
-    backgroundColor: '#D6D3D1',
     borderRadius: 16,
     marginTop: 20,
     overflow: 'hidden',
     flexDirection: 'column',
     gap: 1,
+    position: 'relative',
   },
   referenceRow: {
     backgroundColor: '#F5F5F4',

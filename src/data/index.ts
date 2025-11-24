@@ -249,7 +249,10 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '24_shooting-star',
     ...ASSETS_MAP['24_shooting-star'],
-    description: { ja: '流れ星の説明文です。', en: 'Description for Shooting Star.' },
+    description: { 
+      ja: 'まるでマンガのような、尾を引きながら流れる星の姿を見事に表現したあやとりです。ひもを二重にしてから取り始めるというちょっと変わった特徴があります。', 
+      en: 'A string figure that beautifully represents the shooting star as it trails behind like a manga. It has a slightly unusual feature of starting by doubling the string and then taking.' 
+    },
     premiumCourseId: 0, // 無料
     data: {
       region: null,
@@ -513,7 +516,7 @@ export const stringFigures: StringFigure[] = [
     },
   {
     id: '49',
-    name: { ja: 'カリブー', en: 'Caribou' },
+    name: { ja: 'カリブー', en: 'A Caribou' },
     difficulty: 'medium',
     directory: '49_caribou',
     ...ASSETS_MAP['49_caribou'],
@@ -563,13 +566,21 @@ export const stringFigures: StringFigure[] = [
     },
   {
     id: '54',
-    name: { ja: '藪の中のカリブー', en: 'Caribou in the Bush' },
+    name: { ja: '柳の中のカリブー', en: 'A Caribou in the Willows' },
     difficulty: 'hard',
-    directory: '54_caribou-in-bush',
-    ...ASSETS_MAP['54_caribou-in-bush'],
-    description: { ja: '藪の中のカリブーの説明文です。', en: 'Description for Caribou in the Bush.' },
+    directory: '54_caribou-in-willows',
+    ...ASSETS_MAP['54_caribou-in-willows'],
+    description: { 
+      ja: 'カリブーが柳の下で涼んでいる様子を表しています。後半から「カリブー」と同じ手順で形を作っていきます', 
+      en: 'A Caribou is resting under the willow. The same procedure as "A Caribou" is used from the second half.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'アラスカ', en: 'Alaska' },
+      source: 'Diamond Jenness, <i>Eskimo String Figures</i>, 1924',
+      author: null,
+      references: null
+    }
     },
   {
     id: '56',

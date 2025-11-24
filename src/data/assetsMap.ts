@@ -270,10 +270,10 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/53_2fawns/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/53_2fawns/preview.mp4'),
   },
-  '54_caribou-in-bush': {
-    thumbnail: require('../../assets/string-figures/54_caribou-in-bush/thumbnail-kraft.jpg'),
-    patternImage: require('../../assets/string-figures/54_caribou-in-bush/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/54_caribou-in-bush/preview.mp4'),
+  '54_caribou-in-willows': {
+    thumbnail: require('../../assets/string-figures/54_caribou-in-willows/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/54_caribou-in-willows/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/54_caribou-in-willows/preview.mp4'),
   },
   '56_teepee': {
     thumbnail: require('../../assets/string-figures/56_teepee/thumbnail-kraft.jpg'),
