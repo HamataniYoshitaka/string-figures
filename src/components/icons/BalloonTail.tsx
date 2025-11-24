@@ -5,7 +5,7 @@ interface BalloonTailProps {
   width?: number;
   height?: number;
   fillColor?: string;
-  position?: 'topleft' | 'topright' | 'topcenter' | 'lefttop';
+  position?: 'topleft' | 'topright' | 'topcenter' | 'lefttop' | 'bottomright' | 'bottomcenter';
 }
 
 const BalloonTail: React.FC<BalloonTailProps> = ({
@@ -21,10 +21,11 @@ const BalloonTail: React.FC<BalloonTailProps> = ({
       viewBox="0 0 8 8"
       style={{
         position: 'absolute',
-        left: position === 'topleft' ? 0 : position === 'lefttop' ? -8 : position === 'topcenter' ? '50%': 'auto',
-        right: position === 'topright' ? 0 : 'auto',
-        top: position === 'lefttop' ? 0 : -8,
-        transform: position === 'topcenter' ? [{ translateX: '50%' }] : undefined,
+        left: position === 'topleft' ? 0 : position === 'lefttop' ? -8 : position === 'topcenter' ? '50%' : position === 'bottomcenter' ? '50%' : 'auto',
+        right: position === 'topright' ? 0 : position === 'bottomright' ? 0 : 'auto',
+        top: position === 'lefttop' ? 0 : position === 'bottomright' || position === 'bottomcenter' ? 'auto' : -8,
+        bottom: position === 'bottomright' || position === 'bottomcenter' ? -8 : 'auto',
+        transform: position === 'topcenter' || position === 'bottomcenter' ? [{ translateX: position === 'topcenter' ? '50%' : '-50%' }] : undefined,
       }}
     >
       <Path
@@ -35,7 +36,11 @@ const BalloonTail: React.FC<BalloonTailProps> = ({
               ? "M8 0 L8 8 L0 8 Z"
               : position === 'topcenter' 
                 ? "M4 0 L0 8 L8 8 Z"
-                : "M0 0 L8 8 L0 8 Z"
+                : position === 'bottomright'
+                  ? "M8 0 L8 8 L0 8 Z"
+                  : position === 'bottomcenter'
+                    ? "M4 8 L0 0 L8 0 Z"
+                    : "M0 0 L8 8 L0 8 Z"
         }
         fill={fillColor}
       />

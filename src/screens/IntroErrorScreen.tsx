@@ -137,7 +137,8 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
                     <CloseIcon width={24} height={24} fillColor="#79716B" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
-                <Text style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
+                <Text 
+                    style={[styles.title, { fontSize: isTablet ? 22 : 18, fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]} numberOfLines={1}>
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
             </View>
@@ -176,7 +177,7 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
                     {getLocalizedText({ ja: '音声認識とマイクが使用できませんでした。\nこのままでもアプリをお楽しみいただけますが、\n「設定」アプリからアクセスを許可することをおすすめめします。', en: 'Voice recognition and microphone are not available. You can still enjoy the app, but we recommend allowing access from the "Settings" app.' })}
                 </Text>
                 <Text style={[styles.subtitleText, { marginTop: 12, fontSize: 14 }]}>
-                    {getLocalizedText({ ja: '（音声の保存・収集は一切行なっておりません）', en: '(No voice recording or collection is performed.)' })}
+                    {getLocalizedText({ ja: '（音声の保存・収集は一切行なっておりません）', en: '(We do not record or collect any voice data.)' })}
                 </Text>
             </View>
 

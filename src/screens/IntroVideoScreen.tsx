@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -6,6 +6,7 @@ import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronRightIcon, CloseIcon } from '../components/icons';
+import BalloonTail from '../components/icons/BalloonTail';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import ProgressDots from '../components/ProgressDots';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
@@ -29,7 +30,10 @@ const chapters = [
     },
     {
         title: { ja: '音声認識について', en: 'About voice recognition' },
-        subtitle: { ja: '音声認識とマイクの使用確認画面が出ますので、どちらも許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow both the voice recognition and microphone usage confirmation screens to appear.\n(No voice recording or collection is performed.)' },
+        subtitle: { 
+            ja: '音声認識とマイクの使用確認画面が出ますので、どちらも許可して下さい\n（音声の保存・収集は一切行なっておりません）', 
+            en: 'Please allow both the voice recognition and microphone usage confirmation screens to appear.\n(We do not record or collect any audio.)'
+        },
         video: {ja: require('../../assets/string-figures/0_introduction/intro2.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-en.mp4')}
     },
     {
@@ -52,7 +56,7 @@ const chapters_android = [
     },
     {
         title: { ja: '音声認識について', en: 'About voice recognition'  },
-        subtitle: { ja: 'マイクの使用確認画面が出ますので許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow the microphone usage confirmation screen to appear.\n(No voice recording or collection is performed.)' },
+        subtitle: { ja: 'マイクの使用確認画面が出ますので許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow the microphone usage confirmation screen to appear.\n(We do not record or collect any audio.)' },
         video: {ja: require('../../assets/string-figures/0_introduction/intro2-android.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-android-en.mp4')}
     },
     {
@@ -74,14 +78,41 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentChapterIndex, setCurrentChapterIndex] = useState<number>(0);
     const [playbackPosition, setPlaybackPosition] = useState(0);
     const [videoDuration, setVideoDuration] = useState(0);
+    const [showBalloon, setShowBalloon] = useState<boolean>(false);
 
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
     const nextStepButtonScale = useRef(new Animated.Value(1)).current;
     
+    // 吹き出しタイマー管理
+    const balloonTimerRef = useRef<NodeJS.Timeout | null>(null);
+    
     const { isTablet, isDeviceLandscape } = useDeviceInfo();
     const isAndroid = Platform.OS === 'android';
     console.log('isAndroid', isAndroid);
+    
+    // 吹き出しタイマーの管理
+    useEffect(() => {
+        // 既存のタイマーをクリア
+        if (balloonTimerRef.current) {
+            clearTimeout(balloonTimerRef.current);
+        }
+        
+        // 吹き出しを非表示にする
+        setShowBalloon(false);
+        
+        // ２0秒後に吹き出しを表示
+        balloonTimerRef.current = setTimeout(() => {
+            setShowBalloon(true);
+        }, 20000);
+        
+        // クリーンアップ
+        return () => {
+            if (balloonTimerRef.current) {
+                clearTimeout(balloonTimerRef.current);
+            }
+        };
+    }, [currentChapterIndex]);
     // アニメーションヘルパー関数
     const createPressInHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {
@@ -256,75 +287,92 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
             </View>
 
-            {/* 字幕エリア */}
-            <View style={styles.subtitleContainer}>
-                {(() => {
-                    const currentChapter = isAndroid ? chapters_android[currentChapterIndex] : chapters[currentChapterIndex];
-                    const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
-                    const subtitle = getLocalizedText(currentChapter.subtitle);
-                    
-                    return (
-                        <>
-                            {title && (
-                                <View style={styles.titleContainer}>
-                                    <Text style={styles.stepNumber}>
-                                        Step {currentChapterIndex + 1}
+            <View style={styles.subtitleContainerWrapper}>
+                {/* 字幕エリア */}
+                <View style={styles.subtitleContainer}>
+                    {(() => {
+                        const currentChapter = isAndroid ? chapters_android[currentChapterIndex] : chapters[currentChapterIndex];
+                        const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
+                        const subtitle = getLocalizedText(currentChapter.subtitle);
+                        
+                        return (
+                            <>
+                                {title && (
+                                    <View style={styles.titleContainer}>
+                                        <Text style={styles.stepNumber}>
+                                            Step {currentChapterIndex + 1}
+                                        </Text>
+                                        <Text style={styles.stepTitle}>
+                                            {title}
+                                        </Text>
+                                    </View>
+                                )}
+                                {subtitle && (
+                                    <Text style={styles.subtitleText}>
+                                        {subtitle}
                                     </Text>
-                                    <Text style={styles.stepTitle}>
+                                )}
+                            </>
+                        );
+                    })()}
+                </View>
+
+                {/* コントロールボタンエリア */}
+                <View style={styles.controlsContainer}>
+                    {showBalloon && (
+                        <View style={styles.balloonContainer}>
+                            <View style={styles.balloon}>
+                                <Text style={styles.balloonText}>
+                                    {getLocalizedText({ ja: 'ボタンをタップして下さい', en: 'Please tap the button' })}
+                                </Text>
+                                <BalloonTail
+                                    width={10}
+                                    height={10}
+                                    fillColor="#ff6900"
+                                    position="bottomcenter"
+                                />
+                            </View>
+                        </View>
+                    )}
+                    <TouchableWithoutFeedback 
+                        onPress={onNextChapter}
+                        onPressIn={createPressInHandler(nextStepButtonScale)}
+                        onPressOut={createPressOutHandler(nextStepButtonScale)}
+                    >
+                        <Animated.View 
+                            style={[
+                                styles.nextStepButton,
+                                { transform: [{ scale: nextStepButtonScale }] }
+                            ]}
+                        >
+                            <Text style={[
+                                styles.nextStepLabel,
+                                { fontSize: currentLanguage === 'ja' ? 24 : 22 }
+                            ]}>
+                                Next Step
+                            </Text>
+                            {(() => {
+                                const currentChapter = isAndroid ? chapters_android[currentChapterIndex+1] : chapters[currentChapterIndex+1];
+                                const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
+                                return title ? (
+                                    <Text style={[
+                                        styles.nextStepTitle,
+                                        { fontSize: currentLanguage === 'ja' ? 15 : 14 }
+                                    ]} numberOfLines={2}>
                                         {title}
                                     </Text>
-                                </View>
-                            )}
-                            {subtitle && (
-                                <Text style={styles.subtitleText}>
-                                    {subtitle}
-                                </Text>
-                            )}
-                        </>
-                    );
-                })()}
-            </View>
-
-            {/* コントロールボタンエリア */}
-            <View style={styles.controlsContainer}>
-                <TouchableWithoutFeedback 
-                    onPress={onNextChapter}
-                    onPressIn={createPressInHandler(nextStepButtonScale)}
-                    onPressOut={createPressOutHandler(nextStepButtonScale)}
-                >
-                    <Animated.View 
-                        style={[
-                            styles.nextStepButton,
-                            { transform: [{ scale: nextStepButtonScale }] }
-                        ]}
-                    >
-                        <Text style={[
-                            styles.nextStepLabel,
-                            { fontSize: currentLanguage === 'ja' ? 24 : 22 }
-                        ]}>
-                            Next Step
-                        </Text>
-                        {(() => {
-                            const currentChapter = isAndroid ? chapters_android[currentChapterIndex+1] : chapters[currentChapterIndex+1];
-                            const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
-                            return title ? (
-                                <Text style={[
-                                    styles.nextStepTitle,
-                                    { fontSize: currentLanguage === 'ja' ? 15 : 14 }
-                                ]} numberOfLines={2}>
-                                    {title}
-                                </Text>
-                            ) : null;
-                        })()}
-                        <ChevronRightIcon
-                            width={27}
-                            height={27}
-                            fillColor="#FFFFFF"
-                            strokeColor="#FFFFFF"
-                            strokeWidth={0}
-                        />
-                    </Animated.View>
-                </TouchableWithoutFeedback>
+                                ) : null;
+                            })()}
+                            <ChevronRightIcon
+                                width={27}
+                                height={27}
+                                fillColor="#FFFFFF"
+                                strokeColor="#FFFFFF"
+                                strokeWidth={0}
+                            />
+                        </Animated.View>
+                    </TouchableWithoutFeedback>
+                </View>
             </View>
             
         </SafeAreaView>
@@ -378,6 +426,12 @@ const styles = StyleSheet.create({
         marginTop: 16,
         paddingLeft: 16,
     },
+    subtitleContainerWrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        maxWidth: 500,
+        marginHorizontal: 'auto',
+    },
     subtitleContainer: {
         flex: 1,
         paddingHorizontal: 16,
@@ -415,6 +469,25 @@ const styles = StyleSheet.create({
     controlsContainer: {
         paddingHorizontal: 16,
         paddingBottom: 32,
+        position: 'relative',
+    },
+    balloonContainer: {
+        position: 'absolute',
+        left: 107,
+        bottom: 100,
+        zIndex: 10,
+    },
+    balloon: {
+        backgroundColor: '#ff6900',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        borderRadius: 8,
+        position: 'relative',
+    },
+    balloonText: {
+        fontSize: 16,
+        color: '#FFFFFF',
+        lineHeight: 16,
     },
     nextStepButton: {
         backgroundColor: '#57534d',
