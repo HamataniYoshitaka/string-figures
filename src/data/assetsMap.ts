@@ -290,6 +290,21 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/59_paddler/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/59_paddler/preview.mp4'),
   },
+  '60_position1': {
+    thumbnail: require('../../assets/string-figures/60_position1/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/60_position1/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/60_position1/preview.mp4'),
+  },
+  '61_opening-a': {
+    thumbnail: require('../../assets/string-figures/61_opening-a/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/61_opening-a/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/61_opening-a/preview.mp4'),
+  },
+  '62_japanese-opening': {
+    thumbnail: require('../../assets/string-figures/62_japanese-opening/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/62_japanese-opening/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/62_japanese-opening/preview.mp4'),
+  },
   '64_a-man-flexing-his-biceps': {
     thumbnail: require('../../assets/string-figures/64_a-man-flexing-his-biceps/thumbnail-kraft.gif'),
     patternImage: require('../../assets/string-figures/64_a-man-flexing-his-biceps/pattern.jpg'),

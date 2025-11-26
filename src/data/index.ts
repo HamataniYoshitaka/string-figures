@@ -19,8 +19,8 @@ export const stringFigures: StringFigure[] = [
     directory: '6_tieup',
     ...ASSETS_MAP['6_tieup'],
     description: { 
-      ja: 'まずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\nまずはあやとりに使う紐の結び方を学びましょう\n', 
-      en: 'First, learn how to tie the strings used for string figures.' 
+      ja: 'まずはあやとりに使う紐を作りましょう\nここでは簡単で結び目の小さい「相引き結び（テグス結び）」を紹介します。\n何種類かの長さの紐を用意して使い分けると良いでしょう', 
+      en: 'First, learn how to tie the strings used for string figures.\nThis introduction will focus on the simple and small "Fisherman\'s Knot". It is recommended to prepare various lengths of strings to use them appropriately.' 
     },
     premiumCourseId: 0, // 無料
     data: null
@@ -609,6 +609,42 @@ export const stringFigures: StringFigure[] = [
     directory: '59_paddler',
     ...ASSETS_MAP['59_paddler'],
     description: { ja: 'カヤックをこぐ人の説明文です。', en: 'Description for Paddler.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '60',
+    name: { ja: 'はじめの構え', en: 'Position 1' },
+    difficulty: 'basic',
+    directory: '60_position1',
+    ...ASSETS_MAP['60_position1'],
+    description: { 
+      ja: '「はじめの構え」は、ほとんどのあやとりの開始位置となる、最も基本的な構えです', 
+      en: 'The "Position 1" is the most basic position for most string figures.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '61',
+    name: { ja: '人差し指の構え', en: 'Opening A' },
+    difficulty: 'basic',
+    directory: '61_opening-a',
+    ...ASSETS_MAP['61_opening-a'],
+    description: { ja: '世界中のあやとりの多くが、この「人差し指の構え」から始まります', en: 'Most string figures in the world start with this "Opening A".' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '62',
+    name: { ja: '中指の構え', en: 'Japanese Opening' },
+    difficulty: 'basic',
+    directory: '62_japanese-opening',
+    ...ASSETS_MAP['62_japanese-opening'],
+    description: { 
+      ja: '日本のあやとりの多くが、この「中指の構え」から始まります。', 
+      en: 'Most string figures in Japan start with this "Japanese Opening".' 
+    },
     premiumCourseId: 0, // 無料
     data: null
   },

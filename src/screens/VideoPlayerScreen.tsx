@@ -65,8 +65,6 @@ export interface VideoPlayerSharedProps {
   onReplay: () => Promise<void>;
   onPreviousChapter: () => Promise<void>;
   onRestartFromBeginning: () => Promise<void>;
-  onSlowerSpeed: () => Promise<void>;
-  onFasterSpeed: () => Promise<void>;
   onLandscapeToggle: () => Promise<void>;
   onToggleBookmark: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
@@ -113,10 +111,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         await handlePreviousChapter();
       } else if (keyword === 'もういちど' || keyword === 'replay') {
         await handleReplay();
-      } else if (keyword === 'ゆっくり' || keyword === 'slower') {
-        await handleSlowerSpeed();
-      } else if (keyword === 'はやく' || keyword === 'faster') {
-        await handleFasterSpeed();
       } else if (keyword === 'はじめから' || keyword === 'restart') {
         await handleRestartFromBeginning();
       }
@@ -361,50 +355,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  // 再生速度を遅くする関数
-  const handleSlowerSpeed = async () => {
-    if (!videoRef.current) return;
-    
-    try {
-      const status = await videoRef.current.getStatusAsync();
-      // 動画が再生中の場合は何もしない
-      if (status.isLoaded && status.isPlaying) {
-        return;
-      }
-      
-      const currentIndex = PLAYBACK_RATES.indexOf(playbackRate);
-      if (currentIndex > 0) {
-        const newRate = PLAYBACK_RATES[currentIndex - 1];
-        setPlaybackRate(newRate);
-        await videoRef.current.setRateAsync(newRate, true);
-      }
-    } catch (error) {
-      console.error('Error setting playback rate:', error);
-    }
-  };
-
-  // 再生速度を速くする関数
-  const handleFasterSpeed = async () => {
-    if (!videoRef.current) return;
-    
-    try {
-      const status = await videoRef.current.getStatusAsync();
-      // 動画が再生中の場合は何もしない
-      if (status.isLoaded && status.isPlaying) {
-        return;
-      }
-      
-      const currentIndex = PLAYBACK_RATES.indexOf(playbackRate);
-      if (currentIndex < PLAYBACK_RATES.length - 1) {
-        const newRate = PLAYBACK_RATES[currentIndex + 1];
-        setPlaybackRate(newRate);
-        await videoRef.current.setRateAsync(newRate, true);
-      }
-    } catch (error) {
-      console.error('Error setting playback rate:', error);
-    }
-  };
-
   // LandScapeボタンのハンドラー
   const handleLandscapeToggle = async () => {
     if (isTablet) return; // タブレットでは何もしない
@@ -452,8 +402,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     onReplay: handleReplay,
     onPreviousChapter: handlePreviousChapter,
     onRestartFromBeginning: handleRestartFromBeginning,
-    onSlowerSpeed: handleSlowerSpeed,
-    onFasterSpeed: handleFasterSpeed,
     onLandscapeToggle: handleLandscapeToggle,
     onToggleBookmark: handleToggleBookmark,
     getPlaybackRateDisplay,
