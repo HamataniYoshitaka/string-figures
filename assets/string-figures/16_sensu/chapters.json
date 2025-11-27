@@ -1,14 +1,23 @@
 [
     {
-        "subtitle": { "ja": "左手の親指と小指に糸をかけて始めます。手のひらの糸を中指にかけます", "en": "Chapter 1" }
+        "subtitle": { "ja": "左手の親指と小指に糸をかけて始めます。手のひらの糸を中指にかけます", "en": "Begin with the string on the left thumb and little finger. Place the palm string on the middle finger." }
     },
     {
-        "subtitle": { "ja": "輪の中に右手を下から入れ、左手の人差し指と薬指の前にある糸を、右手の人差し指と親指それぞれ掴み、右手を引きます", "en": "Chapter 2" }
+        "subtitle": { 
+            "ja": "輪の中に右手を下から入れ、左手の人差し指と薬指の前にある糸を、右手の人差し指と親指でそれぞれ掴み、右手を引きます", 
+            "en": "Insert the right hand up into the loop, grasp the strings in front of the left index and ring fingers with the right index finger and thumb respectively, and draw the right hand back." 
+        }
     },
     {
-        "subtitle": { "ja": "左手の人差し指、中指、薬指を、それぞれの指の前にある輪の中に上から入れます。右手の糸を左手の甲に回し、右手を離します", "en": "Chapter 3" }
+        "subtitle": { 
+            "ja": "左手の人差し指、中指、薬指を、それぞれの指の前にある輪の中に上から入れます。右手の糸を左手の甲に回し、右手を離します", 
+            "en": "Insert the left index, middle, and ring fingers down into the loops in front of each finger. Carry the right-hand strings over the back of the left hand, and release the right hand." 
+        }
     },
     {
-        "subtitle": { "ja": "右手の人差し指で、左手の小指と親指の糸をとり、下に引っ張って完成です", "en": "Chapter 3" }
+        "subtitle": { 
+            "ja": "右手の人差し指で、左手の小指と親指の糸をとり、下に引っ張って完成です", 
+            "en": "With the right index finger, pick up the left little-finger and thumb strings, pull them down, and complete the figure." 
+        }
     }
 ]

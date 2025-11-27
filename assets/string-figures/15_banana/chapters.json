@@ -1,23 +1,23 @@
 [
     {
-        "subtitle": { "ja": "中指の構えから始めます。両手の親指で、中指の向こう側の糸を下から取ります", "en": "Chapter 1" }
+        "subtitle": { "ja": "中指の構えから始めます。両手の親指で、中指の向こう側の糸を下から取ります", "en": "From Japanese Opening, with both thumbs pick up from below the far middle‐finger strings." }
     },
     {
-        "subtitle": { "ja": "両方の親指の上の糸を残したまま、親指同士を繋いでいる下の糸だけを外します", "en": "Chapter 2" }
+        "subtitle": { "ja": "両方の親指の上の糸を残したまま、親指同士を繋いでいる下の糸だけを外します", "en": "Keeping the upper thumb strings, release only the lower string connecting the two thumbs." }
     },
     {
-        "subtitle": { "ja": "両方の中指の向こう側の糸を小指にかけます", "en": "Chapter 3" }
+        "subtitle": { "ja": "両方の中指の向こう側の糸を小指にかけます", "en": "Place the far middle‐finger strings onto the little fingers." }
     },
     {
-        "subtitle": { "ja": "両方の小指の上の糸を残したまま、小指同士を繋いでいる下の糸だけを外します", "en": "Chapter 3" }
+        "subtitle": { "ja": "両方の小指の上の糸を残したまま、小指同士を繋いでいる下の糸だけを外します", "en": "Keeping the upper little‐finger strings, release only the lower string connecting the two little fingers." }
     },
     {
-        "subtitle": { "ja": "両方の中指の糸を外します", "en": "Chapter 3" }
+        "subtitle": { "ja": "両方の中指の糸を外します", "en": "Release both middle‐finger strings." }
     },
     {
-        "subtitle": { "ja": "両手を広げて、中央の結び目を絞めます", "en": "Chapter 3" }
+        "subtitle": { "ja": "両手を広げて、中央の結び目を絞めます", "en": "Draw both hands apart and tighten the central knot." }
     },
     {
-        "subtitle": { "ja": "糸を床に置いて完成です", "en": "Chapter 3" }
+        "subtitle": { "ja": "糸を床に置いて完成です", "en": "Lay the strings on the floor to complete the figure." }
     }
 ]

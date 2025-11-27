@@ -1,17 +1,20 @@
 [
     {
-        "subtitle": { "ja": "左手の親指に糸をかけ、親指の左の糸を中指にかけます", "en": "Chapter 1" }
+        "subtitle": { "ja": "左手の親指に糸をかけ、親指の左の糸を人差し指にかけます", "en": "Place the string on the left thumb, and move the left thumb’s left string over to the index finger." }
     },
     {
-        "subtitle": { "ja": "同じように、左の糸を取って中指、薬指、小指に順番にかけます", "en": "Chapter 2" }
+        "subtitle": { "ja": "同じように、左の糸を取って中指、薬指、小指に順番にかけます", "en": "In the same way, take the left string and place it in turn on the middle, ring, and little fingers." }
     },
     {
-        "subtitle": { "ja": "小指から垂れている2本の糸の左側の糸を右手で後ろから取り、薬指にかけます", "en": "Chapter 3" }
+        "subtitle": { 
+            "ja": "小指から垂れている2本の糸の左側の糸を右手で後ろから取り、薬指にかけます", 
+            "en": "With the right hand, take from behind the left of the two strings hanging from the little finger, and place it on the ring finger." 
+        }
     },
     {
-        "subtitle": { "ja": "垂れている2本の糸の右側の糸をとり、中指、人差し指、親指に順番にかけます", "en": "Chapter 4" }
+        "subtitle": { "ja": "垂れている2本の糸の右側の糸をとり、中指、人差し指、親指に順番にかけます", "en": "Take the right of the two hanging strings, and place it in turn on the middle, index, and thumb fingers." }
     },
     {
-        "subtitle": { "ja": "小指にかかっている輪を外し、親指から垂れている2本の糸を左に引くと全ての糸が外れます", "en": "Chapter 5" }
+        "subtitle": { "ja": "小指にかかっている輪を外し、親指から垂れている2本の糸を左に引くと全ての糸が外れます", "en": "Release the little-finger loop, and draw leftward the two strings hanging from the thumb to let all the strings fall away." }
     }
 ]
