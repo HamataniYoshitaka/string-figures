@@ -58,6 +58,7 @@ import { FIGURE_59_PADDLER_VIDEOS } from './figure-59_paddler';
 import { FIGURE_60_POSITION1_VIDEOS } from './figure-60_position1';
 import { FIGURE_61_OPENING_A_VIDEOS } from './figure-61_opening-a';
 import { FIGURE_64_A_MAN_FLEXING_HIS_BICEPS_VIDEOS } from './figure-64_a-man-flexing-his-biceps';
+import { FIGURE_62_JAPANESE_OPENING_VIDEOS } from './figure-62_japanese-opening';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -119,5 +120,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '59_paddler': FIGURE_59_PADDLER_VIDEOS,
   '60_position1': FIGURE_60_POSITION1_VIDEOS,
   '61_opening-a': FIGURE_61_OPENING_A_VIDEOS,
+  '62_japanese-opening': FIGURE_62_JAPANESE_OPENING_VIDEOS,
   '64_a-man-flexing-his-biceps': FIGURE_64_A_MAN_FLEXING_HIS_BICEPS_VIDEOS
 };

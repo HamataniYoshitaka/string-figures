@@ -19,6 +19,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { StringFigure } from '../types';
 import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon } from './icons';
 import { useOrientation } from '../hooks/useOrientation';
+import PreviewVideoPlayer from './PreviewVideoPlayer';
 
 interface Props {
   item: StringFigure | null;
@@ -185,7 +186,9 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
         <View style={styles.content}>
           {/* プレビュー動画エリア */}
           <View style={styles.imageContainer}>
-            {item.previewUrl ? (
+            {item.directory ? (
+              <PreviewVideoPlayer directory={item.directory} />
+            ) : item.previewUrl ? (
               <Video
                 source={typeof item.previewUrl === 'string' 
                   ? { uri: item.previewUrl } 
