@@ -1,6 +1,9 @@
 [
     {
-        "subtitle": { "ja": "はじめの構えから始めます。両手親指で小指の糸を上から取り、親指と小指に糸を巻き付けます", "en": "Begin with the string looped on both thumbs and little fingers. With both thumbs, move over and pick down the little-finger strings, winding them onto the thumbs and little fingers." }
+        "subtitle": { 
+            "ja": "はじめの構えから始めます。両手親指で小指の糸を上から取り、親指と小指に糸を巻き付けます", 
+            "en": "From \"Position 1\", with both thumbs, move over and pick down the little-finger strings, winding them onto the thumbs and little fingers." 
+        }
     },
     {
         "subtitle": { "ja": "両手親指で、小指の糸を下から取ります", "en": "With both thumbs, pick up from below the little-finger strings." }

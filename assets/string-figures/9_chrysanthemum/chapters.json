@@ -1,6 +1,9 @@
 [
     {
-        "subtitle": { "ja": "はじめの構えから始めます。右手の小指で、左手の手のひらにかかっている糸を上から取ります", "en": "Begin with the string looped on both thumbs and little fingers. With the right little finger, move over and pick down the palm string of the left hand." }
+        "subtitle": { 
+            "ja": "はじめの構えから始めます。右手の小指で、左手の手のひらにかかっている糸を上から取ります", 
+            "en": "Begin with \"Position 1\". With the right little finger, move over and pick down the palm string of the left hand." 
+        }
     },
     {
         "subtitle": { "ja": "左右の人差し指で、小指の手前の糸を下から取ります", "en": "With both index fingers, pick up from below the near little-finger strings." }

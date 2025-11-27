@@ -1,20 +1,23 @@
 [
     {
-        "subtitle": { "ja": "はじめの構えから始めて、左右の小指に糸を1周巻き付けます", "en": "Chapter 1" }
+        "subtitle": { 
+            "ja": "はじめの構えから始めて、左右の小指に糸を1周巻き付けます", 
+            "en": "From \"Position 1\", wind the little‐finger strings once around both little fingers." 
+        }
     },
     {
-        "subtitle": { "ja": "左右の親指に糸を1周巻き付けます", "en": "Chapter 2" }
+        "subtitle": { "ja": "左右の親指に糸を1周巻き付けます", "en": "Wind the thumb strings once around both thumbs." }
     },
     {
-        "subtitle": { "ja": "右手の薬指で、左手親指に巻き付いている輪をとります", "en": "Chapter 3" }
+        "subtitle": { "ja": "右手の薬指で、左手親指に巻き付いている輪をとります", "en": "With the right ring finger, pick up the loop wound around the left thumb." }
     },
     {
-        "subtitle": { "ja": "右手の人差し指指で、左手小指に巻き付いている輪をとります", "en": "Chapter 4" }
+        "subtitle": { "ja": "右手の人差し指で、左手小指に巻き付いている輪をとります", "en": "With the right index finger, pick up the loop wound around the left little finger." }
     },
     {
-        "subtitle": { "ja": "左手の薬指で、右手親指に巻き付いている輪をとります", "en": "Chapter 5" }
+        "subtitle": { "ja": "左手の薬指で、右手親指に巻き付いている輪をとります", "en": "With the left ring finger, pick up the loop wound around the right thumb." }
     },
     {
-        "subtitle": { "ja": "左手の人差し指で、右手小指に巻き付いている輪をとって完成です", "en": "Chapter 5" }
+        "subtitle": { "ja": "左手の人差し指で、右手小指に巻き付いている輪をとって完成です", "en": "With the left index finger, pick up the loop wound around the right little finger to complete the figure." }
     }
 ]

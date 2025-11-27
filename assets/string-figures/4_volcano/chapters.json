@@ -1,6 +1,9 @@
 [
       {
-        "subtitle": { "ja": "はじめの構えから始めます。左手親指に糸を1周巻き付けます", "en": "Begin with the string looped on both thumbs and little fingers. Wind the string once around the left thumb." }
+        "subtitle": { 
+          "ja": "はじめの構えから始めます。左手親指に糸を1周巻き付けます", 
+          "en": "From \"Position 1\", wind the string once around the left thumb." 
+        }
       },
       {
         "subtitle": { "ja": "左手親指の輪を、右手親指で下から取ります", "en": "With the right thumb, pick up the left thumb loop from below." }

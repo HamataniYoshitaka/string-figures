@@ -1,11 +1,17 @@
 [
     {
-        "subtitle": { "ja": "はじめの構えから始めます。右手の中指で左手のひらの糸を下からとり、1回転ねじります", "en": "Chapter 1" }
+        "subtitle": { 
+            "ja": "はじめの構えから始めます。右手の中指で左手のひらの糸を下からとり、1回転ねじります", 
+            "en": "From \"Position 1\", pick up the left palm string from below with the right middle finger, and twist it once." 
+        }
     },
     {
-        "subtitle": { "ja": "右手の中指の輪の中に左手の中指を上から入れ、右手のひらの糸を下からとります", "en": "Chapter 2" }
+        "subtitle": { 
+            "ja": "右手の中指の輪の中に左手の中指を上から入れ、右手のひらの糸を下からとります", 
+            "en": "Insert the left middle finger down into the right middle‐finger loop, and pick up the right palm string from below." 
+        }
     },
     {
-        "subtitle": { "ja": "右手の親指、小指の糸を外して完成です", "en": "Chapter 3" }
+        "subtitle": { "ja": "右手の親指、小指の糸を外して完成です", "en": "Release the right thumb and little‐finger strings to complete the figure." }
     }
 ]
