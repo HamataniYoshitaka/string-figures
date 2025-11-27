@@ -47,6 +47,7 @@ const CommercialCollection1: StringFigure = {
   description: { ja: '追加コレクションを見る', en: 'See Additional Collection.' },
   premiumCourseId: 1,
   directNavigationDestination: 'Additional',
+  data: null,
 };
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {

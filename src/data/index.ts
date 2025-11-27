@@ -657,6 +657,7 @@ export const stringFigures: StringFigure[] = [
     previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
     description: { ja: 'このアプリの操作方法の紹介です', en: 'Introduction to the operation of this app.' },
     premiumCourseId: 0,
+    directNavigationDestination: 'Intro',
     data: null
   },
 ];

@@ -1,4 +1,4 @@
-package com.anonymous.stringfigures
+package com.hamahouse.stringfigures
 
 import android.os.Build
 import android.os.Bundle

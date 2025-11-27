@@ -26,7 +26,7 @@ const chapters = [
     {
         title: { ja: 'このアプリの特徴', en: 'Features of this app' },
         subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に糸がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
-        video: {ja: require('../../assets/string-figures/0_introduction/intro1.mp4'), en: require('../../assets/string-figures/0_introduction/intro1-en.mp4')}
+        video: {ja: require('../../assets/string-figures/0_introduction/intro1-ja.mp4'), en: require('../../assets/string-figures/0_introduction/intro1-en.mp4')}
     },
     {
         title: { ja: '音声認識について', en: 'About voice recognition' },
@@ -34,17 +34,17 @@ const chapters = [
             ja: '音声認識とマイクの使用確認画面が出ますので、どちらも許可して下さい\n（音声の保存・収集は一切行なっておりません）', 
             en: 'Please allow both the voice recognition and microphone usage confirmation screens to appear.\n(We do not record or collect any audio.)'
         },
-        video: {ja: require('../../assets/string-figures/0_introduction/intro2.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-en.mp4')}
+        video: {ja: require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-ios-en.mp4')}
     },
     {
         title: { ja: 'マイクの利用許可', en: 'Permission to use microphone' },
         subtitle: { ja: '', en: '' },
-        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+        video: require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4')
     },
     {
         title: { ja: '', en: '' },
         subtitle: { ja: '', en: '' },
-        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+        video: require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4')
     },
 ];  
 
@@ -52,22 +52,22 @@ const chapters_android = [
     {
         title: { ja: 'このアプリの特徴', en: 'Features of this app' },
         subtitle: { ja: 'これは「あやとり」の取り方を解説するアプリです。\n両手の指に糸がかかったままでも\n画面に触らずに「声」で操作できます', en: 'This is an app that explains how to play "String figures". You can operate it by voice without touching the screen even if the string is caught on your fingers.' },
-        video: {ja: require('../../assets/string-figures/0_introduction/intro1.mp4'), en: require('../../assets/string-figures/0_introduction/intro1-en.mp4')}
+        video: {ja: require('../../assets/string-figures/0_introduction/intro1-ja.mp4'), en: require('../../assets/string-figures/0_introduction/intro1-en.mp4')}
     },
     {
         title: { ja: '音声認識について', en: 'About voice recognition'  },
         subtitle: { ja: 'マイクの使用確認画面が出ますので許可して下さい\n（音声の保存・収集は一切行なっておりません）', en: 'Please allow the microphone usage confirmation screen to appear.\n(We do not record or collect any audio.)' },
-        video: {ja: require('../../assets/string-figures/0_introduction/intro2-android.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-android-en.mp4')}
+        video: {ja: require('../../assets/string-figures/0_introduction/intro2-android-ja.mp4'), en: require('../../assets/string-figures/0_introduction/intro2-android-en.mp4')}
     },
     {
         title: { ja: 'マイクの利用許可', en: 'Permission to use microphone' },
         subtitle: { ja: '', en: '' },
-        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+        video: require('../../assets/string-figures/0_introduction/intro2-android-ja.mp4')
     },
     {
         title: { ja: '', en: '' },
         subtitle: { ja: '', en: '' },
-        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+        video: require('../../assets/string-figures/0_introduction/intro2-android-ja.mp4')
     },
 ];  
 

@@ -1,4 +1,4 @@
-package com.anonymous.stringfigures
+package com.hamahouse.stringfigures
 
 import android.app.Application
 import android.content.res.Configuration

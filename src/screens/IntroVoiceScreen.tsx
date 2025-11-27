@@ -27,12 +27,12 @@ const chapters = [
     {
         title: { ja: '', en: '' },
         subtitle: { ja: '', en: '' },
-        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+        video: require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4')
     },
     {
         title: { ja: '', en: '' },
         subtitle: { ja: '', en: '' },
-        video: require('../../assets/string-figures/0_introduction/intro2.mp4')
+        video: require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4')
     },
     {
         title: { ja: '音声テスト', en: 'Voice test' },
