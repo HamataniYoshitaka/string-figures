@@ -142,8 +142,8 @@ export const stringFigures: StringFigure[] = [
     directory: '14_footprint',
     ...ASSETS_MAP['14_footprint'],
     description: { 
-      ja: 'かわいい足跡ができます。大きさや色を変えて何個か並べるとより面白いでしょう', 
-      en: 'You can make cute footprints with this string figure. Lining up several of them with different sizes and colors will make it even more fun.' 
+      ja: 'かわいい足あとができます。大きさや色を変えて何個か並べるとより面白いでしょう。糸を二重にして取るのもおすすめです', 
+      en: 'You can make cute footprints with this string figure. Lining up several of them with different sizes and colors will make it even more fun. It is also recommended to take the string double.' 
     },
     premiumCourseId: 0, // 無料
     data: {
