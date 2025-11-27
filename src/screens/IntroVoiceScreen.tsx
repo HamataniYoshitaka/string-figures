@@ -11,6 +11,7 @@ import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import ProgressDots from '../components/ProgressDots';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
+import { Provider as PaperProvider, Snackbar } from 'react-native-paper';
 
 type IntroVoiceScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -53,6 +54,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentChapterIndex, setCurrentChapterIndex] = useState<number>(2);
     const [playbackPosition, setPlaybackPosition] = useState(0);
     const [videoDuration, setVideoDuration] = useState(0);
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
 
 
     // 音声認識フック
@@ -69,6 +71,10 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
           if (keyword === 'つぎ' || keyword === 'next') {
             await handleNextScreen();
           } 
+        },
+        onNetworkError: () => {
+          // ネットワークエラー時にSnackbarを表示
+          setSnackbarVisible(true);
         },
     });
 
@@ -198,122 +204,137 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     };    
 
 
+    // ネットワークエラーメッセージ
+    const networkErrorMessage = getLocalizedText({
+        ja: 'ネットワーク接続がありません。音声認識機能を使用できません。',
+        en: 'No network connection. Speech recognition is unavailable.',
+    });
+
     return (    
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <TouchableWithoutFeedback 
-                    onPress={onGoBack}
-                    onPressIn={createPressInHandler(backButtonScale)}
-                    onPressOut={createPressOutHandler(backButtonScale)}
-                >
-                    <Animated.View 
-                    style={[
-                        styles.backButton,
-                        { transform: [{ scale: backButtonScale }] }
-                    ]}
+        <PaperProvider>
+            <SafeAreaView style={styles.container}>
+                <View style={styles.header}>
+                    <TouchableWithoutFeedback 
+                        onPress={onGoBack}
+                        onPressIn={createPressInHandler(backButtonScale)}
+                        onPressOut={createPressOutHandler(backButtonScale)}
                     >
-                    <CloseIcon width={24} height={24} fillColor="#79716B" />
-                    </Animated.View>
-                </TouchableWithoutFeedback>
-                <Text style={[
-                    styles.title, 
-                    { 
-                        fontSize: isTablet ? 22 : 18,
-                        fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
-                    }
-                ]} numberOfLines={1}>
-                    {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
-                </Text>
-            </View>
-
-            {/* 動画エリア */}
-            <View style={[
-                styles.videoArea,
-                !isTablet && { paddingHorizontal: 0 },
-                (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape
-            ]}>
-                <View style={[
-                    styles.videoPlayer,
-                    !isTablet && { borderRadius: 0 },
-                ]}>
-                <Video
-                    key={`chapter-${currentChapterIndex}`}
-                    ref={videoRef}
-                    source={ currentLanguage === 'ja' ? chapters[currentChapterIndex].video.ja : chapters[currentChapterIndex].video.en }
-                    style={styles.video}
-                    resizeMode={ResizeMode.COVER}
-                    shouldPlay={false}
-                    isLooping={false}
-                    isMuted={true}
-                    useNativeControls={false}
-                    rate={playbackRate}
-                    onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-                    onLoad={handleVideoLoad}
-                />
-                
+                        <Animated.View 
+                        style={[
+                            styles.backButton,
+                            { transform: [{ scale: backButtonScale }] }
+                        ]}
+                        >
+                        <CloseIcon width={24} height={24} fillColor="#79716B" />
+                        </Animated.View>
+                    </TouchableWithoutFeedback>
+                    <Text style={[
+                        styles.title, 
+                        { 
+                            fontSize: isTablet ? 22 : 18,
+                            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                        }
+                    ]} numberOfLines={1}>
+                        {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
+                    </Text>
                 </View>
 
-                {/* 進捗バー */}
+                {/* 動画エリア */}
                 <View style={[
-                    styles.progressContainer,
+                    styles.videoArea,
+                    !isTablet && { paddingHorizontal: 0 },
+                    (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape
                 ]}>
-                <ProgressDots 
-                    chapters={chapters}
-                    currentChapterIndex={currentChapterIndex}
-                    getChapterProgress={getChapterProgress}
-                />
-                </View>
-
-            </View>
-
-            {/* 字幕エリア */}
-            <View style={styles.subtitleContainer}>
-                {(() => {
-                    const currentChapter = chapters[currentChapterIndex];
-                    const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
-                    const subtitle = getLocalizedText(currentChapter.subtitle);
+                    <View style={[
+                        styles.videoPlayer,
+                        !isTablet && { borderRadius: 0 },
+                    ]}>
+                    <Video
+                        key={`chapter-${currentChapterIndex}`}
+                        ref={videoRef}
+                        source={ currentLanguage === 'ja' ? chapters[currentChapterIndex].video.ja : chapters[currentChapterIndex].video.en }
+                        style={styles.video}
+                        resizeMode={ResizeMode.COVER}
+                        shouldPlay={false}
+                        isLooping={false}
+                        isMuted={true}
+                        useNativeControls={false}
+                        rate={playbackRate}
+                        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+                        onLoad={handleVideoLoad}
+                    />
                     
-                    return (
-                        <>
-                            {title && (
-                                <View style={styles.titleContainer}>
-                                    <Text style={styles.stepNumber}>
-                                        Step {currentChapterIndex + 1}
-                                    </Text>
-                                    <Text style={styles.stepTitle}>
-                                        {title}
-                                    </Text>
-                                </View>
-                            )}
-                            {subtitle && (
-                                <Text style={styles.subtitleText}>
-                                    {subtitle}
-                                </Text>
-                            )}
-                        </>
-                    );
-                })()}
-            </View>
+                    </View>
 
-            <View style={styles.voiceFallbackCard}>
-                <View style={styles.voiceFallbackHeader}>
-                    <View style={styles.voiceFallbackDivider} />
-                    <Text style={styles.voiceFallbackHeaderText}>{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
-                    <View style={styles.voiceFallbackDivider} />
+                    {/* 進捗バー */}
+                    <View style={[
+                        styles.progressContainer,
+                    ]}>
+                    <ProgressDots 
+                        chapters={chapters}
+                        currentChapterIndex={currentChapterIndex}
+                        getChapterProgress={getChapterProgress}
+                    />
+                    </View>
+
                 </View>
 
-                <View style={styles.voiceFallbackDescription}>
-                    <Text style={styles.voiceFallbackDescriptionText}>{getLocalizedText({ja: 'あなたの声に反応しないですか？', en: 'Is your voice not responding?'})}</Text>
-                    <Text style={styles.voiceFallbackDescriptionText}>{getLocalizedText({ja: 'このアプリは音声認識無しでも楽しむことができます', en: 'This app can be enjoyed without voice recognition'})}</Text>
+                {/* 字幕エリア */}
+                <View style={styles.subtitleContainer}>
+                    {(() => {
+                        const currentChapter = chapters[currentChapterIndex];
+                        const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
+                        const subtitle = getLocalizedText(currentChapter.subtitle);
+                        
+                        return (
+                            <>
+                                {title && (
+                                    <View style={styles.titleContainer}>
+                                        <Text style={styles.stepNumber}>
+                                            Step {currentChapterIndex + 1}
+                                        </Text>
+                                        <Text style={styles.stepTitle}>
+                                            {title}
+                                        </Text>
+                                    </View>
+                                )}
+                                {subtitle && (
+                                    <Text style={styles.subtitleText}>
+                                        {subtitle}
+                                    </Text>
+                                )}
+                            </>
+                        );
+                    })()}
                 </View>
 
-                <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={onSkip}>
-                    <Text style={styles.voiceFallbackButtonText}>{getLocalizedText({ja: 'このまま次に進む', en: 'Skip to next'})}</Text>
-                </TouchableOpacity>
-            </View>
-            
-        </SafeAreaView>
-        
+                <View style={styles.voiceFallbackCard}>
+                    <View style={styles.voiceFallbackHeader}>
+                        <View style={styles.voiceFallbackDivider} />
+                        <Text style={styles.voiceFallbackHeaderText}>{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
+                        <View style={styles.voiceFallbackDivider} />
+                    </View>
+
+                    <View style={styles.voiceFallbackDescription}>
+                        <Text style={styles.voiceFallbackDescriptionText}>{getLocalizedText({ja: 'あなたの声に反応しないですか？', en: 'Is your voice not responding?'})}</Text>
+                        <Text style={styles.voiceFallbackDescriptionText}>{getLocalizedText({ja: 'このアプリは音声認識無しでも楽しむことができます', en: 'This app can be enjoyed without voice recognition'})}</Text>
+                    </View>
+
+                    <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={onSkip}>
+                        <Text style={styles.voiceFallbackButtonText}>{getLocalizedText({ja: 'このまま次に進む', en: 'Skip to next'})}</Text>
+                    </TouchableOpacity>
+                </View>
+                
+            </SafeAreaView>
+            <Snackbar
+                visible={snackbarVisible}
+                onDismiss={() => setSnackbarVisible(false)}
+                duration={4000}
+                style={{ position: 'absolute', top: 0, left: 0, right: 0 }}
+            >
+                {networkErrorMessage}
+            </Snackbar>
+        </PaperProvider>
     );
 }
 

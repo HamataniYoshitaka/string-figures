@@ -159,6 +159,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
       description: { ja: 'このアプリの操作方法の紹介です', en: 'Introduction to the operation of this app.' },
       premiumCourseId: 0,
+      data: null,
     },
     {
       id: '4',
@@ -168,6 +169,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['4_volcano'],
       description: { ja: '火山の説明文です。', en: 'Description for Volcano.' },
       premiumCourseId: 2,
+      data: null,
     },
     {
       id: '2',
@@ -177,6 +179,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['2_jacobs-ladder4'],
       description: { ja: '日本では中指を主に使う「4段ばしご」、世界では人差し指を使う「ヤコブの梯子」という名前で知られています。ここでは中指を使って取る方法を紹介します', en: 'Description for Jacob\'s Ladder.' },
       premiumCourseId: 0,
+      data: null,
     },
     {
       id: '1',
@@ -186,6 +189,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['1_star'],
       description: { ja: '手のひらにかわいい星ができます。短め、太めの紐を使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
 
     {
@@ -196,6 +200,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['5_many-stars'],
       description: { ja: 'たくさんの星の説明文です。', en: 'Description for Many Stars.' },
       premiumCourseId: 0,
+      data: null,
     },
     {
       id: '8',
@@ -205,6 +210,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['8_elastic-band'],
       description: { ja: 'ゴムの説明文です。', en: 'Description for Elastic Band.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '9',
@@ -214,6 +220,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['9_chrysanthemum'],
       description: { ja: '菊の説明文です。', en: 'Description for Chrysanthemum.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '10',
@@ -223,6 +230,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['10_magic-fingers'],
       description: { ja: '指ぬきの説明文です。', en: 'Description for Magic Fingers.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '11',
@@ -232,6 +240,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['11_wink'],
       description: { ja: 'ウインクの説明文です。', en: 'Description for Wink.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '12',
@@ -241,6 +250,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['12_9-diamonds'],
       description: { ja: '9つダイヤの説明文です。', en: 'Description for Nine Diamonds.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '13',
@@ -250,6 +260,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['13_easy-broom'],
       description: { ja: 'かんたんほうきの説明文です。', en: 'Description for Easy Broom.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '14',
@@ -259,6 +270,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['14_footprint'],
       description: { ja: '足あとの説明文です。', en: 'Description for Footprint.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '15',
@@ -268,6 +280,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['15_banana'],
       description: { ja: 'バナナの説明文です。', en: 'Description for Banana.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '16',
@@ -277,6 +290,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['16_sensu'],
       description: { ja: '扇子の説明文です。', en: 'Description for Sensu.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '17',
@@ -286,6 +300,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['17_broom'],
       description: { ja: 'ほうきの説明文です。', en: 'Description for Broom.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '18',
@@ -295,6 +310,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['18_mt-fuji'],
       description: { ja: '富士山の説明文です。', en: 'Description for Mt. Fuji.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '19',
@@ -304,6 +320,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['19_two-chiefs'],
       description: { ja: '二人の首長の説明文です。', en: 'Description for Two Chiefs.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '20',
@@ -313,15 +330,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['20_tuzumi'],
       description: { ja: 'つづみの説明文です。', en: 'Description for Tuzumi.' },
       premiumCourseId: 0, // 無料
-    },
-    {
-      id: '21',
-      name: { ja: '菊水', en: 'Kikusui' },
-      difficulty: 'medium',
-      directory: '21_kikusui',
-      ...ASSETS_MAP['21_kikusui'],
-      description: { ja: '菊水の説明文です。', en: 'Description for Kikusui.' },
-      premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '22',
@@ -331,6 +340,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['22_spear'],
       description: { ja: 'やり投げの説明文です。', en: 'Description for Spear.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '23',
@@ -340,6 +350,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['23_finger-stroll'],
       description: { ja: '指の散歩の説明文です。', en: 'Description for Finger Stroll.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '24',
@@ -349,6 +360,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['24_shooting-star'],
       description: { ja: '流れ星の説明文です。', en: 'Description for Shooting Star.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '25',
@@ -358,15 +370,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['25_fingers-magic'],
       description: { ja: '指ぬきの説明文です。', en: 'Description for Fingers Magic.' },
       premiumCourseId: 0, // 無料
-    },
-    {
-      id: '26',
-      name: { ja: 'ハンモック', en: 'Hammock' },
-      difficulty: 'easy',
-      directory: '26_hammock',
-      ...ASSETS_MAP['26_hammock'],
-      description: { ja: 'ハンモックの説明文です。', en: 'Description for Hammock.' },
-      premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '27',
@@ -376,6 +380,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['27_fish'],
       description: { ja: 'さかなの説明文です。', en: 'Description for Fish.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '28',
@@ -385,6 +390,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['28_atanua-house'],
       description: { ja: 'アタヌアの家の説明文です。', en: 'Description for Atanua House.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '29',
@@ -394,6 +400,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['29_two-fishes'],
       description: { ja: '二匹の魚の説明文です。', en: 'Description for Two Fishes.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
     {
       id: '30',
@@ -403,6 +410,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       ...ASSETS_MAP['30_star'],
       description: { ja: '星の説明文です。', en: 'Description for Star.' },
       premiumCourseId: 0, // 無料
+      data: null,
     },
   ]; // あやとりデータの配列
 
@@ -442,7 +450,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#F7F5F2',
   },
 
   header: {

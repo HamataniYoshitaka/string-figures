@@ -213,12 +213,15 @@ const styles = StyleSheet.create({
     controlsContainer: {
         paddingHorizontal: 24,
         paddingBottom: 32,
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     controlButton: {
         alignItems: 'center',
         justifyContent: 'center',
-        minWidth: 80,
+        minWidth: 160,
         paddingVertical: 12,
+        paddingHorizontal: 40,
         gap: 10,
     },
     buttonContainer: {
@@ -234,7 +237,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: '#FFFFFF',
         paddingVertical: 12,
-        paddingHorizontal: 32,
+        paddingHorizontal: 64,
         alignSelf: 'stretch',
     },
     startButtonText: {
