@@ -5,6 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 import { Video, AVPlaybackStatus } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
+import { Provider as PaperProvider, Snackbar } from 'react-native-paper';
 
 import { RootStackParamList, Chapter } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
@@ -93,6 +94,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const replayButtonRef = useRef<ReplayButtonRef>(null);
   const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
 
   // 音声認識フック
   const {
@@ -114,6 +116,10 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       } else if (keyword === 'はじめから' || keyword === 'restart') {
         await handleRestartFromBeginning();
       }
+    },
+    onNetworkError: () => {
+      // ネットワークエラー時にSnackbarを表示
+      setSnackbarVisible(true);
     },
   });
 
@@ -414,10 +420,28 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // それ以外はVideoPlayerPortrait
   const shouldUseLandscape = !isTablet && isDeviceLandscape;
   
-  return shouldUseLandscape ? (
-    <VideoPlayerLandscape {...sharedProps} />
-  ) : (
-    <VideoPlayerPortrait {...sharedProps} />
+  // ネットワークエラーメッセージ
+  const networkErrorMessage = getLocalizedText({
+    ja: 'ネットワーク接続がありません。音声認識機能を使用できません。',
+    en: 'No network connection. Speech recognition is unavailable.',
+  });
+  
+  return (
+    <PaperProvider>
+      {shouldUseLandscape ? (
+        <VideoPlayerLandscape {...sharedProps} />
+      ) : (
+        <VideoPlayerPortrait {...sharedProps} />
+      )}
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={4000}
+        style={{ position: 'absolute', top: -200, left: 0, right: 0 }}
+      >
+        {networkErrorMessage}
+      </Snackbar>
+    </PaperProvider>
   );
 };
 

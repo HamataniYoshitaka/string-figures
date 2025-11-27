@@ -1,6 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { Platform, NativeModules } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   ExpoSpeechRecognitionModule,
   useSpeechRecognitionEvent,
@@ -9,6 +7,8 @@ import {
 interface UseSpeechRecognitionProps {
   /** 音声認識でキーワードが検出された時のコールバック */
   onKeywordDetected?: (keyword: string) => void;
+  /** ネットワークエラーが発生した時のコールバック */
+  onNetworkError?: () => void;
   /** アプリの言語設定 */
   language?: 'ja' | 'en';
   /** 音声認識の無活動時間（ミリ秒）。この時間経過後に自動再起動（デフォルト: 20000） */
@@ -45,6 +45,7 @@ interface UseSpeechRecognitionReturn {
  */
 export const useSpeechRecognition = ({
   onKeywordDetected,
+  onNetworkError,
   language = 'ja',
   inactivityTimeout = 20000,
   pauseAfterKeywords = 1500,
@@ -296,6 +297,13 @@ export const useSpeechRecognition = ({
       console.log('音声認識停止に伴う予期されるエラー (無視):', event.error);
     } else {
       console.error('音声認識エラー:', event.error);
+      
+      // ネットワーク関連のエラーを検出
+      const networkErrors = ['network', 'network-timeout', 'no-match'];
+      if (networkErrors.includes(event.error)) {
+        console.log('ネットワークエラーを検出:', event.error);
+        onNetworkError?.();
+      }
     }
     setRecognizing(false);
   });

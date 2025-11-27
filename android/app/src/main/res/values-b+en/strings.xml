@@ -1,3 +1,4 @@
 <resources>
+  <string name="messages">"[object Object]"</string>
   <string name="app_name">"String Figures"</string>
 </resources>

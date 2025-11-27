@@ -4,5 +4,8 @@
     "NSSpeechRecognitionUsageDescription": "This app uses speech recognition to operate the video.",
     "NSMicrophoneUsageDescription": "This app needs access to the microphone to use speech recognition."
   },
-  "android": { "app_name": "String Figures" }
+  "android": { "app_name": "String Figures" },
+  "messages": {
+    "networkError": "No network connection. Speech recognition is unavailable."
+  }
 }
