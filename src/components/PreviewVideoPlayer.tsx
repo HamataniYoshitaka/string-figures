@@ -59,7 +59,7 @@ const PreviewVideoPlayer: React.FC<Props> = ({ directory }) => {
   // 次の動画の読み込み完了を検知
   const handleNextVideoLoad = () => {
     setIsNextVideoReady(true);
-    // 次の動画を再生開始
+    // 次の動画を再生開始（読み込み完了後すぐに再生）
     if (nextVideoRef.current) {
       nextVideoRef.current.playAsync();
     }
@@ -69,25 +69,36 @@ const PreviewVideoPlayer: React.FC<Props> = ({ directory }) => {
   const handleNextPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
     if (!status.isLoaded) return;
 
-    // 次の動画が再生開始したら、現在の動画を非表示にして次の動画を表示
+    // 次の動画が再生開始し、実際にフレームが表示できる状態（positionMillis > 0）になったら
+    // 前の動画を非表示にして切り替え
     if (status.isPlaying && !isNextVideoPlaying) {
-      setIsNextVideoPlaying(true);
-      // 現在の動画を停止
-      if (currentVideoRef.current) {
-        currentVideoRef.current.pauseAsync();
+      // positionMillisが0より大きい = 実際にフレームが表示されている
+      if (status.positionMillis && status.positionMillis > 0) {
+        setIsNextVideoPlaying(true);
+        
+        // 次の動画が確実に表示されているので、前の動画を非表示にする
+        // 次のフレームで切り替え
+        requestAnimationFrame(() => {
+          // 現在の動画を停止
+          if (currentVideoRef.current) {
+            currentVideoRef.current.pauseAsync();
+          }
+          // 次の動画を現在の動画に切り替え
+          setCurrentVideoIndex(nextVideoIndex!);
+          setNextVideoIndex(null);
+          setIsNextVideoReady(false);
+          setIsNextVideoPlaying(false);
+        });
       }
-      // 次の動画を現在の動画に切り替え
-      setCurrentVideoIndex(nextVideoIndex!);
-      setNextVideoIndex(null);
-      setIsNextVideoReady(false);
-      setIsNextVideoPlaying(false);
     }
   };
 
   // 現在の動画が表示されているかどうか
+  // 次の動画が再生開始してpositionMillis > 0になったら、前の動画を非表示にする
   const isCurrentVideoVisible = nextVideoIndex === null || !isNextVideoPlaying;
   // 次の動画が表示されているかどうか
-  const isNextVideoVisible = nextVideoIndex !== null && isNextVideoPlaying;
+  // 次の動画が読み込まれたらすぐに表示（opacity: 1）にして、前の動画の上に重ねる
+  const isNextVideoVisible = nextVideoIndex !== null && isNextVideoReady;
 
   return (
     <View style={styles.container}>
