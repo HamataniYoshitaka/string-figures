@@ -311,6 +311,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       if (item.directNavigationDestination === 'Additional') {
         navigation.navigate('Additional');
       }
+      if (item.directNavigationDestination === 'Policy') {
+        navigation.navigate('Policy');
+      }
       if (item.directNavigationDestination === 'Intro') {
         navigation.navigate('IntroVideo', { currentLanguage: currentLanguage });
       }
@@ -381,6 +384,13 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         setTimeout(() => {
           showLanguageActionSheet();
         }, 300);
+      },
+    },
+    {
+      id: 'policy',
+      label: currentLanguage === 'ja' ? 'このアプリについて' : 'About this app',
+      onPress: () => {
+        navigation.navigate('Policy');
       },
     },
     {

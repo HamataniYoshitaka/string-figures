@@ -390,6 +390,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 24,
         justifyContent: 'center',
+        maxWidth: 560,
+        marginHorizontal: 'auto',
     },
     titleContainer: {
         flexDirection: 'row',

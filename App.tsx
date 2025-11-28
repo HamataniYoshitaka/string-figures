@@ -17,6 +17,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
 import IntroCompleteScreen from './src/screens/IntroCompleteScreen';
 import AdditionalScreen from './src/screens/AdditionalScreen';
+import PolicyScreen from './src/screens/PolicyScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -85,6 +86,7 @@ export default function App() {
               }}
             />
             <Stack.Screen name="Additional" component={AdditionalScreen} />
+            <Stack.Screen name="Policy" component={PolicyScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </BottomSheetModalProvider>

@@ -7,7 +7,6 @@ import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon } from '../components/icons';
-import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import PurchaseButton from '../components/PurchaseButton';
 
 type AdditionalScreenNavigationProp = StackNavigationProp<

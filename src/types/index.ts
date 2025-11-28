@@ -44,4 +44,5 @@ export type RootStackParamList = {
   Home: undefined;
   VideoPlayer: { stringFigure: StringFigure, currentLanguage: 'ja' | 'en' };
   Additional: undefined;  
+  Policy: undefined;
 };
