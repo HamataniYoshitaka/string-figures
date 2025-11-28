@@ -106,12 +106,12 @@ export const stringFigures: StringFigure[] = [
     directory: '5_many-stars',
     ...ASSETS_MAP['5_many-stars'],
     description: { 
-      ja: 'アメリカのナバホ族に伝わるあやとりです。複雑な模様が、満天の星のきらめきを美しく表現します。', 
+      ja: '北アメリカのナバホ族に伝わるあやとりです。複雑な模様が、満天の星のきらめきを美しく表現します。', 
       en: 'This string figure comes from the Navajo people of the United States. Its intricate pattern beautifully expresses the sparkle of a star-filled sky.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: 'アメリカ', en: 'United States' },
+      region: { ja: '北アメリカ', en: 'North America' },
       source: 'A. C. Haddon, <i>A Few American String Figures and Tricks</i>, 1903',
       author: null,
       references: null
@@ -364,9 +364,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '26_hammock',
     ...ASSETS_MAP['26_hammock'],
-    description: { ja: 'ハンモックの説明文です。', en: 'Description for Hammock.' },
+    description: { 
+      ja: 'あやとりが完成した状態が、左右の手の形も含めて赤ちゃんを寝かしつけている動きになる、愛らしいあやとりです', 
+      en: 'This charming string figure depicts the motion of rocking a baby to sleep, including the posture of both hands once the figure is finished.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'ハワイ', en: 'Hawaii' },
+      source: 'L. A. Dickey,<i>String Figures from Hawaii</i>, 1928',
+      author: null,
+      references: null
+    }
   },
   {
     id: '27',
@@ -448,13 +456,21 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '35',
-    name: { ja: '1段ばしご', en: '1 Ladder' },
+    name: { ja: '1段ばしご', en: 'One Diamond' },
     difficulty: 'medium',
     directory: '35_jacobs-ladder1',
     ...ASSETS_MAP['35_jacobs-ladder1'],
-    description: { ja: '1段ばしごの説明文です。', en: 'Description for 1 Ladder.' },
+    description: { 
+      ja: '最も有名なあやとり「4段ばしご」の1段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います', 
+      en: 'This is the single-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.”' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'ハワイ、日本、他', en: 'Japan, Hawaii, etc.' },
+      source: 'L. A. Dickey,<i>String Figures from Hawaii</i>, 1928',
+      author: null,
+      references: null
+    }
     },
   {
     id: '36',
@@ -462,9 +478,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '36_jacobs-ladder2',
     ...ASSETS_MAP['36_jacobs-ladder2'],
-    description: { ja: '2段ばしごの説明文です。', en: 'Description for 2 Ladder.' },
+    description: { 
+      ja: '最も有名なあやとり「4段ばしご」の2段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います', 
+      en: 'This is the two-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.”' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
+      source: 'C. F. Jayne,<i>String Figures</i>, 1906',
+      author: null,
+      references: null
+    }
     },
   { 
     id: '37',
@@ -472,9 +496,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '37_jacobs-ladder3',
     ...ASSETS_MAP['37_jacobs-ladder3'],
-    description: { ja: '3段ばしごの説明文です。', en: 'Description for 3 Ladder.' },
+    description: { 
+      ja: '最も有名なあやとり「4段ばしご」の3段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います', 
+      en: 'This is the three-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.”' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'ハワイ、日本、他', en: 'Hawaii, Japan, etc.' },
+      source: 'L. A. Dickey,<i>String Figures from Hawaii</i>, 1928',
+      author: null,
+      references: null
+    }
     },
   {
     id: '2',
@@ -487,7 +519,12 @@ export const stringFigures: StringFigure[] = [
       en: 'This is a famous string figure widely known all over the world. Here, we introduce the method using the middle fingers, which is common in Japan.' 
     },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
+      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      author: null,
+      references: null
+    }
     },
   { 
     id: '38',
@@ -515,19 +552,35 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '39_the-sun',
     ...ASSETS_MAP['39_the-sun'],
-    description: { ja: '太陽の説明文です。', en: 'Description for The Sun.' },
+    description: { 
+      ja: '同じ出来上がりのパターンなるあやとりが、様々な名称で世界中に伝承されています。ここではナウルに伝わる手順を紹介します', 
+      en: 'String figures with the same final pattern are passed down around the world under various names. Here, we present the version traditionally taught in Nauru.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'ミクロネシア、オーストラリア、他', en: 'Micronesia, Australia, etc.' },
+      source: 'P. Hambruch, <i>Nauru</i>, 1914 ',
+      author: null,
+      references: null
+    }
     },
   {
     id: '40',
-    name: { ja: '山の上の月', en: 'Moon Over Mountain' },
+    name: { ja: '山の上のお月さん', en: 'The Moon on the Mountain' },
     difficulty: 'medium',
     directory: '40_moon-over-mountain',
     ...ASSETS_MAP['40_moon-over-mountain'],
-    description: { ja: '山の上の月の説明文です。', en: 'Description for Moon Over Mountain.' },
+    description: { 
+      ja: '山の頂上に大きな月が昇ってくる、日本の伝承あやとりです。両手を広げることで、月が小さくなりながら高く昇っていきます', 
+      en: 'This is a traditional Japanese string figure depicting a large moon rising over the mountaintop. As you spread your hands apart, the moon becomes smaller and rises higher into the sky.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: 'さいとうたま, <i>あやとりいととり 2</i>, 1982 ',
+      author: null,
+      references: null
+    }
     },
   { 
     id: '41',
@@ -535,19 +588,32 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '41_dandelion',
     ...ASSETS_MAP['41_dandelion'],
-    description: { ja: 'たんぽぽの説明文です。', en: 'Description for Dandelion.' },
+    description: { ja: '日本の伝承あやとり「菊」と似ていますが、花弁が10枚あり、手順も簡単です', en: 'Description for Dandelion.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: null,
+      source: '夏堀謹二郎, <i>日本の綾取</i>, 1986',
+      author: { ja: '夏堀謹二郎', en: 'NATSUBORI Kinjiro' },
+      references: null
+    }
     },
   {
     id: '42',
-    name: { ja: 'アパッチの扉', en: 'Apache Door' },
+    name: { ja: 'テントの幕', en: 'A Tent Flap' },
     difficulty: 'medium',
     directory: '42_apaches-door',
     ...ASSETS_MAP['42_apaches-door'],
-    description: { ja: 'アパッチの扉の説明文です。', en: 'Description for Apache Door.' },
+    description: { 
+      ja: '複雑で美しいパターンが出来上がりますが、手順は意外と短いです。北アメリカのアパッチ族の伝統的な住居「ティーピー」の入り口に掛ける幕を表しています', 
+      en: 'It creates a complex and beautiful pattern, yet the sequence of steps is surprisingly short. It represents the curtain hung at the entrance of a “teepee,” the traditional dwelling of the Apache people of North America.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北アメリカ', en: 'North America' },
+      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      author: null,
+      references: null
+    }
     },
   {
     id: '43',
@@ -555,9 +621,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'hard',
     directory: '43_trampoline',
     ...ASSETS_MAP['43_trampoline'],
-    description: { ja: 'トランポリンの説明文です。', en: 'Description for Trampoline.' },
+    description: { 
+      ja: 'ナイジェリアやシエラレオネなどで伝承されているあやとりです。10本の指を全て使った複雑なパターンが出来上がりますが、最後に親指と小指から糸を外すことで一瞬で最初の状態に戻ります。', 
+      en: 'This string figure is traditionally practiced in regions including Nigeria and Sierra Leone. It forms a complex design that uses all ten fingers, yet with a simple motion—releasing the strings from your thumbs and little fingers—it snaps back to its starting form in an instant.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'アフリカ', en: 'Africa' },
+      source: 'J. Parkinson, <i>Yöruba String Figures</i>, 1906',
+      author: null,
+      references: null
+    }
     },
   {
     id: '44',
@@ -565,19 +639,34 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '44_butterfly',
     ...ASSETS_MAP['44_butterfly'],
-    description: { ja: '蝶の説明文です。', en: 'Description for Butterfly.' },
+    description: { 
+      ja: 'ナバホ族に伝わるあやとりです。渦巻きで蝶の口吻を表している珍しいあやとりです。親指と人差し指を開閉することで蝶が羽ばたきます', 
+      en: 'This string figure comes from the Navajo people. Its spiral design represents the butterfly’s proboscis, making it quite a unique figure. By opening and closing your thumbs and index fingers, the butterfly appears to flap its wings.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北アメリカ', en: 'North America' },
+      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      author: null,
+      references: null
+    }
   },
   {
     id: '45',
-    name: { ja: 'ハンモック', en: 'Hammock' },
+    name: { ja: 'あみ', en: 'Hammock' },
     difficulty: 'medium',
     directory: '45_hammock',
     ...ASSETS_MAP['45_hammock'],
-    description: { ja: 'ハンモックの説明文です。', en: 'Description for Hammock.' },
+    description: { 
+      ja: '対照的で美しい形のあやとりです。日本では「あみ」という名前で知られ、ここから「琴」「バリカン」とあやとりが続きます',
+      en: 'This string figure has a strikingly symmetrical and elegant shape. In Japan, it is called “Ami,” and from it you can continue on to the figures “Koto” and “Barikan.”'
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '野口広, <i>あやとり</i>, 1973',
+      author: null,
+      references: null
+    }
   },
   {
     id: '46',
@@ -585,9 +674,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '46_rabit',
     ...ASSETS_MAP['46_rabit'],
-    description: { ja: 'うさぎの説明文です。', en: 'Description for Rabbit.' },
+    description: { 
+      ja: 'うさぎの顔の特徴を捉えた、愛らしい形のあやとりです。北アメリカのクラマス族に伝わるあやとりです', 
+      en: 'This charming string figure captures the distinctive features of a rabbit’s face. It comes from the Klamath people of North America.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北アメリカ', en: 'North America' },
+      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      author: null,
+      references: null
+    }
   },
   {
     id: '47',
@@ -595,9 +692,16 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '47_turtle',
     ...ASSETS_MAP['47_turtle'],
-    description: { ja: 'かめの説明文です。', en: 'Description for Turtle.' },
+    description: { 
+      ja: 'かめの形が見事に表現されたあやとりです。最後に手から糸を外すことであやとりが完成します', 
+      en: 'This is a wonderfully crafted string figure that depicts a turtle. To finish, you release the strings from your hands, revealing the completed figure.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'パプアニューギニア', en: 'Papua New Guinea' },
+      source: '野口広, <i>あやとり 続々</i>, 1975  ',
+      author: null,
+      references: null
+    }
   },
   {
     id: '48',
