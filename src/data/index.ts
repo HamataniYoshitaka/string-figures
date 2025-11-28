@@ -77,7 +77,10 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '3_spiderweb',
     ...ASSETS_MAP['3_spiderweb'],
-    description: { ja: '蜘蛛の巣の説明文です。', en: 'Description for Spiderweb.' },
+    description: { 
+      ja: '放射状の形が綺麗なあやとりです。紐を二重にすることで、よりバランスの取れた形を作りやすくなります', 
+      en: 'A beautiful string figure with a radial shape. By doubling the string, you can make it even more beautiful.' 
+    },
     premiumCourseId: 1, // 有料コース1
     data: null
   },
@@ -87,9 +90,14 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'hard',
     directory: '4_volcano',
     ...ASSETS_MAP['4_volcano'],
-    description: { ja: '噴火する火山を立体的に表現した見事なあやとりです', en: 'A beautiful string figure that represents a volcano erupting.' },
+    description: { ja: '中央の六角錐とその頂点を引き上げる糸を用いて、噴火する火山を立体的に表現した見事なあやとりです', en: 'This impressive string figure represents an erupting volcano in three dimensions, using a central hexagonal pyramid and the thread that lifts its peak.' },
     premiumCourseId: 2, // 有料コース2
-    data: null
+    data: {
+      region: { ja: 'パタゴニア', en: 'Patagonia' },
+      source: 'R. Martínez-Crovetto, <i>Juegos de Hilo de los Aborígenes del Norte de Patagonia</i>, 1970 ',
+      author: null,
+      references: null
+    }
   },
   {
     id: '5',
@@ -97,19 +105,35 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '5_many-stars',
     ...ASSETS_MAP['5_many-stars'],
-    description: { ja: '複雑な模様が、満天の星のきらめきを美しく表現します。', en: 'A complex pattern beautifully represents the sparkle of a star-filled sky.' },
+    description: { 
+      ja: 'アメリカのナバホ族に伝わるあやとりです。複雑な模様が、満天の星のきらめきを美しく表現します。', 
+      en: 'This string figure comes from the Navajo people of the United States. Its intricate pattern beautifully expresses the sparkle of a star-filled sky.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'アメリカ', en: 'United States' },
+      source: 'A. C. Haddon, <i>A Few American String Figures and Tricks</i>, 1903',
+      author: null,
+      references: null
+    }
   },
   {
     id: '7',
-    name: { ja: 'カタツムリ', en: 'Snail' },
+    name: { ja: 'かたつむり', en: 'Snail' },
     difficulty: 'easy',
     directory: '7_snail',
     ...ASSETS_MAP['7_snail'],
-    description: { ja: '小さなかわいいカタツムリが出来上がります', en: 'A small and cute snail is completed.' },
+    description: { 
+      ja: '小さなかわいいかたつむりが出来上がります。両手を振って糸をぐるぐる巻きつけるという、ちょっと変わった手順があります', 
+      en: 'The result is a small, charming snail. One of the steps is a bit unusual—you swing both hands and wind the string around in a circular motion.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: null,
+      source: '有木昭久, 湯浅清四郎, <i>世界のあやとり傑作選</i>, 1974 ',
+      author: { ja: '有木昭久', en: 'ARIKI Teruhisa' },
+      references: null
+    }
   },
   {
     id: '8',
@@ -117,9 +141,20 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '8_elastic-band',
     ...ASSETS_MAP['8_elastic-band'],
-    description: { ja: '糸が伸び縮みしているように見えるあやとりです', en: 'A string figure that looks like a rubber band is stretched and contracted.' },
+    description: { 
+      ja: '世界各地に伝わるあやとりです。糸が伸び縮みしているように見えます', 
+      en: 'This string figure is popular around the world. It looks like a rubber band that stretches and contracts.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { 
+        ja: 'ニュージーランド、日本、ハワイ、他', 
+        en: 'New Zealand, Japan, Hawaii, etc.' 
+      },
+      source: 'J. C. Andersen, <i>Māori String Figures</i>, 1927 ',
+      author: null,
+      references: null
+    }
   },
   {
     id: '9',
@@ -127,9 +162,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '9_chrysanthemum',
     ...ASSETS_MAP['9_chrysanthemum'],
-    description: { ja: '日本人にとって古くから親しまれている菊の花の形です', en: 'A chrysanthemum is a traditional Japanese symbol of longevity and beauty.' },
+    description: { 
+      ja: '日本人にとって古くから親しまれている菊の花の形です。最後は手から糸を外すことであやとりが完成します', 
+      en: 'This string figure forms the shape of a chrysanthemum, a flower long cherished in Japan. The figure is completed by removing the strings from your hands at the final step.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '有木昭久, 湯浅清四郎, <i>楽しいあやとり遊び</i>, 1973 ',
+      author: null,
+      references: null
+    }
   },
   {
     id: '10',
@@ -143,13 +186,21 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '11',
-    name: { ja: 'ウインク', en: 'Wink' },
+    name: { ja: 'ウインク', en: 'Winking Eye' },
     difficulty: 'easy',
     directory: '11_wink',
     ...ASSETS_MAP['11_wink'],
-    description: { ja: 'ウインクの説明文です。', en: 'Description for Wink.' },
+    description: { 
+      ja: '紐を引くと目を閉じ、離すと目が開きます。アフリカでは「ニワトリの産卵」として知られているあやとりです', 
+      en: 'When you pull the string, the eyes close; when you release it, the eyes open. In Africa, this string figure is known as “The Hen\'s Vent”' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'アフリカ, ハワイ, 他', en: 'Africa, Hawaii, etc.' },
+      source: 'W. C. Farabee, <i>The Central Arawaks</i>, 1918',
+      author: null,
+      references: null
+    }
   },
   {
     id: '12',
@@ -383,10 +434,18 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'hard',
     directory: '33_crub',
     ...ASSETS_MAP['33_crub'],
-    description: { ja: 'かにの説明文です。', en: 'Description for Crub.' },
-    premiumCourseId: 1, // コレクション1
-    data: null
+    description: { 
+      ja: 'かにの形が見事に表現されたあやとりです。とても長い手順を辿りますが、一つ一つは難しい操作ではありません。ここでは「カヌー」の完成形からの手順を紹介していますので、「カヌー」の作り方を先に習得してから始めて下さい', 
+      en: 'This string figure beautifully represents the shape of a crab. Although the process involves many steps, none of them are particularly difficult. The instructions here begin from the completed form of “Canoe,” so please learn how to make “Canoe” first before starting.' 
     },
+    premiumCourseId: 1, // コレクション1
+    data: {
+      region: { ja: 'パプアニューギニア', en: 'Papua New Guinea' },
+      source: 'W. H. R. Rivers, A. C. Haddon, <i>A Method of Recording String Figures and Tricks</i>, 1902 ',
+      author: null,
+      references: null
+    }
+  },
   {
     id: '35',
     name: { ja: '1段ばしご', en: '1 Ladder' },
