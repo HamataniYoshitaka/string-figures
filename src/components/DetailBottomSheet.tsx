@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
-  Platform,
 } from 'react-native';
 import {
   BottomSheetModal,
@@ -263,11 +262,23 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 {getDifficultyText(item.difficulty)}
               </Text>
             </View>
-            <Text style={styles.description}>{getLocalizedText(item.description)}</Text>
+            <Text style={styles.description}>
+              {getLocalizedText(item.description).split(/(<i>.*?<\/i>)/g).map((part, idx) => {
+                if (part.startsWith('<i>') && part.endsWith('</i>')) {
+                  return (
+                    <Text key={idx} style={styles.descriptionItalic}>
+                      {part.replace('<i>', '').replace('</i>', '')}
+                    </Text>
+                  );
+                }
+                return part;
+              })}
+            </Text>
             
             {/* 参考情報セクション */}
             {item.data && (
               <View style={styles.referenceContainer}>
+                {/* 罫線用のグラデーション */}
                 <LinearGradient
                   colors={['#F5F5F4', '#F5F5F4', '#D6D3D1', '#D6D3D1']}
                   locations={[0, 0.05, 0.05, 1]}
@@ -303,13 +314,13 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                     <Text style={styles.referenceLabel}>
                       {getLocalizedText({ ja: '出典', en: 'Source' })}
                     </Text>
-                    <Text style={[styles.referenceValue, styles.referenceValueItalic]}>
+                    <Text style={[styles.referenceValue]}>
                       {item.data.source && (
                         <Text>
                           {item.data.source.split(/(<i>.*?<\/i>)/g).map((part, idx) => {
                             if (part.startsWith('<i>') && part.endsWith('</i>')) {
                               return (
-                                <Text key={idx} style={{ fontStyle: 'italic' }}>
+                                <Text key={idx} style={styles.referenceValueItalic}>
                                   {part.replace('<i>', '').replace('</i>', '')}
                                 </Text>
                               );
@@ -329,8 +340,10 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                       {getLocalizedText({ ja: '参考', en: 'Reference' })}
                     </Text>
                     <View style={styles.referenceValueContainer}>
-                      <Text style={[styles.referenceValue, styles.referenceValueItalic]}>
-                        World of String figures
+                      <Text style={styles.referenceValue}>
+                        {item.data.references.map((reference, index) => (
+                          <Text key={index} style={styles.referenceValueItalic}>{getLocalizedText(reference)}</Text>
+                        ))}
                       </Text>
                       <View style={styles.externalLinkIconContainer}>
                         <ExternalLinkIcon width={18} height={18} strokeColor="#57534D" />
@@ -478,6 +491,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'KleeOne-Regular',
   },
+  descriptionItalic: {
+    fontFamily: 'NotoSerif-Italic',
+  },
   bookmarkButton: {
     position: 'absolute',
     top: -12,
@@ -514,9 +530,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#57534D',
     textAlign: 'right',
+    fontFamily: 'NotoSerif-Regular',
   },
   referenceValueItalic: {
-    fontStyle: 'italic',
+    fontFamily: 'NotoSerif-Italic',
   },
   referenceValueContainer: {
     flex: 1,

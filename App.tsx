@@ -36,6 +36,8 @@ export default function App() {
           'Merriweather-SemiBold': require('./assets/fonts/Merriweather/Merriweather-SemiBold.ttf'),
           'Roboto-Medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
           'Montserrat-SemiBold': require('./assets/fonts/Montserrat/Montserrat-SemiBold.ttf'),
+          'NotoSerif-Regular': require('./assets/fonts/NotoSerif/NotoSerif-Regular.ttf'),
+          'NotoSerif-Italic': require('./assets/fonts/NotoSerif/NotoSerif-Italic.ttf'),
         });
 
         // イントロ完了状態を読み込む

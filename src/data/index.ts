@@ -552,7 +552,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['34_amwangiyo'],
     description: { 
       ja: 'アムワンギヨはナウル語で「枝」のことで、中央の幹から左右に枝が伸びている状態を表しています', 
-      en: 'In Nauruan, Amwangiyo means “branches,” depicting the way branches spread outward from a central trunk.' 
+      en: 'In Nauruan, <i>Amwangiyo</i> means “branches,” depicting the way branches spread outward from a central trunk.' 
     },
     premiumCourseId: 1, // コレクション1
     data: {
