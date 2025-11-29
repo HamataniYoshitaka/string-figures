@@ -218,9 +218,16 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '13_easy-broom',
     ...ASSETS_MAP['13_easy-broom'],
-    description: { ja: '一瞬でほうきの形が出来上がります', en: 'A broom that can be made easily.' },
+    description: { 
+      ja: '一瞬でほうきの形が出来上がります。世界各地に広く分布する有名なあやとりです。日本では最後に両手を広げる際、手を1回叩きます', 
+      en: 'The broom shape appears in an instant. This famous string figure is widely found around the world. In Japan, people clap their hands once as they spread them apart at the final step.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
+      source: 'J. Teit, <i>The Thompson Indians of British Columbia</i>, 1900',
+      author: null,
+      references: null
+    }
   },
   {
     id: '14',
@@ -266,9 +273,16 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '17_broom',
     ...ASSETS_MAP['17_broom'],
-    description: { ja: 'ほうきの説明文です。', en: 'Description for Broom.' },
+    description: { 
+      ja: 'ほうき、パラシュートなどと呼ばれ、世界各地に広く分布する有名なあやとりです', 
+      en: 'Known as “Broom” or “Parachute,” this famous string figure is widely found across many regions of the world.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
+      source: 'G. Tessmann, <i>Die Kinderspiele der Pangwe</i>, 1912',
+      author: null,
+      references: null
+    }
     },
   {
     id: '18',
@@ -378,23 +392,39 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '27',
-    name: { ja: 'さかな', en: 'Fish' },
+    name: { ja: 'さかな', en: 'A Fish' },
     difficulty: 'medium',
     directory: '27_fish',
     ...ASSETS_MAP['27_fish'],
-    description: { ja: 'さかなの説明文です。', en: 'Description for Fish.' },
+    description: { 
+      ja: 'シンプルで力強い、大きな魚が出来上がります。', 
+      en: 'A simple yet powerful figure that forms a large fish.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'ハワイ', en: 'Hawaii' },
+      source: 'L. A. Dickey, <i>String Figures from Hawaii</i>, 1928',
+      author: null,
+      references: null
+    }
   },
   {
     id: '28',
-    name: { ja: 'アタヌアの家', en: 'Atanua House' },
+    name: { ja: 'アタヌアの家', en: 'The House of Atanua' },
     difficulty: 'easy',
     directory: '28_atanua-house',
     ...ASSETS_MAP['28_atanua-house'],
-    description: { ja: 'アタヌアの家の説明文です。', en: 'Description for Atanua House.' },
+    description: { 
+      ja: '立体的な長屋が出来上がるあやとりです。他にはあまり見られない独特の手順で作成しますが、難しくはありません', 
+      en: 'This string figure creates a three-dimensional longhouse. It is made using a unique procedure rarely seen in other figures, yet it is not difficult.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'ポリネシア', en: 'Polynesia' },
+      source: 'W. C. Handy,	<i>String Figures from the Marquesas and Society Islands</i>, 1925',
+      author: null,
+      references: null
+    }
     },
   {
     id: '29',
