@@ -532,9 +532,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '38_dance-stage',
     ...ASSETS_MAP['38_dance-stage'],
-    description: { ja: 'ダンスの舞台の説明文です。', en: 'Description for Dance Stage.' },
+    description: { 
+      ja: 'ダンスを踊るための舞台を表しています。最後の手順で、絡まったように見える糸が一瞬で開いて美しいパターンが出来上がります', 
+      en: 'This figure depicts a dance stage. At the final step, the strings—seemingly knotted together—suddenly unfold, revealing a beautiful pattern in an instant.' 
+    },
     premiumCourseId: 1, // コレクション1
-    data: null
+    data: {
+      region: { ja: 'パラオ', en: 'Palau' },
+      source: 'P. Raymund, <i>The String Games and Cat\'s Cradles of Palau</i>, 1911',
+      author: null,
+      references: null
+    }
     },
   {
     id: '34',
@@ -542,9 +550,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'hard',
     directory: '34_amwangiyo',
     ...ASSETS_MAP['34_amwangiyo'],
-    description: { ja: 'アムワンギヨの説明文です。', en: 'Description for Amwangiyo.' },
+    description: { 
+      ja: 'アムワンギヨはナウル語で「枝」のことで、中央の幹から左右に枝が伸びている状態を表しています', 
+      en: 'In Nauruan, Amwangiyo means “branches,” depicting the way branches spread outward from a central trunk.' 
+    },
     premiumCourseId: 1, // コレクション1
-    data: null
+    data: {
+      region: { ja: 'ナウル', en: 'Nauru' },
+      source: 'H. C. Maude, <i>The String Figures of Nauru Island</i>, 1971',
+      author: null,
+      references: null
+    }
     },
   {
     id: '39',
@@ -705,13 +721,18 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '48',
-    name: { ja: 'シャベル', en: 'Shovel' },
+    name: { ja: '雪かきシャベル', en: 'A Snow Shovel' },
     difficulty: 'easy',
     directory: '48_shovel',
     ...ASSETS_MAP['48_shovel'],
-    description: { ja: 'シャベルの説明文です。', en: 'Description for Shovel.' },
+    description: { ja: 'カナダのイヌイットに伝わるあやとりです', en: 'This string figure comes from the Inuit of Canada.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: 'D. Jenness, <i>Eskimo String Figures</i>, 1924',
+      author: null,
+      references: null
+    }
     },
   {
     id: '49',
@@ -787,29 +808,53 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '56_teepee',
     ...ASSETS_MAP['56_teepee'],
-    description: { ja: 'ティーピーの説明文です。', en: 'Description for Teepee.' },
+    description: { 
+      ja: 'ティーピーはアメリカインディアンのうち、おもに平原の部族が利用する移動用住居です。「テントの幕」というあやとりがあり、このティーピーの出入口に掛ける幕を表しています', 
+      en: 'A teepee is a movable home traditionally used by Native American tribes of the Great Plains. There is a string figure known as “A Tent Flap,” depicting the fabric hung at the entrance of the teepee.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北アメリカ', en: 'North America' },
+      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      author: null,
+      references: null
+    }
   },
   {
     id: '57',
-    name: { ja: '雷', en: 'Thunder' },
+    name: { ja: '稲妻', en: 'Lightning' },
     difficulty: 'medium',
     directory: '57_thunder',
     ...ASSETS_MAP['57_thunder'],
-    description: { ja: '雷の説明文です。', en: 'Description for Thunder.' },
+    description: { 
+      ja: '最後の操作が特徴的で、まさに稲妻のように一瞬にして形が出来上がります。北アメリカのナバホ族に伝わるあやとりです', 
+      en: 'The final move is distinctive, forming the figure in an instant—just like a flash of lightning. This string figure comes from the Navajo people of North America.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北アメリカ', en: 'North America' },
+      source: 'A. C. Haddon, <i>A Few American String Figures and Tricks</i>, 1903 ',
+      author: null,
+      references: null
+    }
   },
   {
     id: '59',
-    name: { ja: 'カヤックをこぐ人', en: 'Paddler' },
+    name: { ja: 'カヤックをこぐ人', en: 'The Kayaker' },
     difficulty: 'hard',
     directory: '59_paddler',
     ...ASSETS_MAP['59_paddler'],
-    description: { ja: 'カヤックをこぐ人の説明文です。', en: 'Description for Paddler.' },
+    description: { 
+      ja: '両手の人差し指を左右に動かすことで、カヤックに乗っている人が漕ぎ出します。イヌイットのあやとりで、このあと「山並み」へと続けて取ることができます', 
+      en: 'By moving both index fingers from side to side, the person in the kayak appears to paddle forward. This is an Inuit string figure, and from it you can continue on to make “The Range of the Mountains.”' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: 'D. Jenness, <i>Eskimo String Figures</i>, 1924',
+      author: null,
+      references: null
+    }
   },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
