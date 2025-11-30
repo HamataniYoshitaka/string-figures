@@ -194,7 +194,7 @@ export const stringFigures: StringFigure[] = [
       ja: '紐を引くと目を閉じ、離すと目が開きます。アフリカでは「ニワトリの産卵」として知られているあやとりです', 
       en: 'When you pull the string, the eyes close; when you release it, the eyes open. In Africa, this string figure is known as “The Hen\'s Vent”' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: 'アフリカ, ハワイ, 他', en: 'Africa, Hawaii, etc.' },
       source: 'W. C. Farabee, <i>The Central Arawaks</i>, 1918',
@@ -301,7 +301,7 @@ export const stringFigures: StringFigure[] = [
     directory: '19_two-chiefs',
     ...ASSETS_MAP['19_two-chiefs'],
     description: { ja: '二人の首長の説明文です。', en: 'Description for Two Chiefs.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: null
     },
   {
@@ -354,7 +354,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'まるでマンガのような、尾を引きながら流れる星の姿を見事に表現したあやとりです。ひもを二重にしてから取り始めるというちょっと変わった特徴があります。', 
       en: 'A string figure that beautifully represents the shooting star as it trails behind like a manga. It has a slightly unusual feature of starting by doubling the string and then taking.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: {
       region: null,
       source: 'SHISHIDO Y, <i>Geometrical Figures</i>, 1980',
@@ -418,7 +418,7 @@ export const stringFigures: StringFigure[] = [
       ja: '立体的な長屋が出来上がるあやとりです。他にはあまり見られない独特の手順で作成しますが、難しくはありません', 
       en: 'This string figure creates a three-dimensional longhouse. It is made using a unique procedure rarely seen in other figures, yet it is not difficult.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: 'ポリネシア', en: 'Polynesia' },
       source: 'W. C. Handy,	<i>String Figures from the Marquesas and Society Islands</i>, 1925',
@@ -433,7 +433,7 @@ export const stringFigures: StringFigure[] = [
     directory: '29_two-fishes',
     ...ASSETS_MAP['29_two-fishes'],
     description: { ja: '二匹の魚の説明文です。', en: 'Description for Two Fishes.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // コレクション1
     data: null
     },
   {
@@ -671,7 +671,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'ナイジェリアやシエラレオネなどで伝承されているあやとりです。10本の指を全て使った複雑なパターンが出来上がりますが、最後に親指と小指から糸を外すことで一瞬で最初の状態に戻ります。', 
       en: 'This string figure is traditionally practiced in regions including Nigeria and Sierra Leone. It forms a complex design that uses all ten fingers, yet with a simple motion—releasing the strings from your thumbs and little fingers—it snaps back to its starting form in an instant.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: 'アフリカ', en: 'Africa' },
       source: 'J. Parkinson, <i>Yöruba String Figures</i>, 1906',
@@ -688,7 +688,7 @@ export const stringFigures: StringFigure[] = [
     description: { 
       ja: 'ナバホ族に伝わるあやとりです。渦巻きで蝶の口吻を表している珍しいあやとりです。親指と人差し指を開閉することで蝶が羽ばたきます', 
       en: 'This string figure comes from the Navajo people. Its spiral design represents the butterfly’s proboscis, making it quite a unique figure. By opening and closing your thumbs and index fingers, the butterfly appears to flap its wings.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: 'C. F. Jayne, <i>String Figures</i>, 1906',
@@ -724,7 +724,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'うさぎの顔の特徴を捉えた、愛らしい形のあやとりです。北アメリカのクラマス族に伝わるあやとりです', 
       en: 'This charming string figure captures the distinctive features of a rabbit’s face. It comes from the Klamath people of North America.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: 'C. F. Jayne, <i>String Figures</i>, 1906',
@@ -741,7 +741,7 @@ export const stringFigures: StringFigure[] = [
     description: { 
       ja: 'かめの形が見事に表現されたあやとりです。最後に手から糸を外すことであやとりが完成します', 
       en: 'This is a wonderfully crafted string figure that depicts a turtle. To finish, you release the strings from your hands, revealing the completed figure.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: 'パプアニューギニア', en: 'Papua New Guinea' },
       source: '野口広, <i>あやとり 続々</i>, 1975  ',
@@ -791,7 +791,7 @@ export const stringFigures: StringFigure[] = [
     directory: '51_seagull',
     ...ASSETS_MAP['51_seagull'],
     description: { ja: 'かもめの説明文です。', en: 'Description for Seagull.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // コレクション1
     data: null
     },
   {
@@ -801,7 +801,7 @@ export const stringFigures: StringFigure[] = [
     directory: '52_mouth',
     ...ASSETS_MAP['52_mouth'],
     description: { ja: 'くちの説明文です。', en: 'Description for Mouth.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: null
     },
   {
@@ -824,7 +824,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'カリブーが柳の下で涼んでいる様子を表しています。後半から「カリブー」と同じ手順で形を作っていきます', 
       en: 'A Caribou is resting under the willow. The same procedure as "A Caribou" is used from the second half.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: 'アラスカ', en: 'Alaska' },
       source: 'Diamond Jenness, <i>Eskimo String Figures</i>, 1924',
@@ -860,7 +860,7 @@ export const stringFigures: StringFigure[] = [
       ja: '最後の操作が特徴的で、まさに稲妻のように一瞬にして形が出来上がります。北アメリカのナバホ族に伝わるあやとりです', 
       en: 'The final move is distinctive, forming the figure in an instant—just like a flash of lightning. This string figure comes from the Navajo people of North America.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: 'A. C. Haddon, <i>A Few American String Figures and Tricks</i>, 1903 ',
@@ -886,6 +886,17 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '64',
+    name: { ja: '上腕二頭筋を動かす男', en: 'Man Flexing His Biceps' },
+    difficulty: 'hard',
+    directory: '64_a-man-flexing-his-biceps',
+    ...ASSETS_MAP['64_a-man-flexing-his-biceps'],
+    description: { ja: '上腕二頭筋を動かす男の説明文です。', en: 'Description for Man Flexing His Biceps.' },
+    premiumCourseId: 2, // コレクション2
+    data: null
+  },
+
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',

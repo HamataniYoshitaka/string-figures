@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
   },
   scrollContentContainer: {
     position: 'relative',
-    paddingBottom: 20,
+    paddingBottom: 60,
     marginTop: 0,
     // zIndex: 100,
   },

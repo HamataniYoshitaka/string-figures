@@ -7,7 +7,6 @@ import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon, ExternalLinkIcon } from '../components/icons';
-import PurchaseButton from '../components/PurchaseButton';
 
 type PolicyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -73,11 +72,6 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
     }, []);
 
 
-    const handlePurchasePress = () => {
-        // ブランクのまま
-    };
-
-
     return (    
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
@@ -128,7 +122,7 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
                         </Text>
                         <Text style={styles.sectionDescription}>
                             { getLocalizedText({ 
-                                ja: '音声で動画を操作するために、マイクと音声認識機能を使用しています。android端末の場合は、データ通信できない場合は音声操作ができませんのでご注意ください。iPhone, iPadでは音声操作に通信を伴わないため、圏外であっても音声操作をご利用いただけます。', 
+                                ja: '音声で動画を操作するために、マイクと音声認識機能を使用しています。android端末の場合は、データ通信できない場合は音声操作ができませんのでご注意ください。iPhone, iPadでは音声操作に通信を伴わないため、オフライン状態であっても音声操作をご利用いただけます。', 
                                 en: 'In order to operate the video by voice, we use the microphone and voice recognition function. Please note that on Android devices, voice commands cannot be used if mobile data is unavailable. On iPhone and iPad, voice controls do not require a data connection, so you can use them even when you are offline.' }) 
                             }
                         </Text>
@@ -204,7 +198,7 @@ const styles = StyleSheet.create({
     },
 
     contentContainer: {
-        paddingHorizontal: 24,
+        paddingHorizontal: 12,
         paddingBottom: 32,
         flex: 1,
         alignItems: 'center',
