@@ -48,6 +48,12 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   const COLLECTION_NAME = `コレクション${collectionId}`;
   const PURCHASE_TEXT = 'を購入する';
   const PRICE = '¥000';
+  const PURCHASED_TEXT = '購入済';
+
+  // disabled時の背景色とテキスト色
+  const buttonBackgroundColor = disabled ? '#E5E5E5' : backgroundColor;
+  const textColor = disabled ? '#A1A1A1' : '#FFFFFF';
+  const iconColor = disabled ? '#A1A1A1' : '#FFFFFF';
 
   return (
     <TouchableWithoutFeedback
@@ -59,7 +65,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
         style={[
           styles.button,
           { transform: [{ scale: scaleAnim }] },
-          { backgroundColor: backgroundColor },
+          { backgroundColor: buttonBackgroundColor },
           disabled && styles.buttonDisabled,
         ]}
       >
@@ -69,19 +75,21 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
             width={32}
             height={32}
             strokeColor="transparent"
-            fillColor="#ffffff"
+            fillColor={iconColor}
             strokeWidth={0}
           />
         </View>
 
         {/* 中央: テキスト */}
         <View style={styles.textContainer}>
-          <Text style={styles.collectionName}>{COLLECTION_NAME}</Text>
-          <Text style={styles.purchaseText}>{PURCHASE_TEXT}</Text>
+          <Text style={[styles.collectionName, { color: textColor }]}>{COLLECTION_NAME}</Text>
+          {!disabled && <Text style={styles.purchaseText}>{PURCHASE_TEXT}</Text>}
         </View>
 
-        {/* 右側: 価格 */}
-        <Text style={styles.price}>{PRICE}</Text>
+        {/* 右側: 価格または購入済 */}
+        <Text style={[styles.price, { color: textColor }]}>
+          {disabled ? PURCHASED_TEXT : PRICE}
+        </Text>
       </Animated.View>
     </TouchableWithoutFeedback>
   );
@@ -109,7 +117,8 @@ const styles = StyleSheet.create({
     }),
   },
   buttonDisabled: {
-    opacity: 0.5,
+    shadowOpacity: 0,
+    elevation: 0,
   },
   iconContainer: {
     width: 32,
@@ -128,7 +137,6 @@ const styles = StyleSheet.create({
   collectionName: {
     fontSize: 20,
     lineHeight: 20,
-    color: '#FFFFFF',
     fontWeight: '600',
   },
   purchaseText: {
@@ -138,9 +146,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   price: {
-    fontSize: 24,
-    lineHeight: 24,
-    color: '#FFFFFF',
+    fontSize: 20,
+    lineHeight: 20,
     fontWeight: '600',
   },
 });
