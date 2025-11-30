@@ -88,7 +88,7 @@ interface StringFigure {
 interface AppSettings {
   language: 'ja' | 'en'; // 将来的な多言語対応
   subtitlesEnabled: boolean;
-  purchasedItems: string[]; // 購入済みアイテムのID配列
+  purchasedItems: number[]; // 購入済みアイテムのID配列
   introductionCompleted: boolean; // 初回起動時のチュートリアルを完了したかどうか
 }
 

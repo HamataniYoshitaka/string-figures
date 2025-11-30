@@ -10,8 +10,8 @@ import {
 import { LockOpenIcon } from './icons';
 
 interface PurchaseButtonProps {
-  onPress?: () => void;
-  collectionId: string;
+  onPress?: (collectionId: number) => void;
+  collectionId: number;
   backgroundColor?: string;
 }
 
@@ -37,11 +37,11 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   };
 
   const handlePress = () => {
-    onPress?.();
+    onPress?.(collectionId);
   };
 
   // 定数
-  const COLLECTION_NAME = 'コレクション2';
+  const COLLECTION_NAME = `コレクション${collectionId}`;
   const PURCHASE_TEXT = 'を購入する';
   const PRICE = '¥000';
 

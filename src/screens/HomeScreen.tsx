@@ -72,6 +72,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   // ブックマーク済みIDのリスト
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
 
+  // 購入済みアイテムのリスト
+  const [purchasedItems, setPurchasedItems] = useState<number[]>([]);
+
   // 画面幅の状態
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
@@ -92,7 +95,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     const initializeSettings = async () => {
       await loadLanguageSetting();
-      await Promise.all([loadBookmarkedIds(), loadSelectedFilters()]);
+      await Promise.all([loadBookmarkedIds(), loadSelectedFilters(), loadPurchasedItems()]);
       // スマホの場合、HomeScreen表示時は常に縦向きに設定
       if (!isTablet) {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
@@ -119,6 +122,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     React.useCallback(() => {
       loadBookmarkedIds();
       loadSelectedFilters();
+      loadPurchasedItems();
     }, [])
   );
 
@@ -196,6 +200,25 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
+  const loadPurchasedItems = async () => {
+    try {
+      const savedPurchasedItems = await AsyncStorage.getItem('purchasedItems');
+      if (savedPurchasedItems) {
+        const parsedItems = JSON.parse(savedPurchasedItems);
+        if (Array.isArray(parsedItems)) {
+          setPurchasedItems(parsedItems);
+        } else {
+          setPurchasedItems([]);
+        }
+      } else {
+        setPurchasedItems([]);
+      }
+    } catch (error) {
+      console.error('購入済みアイテムの読み込みに失敗しました:', error);
+      setPurchasedItems([]);
+    }
+  };
+
   const saveBookmarkedIds = async (ids: string[]) => {
     try {
       await AsyncStorage.setItem('bookmarkedIds', JSON.stringify(ids));
@@ -233,8 +256,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const organizeIntoColumns = (items: StringFigure[], numColumns: number) => {
     const columns: StringFigure[][] = Array.from({ length: numColumns }, () => []);
     
-    // premiumCourseId === 0 のものだけをフィルタリング
-    const filteredItems = items.filter(item => item.premiumCourseId === 0);
+    // premiumCourseId === 0 または purchasedItems に含まれるものをフィルタリング
+    const filteredItems = items.filter(item => 
+      item.premiumCourseId === 0 || purchasedItems.includes(item.premiumCourseId)
+    );
     
     filteredItems.forEach((item, index) => {
       const columnIndex = index % numColumns;
@@ -267,7 +292,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     return figures;
   }, [bookmarkedIds, isBookmarkFilterActive, selectedFilters]);
 
-  const columns = organizeIntoColumns(filteredStringFigures, columnsCount);
+  const columns = useMemo(() => 
+    organizeIntoColumns(filteredStringFigures, columnsCount),
+    [filteredStringFigures, columnsCount, purchasedItems]
+  );
 
   const renderCard = (item: StringFigure) => {
     const imageInfo = imageDimensions[item.id];

@@ -81,8 +81,33 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
         { id: 5, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
     ];
 
-    const handlePurchasePress = () => {
-        // ブランクのまま
+    const handlePurchasePress = async (collectionId: number) => {
+        try {
+            console.log('handlePurchasePress', collectionId);
+            
+            // 既存のpurchasedItemsを読み込む
+            const savedPurchasedItems = await AsyncStorage.getItem('purchasedItems');
+            let purchasedItems: number[] = [];
+            
+            if (savedPurchasedItems) {
+                const parsedItems = JSON.parse(savedPurchasedItems);
+                if (Array.isArray(parsedItems)) {
+                    purchasedItems = parsedItems;
+                }
+            }
+            
+            // collectionIdが既に含まれていない場合のみ追加
+            if (!purchasedItems.includes(collectionId)) {
+                purchasedItems.push(collectionId);
+                await AsyncStorage.setItem('purchasedItems', JSON.stringify(purchasedItems));
+                console.log('購入済みアイテムに追加しました:', collectionId);
+                Alert.alert('購入ありがとうございます', `コレクション${collectionId}を追加しました。引き続き、あやとりの世界をお楽しみください`, [{ text: 'OK', onPress: onGoBack }]);
+            } else {
+                console.log('既に購入済みです:', collectionId);
+            }
+        } catch (error) {
+            console.error('購入済みアイテムの保存に失敗しました:', error);
+        }
     };
 
 
@@ -148,7 +173,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                     <View style={styles.purchaseButtonContainer}>
                         <PurchaseButton 
                             onPress={handlePurchasePress} 
-                            collectionId="1" 
+                            collectionId={1}
                             backgroundColor="#2B7FFF" 
                         />
                     </View>
