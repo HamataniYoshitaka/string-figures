@@ -233,7 +233,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const organizeIntoColumns = (items: StringFigure[], numColumns: number) => {
     const columns: StringFigure[][] = Array.from({ length: numColumns }, () => []);
     
-    items.forEach((item, index) => {
+    // premiumCourseId === 0 のものだけをフィルタリング
+    const filteredItems = items.filter(item => item.premiumCourseId === 0);
+    
+    filteredItems.forEach((item, index) => {
       const columnIndex = index % numColumns;
       columns[columnIndex].push(item);
     });

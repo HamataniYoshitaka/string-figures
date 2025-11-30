@@ -14,6 +14,7 @@ export { default as TutorialIcon } from './Tutorial';
 export { default as CheckCircleOutlineIcon } from './CheckCircleOutline';
 export { default as TranslateIcon } from './Translate';
 export { default as LockOpenIcon } from './LockOpen';
+export { default as LockIcon } from './Lock';
 export { default as BalloonTailIcon } from './BalloonTail';
 export { default as ArrowRightIcon } from './ArrowRight';
 export { default as ArrowLeftIcon } from './ArrowLeft';
