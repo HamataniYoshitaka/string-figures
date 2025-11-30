@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, Image, ImageSourcePropType } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -171,18 +171,18 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         contentContainerStyle={styles.thumbnailScrollContent}
                         showsHorizontalScrollIndicator={false}
                     >
-                        {collectionThumbnails.map((item) => (
+                        {stringFigures.filter(figure => figure.premiumCourseId === 1).map((item) => (
                             <View key={item.id} style={styles.thumbnailItem}>
                                 <View style={styles.thumbnailImageContainer}>
                                     <Image 
-                                        source={item.image}
+                                        source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail as ImageSourcePropType}
                                         style={styles.thumbnailImage}
                                         resizeMode="cover"
                                     />
                                 </View>
                                 <View style={styles.captionSpacer} />
                                 <Text style={styles.thumbnailCaption} numberOfLines={2}>
-                                    {item.name}
+                                    {item.name[currentLanguage]}
                                 </Text>
                             </View>
                         ))}
@@ -203,7 +203,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         <Text style={[styles.collectionTitle, { color: '#E17100' }]}>コレクション2</Text>
                         <View style={styles.descriptionSpacer} />
                         <Text style={styles.collectionDescription}>
-                            コレクション1には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 2).length}パターンが収録されています。
+                            コレクション2には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 2).length}パターンが収録されています。
                         </Text>
                     </View>
                     
@@ -213,18 +213,18 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         contentContainerStyle={styles.thumbnailScrollContent}
                         showsHorizontalScrollIndicator={false}
                     >
-                        {collectionThumbnails.map((item) => (
+                        {stringFigures.filter(figure => figure.premiumCourseId === 2).map((item) => (
                             <View key={item.id} style={styles.thumbnailItem}>
                                 <View style={styles.thumbnailImageContainer}>
                                     <Image 
-                                        source={item.image}
+                                        source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail as ImageSourcePropType}
                                         style={styles.thumbnailImage}
                                         resizeMode="cover"
                                     />
                                 </View>
                                 <View style={styles.captionSpacer} />
                                 <Text style={styles.thumbnailCaption} numberOfLines={2}>
-                                    {item.name}
+                                    {item.name[currentLanguage]}
                                 </Text>
                             </View>
                         ))}
@@ -351,6 +351,8 @@ const styles = StyleSheet.create({
     thumbnailImage: {
         width: '100%',
         height: '100%',
+        // resizeMode: 'contain',
+        objectFit: 'contain',
     },
     captionSpacer: {
         height: 4,

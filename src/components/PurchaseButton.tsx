@@ -47,7 +47,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   // 定数
   const COLLECTION_NAME = `コレクション${collectionId}`;
   const PURCHASE_TEXT = 'を購入する';
-  const PRICE = '¥000';
+  const PRICE = '¥0';
   const PURCHASED_TEXT = '購入済';
 
   // disabled時の背景色とテキスト色
