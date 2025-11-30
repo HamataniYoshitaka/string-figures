@@ -8,6 +8,7 @@ import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon } from '../components/icons';
 import PurchaseButton from '../components/PurchaseButton';
+import { stringFigures } from '../data/index';
 
 type AdditionalScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -22,6 +23,7 @@ interface Props {
 
 const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
+    const [purchasedItems, setPurchasedItems] = useState<number[]>([]);
 
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
@@ -68,8 +70,23 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
+    const loadPurchasedItems = async () => {
+        try {
+            const savedPurchasedItems = await AsyncStorage.getItem('purchasedItems');
+            if (savedPurchasedItems) {
+                const parsedItems = JSON.parse(savedPurchasedItems);
+                if (Array.isArray(parsedItems)) {
+                    setPurchasedItems(parsedItems);
+                }
+            }
+        } catch (error) {
+            console.error('購入済みアイテムの読み込みに失敗しました:', error);
+        }
+    };
+
     useEffect(() => {
         loadLanguageSetting();
+        loadPurchasedItems();
     }, []);
 
     // コレクション1のサムネイルデータ（仮データ）
@@ -100,6 +117,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
             if (!purchasedItems.includes(collectionId)) {
                 purchasedItems.push(collectionId);
                 await AsyncStorage.setItem('purchasedItems', JSON.stringify(purchasedItems));
+                setPurchasedItems([...purchasedItems]);
                 console.log('購入済みアイテムに追加しました:', collectionId);
                 Alert.alert('購入ありがとうございます', `コレクション${collectionId}を追加しました。引き続き、あやとりの世界をお楽しみください`, [{ text: 'OK', onPress: onGoBack }]);
             } else {
@@ -140,10 +158,10 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
             >
                 <View style={styles.collectionCard}>
                     <View style={styles.collectionHeader}>
-                        <Text style={styles.collectionTitle}>コレクション1</Text>
+                        <Text style={[styles.collectionTitle, { color: '#2B7FFF' }]}>コレクション1</Text>
                         <View style={styles.descriptionSpacer} />
                         <Text style={styles.collectionDescription}>
-                            コレクション1には、以下のあやとり30パターンが収録されています。
+                            コレクション1には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 1).length}パターンが収録されています。
                         </Text>
                     </View>
                     
@@ -174,7 +192,50 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         <PurchaseButton 
                             onPress={handlePurchasePress} 
                             collectionId={1}
-                            backgroundColor="#2B7FFF" 
+                            backgroundColor="#2B7FFF"
+                            disabled={purchasedItems.includes(1)}
+                        />
+                    </View>
+                </View>
+
+                <View style={styles.collectionCard}>
+                    <View style={styles.collectionHeader}>
+                        <Text style={[styles.collectionTitle, { color: '#E17100' }]}>コレクション2</Text>
+                        <View style={styles.descriptionSpacer} />
+                        <Text style={styles.collectionDescription}>
+                            コレクション1には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 2).length}パターンが収録されています。
+                        </Text>
+                    </View>
+                    
+                    <ScrollView 
+                        horizontal 
+                        style={styles.thumbnailScrollView}
+                        contentContainerStyle={styles.thumbnailScrollContent}
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        {collectionThumbnails.map((item) => (
+                            <View key={item.id} style={styles.thumbnailItem}>
+                                <View style={styles.thumbnailImageContainer}>
+                                    <Image 
+                                        source={item.image}
+                                        style={styles.thumbnailImage}
+                                        resizeMode="cover"
+                                    />
+                                </View>
+                                <View style={styles.captionSpacer} />
+                                <Text style={styles.thumbnailCaption} numberOfLines={2}>
+                                    {item.name}
+                                </Text>
+                            </View>
+                        ))}
+                    </ScrollView>
+
+                    <View style={styles.purchaseButtonContainer}>
+                        <PurchaseButton 
+                            onPress={handlePurchasePress} 
+                            collectionId={2}
+                            backgroundColor="#E17100"
+                            disabled={purchasedItems.includes(2)}
                         />
                     </View>
                 </View>
@@ -237,6 +298,7 @@ const styles = StyleSheet.create({
     },
     scrollContent: {
         padding: 16,
+        gap: 16,
     },
     collectionCard: {
         backgroundColor: '#FFFFFF',
@@ -251,7 +313,6 @@ const styles = StyleSheet.create({
     collectionTitle: {
         fontFamily: 'KleeOne-SemiBold',
         fontSize: 24,
-        color: '#2B7FFF',
         fontWeight: '600',
     },
     descriptionSpacer: {

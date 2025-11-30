@@ -13,12 +13,14 @@ interface PurchaseButtonProps {
   onPress?: (collectionId: number) => void;
   collectionId: number;
   backgroundColor?: string;
+  disabled?: boolean;
 }
 
-const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, backgroundColor }) => {
+const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, backgroundColor, disabled = false }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
+    if (disabled) return;
     Animated.spring(scaleAnim, {
       toValue: 0.95,
       useNativeDriver: true,
@@ -28,6 +30,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   };
 
   const handlePressOut = () => {
+    if (disabled) return;
     Animated.spring(scaleAnim, {
       toValue: 1,
       useNativeDriver: true,
@@ -37,6 +40,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   };
 
   const handlePress = () => {
+    if (disabled) return;
     onPress?.(collectionId);
   };
 
@@ -56,6 +60,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
           styles.button,
           { transform: [{ scale: scaleAnim }] },
           { backgroundColor: backgroundColor },
+          disabled && styles.buttonDisabled,
         ]}
       >
         {/* 左側: アイコン */}
@@ -102,6 +107,9 @@ const styles = StyleSheet.create({
         elevation: 4,
       },
     }),
+  },
+  buttonDisabled: {
+    opacity: 0.5,
   },
   iconContainer: {
     width: 32,
