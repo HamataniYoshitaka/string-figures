@@ -296,13 +296,21 @@ export const stringFigures: StringFigure[] = [
     },
   {
     id: '19',
-    name: { ja: '二人の首長', en: 'Two Chiefs' },
+    name: { ja: '二人の酋󠄁長', en: 'Two Chiefs' },
     difficulty: 'medium',
     directory: '19_two-chiefs',
     ...ASSETS_MAP['19_two-chiefs'],
-    description: { ja: '二人の首長の説明文です。', en: 'Description for Two Chiefs.' },
+    description: { 
+      ja: '二人の酋󠄁長が並んでいる様子です。このあやとりが採取されたカロリン諸島には「ひとりの酋󠄁長」というあやとりもあります', 
+      en: 'This figure depicts two chiefs standing side by side. In the Caroline Islands, where this string figure was collected, there is also a version called “One Chief.”' 
+    },
     premiumCourseId: 2, // コレクション2
-    data: null
+    data: {
+      region: { ja: 'ミクロネシア', en: 'Micronesia' },
+      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      author: null,
+      references: null
+    }
     },
   {
     id: '20',
@@ -948,9 +956,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '68_laia-flower',
     ...ASSETS_MAP['68_laia-flower'],
-    description: { ja: 'ライアの花の説明文です。', en: 'Description for The Laia Flower.' },
+    description: { 
+      ja: '立体的な六角錐が出来上がる、非常に美しいあやとりです。全ての手順を手前と奥を逆にして取ることで、逆さまの「ライアの実」が出来上がります', 
+      en: 'This elegant string figure produces a three-dimensional hexagonal pyramid. If you perform every step in reverse (front and back switched), you will obtain an upside-down variation known as “The Liar Fruit.”' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'メラネシア', en: 'Melanesia' },
+      source: 'W. W. R. Ball, <i>String Figures 3rd ed.</i>, 1929',
+      author: null,
+      references: null
+    }
   },
 
   { id: '99999',
