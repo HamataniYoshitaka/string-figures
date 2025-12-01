@@ -1,29 +1,44 @@
 [
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "人差し指の構えから始めます。右手の人差し指で、全ての糸の下を通して人差し指手前の糸を上から取ります。右手を元の位置に戻します", 
+            "en": "Begin with Opening A, with the right index finger pass under all the strings, move over and pick down the near index-finger string, and return the right hand to its original position." 
+        }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左手の人差し指を、右手人差し指にかかっている上の輪に下から入れて輪を広げます", "en": "Insert the left index finger up into the upper loop on the right index finger and spread the loop." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "両手の親指の糸を外します", "en": "Release both thumb strings." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "左右の人差し指手前にかかっている下の輪に親指を上から入れ、小指手前の糸を下から取って引き出します", 
+            "en": "Insert both thumbs down into the lower loops near the index fingers, pick up the near little-finger strings from below, and draw them out." 
+        }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "人差し指にかかっている上の糸を左右の親指で上から押さえて糸を引き出します。親指の背にかかっている糸は自然に外れます", 
+            "en": "With both thumbs, press down on the upper strings on the index fingers and draw them out; the strings on the backs of the thumbs fall away naturally." 
+        }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "左右の親指で、小指手前の糸を下から取って引き出します。親指の腹にかかっている糸は自然に外れます", 
+            "en": "With both thumbs, pick up the near little-finger strings from below and draw them out; the strings on the thumb pads fall away naturally." 
+        }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "左右の親指で、親指の前にある1本の水平な糸を下から取って引き出します。親指の背にかかっている糸は自然に外れます", 
+            "en": "With both thumbs, pick up from below the single horizontal string in front of the thumbs and draw it out; the strings on the backs of the thumbs fall away naturally." 
+        }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指にかかっている糸を全て外します", "en": "Release all the strings from both index fingers." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "指先を向こう側に向けて完成です", "en": "Point the fingertips away to complete the figure." }
     }
 ]

@@ -790,19 +790,35 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '51_seagull',
     ...ASSETS_MAP['51_seagull'],
-    description: { ja: 'かもめの説明文です。', en: 'Description for Seagull.' },
+    description: { 
+      ja: 'イヌイットのあやとりで、大きく翼を広げたかもめを表しています。完成系はシンプルですが、手順は意外と複雑です', 
+      en: 'This string figure from Inuit tradition depicts a seagull stretching its wings wide. The final shape is simple, but the procedure to make it is unexpectedly complex.' 
+    },
     premiumCourseId: 1, // コレクション1
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: 'G. B. Gordon, <i>Notes on the Western Eskimo</i>, 1906',
+      author: null,
+      references: null
+    }
     },
   {
     id: '52',
-    name: { ja: 'くち', en: 'Mouth' },
+    name: { ja: 'くち', en: 'A Mouth' },
     difficulty: 'medium',
     directory: '52_mouth',
     ...ASSETS_MAP['52_mouth'],
-    description: { ja: 'くちの説明文です。', en: 'Description for Mouth.' },
+    description: { 
+      ja: '完成系は非常にシンプルですが、手順は意外と複雑です。両手を動かすことで、くちが開閉します', 
+      en: 'The final shape is very simple, but the sequence of steps is unexpectedly complex. By moving both hands, the mouth opens and closes.' 
+    },
     premiumCourseId: 2, // コレクション2
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      author: null,
+      references: null
+    }
     },
   {
     id: '53',
