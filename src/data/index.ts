@@ -912,6 +912,46 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 2, // コレクション2
     data: null
   },
+  {
+    id: '65',
+    name: { ja: '耳の大きな犬', en: 'A Dog Walking' },
+    difficulty: 'medium',
+    directory: '65_dog-walking',
+    ...ASSETS_MAP['65_dog-walking'],
+    description: { ja: '耳の大きな犬の説明文です。', en: 'Description for A Dog Walking.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '66',
+    name: { ja: 'ネズミ', en: 'A Mouse' },
+    difficulty: 'medium',
+    directory: '66_mouse',
+    ...ASSETS_MAP['66_mouse'],
+    description: { ja: 'ネズミの説明文です。', en: 'Description for A Mouse.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '67',
+    name: { ja: 'モア島', en: 'The Island Moa' },
+    difficulty: 'medium',
+    directory: '67_island-moa',
+    ...ASSETS_MAP['67_island-moa'],
+    description: { ja: 'モア島の説明文です。', en: 'Description for The Island Moa.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '68',
+    name: { ja: 'ライアの花', en: 'The Laia Flower' },
+    difficulty: 'medium',
+    directory: '68_laia-flower',
+    ...ASSETS_MAP['68_laia-flower'],
+    description: { ja: 'ライアの花の説明文です。', en: 'Description for The Laia Flower.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
 
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },

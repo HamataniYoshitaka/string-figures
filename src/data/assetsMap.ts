@@ -310,4 +310,24 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/64_a-man-flexing-his-biceps/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/64_a-man-flexing-his-biceps/preview.mp4'),
   },
+  // '65_dog-walking': {
+  //   thumbnail: require('../../assets/string-figures/65_dog-walking/thumbnail-kraft.jpg'),
+  //   patternImage: require('../../assets/string-figures/65_dog-walking/pattern.jpg'),
+  //   previewUrl: require('../../assets/string-figures/65_dog-walking/preview.mp4'),
+  // },
+  // '66_mouse': {
+  //   thumbnail: require('../../assets/string-figures/66_mouse/thumbnail-kraft.jpg'),
+  //   patternImage: require('../../assets/string-figures/66_mouse/pattern.jpg'),
+  //   previewUrl: require('../../assets/string-figures/66_mouse/preview.mp4'),
+  // },
+  '67_island-moa': {
+    thumbnail: require('../../assets/string-figures/67_island-moa/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/67_island-moa/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/67_island-moa/preview.mp4'),
+  },
+  '68_laia-flower': {
+    thumbnail: require('../../assets/string-figures/68_laia-flower/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/68_laia-flower/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/68_laia-flower/preview.mp4'),
+  },
 };
