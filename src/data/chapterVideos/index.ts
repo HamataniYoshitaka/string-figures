@@ -126,7 +126,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '61_opening-a': FIGURE_61_OPENING_A_VIDEOS,
   '62_japanese-opening': FIGURE_62_JAPANESE_OPENING_VIDEOS,
   '64_a-man-flexing-his-biceps': FIGURE_64_A_MAN_FLEXING_HIS_BICEPS_VIDEOS,
-  '65_dog-walking': FIGURE_65_DOG_WALKING_VIDEOS,
+  // '65_dog-walking': FIGURE_65_DOG_WALKING_VIDEOS,
   '66_mouse': FIGURE_66_MOUSE_VIDEOS,
   '67_island-moa': FIGURE_67_ISLAND_MOA_VIDEOS,
   '68_laia-flower': FIGURE_68_LAIA_FLOWER_VIDEOS
