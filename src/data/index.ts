@@ -893,6 +893,16 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '58',
+    name: { ja: '天と地', en: 'Earth and Sky' },
+    difficulty: 'medium',
+    directory: '58_earth-and-sky',
+    ...ASSETS_MAP['58_earth-and-sky'],
+    description: { ja: '天と地の説明文です。', en: 'Description for Earth and Sky.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
     id: '59',
     name: { ja: 'カヤックをこぐ人', en: 'The Kayaker' },
     difficulty: 'hard',

@@ -285,6 +285,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/57_thunder/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/57_thunder/preview.mp4'),
   },
+  '58_earth-and-sky': {
+    thumbnail: require('../../assets/string-figures/58_earth-and-sky/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/58_earth-and-sky/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/58_earth-and-sky/preview.mp4'),
+  },
   '59_kayaker': {
     thumbnail: require('../../assets/string-figures/59_kayaker/thumbnail-kraft.gif'),
     patternImage: require('../../assets/string-figures/59_kayaker/pattern.jpg'),
