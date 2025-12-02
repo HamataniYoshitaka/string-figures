@@ -2,7 +2,8 @@
   "ios": { 
     "CFBundleDisplayName": "String Figures",
     "NSSpeechRecognitionUsageDescription": "This app uses speech recognition to operate the video.",
-    "NSMicrophoneUsageDescription": "This app needs access to the microphone to use speech recognition."
+    "NSMicrophoneUsageDescription": "This app needs access to the microphone to use speech recognition.",
+    "NSPhotoLibraryUsageDescription": "This app may access the photo library to select and save images for some features."
   },
   "android": { "app_name": "String Figures" },
   "messages": {

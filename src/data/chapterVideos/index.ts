@@ -54,7 +54,7 @@ import { FIGURE_53_2FAWNS_VIDEOS } from './figure-53_2fawns';
 import { FIGURE_54_CARIBOU_IN_WILLOWS_VIDEOS } from './figure-54_caribou-in-willows';
 import { FIGURE_56_TEEPEE_VIDEOS } from './figure-56_teepee';
 import { FIGURE_57_THUNDER_VIDEOS } from './figure-57_thunder';
-import { FIGURE_59_PADDLER_VIDEOS } from './figure-59_paddler';
+import { FIGURE_59_KAYAKER_VIDEOS } from './figure-59_kayaker';
 import { FIGURE_60_POSITION1_VIDEOS } from './figure-60_position1';
 import { FIGURE_61_OPENING_A_VIDEOS } from './figure-61_opening-a';
 import { FIGURE_64_A_MAN_FLEXING_HIS_BICEPS_VIDEOS } from './figure-64_a-man-flexing-his-biceps';
@@ -121,7 +121,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '54_caribou-in-willows': FIGURE_54_CARIBOU_IN_WILLOWS_VIDEOS,
   '56_teepee': FIGURE_56_TEEPEE_VIDEOS,
   '57_thunder': FIGURE_57_THUNDER_VIDEOS,
-  '59_paddler': FIGURE_59_PADDLER_VIDEOS,
+  '59_kayaker': FIGURE_59_KAYAKER_VIDEOS,
   '60_position1': FIGURE_60_POSITION1_VIDEOS,
   '61_opening-a': FIGURE_61_OPENING_A_VIDEOS,
   '62_japanese-opening': FIGURE_62_JAPANESE_OPENING_VIDEOS,

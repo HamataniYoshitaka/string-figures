@@ -22,6 +22,7 @@
       "infoPlist": {
         "NSSpeechRecognitionUsageDescription": "このアプリは、動画の操作を音声で行うために音声認識機能を使用します。",
         "NSMicrophoneUsageDescription": "このアプリは、音声認識のためにマイクへのアクセスが必要です。",
+        "NSPhotoLibraryUsageDescription": "このアプリは、一部の機能で画像を選択・保存する可能性があるため、写真ライブラリへのアクセスが必要になる場合があります。",
         "CFBundleAllowMixedLocalizations": true
       }
     },

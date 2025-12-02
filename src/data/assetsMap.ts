@@ -285,10 +285,10 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/57_thunder/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/57_thunder/preview.mp4'),
   },
-  '59_paddler': {
-    thumbnail: require('../../assets/string-figures/59_paddler/thumbnail-kraft.gif'),
-    patternImage: require('../../assets/string-figures/59_paddler/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/59_paddler/preview.mp4'),
+  '59_kayaker': {
+    thumbnail: require('../../assets/string-figures/59_kayaker/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/59_kayaker/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/59_kayaker/preview.mp4'),
   },
   '60_position1': {
     thumbnail: require('../../assets/string-figures/60_position1/thumbnail-kraft.jpg'),
@@ -310,11 +310,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/64_a-man-flexing-his-biceps/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/64_a-man-flexing-his-biceps/preview.mp4'),
   },
-  // '65_dog-walking': {
-  //   thumbnail: require('../../assets/string-figures/65_dog-walking/thumbnail-kraft.jpg'),
-  //   patternImage: require('../../assets/string-figures/65_dog-walking/pattern.jpg'),
-  //   previewUrl: require('../../assets/string-figures/65_dog-walking/preview.mp4'),
-  // },
+  '65_dog-walking': {
+    thumbnail: require('../../assets/string-figures/65_dog-walking/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/65_dog-walking/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/65_dog-walking/preview.mp4'),
+  },
   '66_mouse': {
     thumbnail: require('../../assets/string-figures/66_mouse/thumbnail-kraft.jpg'),
     patternImage: require('../../assets/string-figures/66_mouse/pattern.jpg'),

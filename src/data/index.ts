@@ -892,24 +892,24 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
-  // {
-  //   id: '59',
-  //   name: { ja: 'カヤックをこぐ人', en: 'The Kayaker' },
-  //   difficulty: 'hard',
-  //   directory: '59_paddler',
-  //   ...ASSETS_MAP['59_paddler'],
-  //   description: { 
-  //     ja: '両手の人差し指を左右に動かすことで、カヤックに乗っている人が漕ぎ出します。イヌイットのあやとりで、このあと「山並み」へと続けて取ることができます', 
-  //     en: 'By moving both index fingers from side to side, the person in the kayak appears to paddle forward. This is an Inuit string figure, and from it you can continue on to make “The Range of the Mountains.”' 
-  //   },
-  //   premiumCourseId: 0, // 無料
-  //   data: {
-  //     region: { ja: '北極圏', en: 'Arctic Circle' },
-  //     source: 'D. Jenness, <i>Eskimo String Figures</i>, 1924',
-  //     author: null,
-  //     references: null
-  //   }
-  // },
+  {
+    id: '59',
+    name: { ja: 'カヤックをこぐ人', en: 'The Kayaker' },
+    difficulty: 'hard',
+    directory: '59_kayaker',
+    ...ASSETS_MAP['59_kayaker'],
+    description: { 
+      ja: '両手の人差し指を左右に動かすことで、カヤックに乗っている人が漕ぎ出します。イヌイットのあやとりで、このあと「山並み」へと続けて取ることができます', 
+      en: 'By moving both index fingers from side to side, the person in the kayak appears to paddle forward. This is an Inuit string figure, and from it you can continue on to make “The Range of the Mountains.”' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: 'D. Jenness, <i>Eskimo String Figures</i>, 1924',
+      author: null,
+      references: null
+    }
+  },
   {
     id: '64',
     name: { ja: '上腕二頭筋を動かす男', en: 'Man Flexing His Biceps' },
@@ -920,36 +920,36 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 2, // コレクション2
     data: null
   },
-  // {
-  //   id: '65',
-  //   name: { ja: '耳の大きな犬', en: 'A Dog Walking' },
-  //   difficulty: 'medium',
-  //   directory: '65_dog-walking',
-  //   ...ASSETS_MAP['65_dog-walking'],
-  //   description: { ja: '耳の大きな犬の説明文です。', en: 'Description for A Dog Walking.' },
-  //   premiumCourseId: 0, // 無料
-  //   data: null
-  // },
-  // {
-  //   id: '66',
-  //   name: { ja: 'ネズミ', en: 'A Mouse' },
-  //   difficulty: 'medium',
-  //   directory: '66_mouse',
-  //   ...ASSETS_MAP['66_mouse'],
-  //   description: { ja: 'ネズミの説明文です。', en: 'Description for A Mouse.' },
-  //   premiumCourseId: 0, // 無料
-  //   data: null
-  // },
-  // {
-  //   id: '67',
-  //   name: { ja: 'モア島', en: 'The Island Moa' },
-  //   difficulty: 'medium',
-  //   directory: '67_island-moa',
-  //   ...ASSETS_MAP['67_island-moa'],
-  //   description: { ja: 'モア島の説明文です。', en: 'Description for The Island Moa.' },
-  //   premiumCourseId: 0, // 無料
-  //   data: null
-  // },
+  {
+    id: '65',
+    name: { ja: '耳の大きな犬', en: 'A Dog Walking' },
+    difficulty: 'hard',
+    directory: '65_dog-walking',
+    ...ASSETS_MAP['65_dog-walking'],
+    description: { ja: '耳の大きな犬の説明文です。', en: 'Description for A Dog Walking.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '66',
+    name: { ja: 'ネズミ', en: 'A Mouse' },
+    difficulty: 'medium',
+    directory: '66_mouse',
+    ...ASSETS_MAP['66_mouse'],
+    description: { ja: 'ネズミの説明文です。', en: 'Description for A Mouse.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '67',
+    name: { ja: 'モア島', en: 'The Island Moa' },
+    difficulty: 'medium',
+    directory: '67_island-moa',
+    ...ASSETS_MAP['67_island-moa'],
+    description: { ja: 'モア島の説明文です。', en: 'Description for The Island Moa.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
   {
     id: '68',
     name: { ja: 'ライアの花', en: 'The Laia Flower' },
