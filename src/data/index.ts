@@ -968,6 +968,29 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '69',
+    name: { ja: '山間の月', en: 'The Moon Between the Mountains' },
+    difficulty: 'medium',
+    directory: '69_moon-between-mountains',
+    ...ASSETS_MAP['69_moon-between-mountains'],
+    description: { 
+      ja: '山間の月の説明文です。', 
+      en: 'Description for The Moon Between the Mountains.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '70',
+    name: { ja: '山並み', en: 'The Range of the Mountains' },
+    difficulty: 'hard',
+    directory: '70_mountains',
+    ...ASSETS_MAP['70_mountains'],
+    description: { ja: '山並みの説明文です。', en: 'Description for The Range of the Mountains.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
 
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },

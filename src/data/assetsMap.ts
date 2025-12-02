@@ -330,4 +330,14 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/68_laia-flower/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/68_laia-flower/preview.mp4'),
   },
+  '69_moon-between-mountains': {
+    thumbnail: require('../../assets/string-figures/69_moon-between-mountains/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/69_moon-between-mountains/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/69_moon-between-mountains/preview.mp4'),
+  },
+  '70_mountains': {
+    thumbnail: require('../../assets/string-figures/70_mountains/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/70_mountains/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/70_mountains/preview.mp4'),
+  },
 };
