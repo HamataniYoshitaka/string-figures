@@ -1001,6 +1001,16 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: null
   },
+  {
+    id: '77',
+    name: { ja: 'コウモリの群れ', en: 'Bats' },
+    difficulty: 'medium',
+    directory: '77_bats',
+    ...ASSETS_MAP['77_bats'],
+    description: { ja: 'コウモリの群れの説明文です。', en: 'Description for Bats.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
 
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },

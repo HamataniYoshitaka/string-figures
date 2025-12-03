@@ -345,4 +345,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/70_mountains/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/70_mountains/preview.mp4'),
   },
+  '77_bats': {
+    thumbnail: require('../../assets/string-figures/77_bats/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/77_bats/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/77_bats/preview.mp4'),
+  },
 };

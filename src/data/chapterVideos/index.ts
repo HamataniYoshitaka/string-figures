@@ -66,6 +66,7 @@ import { FIGURE_67_ISLAND_MOA_VIDEOS } from './figure-67_island-moa';
 import { FIGURE_68_LAIA_FLOWER_VIDEOS } from './figure-68_laia-flower';
 import { FIGURE_69_MOON_BETWEEN_MOUNTAINS_VIDEOS } from './figure-69_moon-between-mountains';
 import { FIGURE_70_MOUNTAINS_VIDEOS } from './figure-70_mountains';
+import { FIGURE_77_BATS_VIDEOS } from './figure-77_bats';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -135,5 +136,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '67_island-moa': FIGURE_67_ISLAND_MOA_VIDEOS,
   '68_laia-flower': FIGURE_68_LAIA_FLOWER_VIDEOS,
   '69_moon-between-mountains': FIGURE_69_MOON_BETWEEN_MOUNTAINS_VIDEOS,
-  '70_mountains': FIGURE_70_MOUNTAINS_VIDEOS
+  '70_mountains': FIGURE_70_MOUNTAINS_VIDEOS,
+  '77_bats': FIGURE_77_BATS_VIDEOS
 };
