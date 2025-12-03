@@ -69,6 +69,7 @@ import { FIGURE_70_MOUNTAINS_VIDEOS } from './figure-70_mountains';
 import { FIGURE_74_CANOE_VIDEOS } from './figure-74_canoe';
 import { FIGURE_75_TORNADO_VIDEOS } from './figure-75_tornado';
 import { FIGURE_77_BATS_VIDEOS } from './figure-77_bats';
+import { FIGURE_73_SLEEPER_VIDEOS } from './figure-73_sleeper';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -139,6 +140,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '68_laia-flower': FIGURE_68_LAIA_FLOWER_VIDEOS,
   '69_moon-between-mountains': FIGURE_69_MOON_BETWEEN_MOUNTAINS_VIDEOS,
   '70_mountains': FIGURE_70_MOUNTAINS_VIDEOS,
+  '73_sleeper': FIGURE_73_SLEEPER_VIDEOS,
   '74_canoe': FIGURE_74_CANOE_VIDEOS,
   '75_tornado': FIGURE_75_TORNADO_VIDEOS,
   '77_bats': FIGURE_77_BATS_VIDEOS
