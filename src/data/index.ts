@@ -1012,6 +1012,16 @@ export const stringFigures: StringFigure[] = [
     data: null
   },
   {
+    id: '75',
+    name: { ja: '竜巻', en: 'Tornado' },
+    difficulty: 'medium',
+    directory: '75_tornado',
+    ...ASSETS_MAP['75_tornado'],
+    description: { ja: '竜巻の説明文です。', en: 'Description for Tornado.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
     id: '77',
     name: { ja: 'コウモリの群れ', en: 'Bats' },
     difficulty: 'medium',
