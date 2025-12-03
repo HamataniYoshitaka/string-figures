@@ -1002,6 +1002,16 @@ export const stringFigures: StringFigure[] = [
     data: null
   },
   {
+    id: '74',
+    name: { ja: 'カヌー', en: 'Canoe' },
+    difficulty: 'medium',
+    directory: '74_canoe',
+    ...ASSETS_MAP['74_canoe'],
+    description: { ja: 'カヌーの説明文です。', en: 'Description for Canoe.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
     id: '77',
     name: { ja: 'コウモリの群れ', en: 'Bats' },
     difficulty: 'medium',
