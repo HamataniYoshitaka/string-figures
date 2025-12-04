@@ -1041,7 +1041,16 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: null
   },
-
+  {
+    id: '82',
+    name: { ja: '嵐の雲', en: 'Storm Clouds' },
+    difficulty: 'hard',
+    directory: '82_storm-clouds',
+    ...ASSETS_MAP['82_storm-clouds'],
+    description: { ja: '嵐の雲の説明文です。', en: 'Description for Storm Clouds.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',

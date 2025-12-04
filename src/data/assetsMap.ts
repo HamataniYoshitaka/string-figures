@@ -365,5 +365,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/77_bats/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/77_bats/preview.mp4'),
   },
-
+  '82_storm-clouds': {
+    thumbnail: require('../../assets/string-figures/82_storm-clouds/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/82_storm-clouds/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/82_storm-clouds/preview.mp4'),
+  },
 };

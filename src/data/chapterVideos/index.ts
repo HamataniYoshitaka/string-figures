@@ -70,6 +70,7 @@ import { FIGURE_74_CANOE_VIDEOS } from './figure-74_canoe';
 import { FIGURE_75_TORNADO_VIDEOS } from './figure-75_tornado';
 import { FIGURE_77_BATS_VIDEOS } from './figure-77_bats';
 import { FIGURE_73_SLEEPER_VIDEOS } from './figure-73_sleeper';
+import { FIGURE_82_STORM_CLOUDS_VIDEOS } from './figure-82_storm-clouds';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -143,5 +144,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '73_sleeper': FIGURE_73_SLEEPER_VIDEOS,
   '74_canoe': FIGURE_74_CANOE_VIDEOS,
   '75_tornado': FIGURE_75_TORNADO_VIDEOS,
-  '77_bats': FIGURE_77_BATS_VIDEOS
+  '77_bats': FIGURE_77_BATS_VIDEOS,
+  '82_storm-clouds': FIGURE_82_STORM_CLOUDS_VIDEOS
 };
