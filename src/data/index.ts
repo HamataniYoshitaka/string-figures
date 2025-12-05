@@ -495,7 +495,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '35',
     name: { ja: '1段ばしご', en: 'One Diamond' },
-    difficulty: 'medium',
+    difficulty: 'easy',
     directory: '35_jacobs-ladder1',
     ...ASSETS_MAP['35_jacobs-ladder1'],
     description: { 
@@ -513,7 +513,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '36',
     name: { ja: '2段ばしご', en: '2 Ladder' },
-    difficulty: 'medium',
+    difficulty: 'easy',
     directory: '36_jacobs-ladder2',
     ...ASSETS_MAP['36_jacobs-ladder2'],
     description: { 
@@ -531,7 +531,7 @@ export const stringFigures: StringFigure[] = [
   { 
     id: '37',
     name: { ja: '3段ばしご', en: '3 Ladder' },
-    difficulty: 'medium',
+    difficulty: 'easy',
     directory: '37_jacobs-ladder3',
     ...ASSETS_MAP['37_jacobs-ladder3'],
     description: { 
@@ -549,7 +549,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '2',
     name: { ja: '4段ばしご', en: 'Jacob\'s Ladder' },
-    difficulty: 'medium',
+    difficulty: 'easy',
     directory: '2_jacobs-ladder4',
     ...ASSETS_MAP['2_jacobs-ladder4'],
     description: { 
@@ -1048,6 +1048,26 @@ export const stringFigures: StringFigure[] = [
     directory: '82_storm-clouds',
     ...ASSETS_MAP['82_storm-clouds'],
     description: { ja: '嵐の雲の説明文です。', en: 'Description for Storm Clouds.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '83',
+    name: { ja: 'ダンスハウスで踊る人々', en: 'Eskimos in a Dancehouse' },
+    difficulty: 'medium',
+    directory: '83_dancers',
+    ...ASSETS_MAP['83_dancers'],
+    description: { ja: 'ダンスハウスで踊る人々の説明文です。', en: 'Description for Eskimos in a Dancehouse.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
+    id: '84',
+    name: { ja: '白鳥', en: 'A Swan' },
+    difficulty: 'hard',
+    directory: '84_swan',
+    ...ASSETS_MAP['84_swan'],
+    description: { ja: '白鳥の説明文です。', en: 'Description for A Swan.' },
     premiumCourseId: 0, // 無料
     data: null
   },

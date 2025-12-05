@@ -370,4 +370,14 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/82_storm-clouds/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/82_storm-clouds/preview.mp4'),
   },
+  '83_dancers': {
+    thumbnail: require('../../assets/string-figures/83_dancers/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/83_dancers/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/83_dancers/preview.mp4'),
+  },
+  '84_swan': {
+    thumbnail: require('../../assets/string-figures/84_swan/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/84_swan/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/84_swan/preview.mp4'),
+  },
 };
