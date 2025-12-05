@@ -72,19 +72,6 @@ export const stringFigures: StringFigure[] = [
     data: null
   },
   {
-    id: '3',
-    name: { ja: '蜘蛛の巣', en: 'Spiderweb' },
-    difficulty: 'easy',
-    directory: '3_spiderweb',
-    ...ASSETS_MAP['3_spiderweb'],
-    description: { 
-      ja: '放射状の形が綺麗なあやとりです。紐を二重にすることで、よりバランスの取れた形を作りやすくなります', 
-      en: 'A beautiful string figure with a radial shape. By doubling the string, you can make it even more beautiful.' 
-    },
-    premiumCourseId: 1, // 有料コース1
-    data: null
-  },
-  {
     id: '4',
     name: { ja: '火山', en: 'Volcano' },
     difficulty: 'hard',
@@ -118,24 +105,6 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
-    id: '7',
-    name: { ja: 'かたつむり', en: 'Snail' },
-    difficulty: 'easy',
-    directory: '7_snail',
-    ...ASSETS_MAP['7_snail'],
-    description: { 
-      ja: '小さなかわいいかたつむりが出来上がります。両手を振って糸をぐるぐる巻きつけるという、ちょっと変わった手順があります', 
-      en: 'The result is a small, charming snail. One of the steps is a bit unusual—you swing both hands and wind the string around in a circular motion.' 
-    },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: null,
-      source: '有木昭久, 湯浅清四郎, <i>世界のあやとり傑作選</i>, 1974 ',
-      author: { ja: '有木昭久', en: 'ARIKI Teruhisa' },
-      references: null
-    }
-  },
-  {
     id: '8',
     name: { ja: 'ゴム', en: 'Elastic Band' },
     difficulty: 'easy',
@@ -151,7 +120,79 @@ export const stringFigures: StringFigure[] = [
         ja: 'ニュージーランド、日本、ハワイ、他', 
         en: 'New Zealand, Japan, Hawaii, etc.' 
       },
-      source: 'J. C. Andersen, <i>Māori String Figures</i>, 1927 ',
+      source: '“Toemi”\nJ. C. Andersen\n <i>Māori String Figures</i> (1927)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '35',
+    name: { ja: '1段ばしご', en: 'One Diamond' },
+    difficulty: 'easy',
+    directory: '35_jacobs-ladder1',
+    ...ASSETS_MAP['35_jacobs-ladder1'],
+    description: { 
+      ja: '最も有名なあやとり「4段ばしご」の1段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
+      en: 'This is the single-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.” In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: 'ハワイ、日本、他', en: 'Japan, Hawaii, etc.' },
+      source: '“One Eye”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '36',
+    name: { ja: '2段ばしご', en: '2 Diamonds' },
+    difficulty: 'easy',
+    directory: '36_jacobs-ladder2',
+    ...ASSETS_MAP['36_jacobs-ladder2'],
+    description: { 
+      ja: '最も有名なあやとり「4段ばしご」の2段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
+      en: 'This is the two-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.” In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
+      source: '“Osage Two Diamonds”\nC. F. Jayne\n <i>String Figures</i> (1906)',
+      author: null,
+      references: null
+    }
+  },
+  { 
+    id: '37',
+    name: { ja: '3段ばしご', en: '3 Diamonds' },
+    difficulty: 'easy',
+    directory: '37_jacobs-ladder3',
+    ...ASSETS_MAP['37_jacobs-ladder3'],
+    description: { 
+      ja: '最も有名なあやとり「4段ばしご」の3段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
+      en: 'This is the three-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.” In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: 'ハワイ、日本、他', en: 'Hawaii, Japan, etc.' },
+      source: '“Three Eyes”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '2',
+    name: { ja: '4段ばしご', en: '4 Diamonds' },
+    difficulty: 'easy',
+    directory: '2_jacobs-ladder4',
+    ...ASSETS_MAP['2_jacobs-ladder4'],
+    description: { 
+      ja: '日本では中指を主に使う「4段ばしご」、世界では主に人差し指を使い「ヤコブの梯子」など様々な名前で知られています。ここでは中指を使って取る方法を紹介します', 
+      en: 'This is a famous string figure widely known all over the world. Here, we introduce the method using the middle fingers, which is common in Japan.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
+      source: '“Osage Diamonds”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
     }
@@ -171,6 +212,24 @@ export const stringFigures: StringFigure[] = [
       region: { ja: '日本', en: 'Japan' },
       source: '有木昭久, 湯浅清四郎, <i>楽しいあやとり遊び</i>, 1973 ',
       author: null,
+      references: null
+    }
+  },
+  {
+    id: '7',
+    name: { ja: 'かたつむり', en: 'Snail' },
+    difficulty: 'easy',
+    directory: '7_snail',
+    ...ASSETS_MAP['7_snail'],
+    description: { 
+      ja: '小さなかわいいかたつむりが出来上がります。両手を振って糸をぐるぐる巻きつけるという、ちょっと変わった手順があります', 
+      en: 'The result is a small, charming snail. One of the steps is a bit unusual—you swing both hands and wind the string around in a circular motion.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: null,
+      source: '有木昭久, 湯浅清四郎, <i>世界のあやとり傑作選</i>, 1974 ',
+      author: { ja: '有木昭久', en: 'ARIKI Teruhisa' },
       references: null
     }
   },
@@ -256,7 +315,20 @@ export const stringFigures: StringFigure[] = [
     description: { ja: 'バナナの説明文です。', en: 'Description for Banana.' },
     premiumCourseId: 0, // 無料
     data: null
+  },
+  {
+    id: '3',
+    name: { ja: '蜘蛛の巣', en: 'Spiderweb' },
+    difficulty: 'easy',
+    directory: '3_spiderweb',
+    ...ASSETS_MAP['3_spiderweb'],
+    description: { 
+      ja: '放射状の形が綺麗なあやとりです。紐を二重にすることで、よりバランスの取れた形を作りやすくなります', 
+      en: 'A beautiful string figure with a radial shape. By doubling the string, you can make it even more beautiful.' 
     },
+    premiumCourseId: 1, // 有料コース1
+    data: null
+  },
   {
     id: '16',
     name: { ja: 'せんす', en: 'Sensu' },
@@ -492,78 +564,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
-  {
-    id: '35',
-    name: { ja: '1段ばしご', en: 'One Diamond' },
-    difficulty: 'easy',
-    directory: '35_jacobs-ladder1',
-    ...ASSETS_MAP['35_jacobs-ladder1'],
-    description: { 
-      ja: '最も有名なあやとり「4段ばしご」の1段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います', 
-      en: 'This is the single-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.”' 
-    },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: 'ハワイ、日本、他', en: 'Japan, Hawaii, etc.' },
-      source: 'L. A. Dickey,<i>String Figures from Hawaii</i>, 1928',
-      author: null,
-      references: null
-    }
-    },
-  {
-    id: '36',
-    name: { ja: '2段ばしご', en: '2 Ladder' },
-    difficulty: 'easy',
-    directory: '36_jacobs-ladder2',
-    ...ASSETS_MAP['36_jacobs-ladder2'],
-    description: { 
-      ja: '最も有名なあやとり「4段ばしご」の2段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います', 
-      en: 'This is the two-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.”' 
-    },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
-      source: 'C. F. Jayne,<i>String Figures</i>, 1906',
-      author: null,
-      references: null
-    }
-    },
-  { 
-    id: '37',
-    name: { ja: '3段ばしご', en: '3 Ladder' },
-    difficulty: 'easy',
-    directory: '37_jacobs-ladder3',
-    ...ASSETS_MAP['37_jacobs-ladder3'],
-    description: { 
-      ja: '最も有名なあやとり「4段ばしご」の3段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います', 
-      en: 'This is the three-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.”' 
-    },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: 'ハワイ、日本、他', en: 'Hawaii, Japan, etc.' },
-      source: 'L. A. Dickey,<i>String Figures from Hawaii</i>, 1928',
-      author: null,
-      references: null
-    }
-    },
-  {
-    id: '2',
-    name: { ja: '4段ばしご', en: 'Jacob\'s Ladder' },
-    difficulty: 'easy',
-    directory: '2_jacobs-ladder4',
-    ...ASSETS_MAP['2_jacobs-ladder4'],
-    description: { 
-      ja: '日本では中指を主に使う「4段ばしご」、世界では主に人差し指を使い「ヤコブの梯子」など様々な名前で知られています。ここでは中指を使って取る方法を紹介します', 
-      en: 'This is a famous string figure widely known all over the world. Here, we introduce the method using the middle fingers, which is common in Japan.' 
-    },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
-      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
-      author: null,
-      references: null
-    }
-    },
   { 
     id: '38',
     name: { ja: 'ダンスの舞台', en: 'Dance Stage' },
