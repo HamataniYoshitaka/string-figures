@@ -385,7 +385,7 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '18_mt-fuji',
     ...ASSETS_MAP['18_mt-fuji'],
-    description: { ja: '富士山の説明文です。', en: 'Description for Mt. Fuji.' },
+    description: { ja: '今回紹介するあやとり以外にも、日本には富士山を表すあやとりがたくさんあります', en: 'In addition to the figure presented this time, Japan has many other string figures that depict Mount Fuji.' },
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
@@ -628,10 +628,18 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '32_canoe',
     ...ASSETS_MAP['32_canoe'],
-    description: { ja: '小舟の説明文です。', en: 'Description for A Boat.' },
-    premiumCourseId: 0, // 無料
-    data: null
+    description: { 
+      ja: '立体的なボートが出来上がるあやとりです。この後「かに」へと続けて取ることができます', 
+      en: 'This string figure creates a three-dimensional boat. After completing it, you can go straight into the next figure, <i>Crub.</i>' 
     },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: 'パプアニューギニア', en: 'Papua New Guinea' },
+      source: '“Tim (a well)”\nW. H. R. Rivers, A. C. Haddon\n<i>A Method of Recording String Figures and Tricks</i>(1902)',
+      author: null,
+      references: null
+    }
+  },
   {
     id: '33',
     name: { ja: 'かに', en: 'Crub' },
@@ -640,12 +648,12 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['33_crub'],
     description: { 
       ja: 'かにの形が見事に表現されたあやとりです。とても長い手順を辿りますが、一つ一つは難しい操作ではありません。ここでは「小舟」の完成形からの手順を紹介していますので、「小舟」の作り方を先に習得してから始めて下さい', 
-      en: 'This string figure beautifully represents the shape of a crab. Although the process involves many steps, none of them are particularly difficult. The instructions here begin from the completed form of “A Boat,” so please learn how to make “A Boat” first before starting.' 
+      en: 'This string figure beautifully represents the shape of a crab. Although the process involves many steps, none of them are particularly difficult. The instructions here begin from the completed form of <i>A Boat,</i> so please learn how to make <i>A Boat</i> first before starting.' 
     },
     premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: 'パプアニューギニア', en: 'Papua New Guinea' },
-      source: 'W. H. R. Rivers, A. C. Haddon, <i>A Method of Recording String Figures and Tricks</i>, 1902 ',
+      source: '“Kokowa (crab)”\nW. H. R. Rivers, A. C. Haddon\n<i>A Method of Recording String Figures and Tricks</i>(1902)',
       author: null,
       references: null
     }
@@ -864,9 +872,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '49_caribou',
     ...ASSETS_MAP['49_caribou'],
-    description: { ja: 'カリブーの説明文です。', en: 'Description for Caribou.' },
+    description: { 
+      ja: '北アメリカのトナカイである「カリブー」を表現したあやとりです。手順のほとんどを右手だけで行います', 
+      en: 'This string figure represents the “caribou,” a reindeer native to North America. Most of the steps are performed using only the right hand.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“Tuktuqdjung (Cariboo)”\nF. Boas\n<i>The Game of Cat\'s Cradle</i>(1888)',
+      author: null,
+      references: null
+    }
     },
   {
     id: '50',
@@ -980,13 +996,21 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '58',
-    name: { ja: '天と地', en: 'Earth and Sky' },
+    name: { ja: '天と地', en: 'Earth and the Sky' },
     difficulty: 'medium',
     directory: '58_earth-and-sky',
     ...ASSETS_MAP['58_earth-and-sky'],
-    description: { ja: '天と地の説明文です。', en: 'Description for Earth and Sky.' },
+    description: { 
+      ja: '上下2層に分かれた平面が天と地を表している、美しいあやとりです。南アメリカのマプチェ族に伝わるあやとりです', 
+      en: 'This beautiful string figure represents heaven and earth with two horizontal layers—an upper and a lower plane. It comes from the Mapuche people of South America.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '南アメリカ', en: 'South America' },
+      source: '“casa abandonada”\nJ. Braunstein, I. Balducci, M. Reca, O. Sturzenegger\n<i>Juegos y Lenguajes de Hilo en el Gran Chaco</i>(2017)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '59',
@@ -1115,23 +1139,39 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '74',
-    name: { ja: 'カヌー', en: 'Canoe' },
-    difficulty: 'medium',
+    name: { ja: 'カヌー', en: 'A Canoe' },
+    difficulty: 'easy',
     directory: '74_canoe',
     ...ASSETS_MAP['74_canoe'],
-    description: { ja: 'カヌーの説明文です。', en: 'Description for Canoe.' },
+    description: { 
+      ja: 'アボリジニのあやとりです。立体的なカヌーが出来上がります。この後「たつまき」へと続けて取ることができます', 
+      en: 'This string figure from Aboriginal tradition creates a three-dimensional canoe. After completing it, you can go straight into the next figure, <i>A Waterspout.</i>' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'オーストラリア', en: 'Australia' },
+      source: '“A Canoe (Auto)”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '75',
-    name: { ja: '竜巻', en: 'Tornado' },
+    name: { ja: 'たつまき', en: 'A Waterspout' },
     difficulty: 'medium',
     directory: '75_tornado',
     ...ASSETS_MAP['75_tornado'],
-    description: { ja: '竜巻の説明文です。', en: 'Description for Tornado.' },
+    description: { 
+      ja: 'たつまきの形が立体的に表現された見事なあやとりです。ここでは「カヌー」の完成形からの手順を紹介していますので、「カヌー」の作り方を先に習得してから始めて下さい', 
+      en: 'This is a remarkable string figure that expresses the shape of a tornado in three dimensions. The instructions here begin from the completed form of <i>A Canoe,</i> so please learn how to make <i>A Canoe</i> first before starting.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'オーストラリア', en: 'Australia' },
+      source: '“The Waterspout (Mare)”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '77',
@@ -1139,9 +1179,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '77_bats',
     ...ASSETS_MAP['77_bats'],
-    description: { ja: 'コウモリの群れの説明文です。', en: 'Description for Bats.' },
+    description: { 
+      ja: 'こうもりが群れになってぶら下がっている様子を表しているあやとりです。最後にこうもりは次々と飛び立って行きます', 
+      en: 'This string figure represents a group of bats hanging together. In the final steps, the bats fly away one after another.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '南アメリカ', en: 'South America' },
+      source: '“t\'afoloc (muchos pecaríes)”\nJ. Braunstein\n <i>Figuras y Juegos de Hilos de los Indios Maká </i> (1992)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '82',
@@ -1149,9 +1197,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'hard',
     directory: '82_storm-clouds',
     ...ASSETS_MAP['82_storm-clouds'],
-    description: { ja: '嵐の雲の説明文です。', en: 'Description for Storm Clouds.' },
+    description: { 
+      ja: 'ナバホ族のあやとりです。同じ操作を繰り返すことで、雲はいくつでも作ることができます', 
+      en: 'This is a Navajo string figure. By repeating the same motion, you can create as many clouds as you like.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北アメリカ', en: 'North America' },
+      source: '“Storm Clouds”\nC. F. Jayne\n <i>String Figures</i> (1906)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '83',
@@ -1159,9 +1215,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '83_dancers',
     ...ASSETS_MAP['83_dancers'],
-    description: { ja: 'ダンスハウスで踊る人々の説明文です。', en: 'Description for Eskimos in a Dancehouse.' },
+    description: { 
+      ja: '男女のダンサーが列を作って踊っているあやとりです。列の最後の輪はドラムを表しています。ダンサー達は次々と退場していき、最後はダンスハウスは無人になります', 
+      en: 'This string figure shows male and female dancers lined up in a row. The last loop represents a drum. The dancers leave the line one by one, and in the end the dance house is left empty.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“The Children (a series of dancers, the last one carrying the drum)”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '84',
