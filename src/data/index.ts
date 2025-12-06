@@ -588,24 +588,40 @@ export const stringFigures: StringFigure[] = [
     },
   {
     id: '30',
-    name: { ja: '星', en: 'Star' },
+    name: { ja: '星', en: 'A Star' },
     difficulty: 'easy',
     directory: '30_star',
     ...ASSETS_MAP['30_star'],
-    description: { ja: '星の説明文です。', en: 'Description for Star.' },
-    premiumCourseId: 0, // 無料
-    data: null
+    description: { 
+      ja: '星をモチーフにしたあやとりは世界中に数多くありますが、この日本に伝わるあやとりは、手順も短く比較的簡単に作ることができます', 
+      en: 'Although there are many star-themed string figures around the world, this Japanese one has a short sequence and is relatively easy to make.' 
     },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“ほし”\nさいとうたま\n <i>あやとりいととり 1</i> (1982)',
+      author: null,
+      references: null
+    }
+  },
   {
     id: '31',
-    name: { ja: 'はたおり', en: 'Loom' },
+    name: { ja: 'はたおり', en: 'Sewing Machine' },
     difficulty: 'easy',
     directory: '31_weaving',
     ...ASSETS_MAP['31_weaving'],
-    description: { ja: 'はたおりの説明文です。', en: 'Description for Loom.' },
-    premiumCourseId: 0, // 無料
-    data: null
+    description: { 
+      ja: '日本の各地で、さまざまな名前で伝えられているあやとりです。手のひらの向きを変えることで、はたおり機が動きます', 
+      en: 'This string figure is passed down across Japan under various names. By changing the orientation of your palms, the loom appears to move.' 
     },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“はたおり”\n有木昭久, 湯浅清四郎\n <i>楽しいあやとり遊び</i> (1973)',
+      author: null,
+      references: null
+    }
+  },
   {
     id: '32',
     name: { ja: '小舟', en: 'A Boat' },
@@ -992,23 +1008,39 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '64',
-    name: { ja: '上腕二頭筋を動かす男', en: 'Man Flexing His Biceps' },
+    name: { ja: '上腕二頭筋を動かす男', en: 'A Man Flexing His Biceps' },
     difficulty: 'hard',
     directory: '64_a-man-flexing-his-biceps',
     ...ASSETS_MAP['64_a-man-flexing-his-biceps'],
-    description: { ja: '上腕二頭筋を動かす男の説明文です。', en: 'Description for Man Flexing His Biceps.' },
+    description: { 
+      ja: '力自慢のイヌイットを表したユーモラスなあやとりです。人差し指に合わせて男の腕が動きます', 
+      en: 'This humorous string figure represents a strong Inuit man. His arms move in sync with your index fingers.' 
+    },
     premiumCourseId: 2, // コレクション2
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“Aksatquligaciaq (Celui qui a le haut du bras)”\nG. Mary-Rousselière\n <i>Les Jeux de Ficelle des Arviligjuarmiut</i> (1969)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '65',
-    name: { ja: '耳の大きな犬', en: 'A Dog Walking' },
+    name: { ja: '耳の大きな犬', en: 'A Dog with Large Ears' },
     difficulty: 'hard',
     directory: '65_dog-walking',
     ...ASSETS_MAP['65_dog-walking'],
-    description: { ja: '耳の大きな犬の説明文です。', en: 'Description for A Dog Walking.' },
+    description: { 
+      ja: 'カナダに住むコパーイヌイットに伝わるあやとりです。右手を引くと、耳の大きな犬が歩き出します。ひもを戻して何回でも散歩させることができます', 
+      en: 'This string figure comes from the Copper Inuit of Canada. When you pull your right hand, the large-eared dog begins to walk. You can return the string and take it for a walk again and again.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“A Dog with Large Ears”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '66',
@@ -1137,9 +1169,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'hard',
     directory: '84_swan',
     ...ASSETS_MAP['84_swan'],
-    description: { ja: '白鳥の説明文です。', en: 'Description for A Swan.' },
+    description: { 
+      ja: '長い手順と複雑な操作が必要なあやとりですが、最後の手順で白鳥が首を伸ばす動きはとても優雅です。地域によっては白鳥が飛び立つ所まであやとりが続き、後には波紋だけが残ります', 
+      en: 'This string figure involves many steps and intricate moves, but the final moment—when the swan gracefully extends its neck—is truly beautiful. In certain regions, the sequence goes on to show the swan taking flight, with only the ripples left in its wake.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“The Swan”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
+      author: null,
+      references: null
+    }
   },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
