@@ -81,7 +81,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 2, // 有料コース2
     data: {
       region: { ja: 'パタゴニア', en: 'Patagonia' },
-      source: 'R. Martínez-Crovetto, <i>Juegos de Hilo de los Aborígenes del Norte de Patagonia</i>, 1970 ',
+      source: '“Volcan”\nR. Martínez-Crovetto\n<i>Juegos de Hilo de los Aborígenes del Norte de Patagonia</i> (1970)',
       author: null,
       references: null
     }
@@ -99,7 +99,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
-      source: 'A. C. Haddon, <i>A Few American String Figures and Tricks</i>, 1903',
+      source: '“Many Stars”\nA. C. Haddon\n<i>A Few American String Figures and Tricks</i> (1903)',
       author: null,
       references: null
     }
@@ -494,7 +494,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 2, // コレクション2
     data: {
       region: null,
-      source: 'SHISHIDO Y, <i>Geometrical Figures</i>, 1980',
+      source: '“A Shooting Star”\nSHISHIDO Yukio\n<i>Geometrical Figures</i> (1980)',
       author: { ja: 'SHISHIDO Yukio', en: 'SHISHIDO Yukio' },
       references: null
     }
@@ -671,7 +671,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: 'パラオ', en: 'Palau' },
-      source: 'P. Raymund, <i>The String Games and Cat\'s Cradles of Palau</i>, 1911',
+      source: '“Choilolél of Arsei”\nP. Raymund\n<i>The String Games and Cat\'s Cradles of Palau</i> (1911)',
       author: null,
       references: null
     }
@@ -689,7 +689,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: 'ナウル', en: 'Nauru' },
-      source: 'H. C. Maude, <i>The String Figures of Nauru Island</i>, 1971',
+      source: '“Amwangiyo”\nH. C. Maude\n<i>The String Figures of Nauru Island</i> (1971)',
       author: null,
       references: null
     }
@@ -706,8 +706,8 @@ export const stringFigures: StringFigure[] = [
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: 'ミクロネシア、オーストラリア、他', en: 'Micronesia, Australia, etc.' },
-      source: 'P. Hambruch, <i>Nauru</i>, 1914 ',
+      region: { ja: 'ナウル、ミクロネシア、オーストラリア、他', en: 'Nauru, Micronesia, Australia, etc.' },
+      source: 'Die Sonne (e kuan)\nP. Hambruch\n<i>Nauru</i> (1914)',
       author: null,
       references: null
     }
@@ -725,7 +725,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
-      source: 'さいとうたま, <i>あやとりいととり 2</i>, 1982 ',
+      source: '“山の上のお月さん”\nさいとうたま\n<i>あやとりいととり 2</i> (1982)',
       author: null,
       references: null
     }
@@ -740,7 +740,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: null,
-      source: '夏堀謹二郎, <i>日本の綾取</i>, 1986',
+      source: '“たんぽぽ”\n夏堀謹二郎\n<i>日本の綾取</i> (1986)',
       author: { ja: '夏堀謹二郎', en: 'NATSUBORI Kinjiro' },
       references: null
     }
@@ -758,7 +758,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
-      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      source: '“An Apache Door”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
     }
@@ -776,14 +776,14 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: 'アフリカ', en: 'Africa' },
-      source: 'J. Parkinson, <i>Yöruba String Figures</i>, 1906',
+      source: '“Ile Ubde (a parrot cage)”\nJ. Parkinson\n<i>Yöruba String Figures</i> (1906)',
       author: null,
       references: null
     }
     },
   {
     id: '44',
-    name: { ja: '蝶', en: 'Butterfly' },
+    name: { ja: '蝶', en: 'A Butterfly' },
     difficulty: 'easy',
     directory: '44_butterfly',
     ...ASSETS_MAP['44_butterfly'],
@@ -793,7 +793,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
-      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      source: '“A Butterfly”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
     }
@@ -811,7 +811,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
-      source: '野口広, <i>あやとり</i>, 1973',
+      source: '“あみ・お琴・ハンモック・バリカン”\n野口広\n<i>あやとり</i> (1973)',
       author: null,
       references: null
     }
@@ -829,7 +829,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
-      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      source: '“A Rabbit”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
     }
@@ -846,7 +846,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: 'パプアニューギニア', en: 'Papua New Guinea' },
-      source: '野口広, <i>あやとり 続々</i>, 1975  ',
+      source: '“かめ”\n野口広\n<i>あやとり 続々</i> (1975)',
       author: null,
       references: null
     }
@@ -861,7 +861,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
-      source: 'D. Jenness, <i>Eskimo String Figures</i>, 1924',
+      source: '“A Snow Shovel”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
     }
@@ -907,14 +907,14 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
-      source: 'G. B. Gordon, <i>Notes on the Western Eskimo</i>, 1906',
+      source: 'Sea Gull (t\'keyack)\nG. B. Gordon\n<i>Notes on the Western Eskimo</i> (1906)',
       author: null,
       references: null
     }
-    },
+  },
   {
     id: '52',
-    name: { ja: 'くち', en: 'A Mouth' },
+    name: { ja: '口', en: 'A Mouth' },
     difficulty: 'medium',
     directory: '52_mouth',
     ...ASSETS_MAP['52_mouth'],
@@ -925,7 +925,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
-      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      source: '“A Mouth”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
     }
@@ -940,24 +940,24 @@ export const stringFigures: StringFigure[] = [
   //   premiumCourseId: 0, // 無料
   //   data: null
   // },
-  // {
-  //   id: '54',
-  //   name: { ja: '柳の中のカリブー', en: 'A Caribou in the Willows' },
-  //   difficulty: 'hard',
-  //   directory: '54_caribou-in-willows',
-  //   ...ASSETS_MAP['54_caribou-in-willows'],
-  //   description: { 
-  //     ja: 'カリブーが柳の下で涼んでいる様子を表しています。後半から「カリブー」と同じ手順で形を作っていきます', 
-  //     en: 'A Caribou is resting under the willow. The same procedure as "A Caribou" is used from the second half.' 
-  //   },
-  //   premiumCourseId: 2, // コレクション2
-  //   data: {
-  //     region: { ja: 'アラスカ', en: 'Alaska' },
-  //     source: 'Diamond Jenness, <i>Eskimo String Figures</i>, 1924',
-  //     author: null,
-  //     references: null
-  //   }
-  // },
+  {
+    id: '54',
+    name: { ja: '柳の中のカリブー', en: 'A Caribou in the Willows' },
+    difficulty: 'hard',
+    directory: '54_caribou-in-willows',
+    ...ASSETS_MAP['54_caribou-in-willows'],
+    description: { 
+      ja: 'カリブーが柳の下で涼んでいる様子を表しています。後半から「カリブー」と同じ手順で形を作っていきます', 
+      en: 'A Caribou is resting under the willow. The same procedure as <i>A Caribou</i> is used from the second half.' 
+    },
+    premiumCourseId: 2, // コレクション2
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“The Caribou in the Willows”\nDiamond Jenness\n<i>Eskimo String Figures</i> (1924)',
+      author: null,
+      references: null
+    }
+  },
   {
     id: '56',
     name: { ja: 'ティーピー', en: 'Teepee' },
@@ -971,7 +971,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
-      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      source: '“An Apache Teepee”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
     }
@@ -989,7 +989,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
-      source: 'A. C. Haddon, <i>A Few American String Figures and Tricks</i>, 1903 ',
+      source: '“Lightning”\nA. C. Haddon\n<i>A Few American String Figures and Tricks</i> (1903)',
       author: null,
       references: null
     }
@@ -1025,7 +1025,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
-      source: 'D. Jenness, <i>Eskimo String Figures</i>, 1924',
+      source: '“The Kayaker”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
     }
@@ -1099,7 +1099,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: 'メラネシア', en: 'Melanesia' },
-      source: 'W. W. R. Ball, <i>String Figures 3rd ed.</i>, 1929',
+      source: '“The Laia Fruit, the Laia Flower”\nW. W. R. Ball\n<i>String Figures 3rd ed.</i> (1929)',
       author: null,
       references: null
     }
@@ -1133,9 +1133,16 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '73_sleeper',
     ...ASSETS_MAP['73_sleeper'],
-    description: { ja: 'ベッドの男の説明文です。', en: 'Description for The Sleeper.' },
+    description: { 
+      ja: 'ベッドの中央で男が眠っている様子を表現したあやとりです。小指の糸を外すことで、ベッドが壊れて男が転げ落ちます', 
+      en: 'This string figure shows a man sleeping at the center of a bed. When you release the strings from your little fingers, the bed collapses and the man falls off.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'メラネシア', en: 'Melanesia' },
+      source: '“A Man and a Bed”\nC. F. Jayne\n <i>String Figures</i> (1906)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '74',
