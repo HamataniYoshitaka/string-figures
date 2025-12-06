@@ -55,7 +55,7 @@ export const stringFigures: StringFigure[] = [
     directory: '62_japanese-opening',
     ...ASSETS_MAP['62_japanese-opening'],
     description: { 
-      ja: '日本のあやとりの多くが、この「中指の構え」から始まります。', 
+      ja: '日本のあやとりの多くが、この「中指の構え」から始まります', 
       en: 'Most string figures in Japan start with this "Japanese Opening".' 
     },
     premiumCourseId: 0, // 無料
@@ -93,7 +93,7 @@ export const stringFigures: StringFigure[] = [
     directory: '5_many-stars',
     ...ASSETS_MAP['5_many-stars'],
     description: { 
-      ja: '北アメリカのナバホ族に伝わるあやとりです。複雑な模様が、満天の星のきらめきを美しく表現します。', 
+      ja: '北アメリカのナバホ族に伝わるあやとりです。複雑な模様が、満天の星のきらめきを美しく表現します', 
       en: 'This string figure comes from the Navajo people of the United States. Its intricate pattern beautifully expresses the sparkle of a star-filled sky.' 
     },
     premiumCourseId: 0, // 無料
@@ -210,7 +210,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
-      source: '有木昭久, 湯浅清四郎, <i>楽しいあやとり遊び</i>, 1973 ',
+      source: '“菊”\n有木昭久, 湯浅清四郎\n <i>楽しいあやとり遊び</i> (1973)',
       author: null,
       references: null
     }
@@ -228,7 +228,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: null,
-      source: '有木昭久, 湯浅清四郎, <i>世界のあやとり傑作選</i>, 1974 ',
+      source: '“でんでん虫”\n有木昭久, 湯浅清四郎\n <i>世界のあやとり傑作選</i> (1974)',
       author: { ja: '有木昭久', en: 'ARIKI Teruhisa' },
       references: null
     }
@@ -256,34 +256,42 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: 'アフリカ, ハワイ, 他', en: 'Africa, Hawaii, etc.' },
-      source: 'W. C. Farabee, <i>The Central Arawaks</i>, 1918',
+      source: '“a Parrot\'s Tail”\nW. C. Farabee\n <i>The Central Arawaks</i> (1918)',
       author: null,
       references: null
     }
   },
   {
     id: '12',
-    name: { ja: '9つダイヤ', en: 'Nine Diamonds' },
+    name: { ja: '9つのダイヤ', en: 'Nine Diamonds' },
     difficulty: 'easy',
     directory: '12_9-diamonds',
     ...ASSETS_MAP['12_9-diamonds'],
-    description: { ja: '9つダイヤの説明文です。', en: 'Description for Nine Diamonds.' },
+    description: { 
+      ja: '中央にダイヤの形が9個並びます。手順は短いですが、途中で薬指を使う箇所があるので指を間違えないようにしましょう', 
+      en: 'Nine diamond shapes line up across the center. The sequence is short, but be careful not to use the wrong finger, as there is a step that requires the ring fingers.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本、ハワイ', en: 'Japan, Hawaii' },
+      source: '“Nine Eyes”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '13',
-    name: { ja: 'かんたんほうき', en: 'Easy Broom' },
+    name: { ja: 'ぱんぱんほうき', en: 'A Tent' },
     difficulty: 'easy',
     directory: '13_easy-broom',
     ...ASSETS_MAP['13_easy-broom'],
     description: { 
       ja: '一瞬でほうきの形が出来上がります。世界各地に広く分布する有名なあやとりです。日本では最後に両手を広げる際、手を1回叩きます', 
-      en: 'The broom shape appears in an instant. This famous string figure is widely found around the world. In Japan, people clap their hands once as they spread them apart at the final step.' },
+      en: 'The tent shape appears in an instant. This famous string figure is widely found around the world. In Japan, people clap their hands once as they spread them apart at the final step.' },
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
-      source: 'J. Teit, <i>The Thompson Indians of British Columbia</i>, 1900',
+      source: '“Pitching a Tent”\nJ. Teit\n <i>The Thompson Indians of British Columbia</i> (1900)',
       author: null,
       references: null
     }
@@ -301,7 +309,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: 'ボリビア', en: 'Bolivia' },
-      source: 'S. Rydén, <i>South American String Figures</i>, 1934',
+      source: '“Ulou”\nS. Rydén\n <i>South American String Figures</i> (1934)',
       author: null,
       references: null
     }
@@ -312,9 +320,16 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '15_banana',
     ...ASSETS_MAP['15_banana'],
-    description: { ja: 'バナナの説明文です。', en: 'Description for Banana.' },
+    description: { 
+      ja: '4本のバナナが出来上がる、簡単な手順のあやとりです。最後に手から糸を外して完成します', 
+      en: 'This easy string figure creates four bananas. To finish, you release the strings from your hands to reveal the completed shape.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
   },
   {
     id: '3',
@@ -331,13 +346,21 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '16',
-    name: { ja: 'せんす', en: 'Sensu' },
+    name: { ja: '松葉', en: 'Sensu' },
     difficulty: 'easy',
     directory: '16_sensu',
     ...ASSETS_MAP['16_sensu'],
-    description: { ja: '扇子の説明文です。', en: 'Description for Sensu.' },
+    description: { 
+      ja: '「扇子」とは日本の伝統的な折り畳むことができる団扇のことです。他にも「松葉」という名前で知られているあやとりです', 
+      en: '<i>Sensu</i> is a traditional Japanese folding fan. This string figure is also known by another name, “Pine Needles.”' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“松葉”\n有木昭久, 湯浅清四郎\n <i>楽しいあやとり遊び</i> (1973)',
+      author: null,
+      references: null
+    }
     },
   {
     id: '17',
@@ -351,7 +374,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
-      source: 'G. Tessmann, <i>Die Kinderspiele der Pangwe</i>, 1912',
+      source: '“Salztrichter”\nG. Tessmann\n <i>Die Kinderspiele der Pangwe</i> (1912)',
       author: null,
       references: null
     }
@@ -364,7 +387,12 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['18_mt-fuji'],
     description: { ja: '富士山の説明文です。', en: 'Description for Mt. Fuji.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“富士山”\n夏堀謹二郎\n <i>日本の綾取</i> (1986)',
+      author: null,
+      references: null
+    }
     },
   {
     id: '19',
@@ -379,20 +407,28 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: 'ミクロネシア', en: 'Micronesia' },
-      source: 'C. F. Jayne, <i>String Figures</i>, 1906',
+      source: '“Two Chiefs”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
     }
     },
   {
     id: '20',
-    name: { ja: 'つづみ', en: 'Tuzumi' },
+    name: { ja: 'つづみ', en: 'Drum' },
     difficulty: 'easy',
     directory: '20_tuzumi',
     ...ASSETS_MAP['20_tuzumi'],
-    description: { ja: 'つづみの説明文です。', en: 'Description for Tuzumi.' },
+    description: { 
+      ja: '日本とナバホ族に伝わるあやとりです。日本では「つづみ」という名前で呼ばれますが、どちらも太鼓を表しています', 
+      en: 'This string figure is found in both Japan and Navajo tradition. In Japan it is called “Tsuzumi,” and in both cultures the figure represents a drum.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本、北アメリカ', en: 'Japan, North America' },
+      source: '“Drum”\nW. Wirt, M. Sherman, M. Mitchell\n <i>String Games of the Navajo : 1999</i> (2000)',
+      author: null,
+      references: null
+    }
     },
   {
     id: '21',
@@ -400,29 +436,50 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '21_kikusui',
     ...ASSETS_MAP['21_kikusui'],
-    description: { ja: '菊水の説明文です。', en: 'Description for Kikusui.' },
+    description: { 
+      ja: '日本の家にはそれぞれ家紋があり、「菊水」もその一つです', 
+      en: 'In Japan, families traditionally have their own crests, and <i>Kikusui</i> is one such family emblem.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“KIKUSUI”\nSAITO T. \n <i>Ayatori: The Traditional String Figures of Japan : 1970-99</i> (2004)',
+      author: null,
+      references: null
+    }
     },
   {
     id: '22',
-    name: { ja: 'やり投げ', en: 'Spear' },
+    name: { ja: '投げやり', en: 'Spear' },
     difficulty: 'easy',
     directory: '22_spear',
     ...ASSETS_MAP['22_spear'],
-    description: { ja: 'やり投げの説明文です。', en: 'Description for Spear.' },
+    description: { 
+      ja: 'マレー島に伝わるあやとりです。やりを左右に繰り返し飛ばして遊ぶことができます', 
+      en: 'This string figure comes from Malaya. You can play with it by repeatedly launching the spear from side to side.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'メラネシア', en: 'Melanesia' },
+      source: '“Casting the Fish-Spear”\nC. F. Jayne\n <i>String Figures</i> (1906)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '23',
-    name: { ja: '指の散歩', en: 'Finger Stroll' },
+    name: { ja: 'ひもの散歩', en: 'String Stroll' },
     difficulty: 'easy',
     directory: '23_finger-stroll',
     ...ASSETS_MAP['23_finger-stroll'],
-    description: { ja: '指の散歩の説明文です。', en: 'Description for Finger Stroll.' },
+    description: { ja: '親指から小指まで順番に糸が移動していき、また戻ってくるあやとりです', en: 'This string figure moves the thread sequentially from the thumb to the little finger and then back again.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
     },
   {
     id: '24',
@@ -431,8 +488,8 @@ export const stringFigures: StringFigure[] = [
     directory: '24_shooting-star',
     ...ASSETS_MAP['24_shooting-star'],
     description: { 
-      ja: 'まるでマンガのような、尾を引きながら流れる星の姿を見事に表現したあやとりです。ひもを二重にしてから取り始めるというちょっと変わった特徴があります。', 
-      en: 'A string figure that beautifully represents the shooting star as it trails behind like a manga. It has a slightly unusual feature of starting by doubling the string and then taking.' 
+      ja: 'まるでマンガのような、尾を引きながら流れる星の姿を見事に表現したあやとりです。ひもを二重にしてから取り始めるというちょっと変わった特徴があります', 
+      en: 'A string figure that beautifully represents the shooting star as it trails behind like a MANGA. It has a slightly unusual feature of starting by doubling the string and then taking.' 
     },
     premiumCourseId: 2, // コレクション2
     data: {
@@ -444,13 +501,18 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '25',
-    name: { ja: '指ぬき', en: 'Fingers Magic' },
+    name: { ja: 'ひもぬき', en: 'String Magic' },
     difficulty: 'easy',
     directory: '25_fingers-magic',
     ...ASSETS_MAP['25_fingers-magic'],
-    description: { ja: '指ぬきの説明文です。', en: 'Description for Fingers Magic.' },
+    description: { ja: '人差し指と親指にかかった糸が、一瞬にして抜けてしまう簡単なマジックです', en: 'This is a simple trick in which the string looped around the index finger and thumb slips off in an instant.' },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
   },
   {
     id: '26',
@@ -465,7 +527,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: 'ハワイ', en: 'Hawaii' },
-      source: 'L. A. Dickey,<i>String Figures from Hawaii</i>, 1928',
+      source: '“One Eye, Ahamaka, or Palai Huna Nui (hammock, extreme shyness)”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
       author: null,
       references: null
     }
@@ -477,13 +539,13 @@ export const stringFigures: StringFigure[] = [
     directory: '27_fish',
     ...ASSETS_MAP['27_fish'],
     description: { 
-      ja: 'シンプルで力強い、大きな魚が出来上がります。', 
-      en: 'A simple yet powerful figure that forms a large fish.' 
+      ja: 'ハワイに伝わるあやとりです。ハワイ語で「weoweo」と呼ばれているキントキダイ科の赤い魚を表しています', 
+      en: 'This string figure originates from Hawaii and depicts a bright red snapper known in Hawaiian as <i>weoweo</i>.' 
     },
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: 'ハワイ', en: 'Hawaii' },
-      source: 'L. A. Dickey, <i>String Figures from Hawaii</i>, 1928',
+      source: '“Weoweo”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
       author: null,
       references: null
     }
@@ -501,7 +563,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: 'ポリネシア', en: 'Polynesia' },
-      source: 'W. C. Handy,	<i>String Figures from the Marquesas and Society Islands</i>, 1925',
+      source: '“Fa\'e Papa (The House of Atanua)”\nW. C. Handy\n <i>String Figures from the Marquesas and Society Islands</i> (1925)',
       author: null,
       references: null
     }
@@ -512,9 +574,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '29_two-fishes',
     ...ASSETS_MAP['29_two-fishes'],
-    description: { ja: '二匹の魚の説明文です。', en: 'Description for Two Fishes.' },
+    description: { 
+      ja: '最後に両手を広げると、2匹の魚が逃げて行きます。ここでは「2匹の魚」として紹介していますが、カロリン諸島に伝わるこのあやとりには名前が無く、明確なモチーフも不明です', 
+      en: 'When you spread your hands at the end, two fish appear to swim away. Here we introduce it as <i>Two Fishes</i> but this string figure from the Caroline Islands has no traditional name, and its intended motif is unknown..' 
+    },
     premiumCourseId: 1, // コレクション1
-    data: null
+    data: {
+      region: { ja: 'ミクロネシア', en: 'Micronesia' },
+      source: '“No Name”\nC. F. Jayne\n <i>String Figures</i> (1906)',
+      author: null,
+      references: null
+    }
     },
   {
     id: '30',
@@ -676,7 +746,7 @@ export const stringFigures: StringFigure[] = [
     directory: '43_trampoline',
     ...ASSETS_MAP['43_trampoline'],
     description: { 
-      ja: 'ナイジェリアやシエラレオネなどで伝承されているあやとりです。10本の指を全て使った複雑なパターンが出来上がりますが、最後に親指と小指から糸を外すことで一瞬で最初の状態に戻ります。', 
+      ja: 'ナイジェリアやシエラレオネなどで伝承されているあやとりです。10本の指を全て使った複雑なパターンが出来上がりますが、最後に親指と小指から糸を外すことで一瞬で最初の状態に戻ります', 
       en: 'This string figure is traditionally practiced in regions including Nigeria and Sierra Leone. It forms a complex design that uses all ten fingers, yet with a simple motion—releasing the strings from your thumbs and little fingers—it snaps back to its starting form in an instant.' 
     },
     premiumCourseId: 2, // コレクション2
