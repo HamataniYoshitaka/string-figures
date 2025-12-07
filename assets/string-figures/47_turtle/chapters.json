@@ -1,32 +1,32 @@
 [
     {
-        "subtitle": { "ja": "両手の人差し指に糸をかけて始めます。両手の親指で人差し指の向こうの糸を取ります", "en": "" }
+        "subtitle": { "ja": "両手の人差し指に糸をかけて始めます。両手の親指で人差し指の向こうの糸を取ります", "en": "Begin with the string on both index fingers. With both thumbs, pick up the far index-finger strings." }
     },
     {
-        "subtitle": { "ja": "両手の小指で人差し指の手前の糸を取ります", "en": "" }
+        "subtitle": { "ja": "両手の小指で人差し指の手前の糸を取ります", "en": "With both little fingers, pick up the near index-finger strings." }
     },
     {
-        "subtitle": { "ja": "左右の人差し指の輪を交換します", "en": "" }
+        "subtitle": { "ja": "左右の人差し指の輪を交換します", "en": "Exchange the index-finger loops on both hands." }
     },
     {
-        "subtitle": { "ja": "右手の親指と人差し指を左手人差し指の輪に上から入れて、左手親指の輪を引き出します", "en": "" }
+        "subtitle": { "ja": "右手の親指と人差し指を左手人差し指の輪に上から入れて、左手親指の輪を引き出します", "en": "Insert the right thumb and index finger down into the left index-finger loop, and draw out the left thumb loop." }
     },
     {
-        "subtitle": { "ja": "左手親指の糸を外し、右手で引き出した輪を左手親指に再びかけます", "en": "" }
+        "subtitle": { "ja": "左手親指の糸を外し、右手で引き出した輪を左手親指に再びかけます", "en": "Release the left thumb string, and place the drawn-out loop back on the left thumb." }
     },
     {
-        "subtitle": { "ja": "同様に、左手人差し指の輪の中から左手小指の輪を引き出し、左手小指に再びかけます", "en": "" }
+        "subtitle": { "ja": "同様に、左手人差し指の輪の中から左手小指の輪を引き出し、左手小指に再びかけます", "en": "In the same way, draw out the left little-finger loop from the left index-finger loop, and place it back on the left little finger." }
     },
     {
-        "subtitle": { "ja": "右手も同様に、人差し指の中から輪を引き出して、右手小指に再びかけます", "en": "" }
+        "subtitle": { "ja": "右手も同様に、人差し指の中から輪を引き出して、右手小指に再びかけます", "en": "In the same way on the right hand, draw the loop out of the right index-finger loop and place it back on the right little finger." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指で、中央にある菱形の輪の上側の糸を下から取ります", "en": "With both index fingers, pick up from below the upper string of the central diamond-shaped loop." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指から、上の輪を残したまま下の輪だけを外します", "en": "Keeping the upper loops on both index fingers, release only the lower loops." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "指先を下に向け、手から糸を外して完成です", "en": "Point the fingertips downward and let the strings fall away to complete the figure." }
     }
 ]
