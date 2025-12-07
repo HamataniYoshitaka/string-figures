@@ -9,5 +9,11 @@ export const FIGURE_83_DANCERS_VIDEOS = {
   8: require('../../../assets/string-figures/83_dancers/chapters/08.mp4'),
   9: require('../../../assets/string-figures/83_dancers/chapters/09.mp4'),
   10: require('../../../assets/string-figures/83_dancers/chapters/10.mp4'),
-  11: require('../../../assets/string-figures/83_dancers/chapters/11.mp4')
+  11: require('../../../assets/string-figures/83_dancers/chapters/11.mp4'),
+  12: require('../../../assets/string-figures/83_dancers/chapters/12.mp4'),
+  13: require('../../../assets/string-figures/83_dancers/chapters/13.mp4'),
+  14: require('../../../assets/string-figures/83_dancers/chapters/14.mp4'),
+  15: require('../../../assets/string-figures/83_dancers/chapters/15.mp4'),
+  16: require('../../../assets/string-figures/83_dancers/chapters/16.mp4'),
+  17: require('../../../assets/string-figures/83_dancers/chapters/17.mp4')
 };

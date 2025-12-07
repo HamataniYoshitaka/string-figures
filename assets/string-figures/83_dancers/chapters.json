@@ -1,35 +1,53 @@
 [
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左手の親指と小指に糸をかけて始めます。左手のひらの糸を中指にかけます", "en": "Begin with the string on the left thumb and little finger. Place the left palm string on the middle finger." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左手の輪の中に右手を下から入れ、左人差し指の糸を右人差し指で、左薬指の糸を右中指でそれぞれ取ります", "en": "Insert the right hand up into the left loop, and with the right index finger pick up the left index-finger string, and with the right middle finger pick up the left ring-finger string." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左手の輪の下を通して右手を引きます", "en": "Draw the right hand back under the left-hand loop." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左人差し指中指薬指を、それぞれの指の前にある輪に上から入れます。両手を半回転させて、右手から全ての糸を外します", "en": "Insert the left index, middle, and ring fingers down into the loops in front of each finger. Turn both hands half a turn, and release all the strings from the right hand." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左薬指の輪を右手で下から握り、右親指と人差し指を左薬指の輪に下から入れて輪を広げます", "en": "Grasp the left ring-finger loop from below with the right hand, insert the right thumb and index finger up into the loop, and spread it." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "右手を手前側に半回転させます。右人差し指の糸を左人差し指にかけ、右手を離します", "en": "Turn the right hand half a turn toward you. Place the right index-finger string on the left index finger, and release the right hand." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左人差し指の上の輪に右手を上から入れ、左人差し指下の輪を引き出します", "en": "Insert the right hand down into the upper left index-finger loop, and draw out the lower left index-finger loop." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "引き出した左人差し指の輪を右手で上から握り、右親指と人差し指を上から入れて輪を広げます", "en": "Grasp the drawn-out left index-finger loop from above with the right hand, insert the right thumb and index finger down into it, and spread the loop." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "右手を向こう側に半回転させます。右人差し指の糸を左薬指にかけ、右手を離します", "en": "Turn the right hand half a turn away. Place the right index-finger string on the left ring finger, and release the right hand." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "右人差し指で左人差し指背の糸を、右中指で左薬指背の糸を下から取り、右手を引きます", "en": "With the right index finger pick up from below the string on the back of the left index finger, and with the right middle finger pick up from below the string on the back of the left ring finger, then draw the right hand back." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左人差し指中指薬指から糸を外して1ペアのダンサーの完成です。外した左手の指を、それぞれ右側の大きな輪に下から入れ、右手を離します", "en": "Release the strings from the left index, middle, and ring fingers to form one pair of dancers. Insert the freed left fingers up into the large right-hand loops, and release the right hand." }
+    },
+    {
+        "subtitle": { "ja": "同様の操作を繰り返し、2ペア目のダンサーを作ります", "en": "Repeat the same operations to form the second pair of dancers." }
+    },
+    {
+        "subtitle": { "ja": "同様の操作を繰り返すことで、ダンサーの数を何ペアでも増やすことができます", "en": "By repeating the same operations, you can make as many pairs of dancers as you wish." }
+    },
+    {
+        "subtitle": { "ja": "最後に左人差し指中指薬指から糸を外し、両手を手前側に半回転させます。右手の糸を静かに置きます", "en": "Finally release the strings from the left index, middle, and ring fingers, turn both hands half a turn toward you, and lay the right-hand strings down gently." }
+    },
+    {
+        "subtitle": { "ja": "右手を静かに離し、左中指の輪を右手で外します。右人差し指中指を外した輪に戻します。両手を向こう側に半回転させて完成です", "en": "Release the right hand gently, remove the left middle-finger loop with the right hand, return the right index and middle fingers into the removed loop, turn both hands half a turn away, and complete the figure." }
+    },
+    {
+        "subtitle": { "ja": "右手の糸を静かに離します。ダンサーの左側に右手人差し指中指を下から入れ、右手を引くことで1ペアが退場します", "en": "Release the right-hand strings gently. Insert the right index and middle fingers up on the left side of the dancer, and draw the right hand back to let one pair exit." }
+    },
+    {
+        "subtitle": { "ja": "同様の操作を繰り返すことで、ダンサーは全員退場します", "en": "By repeating the same operations, all the dancers will exit." }
     }
 ]

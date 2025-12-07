@@ -1,35 +1,49 @@
 [
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "右手の人差し指に糸をかけて始めます。人差し指手前の糸を巻き付けます。左手の人差し指を右手人差し指の輪に下から入れて、輪を広げます", 
+            "en": "Begin with the string on the right index finger. Wind the near index-finger string around it. Insert the left index finger up into the right index-finger loop and spread the loop." 
+        }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "人差し指手前の2本の糸の間から、左親指で左人差し指の向こう上の糸を取り、右親指で右人差し指の向こう下の糸を取ります", 
+            "en": "From between the two near index-finger strings, with the left thumb pick up the upper far left index-finger string, and with the right thumb pick up the lower far right index-finger string." 
+        }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "左右の人差し指の輪の中に、中指薬指小指を下から入れ、人差し指手前上の糸を押さえます", 
+            "en": "Insert the middle, ring, and little fingers up into the index-finger loops on both hands, and press down the upper near index-finger strings." 
+        }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "人差し指手前下の糸に中指を乗せて薬指とで挟み、人差し指の輪から引き出します。引き出した糸を中指薬指小指で握ります", 
+            "en": "Place the middle fingers over the lower near index-finger strings, pinch them with the ring fingers, draw them out of the index-finger loops, and grasp the drawn strings with the middle, ring, and little fingers." 
+        }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指から糸を外して1つ目の雲が完成します", "en": "Release the strings from both thumbs to form the first cloud." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指を、人差し指の下の糸の下を通して人差し指中の糸を上から取ります", "en": "Pass both thumbs under the lower index-finger strings and move over and pick down the middle index-finger strings." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の中指薬指小指で、握っていた糸を離して親指の糸を握ります。親指から糸を外します", "en": "With both middle, ring, and little fingers, release the strings you were holding and grasp the thumb strings. Release the thumb strings." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { 
+            "ja": "左右の中指を、人差し指下の2本の糸の手前側を通して人差し指上の糸を向こう側から取ります", 
+            "en": "Pass both middle fingers in front of the two lower index-finger strings and pick up the upper index-finger strings from the far side." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の薬指小指で握っていた糸を外し、中指の背にかけます。中指の輪に薬指小指を入れます", "en": "Release the strings held by the ring and little fingers on both hands, place them on the backs of the middle fingers, and insert the ring and little fingers into the middle-finger loops." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指で、人差し指上の2本の糸から絡まりが少ない糸を向こう側から取ります。人差し指を持ち上げることで2つめの雲が完成します", "en": "With both index fingers, from the two upper index-finger strings pick up from the far side the string with fewer twists. Lift the index fingers to form the second cloud." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "同様の操作を繰り返すことで、何個でも雲を増やすことができます", "en": "By repeating the same operations, you can add as many clouds as you wish." }
     }
 ]
