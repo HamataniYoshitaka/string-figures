@@ -1219,7 +1219,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '83',
     name: { ja: 'ダンスハウスで踊る人々', en: 'Eskimos in a Dancehouse' },
-    difficulty: 'medium',
+    difficulty: 'hard',
     directory: '83_dancers',
     ...ASSETS_MAP['83_dancers'],
     description: { 
