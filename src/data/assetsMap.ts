@@ -370,6 +370,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/80_calophyllum/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/80_calophyllum/preview.mp4'),
   },
+  '81_bat': {
+    thumbnail: require('../../assets/string-figures/81_bat/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/81_bat/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/81_bat/preview.mp4'),
+  },
   '82_storm-clouds': {
     thumbnail: require('../../assets/string-figures/82_storm-clouds/thumbnail-kraft.jpg'),
     patternImage: require('../../assets/string-figures/82_storm-clouds/pattern.jpg'),

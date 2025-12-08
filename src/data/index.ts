@@ -1217,6 +1217,24 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '81',
+    name: { ja: 'コウモリ', en: 'Bat' },
+    difficulty: 'medium',
+    directory: '81_bat',
+    ...ASSETS_MAP['81_bat'],
+    description: { 
+      ja: '北アメリカのナバホ族に伝わるあやとりです。後半は「たくさんの星」と同じ手順で作成します', 
+      en: 'This string figure comes from the Navajo people of North America. The second half is made using the same steps as <i>Many Stars.</i>' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '北アメリカ', en: 'North America' },
+      source: '“Bat”\nW. Wirt, M. Sherman, M. Mitchell (BISFA 7)\n <i>String Games of the Navajo : 1999</i> (2000)',
+      author: null,
+      references: null
+    }
+  },
+  {
     id: '82',
     name: { ja: '嵐の雲', en: 'Storm Clouds' },
     difficulty: 'hard',
