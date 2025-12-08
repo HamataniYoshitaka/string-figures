@@ -1199,6 +1199,24 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '80',
+    name: { ja: 'テリハボクの花', en: 'Blossom of the Calophyllum' },
+    difficulty: 'hard',
+    directory: '80_calophyllum',
+    ...ASSETS_MAP['80_calophyllum'],
+    description: { 
+      ja: '太平洋諸島などに自生する常緑高木「テリハボク」の花を表したあやとりです。テリハボクはナウルの"国の木"に指定されています', 
+      en: 'This figure depicts the flower of <i>Calophyllum</i>, an evergreen tree found in places such as the Pacific Islands. In Nauru, this tree is recognized as the national tree.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: 'ナウル', en: 'Nauru' },
+      source: '“Die Blüte des Calophyllum (e bŭr ĭn íjọ)”\nP. Hambruch\n<i>Nauru</i> (1914)',
+      author: null,
+      references: null
+    }
+  },
+  {
     id: '82',
     name: { ja: '嵐の雲', en: 'Storm Clouds' },
     difficulty: 'hard',

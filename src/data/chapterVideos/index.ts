@@ -70,6 +70,7 @@ import { FIGURE_74_CANOE_VIDEOS } from './figure-74_canoe';
 import { FIGURE_75_TORNADO_VIDEOS } from './figure-75_tornado';
 import { FIGURE_77_BATS_VIDEOS } from './figure-77_bats';
 import { FIGURE_73_SLEEPER_VIDEOS } from './figure-73_sleeper';
+import { FIGURE_80_CALOPHYLLUM_VIDEOS } from './figure-80_calophyllum';
 import { FIGURE_82_STORM_CLOUDS_VIDEOS } from './figure-82_storm-clouds';
 import { FIGURE_83_DANCERS_VIDEOS } from './figure-83_dancers';
 import { FIGURE_84_SWAN_VIDEOS } from './figure-84_swan';
@@ -147,6 +148,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '74_canoe': FIGURE_74_CANOE_VIDEOS,
   '75_tornado': FIGURE_75_TORNADO_VIDEOS,
   '77_bats': FIGURE_77_BATS_VIDEOS,
+  '80_calophyllum': FIGURE_80_CALOPHYLLUM_VIDEOS,
   '82_storm-clouds': FIGURE_82_STORM_CLOUDS_VIDEOS,
   '83_dancers': FIGURE_83_DANCERS_VIDEOS,
   '84_swan': FIGURE_84_SWAN_VIDEOS
