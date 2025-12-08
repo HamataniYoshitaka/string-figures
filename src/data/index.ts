@@ -1128,6 +1128,24 @@ export const stringFigures: StringFigure[] = [
     data: null
   },
   {
+    id: '72',
+    name: { ja: '糸つむぎ', en: 'Spindle' },
+    difficulty: 'easy',
+    directory: '72_spindle',
+    ...ASSETS_MAP['72_spindle'],
+    description: { 
+      ja: 'ひもを2重にして、指に巻きつけて作成するあやとりです。手を開閉することで糸を紡いでいるように見えます', 
+      en: 'This figure is created by folding the string in half and wrapping it around your fingers. When you open and close your hands, the motion resembles spinning yarn.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '北アメリカ', en: 'North America' },
+      source: '“Spindle”\nF. D. McCarthy 1960\n <i>The String Figures of Yirrkalla</i> (1960)',
+      author: null,
+      references: null
+    }
+  },
+  {
     id: '73',
     name: { ja: 'ベッドの男', en: 'The Sleeper' },
     difficulty: 'easy',
