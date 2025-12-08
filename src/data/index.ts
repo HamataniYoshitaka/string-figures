@@ -1020,12 +1020,12 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['59_kayaker'],
     description: { 
       ja: '両手の人差し指を左右に動かすことで、カヤックに乗っている人が漕ぎ出します。イヌイットのあやとりで、このあと「山並み」へと続けて取ることができます', 
-      en: 'By moving both index fingers from side to side, the person in the kayak appears to paddle forward. This is an Inuit string figure, and from it you can continue on to make “The Range of the Mountains.”' 
+      en: 'By moving both index fingers from side to side, the person in the kayak appears to paddle forward. This is an Inuit string figure, and from it you can continue on to make <i>The Mountains.</i>' 
     },
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
-      source: '“The Kayaker”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
+      source: '“The Clothes Line (iniarl)”\nG. B. Gordon\n<i>Notes on the Western Eskimo</i> (1906)',
       author: null,
       references: null
     }
@@ -1127,13 +1127,21 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '70',
-    name: { ja: '山並み', en: 'The Range of the Mountains' },
+    name: { ja: '山並み', en: 'The Mountains' },
     difficulty: 'hard',
     directory: '70_mountains',
     ...ASSETS_MAP['70_mountains'],
-    description: { ja: '山並みの説明文です。', en: 'Description for The Range of the Mountains.' },
+    description: { 
+      ja: '「カヤックを漕ぐ人」から続けてとるあやとりで、漕いで行った人が遥か向こうに見た山並みを表しています。ここでは「カヤックを漕ぐ人」の完成形からの手順を紹介していますので、「カヤックを漕ぐ人」の作り方を先に習得してから始めて下さい', 
+      en: 'This string figure continues from <i>The Kayaker</i> and represents the mountain range seen far in the distance by the paddler. The instructions here begin from the finished form of <i>The Kayaker,</i> so please learn how to make <i>The Kayaker</i> first before starting.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北アメリカ', en: 'North America' },
+      source: '“The Range of the Mountains”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '72',
