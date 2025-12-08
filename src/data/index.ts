@@ -1078,13 +1078,21 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '67',
-    name: { ja: 'モア島', en: 'The Island Moa' },
+    name: { ja: 'モア島', en: 'The Island of Moa' },
     difficulty: 'medium',
     directory: '67_island-moa',
     ...ASSETS_MAP['67_island-moa'],
-    description: { ja: 'モア島の説明文です。', en: 'Description for The Island Moa.' },
+    description: { 
+      ja: 'モア島はトレス海峡に浮かぶ、小高い山がある島です。頂上にいつも雲がかかっている山の姿を表したあやとりです。', 
+      en: '<i>The Island of Moa</i> is an island with a modest mountain located in the Torres Strait. This string figure represents the mountain, which is always covered with clouds at its summit.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'メラネシア', en: 'Melanesia' },
+      source: '“The Island of Moa”\nK. Haddon\n<i>String Games for Beginners</i> (1934)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '68',
