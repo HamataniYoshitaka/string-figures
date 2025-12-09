@@ -886,13 +886,21 @@ export const stringFigures: StringFigure[] = [
     },
   {
     id: '50',
-    name: { ja: '2階建てのシベリアの家', en: '2-Story Siberian House' },
+    name: { ja: '2階建てのシベリアの家', en: 'Two-Story Siberian House' },
     difficulty: 'medium',
     directory: '50_2story-siberian-house',
     ...ASSETS_MAP['50_2story-siberian-house'],
-    description: { ja: '2階建てのシベリアの家の説明文です。', en: 'Description for 2-Story Siberian House.' },
+    description: { 
+      ja: '「シベリアの家」を2階建てにしたあやとりです。ひもを順番に外していくことで、家が壊れ、修復して1階建てになり、また壊れて中から子供が逃げ出します', 
+      en: 'This is a two-story version of “Siberian House.” By removing the loops in sequence, the house collapses, is repaired into a single-story house, and then collapses again as the children escape from inside.' 
+    },
     premiumCourseId: 0, // 無料 
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“taŋäүot”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
+      author: null,
+      references: null
+    }
     },
   {
     id: '51',
@@ -1149,9 +1157,17 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '71_siberian-house',
     ...ASSETS_MAP['71_siberian-house'],
-    description: { ja: 'シベリアの家の説明文です。', en: 'Description for The Siberian House.' },
+    description: { 
+      ja: 'シベリア東部のあやとりです。人差し指を外すと、家が壊れて中から2人の子供が逃げ出します。このあやとりを変形させた「2階建てのシベリアの家」というあやとりがあります', 
+      en: 'This string figure comes from eastern Siberia. When you remove your index fingers, the house collapses and two children escape from inside. There is also a variation of this figure known as <i>Two-Story Siberian House.</i>' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“Siberian House (kochlinee)”\nG. B. Gordon\n<i>Notes on the Western Eskimo</i> (1906)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '72',
