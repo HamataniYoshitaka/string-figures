@@ -1144,6 +1144,16 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '71',
+    name: { ja: 'シベリアの家', en: 'The Siberian House' },
+    difficulty: 'easy',
+    directory: '71_siberian-house',
+    ...ASSETS_MAP['71_siberian-house'],
+    description: { ja: 'シベリアの家の説明文です。', en: 'Description for The Siberian House.' },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
+  {
     id: '72',
     name: { ja: '糸つむぎ', en: 'Spindle' },
     difficulty: 'easy',

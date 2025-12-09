@@ -345,6 +345,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/70_mountains/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/70_mountains/preview.mp4'),
   },
+  '71_siberian-house': {
+    thumbnail: require('../../assets/string-figures/71_siberian-house/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/71_siberian-house/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/71_siberian-house/preview.mp4'),
+  },
   '72_spindle': {
     thumbnail: require('../../assets/string-figures/72_spindle/thumbnail-kraft.gif'),
     patternImage: require('../../assets/string-figures/72_spindle/pattern.jpg'),
