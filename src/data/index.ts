@@ -1076,7 +1076,7 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '66',
-    name: { ja: 'ネズミ', en: 'A Mouse' },
+    name: { ja: 'ねずみ', en: 'A Mouse' },
     difficulty: 'medium',
     directory: '66_mouse',
     ...ASSETS_MAP['66_mouse'],
@@ -1247,7 +1247,7 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '77',
-    name: { ja: 'コウモリの群れ', en: 'Bats' },
+    name: { ja: 'こうもりの群れ', en: 'Bats' },
     difficulty: 'medium',
     directory: '77_bats',
     ...ASSETS_MAP['77_bats'],
@@ -1283,7 +1283,7 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '81',
-    name: { ja: 'コウモリ', en: 'Bat' },
+    name: { ja: 'こうもり', en: 'Bat' },
     difficulty: 'medium',
     directory: '81_bat',
     ...ASSETS_MAP['81_bat'],
