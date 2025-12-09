@@ -1,35 +1,47 @@
 [
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "両手で輪を握り、親指に糸をかけて始めます。左右の人差し指で、親指手前の糸を上から取ります", "en": "Hold the loop in both hands and place it onto the thumbs to begin. With both index fingers, move over and pick down the near thumb strings." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "右親指の輪に左親指を下から入れます。左親指の輪に右親指を下から入れます。両手を左右に広げます", "en": "Insert the left thumb from below into the right-thumb loop. Insert the right thumb from below into the left-thumb loop. Open the hands to the sides." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の小指を、全ての糸の下を通って親指の輪に下から入れ、親指向こうの糸を取ります", "en": "Insert both little fingers under all the strings and from below into the thumb loops, and pick up from below the far thumb strings." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左親指と右人差し指を繋ぐ斜めの糸を、左右の小指で上から押さえて握ります", "en": "With both little fingers, move over and press down the diagonal string that runs between the left thumb and right index finger, and grasp it." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指にかかる2本の糸のうち、親指と小指を繋ぐ糸だけを親指から外します", "en": "From the two strings on each thumb, release only the string that runs between the thumb and little finger." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指の輪に親指を下から入れて輪を広げます", "en": "Insert both thumbs from below into the index loops and open the loops." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指から、上の糸だけを残して下の糸を外します", "en": "Retain only the upper thumb strings and release the lower strings from both thumbs." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左人差し指の糸を外します", "en": "Release the left index-finger string." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "指先を向こうに向けます。中央下の三角の輪に右人差し指と中指を上から入れます", "en": "Turn the fingertips away. Insert the right index and middle fingers from above into the lower central triangular loop." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "右人差し指手前の2本の糸を引き出し、右親指の輪に右人差し指と中指を入れます", "en": "Draw out the two near right–index strings and insert the right index and middle fingers into the right-thumb loop." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "右小指向こうの糸を右人差し指と中指で挟んで引き出します。右親指の輪に右人差し指と中指を入れます", "en": "With the right index and middle fingers, grasp the far right–little-finger string and draw it out; insert the right index and middle fingers into the right-thumb loop." }
+    },
+    {
+        "subtitle": { "ja": "左小指の糸を外します", "en": "Release the left little-finger string." }
+    },
+    {
+        "subtitle": { "ja": "左小指と右中指の指先を合わせ、右中指の輪を左小指に移します", "en": "Bring the left little finger and right middle finger tips together, and transfer the right–middle-finger loop to the left little finger." }
+    },
+    {
+        "subtitle": { "ja": "右小指と右親指から糸を外して完成です", "en": "Release the strings from the right little finger and right thumb to show the finished figure." }
+    },
+    {
+        "subtitle": { "ja": "右手を引くと、犬が左に歩きます。犬を右に引くことで、何度でも散歩させることができます", "en": "When the right hand is pulled, the dog walks to the left. By pulling the dog to the right, you can take it for a walk again and again." }
     }
 ]
