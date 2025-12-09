@@ -9,5 +9,9 @@ export const FIGURE_69_MOON_BETWEEN_MOUNTAINS_VIDEOS = {
   8: require('../../../assets/string-figures/69_moon-between-mountains/chapters/08.mp4'),
   9: require('../../../assets/string-figures/69_moon-between-mountains/chapters/09.mp4'),
   10: require('../../../assets/string-figures/69_moon-between-mountains/chapters/10.mp4'),
-  11: require('../../../assets/string-figures/69_moon-between-mountains/chapters/11.mp4')
+  11: require('../../../assets/string-figures/69_moon-between-mountains/chapters/11.mp4'),
+  12: require('../../../assets/string-figures/69_moon-between-mountains/chapters/12.mp4'),
+  13: require('../../../assets/string-figures/69_moon-between-mountains/chapters/13.mp4'),
+  14: require('../../../assets/string-figures/69_moon-between-mountains/chapters/14.mp4'),
+  15: require('../../../assets/string-figures/69_moon-between-mountains/chapters/15.mp4')
 };

@@ -1,41 +1,47 @@
 [
     {
-        "subtitle": { "ja": "左手で輪を握って始めます。左人差し指に糸を1回巻きます", "en": "" }
+        "subtitle": { "ja": "左手で輪を握って始めます。左人差し指に糸を1回巻きます。左人差し指の2本の輪に、右人差し指を下から入れます", "en": "Hold the loop in the left hand to begin. Wrap the string once around the left index finger. Insert the right index finger from below into the two left–index-finger loops." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左手で握っている大きな輪に、左右の親指を手前側から入れます。両手を左右に広げ、手のひらを上に向けます", "en": "Insert both thumbs from the near side into the large loop held in the left hand. Open the hands to the sides and turn the palms upward." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指の輪に中指薬指小指を下から入れ、人差し指手前の2本の糸と親指向こうの糸を握ります", "en": "Insert the middle, ring, and little fingers from below into the index loops and grasp the two near index strings together with the far thumb string." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指で親指手前の糸を上から取り、人差し指の輪から引き出します。人差し指にかかっていた2本の糸は自然に外れます", "en": "With both index fingers, move over and pick down the near thumb strings and draw them out of the index loops; the two strings lying on the index fingers fall away naturally." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指の糸を外します", "en": "Release the thumb strings from both hands." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の中指同士を繋ぐ糸の上に親指を乗せ、中指から中央に繋がる糸を下から取ります", "en": "Place both thumbs on the string linking the middle fingers and pick up from below the strings that run from the middle fingers to the center." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の中指薬指小指で握っていた糸を離します", "en": "Release the strings held by the middle, ring, and little fingers of both hands." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指の輪に、中指薬指小指を下から入れ、人差し指手間の糸と親指向こうの糸を握ります", "en": "Insert the middle, ring, and little fingers from below into the index loops and grasp the near index strings together with the far thumb strings." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指で、親指手前の糸を上から取り、人差し指の輪から引き出します。人差し指にかかっていた糸は自然に外れます", "en": "With both index fingers, move over and pick down the near thumb strings and draw them out of the index loops; the strings lying on the index fingers fall away naturally." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指の糸を外します", "en": "Release the thumb strings from both hands." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指で、中指手前の糸を取ります", "en": "With both thumbs, pick up from below the near middle-finger strings." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の中指薬指小指で握っていた糸を離します", "en": "Release the strings held by the middle, ring, and little fingers of both hands." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指の輪に、中指薬指小指を下から入れ、人差し指手間の糸と親指向こうの糸を握ります", "en": "Insert the middle, ring, and little fingers from below into the index loops and grasp the near index strings together with the far thumb strings." }
+    },
+    {
+        "subtitle": { "ja": "左右の人差し指で、親指手前の糸を上から取り、人差し指の輪から引き出します。人差し指にかかっていた糸は自然に外れます", "en": "With both index fingers, move over and pick down the near thumb strings and draw them out of the index loops; the strings lying on the index fingers fall away naturally." }
+    },
+    {
+        "subtitle": { "ja": "左右の親指の糸を外し、形を整えて完成です", "en": "Release the thumb strings from both hands, adjust the figure, and show the finished form." }
     }
 ]

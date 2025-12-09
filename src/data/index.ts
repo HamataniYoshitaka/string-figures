@@ -1123,15 +1123,20 @@ export const stringFigures: StringFigure[] = [
   {
     id: '69',
     name: { ja: '山間の月', en: 'The Moon Between the Mountains' },
-    difficulty: 'medium',
+    difficulty: 'hard',
     directory: '69_moon-between-mountains',
     ...ASSETS_MAP['69_moon-between-mountains'],
     description: { 
-      ja: '山間の月の説明文です。', 
-      en: 'Description for The Moon Between the Mountains.' 
+      ja: 'イヌイットのあやとりです。中央の満月は、地域によっては太陽を表します', 
+      en: 'This is an Inuit string figure. The full moon in the center is interpreted as the sun in some regions.' 
     },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“The Moon Between the Mountains”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '70',
