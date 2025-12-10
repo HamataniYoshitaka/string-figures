@@ -736,7 +736,10 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'medium',
     directory: '41_dandelion',
     ...ASSETS_MAP['41_dandelion'],
-    description: { ja: '日本の伝承あやとり「菊」と似ていますが、花弁が10枚あり、手順も簡単です', en: 'Description for Dandelion.' },
+    description: { 
+      ja: '日本の伝承あやとり「菊」と似ていますが、花弁が10枚あり、手順も簡単です', 
+      en: 'This resembles the traditional Japanese string figure <i>Chrysanthemum,</i> but it has ten petals and the sequence is simpler.' 
+    },
     premiumCourseId: 0, // 無料
     data: {
       region: null,
@@ -944,7 +947,10 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'hard',
     directory: '53_2fawns',
     ...ASSETS_MAP['53_2fawns'],
-    description: { ja: '2頭の子鹿の説明文です。', en: 'Description for Two Fawns.' },
+    description: { 
+      ja: 'カナダのイヌイットに伝わるあやとりです。手順は長くはありませんが、1つ1つの操作はかなり複雑です', 
+      en: 'This string figure is traditionally passed down among the Inuit people of Canada. Although the overall sequence is short, each step is fairly complex.' 
+    },
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
@@ -1081,13 +1087,21 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '66',
-    name: { ja: 'ねずみ', en: 'A Mouse' },
+    name: { ja: 'ねずみの顔', en: 'Mouse Face' },
     difficulty: 'medium',
     directory: '66_mouse',
     ...ASSETS_MAP['66_mouse'],
-    description: { ja: 'ネズミの説明文です。', en: 'Description for A Mouse.' },
+    description: { 
+      ja: '2000年にドイツ万博でナイジェリア男性から採集されたあやとりです。当時、完成形には名前が付いていませんでしたが、ディズニーの有名なキャラクターに似ていることから名前が付けられました', 
+      en: 'This string figure was collected in 2000 from a Nigerian man at the World Expo in Germany. At the time, the completed form had no name, but it was later given one because it resembled a famous Disney character.' 
+    },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'ナイジェリア', en: 'Nigeria' },
+      source: '“Mouse Face”\nA. Reichert (BISFA 9)\n<i>Some String Figures from Modern Africa : 2000</i> (2002)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '67',
