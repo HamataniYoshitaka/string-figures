@@ -1372,6 +1372,19 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '87',
+    name: { ja: 'ヤシの木', en: 'A Palm Tree' },
+    difficulty: 'two_people',
+    directory: '87_palm-tree',
+    ...ASSETS_MAP['87_palm-tree'],
+    description: { 
+      ja: 'ヤシの木の説明文です', 
+      en: 'Description for A Palm Tree.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: null
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',

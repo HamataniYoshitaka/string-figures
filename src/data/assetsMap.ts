@@ -400,4 +400,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/84_swan/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/84_swan/preview.mp4'),
   },
+  '87_palm-tree': {
+    thumbnail: require('../../assets/string-figures/87_palm-tree/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/87_palm-tree/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/87_palm-tree/preview.mp4'),
+  },
 };
