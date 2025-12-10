@@ -3,7 +3,7 @@ import { ImageSourcePropType } from 'react-native';
 export interface StringFigure {
   id: string;
   name: { ja: string; en: string };
-  difficulty: 'basic' | 'easy' | 'medium' | 'hard';
+  difficulty: 'basic' | 'easy' | 'medium' | 'hard' | 'two_people';
   directory: string;
   thumbnail: ImageSourcePropType | string;
   patternImage: ImageSourcePropType | string;

@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { BookmarkIcon, EasyIcon, NormalIcon, HardIcon, TutorialIcon } from './icons';
+import { BookmarkIcon, EasyIcon, NormalIcon, HardIcon, TutorialIcon, TwoPeopleIcon } from './icons';
 
 interface FilterButtonsProps {
-  selectedFilters: ('basic' | 'easy' | 'medium' | 'hard')[];
-  onToggleFilter: (filter: 'basic' | 'easy' | 'medium' | 'hard') => void;
+  selectedFilters: ('basic' | 'easy' | 'medium' | 'hard' | 'two_people')[];
+  onToggleFilter: (filter: 'basic' | 'easy' | 'medium' | 'hard' | 'two_people') => void;
   currentLanguage: 'ja' | 'en';
   isBookmarkFilterActive: boolean;
   onToggleBookmarkFilter: () => void;
@@ -31,12 +31,13 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
   };
 
   // 難易度テキストを取得
-  const getDifficultyText = (difficulty: 'basic' | 'easy' | 'medium' | 'hard') => {
+  const getDifficultyText = (difficulty: 'basic' | 'easy' | 'medium' | 'hard' | 'two_people') => {
     const difficultyTexts = {
       basic: { ja: 'きほん', en: 'Basic' },
       easy: { ja: 'かんたん', en: 'Easy' },
       medium: { ja: 'ふつう', en: 'Normal' },
       hard: { ja: 'むずかしい', en: 'Hard' },
+      two_people: { ja: 'ふたり', en: '2 People' },
     };
     return getLocalizedText(difficultyTexts[difficulty]);
   };
@@ -141,6 +142,26 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           selectedFilters.includes('hard') ? styles.filterTextSelected : styles.filterTextUnselected
         ]}>
           {getDifficultyText('hard')}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity 
+        style={[
+          styles.filterButton, 
+          selectedFilters.includes('two_people') ? styles.filterButtonSelected : styles.filterButtonUnselected
+        ]}
+        onPress={() => onToggleFilter('two_people')}
+      >
+        <TwoPeopleIcon 
+          width={24}
+          height={24}
+          strokeColor={selectedFilters.includes('two_people') ? '#F7F5F2' : '#57534D'}
+          strokeWidth={1}
+        />
+        <Text style={[
+          styles.filterText, 
+          selectedFilters.includes('two_people') ? styles.filterTextSelected : styles.filterTextUnselected
+        ]}>
+          {getDifficultyText('two_people')}
         </Text>
       </TouchableOpacity>
     </ScrollView>

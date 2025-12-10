@@ -16,7 +16,7 @@ import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon, TwoPeopleIcon } from './icons';
 import { useOrientation } from '../hooks/useOrientation';
 
 interface Props {
@@ -122,6 +122,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
       case 'easy': return EasyIcon;
       case 'medium': return NormalIcon;
       case 'hard': return HardIcon;
+      case 'two_people': return TwoPeopleIcon;
       default: return EasyIcon;
     }
   };
@@ -132,6 +133,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
       easy: { ja: 'かんたん', en: 'Easy' },
       medium: { ja: 'ふつう', en: 'Normal' },
       hard: { ja: 'むずかしい', en: 'Hard' },
+      two_people: { ja: 'ふたり', en: '2 People' },
     };
     
     const textObj = difficultyTexts[difficulty as keyof typeof difficultyTexts];

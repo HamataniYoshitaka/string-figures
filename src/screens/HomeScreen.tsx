@@ -57,7 +57,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
   
-  const [selectedFilters, setSelectedFilters] = useState<('basic' | 'easy' | 'medium' | 'hard')[]>(DEFAULT_SELECTED_FILTERS);
+  const [selectedFilters, setSelectedFilters] = useState<('basic' | 'easy' | 'medium' | 'hard' | 'two_people')[]>(DEFAULT_SELECTED_FILTERS);
   const [isBookmarkFilterActive, setIsBookmarkFilterActive] = useState(false);
 
   // ドロップダウンメニューの状態
@@ -191,8 +191,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         saveSelectedFilters(DEFAULT_SELECTED_FILTERS);
         return;
       }
-      const validFilters = parsedFilters.filter((filter: unknown): filter is 'basic' | 'easy' | 'medium' | 'hard' =>
-        filter === 'basic' || filter === 'easy' || filter === 'medium' || filter === 'hard'
+      const validFilters = parsedFilters.filter((filter: unknown): filter is 'basic' | 'easy' | 'medium' | 'hard' | 'two_people' =>
+        filter === 'basic' || filter === 'easy' || filter === 'medium' || filter === 'hard' || filter === 'two_people'
       );
       setSelectedFilters(validFilters.length > 0 ? validFilters : []);
     } catch (error) {
@@ -228,7 +228,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const saveSelectedFilters = async (filters: ('basic' | 'easy' | 'medium' | 'hard')[]) => {
+  const saveSelectedFilters = async (filters: ('basic' | 'easy' | 'medium' | 'hard' | 'two_people')[]) => {
     try {
       await AsyncStorage.setItem('selectedFilters', JSON.stringify(filters));
     } catch (error) {
@@ -236,10 +236,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const toggleFilter = (filter: 'basic' | 'easy' | 'medium' | 'hard') => {
+  const toggleFilter = (filter: 'basic' | 'easy' | 'medium' | 'hard' | 'two_people') => {
     setIsBookmarkFilterActive(false);
     setSelectedFilters(prev => {
-      let updatedFilters: ('basic' | 'easy' | 'medium' | 'hard')[];
+      let updatedFilters: ('basic' | 'easy' | 'medium' | 'hard' | 'two_people')[];
       if (prev.includes(filter)) {
         // フィルターが既に選択されている場合は削除
         updatedFilters = prev.filter(f => f !== filter);
