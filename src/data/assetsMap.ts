@@ -410,4 +410,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/87_palm-tree/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/87_palm-tree/preview.mp4'),
   },
+  '88_wrist-magic': {
+    thumbnail: require('../../assets/string-figures/88_wrist-magic/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/88_wrist-magic/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/88_wrist-magic/preview.mp4'),
+  },
 };

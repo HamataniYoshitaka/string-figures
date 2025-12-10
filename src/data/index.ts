@@ -1408,6 +1408,24 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '88',
+    name: { ja: '手首抜き', en: 'Wrist Magic' },
+    difficulty: 'two_people',
+    directory: '88_wrist-magic',
+    ...ASSETS_MAP['88_wrist-magic'],
+    description: { 
+      ja: '相手の手首に巻きつけた糸が、あっという間に外れる有名なあやとりのトリックです。ここでは人差し指を使った手順を説明していますが、日本では主に中指を使います', 
+      en: 'This is a famous string-figure trick in which the thread wrapped around your partner’s wrist slips off in an instant. Here we explain a method that uses the index fingers, but in Japan people generally use the middle fingers.' 
+    },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',

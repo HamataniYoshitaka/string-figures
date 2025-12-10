@@ -79,6 +79,7 @@ import { FIGURE_83_DANCERS_VIDEOS } from './figure-83_dancers';
 import { FIGURE_84_SWAN_VIDEOS } from './figure-84_swan';
 import { FIGURE_86_ROPE_BRIDGE_VIDEOS } from './figure-86_rope-bridge';
 import { FIGURE_87_PALM_TREE_VIDEOS } from './figure-87_palm-tree';
+import { FIGURE_88_WRIST_MAGIC_VIDEOS } from './figure-88_wrist-magic';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -161,5 +162,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '83_dancers': FIGURE_83_DANCERS_VIDEOS,
   '84_swan': FIGURE_84_SWAN_VIDEOS,
   '86_rope-bridge': FIGURE_86_ROPE_BRIDGE_VIDEOS,
-  '87_palm-tree': FIGURE_87_PALM_TREE_VIDEOS
+  '87_palm-tree': FIGURE_87_PALM_TREE_VIDEOS,
+  '88_wrist-magic': FIGURE_88_WRIST_MAGIC_VIDEOS
 };
