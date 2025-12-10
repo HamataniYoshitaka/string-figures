@@ -938,16 +938,21 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
-  // {
-  //   id: '53',
-  //   name: { ja: '2匹の子鹿', en: 'Two Fawns' },
-  //   difficulty: 'hard',
-  //   directory: '53_2fawns',
-  //   ...ASSETS_MAP['53_2fawns'],
-  //   description: { ja: '2匹の子鹿の説明文です。', en: 'Description for Two Fawns.' },
-  //   premiumCourseId: 0, // 無料
-  //   data: null
-  // },
+  {
+    id: '53',
+    name: { ja: '2頭の子鹿', en: 'Two Fawns' },
+    difficulty: 'hard',
+    directory: '53_2fawns',
+    ...ASSETS_MAP['53_2fawns'],
+    description: { ja: '2頭の子鹿の説明文です。', en: 'Description for Two Fawns.' },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“Two Fawns”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
+      author: null,
+      references: null
+    }
+  },
   {
     id: '54',
     name: { ja: '柳の中のカリブー', en: 'A Caribou in the Willows' },
