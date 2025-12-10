@@ -1373,17 +1373,40 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '86',
+    name: { ja: 'ロープの吊り橋', en: 'Rope Bridge' },
+    difficulty: 'two_people',
+    directory: '86_rope-bridge',
+    ...ASSETS_MAP['86_rope-bridge'],
+    description: { 
+      ja: 'パプアニューギニアのあやとりです。右手を引くと材木を運ぶ人が吊り橋を渡って行きます。ここではもう一人の人に手伝ってもらう手順を紹介していますが、棒を口でくわえる、などの方法で一人で取ることも可能です', 
+      en: 'This string figure comes from Papua New Guinea. When you pull your right hand, a man carrying lumber crosses a suspension bridge. Here we introduce a method that involves assistance from another person, but it is also possible to perform it alone—for example, by holding the stick in your mouth.' 
+    },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: 'メラネシア', en: 'Melanesia' },
+      source: '“Making Fire and Rope Bridge”\nSHISHIDO Y., NOGUCHI H. (BSFA 14)\n <i>Some String Figures of Highland People in Papua New Guinea : 1984</i> (1987)',
+      author: null,
+      references: null
+    }
+  },
+  {
     id: '87',
     name: { ja: 'ヤシの木', en: 'A Palm Tree' },
     difficulty: 'two_people',
     directory: '87_palm-tree',
     ...ASSETS_MAP['87_palm-tree'],
     description: { 
-      ja: 'ヤシの木の説明文です', 
-      en: 'Description for A Palm Tree.' 
+      ja: 'マレー島に伝わるあやとりです。ここではもう一人の人に手伝ってもらう手順を紹介していますが、足などを用いて一人で取ることも可能です', 
+      en: 'This string figure comes from Malaya. Here we introduce a method that involves help from another person, but it can also be done alone by using your feet, for example.' 
     },
     premiumCourseId: 0, // 無料
-    data: null
+    data: {
+      region: { ja: 'メラネシア', en: 'Melanesia' },
+      source: '“A Palm Tree”\nC. F. Jayne\n <i>String Figures</i> (1906)',
+      author: null,
+      references: null
+    }
   },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
