@@ -10,15 +10,17 @@ import {
 import { LockOpenIcon } from './icons';
 
 interface PurchaseButtonProps {
-  onPress?: () => void;
-  collectionId: string;
+  onPress?: (collectionId: number) => void;
+  collectionId: number;
   backgroundColor?: string;
+  disabled?: boolean;
 }
 
-const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, backgroundColor }) => {
+const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, backgroundColor, disabled = false }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
+    if (disabled) return;
     Animated.spring(scaleAnim, {
       toValue: 0.95,
       useNativeDriver: true,
@@ -28,6 +30,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   };
 
   const handlePressOut = () => {
+    if (disabled) return;
     Animated.spring(scaleAnim, {
       toValue: 1,
       useNativeDriver: true,
@@ -37,13 +40,20 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   };
 
   const handlePress = () => {
-    onPress?.();
+    if (disabled) return;
+    onPress?.(collectionId);
   };
 
   // 定数
-  const COLLECTION_NAME = 'コレクション2';
+  const COLLECTION_NAME = `コレクション${collectionId}`;
   const PURCHASE_TEXT = 'を購入する';
-  const PRICE = '¥000';
+  const PRICE = '¥0';
+  const PURCHASED_TEXT = '購入済';
+
+  // disabled時の背景色とテキスト色
+  const buttonBackgroundColor = disabled ? '#E5E5E5' : backgroundColor;
+  const textColor = disabled ? '#A1A1A1' : '#FFFFFF';
+  const iconColor = disabled ? '#A1A1A1' : '#FFFFFF';
 
   return (
     <TouchableWithoutFeedback
@@ -55,7 +65,8 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
         style={[
           styles.button,
           { transform: [{ scale: scaleAnim }] },
-          { backgroundColor: backgroundColor },
+          { backgroundColor: buttonBackgroundColor },
+          disabled && styles.buttonDisabled,
         ]}
       >
         {/* 左側: アイコン */}
@@ -64,19 +75,21 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
             width={32}
             height={32}
             strokeColor="transparent"
-            fillColor="#ffffff"
+            fillColor={iconColor}
             strokeWidth={0}
           />
         </View>
 
         {/* 中央: テキスト */}
         <View style={styles.textContainer}>
-          <Text style={styles.collectionName}>{COLLECTION_NAME}</Text>
-          <Text style={styles.purchaseText}>{PURCHASE_TEXT}</Text>
+          <Text style={[styles.collectionName, { color: textColor }]}>{COLLECTION_NAME}</Text>
+          {!disabled && <Text style={styles.purchaseText}>{PURCHASE_TEXT}</Text>}
         </View>
 
-        {/* 右側: 価格 */}
-        <Text style={styles.price}>{PRICE}</Text>
+        {/* 右側: 価格または購入済 */}
+        <Text style={[styles.price, { color: textColor }]}>
+          {disabled ? PURCHASED_TEXT : PRICE}
+        </Text>
       </Animated.View>
     </TouchableWithoutFeedback>
   );
@@ -103,6 +116,10 @@ const styles = StyleSheet.create({
       },
     }),
   },
+  buttonDisabled: {
+    shadowOpacity: 0,
+    elevation: 0,
+  },
   iconContainer: {
     width: 32,
     height: 32,
@@ -120,7 +137,6 @@ const styles = StyleSheet.create({
   collectionName: {
     fontSize: 20,
     lineHeight: 20,
-    color: '#FFFFFF',
     fontWeight: '600',
   },
   purchaseText: {
@@ -130,9 +146,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   price: {
-    fontSize: 24,
-    lineHeight: 24,
-    color: '#FFFFFF',
+    fontSize: 20,
+    lineHeight: 20,
     fontWeight: '600',
   },
 });

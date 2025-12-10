@@ -26,7 +26,7 @@ export interface Chapter {
 export interface AppSettings {
   language: 'ja' | 'en';
   subtitlesEnabled: boolean;
-  purchasedItems: string[];
+  purchasedItems: number[];
   introductionCompleted: boolean;
 }
 
