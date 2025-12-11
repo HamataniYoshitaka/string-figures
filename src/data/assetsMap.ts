@@ -415,4 +415,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/88_wrist-magic/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/88_wrist-magic/preview.mp4'),
   },
+  '89_mochitsuki': {
+    thumbnail: require('../../assets/string-figures/89_mochitsuki/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/89_mochitsuki/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/89_mochitsuki/preview.mp4'),
+  },
 };

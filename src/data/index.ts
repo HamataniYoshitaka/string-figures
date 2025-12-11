@@ -1426,6 +1426,23 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '89',
+    name: { ja: 'もちつき', en: 'Mochitsuki' },
+    difficulty: 'two_people',
+    directory: '89_mochitsuki',
+    ...ASSETS_MAP['89_mochitsuki'],
+    description: { 
+      ja: '日本ではとても有名なあやとりです。向かい合った二人が右手、左手を交互にリズム良く合わせます', 
+      en: 'This is a very well-known string figure in Japan. Two people face each other and rhythmically bring their right and left hands together in turn.' },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: "“もちつき”\n有木昭久, 湯浅清四郎\n<i>楽しいあやとり遊び</i> (1973)",
+      author: null,
+      references: null
+    }
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',
