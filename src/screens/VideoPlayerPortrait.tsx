@@ -95,13 +95,17 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               <CloseIcon width={24} height={24} fillColor="#79716B" />
             </Animated.View>
           </TouchableWithoutFeedback>
-          <Text style={[
-            styles.title, 
-            { 
-              fontSize: isTablet ? 22 : 18,
-              fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
-            }
-          ]} numberOfLines={1}>
+          <Text 
+            maxFontSizeMultiplier={1.35}
+            numberOfLines={1}
+            style={[
+              styles.title, 
+              { 
+                fontSize: isTablet ? 22 : 18,
+                fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+              }
+            ]}
+          >
             {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
           </Text>
         </View>
@@ -137,13 +141,17 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             <CloseIcon width={24} height={24} fillColor="#79716B" />
           </Animated.View>
         </TouchableWithoutFeedback>
-        <Text style={[
-          styles.title, 
-          { 
-            fontSize: isTablet ? 22 : 18,
-            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
-          }
-        ]} numberOfLines={1}>
+        <Text 
+          maxFontSizeMultiplier={1.35}
+          numberOfLines={1}
+          style={[
+            styles.title, 
+            { 
+              fontSize: isTablet ? 22 : 18,
+              fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+            }
+          ]}
+        >
           {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
         </Text>
         <TouchableWithoutFeedback 
@@ -218,36 +226,63 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             <View style={styles.subtitleContainerTabletLandscape}>
               <View style={styles.subtitleStackTabletLandscape} pointerEvents="none">
                 {/* 影だけを同じ位置に重ねる（回数で濃さ調整） */}
-                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
+                >
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
+                >
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
+                >
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
+                >
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
+                >
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
+                >
+                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
+                </Text>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
+                >
                   {getLocalizedText(chapters[currentChapterIndex].subtitle)}
                 </Text>
                 <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
                   {getLocalizedText(chapters[currentChapterIndex].subtitle)}
                 </Text>
-                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
-                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                </Text>
-                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
-                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                </Text>
-                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
-                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                </Text>
-                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
-                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                </Text>
-                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
-                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                </Text>
-                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
-                  {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                </Text>
-                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
+                >
                   {getLocalizedText(chapters[currentChapterIndex].subtitle)}
                 </Text>
 
                 {/* 本体テキスト */}
-                <Text style={styles.subtitleTextTabletLandscape}>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={styles.subtitleTextTabletLandscape}
+                >
                   {getLocalizedText(chapters[currentChapterIndex].subtitle)}
                 </Text>
               </View>
@@ -259,7 +294,10 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
       {/* 字幕エリア - デバイスがランドスケープの場合は非表示 */}
       {!isDeviceLandscape && (
         <View style={styles.subtitleContainer}>
-          <Text style={styles.subtitleText}>
+          <Text 
+            maxFontSizeMultiplier={1.25}
+            style={styles.subtitleText}
+          >
             {getLocalizedText(chapters[currentChapterIndex].subtitle)}
           </Text>
         </View>

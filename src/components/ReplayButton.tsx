@@ -244,7 +244,10 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
                 },
               ]}
             >
-              <Text style={[styles.labelText]}>
+              <Text 
+                allowFontScaling={false}
+                style={[styles.labelText]}
+              >
                 {displayChapterIndex + 1}
               </Text>
             </Animated.View>
@@ -256,9 +259,12 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
             isDisabled && styles.balloonDisabled,
             !isDisabled && { backgroundColor: balloonColor }
           ]}>
-            <Text style={[
-              styles.controlButtonText
-            ]}>
+            <Text 
+              maxFontSizeMultiplier={1.25}
+              style={[
+                styles.controlButtonText
+              ]}
+            >
               {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
             </Text>
             <BalloonTail

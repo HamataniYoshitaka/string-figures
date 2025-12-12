@@ -131,7 +131,10 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
             isDisabled && styles.balloonDisabled,
             !isDisabled && { backgroundColor: balloonColor }
           ]}>
-            <Text style={[styles.controlButtonText]}>
+            <Text 
+              maxFontSizeMultiplier={1.25}
+              style={[styles.controlButtonText]}
+            >
               {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
             </Text>
             <BalloonTail

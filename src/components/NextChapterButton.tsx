@@ -146,7 +146,10 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
             isDisabled && styles.balloonDisabled,
             { backgroundColor: balloonBackgroundColor }
           ]}>
-            <Text style={styles.controlButtonText}>
+            <Text 
+              maxFontSizeMultiplier={1.25}
+              style={styles.controlButtonText}
+            >
               {isLastChapterCompleted
                 ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
                 : getLocalizedText({ ja: 'つぎ', en: 'Next' })

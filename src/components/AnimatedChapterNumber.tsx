@@ -142,7 +142,10 @@ const AnimatedChapterNumber: React.FC<AnimatedChapterNumberProps> = ({
           },
         ]}
       >
-        <Text style={styles.chapterText}>...</Text>
+        <Text 
+          allowFontScaling={false}
+          style={styles.chapterText}
+        >...</Text>
       </Animated.View>
     );
   }
@@ -159,7 +162,10 @@ const AnimatedChapterNumber: React.FC<AnimatedChapterNumberProps> = ({
         },
       ]}
     >
-      <Text style={styles.chapterText}>{chapterNumber}</Text>
+      <Text 
+        allowFontScaling={false}
+        style={styles.chapterText}
+      >{chapterNumber}</Text>
     </Animated.View>
   );
 };
