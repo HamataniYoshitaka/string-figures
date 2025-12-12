@@ -77,10 +77,14 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeColor={selectedFilters.includes('basic') ? '#F7F5F2' : '#57534D'} 
           strokeWidth={1}
         />
-        <Text style={[
-          styles.filterText, 
-          selectedFilters.includes('basic') ? styles.filterTextSelected : styles.filterTextUnselected
-        ]}>
+        <Text 
+          minimumFontScale={1.0}
+          maxFontSizeMultiplier={1.25}
+          style={[
+            styles.filterText, 
+            selectedFilters.includes('basic') ? styles.filterTextSelected : styles.filterTextUnselected
+          ]}
+        >
           {getDifficultyText('basic')}
         </Text>
       </TouchableOpacity>
@@ -97,10 +101,14 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeColor={selectedFilters.includes('easy') ? '#F7F5F2' : '#57534D'} 
           strokeWidth={1}
         />
-        <Text style={[
-          styles.filterText, 
-          selectedFilters.includes('easy') ? styles.filterTextSelected : styles.filterTextUnselected
-        ]}>
+        <Text 
+          minimumFontScale={1.0}
+          maxFontSizeMultiplier={1.25}
+          style={[
+            styles.filterText, 
+            selectedFilters.includes('easy') ? styles.filterTextSelected : styles.filterTextUnselected
+          ]}
+        >
           {getDifficultyText('easy')}
         </Text>
       </TouchableOpacity>
@@ -117,10 +125,14 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeColor={selectedFilters.includes('medium') ? '#F7F5F2' : '#57534D'}
           strokeWidth={1}
         />
-        <Text style={[
-          styles.filterText, 
-          selectedFilters.includes('medium') ? styles.filterTextSelected : styles.filterTextUnselected
-        ]}>
+        <Text 
+          minimumFontScale={1.0}
+          maxFontSizeMultiplier={1.25}
+          style={[
+            styles.filterText, 
+            selectedFilters.includes('medium') ? styles.filterTextSelected : styles.filterTextUnselected
+          ]}
+        >
           {getDifficultyText('medium')}
         </Text>
       </TouchableOpacity>
@@ -137,10 +149,14 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeColor={selectedFilters.includes('hard') ? '#F7F5F2' : '#57534D'}
           strokeWidth={1}
         />
-        <Text style={[
-          styles.filterText, 
-          selectedFilters.includes('hard') ? styles.filterTextSelected : styles.filterTextUnselected
-        ]}>
+        <Text 
+          minimumFontScale={1.0}
+          maxFontSizeMultiplier={1.25}
+          style={[
+            styles.filterText, 
+            selectedFilters.includes('hard') ? styles.filterTextSelected : styles.filterTextUnselected
+          ]}
+        >
           {getDifficultyText('hard')}
         </Text>
       </TouchableOpacity>
@@ -157,10 +173,14 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeColor={selectedFilters.includes('two_people') ? '#F7F5F2' : '#57534D'}
           strokeWidth={1}
         />
-        <Text style={[
-          styles.filterText, 
-          selectedFilters.includes('two_people') ? styles.filterTextSelected : styles.filterTextUnselected
-        ]}>
+        <Text 
+          minimumFontScale={1.0}
+          maxFontSizeMultiplier={1.25}
+          style={[
+            styles.filterText, 
+            selectedFilters.includes('two_people') ? styles.filterTextSelected : styles.filterTextUnselected
+          ]}
+        >
           {getDifficultyText('two_people')}
         </Text>
       </TouchableOpacity>

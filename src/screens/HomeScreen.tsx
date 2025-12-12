@@ -446,11 +446,15 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         <ScrollView style={styles.scrollView}>
         {/* ヘッダー */}
         <View style={[styles.header, isTablet && styles.headerTablet]}>
-          <Text style={[
-            styles.title, 
-            isTablet && styles.titleTablet,
-            { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
-          ]}>
+          <Text 
+            minimumFontScale={1.0}
+            maxFontSizeMultiplier={1.35}
+            style={[
+              styles.title, 
+              isTablet && styles.titleTablet,
+              { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+            ]}
+          >
             {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
           </Text>
           <TouchableOpacity 

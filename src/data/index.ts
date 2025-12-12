@@ -396,12 +396,12 @@ export const stringFigures: StringFigure[] = [
     },
   {
     id: '19',
-    name: { ja: '二人の酋󠄁長', en: 'Two Chiefs' },
+    name: { ja: '二人の首長', en: 'Two Chiefs' },
     difficulty: 'medium',
     directory: '19_two-chiefs',
     ...ASSETS_MAP['19_two-chiefs'],
     description: { 
-      ja: '二人の酋󠄁長が並んでいる様子です。このあやとりが採取されたカロリン諸島には「ひとりの酋󠄁長」というあやとりもあります', 
+      ja: '二人の首長が並んでいる様子です。このあやとりが採取されたカロリン諸島には「ひとりの首長」というあやとりもあります', 
       en: 'This figure depicts two chiefs standing side by side. In the Caroline Islands, where this string figure was collected, there is also a version called “One Chief.”' 
     },
     premiumCourseId: 2, // コレクション2
@@ -1445,12 +1445,12 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '93',
-    name: { ja: 'ひとりの酋󠄁長', en: 'One Chief' },
+    name: { ja: 'ひとりの首長', en: 'One Chief' },
     difficulty: 'medium',
     directory: '93_one-chief',
     ...ASSETS_MAP['93_one-chief'],
     description: { 
-      ja: '同じパターンが様々な地域で伝承されているあやとりです。このあやとりが採取されたカロリン諸島には「二人の酋󠄁長」というあやとりもありますが、難易度は「ひとりの酋󠄁長」の方が高いです', 
+      ja: '同じパターンが様々な地域で伝承されているあやとりです。このあやとりが採取されたカロリン諸島には「二人の首長」というあやとりもありますが、難易度は「ひとりの首長」の方が高いです', 
       en: 'This string figure is a pattern that has been handed down in many different regions. In the Caroline Islands, where this figure was collected, there is also a version called <i>Two Chiefs,</i> but <i>One Chief</i> is considered the more difficult of the two.' 
     },
     premiumCourseId: 0,
