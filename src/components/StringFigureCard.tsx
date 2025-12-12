@@ -131,9 +131,13 @@ const StringFigureCard: React.FC<Props> = ({
         </View>
         <View style={styles.cardContent}>
           <View style={styles.titleContainer}>
-            <Text style={styles.cardTitle}>{getLocalizedText(item.name)}</Text>
+            <Text 
+              maxFontSizeMultiplier={1.35}
+              style={styles.cardTitle}
+            >
+              {getLocalizedText(item.name)}
+            </Text>
             {!item.directNavigationDestination && getDifficultyIcon(item.difficulty, 24)}
-            {}
           </View>
         </View>
       </Animated.View>

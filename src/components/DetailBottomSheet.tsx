@@ -251,24 +251,38 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
 
           {/* 作品情報 */}
           <View style={styles.infoContainer}>
-            <Text style={[
-              styles.title,
-              { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
-            ]}>{getLocalizedText(item.name)}</Text>
+            <Text 
+              maxFontSizeMultiplier={1.35}
+              style={[
+                styles.title,
+                { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+              ]}
+            >
+              {getLocalizedText(item.name)}</Text>
             <View style={styles.difficultyContainer}>
               {(() => {
                 const IconComponent = getDifficultyIcon(item.difficulty);
                 return <IconComponent width={28} height={28} strokeColor="#666" />;
               })()}
-              <Text style={styles.difficultyText}>
+              <Text 
+                maxFontSizeMultiplier={1.25}
+                style={styles.difficultyText}
+              >
                 {getDifficultyText(item.difficulty)}
               </Text>
             </View>
-            <Text style={styles.description}>
+            <Text 
+              maxFontSizeMultiplier={1.25}
+              style={styles.description}
+            >
               {getLocalizedText(item.description).split(/(<i>.*?<\/i>)/g).map((part, idx) => {
                 if (part.startsWith('<i>') && part.endsWith('</i>')) {
                   return (
-                    <Text key={idx} style={styles.descriptionItalic}>
+                    <Text 
+                      key={idx} 
+                      style={styles.descriptionItalic}
+                      maxFontSizeMultiplier={1.25}
+                    >
                       {part.replace('<i>', '').replace('</i>', '')}
                     </Text>
                   );
@@ -290,10 +304,16 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 />
                 {item.data.region && (
                 <View style={styles.referenceRow}>
-                  <Text style={styles.referenceLabel}>
+                  <Text 
+                    maxFontSizeMultiplier={1.25}
+                    style={styles.referenceLabel}
+                  >
                     {getLocalizedText({ ja: '地域', en: 'Region' })}
                   </Text>
-                  <Text style={styles.referenceValue}>
+                  <Text 
+                    maxFontSizeMultiplier={1.25}
+                    style={styles.referenceValue}
+                  >
                     {getLocalizedText(item.data.region)}
                   </Text>
                 </View>
@@ -301,10 +321,16 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 {/* <View style={styles.referenceDivider} /> */}
                 {item.data.author && (
                   <View style={styles.referenceRow}>
-                    <Text style={styles.referenceLabel}>
+                    <Text 
+                      maxFontSizeMultiplier={1.25}
+                      style={styles.referenceLabel}
+                    >
                       {getLocalizedText({ ja: '作者', en: 'Author' })}
                     </Text>
-                    <Text style={styles.referenceValue}>
+                    <Text 
+                      maxFontSizeMultiplier={1.25}
+                      style={styles.referenceValue}
+                    >
                       {getLocalizedText(item.data.author)}
                     </Text>
                   </View>
@@ -313,16 +339,28 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 {/* 出典 */}
                 {item.data.source && (
                   <View style={styles.referenceRow}>
-                    <Text style={styles.referenceLabel}>
+                    <Text 
+                      maxFontSizeMultiplier={1.25}
+                      style={styles.referenceLabel}
+                    >
                       {getLocalizedText({ ja: '出典', en: 'Source' })}
                     </Text>
-                    <Text style={[styles.referenceValue]}>
+                    <Text 
+                      maxFontSizeMultiplier={1.25}
+                      style={[styles.referenceValue]}
+                    >
                       {item.data.source && (
-                        <Text>
+                        <Text 
+                          maxFontSizeMultiplier={1.25}
+                        >
                           {item.data.source.split(/(<i>.*?<\/i>)/g).map((part, idx) => {
                             if (part.startsWith('<i>') && part.endsWith('</i>')) {
                               return (
-                                <Text key={idx} style={styles.referenceValueItalic}>
+                                <Text 
+                                  key={idx} 
+                                  style={styles.referenceValueItalic}
+                                  maxFontSizeMultiplier={1.25}
+                                >
                                   {part.replace('<i>', '').replace('</i>', '')}
                                 </Text>
                               );
@@ -338,13 +376,23 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 
                 {item.data.references && (
                   <View style={styles.referenceRow}>
-                    <Text style={styles.referenceLabel}>
+                    <Text 
+                      maxFontSizeMultiplier={1.25}
+                      style={styles.referenceLabel}
+                    >
                       {getLocalizedText({ ja: '参考', en: 'Reference' })}
                     </Text>
                     <View style={styles.referenceValueContainer}>
-                      <Text style={styles.referenceValue}>
+                      <Text 
+                        maxFontSizeMultiplier={1.25}
+                        style={styles.referenceValue}
+                      >
                         {item.data.references.map((reference, index) => (
-                          <Text key={index} style={styles.referenceValueItalic}>{getLocalizedText(reference)}</Text>
+                          <Text 
+                            key={index} 
+                            style={styles.referenceValueItalic}
+                            maxFontSizeMultiplier={1.25}
+                          >{getLocalizedText(reference)}</Text>
                         ))}
                       </Text>
                       <View style={styles.externalLinkIconContainer}>

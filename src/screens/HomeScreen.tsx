@@ -447,7 +447,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         {/* ヘッダー */}
         <View style={[styles.header, isTablet && styles.headerTablet]}>
           <Text 
-            minimumFontScale={1.0}
             maxFontSizeMultiplier={1.35}
             style={[
               styles.title, 

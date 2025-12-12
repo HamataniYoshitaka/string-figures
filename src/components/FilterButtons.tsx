@@ -78,7 +78,6 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeWidth={1}
         />
         <Text 
-          minimumFontScale={1.0}
           maxFontSizeMultiplier={1.25}
           style={[
             styles.filterText, 
@@ -102,7 +101,6 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeWidth={1}
         />
         <Text 
-          minimumFontScale={1.0}
           maxFontSizeMultiplier={1.25}
           style={[
             styles.filterText, 
@@ -126,7 +124,6 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeWidth={1}
         />
         <Text 
-          minimumFontScale={1.0}
           maxFontSizeMultiplier={1.25}
           style={[
             styles.filterText, 
@@ -150,7 +147,6 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeWidth={1}
         />
         <Text 
-          minimumFontScale={1.0}
           maxFontSizeMultiplier={1.25}
           style={[
             styles.filterText, 
@@ -174,7 +170,6 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
           strokeWidth={1}
         />
         <Text 
-          minimumFontScale={1.0}
           maxFontSizeMultiplier={1.25}
           style={[
             styles.filterText, 
