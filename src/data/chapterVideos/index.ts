@@ -81,6 +81,8 @@ import { FIGURE_86_ROPE_BRIDGE_VIDEOS } from './figure-86_rope-bridge';
 import { FIGURE_87_PALM_TREE_VIDEOS } from './figure-87_palm-tree';
 import { FIGURE_88_WRIST_MAGIC_VIDEOS } from './figure-88_wrist-magic';
 import { FIGURE_89_MOCHITSUKI_VIDEOS } from './figure-89_mochitsuki';
+import { FIGURE_91_5DIAMONDS_VIDEOS } from './figure-91_5diamonds';
+import { FIGURE_92_6DIAMONDS_VIDEOS } from './figure-92_6diamonds';
 import { FIGURE_93_ONE_CHIEF_VIDEOS } from './figure-93_one-chief';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
@@ -167,5 +169,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '87_palm-tree': FIGURE_87_PALM_TREE_VIDEOS,
   '88_wrist-magic': FIGURE_88_WRIST_MAGIC_VIDEOS,
   '89_mochitsuki': FIGURE_89_MOCHITSUKI_VIDEOS,
+  '91_5diamonds': FIGURE_91_5DIAMONDS_VIDEOS,
+  '92_6diamonds': FIGURE_92_6DIAMONDS_VIDEOS,
   '93_one-chief': FIGURE_93_ONE_CHIEF_VIDEOS
 };

@@ -420,6 +420,16 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/89_mochitsuki/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/89_mochitsuki/preview.mp4'),
   },
+  '91_5diamonds': {
+    thumbnail: require('../../assets/string-figures/91_5diamonds/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/91_5diamonds/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/91_5diamonds/preview.mp4'),
+  },
+  '92_6diamonds': {
+    thumbnail: require('../../assets/string-figures/92_6diamonds/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/92_6diamonds/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/92_6diamonds/preview.mp4'),
+  },
   '93_one-chief': {
     thumbnail: require('../../assets/string-figures/93_one-chief/thumbnail-kraft.jpg'),
     patternImage: require('../../assets/string-figures/93_one-chief/pattern.jpg'),

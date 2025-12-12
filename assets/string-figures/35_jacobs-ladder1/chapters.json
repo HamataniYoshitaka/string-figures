@@ -15,7 +15,10 @@
         "subtitle": { "ja": "左右の親指で、中指手前の糸を下から取ります", "en": "With both thumbs, pick up from below the near middle-finger strings." }
     },
     {
-        "subtitle": { "ja": "左右の親指で、上の糸を残したまま親指同士を繋いでいる下の糸だけを外します", "en": "With both thumbs, keep the upper strings and release only the lower string that runs between the thumbs." }
+        "subtitle": {
+          "ja": "左右の親指にかかる2本の糸から、親指と中指を繋ぐ上の糸を残したまま、下の糸だけを外します",
+          "en": "From the two strings on each thumb, retain the upper string that runs between the thumb and middle finger and release only the lower string."
+        }
     },
     {
         "subtitle": { "ja": "左右の中指を、親指の前にある三角の輪に上から入れます", "en": "Insert both middle fingers from above into the triangular loops in front of the thumbs." }

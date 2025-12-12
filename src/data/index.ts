@@ -133,7 +133,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['35_jacobs-ladder1'],
     description: { 
       ja: '最も有名なあやとり「4段ばしご」の1段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
-      en: 'This is the single-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.” In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
+      en: 'This is the single-diamond version of the famous string figure <i>Four Diamonds</i>. The first half of the sequence differs, but the latter half follows the same movements as <i>Four Diamonds</i>. In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
     },
     premiumCourseId: 0, // 無料
     data: {
@@ -151,7 +151,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['36_jacobs-ladder2'],
     description: { 
       ja: '最も有名なあやとり「4段ばしご」の2段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
-      en: 'This is the two-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.” In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
+      en: 'This is the two-diamond version of the famous string figure <i>Four Diamonds</i>. The first half of the sequence differs, but the latter half follows the same movements as <i>Four Diamonds</i>. In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
     },
     premiumCourseId: 0, // 無料
     data: {
@@ -169,7 +169,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['37_jacobs-ladder3'],
     description: { 
       ja: '最も有名なあやとり「4段ばしご」の3段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
-      en: 'This is the three-diamond version of the famous string figure “Four Diamonds.” The first half of the sequence differs, but the latter half follows the same movements as “Four Diamonds.” In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
+      en: 'This is the three-diamond version of the famous string figure <i>Four Diamonds</i>. The first half of the sequence differs, but the latter half follows the same movements as <i>Four Diamonds</i>. In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
     },
     premiumCourseId: 0, // 無料
     data: {
@@ -193,6 +193,42 @@ export const stringFigures: StringFigure[] = [
     data: {
       region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
       source: '“Osage Diamonds”\nC. F. Jayne\n <i>String Figures</i> (1906)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '91',
+    name: { ja: '5段ばしご', en: '5 Diamonds' },
+    difficulty: 'easy',
+    directory: '91_5diamonds',
+    ...ASSETS_MAP['91_5diamonds'],
+    description: { 
+      ja: '最も有名なあやとり「4段ばしご」の5段バージョンです。後半に1手順増えるだけで、他は「4段ばしご」と同じです。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
+      en: 'This is the five-diamond version of the well-known string figure <i>Four Diamonds</i>. Only one additional step is added in the second half; all other steps are the same as in <i>Four Diamonds</i>. Here, we present the method commonly taught in Japan, which uses the middle fingers.' 
+    },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '92',
+    name: { ja: '6段ばしご', en: '6 Diamonds' },
+    difficulty: 'easy',
+    directory: '92_6diamonds',
+    ...ASSETS_MAP['92_6diamonds'],
+    description: { 
+      ja: '最も有名なあやとり「4段ばしご」の6段バージョンです。後半に1手順増えるだけで、他は「4段ばしご」と同じです。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
+      en: 'This is the six-diamond version of the well-known string figure <i>Four Diamonds</i>. Only one additional step is added in the latter half; all other steps are the same as in <i>Four Diamonds</i>. Here, we present the method commonly taught in Japan, which uses the middle fingers.' 
+    },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
       author: null,
       references: null
     }
