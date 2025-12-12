@@ -1443,6 +1443,24 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '93',
+    name: { ja: 'ひとりの酋󠄁長', en: 'One Chief' },
+    difficulty: 'medium',
+    directory: '93_one-chief',
+    ...ASSETS_MAP['93_one-chief'],
+    description: { 
+      ja: '同じパターンが様々な地域で伝承されているあやとりです。このあやとりが採取されたカロリン諸島には「二人の酋󠄁長」というあやとりもありますが、難易度は「ひとりの酋󠄁長」の方が高いです', 
+      en: 'This string figure is a pattern that has been handed down in many different regions. In the Caroline Islands, where this figure was collected, there is also a version called <i>Two Chiefs,</i> but <i>One Chief</i> is considered the more difficult of the two.' 
+    },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: 'ミクロネシア', en: 'Micronesia' },
+      source: '“One Chief”\nC. F. Jayne\n <i>String Figures</i> (1906)',
+      author: null,
+      references: null
+    }
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',

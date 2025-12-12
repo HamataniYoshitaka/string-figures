@@ -420,4 +420,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/89_mochitsuki/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/89_mochitsuki/preview.mp4'),
   },
+  '93_one-chief': {
+    thumbnail: require('../../assets/string-figures/93_one-chief/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/93_one-chief/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/93_one-chief/preview.mp4'),
+  },
 };
