@@ -5,8 +5,5 @@
     "NSMicrophoneUsageDescription": "This app needs access to the microphone to use speech recognition.",
     "NSPhotoLibraryUsageDescription": "This app may access the photo library to select and save images for some features."
   },
-  "android": { "app_name": "String Figures" },
-  "messages": {
-    "networkError": "No network connection. Speech recognition is unavailable."
-  }
+  "android": { "app_name": "String Figures" }
 }
