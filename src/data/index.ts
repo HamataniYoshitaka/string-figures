@@ -701,7 +701,7 @@ export const stringFigures: StringFigure[] = [
     directory: '39_the-sun',
     ...ASSETS_MAP['39_the-sun'],
     description: { 
-      ja: '同じ出来上がりのパターンなるあやとりが、様々な名称で世界中に伝承されています。ここではナウルに伝わる手順を紹介します', 
+      ja: '同じ出来上がりのパターンになるあやとりが、様々な名称で世界中に伝承されています。ここではナウルに伝わる手順を紹介します', 
       en: 'String figures with the same final pattern are passed down around the world under various names. Here, we present the version traditionally taught in Nauru.' 
     },
     premiumCourseId: 0, // 無料

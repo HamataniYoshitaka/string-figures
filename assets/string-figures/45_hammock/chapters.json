@@ -15,27 +15,27 @@
         "subtitle": { "ja": "左右の人差し指で、反対の手の中指手前の糸を取り合います", "en": "With both index fingers, pick up each other’s near middle-finger strings." }
     },
     {
-        "subtitle": { "ja": "左右の親指で、中指と薬指の糸を越えて小指手前の糸を取ります", "en": "With both thumbs, move over the middle- and ring-finger strings and pick up the near little-finger strings." }
+        "subtitle": { "ja": "左右の親指で、人差し指と中指の糸を越えて小指手前の糸を取ります", "en": "With both thumbs, move over the index- and middle-finger strings and pick up from below the near little-finger strings." }
     },
     {
         "subtitle": { "ja": "左右の人差し指と中指で、反対の手のひらの糸を取り合います", "en": "With both index and middle fingers, pick up each other’s palm strings." }
     },
     {
         "subtitle": { 
-            "ja": "左右の親指の糸を、反対側の手で持って親指から糸を外し、半回転させて元の親指に戻します", 
-            "en": "With the opposite hand, hold each thumb string, remove it from the thumb, twist it half a turn, and return it to the original thumb." 
+            "ja": "左右の親指の糸を、反対側の手で持って親指から糸を外し、半回転させてねじれを無くし、元の親指に戻します", 
+            "en": "With the opposite hand, take each thumb string, remove it from the thumb, turn it halfway to remove the twist, and return it to the original thumb." 
         }
     },
     {
         "subtitle": { 
-            "ja": "同様に、左右の薬指の糸を、反対側の手で持って薬指から糸を外し、半回転させて元の薬指に戻します", 
-            "en": "In the same way, hold each ring-finger string with the opposite hand, remove it from the ring finger, twist it half a turn, and return it to the original ring finger." 
+            "ja": "同様に、左右の薬指の糸を、反対側の手で持って薬指から糸を外し、半回転させてねじれを無くし、元の薬指に戻します", 
+            "en": "In the same way, with the opposite hand take each ring-finger string, remove it from the ring finger, turn it halfway to remove the twist, and return it to the original ring finger." 
         }
     },
     {
         "subtitle": { 
-            "ja": "同様に、左右の小指の糸を、反対側の手で持って小指から糸を外し、半回転させて元の小指に戻して完成です", 
-            "en": "In the same way, hold each little-finger string with the opposite hand, remove it from the little finger, twist it half a turn, and return it to the original little finger to complete the figure." 
+            "ja": "同様に、左右の小指の糸を、反対側の手で持って小指から糸を外し、半回転させてねじれを無くし、元の小指に戻して完成です", 
+            "en": "In the same way, with the opposite hand take each little-finger string, remove it from the little finger, turn it halfway to remove the twist, return it to the original little finger, and show the finished figure." 
         }
     }
 ]
