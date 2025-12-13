@@ -9,6 +9,7 @@ import {
   Dimensions,
   Platform,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Video, ResizeMode } from 'expo-av';
 import { CloseIcon, BookmarkIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
@@ -56,6 +57,12 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   // デバイス情報を取得
   const { isTablet, isDeviceLandscape } = useDeviceInfo();
   
+  // セーフエリアインセットを取得
+  const insets = useSafeAreaInsets();
+  
+  // Androidでシステムバーがある場合のpaddingBottomを計算
+  const containerPaddingBottom = Platform.OS === 'android' && insets.bottom > 30 ? 40 : 0;
+  
   // アニメーションヘルパー関数
   const createPressInHandler = (scale: Animated.Value) => () => {
     Animated.spring(scale, {
@@ -79,7 +86,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
     // console.log('VideoPlayerPortrait - Invalid stringFigure or chapter data');
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom }]}>
         <View style={styles.header}>
           <TouchableWithoutFeedback 
             onPress={onGoBack}
@@ -125,7 +132,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom }]}>
       <View style={styles.header}>
         <TouchableWithoutFeedback 
           onPress={onGoBack}
@@ -385,7 +392,8 @@ const styles = StyleSheet.create({
   },
   videoArea: {
     paddingHorizontal: 16,
-    paddingTop: 16,
+    // paddingTop: 16,
+    paddingTop: Platform.OS === 'android' ? 0 : 8,
   },
   videoAreaTabletLandscape: {
     paddingTop: 0,

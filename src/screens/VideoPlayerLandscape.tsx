@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import VideoControlPanel from '../components/VideoControlPanel';
@@ -32,6 +33,12 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
 }) => {
   
   const { width: screenWidth } = Dimensions.get('window');
+
+  // セーフエリアインセットを取得
+  const insets = useSafeAreaInsets();
+  
+  // Androidでシステムバーがある場合のpaddingRightを計算
+  const containerPaddingRight = Platform.OS === 'android' && insets.right > 30 ? 30 : 0;
 
   // 画面サイズ判定
   const isSmallScreen = screenWidth <= 667; // iPhoneSE2の高さは667px
@@ -98,7 +105,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   const subtitle = getLocalizedText(chapters[currentChapterIndex].subtitle);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingRight: containerPaddingRight }]}>
       {/* ブックマークボタン */}
       <TouchableOpacity
         style={styles.bookmarkButton}
