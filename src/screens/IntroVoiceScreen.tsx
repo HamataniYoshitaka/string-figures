@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Animated, Text, Dimensions, Alert } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Animated, Text, Dimensions, Alert, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -284,72 +284,78 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
                 </View>
 
-                {/* 字幕エリア */}
-                <View style={styles.subtitleContainer}>
-                    {(() => {
-                        const currentChapter = chapters[currentChapterIndex];
-                        const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
-                        const subtitle = getLocalizedText(currentChapter.subtitle);
-                        
-                        return (
-                            <>
-                                {title && (
-                                    <View style={styles.titleContainer}>
+                <ScrollView 
+                    style={styles.scrollContainer}
+                    contentContainerStyle={styles.scrollContent}
+                    showsVerticalScrollIndicator={false}
+                >
+                    {/* 字幕エリア */}
+                    <View style={styles.subtitleContainer}>
+                        {(() => {
+                            const currentChapter = chapters[currentChapterIndex];
+                            const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
+                            const subtitle = getLocalizedText(currentChapter.subtitle);
+                            
+                            return (
+                                <>
+                                    {title && (
+                                        <View style={styles.titleContainer}>
+                                            <Text 
+                                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                                style={styles.stepNumber}
+                                            >
+                                                Step {currentChapterIndex + 1}
+                                            </Text>
+                                            <Text 
+                                                maxFontSizeMultiplier={1.25}
+                                                style={styles.stepTitle}
+                                            >
+                                                {title}
+                                            </Text>
+                                        </View>
+                                    )}
+                                    {subtitle && (
                                         <Text 
-                                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                            style={styles.stepNumber}
+                                            maxFontSizeMultiplier={isSmallScreen? 1.0 : 1.25}
+                                            style={styles.subtitleText}
                                         >
-                                            Step {currentChapterIndex + 1}
+                                            {subtitle}
                                         </Text>
-                                        <Text 
-                                            maxFontSizeMultiplier={1.25}
-                                            style={styles.stepTitle}
-                                        >
-                                            {title}
-                                        </Text>
-                                    </View>
-                                )}
-                                {subtitle && (
-                                    <Text 
-                                        maxFontSizeMultiplier={isSmallScreen? 1.0 : 1.25}
-                                        style={styles.subtitleText}
-                                    >
-                                        {subtitle}
-                                    </Text>
-                                )}
-                            </>
-                        );
-                    })()}
-                </View>
-
-                <View style={styles.voiceFallbackCard}>
-                    <View style={styles.voiceFallbackHeader}>
-                        <View style={styles.voiceFallbackDivider} />
-                        <Text 
-                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                            style={styles.voiceFallbackHeaderText}
-                        >{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
-                        <View style={styles.voiceFallbackDivider} />
+                                    )}
+                                </>
+                            );
+                        })()}
                     </View>
 
-                    <View style={styles.voiceFallbackDescription}>
-                        <Text 
-                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                            style={styles.voiceFallbackDescriptionText}
-                        >{getLocalizedText({ja: 'あなたの声に反応しないですか？', en: 'Is your voice not responding?'})}</Text>
-                        <Text 
-                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                            style={styles.voiceFallbackDescriptionText}
-                        >{getLocalizedText({ja: 'このアプリは音声認識無しでも楽しむことができます', en: 'This app can be enjoyed without voice recognition'})}</Text>
-                    </View>
+                    <View style={styles.voiceFallbackCard}>
+                        <View style={styles.voiceFallbackHeader}>
+                            <View style={styles.voiceFallbackDivider} />
+                            <Text 
+                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                style={styles.voiceFallbackHeaderText}
+                            >{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
+                            <View style={styles.voiceFallbackDivider} />
+                        </View>
 
-                    <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={onSkip}>
-                        <Text 
-                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                            style={styles.voiceFallbackButtonText}
-                        >{getLocalizedText({ja: 'このまま次に進む', en: 'Skip to next'})}</Text>
-                    </TouchableOpacity>
-                </View>
+                        <View style={styles.voiceFallbackDescription}>
+                            <Text 
+                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                style={styles.voiceFallbackDescriptionText}
+                            >{getLocalizedText({ja: 'あなたの声に反応しないですか？', en: 'Is your voice not responding?'})}</Text>
+                            <Text 
+                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                style={styles.voiceFallbackDescriptionText}
+                            >{getLocalizedText({ja: 'このアプリは音声認識無しでも楽しむことができます', en: 'This app can be enjoyed without voice recognition'})}</Text>
+                        </View>
+
+                        <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={onSkip}>
+                            <Text 
+                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                style={styles.voiceFallbackButtonText}
+                            >{getLocalizedText({ja: 'このまま次に進む', en: 'Skip to next'})}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
                 
             </SafeAreaView>
             <Snackbar
@@ -411,8 +417,13 @@ const styles = StyleSheet.create({
         marginTop: 16,
         paddingLeft: 16,
     },
-    subtitleContainer: {
+    scrollContainer: {
         flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
+    },
+    subtitleContainer: {
         paddingHorizontal: 16,
         paddingVertical: 24,
         justifyContent: 'center',
