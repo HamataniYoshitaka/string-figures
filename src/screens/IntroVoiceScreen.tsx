@@ -228,13 +228,16 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         <CloseIcon width={24} height={24} fillColor="#79716B" />
                         </Animated.View>
                     </TouchableWithoutFeedback>
-                    <Text style={[
-                        styles.title, 
-                        { 
-                            fontSize: isTablet ? 22 : 18,
-                            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
-                        }
-                    ]} numberOfLines={1}>
+                    <Text 
+                        maxFontSizeMultiplier={1.35}
+                        style={[
+                            styles.title, 
+                            { 
+                                fontSize: isTablet ? 22 : 18,
+                                fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                            }
+                        ]} numberOfLines={1}
+                    >
                         {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                     </Text>
                 </View>
@@ -290,16 +293,25 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                             <>
                                 {title && (
                                     <View style={styles.titleContainer}>
-                                        <Text style={styles.stepNumber}>
+                                        <Text 
+                                            maxFontSizeMultiplier={1.25}
+                                            style={styles.stepNumber}
+                                        >
                                             Step {currentChapterIndex + 1}
                                         </Text>
-                                        <Text style={styles.stepTitle}>
+                                        <Text 
+                                            maxFontSizeMultiplier={1.25}
+                                            style={styles.stepTitle}
+                                        >
                                             {title}
                                         </Text>
                                     </View>
                                 )}
                                 {subtitle && (
-                                    <Text style={styles.subtitleText}>
+                                    <Text 
+                                        maxFontSizeMultiplier={1.25}
+                                        style={styles.subtitleText}
+                                    >
                                         {subtitle}
                                     </Text>
                                 )}
@@ -311,17 +323,29 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 <View style={styles.voiceFallbackCard}>
                     <View style={styles.voiceFallbackHeader}>
                         <View style={styles.voiceFallbackDivider} />
-                        <Text style={styles.voiceFallbackHeaderText}>{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
+                        <Text 
+                            maxFontSizeMultiplier={1.25}
+                            style={styles.voiceFallbackHeaderText}
+                        >{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
                         <View style={styles.voiceFallbackDivider} />
                     </View>
 
                     <View style={styles.voiceFallbackDescription}>
-                        <Text style={styles.voiceFallbackDescriptionText}>{getLocalizedText({ja: 'あなたの声に反応しないですか？', en: 'Is your voice not responding?'})}</Text>
-                        <Text style={styles.voiceFallbackDescriptionText}>{getLocalizedText({ja: 'このアプリは音声認識無しでも楽しむことができます', en: 'This app can be enjoyed without voice recognition'})}</Text>
+                        <Text 
+                            maxFontSizeMultiplier={1.25}
+                            style={styles.voiceFallbackDescriptionText}
+                        >{getLocalizedText({ja: 'あなたの声に反応しないですか？', en: 'Is your voice not responding?'})}</Text>
+                        <Text 
+                            maxFontSizeMultiplier={1.25}
+                            style={styles.voiceFallbackDescriptionText}
+                        >{getLocalizedText({ja: 'このアプリは音声認識無しでも楽しむことができます', en: 'This app can be enjoyed without voice recognition'})}</Text>
                     </View>
 
                     <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={onSkip}>
-                        <Text style={styles.voiceFallbackButtonText}>{getLocalizedText({ja: 'このまま次に進む', en: 'Skip to next'})}</Text>
+                        <Text 
+                            maxFontSizeMultiplier={1.25}
+                            style={styles.voiceFallbackButtonText}
+                        >{getLocalizedText({ja: 'このまま次に進む', en: 'Skip to next'})}</Text>
                     </TouchableOpacity>
                 </View>
                 

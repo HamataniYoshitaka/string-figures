@@ -479,7 +479,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <MicrophoneQuestionIcon width={24} height={24} fillColor="#533000ff" />
-                <Text style={{ color: '#533000ff', marginLeft: 8, flex: 1 }}>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={{ color: '#533000ff', marginLeft: 8, flex: 1 }}
+                >
                   {currentLanguage === 'ja'
                     ? '音声認識が有効化されていません。このままでもアプリをご利用いただけますが、有効化することで「声」で操作できるようになり便利です'
                     : 'The speech recognition is not enabled. You can still use the app as is, but enabling it will allow you to control the app with your voice.'}

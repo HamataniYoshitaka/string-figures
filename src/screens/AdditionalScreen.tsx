@@ -146,7 +146,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                     <CloseIcon width={24} height={24} fillColor="#79716B" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
-                <Text style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
+                <Text maxFontSizeMultiplier={1.35} style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
                     {getLocalizedText({ja: '追加コレクション', en: 'Additional Collection'})}
                 </Text>
             </View>

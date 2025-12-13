@@ -234,13 +234,16 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     <CloseIcon width={24} height={24} fillColor="#79716B" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
-                <Text style={[
-                    styles.title, 
-                    { 
-                        fontSize: isTablet ? 22 : 18,
-                        fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
-                    }
-                ]} numberOfLines={1}>
+                <Text 
+                    maxFontSizeMultiplier={1.35}
+                    style={[
+                        styles.title, 
+                        { 
+                            fontSize: isTablet ? 22 : 18,
+                            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                        }
+                    ]} numberOfLines={1}
+                >
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
             </View>
@@ -299,16 +302,25 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                             <>
                                 {title && (
                                     <View style={styles.titleContainer}>
-                                        <Text style={styles.stepNumber}>
+                                        <Text 
+                                            maxFontSizeMultiplier={1.25}
+                                            style={styles.stepNumber}
+                                        >
                                             Step {currentChapterIndex + 1}
                                         </Text>
-                                        <Text style={styles.stepTitle}>
+                                        <Text 
+                                            maxFontSizeMultiplier={1.25}
+                                            style={styles.stepTitle}
+                                        >
                                             {title}
                                         </Text>
                                     </View>
                                 )}
                                 {subtitle && (
-                                    <Text style={styles.subtitleText}>
+                                    <Text 
+                                        maxFontSizeMultiplier={1.25}
+                                        style={styles.subtitleText}
+                                    >
                                         {subtitle}
                                     </Text>
                                 )}
@@ -322,7 +334,10 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     {showBalloon && (
                         <View style={styles.balloonContainer}>
                             <View style={styles.balloon}>
-                                <Text style={styles.balloonText}>
+                                <Text 
+                                    maxFontSizeMultiplier={1.25}
+                                    style={styles.balloonText}
+                                >
                                     {getLocalizedText({ ja: 'ボタンをタップして下さい', en: 'Please tap the button' })}
                                 </Text>
                                 <BalloonTail
@@ -345,17 +360,22 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 { transform: [{ scale: nextStepButtonScale }] }
                             ]}
                         >
-                            <Text style={[
-                                styles.nextStepLabel,
-                                { fontSize: currentLanguage === 'ja' ? 24 : 22 }
-                            ]}>
+                            <Text 
+                                maxFontSizeMultiplier={1.25}
+                                style={[
+                                    styles.nextStepLabel,
+                                    { fontSize: currentLanguage === 'ja' ? 24 : 22 }
+                                ]}
+                            >
                                 Next Step
                             </Text>
                             {(() => {
                                 const currentChapter = isAndroid ? chapters_android[currentChapterIndex+1] : chapters[currentChapterIndex+1];
                                 const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
                                 return title ? (
-                                    <Text style={[
+                                    <Text 
+                                        maxFontSizeMultiplier={1.25}
+                                        style={[
                                         styles.nextStepTitle,
                                         { fontSize: currentLanguage === 'ja' ? 15 : 14 }
                                     ]} numberOfLines={2}>

@@ -138,6 +138,7 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
                     </Animated.View>
                 </TouchableWithoutFeedback>
                 <Text 
+                    maxFontSizeMultiplier={1.35}
                     style={[styles.title, { fontSize: isTablet ? 22 : 18, fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]} numberOfLines={1}>
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
@@ -173,10 +174,16 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
 
             {/* 字幕エリア */}
             <View style={styles.subtitleContainer}>
-                <Text style={styles.subtitleText}>
+                <Text 
+                    maxFontSizeMultiplier={1.25}
+                    style={styles.subtitleText}
+                >
                     {getLocalizedText({ ja: '音声認識とマイクが使用できませんでした。\nこのままでもアプリをお楽しみいただけますが、\n「設定」アプリからアクセスを許可することをおすすめめします。', en: 'Voice recognition and microphone are not available. You can still enjoy the app, but we recommend allowing access from the "Settings" app.' })}
                 </Text>
-                <Text style={[styles.subtitleText, { marginTop: 12, fontSize: 14 }]}>
+                <Text 
+                    maxFontSizeMultiplier={1.25}
+                    style={[styles.subtitleText, { marginTop: 12, fontSize: 14 }]}
+                >
                     {getLocalizedText({ ja: '（音声の保存・収集は一切行なっておりません）', en: '(We do not record or collect any voice data.)' })}
                 </Text>
             </View>
@@ -191,7 +198,10 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
                             pressed && { opacity: 0.9, transform: [{ scale: 0.98 }] },
                         ]}
                     >
-                        <Text style={styles.outlinedButtonText}>
+                        <Text 
+                            maxFontSizeMultiplier={1.25}
+                            style={styles.outlinedButtonText}
+                        >
                             {getLocalizedText({ ja: '設定アプリを開く', en: 'Open Settings' })}
                         </Text>
                     </Pressable>
@@ -200,7 +210,10 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
                         onPress={onGoBack}
                         style={({ pressed }) => [styles.textButton, pressed && { opacity: 0.6 }]}
                     >
-                        <Text style={styles.textButtonLabel}>
+                        <Text 
+                            maxFontSizeMultiplier={1.25}
+                            style={styles.textButtonLabel}
+                        >
                             {getLocalizedText({ ja: 'このままはじめる', en: 'Start anyway' })}
                         </Text>
                     </Pressable>

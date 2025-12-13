@@ -268,7 +268,10 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
                 >
                   {getLocalizedText(chapters[currentChapterIndex].subtitle)}
                 </Text>
-                <Text style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}>
+                <Text 
+                  maxFontSizeMultiplier={1.25}
+                  style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
+                >
                   {getLocalizedText(chapters[currentChapterIndex].subtitle)}
                 </Text>
                 <Text 
@@ -296,7 +299,10 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         <View style={styles.subtitleContainer}>
           <Text 
             maxFontSizeMultiplier={1.25}
-            style={styles.subtitleText}
+            style={[
+              { fontSize: isTablet ? 18 : 16 },
+              styles.subtitleText
+            ]}
           >
             {getLocalizedText(chapters[currentChapterIndex].subtitle)}
           </Text>
@@ -459,7 +465,7 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     fontFamily: 'KleeOne-Regular',
-    fontSize: 16,
+    // fontSize: 16,
     color: '#333',
     textAlign: 'center',
     lineHeight: 24,

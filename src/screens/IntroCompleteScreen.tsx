@@ -106,13 +106,16 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     <CloseIcon width={24} height={24} fillColor="#222" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
-                <Text style={[
-                    styles.title, 
-                    { 
-                        fontSize: isTablet ? 22 : 18,
-                        fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
-                    }
-                ]} numberOfLines={1}>
+                <Text 
+                    maxFontSizeMultiplier={1.35}
+                    style={[
+                        styles.title, 
+                        { 
+                            fontSize: isTablet ? 22 : 18,
+                            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                        }
+                    ]} numberOfLines={1}
+                >
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
             </View>
@@ -124,11 +127,17 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 <View style={styles.checkCircleContainer}>
                     <CheckCircleOutlineIcon width={80} height={80} fillColor="#333" />
                 </View>
-                <Text style={styles.titleText}>
+                <Text 
+                    maxFontSizeMultiplier={1.25}
+                    style={styles.titleText}
+                >
                     {getLocalizedText({ ja: '準備が完了\nしました!', en: 'Preparation is complete!' })}
                 </Text>
 
-                <Text style={styles.subtitleText}>
+                <Text 
+                    maxFontSizeMultiplier={1.25}
+                    style={styles.subtitleText}
+                >
                     {getLocalizedText({ ja: '世界中に伝承されている\n「あやとり」をお楽しみ下さい!', en: 'Enjoy the string figures that have been passed down through generations around the world!' })}
                 </Text>
             </View>
@@ -148,7 +157,10 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                     { transform: [{ scale: startButtonScale }] },
                                 ]}
                             >
-                                <Text style={styles.startButtonText}>
+                                <Text 
+                                    maxFontSizeMultiplier={1.25}
+                                    style={styles.startButtonText}
+                                >
                                     {getLocalizedText({ ja: 'はじめる', en: 'Start' })}
                                 </Text>
                             </Animated.View>
