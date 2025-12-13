@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: '#FFFFFF',
         paddingVertical: 12,
-        paddingHorizontal: 64,
+        width: 240,
         alignSelf: 'stretch',
     },
     startButtonText: {

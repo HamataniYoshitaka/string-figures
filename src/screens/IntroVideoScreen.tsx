@@ -423,7 +423,6 @@ const styles = StyleSheet.create({
     },
     videoArea: {
         paddingHorizontal: 16,
-        paddingTop: 16,
     },
     videoAreaTabletLandscape: {
         paddingTop: 0,
@@ -482,13 +481,13 @@ const styles = StyleSheet.create({
         fontFamily: 'KleeOne-SemiBold',
         fontSize: 16,
         color: '#57534d',
-        lineHeight: 32,
+        lineHeight: 24,
         fontWeight: '600',
         textAlign: 'left',
     },
     controlsContainer: {
         paddingHorizontal: 16,
-        paddingBottom: 32,
+        paddingBottom: 16,
         position: 'relative',
     },
     balloonContainer: {
