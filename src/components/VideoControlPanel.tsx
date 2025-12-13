@@ -35,8 +35,8 @@ interface VideoControlPanelProps {
   onReplay: () => void;
   onPreviousChapter: () => void;
   onRestartFromBeginning: () => void;
-  onSlowerSpeed: () => void;
-  onFasterSpeed: () => void;
+  // onSlowerSpeed: () => void;
+  // onFasterSpeed: () => void;
   onLandscapeToggle: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
   getChapterProgress: (chapterIndex: number) => number;
@@ -61,8 +61,8 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onReplay,
   onPreviousChapter,
   onRestartFromBeginning,
-  onSlowerSpeed,
-  onFasterSpeed,
+  // onSlowerSpeed,
+  // onFasterSpeed,
   onLandscapeToggle,
   getPlaybackRateDisplay,
   getChapterProgress,

@@ -129,7 +129,7 @@ const PreviousChapterLandscapeButton = forwardRef<PreviousChapterLandscapeButton
           isDisabled && styles.balloonDisabled,
           { backgroundColor: balloonColor }
         ]}>
-          <Text style={[styles.controlButtonText]}>{getLocalizedText({ ja: 'まえ', en: 'Previous' })}</Text>
+          <Text maxFontSizeMultiplier={1.25} style={[styles.controlButtonText]}>{getLocalizedText({ ja: 'まえ', en: 'Previous' })}</Text>
           <SpeedButtonTail
             fillColor="rgba(209, 200, 194, 0.5)"
             isBottom={true}

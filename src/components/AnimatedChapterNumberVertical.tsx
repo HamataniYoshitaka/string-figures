@@ -161,7 +161,7 @@ const AnimatedChapterNumberVertical: React.FC<AnimatedChapterNumberVerticalProps
         },
       ]}
     >
-      <Text style={styles.chapterText}>{chapterNumber}</Text>
+      <Text allowFontScaling={false} style={styles.chapterText}>{chapterNumber}</Text>
     </Animated.View>
   );
 };

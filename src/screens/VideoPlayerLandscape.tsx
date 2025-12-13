@@ -146,18 +146,18 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           <View style={styles.subtitleArea}>
             <View style={styles.subtitleStack} pointerEvents="none">
               {/* 影だけを同じ位置に重ねる（回数で濃さ調整） */}
-              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
 
               {/* 本体テキスト */}
-              <Text style={[styles.subtitleText, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
             </View>
           </View>
         </View>
@@ -184,8 +184,8 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           onReplay={restProps.onReplay}
           onPreviousChapter={restProps.onPreviousChapter}
           onRestartFromBeginning={restProps.onRestartFromBeginning}
-          onSlowerSpeed={restProps.onSlowerSpeed}
-          onFasterSpeed={restProps.onFasterSpeed}
+          // onSlowerSpeed={restProps.onSlowerSpeed}
+          // onFasterSpeed={restProps.onFasterSpeed}
           onLandscapeToggle={restProps.onLandscapeToggle}
           getPlaybackRateDisplay={restProps.getPlaybackRateDisplay}
           getChapterProgress={getChapterProgress}

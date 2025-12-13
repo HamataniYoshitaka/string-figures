@@ -139,12 +139,17 @@ const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, Nex
           isDisabled && styles.balloonDisabled,
           { backgroundColor: balloonBackgroundColor }
         ]}>
-          <Text style={[
-            styles.controlButtonText,
-          ]}>{isLastChapterCompleted
-            ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
-            : getLocalizedText({ ja: 'つぎ', en: 'Next' })
-          }</Text>
+          <Text 
+            maxFontSizeMultiplier={1.25}
+            style={[
+              styles.controlButtonText,
+            ]}
+          >
+            {isLastChapterCompleted
+              ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
+              : getLocalizedText({ ja: 'つぎ', en: 'Next' })
+            }
+          </Text>
           <SpeedButtonTail
             fillColor="rgba(209, 200, 194, 0.5)"
             isBottom={true}

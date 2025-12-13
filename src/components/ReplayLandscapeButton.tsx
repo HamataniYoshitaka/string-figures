@@ -243,7 +243,7 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
                 },
               ]}
             >
-              <Text style={[styles.labelText]}>
+              <Text allowFontScaling={false} style={[styles.labelText]}>
                 {displayChapterIndex + 1}
               </Text>
             </Animated.View>
@@ -255,9 +255,14 @@ const ReplayLandscapeButton = forwardRef<ReplayLandscapeButtonRef, ReplayLandsca
           isDisabled && styles.balloonDisabled,
           !isDisabled && { backgroundColor: balloonColor }
         ]}>
-          <Text style={[
-            isDisabled && styles.balloonTextDisabled
-          ]}>{getLocalizedText({ ja: 'もういちど', en: 'Replay' })}</Text>
+          <Text 
+            maxFontSizeMultiplier={1.25}
+            style={[
+              isDisabled && styles.balloonTextDisabled
+            ]}
+          >
+            {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
+          </Text>
           <SpeedButtonTail
             fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
             isBottom={true}
