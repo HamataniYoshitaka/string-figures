@@ -27,6 +27,7 @@ interface Props {
   onPlayVideo: (item: StringFigure) => void;
   onToggleBookmark: () => void;
   currentLanguage: 'ja' | 'en';
+  onPrerequisitePress?: (prerequisiteId: string) => void;
 }
 
 export interface DetailBottomSheetRef {
@@ -41,6 +42,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   onPlayVideo,
   onToggleBookmark,
   currentLanguage,
+  onPrerequisitePress,
 }, ref) => {
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
@@ -276,7 +278,9 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
               const prerequisiteItem = stringFigures.find(figure => figure.id === item.prerequisite);
               const prerequisiteName = prerequisiteItem ? getLocalizedText(prerequisiteItem.name) : '';
               const handlePrerequisitePress = () => {
-                // TODO: タップ後の処理を実装
+                if (item.prerequisite && onPrerequisitePress) {
+                  onPrerequisitePress(item.prerequisite);
+                }
               };
               return (
                 <View style={styles.prerequisiteContainer}>

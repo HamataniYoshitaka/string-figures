@@ -384,6 +384,19 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
+  const handlePrerequisitePress = (prerequisiteId: string) => {
+    // 1. BottomSheetを閉じる
+    bottomSheetRef.current?.dismiss();
+    
+    // 2. BottomSheetが完全に閉じるのを待ってから、そのIDの作品をセットしてBottomSheetを表示
+    setTimeout(() => {
+      const prerequisiteItem = stringFigures.find(figure => figure.id === prerequisiteId);
+      if (prerequisiteItem) {
+        setSelectedItem(prerequisiteItem);
+      }
+    }, 600);
+  };
+
   // メニューボタンの処理
   const handleMenuPress = () => {
     if (menuButtonRef.current) {
@@ -522,6 +535,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         onPlayVideo={handlePlayVideo}
         onToggleBookmark={toggleBookmark}
         currentLanguage={currentLanguage}
+        onPrerequisitePress={handlePrerequisitePress}
       />
 
       {/* ドロップダウンメニュー */}
