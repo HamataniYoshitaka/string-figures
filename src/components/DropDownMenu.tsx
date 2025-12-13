@@ -62,9 +62,14 @@ const DropDownMenu: React.FC<Props> = ({
                     onClose();
                   }}
                 >
-                  <Text style={styles.menuLabel}>{item.label}</Text>
+                  <Text 
+                    maxFontSizeMultiplier={1.35}
+                    style={styles.menuLabel}
+                  >
+                    {item.label}
+                  </Text>
                   {item.value && (
-                    <Text style={styles.menuValue}>{item.value}</Text>
+                    <Text maxFontSizeMultiplier={1.35} style={styles.menuValue}>{item.value}</Text>
                   )}
                 </TouchableOpacity>
               ))}

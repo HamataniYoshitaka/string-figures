@@ -535,7 +535,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   description: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#333',
     lineHeight: 20,
     textAlign: 'center',

@@ -89,7 +89,10 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
                     <CloseIcon width={24} height={24} fillColor="#79716B" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
-                <Text style={[styles.title, { fontSize: isTablet ? 22 : 18 , fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]} numberOfLines={1}>
+                <Text 
+                    maxFontSizeMultiplier={1.35}
+                    style={[styles.title, { fontSize: isTablet ? 22 : 18 , fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]} numberOfLines={1}
+                >
                     {getLocalizedText({ja: 'このアプリについて', en: 'About this app'})}
                 </Text>
             </View>
@@ -101,61 +104,103 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
             >
                 <View style={styles.contentContainer}>
                     <View style={styles.sectionContainer}>
-                        <Text style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]}>
+                        <Text 
+                            maxFontSizeMultiplier={1.35}
+                            style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]}
+                        >
                             { getLocalizedText({ 
                                 ja: 'このアプリについて', 
                                 en: 'About this app' }) 
                             }
                         </Text>
-                        <Text style={styles.sectionDescription}>
+                        <Text 
+                            maxFontSizeMultiplier={1.35}
+                            style={styles.sectionDescription}
+                        >
                             { getLocalizedText({ 
                                 ja: 'このアプリは、世界中に広く伝承されている「あやとり」を紹介することを目指したアプリです。両手に紐がかかって塞がっていても、画面に触らずに「声」で操作できるのが特徴です。', 
-                                en: 'This app is designed to introduce “String Figures (Ayatori, Cat’s Cradle),” a traditional practice that has been shared and passed down across many cultures around the world.. It is characterized by the ability to operate without touching the screen even if the string is caught on your fingers.' }) 
+                                en: 'This app is designed to introduce “String Figures (Ayatori, Cat’s Cradle),” a traditional practice that has been shared and passed down across many cultures around the world. It is characterized by the ability to operate without touching the screen even if the string is caught on your fingers.' }) 
                             }
                         </Text>
 
-                        <Text style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]}>
+                        <Text 
+                            maxFontSizeMultiplier={1.35}
+                            style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]}
+                        >
                             { getLocalizedText({ 
                                 ja: '音声による操作について', 
                                 en: 'About voice operation' }) 
                             }
                         </Text>
-                        <Text style={styles.sectionDescription}>
+                        <Text 
+                            maxFontSizeMultiplier={1.35}
+                            style={styles.sectionDescription}
+                        >
                             { getLocalizedText({ 
                                 ja: '音声で動画を操作するために、マイクと音声認識機能を使用しています。android端末の場合は、データ通信できない場合は音声操作ができませんのでご注意ください。iPhone, iPadでは音声操作に通信を伴わないため、オフライン状態であっても音声操作をご利用いただけます。', 
                                 en: 'In order to operate the video by voice, we use the microphone and voice recognition function. Please note that on Android devices, voice commands cannot be used if mobile data is unavailable. On iPhone and iPad, voice controls do not require a data connection, so you can use them even when you are offline.' }) 
                             }
                         </Text>
-                        <Text style={styles.sectionDescription}>
+                        <Text 
+                            maxFontSizeMultiplier={1.35}
+                            style={styles.sectionDescription}
+                        >
                             { getLocalizedText({ 
                                 ja: 'また、音声認識が利用できない場合であっても、通常のボタンタップ操作により、動画コントロールを含む全ての機能をご利用いただけます。', 
                                 en: 'Even if voice recognition is unavailable, you can still access all functions—including video controls—through normal button tap operations.' }) 
                             }
                         </Text>
-                        <Text style={styles.sectionDescription}>
+                        <Text 
+                            maxFontSizeMultiplier={1.35}
+                            style={styles.sectionDescription}
+                        >
                             { getLocalizedText({ 
                                 ja: '音声操作に利用した音声データの保存・収集は一切行なっておりません。', 
                                 en: 'We do not record or collect any voice data used for voice operation.' }) 
                             }
                         </Text>
 
-                        <Text style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]}>
+                        <Text 
+                            maxFontSizeMultiplier={1.35}
+                            style={[styles.sectionDescription, { marginTop: 16 }]}
+                        >
+                            { getLocalizedText({ 
+                                ja: 'このアプリが認識できる単語は以下の4つのみです。\n・つぎ\n・もういちど\n・まえ\n・はじめから', 
+                                en: 'The only words that this app can recognize are the following four: \n- "next"\n- "replay"\n- "previous"\n- "restart".' }) 
+                            }
+                        </Text>
+
+                        <Text 
+                            maxFontSizeMultiplier={1.35}
+                            style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]}
+                        >
                             { getLocalizedText({ 
                                 ja: '謝辞・参考', 
                                 en: 'Acknowledgements & References' }) 
                             }
                         </Text>
-                        <Text style={styles.sectionDescription}>
+                        <Text 
+                            maxFontSizeMultiplier={1.35}
+                            style={styles.sectionDescription}
+                        >
                             { getLocalizedText({ 
                                 ja: 'このアプリで利用した「あやとり」の手順、文化的背景などは、主に以下のサイトを参考にしました。この場を借りてお礼申し上げます。', 
                                 en: 'The string figure instructions, cultural background, and other information used in this app were primarily referenced from the following websites. I would like to take this opportunity to express my gratitude.' }) 
                             }
                         </Text>
                         <View style={{marginTop: 12}}>
-                            <Text style={styles.sectionDescriptionBold}>あやとりしてみよう
+                            <Text 
+                                maxFontSizeMultiplier={1.35}
+                                style={styles.sectionDescriptionBold}
+                            >
+                                あやとりしてみよう
                             </Text>
                             <View style={styles.linkContainer}>
-                                <Text style={styles.sectionDescriptionLink} onPress={() => Linking.openURL('https://isfa-jp.org/~k16/')}>
+                                <Text 
+                                    maxFontSizeMultiplier={1.35}
+                                    style={styles.sectionDescriptionLink} 
+                                    onPress={() => Linking.openURL('https://isfa-jp.org/~k16/')}
+                                >
                                     https://isfa-jp.org/~k16/
                                 </Text>
                                 <View style={styles.externalLinkIconContainer}>
