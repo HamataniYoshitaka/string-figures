@@ -63,7 +63,10 @@ const LanguageSwitchButton: React.FC<LanguageSwitchButtonProps> = ({
         strokeColor="#57534D"
         strokeWidth={0}
       />
-      <Text style={[styles.buttonText, isTablet && styles.buttonTextTablet]}>
+      <Text 
+        maxFontSizeMultiplier={1.25}
+        style={[styles.buttonText, isTablet && styles.buttonTextTablet]}
+      >
         {currentLanguage === 'ja' ? '日本語' : 'English'}
       </Text>
     </TouchableOpacity>

@@ -55,6 +55,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const [playbackPosition, setPlaybackPosition] = useState(0);
     const [videoDuration, setVideoDuration] = useState(0);
     const [snackbarVisible, setSnackbarVisible] = useState(false);
+    const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
+    const isSmallScreen = screenDimensions.height <= 667;
 
 
     // 音声認識フック
@@ -294,7 +296,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 {title && (
                                     <View style={styles.titleContainer}>
                                         <Text 
-                                            maxFontSizeMultiplier={1.25}
+                                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
                                             style={styles.stepNumber}
                                         >
                                             Step {currentChapterIndex + 1}
@@ -309,7 +311,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 )}
                                 {subtitle && (
                                     <Text 
-                                        maxFontSizeMultiplier={1.25}
+                                        maxFontSizeMultiplier={isSmallScreen? 1.0 : 1.25}
                                         style={styles.subtitleText}
                                     >
                                         {subtitle}
@@ -324,7 +326,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     <View style={styles.voiceFallbackHeader}>
                         <View style={styles.voiceFallbackDivider} />
                         <Text 
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
                             style={styles.voiceFallbackHeaderText}
                         >{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
                         <View style={styles.voiceFallbackDivider} />
@@ -332,18 +334,18 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
                     <View style={styles.voiceFallbackDescription}>
                         <Text 
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
                             style={styles.voiceFallbackDescriptionText}
                         >{getLocalizedText({ja: 'あなたの声に反応しないですか？', en: 'Is your voice not responding?'})}</Text>
                         <Text 
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
                             style={styles.voiceFallbackDescriptionText}
                         >{getLocalizedText({ja: 'このアプリは音声認識無しでも楽しむことができます', en: 'This app can be enjoyed without voice recognition'})}</Text>
                     </View>
 
                     <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={onSkip}>
                         <Text 
-                            maxFontSizeMultiplier={1.25}
+                            maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
                             style={styles.voiceFallbackButtonText}
                         >{getLocalizedText({ja: 'このまま次に進む', en: 'Skip to next'})}</Text>
                     </TouchableOpacity>

@@ -420,11 +420,14 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       {/* ヘッダー */}
       <View style={[styles.header, isTablet && styles.headerTablet]}>
-        <Text style={[
-          styles.title, 
-          isTablet && styles.titleTablet,
-          { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
-        ]}>
+        <Text 
+          maxFontSizeMultiplier={1.35}
+          style={[
+            styles.title, 
+            isTablet && styles.titleTablet,
+            { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+          ]}
+        >
           {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
         </Text>
         <LanguageSwitchButton
