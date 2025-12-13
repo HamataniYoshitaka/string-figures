@@ -1298,7 +1298,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Waterspout (Mare)”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
       author: null,
       references: null
-    }
+    },
+    prerequisite: '74'
   },
   {
     id: '77',

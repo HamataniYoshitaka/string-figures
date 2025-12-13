@@ -16,8 +16,9 @@ import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon, TwoPeopleIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon, TwoPeopleIcon, InfoCircleIcon } from './icons';
 import { useOrientation } from '../hooks/useOrientation';
+import { stringFigures } from '../data/index';
 
 interface Props {
   item: StringFigure | null;
@@ -271,6 +272,43 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 {getDifficultyText(item.difficulty)}
               </Text>
             </View>
+            {item.prerequisite && (() => {
+              const prerequisiteItem = stringFigures.find(figure => figure.id === item.prerequisite);
+              const prerequisiteName = prerequisiteItem ? getLocalizedText(prerequisiteItem.name) : '';
+              const handlePrerequisitePress = () => {
+                // TODO: タップ後の処理を実装
+              };
+              return (
+                <View style={styles.prerequisiteContainer}>
+                  <InfoCircleIcon width={20} height={20} strokeWidth={0} />
+                  <Text style={styles.prerequisiteText}>
+                    {currentLanguage === 'ja' ? (
+                      <>
+                        このあやとりは
+                        <Text 
+                          style={styles.prerequisiteName}
+                          onPress={handlePrerequisitePress}
+                        >
+                          {prerequisiteName}
+                        </Text>
+                        の続きです
+                      </>
+                    ) : (
+                      <>
+                        This string figure is a continuation of{' '}
+                        <Text 
+                          style={styles.prerequisiteName}
+                          onPress={handlePrerequisitePress}
+                        >
+                          {prerequisiteName}
+                        </Text>
+                        .
+                      </>
+                    )}
+                  </Text>
+                </View>
+              );
+            })()}
             <Text 
               maxFontSizeMultiplier={1.25}
               style={styles.description}
@@ -596,6 +634,28 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#D6D3D1',
     marginLeft: 16,
+  },
+  prerequisiteContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginBottom: 16,
+    gap: 6,
+    width: '100%',
+    backgroundColor: '#F5F5F4',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    alignSelf: 'center',
+  },
+  prerequisiteText: {
+    fontSize: 14,
+    color: '#57534D',
+  },
+  prerequisiteName: {
+    fontSize: 18,
+    textDecorationLine: 'underline',
+    color: '#000',
   },
 });
 

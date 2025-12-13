@@ -24,3 +24,5 @@ export { default as ChevronRightIcon } from './ChevronRight';
 export { default as ChevronLeftIcon } from './ChevronLeft';
 export { default as ExternalLinkIcon } from './ExternalLink';
 export { default as TwoPeopleIcon } from './TwoPeople';
+export { default as InfoCircleIcon } from './InfoCircle';
+

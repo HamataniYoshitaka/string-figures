@@ -17,6 +17,7 @@ export interface StringFigure {
     author: { ja: string; en: string } | null;
     references: { ja: string; en: string }[] | null;
   } | null;
+  prerequisite?: string;
 }
 
 export interface Chapter {
