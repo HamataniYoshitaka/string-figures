@@ -686,13 +686,14 @@ export const stringFigures: StringFigure[] = [
       ja: 'かにの形が見事に表現されたあやとりです。とても長い手順を辿りますが、一つ一つは難しい操作ではありません。ここでは「小舟」の完成形からの手順を紹介していますので、「小舟」の作り方を先に習得してから始めて下さい', 
       en: 'This string figure beautifully represents the shape of a crab. Although the process involves many steps, none of them are particularly difficult. The instructions here begin from the completed form of <i>A Boat,</i> so please learn how to make <i>A Boat</i> first before starting.' 
     },
-    premiumCourseId: 1, // コレクション1
+    premiumCourseId: 0, // コレクション1
     data: {
       region: { ja: 'パプアニューギニア', en: 'Papua New Guinea' },
       source: '“Kokowa (crab)”\nW. H. R. Rivers, A. C. Haddon\n<i>A Method of Recording String Figures and Tricks</i>(1902)',
       author: null,
       references: null
-    }
+    },
+    prerequisite: '32'
   },
   { 
     id: '38',
@@ -1209,7 +1210,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Range of the Mountains”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    prerequisite: '59'
   },
   {
     id: '71',

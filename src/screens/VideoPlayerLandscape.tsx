@@ -153,18 +153,18 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           <View style={styles.subtitleArea}>
             <View style={styles.subtitleStack} pointerEvents="none">
               {/* 影だけを同じ位置に重ねる（回数で濃さ調整） */}
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, styles.subtitleShadow, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
 
               {/* 本体テキスト */}
-              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, restProps.currentLanguage === 'en' && { fontSize: 15 }]}>{subtitle}</Text>
+              <Text maxFontSizeMultiplier={1.25} style={[styles.subtitleText, restProps.currentLanguage === 'en' && { fontSize: 15, lineHeight: 20 }]}>{subtitle}</Text>
             </View>
           </View>
         </View>
@@ -279,11 +279,11 @@ const styles = StyleSheet.create({
   subtitleArea: {
     position: 'absolute',
     bottom: 0,
-    left: 20,
-    right: 20,
+    left: 0,
+    right: 0,
     backgroundColor: 'transparent',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
   },
   // 重ね描き用のコンテナ（重ねテキストの基準位置）
   subtitleStack: {
