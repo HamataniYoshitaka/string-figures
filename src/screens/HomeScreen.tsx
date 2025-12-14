@@ -261,9 +261,28 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       item.premiumCourseId === 0 || purchasedItems.includes(item.premiumCourseId)
     );
     
+    // 既存のアイテムをカラムに分配
     filteredItems.forEach((item, index) => {
       const columnIndex = index % numColumns;
       columns[columnIndex].push(item);
+    });
+    
+    // premiumCourseId !== 0 かつ purchasedItems に含まれていないアイテムをランダムに選ぶ
+    const premiumUnpurchasedItems = items.filter(item => 
+      item.premiumCourseId !== 0 && !purchasedItems.includes(item.premiumCourseId)
+    );
+    
+    // ランダムにシャッフル（フィッシャー・イェーツのシャッフル）
+    const shuffledPremiumItems = [...premiumUnpurchasedItems];
+    for (let i = shuffledPremiumItems.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledPremiumItems[i], shuffledPremiumItems[j]] = [shuffledPremiumItems[j], shuffledPremiumItems[i]];
+    }
+    
+    // 各カラムに1個ずつ挿入（最大でnumColumns個まで）
+    const itemsToInsert = shuffledPremiumItems.slice(0, numColumns);
+    itemsToInsert.forEach((item, index) => {
+      columns[index].unshift(item); // カラムの先頭に挿入
     });
     
     return columns;
