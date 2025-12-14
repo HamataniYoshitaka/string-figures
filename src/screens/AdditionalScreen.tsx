@@ -89,15 +89,6 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
         loadPurchasedItems();
     }, []);
 
-    // コレクション1のサムネイルデータ（仮データ）
-    const collectionThumbnails = [
-        { id: 1, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
-        { id: 2, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
-        { id: 3, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
-        { id: 4, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
-        { id: 5, image: require('../../assets/string-figures/1_star/thumbnail.png'), name: 'ダミー' },
-    ];
-
     const handlePurchasePress = async (collectionId: number) => {
         try {
             console.log('handlePurchasePress', collectionId);
@@ -152,40 +143,45 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
             </View>
 
             <ScrollView 
+                horizontal
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollContent}
-                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
+                pagingEnabled={false}
+                snapToInterval={Dimensions.get('window').width * 0.9 + 32}
+                decelerationRate="fast"
             >
                 <View style={styles.collectionCard}>
-                    <View style={styles.collectionHeader}>
-                        <Text style={[styles.collectionTitle, { color: '#2B7FFF' }]}>コレクション1</Text>
-                        <View style={styles.descriptionSpacer} />
-                        <Text style={styles.collectionDescription}>
-                            コレクション1には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 1).length}パターンが収録されています。
-                        </Text>
-                    </View>
-                    
                     <ScrollView 
-                        horizontal 
-                        style={styles.thumbnailScrollView}
-                        contentContainerStyle={styles.thumbnailScrollContent}
-                        showsHorizontalScrollIndicator={false}
+                        style={styles.cardScrollView}
+                        contentContainerStyle={styles.cardScrollContent}
+                        showsVerticalScrollIndicator={false}
                     >
-                        {stringFigures.filter(figure => figure.premiumCourseId === 1).map((item) => (
-                            <View key={item.id} style={styles.thumbnailItem}>
-                                <View style={styles.thumbnailImageContainer}>
-                                    <Image 
-                                        source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail as ImageSourcePropType}
-                                        style={styles.thumbnailImage}
-                                        resizeMode="cover"
-                                    />
+                        <View style={styles.collectionHeader}>
+                            <Text style={[styles.collectionTitle, { color: '#2B7FFF' }]}>コレクション1</Text>
+                            <View style={styles.descriptionSpacer} />
+                            <Text style={styles.collectionDescription}>
+                                コレクション1には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 1).length}パターンが収録されています。
+                            </Text>
+                        </View>
+                        
+                        <View style={styles.thumbnailContainer}>
+                            {stringFigures.filter(figure => figure.premiumCourseId === 1).map((item) => (
+                                <View key={item.id} style={styles.thumbnailItem}>
+                                    <View style={styles.thumbnailImageContainer}>
+                                        <Image 
+                                            source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail as ImageSourcePropType}
+                                            style={styles.thumbnailImage}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
+                                    <View style={styles.captionSpacer} />
+                                    <Text style={styles.thumbnailCaption} numberOfLines={2}>
+                                        {item.name[currentLanguage]}
+                                    </Text>
                                 </View>
-                                <View style={styles.captionSpacer} />
-                                <Text style={styles.thumbnailCaption} numberOfLines={2}>
-                                    {item.name[currentLanguage]}
-                                </Text>
-                            </View>
-                        ))}
+                            ))}
+                        </View>
                     </ScrollView>
 
                     <View style={styles.purchaseButtonContainer}>
@@ -199,35 +195,36 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 </View>
 
                 <View style={styles.collectionCard}>
-                    <View style={styles.collectionHeader}>
-                        <Text style={[styles.collectionTitle, { color: '#E17100' }]}>コレクション2</Text>
-                        <View style={styles.descriptionSpacer} />
-                        <Text style={styles.collectionDescription}>
-                            コレクション2には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 2).length}パターンが収録されています。
-                        </Text>
-                    </View>
-                    
                     <ScrollView 
-                        horizontal 
-                        style={styles.thumbnailScrollView}
-                        contentContainerStyle={styles.thumbnailScrollContent}
-                        showsHorizontalScrollIndicator={false}
+                        style={styles.cardScrollView}
+                        contentContainerStyle={styles.cardScrollContent}
+                        showsVerticalScrollIndicator={false}
                     >
-                        {stringFigures.filter(figure => figure.premiumCourseId === 2).map((item) => (
-                            <View key={item.id} style={styles.thumbnailItem}>
-                                <View style={styles.thumbnailImageContainer}>
-                                    <Image 
-                                        source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail as ImageSourcePropType}
-                                        style={styles.thumbnailImage}
-                                        resizeMode="cover"
-                                    />
+                        <View style={styles.collectionHeader}>
+                            <Text style={[styles.collectionTitle, { color: '#E17100' }]}>コレクション2</Text>
+                            <View style={styles.descriptionSpacer} />
+                            <Text style={styles.collectionDescription}>
+                                コレクション2には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 2).length}パターンが収録されています。
+                            </Text>
+                        </View>
+                        
+                        <View style={styles.thumbnailContainer}>
+                            {stringFigures.filter(figure => figure.premiumCourseId === 2).map((item) => (
+                                <View key={item.id} style={styles.thumbnailItem}>
+                                    <View style={styles.thumbnailImageContainer}>
+                                        <Image 
+                                            source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail as ImageSourcePropType}
+                                            style={styles.thumbnailImage}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
+                                    <View style={styles.captionSpacer} />
+                                    <Text style={styles.thumbnailCaption} numberOfLines={2}>
+                                        {item.name[currentLanguage]}
+                                    </Text>
                                 </View>
-                                <View style={styles.captionSpacer} />
-                                <Text style={styles.thumbnailCaption} numberOfLines={2}>
-                                    {item.name[currentLanguage]}
-                                </Text>
-                            </View>
-                        ))}
+                            ))}
+                        </View>
                     </ScrollView>
 
                     <View style={styles.purchaseButtonContainer}>
@@ -297,18 +294,28 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     scrollContent: {
-        padding: 16,
-        gap: 16,
+        paddingVertical: 16,
+        paddingHorizontal: 16,
+        alignItems: 'center',
     },
     collectionCard: {
+        width: 260,
+        marginRight: 16,
         backgroundColor: '#FFFFFF',
         borderRadius: 16,
         borderWidth: 1,
         borderColor: '#A6A09B',
         overflow: 'hidden',
+        height: '100%',
+    },
+    cardScrollView: {
+        flex: 1,
+    },
+    cardScrollContent: {
+        paddingBottom: 80,
     },
     collectionHeader: {
-        padding: 16,
+        padding: 12,
     },
     collectionTitle: {
         fontFamily: 'KleeOne-SemiBold',
@@ -325,17 +332,14 @@ const styles = StyleSheet.create({
         lineHeight: 24,
         fontWeight: '500',
     },
-    thumbnailScrollView: {
-        flexGrow: 0,
-    },
-    thumbnailScrollContent: {
+    thumbnailContainer: {
+        flexDirection: 'column',
         paddingHorizontal: 12,
         paddingVertical: 0,
-        height: 120,
         alignItems: 'center',
     },
     thumbnailItem: {
-        marginRight: 12,
+        marginBottom: 12,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -367,8 +371,12 @@ const styles = StyleSheet.create({
         maxWidth: 80,
     },
     purchaseButtonContainer: {
-        padding: 16,
-        paddingTop: 10,
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingHorizontal: 12,
+        paddingBottom: 12,
     },
 
 });
