@@ -17,6 +17,7 @@ interface Props {
   calculatedHeight: number;
   currentLanguage: 'ja' | 'en';
   disabled?: boolean;
+  hideTitle?: boolean;
   onPress: (item: StringFigure) => void;
   onImageLoad: (itemId: string, event: any) => void;
 }
@@ -27,6 +28,7 @@ const StringFigureCard: React.FC<Props> = ({
   calculatedHeight,
   currentLanguage,
   disabled = false,
+  hideTitle = false,
   onPress,
   onImageLoad,
 }) => {
@@ -129,17 +131,19 @@ const StringFigureCard: React.FC<Props> = ({
             </View>
           )}
         </View>
-        <View style={styles.cardContent}>
-          <View style={styles.titleContainer}>
-            <Text 
-              maxFontSizeMultiplier={1.35}
-              style={styles.cardTitle}
-            >
-              {getLocalizedText(item.name)}
-            </Text>
-            {!item.directNavigationDestination && getDifficultyIcon(item.difficulty, 24)}
+        {!hideTitle && (
+          <View style={styles.cardContent}>
+            <View style={styles.titleContainer}>
+              <Text 
+                maxFontSizeMultiplier={1.35}
+                style={styles.cardTitle}
+              >
+                {getLocalizedText(item.name)}
+              </Text>
+              {!item.directNavigationDestination && getDifficultyIcon(item.difficulty, 24)}
+            </View>
           </View>
-        </View>
+        )}
       </Animated.View>
     </TouchableWithoutFeedback>
   );

@@ -209,9 +209,14 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                                             bookmarked={false}
                                             calculatedHeight={calculatedHeight}
                                             currentLanguage={currentLanguage}
+                                            hideTitle={true}
                                             onPress={handleItemPress}
                                             onImageLoad={handleImageLoad}
                                         />
+                                        <View style={styles.captionSpacer} />
+                                        <Text style={styles.thumbnailCaption} maxFontSizeMultiplier={1.35}>
+                                            {item.name[currentLanguage]}
+                                        </Text>
                                     </View>
                                 );
                             })}
@@ -259,9 +264,14 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                                             bookmarked={false}
                                             calculatedHeight={calculatedHeight}
                                             currentLanguage={currentLanguage}
+                                            hideTitle={true}
                                             onPress={handleItemPress}
                                             onImageLoad={handleImageLoad}
                                         />
+                                        <View style={styles.captionSpacer} />
+                                        <Text style={styles.thumbnailCaption} numberOfLines={2}>
+                                            {item.name[currentLanguage]}
+                                        </Text>
                                     </View>
                                 );
                             })}
@@ -380,8 +390,9 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
     },
     thumbnailItem: {
-        marginBottom: 12,
+        marginBottom: 24,
         width: '100%',
+        alignItems: 'center',
     },
     thumbnailImageContainer: {
         width: 80,
@@ -399,16 +410,16 @@ const styles = StyleSheet.create({
         objectFit: 'contain',
     },
     captionSpacer: {
-        height: 4,
+        height: 8,
     },
     thumbnailCaption: {
         fontFamily: 'KleeOne-SemiBold',
-        fontSize: 14,
+        fontSize: 16,
         color: '#57534D',
         textAlign: 'center',
         lineHeight: 18,
         fontWeight: '600',
-        maxWidth: 80,
+        width: '100%',
     },
     purchaseButtonContainer: {
         position: 'absolute',
