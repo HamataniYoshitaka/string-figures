@@ -340,6 +340,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         bookmarked={isBookmarked}
         calculatedHeight={calculatedHeight}
         currentLanguage={currentLanguage}
+        purchasedItems={purchasedItems}
         onPress={handleItemPress}
         onImageLoad={handleImageLoad}
       />
@@ -554,6 +555,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         onPlayVideo={handlePlayVideo}
         onToggleBookmark={toggleBookmark}
         currentLanguage={currentLanguage}
+        purchasedItems={purchasedItems}
         onPrerequisitePress={handlePrerequisitePress}
       />
 

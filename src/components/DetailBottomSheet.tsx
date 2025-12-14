@@ -28,6 +28,7 @@ interface Props {
   onPlayVideo: (item: StringFigure) => void;
   onToggleBookmark: () => void;
   currentLanguage: 'ja' | 'en';
+  purchasedItems?: number[];
   onPrerequisitePress?: (prerequisiteId: string) => void;
 }
 
@@ -43,6 +44,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   onPlayVideo,
   onToggleBookmark,
   currentLanguage,
+  purchasedItems = [],
   onPrerequisitePress,
 }, ref) => {
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
@@ -451,6 +453,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
               <RelatedFigures 
                 relatedFigures={item.relatedFigures}
                 currentLanguage={currentLanguage}
+                purchasedItems={purchasedItems}
                 onPress={(relatedItem) => {
                   if (onPrerequisitePress) {
                     onPrerequisitePress(relatedItem.id);

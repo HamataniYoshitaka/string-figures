@@ -90,6 +90,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
                   calculatedHeight={calculatedHeight}
                   currentLanguage={currentLanguage}
                   hideTitle={true}
+                  purchasedItems={purchasedItems}
                   onPress={onItemPress}
                   onImageLoad={onImageLoad}
                 />

@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, BookmarkIcon, TutorialIcon, TwoPeopleIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, BookmarkIcon, TutorialIcon, TwoPeopleIcon, LockIcon } from './icons';
 
 interface Props {
   item: StringFigure;
@@ -18,6 +18,7 @@ interface Props {
   currentLanguage: 'ja' | 'en';
   disabled?: boolean;
   hideTitle?: boolean;
+  purchasedItems?: number[];
   onPress: (item: StringFigure) => void;
   onImageLoad: (itemId: string, event: any) => void;
 }
@@ -29,6 +30,7 @@ const StringFigureCard: React.FC<Props> = ({
   currentLanguage,
   disabled = false,
   hideTitle = false,
+  purchasedItems = [],
   onPress,
   onImageLoad,
 }) => {
@@ -134,6 +136,26 @@ const StringFigureCard: React.FC<Props> = ({
         {!hideTitle && (
           <View style={styles.cardContent}>
             <View style={styles.titleContainer}>
+              {item.premiumCourseId !== 0 && !purchasedItems.includes(item.premiumCourseId) && (
+                <View style={[
+                  styles.lockIconContainer,
+                  {
+                    backgroundColor: item.premiumCourseId === 1 
+                      ? '#2B7FFF' 
+                      : item.premiumCourseId === 2 
+                        ? '#E17100' 
+                        : undefined
+                  }
+                ]}>
+                  <LockIcon 
+                    width={16} 
+                    height={16} 
+                    fillColor="#FFFFFF"
+                    strokeColor="#FFFFFF"
+                    strokeWidth={0}
+                  />
+                </View>
+              )}
               <Text 
                 maxFontSizeMultiplier={1.35}
                 style={styles.cardTitle}
@@ -217,6 +239,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 8,
+    gap: 8,
+  },
+  lockIconContainer: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: '#9E9E9E',
   },
   cardTitle: {
     fontSize: 14,

@@ -9,6 +9,7 @@ interface Props {
   currentLanguage: 'ja' | 'en';
   onPress?: (item: StringFigure) => void;
   bookmarkedIds?: string[];
+  purchasedItems?: number[];
   onImageLoad?: (itemId: string, event: any) => void;
 }
 
@@ -17,6 +18,7 @@ const RelatedFigures: React.FC<Props> = ({
   currentLanguage,
   onPress,
   bookmarkedIds = [],
+  purchasedItems = [],
   onImageLoad,
 }) => {
   const [imageDimensions, setImageDimensions] = useState<{ [key: string]: { width: number; height: number } }>({});
@@ -70,6 +72,7 @@ const RelatedFigures: React.FC<Props> = ({
         bookmarked={isBookmarked}
         calculatedHeight={calculatedHeight}
         currentLanguage={currentLanguage}
+        purchasedItems={purchasedItems}
         onPress={handlePress}
         onImageLoad={handleImageLoad}
       />

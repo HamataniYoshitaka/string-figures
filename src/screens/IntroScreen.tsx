@@ -118,6 +118,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
         bookmarked={false}
         calculatedHeight={calculatedHeight}
         currentLanguage={currentLanguage}
+        purchasedItems={[]}
         onPress={handleItemPress}
         onImageLoad={handleImageLoad}
       />
