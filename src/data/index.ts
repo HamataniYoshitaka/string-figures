@@ -250,7 +250,8 @@ export const stringFigures: StringFigure[] = [
       source: '“菊”\n有木昭久, 湯浅清四郎\n <i>楽しいあやとり遊び</i> (1973)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['41']
   },
   {
     id: '7',
@@ -789,8 +790,9 @@ export const stringFigures: StringFigure[] = [
       source: '“たんぽぽ”\n夏堀謹二郎\n<i>日本の綾取</i> (1986)',
       author: { ja: '夏堀謹二郎', en: 'NATSUBORI Kinjiro' },
       references: null
-    }
     },
+    relatedFigures: ['9']
+  },
   {
     id: '42',
     name: { ja: 'テントの幕', en: 'A Tent Flap' },

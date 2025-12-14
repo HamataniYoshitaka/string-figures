@@ -50,11 +50,13 @@ const RelatedFigures: React.FC<Props> = ({
     if (imageInfo) {
       // カードの幅を取得（画面幅を段組み数で割った値から余白を引く）
       // RelatedFiguresでは2カラムを想定
-      const screenWidth = Dimensions.get('window').width;
+      const screenDimensions = Dimensions.get('window');
+      // iPadかどうかを判定
+      const isTablet = Math.max(screenDimensions.width, screenDimensions.height) >= 1024;
+      const screenWidth = isTablet ? 420 : screenDimensions.width;
       const totalHorizontalPadding = 40; // 左右のpadding 20px × 2
-      const columnsCount = 2;
-      const gapBetweenColumns = (columnsCount - 1) * 15; // カラム間のgap
-      const cardWidth = (screenWidth - totalHorizontalPadding - gapBetweenColumns) / columnsCount;
+      const gapBetweenColumns = 15; // カラム間のgap
+      const cardWidth = (screenWidth - totalHorizontalPadding - gapBetweenColumns) / 2;
       calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
     }
     
