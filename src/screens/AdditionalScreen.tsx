@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -146,68 +146,86 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
 
 
     return (    
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <TouchableWithoutFeedback 
-                    onPress={onGoBack}
-                    onPressIn={createPressInHandler(backButtonScale)}
-                    onPressOut={createPressOutHandler(backButtonScale)}
-                >
-                    <Animated.View 
-                    style={[
-                        styles.backButton,
-                        { transform: [{ scale: backButtonScale }] }
-                    ]}
+        <View style={styles.wrapper}>
+            <Image 
+                source={require('../../assets/bg-additional-screen.jpg')}
+                style={styles.backgroundImage}
+                resizeMode="cover"
+            />
+            <SafeAreaView style={styles.container}>
+                <View style={styles.header}>
+                    <TouchableWithoutFeedback 
+                        onPress={onGoBack}
+                        onPressIn={createPressInHandler(backButtonScale)}
+                        onPressOut={createPressOutHandler(backButtonScale)}
                     >
-                    <CloseIcon width={24} height={24} fillColor="#79716B" />
-                    </Animated.View>
-                </TouchableWithoutFeedback>
-                <Text maxFontSizeMultiplier={1.35} style={[styles.title, { fontSize: isTablet ? 22 : 18 }]} numberOfLines={1}>
-                    {getLocalizedText({ja: '追加コレクション', en: 'Additional Collection'})}
-                </Text>
-            </View>
+                        <Animated.View 
+                        style={[
+                            styles.backButton,
+                            { transform: [{ scale: backButtonScale }] }
+                        ]}
+                        >
+                        <CloseIcon width={28} height={28} fillColor="#FFFFFF" strokeWidth={0} />
+                        </Animated.View>
+                    </TouchableWithoutFeedback>
+                    <Text maxFontSizeMultiplier={1.35} style={[styles.title, { fontSize: isTablet ? 24 : 20 }]} numberOfLines={1}>
+                        {getLocalizedText({ja: '追加コレクション', en: 'Additional Collection'})}
+                    </Text>
+                </View>
 
-            <ScrollView 
-                horizontal
-                style={styles.scrollView}
-                contentContainerStyle={styles.scrollContent}
-                showsHorizontalScrollIndicator={false}
-                pagingEnabled={false}
-                snapToInterval={Dimensions.get('window').width * 0.9 + 32}
-                decelerationRate="fast"
-            >
-                <CollectionCard
-                    collectionId={1}
-                    backgroundColor="#2B7FFF"
-                    imageDimensions={imageDimensions}
-                    currentLanguage={currentLanguage}
-                    purchasedItems={purchasedItems}
-                    onPurchasePress={handlePurchasePress}
-                    onItemPress={handleItemPress}
-                    onImageLoad={handleImageLoad}
-                />
+                <ScrollView 
+                    horizontal
+                    style={styles.scrollView}
+                    contentContainerStyle={styles.scrollContent}
+                    showsHorizontalScrollIndicator={false}
+                    pagingEnabled={false}
+                    snapToInterval={Dimensions.get('window').width * 0.9 + 32}
+                    decelerationRate="fast"
+                >
+                    <CollectionCard
+                        collectionId={1}
+                        backgroundColor="#2B7FFF"
+                        imageDimensions={imageDimensions}
+                        currentLanguage={currentLanguage}
+                        purchasedItems={purchasedItems}
+                        onPurchasePress={handlePurchasePress}
+                        onItemPress={handleItemPress}
+                        onImageLoad={handleImageLoad}
+                    />
 
-                <CollectionCard
-                    collectionId={2}
-                    backgroundColor="#E17100"
-                    imageDimensions={imageDimensions}
-                    currentLanguage={currentLanguage}
-                    purchasedItems={purchasedItems}
-                    onPurchasePress={handlePurchasePress}
-                    onItemPress={handleItemPress}
-                    onImageLoad={handleImageLoad}
-                />
-            </ScrollView>
-            
-        </SafeAreaView>
+                    <CollectionCard
+                        collectionId={2}
+                        backgroundColor="#E17100"
+                        imageDimensions={imageDimensions}
+                        currentLanguage={currentLanguage}
+                        purchasedItems={purchasedItems}
+                        onPurchasePress={handlePurchasePress}
+                        onItemPress={handleItemPress}
+                        onImageLoad={handleImageLoad}
+                    />
+                </ScrollView>
+            </SafeAreaView>
+        </View>
         
     );
 }
 
 const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+    },
+    backgroundImage: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        height: '100%',
+    },
     container: {
         flex: 1,
-        backgroundColor: '#F7F5F2',
+        backgroundColor: 'transparent',
     },
     header: {
         flexDirection: 'row',
@@ -223,10 +241,11 @@ const styles = StyleSheet.create({
     title: {
         fontFamily: 'KleeOne-SemiBold',
         flex: 1,
-        fontSize: 18,
+        // fontSize: 20,
         fontWeight: '600',
         textAlign: 'center',
         marginHorizontal: 16,
+        color: '#FFFFFF',
     },
 
     progressContainer: {

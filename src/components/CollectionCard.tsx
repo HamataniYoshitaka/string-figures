@@ -105,10 +105,8 @@ const styles = StyleSheet.create({
   collectionCard: {
     width: 260,
     marginRight: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
     borderRadius: 16,
-    borderWidth: 1,
-    borderColor: '#A6A09B',
     overflow: 'hidden',
     height: '100%',
   },
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
   collectionDescription: {
     fontFamily: 'KleeOne-Regular',
     fontSize: 16,
-    color: '#57534D',
+    color: '#292524',
     lineHeight: 24,
     fontWeight: '500',
   },
@@ -152,7 +150,7 @@ const styles = StyleSheet.create({
   thumbnailCaption: {
     fontFamily: 'KleeOne-SemiBold',
     fontSize: 16,
-    color: '#57534D',
+    color: '#292524',
     textAlign: 'center',
     lineHeight: 18,
     fontWeight: '600',
