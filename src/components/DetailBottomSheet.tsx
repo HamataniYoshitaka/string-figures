@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  Platform,
 } from 'react-native';
 import {
   BottomSheetModal,
@@ -16,7 +17,7 @@ import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon, TwoPeopleIcon, InfoCircleIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon, TwoPeopleIcon, InfoCircleIcon, LockIcon } from './icons';
 import { useOrientation } from '../hooks/useOrientation';
 import { stringFigures } from '../data/index';
 import RelatedFigures from './RelatedFigures';
@@ -30,6 +31,7 @@ interface Props {
   currentLanguage: 'ja' | 'en';
   purchasedItems?: number[];
   onPrerequisitePress?: (prerequisiteId: string) => void;
+  onAdditionalCollectionPress?: () => void;
 }
 
 export interface DetailBottomSheetRef {
@@ -46,6 +48,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   currentLanguage,
   purchasedItems = [],
   onPrerequisitePress,
+  onAdditionalCollectionPress,
 }, ref) => {
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
@@ -108,6 +111,17 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
+  };
+
+  // 有料コレクションで未購入かどうかを判定
+  const isLocked = item && item.premiumCourseId !== 0 && !purchasedItems.includes(item.premiumCourseId);
+  
+  // premiumCourseIdに応じたボタンの背景色を取得
+  const getButtonBackgroundColor = () => {
+    if (!item) return '#217DFF';
+    if (item.premiumCourseId === 1) return '#2B7FFF';
+    if (item.premiumCourseId === 2) return '#E17100';
+    return '#217DFF';
   };
 
   const handlePlayPress = () => {
@@ -227,12 +241,26 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
               end={{ x: 0, y: 1 }}
             />
             
-            <TouchableOpacity
-              style={styles.playButton}
-              onPress={handlePlayPress}
-            >
-              <PlayIcon width={24} height={28} strokeWidth={3} />
-            </TouchableOpacity>
+            {isLocked ? (
+              <View style={styles.additionalCollectionButtonWrapper}>
+                <TouchableOpacity
+                  style={[styles.additionalCollectionButton, { backgroundColor: getButtonBackgroundColor() }]}
+                  onPress={onAdditionalCollectionPress}
+                >
+                  <LockIcon width={20} height={20} strokeWidth={0} fillColor="#ffffff" />
+                  <Text style={styles.additionalCollectionButtonText} maxFontSizeMultiplier={1.35}>
+                    {getLocalizedText({ ja: '追加コレクションを見る', en: 'See Additional Collection' })}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <TouchableOpacity
+                style={styles.playButton}
+                onPress={handlePlayPress}
+              >
+                <PlayIcon width={24} height={28} strokeWidth={3} />
+              </TouchableOpacity>
+            )}
           </View>
 
           {/* サムネイル - プレビュー動画エリアに重ねる */}
@@ -537,6 +565,39 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingStart: 4,
+  },
+  additionalCollectionButtonWrapper: {
+    position: 'absolute',
+    top: '40%',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  additionalCollectionButton: {
+    borderRadius: 28,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    gap: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.35,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  additionalCollectionButtonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '700',
   },
   thumbnailContainer: {
     position: 'absolute',

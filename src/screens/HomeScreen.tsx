@@ -390,6 +390,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     navigation.navigate('VideoPlayer', { stringFigure: item, currentLanguage: currentLanguage });
   };
 
+  const handleAdditionalCollectionPress = () => {
+    handleCloseBottomSheet();
+    navigation.navigate('Additional');
+  };
+
   const toggleBookmark = () => {
     if (!selectedItem) return;
     
@@ -557,6 +562,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         currentLanguage={currentLanguage}
         purchasedItems={purchasedItems}
         onPrerequisitePress={handlePrerequisitePress}
+        onAdditionalCollectionPress={handleAdditionalCollectionPress}
       />
 
       {/* ドロップダウンメニュー */}
