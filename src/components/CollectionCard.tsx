@@ -4,6 +4,7 @@ import StringFigureCard from './StringFigureCard';
 import PurchaseButton from './PurchaseButton';
 import { stringFigures } from '../data';
 import { StringFigure } from '../types';
+import { LockIcon } from './icons';
 
 interface CollectionCardProps {
   collectionId: number;
@@ -36,9 +37,22 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.collectionHeader}>
-          <Text style={[styles.collectionTitle, { color: backgroundColor }]}>
-            コレクション{collectionId}
-          </Text>
+          <View style={styles.titleContainer}>
+            {!purchasedItems.includes(collectionId) && (
+              <View style={[styles.lockIconContainer, { backgroundColor }]}>
+                <LockIcon 
+                  width={16} 
+                  height={16} 
+                  fillColor="#FFFFFF"
+                  strokeColor="#FFFFFF"
+                  strokeWidth={0}
+                />
+              </View>
+            )}
+            <Text style={[styles.collectionTitle, { color: backgroundColor }]}>
+              コレクション{collectionId}
+            </Text>
+          </View>
           <View style={styles.descriptionSpacer} />
           <Text style={styles.collectionDescription}>
             コレクション{collectionId}には、以下のあやとり{collectionFigures.length}パターンが収録されています。
@@ -118,6 +132,18 @@ const styles = StyleSheet.create({
   },
   collectionHeader: {
     padding: 12,
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  lockIconContainer: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   collectionTitle: {
     fontFamily: 'KleeOne-SemiBold',
