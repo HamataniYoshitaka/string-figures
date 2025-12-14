@@ -695,7 +695,7 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     prerequisite: '32',
-    relatedFigures: ['33']
+    relatedFigures: ['32', '35']
   },
   { 
     id: '38',

@@ -448,7 +448,15 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
             )}
             {/* 関連するあやとり */}
             {item.relatedFigures && item.relatedFigures.length > 0 && (
-              <RelatedFigures relatedFigures={item.relatedFigures} />
+              <RelatedFigures 
+                relatedFigures={item.relatedFigures}
+                currentLanguage={currentLanguage}
+                onPress={(relatedItem) => {
+                  if (onPrerequisitePress) {
+                    onPrerequisitePress(relatedItem.id);
+                  }
+                }}
+              />
             )}
           </View>
         </View>
