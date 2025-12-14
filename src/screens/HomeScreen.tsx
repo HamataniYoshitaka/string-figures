@@ -45,7 +45,7 @@ const CommercialCollection1: StringFigure = {
   patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
   previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
   description: { ja: '追加コレクションを見る', en: 'See Additional Collection.' },
-  premiumCourseId: 1,
+  premiumCourseId: 0,
   directNavigationDestination: 'Additional',
   data: null,
 };

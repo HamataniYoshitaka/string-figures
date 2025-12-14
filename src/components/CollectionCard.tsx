@@ -49,12 +49,12 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
                 />
               </View>
             )}
-            <Text style={[styles.collectionTitle, { color: backgroundColor }]}>
+            <Text style={[styles.collectionTitle, { color: backgroundColor }]} maxFontSizeMultiplier={1.25}>
               コレクション{collectionId}
             </Text>
           </View>
           <View style={styles.descriptionSpacer} />
-          <Text style={styles.collectionDescription}>
+          <Text style={styles.collectionDescription} maxFontSizeMultiplier={1.25} >
             コレクション{collectionId}には、以下のあやとり{collectionFigures.length}パターンが収録されています。
           </Text>
         </View>

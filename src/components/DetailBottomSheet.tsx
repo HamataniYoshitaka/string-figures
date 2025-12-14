@@ -248,7 +248,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                   onPress={onAdditionalCollectionPress}
                 >
                   <LockIcon width={20} height={20} strokeWidth={0} fillColor="#ffffff" />
-                  <Text style={styles.additionalCollectionButtonText} maxFontSizeMultiplier={1.35}>
+                  <Text style={styles.additionalCollectionButtonText} maxFontSizeMultiplier={1.25}>
                     {getLocalizedText({ ja: '追加コレクションを見る', en: 'See Additional Collection' })}
                   </Text>
                 </TouchableOpacity>
