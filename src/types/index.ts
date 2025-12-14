@@ -18,6 +18,7 @@ export interface StringFigure {
     references: { ja: string; en: string }[] | null;
   } | null;
   prerequisite?: string;
+  relatedFigures?: string[];
 }
 
 export interface Chapter {

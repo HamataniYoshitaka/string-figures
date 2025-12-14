@@ -674,7 +674,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Tim (a well)”\nW. H. R. Rivers, A. C. Haddon\n<i>A Method of Recording String Figures and Tricks</i>(1902)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['33']
   },
   {
     id: '33',
@@ -693,7 +694,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    prerequisite: '32'
+    prerequisite: '32',
+    relatedFigures: ['33']
   },
   { 
     id: '38',

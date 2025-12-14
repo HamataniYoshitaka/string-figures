@@ -19,6 +19,7 @@ import { StringFigure } from '../types';
 import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon, TwoPeopleIcon, InfoCircleIcon } from './icons';
 import { useOrientation } from '../hooks/useOrientation';
 import { stringFigures } from '../data/index';
+import RelatedFigures from './RelatedFigures';
 
 interface Props {
   item: StringFigure | null;
@@ -444,6 +445,10 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                   </View>
                 )}
               </View>
+            )}
+            {/* 関連するあやとり */}
+            {item.relatedFigures && item.relatedFigures.length > 0 && (
+              <RelatedFigures relatedFigures={item.relatedFigures} />
             )}
           </View>
         </View>
