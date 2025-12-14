@@ -47,7 +47,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   // 定数
   const COLLECTION_NAME = `コレクション${collectionId}`;
   const PURCHASE_TEXT = 'を購入する';
-  const PRICE = '¥0';
+  const PRICE = '0';
   const PURCHASED_TEXT = '購入済';
 
   // disabled時の背景色とテキスト色
@@ -72,8 +72,8 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
         {/* 左側: アイコン */}
         <View style={styles.iconContainer}>
           <LockOpenIcon
-            width={32}
-            height={32}
+            width={24}
+            height={24}
             strokeColor="transparent"
             fillColor={iconColor}
             strokeWidth={0}
@@ -87,9 +87,18 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
         </View>
 
         {/* 右側: 価格または購入済 */}
-        <Text style={[styles.price, { color: textColor }]}>
-          {disabled ? PURCHASED_TEXT : PRICE}
-        </Text>
+        <View style={styles.priceContainer}>
+          {disabled ? (
+            <Text style={[styles.price, { color: textColor }]}>
+              {PURCHASED_TEXT}
+            </Text>
+          ) : (
+            <>
+              <Text style={[styles.currency, { color: textColor }]}>¥</Text>
+              <Text style={[styles.price, { color: textColor }]}>{PRICE}</Text>
+            </>
+          )}
+        </View>
       </Animated.View>
     </TouchableWithoutFeedback>
   );
@@ -101,9 +110,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#E17100',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    borderRadius: 32,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -121,8 +130,6 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   iconContainer: {
-    width: 32,
-    height: 32,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -131,12 +138,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    marginHorizontal: 16,
+    marginHorizontal: 4,
     gap: 4,
   },
   collectionName: {
-    fontSize: 20,
-    lineHeight: 20,
+    fontSize: 18,
+    lineHeight: 18,
     fontWeight: '600',
   },
   purchaseText: {
@@ -145,9 +152,18 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.8)',
     fontWeight: '600',
   },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
   price: {
     fontSize: 20,
     lineHeight: 20,
+    fontWeight: '600',
+  },
+  currency: {
+    fontSize: 14,
+    lineHeight: 14,
     fontWeight: '600',
   },
 });

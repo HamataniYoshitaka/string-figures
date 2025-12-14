@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, Image, ImageSourcePropType } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -7,9 +7,7 @@ import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon } from '../components/icons';
-import PurchaseButton from '../components/PurchaseButton';
-import StringFigureCard from '../components/StringFigureCard';
-import { stringFigures } from '../data/index';
+import CollectionCard from '../components/CollectionCard';
 import { StringFigure } from '../types';
 
 type AdditionalScreenNavigationProp = StackNavigationProp<
@@ -178,115 +176,27 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 snapToInterval={Dimensions.get('window').width * 0.9 + 32}
                 decelerationRate="fast"
             >
-                <View style={styles.collectionCard}>
-                    <ScrollView 
-                        style={styles.cardScrollView}
-                        contentContainerStyle={styles.cardScrollContent}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        <View style={styles.collectionHeader}>
-                            <Text style={[styles.collectionTitle, { color: '#2B7FFF' }]}>コレクション1</Text>
-                            <View style={styles.descriptionSpacer} />
-                            <Text style={styles.collectionDescription}>
-                                コレクション1には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 1).length}パターンが収録されています。
-                            </Text>
-                        </View>
-                        
-                        <View style={styles.thumbnailContainer}>
-                            {stringFigures.filter(figure => figure.premiumCourseId === 1).map((item) => {
-                                const imageInfo = imageDimensions[item.id];
-                                const cardWidth = 260 - 24; // collectionCard width - paddingHorizontal
-                                let calculatedHeight = 200;
-                                
-                                if (imageInfo) {
-                                    calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
-                                }
-                                
-                                return (
-                                    <View key={item.id} style={styles.thumbnailItem}>
-                                        <StringFigureCard
-                                            item={item}
-                                            bookmarked={false}
-                                            calculatedHeight={calculatedHeight}
-                                            currentLanguage={currentLanguage}
-                                            hideTitle={true}
-                                            onPress={handleItemPress}
-                                            onImageLoad={handleImageLoad}
-                                        />
-                                        <View style={styles.captionSpacer} />
-                                        <Text style={styles.thumbnailCaption} maxFontSizeMultiplier={1.35}>
-                                            {item.name[currentLanguage]}
-                                        </Text>
-                                    </View>
-                                );
-                            })}
-                        </View>
-                    </ScrollView>
+                <CollectionCard
+                    collectionId={1}
+                    backgroundColor="#2B7FFF"
+                    imageDimensions={imageDimensions}
+                    currentLanguage={currentLanguage}
+                    purchasedItems={purchasedItems}
+                    onPurchasePress={handlePurchasePress}
+                    onItemPress={handleItemPress}
+                    onImageLoad={handleImageLoad}
+                />
 
-                    <View style={styles.purchaseButtonContainer}>
-                        <PurchaseButton 
-                            onPress={handlePurchasePress} 
-                            collectionId={1}
-                            backgroundColor="#2B7FFF"
-                            disabled={purchasedItems.includes(1)}
-                        />
-                    </View>
-                </View>
-
-                <View style={styles.collectionCard}>
-                    <ScrollView 
-                        style={styles.cardScrollView}
-                        contentContainerStyle={styles.cardScrollContent}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        <View style={styles.collectionHeader}>
-                            <Text style={[styles.collectionTitle, { color: '#E17100' }]}>コレクション2</Text>
-                            <View style={styles.descriptionSpacer} />
-                            <Text style={styles.collectionDescription}>
-                                コレクション2には、以下のあやとり{stringFigures.filter(figure => figure.premiumCourseId === 2).length}パターンが収録されています。
-                            </Text>
-                        </View>
-                        
-                        <View style={styles.thumbnailContainer}>
-                            {stringFigures.filter(figure => figure.premiumCourseId === 2).map((item) => {
-                                const imageInfo = imageDimensions[item.id];
-                                const cardWidth = 260 - 24; // collectionCard width - paddingHorizontal
-                                let calculatedHeight = 200;
-                                
-                                if (imageInfo) {
-                                    calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
-                                }
-                                
-                                return (
-                                    <View key={item.id} style={styles.thumbnailItem}>
-                                        <StringFigureCard
-                                            item={item}
-                                            bookmarked={false}
-                                            calculatedHeight={calculatedHeight}
-                                            currentLanguage={currentLanguage}
-                                            hideTitle={true}
-                                            onPress={handleItemPress}
-                                            onImageLoad={handleImageLoad}
-                                        />
-                                        <View style={styles.captionSpacer} />
-                                        <Text style={styles.thumbnailCaption} numberOfLines={2}>
-                                            {item.name[currentLanguage]}
-                                        </Text>
-                                    </View>
-                                );
-                            })}
-                        </View>
-                    </ScrollView>
-
-                    <View style={styles.purchaseButtonContainer}>
-                        <PurchaseButton 
-                            onPress={handlePurchasePress} 
-                            collectionId={2}
-                            backgroundColor="#E17100"
-                            disabled={purchasedItems.includes(2)}
-                        />
-                    </View>
-                </View>
+                <CollectionCard
+                    collectionId={2}
+                    backgroundColor="#E17100"
+                    imageDimensions={imageDimensions}
+                    currentLanguage={currentLanguage}
+                    purchasedItems={purchasedItems}
+                    onPurchasePress={handlePurchasePress}
+                    onItemPress={handleItemPress}
+                    onImageLoad={handleImageLoad}
+                />
             </ScrollView>
             
         </SafeAreaView>
@@ -348,86 +258,6 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         paddingHorizontal: 16,
         alignItems: 'center',
-    },
-    collectionCard: {
-        width: 260,
-        marginRight: 16,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        borderWidth: 1,
-        borderColor: '#A6A09B',
-        overflow: 'hidden',
-        height: '100%',
-    },
-    cardScrollView: {
-        flex: 1,
-    },
-    cardScrollContent: {
-        paddingBottom: 80,
-    },
-    collectionHeader: {
-        padding: 12,
-    },
-    collectionTitle: {
-        fontFamily: 'KleeOne-SemiBold',
-        fontSize: 24,
-        fontWeight: '600',
-    },
-    descriptionSpacer: {
-        height: 4,
-    },
-    collectionDescription: {
-        fontFamily: 'KleeOne-Regular',
-        fontSize: 16,
-        color: '#57534D',
-        lineHeight: 24,
-        fontWeight: '500',
-    },
-    thumbnailContainer: {
-        flexDirection: 'column',
-        paddingHorizontal: 12,
-        paddingVertical: 0,
-        alignItems: 'stretch',
-    },
-    thumbnailItem: {
-        marginBottom: 24,
-        width: '100%',
-        alignItems: 'center',
-    },
-    thumbnailImageContainer: {
-        width: 80,
-        height: 80,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: '#79716B',
-        overflow: 'hidden',
-        backgroundColor: '#FFFFFF',
-    },
-    thumbnailImage: {
-        width: '100%',
-        height: '100%',
-        // resizeMode: 'contain',
-        objectFit: 'contain',
-    },
-    captionSpacer: {
-        height: 8,
-    },
-    thumbnailCaption: {
-        fontFamily: 'KleeOne-SemiBold',
-        fontSize: 16,
-        color: '#57534D',
-        textAlign: 'center',
-        lineHeight: 18,
-        fontWeight: '600',
-        width: '100%',
-    },
-    purchaseButtonContainer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        paddingHorizontal: 12,
-        paddingBottom: 12,
     },
 
 });
