@@ -102,7 +102,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Many Stars”\nA. C. Haddon\n<i>A Few American String Figures and Tricks</i> (1903)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['81']
   },
   {
     id: '8',
@@ -438,7 +439,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['19_two-chiefs'],
     description: { 
       ja: '二人の首長が並んでいる様子です。このあやとりが採取されたカロリン諸島には「ひとりの首長」というあやとりもあります', 
-      en: 'This figure depicts two chiefs standing side by side. In the Caroline Islands, where this string figure was collected, there is also a version called “One Chief.”' 
+      en: 'This figure depicts two chiefs standing side by side. In the Caroline Islands, where this string figure was collected, there is also a version called <i>One Chief.</i>' 
     },
     premiumCourseId: 2, // コレクション2
     data: {
@@ -446,8 +447,9 @@ export const stringFigures: StringFigure[] = [
       source: '“Two Chiefs”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
     },
+    relatedFigures: ['93']
+  },
   {
     id: '20',
     name: { ja: 'つづみ', en: 'Drum' },
@@ -695,7 +697,7 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     prerequisite: '32',
-    relatedFigures: ['32', '35']
+    relatedFigures: ['32']
   },
   { 
     id: '38',
@@ -713,8 +715,9 @@ export const stringFigures: StringFigure[] = [
       source: '“Choilolél of Arsei”\nP. Raymund\n<i>The String Games and Cat\'s Cradles of Palau</i> (1911)',
       author: null,
       references: null
-    }
     },
+    relatedFigures: ['34']
+  },
   {
     id: '34',
     name: { ja: 'アムワンギヨ', en: 'Amwangiyo' },
@@ -731,8 +734,9 @@ export const stringFigures: StringFigure[] = [
       source: '“Amwangiyo”\nH. C. Maude\n<i>The String Figures of Nauru Island</i> (1971)',
       author: null,
       references: null
-    }
     },
+    relatedFigures: ['38']
+  },
   {
     id: '39',
     name: { ja: '太陽', en: 'The Sun' },
@@ -803,8 +807,9 @@ export const stringFigures: StringFigure[] = [
       source: '“An Apache Door”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
     },
+    relatedFigures: ['56']
+  },
   {
     id: '43',
     name: { ja: 'トランポリン', en: 'Trampoline' },
@@ -924,8 +929,9 @@ export const stringFigures: StringFigure[] = [
       source: '“Tuktuqdjung (Cariboo)”\nF. Boas\n<i>The Game of Cat\'s Cradle</i>(1888)',
       author: null,
       references: null
-    }
     },
+    relatedFigures: ['54']
+  },
   {
     id: '50',
     name: { ja: '2階建てのシベリアの家', en: 'Two-Story Siberian House' },
@@ -942,8 +948,9 @@ export const stringFigures: StringFigure[] = [
       source: '“taŋäүot”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
     },
+    relatedFigures: ['71']
+  },
   {
     id: '51',
     name: { ja: 'かもめ', en: 'Seagull' },
@@ -1014,7 +1021,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Caribou in the Willows”\nDiamond Jenness\n<i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['49']
   },
   {
     id: '56',
@@ -1032,7 +1040,8 @@ export const stringFigures: StringFigure[] = [
       source: '“An Apache Teepee”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['42']
   },
   {
     id: '57',
@@ -1086,7 +1095,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Clothes Line (iniarl)”\nG. B. Gordon\n<i>Notes on the Western Eskimo</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['70']
   },
   {
     id: '64',
@@ -1213,7 +1223,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    prerequisite: '59'
+    prerequisite: '59',
+    relatedFigures: ['59']
   },
   {
     id: '71',
@@ -1231,7 +1242,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Siberian House (kochlinee)”\nG. B. Gordon\n<i>Notes on the Western Eskimo</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['50']
   },
   {
     id: '72',
@@ -1284,7 +1296,8 @@ export const stringFigures: StringFigure[] = [
       source: '“A Canoe (Auto)”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['75']
   },
   {
     id: '75',
@@ -1303,7 +1316,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    prerequisite: '74'
+    prerequisite: '74',
+    relatedFigures: ['74']
   },
   {
     id: '77',
@@ -1357,7 +1371,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Bat”\nW. Wirt, M. Sherman, M. Mitchell (BISFA 7)\n <i>String Games of the Navajo : 1999</i> (2000)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['5']
   },
   {
     id: '82',
@@ -1500,7 +1515,8 @@ export const stringFigures: StringFigure[] = [
       source: '“One Chief”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['19']
   },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
