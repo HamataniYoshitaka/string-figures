@@ -8,7 +8,9 @@ import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon } from '../components/icons';
 import PurchaseButton from '../components/PurchaseButton';
+import StringFigureCard from '../components/StringFigureCard';
 import { stringFigures } from '../data/index';
+import { StringFigure } from '../types';
 
 type AdditionalScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -24,6 +26,7 @@ interface Props {
 const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
     const [purchasedItems, setPurchasedItems] = useState<number[]>([]);
+    const [imageDimensions, setImageDimensions] = useState<{ [key: string]: { width: number; height: number } }>({});
 
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
@@ -88,6 +91,30 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
         loadLanguageSetting();
         loadPurchasedItems();
     }, []);
+
+    const handleImageLoad = (itemId: string, event: any) => {
+        const { width, height } = event.nativeEvent.source;
+        setImageDimensions(prev => ({
+            ...prev,
+            [itemId]: { width, height }
+        }));
+    };
+
+    const handleItemPress = (item: StringFigure) => {
+        if (item.directNavigationDestination) {
+            if (item.directNavigationDestination === 'Additional') {
+                navigation.navigate('Additional');
+            }
+            if (item.directNavigationDestination === 'Policy') {
+                navigation.navigate('Policy');
+            }
+            if (item.directNavigationDestination === 'Intro') {
+                navigation.navigate('IntroVideo', { currentLanguage: currentLanguage });
+            }
+            return;
+        }
+        // AdditionalScreenでは詳細表示は行わないため、何もしない
+    };
 
     const handlePurchasePress = async (collectionId: number) => {
         try {
@@ -166,21 +193,28 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         </View>
                         
                         <View style={styles.thumbnailContainer}>
-                            {stringFigures.filter(figure => figure.premiumCourseId === 1).map((item) => (
-                                <View key={item.id} style={styles.thumbnailItem}>
-                                    <View style={styles.thumbnailImageContainer}>
-                                        <Image 
-                                            source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail as ImageSourcePropType}
-                                            style={styles.thumbnailImage}
-                                            resizeMode="cover"
+                            {stringFigures.filter(figure => figure.premiumCourseId === 1).map((item) => {
+                                const imageInfo = imageDimensions[item.id];
+                                const cardWidth = 260 - 24; // collectionCard width - paddingHorizontal
+                                let calculatedHeight = 200;
+                                
+                                if (imageInfo) {
+                                    calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
+                                }
+                                
+                                return (
+                                    <View key={item.id} style={styles.thumbnailItem}>
+                                        <StringFigureCard
+                                            item={item}
+                                            bookmarked={false}
+                                            calculatedHeight={calculatedHeight}
+                                            currentLanguage={currentLanguage}
+                                            onPress={handleItemPress}
+                                            onImageLoad={handleImageLoad}
                                         />
                                     </View>
-                                    <View style={styles.captionSpacer} />
-                                    <Text style={styles.thumbnailCaption} numberOfLines={2}>
-                                        {item.name[currentLanguage]}
-                                    </Text>
-                                </View>
-                            ))}
+                                );
+                            })}
                         </View>
                     </ScrollView>
 
@@ -209,21 +243,28 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         </View>
                         
                         <View style={styles.thumbnailContainer}>
-                            {stringFigures.filter(figure => figure.premiumCourseId === 2).map((item) => (
-                                <View key={item.id} style={styles.thumbnailItem}>
-                                    <View style={styles.thumbnailImageContainer}>
-                                        <Image 
-                                            source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail as ImageSourcePropType}
-                                            style={styles.thumbnailImage}
-                                            resizeMode="cover"
+                            {stringFigures.filter(figure => figure.premiumCourseId === 2).map((item) => {
+                                const imageInfo = imageDimensions[item.id];
+                                const cardWidth = 260 - 24; // collectionCard width - paddingHorizontal
+                                let calculatedHeight = 200;
+                                
+                                if (imageInfo) {
+                                    calculatedHeight = (imageInfo.height / imageInfo.width) * cardWidth;
+                                }
+                                
+                                return (
+                                    <View key={item.id} style={styles.thumbnailItem}>
+                                        <StringFigureCard
+                                            item={item}
+                                            bookmarked={false}
+                                            calculatedHeight={calculatedHeight}
+                                            currentLanguage={currentLanguage}
+                                            onPress={handleItemPress}
+                                            onImageLoad={handleImageLoad}
                                         />
                                     </View>
-                                    <View style={styles.captionSpacer} />
-                                    <Text style={styles.thumbnailCaption} numberOfLines={2}>
-                                        {item.name[currentLanguage]}
-                                    </Text>
-                                </View>
-                            ))}
+                                );
+                            })}
                         </View>
                     </ScrollView>
 
@@ -336,12 +377,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         paddingHorizontal: 12,
         paddingVertical: 0,
-        alignItems: 'center',
+        alignItems: 'stretch',
     },
     thumbnailItem: {
         marginBottom: 12,
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: '100%',
     },
     thumbnailImageContainer: {
         width: 80,
