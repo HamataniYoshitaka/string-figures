@@ -1538,6 +1538,24 @@ export const stringFigures: StringFigure[] = [
     },
     relatedFigures: ['19']
   },
+  {
+    id: '95',
+    name: { ja: '二人連続あやとり', en: 'Two People Sequence' },
+    difficulty: 'two_people',
+    directory: '95_2people-sequence',
+    ...ASSETS_MAP['95_2people-sequence'],
+    description: { 
+      ja: '二人の人が順番に糸を取り合います', 
+      en: 'Two people take turns taking the strings.' 
+    },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',

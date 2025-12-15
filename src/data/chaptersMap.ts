@@ -88,4 +88,5 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '91_5diamonds': require('../../assets/string-figures/91_5diamonds/chapters.json'),
   '92_6diamonds': require('../../assets/string-figures/92_6diamonds/chapters.json'),
   '93_one-chief': require('../../assets/string-figures/93_one-chief/chapters.json'),
+  '95_2people-sequence': require('../../assets/string-figures/95_2people-sequence/chapters.json'),
 };

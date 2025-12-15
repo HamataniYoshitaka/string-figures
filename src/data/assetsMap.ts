@@ -440,4 +440,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/93_one-chief/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/93_one-chief/preview.mp4'),
   },
+  '95_2people-sequence': {
+    thumbnail: require('../../assets/string-figures/95_2people-sequence/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/95_2people-sequence/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/95_2people-sequence/preview.mp4'),
+  },
 };
