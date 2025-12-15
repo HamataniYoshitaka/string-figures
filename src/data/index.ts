@@ -1502,6 +1502,24 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '90',
+    name: { ja: 'リング抜き', en: 'Ring Magic' },
+    difficulty: 'easy',
+    directory: '90_ring-magic',
+    ...ASSETS_MAP['90_ring-magic'],
+    description: { 
+      ja: 'ひもを通したはずのリングがあっという間に外れる有名なあやとりのトリックです', 
+      en: 'This is a famous string-figure trick in which a ring that seemed to be threaded onto the string comes off in an instant.' 
+    },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
+  },
+  {
     id: '93',
     name: { ja: 'ひとりの首長', en: 'One Chief' },
     difficulty: 'medium',

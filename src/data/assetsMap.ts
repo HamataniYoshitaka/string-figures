@@ -420,6 +420,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/89_mochitsuki/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/89_mochitsuki/preview.mp4'),
   },
+  '90_ring-magic': {
+    thumbnail: require('../../assets/string-figures/90_ring-magic/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/90_ring-magic/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/90_ring-magic/preview.mp4'),
+  },
   '91_5diamonds': {
     thumbnail: require('../../assets/string-figures/91_5diamonds/thumbnail-kraft.jpg'),
     patternImage: require('../../assets/string-figures/91_5diamonds/pattern.jpg'),
