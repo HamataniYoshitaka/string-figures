@@ -523,14 +523,14 @@ export const stringFigures: StringFigure[] = [
   {
     id: '24',
     name: { ja: '流れ星', en: 'Shooting Star' },
-    difficulty: 'medium',
+    difficulty: 'easy',
     directory: '24_shooting-star',
     ...ASSETS_MAP['24_shooting-star'],
     description: { 
-      ja: 'まるでマンガのような、尾を引きながら流れる星の姿を見事に表現したあやとりです。ひもを二重にしてから取り始めるというちょっと変わった特徴があります', 
-      en: 'A string figure that beautifully represents the shooting star as it trails behind like a MANGA. It has a slightly unusual feature of starting by doubling the string and then taking.' 
+      ja: 'まるでマンガのような、3本の尾を引きながら流れる星の姿を見事に表現したあやとりです', 
+      en: 'Like a scene from a manga, this figure vividly represents a shooting star with three long tails streaming behind it.' 
     },
-    premiumCourseId: 2, // コレクション2
+    premiumCourseId: 0,
     data: {
       region: null,
       source: '“A Shooting Star”\nSHISHIDO Yukio\n<i>Geometrical Figures</i> (1980)',
@@ -1437,7 +1437,7 @@ export const stringFigures: StringFigure[] = [
     directory: '86_rope-bridge',
     ...ASSETS_MAP['86_rope-bridge'],
     description: { 
-      ja: 'パプアニューギニアのあやとりです。右手を引くと材木を運ぶ人が吊り橋を渡って行きます。ここではもう一人の人に手伝ってもらう手順を紹介していますが、棒を口でくわえる、などの方法で一人で取ることも可能です', 
+      ja: 'パプアニューギニアのあやとりです。右手を引くと二人の人が大きな荷物を担いで吊り橋を渡って行きます。ここではもう一人の人に手伝ってもらう手順を紹介していますが、棒を口でくわえる、などの方法で一人で取ることも可能です', 
       en: 'This string figure comes from Papua New Guinea. When you pull your right hand, a man carrying lumber crosses a suspension bridge. Here we introduce a method that involves assistance from another person, but it is also possible to perform it alone—for example, by holding the stick in your mouth.' 
     },
     premiumCourseId: 0,

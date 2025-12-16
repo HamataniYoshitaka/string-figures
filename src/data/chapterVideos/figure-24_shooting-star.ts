@@ -4,8 +4,5 @@ export const FIGURE_24_SHOOTING_STAR_VIDEOS = {
   3: require('../../../assets/string-figures/24_shooting-star/chapters/03.mp4'),
   4: require('../../../assets/string-figures/24_shooting-star/chapters/04.mp4'),
   5: require('../../../assets/string-figures/24_shooting-star/chapters/05.mp4'),
-  6: require('../../../assets/string-figures/24_shooting-star/chapters/06.mp4'),
-  7: require('../../../assets/string-figures/24_shooting-star/chapters/07.mp4'),
-  8: require('../../../assets/string-figures/24_shooting-star/chapters/08.mp4'),
-  9: require('../../../assets/string-figures/24_shooting-star/chapters/09.mp4')
+  6: require('../../../assets/string-figures/24_shooting-star/chapters/06.mp4')
 };

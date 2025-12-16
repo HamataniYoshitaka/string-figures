@@ -1,32 +1,20 @@
 [
     {
-        "subtitle": { "ja": "糸を二重にして、はじめの構えから始めます。右手の中指で、左手のひらの糸を1本だけ取ります", "en": "Double the string and begin with \"Position 1\". With the right middle finger, pick up from below a single palm string of the left hand." }
+        "subtitle": { "ja": "左手の親指と小指に糸をかけて始めます。輪の中に右手を上から入れ、左小指向こう側の糸を取って右手首にかけます", "en": "Begin with the string on the left thumb and little finger. Insert the right hand from above into the loop, pick up the far left–little-finger string, and place it onto the right wrist." }
     },
     {
-        "subtitle": { "ja": "右手の中指の糸を半回転させます。中指は下を向きます", "en": "Give the right middle-finger loop a half twist; the middle finger will point downward." }
+        "subtitle": { "ja": "左小指向こう側の糸を右小指で、左親指手前側の糸を右親指でそれぞれ外側から取ります", "en": "With the right little finger, pick down the far left–little-finger string, and with the right thumb, pick down the near left-thumb string, both from the outside." }
     },
     {
-        "subtitle": { 
-            "ja": "右手の中指で、右手のひらの2本の糸を下からとり、中指を上に向けます。中指にかかっていた1本の糸は自然に外れます", 
-            "en": "With the right middle finger, pick up from below the two palm strings and turn the finger upward; the original middle-finger loop falls away naturally."
-        }
+        "subtitle": { "ja": "右小指手前側の糸を左小指で、右親指向こう側の糸を左親指でそれぞれ外側から取ります", "en": "With the left little finger, pick down the near right–little-finger string, and with the left thumb, pick down the far right-thumb string, both from the outside." }
     },
     {
-        "subtitle": { "ja": "右手の親指と小指の糸を全て外します", "en": "Release all strings from the right thumb and little finger." }
+        "subtitle": { "ja": "右人差し指で左手のひらの糸を取ります", "en": "With the right index finger, pick up the left-palm string." }
     },
     {
-        "subtitle": { "ja": "右手中指の輪に右手の親指と小指を下から入れます", "en": "Insert the right thumb and little finger from below into the right middle-finger loop." }
+        "subtitle": { "ja": "右人差し指を2~3回転させて輪をねじります", "en": "Twist the right index finger two or three times to twist the loop." }
     },
     {
-        "subtitle": { "ja": "右手中指の糸を外します", "en": "Release the right middle-finger string." }
-    },
-    {
-        "subtitle": { "ja": "右手中指で、左手のひらの糸を取ります", "en": "With the right middle finger, pick up from below the palm string of the left hand." }
-    },
-    {
-        "subtitle": { "ja": "右手中指の糸を2~3回転ねじります", "en": "Give the right middle-finger loop two or three twists." }
-    },
-    {
-        "subtitle": { "ja": "右手親指の糸を右手人差し指に移して完成です", "en": "Transfer the right thumb string to the right index finger to complete the figure." }
+        "subtitle": { "ja": "右手首の糸を外して完成です", "en": "Release the right-wrist string to show the finished figure." }
     }
 ]
