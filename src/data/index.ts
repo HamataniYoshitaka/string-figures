@@ -1340,6 +1340,24 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '78',
+    name: { ja: '鉄橋・かめ・ゴム・飛行機', en: 'Bridge・Turtle・Rubber・Plane' },
+    difficulty: 'medium',
+    directory: '78_bridge-turtle-plane',
+    ...ASSETS_MAP['78_bridge-turtle-plane'],
+    description: { 
+      ja: '鉄橋から始まり、かめ、ゴム、飛行機、かぶと、おたまじゃくしと連続してパターンを作るあやとりです。日本ではとても有名なあやとりで、さまざまなバリエーションがあります', 
+      en: 'This string figure begins with “Iron Bridge” and then continues through a sequence of patterns: turtle, rubber band, airplane, helmet, and tadpole. It is very well known in Japan and has many different variations.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本、他', en: 'Japan, Other Regions' },
+      source: '“Bridge, Turtle, and Plane”\n野口広\n<i>あやとり 続々</i> (1975)',
+      author: null,
+      references: null
+    }
+  },
+  {
     id: '80',
     name: { ja: 'テリハボクの花', en: 'Blossom of the Calophyllum' },
     difficulty: 'hard',
@@ -1437,7 +1455,7 @@ export const stringFigures: StringFigure[] = [
     directory: '86_rope-bridge',
     ...ASSETS_MAP['86_rope-bridge'],
     description: { 
-      ja: 'パプアニューギニアのあやとりです。右手を引くと二人の人が大きな荷物を担いで吊り橋を渡って行きます。ここではもう一人の人に手伝ってもらう手順を紹介していますが、棒を口でくわえる、などの方法で一人で取ることも可能です', 
+      ja: 'パプアニューギニアのあやとりです。右手を引くと、大きな荷物を担いだ二人が吊り橋を渡って行きます。ここではもう一人の人に手伝ってもらう手順を紹介していますが、棒を口でくわえる、などの方法で一人で取ることも可能です', 
       en: 'This string figure comes from Papua New Guinea. When you pull your right hand, a man carrying lumber crosses a suspension bridge. Here we introduce a method that involves assistance from another person, but it is also possible to perform it alone—for example, by holding the stick in your mouth.' 
     },
     premiumCourseId: 0,
@@ -1540,17 +1558,17 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '95',
-    name: { ja: '二人連続あやとり', en: 'Two People Sequence' },
+    name: { ja: 'ふたり連続あやとり', en: 'Two People Sequence' },
     difficulty: 'two_people',
     directory: '95_2people-sequence',
     ...ASSETS_MAP['95_2people-sequence'],
     description: { 
-      ja: '二人の人が順番に糸を取り合います', 
-      en: 'Two people take turns taking the strings.' 
+      ja: '300年以上前から多くの日本人が遊んできた、日本で最も有名なあやとりです。日本語の「あやとり」は元来、この二人で糸を取り合う遊びのことを指していました。ここで紹介するもの以外にも、日本中にさまざまなバリエーションが伝承されています', 
+      en: 'This is the most famous string game in Japan, played by many people for over 300 years. Originally, the Japanese term <i>ayatori</i> referred specifically to this two-player string game. In addition to the versions introduced here, many other variations have been passed down throughout Japan.' 
     },
     premiumCourseId: 0,
     data: {
-      region: { ja: '日本', en: 'Japan' },
+      region: { ja: '日本、他', en: 'Japan, Other Regions' },
       source: null,
       author: null,
       references: null

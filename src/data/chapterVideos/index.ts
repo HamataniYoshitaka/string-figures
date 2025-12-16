@@ -86,6 +86,7 @@ import { FIGURE_92_6DIAMONDS_VIDEOS } from './figure-92_6diamonds';
 import { FIGURE_93_ONE_CHIEF_VIDEOS } from './figure-93_one-chief';
 import { FIGURE_90_RING_MAGIC_VIDEOS } from './figure-90_ring-magic';
 import { FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS } from './figure-95_2perople-sequence';
+import { FIGURE_78_BRIDGE_TURTLE_PLANE_VIDEOS } from './figure-78_bridge-turtle-plane';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -162,6 +163,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '74_canoe': FIGURE_74_CANOE_VIDEOS,
   '75_tornado': FIGURE_75_TORNADO_VIDEOS,
   '77_bats': FIGURE_77_BATS_VIDEOS,
+  '78_bridge-turtle-plane': FIGURE_78_BRIDGE_TURTLE_PLANE_VIDEOS,
   '80_calophyllum': FIGURE_80_CALOPHYLLUM_VIDEOS,
   '81_bat': FIGURE_81_BAT_VIDEOS,
   '82_storm-clouds': FIGURE_82_STORM_CLOUDS_VIDEOS,
