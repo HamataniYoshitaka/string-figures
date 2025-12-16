@@ -1,11 +1,14 @@
 [
     {
-        "subtitle": { "ja": "人差し指の構えから始めます。左右の人差し指の糸を交換します", "en": "Begin with the \"Opening A\". Exchange the index strings between the hands." }
+        "subtitle": { "ja": "人差し指の構えから始めます。左人差し指を右人差し指の輪に上から入れ、右人差し指の糸を取ります", "en": "Begin in Opening A. Insert the left index finger from above into the right index loop and pick up the right–index-finger string." }
     },
     {
-        "subtitle": { "ja": "右手の人差し指の糸を離して完成です", "en": "Release the right index string to complete the figure." }
+        "subtitle": { "ja": "左人差し指の下の輪に右人差し指を上から入れ、左人差し指上の輪を越えて取ります", "en": "Insert the right index finger from above into the lower left–index-finger loop and move over the upper left–index-finger loop to pick it down." }
     },
     {
-        "subtitle": { "ja": "外した人差し指の糸を再び取り、反対側の人差し指の糸を外すことで何度でも繰り返すことができます", "en": "You can repeat the figure indefinitely by picking up again the released index string and releasing the opposite one in turn." }
+        "subtitle": { "ja": "右親指と小指の指先を合わせ、右人差し指の糸を外して完成です", "en": "Bring the tips of the right thumb and little finger together, release the right–index-finger string, and show the finished figure." }
+    },
+    {
+        "subtitle": { "ja": "外した人差し指の糸を再び取り、反対側の人差し指の糸を外すことで何度でも繰り返すことができます", "en": "Pick up again the released index-finger string, then release the opposite index-finger string; the sequence can be repeated indefinitely." }
     }
 ]
