@@ -21,6 +21,7 @@ import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, E
 import { useOrientation } from '../hooks/useOrientation';
 import { stringFigures } from '../data/index';
 import RelatedFigures from './RelatedFigures';
+import PurchaseButton from './PurchaseButton';
 
 interface Props {
   item: StringFigure | null;
@@ -33,6 +34,7 @@ interface Props {
   onPrerequisitePress?: (prerequisiteId: string) => void;
   onAdditionalCollectionPress?: () => void;
   isAdditionalScene?: boolean;
+  onPurchasePress?: (collectionId: number) => void;
 }
 
 export interface DetailBottomSheetRef {
@@ -51,6 +53,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   onPrerequisitePress,
   onAdditionalCollectionPress,
   isAdditionalScene = false,
+  onPurchasePress,
 }, ref) => {
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
@@ -245,7 +248,16 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
               end={{ x: 0, y: 1 }}
             />
             
-            {isLocked ? (
+            {isAdditionalScene && item && item.premiumCourseId !== 0 ? (
+              <View style={styles.purchaseButtonWrapper}>
+                <PurchaseButton
+                  onPress={onPurchasePress}
+                  collectionId={item.premiumCourseId}
+                  backgroundColor={getButtonBackgroundColor()}
+                  disabled={purchasedItems.includes(item.premiumCourseId)}
+                />
+              </View>
+            ) : isLocked ? (
               <View style={styles.additionalCollectionButtonWrapper}>
                 <TouchableOpacity
                   style={[styles.additionalCollectionButton, { backgroundColor: getButtonBackgroundColor() }]}
@@ -577,6 +589,15 @@ const styles = StyleSheet.create({
     right: 0,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  purchaseButtonWrapper: {
+    position: 'absolute',
+    top: '40%',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 60,
   },
   additionalCollectionButton: {
     borderRadius: 28,

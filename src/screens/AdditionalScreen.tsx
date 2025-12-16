@@ -271,6 +271,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 purchasedItems={purchasedItems}
                 onPrerequisitePress={handlePrerequisitePress}
                 isAdditionalScene={true}
+                onPurchasePress={handlePurchasePress}
             />
         </View>
         
