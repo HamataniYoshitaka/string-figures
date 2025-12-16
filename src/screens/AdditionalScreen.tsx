@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, Image, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -231,8 +231,8 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                     style={styles.scrollView}
                     contentContainerStyle={styles.scrollContent}
                     showsHorizontalScrollIndicator={false}
-                    pagingEnabled={false}
-                    snapToInterval={Dimensions.get('window').width * 0.9 + 32}
+                    pagingEnabled={true}
+                    snapToInterval={260 + 16}
                     decelerationRate="fast"
                 >
                     <CollectionCard
@@ -256,6 +256,19 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         onItemPress={handleItemPress}
                         onImageLoad={handleImageLoad}
                     />
+
+                    <View style={styles.restorePurchaseContainer}>
+                        <View style={styles.restorePurchaseContent}>
+                            <Text style={styles.restorePurchaseOrText} maxFontSizeMultiplier={1.15}>または</Text>
+                            <View style={styles.restorePurchaseQuestionContainer}>
+                                <Text style={styles.restorePurchaseQuestionText} maxFontSizeMultiplier={1.25}>以前にコレクションを</Text>
+                                <Text style={styles.restorePurchaseQuestionText} maxFontSizeMultiplier={1.25}>購入しましたか？</Text>
+                            </View>
+                            <TouchableOpacity onPress={() => {}}>
+                                <Text style={styles.restorePurchaseButtonText} maxFontSizeMultiplier={1.1}>購入情報を復元する</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </ScrollView>
             </SafeAreaView>
 
@@ -345,6 +358,46 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         paddingHorizontal: 16,
         alignItems: 'center',
+    },
+    restorePurchaseContainer: {
+        backgroundColor: 'rgba(255, 255, 255, 0.85)',
+        borderRadius: 20,
+        padding: 12,
+        // marginHorizontal: 16,
+        width: 260,
+        minHeight: 200,
+    },
+    restorePurchaseContent: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 24,
+        paddingVertical: 24,
+    },
+    restorePurchaseOrText: {
+        fontFamily: 'KleeOne-SemiBold',
+        fontSize: 20,
+        color: '#79716b',
+        textAlign: 'center',
+        lineHeight: 32,
+    },
+    restorePurchaseQuestionContainer: {
+        alignItems: 'center',
+    },
+    restorePurchaseQuestionText: {
+        fontFamily: 'KleeOne-SemiBold',
+        fontSize: 16,
+        color: '#57534d',
+        textAlign: 'center',
+        lineHeight: 32,
+    },
+    restorePurchaseButtonText: {
+        fontFamily: 'KleeOne-SemiBold',
+        fontSize: 22,
+        color: '#292524',
+        textAlign: 'center',
+        lineHeight: 32,
+        textDecorationLine: 'underline',
     },
 
 });
