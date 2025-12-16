@@ -32,6 +32,7 @@ interface Props {
   purchasedItems?: number[];
   onPrerequisitePress?: (prerequisiteId: string) => void;
   onAdditionalCollectionPress?: () => void;
+  isAdditionalScene?: boolean;
 }
 
 export interface DetailBottomSheetRef {
@@ -49,6 +50,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   purchasedItems = [],
   onPrerequisitePress,
   onAdditionalCollectionPress,
+  isAdditionalScene = false,
 }, ref) => {
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
@@ -189,18 +191,20 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
         contentContainerStyle={styles.scrollContentContainer}
       >
         {/* ブックマークボタン */}
-        <TouchableOpacity
-          style={styles.bookmarkButton}
-          onPress={onToggleBookmark}
-        >
-          <BookmarkIcon
-            width={32}
-            height={32}
-            strokeColor={isBookmarked ? '#DC2626' : '#ffffff'}
-            fillColor={isBookmarked ? '#DC2626' : '#aaa'}
-            strokeWidth={1.5}
-          />
-        </TouchableOpacity>
+        {!isAdditionalScene && (
+          <TouchableOpacity
+            style={styles.bookmarkButton}
+            onPress={onToggleBookmark}
+          >
+            <BookmarkIcon
+              width={32}
+              height={32}
+              strokeColor={isBookmarked ? '#DC2626' : '#ffffff'}
+              fillColor={isBookmarked ? '#DC2626' : '#aaa'}
+              strokeWidth={1.5}
+            />
+          </TouchableOpacity>
+        )}
 
         {/* コンテンツ */}
         <View style={styles.content}>
@@ -305,7 +309,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 {getDifficultyText(item.difficulty)}
               </Text>
             </View>
-            {item.prerequisite && (() => {
+            {!isAdditionalScene && item.prerequisite && (() => {
               const prerequisiteItem = stringFigures.find(figure => figure.id === item.prerequisite);
               const prerequisiteName = prerequisiteItem ? getLocalizedText(prerequisiteItem.name) : '';
               const handlePrerequisitePress = () => {
@@ -477,7 +481,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
               </View>
             )}
             {/* 関連するあやとり */}
-            {item.relatedFigures && item.relatedFigures.length > 0 && (
+            {!isAdditionalScene && item.relatedFigures && item.relatedFigures.length > 0 && (
               <RelatedFigures 
                 relatedFigures={item.relatedFigures}
                 currentLanguage={currentLanguage}

@@ -9,6 +9,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloseIcon } from '../components/icons';
 import CollectionCard from '../components/CollectionCard';
 import { StringFigure } from '../types';
+import DetailBottomSheet, { DetailBottomSheetRef } from '../components/DetailBottomSheet';
+import { stringFigures } from '../data/index';
 
 type AdditionalScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -25,7 +27,9 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
     const [purchasedItems, setPurchasedItems] = useState<number[]>([]);
     const [imageDimensions, setImageDimensions] = useState<{ [key: string]: { width: number; height: number } }>({});
-
+    const [selectedItem, setSelectedItem] = useState<StringFigure | null>(null);
+    const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
+    const bottomSheetRef = useRef<DetailBottomSheetRef>(null);
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
     
@@ -88,7 +92,28 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
     useEffect(() => {
         loadLanguageSetting();
         loadPurchasedItems();
+        loadBookmarkedIds();
     }, []);
+
+    const loadBookmarkedIds = async () => {
+        try {
+            const savedBookmarks = await AsyncStorage.getItem('bookmarkedIds');
+            if (savedBookmarks) {
+                setBookmarkedIds(JSON.parse(savedBookmarks));
+            }
+        } catch (error) {
+            console.error('ブックマークの読み込みに失敗しました:', error);
+        }
+    };
+
+    const saveBookmarkedIds = async (ids: string[]) => {
+        try {
+            await AsyncStorage.setItem('bookmarkedIds', JSON.stringify(ids));
+            setBookmarkedIds(ids);
+        } catch (error) {
+            console.error('ブックマークの保存に失敗しました:', error);
+        }
+    };
 
     const handleImageLoad = (itemId: string, event: any) => {
         const { width, height } = event.nativeEvent.source;
@@ -99,19 +124,47 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     const handleItemPress = (item: StringFigure) => {
-        if (item.directNavigationDestination) {
-            if (item.directNavigationDestination === 'Additional') {
-                navigation.navigate('Additional');
-            }
-            if (item.directNavigationDestination === 'Policy') {
-                navigation.navigate('Policy');
-            }
-            if (item.directNavigationDestination === 'Intro') {
-                navigation.navigate('IntroVideo', { currentLanguage: currentLanguage });
-            }
-            return;
+        setSelectedItem(item);
+    };
+
+    useEffect(() => {
+        if (selectedItem) {
+            bottomSheetRef.current?.present();
         }
-        // AdditionalScreenでは詳細表示は行わないため、何もしない
+    }, [selectedItem]);
+
+    const handleCloseBottomSheet = () => {
+        bottomSheetRef.current?.dismiss();
+        setSelectedItem(null);
+    };
+
+    const handlePlayVideo = (item: StringFigure) => {
+        handleCloseBottomSheet();
+        navigation.navigate('VideoPlayer', { stringFigure: item, currentLanguage: currentLanguage });
+    };
+
+    const toggleBookmark = () => {
+        if (!selectedItem) return;
+        
+        const itemId = selectedItem.id;
+        const newBookmarkedIds = bookmarkedIds.includes(itemId)
+            ? bookmarkedIds.filter(id => id !== itemId)
+            : [...bookmarkedIds, itemId];
+        
+        saveBookmarkedIds(newBookmarkedIds);
+    };
+
+    const handlePrerequisitePress = (prerequisiteId: string) => {
+        // 1. BottomSheetを閉じる
+        bottomSheetRef.current?.dismiss();
+        
+        // 2. BottomSheetが完全に閉じるのを待ってから、そのIDの作品をセットしてBottomSheetを表示
+        setTimeout(() => {
+            const prerequisiteItem = stringFigures.find((figure: StringFigure) => figure.id === prerequisiteId);
+            if (prerequisiteItem) {
+                setSelectedItem(prerequisiteItem);
+            }
+        }, 600);
     };
 
     const handlePurchasePress = async (collectionId: number) => {
@@ -205,6 +258,20 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                     />
                 </ScrollView>
             </SafeAreaView>
+
+            {/* 詳細ボトムシート */}
+            <DetailBottomSheet
+                ref={bottomSheetRef}
+                item={selectedItem}
+                isBookmarked={selectedItem ? bookmarkedIds.includes(selectedItem.id) : false}
+                onClose={handleCloseBottomSheet}
+                onPlayVideo={handlePlayVideo}
+                onToggleBookmark={toggleBookmark}
+                currentLanguage={currentLanguage}
+                purchasedItems={purchasedItems}
+                onPrerequisitePress={handlePrerequisitePress}
+                isAdditionalScene={true}
+            />
         </View>
         
     );
