@@ -127,6 +127,92 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '13',
+    name: { ja: 'ぱんぱんほうき', en: 'A Tent' },
+    difficulty: 'easy',
+    directory: '13_easy-broom',
+    ...ASSETS_MAP['13_easy-broom'],
+    description: { 
+      ja: '一瞬でほうきの形が出来上がります。世界各地に広く分布する有名なあやとりです。日本では最後に両手を広げる際、手を1回叩きます', 
+      en: 'The tent shape appears in an instant. This famous string figure is widely found around the world. In Japan, people clap their hands once as they spread them apart at the final step.' },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
+      source: '“Pitching a Tent”\nJ. Teit\n <i>The Thompson Indians of British Columbia</i> (1900)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '22',
+    name: { ja: '投げやり', en: 'Spear' },
+    difficulty: 'easy',
+    directory: '22_spear',
+    ...ASSETS_MAP['22_spear'],
+    description: { 
+      ja: 'マレー島に伝わるあやとりです。やりを左右に繰り返し飛ばして遊ぶことができます', 
+      en: 'This string figure comes from Malaya. You can play with it by repeatedly launching the spear from side to side.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: 'メラネシア', en: 'Melanesia' },
+      source: '“Casting the Fish-Spear”\nC. F. Jayne\n <i>String Figures</i> (1906)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '25',
+    name: { ja: 'ひも抜き', en: 'String Magic' },
+    difficulty: 'easy',
+    directory: '25_fingers-magic',
+    ...ASSETS_MAP['25_fingers-magic'],
+    description: { ja: '人差し指と親指にかかった糸が、一瞬にして抜けてしまう簡単なマジックです', en: 'This is a simple trick in which the string looped around the index finger and thumb slips off in an instant.' },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '89',
+    name: { ja: 'もちつき', en: 'Mochitsuki' },
+    difficulty: 'two_people',
+    directory: '89_mochitsuki',
+    ...ASSETS_MAP['89_mochitsuki'],
+    description: { 
+      ja: '日本ではとても有名なあやとりです。向かい合った二人が右手、左手を交互にリズム良く合わせます', 
+      en: 'This is a very well-known string figure in Japan. Two people face each other and rhythmically bring their right and left hands together in turn.' },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: "“もちつき”\n有木昭久, 湯浅清四郎\n<i>楽しいあやとり遊び</i> (1973)",
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '95',
+    name: { ja: 'ふたり連続あやとり', en: 'Two People Sequence' },
+    difficulty: 'two_people',
+    directory: '95_2people-sequence',
+    ...ASSETS_MAP['95_2people-sequence'],
+    description: { 
+      ja: '300年以上前から多くの日本人が遊んできた、日本で最も有名なあやとりです。日本語の「あやとり」は元来、この二人で糸を取り合う遊びのことを指していました。ここで紹介するもの以外にも、日本中にさまざまなバリエーションが伝承されています', 
+      en: 'This is the most famous string game in Japan, played by many people for over 300 years. Originally, the Japanese term <i>ayatori</i> referred specifically to this two-player string game. In addition to the versions introduced here, many other variations have been passed down throughout Japan.' 
+    },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本、他', en: 'Japan, Other Regions' },
+      source: null,
+      author: null,
+      references: null
+    }
+  },
+
+  {
     id: '35',
     name: { ja: '1段ばしご', en: 'One Diamond' },
     difficulty: 'easy',
@@ -235,6 +321,25 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '90',
+    name: { ja: 'リング抜き', en: 'Ring Magic' },
+    difficulty: 'easy',
+    directory: '90_ring-magic',
+    ...ASSETS_MAP['90_ring-magic'],
+    description: { 
+      ja: 'ひもを通したはずのリングがあっという間に外れる有名なあやとりのトリックです', 
+      en: 'This is a famous string-figure trick in which a ring that seemed to be threaded onto the string comes off in an instant.' 
+    },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
+  },
+
+  {
     id: '9',
     name: { ja: '菊', en: 'Chrysanthemum' },
     difficulty: 'medium',
@@ -318,23 +423,6 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
-    id: '13',
-    name: { ja: 'ぱんぱんほうき', en: 'A Tent' },
-    difficulty: 'easy',
-    directory: '13_easy-broom',
-    ...ASSETS_MAP['13_easy-broom'],
-    description: { 
-      ja: '一瞬でほうきの形が出来上がります。世界各地に広く分布する有名なあやとりです。日本では最後に両手を広げる際、手を1回叩きます', 
-      en: 'The tent shape appears in an instant. This famous string figure is widely found around the world. In Japan, people clap their hands once as they spread them apart at the final step.' },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
-      source: '“Pitching a Tent”\nJ. Teit\n <i>The Thompson Indians of British Columbia</i> (1900)',
-      author: null,
-      references: null
-    }
-  },
-  {
     id: '14',
     name: { ja: '足あと', en: 'Footprint' },
     difficulty: 'easy',
@@ -399,7 +487,26 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     }
+  },
+  {
+    id: '88',
+    name: { ja: '手首抜き', en: 'Wrist Magic' },
+    difficulty: 'two_people',
+    directory: '88_wrist-magic',
+    ...ASSETS_MAP['88_wrist-magic'],
+    description: { 
+      ja: '相手の手首に巻きつけた糸が、あっという間に外れる有名なあやとりのトリックです。ここでは人差し指を使った手順を説明していますが、日本では主に中指を使います', 
+      en: 'This is a famous string-figure trick in which the thread wrapped around your partner’s wrist slips off in an instant. Here we explain a method that uses the index fingers, but in Japan people generally use the middle fingers.' 
     },
+    premiumCourseId: 0,
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: null,
+      author: null,
+      references: null
+    }
+  },
+
   {
     id: '17',
     name: { ja: 'ほうき', en: 'Broom' },
@@ -486,24 +593,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     }
-    },
-  {
-    id: '22',
-    name: { ja: '投げやり', en: 'Spear' },
-    difficulty: 'easy',
-    directory: '22_spear',
-    ...ASSETS_MAP['22_spear'],
-    description: { 
-      ja: 'マレー島に伝わるあやとりです。やりを左右に繰り返し飛ばして遊ぶことができます', 
-      en: 'This string figure comes from Malaya. You can play with it by repeatedly launching the spear from side to side.' 
-    },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: 'メラネシア', en: 'Melanesia' },
-      source: '“Casting the Fish-Spear”\nC. F. Jayne\n <i>String Figures</i> (1906)',
-      author: null,
-      references: null
-    }
   },
   {
     id: '23',
@@ -535,21 +624,6 @@ export const stringFigures: StringFigure[] = [
       region: null,
       source: '“A Shooting Star”\nSHISHIDO Yukio\n<i>Geometrical Figures</i> (1980)',
       author: { ja: 'SHISHIDO Yukio', en: 'SHISHIDO Yukio' },
-      references: null
-    }
-  },
-  {
-    id: '25',
-    name: { ja: 'ひもぬき', en: 'String Magic' },
-    difficulty: 'easy',
-    directory: '25_fingers-magic',
-    ...ASSETS_MAP['25_fingers-magic'],
-    description: { ja: '人差し指と親指にかかった糸が、一瞬にして抜けてしまう簡単なマジックです', en: 'This is a simple trick in which the string looped around the index finger and thumb slips off in an instant.' },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: null,
-      author: null,
       references: null
     }
   },
@@ -1485,59 +1559,6 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
-    id: '88',
-    name: { ja: '手首抜き', en: 'Wrist Magic' },
-    difficulty: 'two_people',
-    directory: '88_wrist-magic',
-    ...ASSETS_MAP['88_wrist-magic'],
-    description: { 
-      ja: '相手の手首に巻きつけた糸が、あっという間に外れる有名なあやとりのトリックです。ここでは人差し指を使った手順を説明していますが、日本では主に中指を使います', 
-      en: 'This is a famous string-figure trick in which the thread wrapped around your partner’s wrist slips off in an instant. Here we explain a method that uses the index fingers, but in Japan people generally use the middle fingers.' 
-    },
-    premiumCourseId: 0,
-    data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: null,
-      author: null,
-      references: null
-    }
-  },
-  {
-    id: '89',
-    name: { ja: 'もちつき', en: 'Mochitsuki' },
-    difficulty: 'two_people',
-    directory: '89_mochitsuki',
-    ...ASSETS_MAP['89_mochitsuki'],
-    description: { 
-      ja: '日本ではとても有名なあやとりです。向かい合った二人が右手、左手を交互にリズム良く合わせます', 
-      en: 'This is a very well-known string figure in Japan. Two people face each other and rhythmically bring their right and left hands together in turn.' },
-    premiumCourseId: 0,
-    data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: "“もちつき”\n有木昭久, 湯浅清四郎\n<i>楽しいあやとり遊び</i> (1973)",
-      author: null,
-      references: null
-    }
-  },
-  {
-    id: '90',
-    name: { ja: 'リング抜き', en: 'Ring Magic' },
-    difficulty: 'easy',
-    directory: '90_ring-magic',
-    ...ASSETS_MAP['90_ring-magic'],
-    description: { 
-      ja: 'ひもを通したはずのリングがあっという間に外れる有名なあやとりのトリックです', 
-      en: 'This is a famous string-figure trick in which a ring that seemed to be threaded onto the string comes off in an instant.' 
-    },
-    premiumCourseId: 0,
-    data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: null,
-      author: null,
-      references: null
-    }
-  },
-  {
     id: '93',
     name: { ja: 'ひとりの首長', en: 'One Chief' },
     difficulty: 'medium',
@@ -1555,24 +1576,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['19']
-  },
-  {
-    id: '95',
-    name: { ja: 'ふたり連続あやとり', en: 'Two People Sequence' },
-    difficulty: 'two_people',
-    directory: '95_2people-sequence',
-    ...ASSETS_MAP['95_2people-sequence'],
-    description: { 
-      ja: '300年以上前から多くの日本人が遊んできた、日本で最も有名なあやとりです。日本語の「あやとり」は元来、この二人で糸を取り合う遊びのことを指していました。ここで紹介するもの以外にも、日本中にさまざまなバリエーションが伝承されています', 
-      en: 'This is the most famous string game in Japan, played by many people for over 300 years. Originally, the Japanese term <i>ayatori</i> referred specifically to this two-player string game. In addition to the versions introduced here, many other variations have been passed down throughout Japan.' 
-    },
-    premiumCourseId: 0,
-    data: {
-      region: { ja: '日本、他', en: 'Japan, Other Regions' },
-      source: null,
-      author: null,
-      references: null
-    }
   },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },

@@ -282,7 +282,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     // 各カラムに1個ずつ挿入（最大でnumColumns個まで）
     const itemsToInsert = shuffledPremiumItems.slice(0, numColumns);
     itemsToInsert.forEach((item, index) => {
-      columns[index].unshift(item); // カラムの先頭に挿入
+      columns[index].push(item); // カラムの先頭に挿入
     });
     
     return columns;
