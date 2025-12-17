@@ -1,50 +1,50 @@
 [
     {
-        "subtitle": { "ja": "人差し指の構えから始めます。左右の親指で、中指手前側の糸を取ります", "en": "" }
+        "subtitle": { "ja": "人差し指の構えから始めます。左右の親指で、中指手前側の糸を取ります", "en": "From Opening A, with both thumbs pick up the near middle-finger strings." }
     },
     {
-        "subtitle": { "ja": "左右の小指で、中指向こう側の糸を取ります", "en": "" }
+        "subtitle": { "ja": "左右の小指で、中指向こう側の糸を取ります", "en": "With both little fingers, pick up the far middle-finger strings." }
     },
     {
-        "subtitle": { "ja": "左右の親指で、小指手前側の糸を取ります", "en": "" }
+        "subtitle": { "ja": "左右の親指で、小指手前側の糸を取ります", "en": "With both thumbs, pick up the near little-finger strings." }
     },
     {
-        "subtitle": { "ja": "左右の小指から全ての糸を外します", "en": "" }
+        "subtitle": { "ja": "左右の小指から全ての糸を外します", "en": "Release all the strings from both little fingers." }
     },
     {
-        "subtitle": { "ja": "左右の小指で、親指向こう側の2本の糸を取ります", "en": "" }
+        "subtitle": { "ja": "左右の小指で、親指向こう側の2本の糸を取ります", "en": "With both little fingers, pick up the two far thumb strings." }
     },
     {
-        "subtitle": { "ja": "左右の親指から全ての糸を外します", "en": "" }
+        "subtitle": { "ja": "左右の親指から全ての糸を外します", "en": "Release all the strings from both thumbs." }
     },
     {
-        "subtitle": { "ja": "左右の親指で、小指手前側の2本の糸を取ります", "en": "" }
+        "subtitle": { "ja": "左右の親指で、小指手前側の2本の糸を取ります", "en": "With both thumbs, pick up the two near little-finger strings." }
     },
     {
-        "subtitle": { "ja": "左右の中指で、反対側の手のひらの2本の糸を取り合います", "en": "" }
+        "subtitle": { "ja": "左右の中指で、反対側の手のひらの2本の糸を取り合います", "en": "With both middle fingers, pick up the two palm strings on the opposite hands." }
     },
     {
-        "subtitle": { "ja": "左右の中指にかかる上の2本の糸を残したまま、下の1本の糸だけを外します。「鉄橋」の完成です", "en": "" }
+        "subtitle": { "ja": "左右の中指にかかる上の2本の糸を残したまま、下の1本の糸だけを外します。「鉄橋」の完成です", "en": "Keeping the two upper strings on both middle fingers, release only the single lower string to complete \"the Iron Bridge\"." }
     },
     {
-        "subtitle": { "ja": "左右の中指の腹側にある糸を中指で上から握ります。「かめ」の完成です", "en": "" }
+        "subtitle": { "ja": "左右の中指の腹側にある糸を中指で上からにぎります。「かめ」の完成です", "en": "With both middle fingers, grasp from above the strings on the palm side of the middle fingers to complete \"the Turtle\"." }
     },
     {
-        "subtitle": { "ja": "左右の中指で握っていた糸を外します", "en": "" }
+        "subtitle": { "ja": "左右の中指で握っていた糸を外します", "en": "Release the strings held by both middle fingers." }
     },
     {
-        "subtitle": { "ja": "左右の人差し指と中指で、中央左右にある糸が斜めに交差した部分を挟んで取ります。「ゴム」の完成です", "en": "" }
+        "subtitle": { "ja": "左右の人差し指と中指で、中央左右にある糸が斜めに交差した部分を挟んで取ります。「ゴム」の完成です", "en": "With both index and middle fingers, pinch and pick up the diagonally crossed strings at the left and right of the center to complete \"the Rubber Band\"." }
     },
     {
-        "subtitle": { "ja": "小指同士の指先を合わせ、右小指の輪を全て左小指に移します。同様に右親指の輪も全て左親指に移します。「飛行機」の完成です", "en": "" }
+        "subtitle": { "ja": "小指同士の指先を合わせ、右小指の輪を全て左小指に移します。同様に右親指の輪も全て左親指に移します。「飛行機」の完成です", "en": "Bring the little-finger tips together and transfer all the right little-finger loops to the left little finger. In the same way, transfer all the right thumb loops to the left thumb to complete \"the Airplane\"." }
     },
     {
-        "subtitle": { "ja": "同様に右人差し指の輪も全て左人差し指に、右中指の輪も全て左中指に移します。形を整えて「かぶと」の完成です", "en": "" }
+        "subtitle": { "ja": "同様に右人差し指の輪も左人差し指に、右中指の輪も左中指に移します。形を整えて「かぶと」の完成です", "en": "In the same way, transfer the right index-finger loops to the left index finger and the right middle-finger loops to the left middle finger. Adjust the figure to complete \"the Helmet\"." }
     },
     {
-        "subtitle": { "ja": "左親指と左小指の全ての糸を外します。左人差し指と中指の間から垂れた糸を引き出して「おたまじゃくし」の完成です", "en": "" }
+        "subtitle": { "ja": "左親指と左小指の全ての糸を外します。左人差し指と中指の間から垂れた糸を引き出して「おたまじゃくし」の完成です", "en": "Release all the strings from the left thumb and left little finger. Draw out the string hanging between the left index and middle fingers to complete \"the Tadpole\"." }
     },
     {
-        "subtitle": { "ja": "左中指向こう側の2本の糸を右手で持って右側に引くことで、左手の糸が全て外れます", "en": "" }
+        "subtitle": { "ja": "左中指向こう側の2本の糸を右手で持って右側に引くことで、左手の糸が全て外れます", "en": "With the right hand, grasp the two far left middle-finger strings and pull them to the right, causing all the strings on the left hand to come off." }
     }    
 ]
