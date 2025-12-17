@@ -15,7 +15,5 @@ export const FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS = {
   14: require('../../../assets/string-figures/95_2people-sequence/chapters/14.mp4'),
   15: require('../../../assets/string-figures/95_2people-sequence/chapters/15.mp4'),
   16: require('../../../assets/string-figures/95_2people-sequence/chapters/16.mp4'),
-  17: require('../../../assets/string-figures/95_2people-sequence/chapters/17.mp4'),
-  18: require('../../../assets/string-figures/95_2people-sequence/chapters/18.mp4'),
-  19: require('../../../assets/string-figures/95_2people-sequence/chapters/19.mp4')
+  17: require('../../../assets/string-figures/95_2people-sequence/chapters/17.mp4')
 };

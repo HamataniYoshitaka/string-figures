@@ -1,62 +1,104 @@
 [
     {
         "subtitle": { 
-            "ja": "はじめの構えから始めます。左親指手前の糸を右手で持ち、左親指に1周巻きます", 
-            "en": "Begin in \"Position 1\". Take the near left-thumb string with the right hand and wrap it once around the left thumb." 
+            "ja": "一人目: 右手を輪の中に下から入れ、右手首に糸を1回巻き付けます", 
+            "en": "" 
         }
     },
     {
         "subtitle": { 
-            "ja": "左親指の輪に右人差し指を下から入れて糸を取ります", 
-            "en": "Insert the right index finger from below into the left-thumb loop and pick up the string." 
+            "ja": "一人目: 左手を輪の中に下から入れ、左手首に糸を1回巻き付けます", 
+            "en": "" 
         }
     },
     {
         "subtitle": { 
-            "ja": "左人差し指で、右手のひらの糸をを右人差し指の輪の中から取ります", 
-            "en": "With the left index finger, pick up the right-palm string from inside the right–index-finger loop." 
+            "ja": "一人目: 左右の中指で、反対側の手首の糸を取り合います", 
+            "en": "" 
         }
     },
     {
         "subtitle": { 
-            "ja": "右人差し指で、左手のひらの糸をを左人差し指の輪の中から取ります", 
-            "en": "With the right index finger, pick up the left-palm string from inside the left–index-finger loop." 
+            "ja": "二人目: 左右の親指と人差し指で、糸が斜めに交差する部分を外側から指を入れてはさみます", 
+            "en": "" 
         }
     },
     {
         "subtitle": { 
-            "ja": "左手から全ての糸を静かに外します", 
-            "en": "Let all the strings fall away from the left hand." 
+            "ja": "二人目: 左右の親指と人差し指を外側に引き出し、手首の糸を下から取ります", 
+            "en": "" 
         }
     },
     {
         "subtitle": { 
-            "ja": "右人差し指の上の輪を左手で持ち、右人差し指下の糸の上を通して上下を入れ替えます", 
-            "en": "With the left hand, take the upper loop on the right index finger and carry it over the lower right–index-finger string to exchange the upper and lower positions." 
+            "ja": "一人目: 左右の親指と人差し指で、中央で糸が斜めに交差する部分に上から指を入れてはさみます", 
+            "en": "" 
         }
     },
     {
         "subtitle": { 
-            "ja": "右人差し指の2本の輪の間に左親指と小指を入れ、上の輪を左親指で、下の輪を左小指で取り、右人差し指から糸を外します", 
-            "en": "Insert the left thumb and little finger between the two loops on the right index finger, take the upper loop on the left thumb and the lower loop on the left little finger, and release the strings from the right index finger." 
+            "ja": "一人目: 左右の親指と人差し指を外側に引き出し、一人目の親指同士と人差し指同士を繋ぐ糸を下から取ります", 
+            "en": "" 
         }
     },
     {
         "subtitle": { 
-            "ja": "左右の親指の輪を反対側の手で持ち、手前側に半回転させて元の親指に戻します", 
-            "en": "With the opposite hand, take each thumb loop, turn it halfway toward you, and return it to the original thumb." 
+            "ja": "二人目: 中央右の糸を左小指で、中央左の糸を右小指でにぎります", 
+            "en": "" 
         }
     },
     {
         "subtitle": { 
-            "ja": "左右の親指で、小指手前の糸を取ります", 
-            "en": "With both thumbs, pick up from below the near little-finger strings." 
+            "ja": "二人目: 左右の小指を外側に引き出し、一人目の親指同士と人差し指同士を繋ぐ糸を下から取ります", 
+            "en": "" 
         }
     },
     {
         "subtitle": { 
-            "ja": "左右の小指の輪に人差し指を上から入れ、親指向こう側の糸を取ります。人差し指から糸が外れないように親指で押さえ、両手を左右に開いて完成です", 
-            "en": "Insert both index fingers from above into the little-finger loops and move over and pick down the far thumb strings. Hold them in place with the thumbs so they do not slip off the index fingers, and open the hands to the sides to show the finished figure." 
+            "ja": "一人目: 左右の親指と人差し指で、糸が斜めに交差する部分を外側から指を入れてはさみます", 
+            "en": "" 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "一人目: 左右の親指と人差し指を外側に引き出し、二人目の親指同士と人差し指同士を繋ぐ糸を上から取ります", 
+            "en": "" 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "二人目: 左右の親指と人差し指で、中央で糸が斜めに交差する部分に上から指を入れてはさんで引き出し、中央の輪に下から指を入れて広げます", 
+            "en": "" 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "一人目: 左右の親指と人差し指で、中央で糸が斜めに交差する部分に上から指を入れてはさみ、中央の輪に下から指を入れて広げます", 
+            "en": "" 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "二人目: 左右の親指と人差し指で、左右で糸が斜めに交差する部分に上から指を入れてはさみ、中央の2本の糸の間に指を下から入れて広げます", 
+            "en": "" 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "二人目: 全体を時計回りに90°回します。一人目: 左右の糸を小指でにぎり、糸が斜めに交差する部分を上から親指と人差し指ではさみ、中央の輪に下から指を入れて広げます", 
+            "en": "" 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "二人目: 左右の親指と人差し指で、糸が斜めに交差する部分を外側から指を入れてはさみ、中央の輪に指を下から入れて広げます", 
+            "en": "" 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "同じ操作を何回も繰り返すことができます", 
+            "en": "" 
         }
     }
 ]
