@@ -153,7 +153,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'マレー島に伝わるあやとりです。やりを左右に繰り返し飛ばして遊ぶことができます', 
       en: 'This string figure comes from Malaya. You can play with it by repeatedly launching the spear from side to side.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: 'メラネシア', en: 'Melanesia' },
       source: '“Casting the Fish-Spear”\nC. F. Jayne\n <i>String Figures</i> (1906)',
@@ -168,7 +168,7 @@ export const stringFigures: StringFigure[] = [
     directory: '25_fingers-magic',
     ...ASSETS_MAP['25_fingers-magic'],
     description: { ja: '人差し指と親指にかかった糸が、一瞬にして抜けてしまう簡単なマジックです', en: 'This is a simple trick in which the string looped around the index finger and thumb slips off in an instant.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: null,
@@ -240,7 +240,7 @@ export const stringFigures: StringFigure[] = [
       ja: '最も有名なあやとり「4段ばしご」の2段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
       en: 'This is the two-diamond version of the famous string figure <i>Four Diamonds</i>. The first half of the sequence differs, but the latter half follows the same movements as <i>Four Diamonds</i>. In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '世界中に広く分布', en: 'Worldwide distribution' },
       source: '“Osage Two Diamonds”\nC. F. Jayne\n <i>String Figures</i> (1906)',
@@ -258,7 +258,7 @@ export const stringFigures: StringFigure[] = [
       ja: '最も有名なあやとり「4段ばしご」の3段バージョンです。前半の手順が異なりますが、後半は「4段ばしご」と同じ操作を行います。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
       en: 'This is the three-diamond version of the famous string figure <i>Four Diamonds</i>. The first half of the sequence differs, but the latter half follows the same movements as <i>Four Diamonds</i>. In this version, we introduce the Japanese method, which is distinguished by the use of the middle fingers.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: 'ハワイ、日本、他', en: 'Hawaii, Japan, etc.' },
       source: '“Three Eyes”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
@@ -294,7 +294,7 @@ export const stringFigures: StringFigure[] = [
       ja: '最も有名なあやとり「4段ばしご」の5段バージョンです。後半に1手順増えるだけで、他は「4段ばしご」と同じです。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
       en: 'This is the five-diamond version of the well-known string figure <i>Four Diamonds</i>. Only one additional step is added in the second half; all other steps are the same as in <i>Four Diamonds</i>. Here, we present the method commonly taught in Japan, which uses the middle fingers.' 
     },
-    premiumCourseId: 0,
+    premiumCourseId: 1,
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: null,
@@ -312,7 +312,7 @@ export const stringFigures: StringFigure[] = [
       ja: '最も有名なあやとり「4段ばしご」の6段バージョンです。後半に1手順増えるだけで、他は「4段ばしご」と同じです。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
       en: 'This is the six-diamond version of the well-known string figure <i>Four Diamonds</i>. Only one additional step is added in the latter half; all other steps are the same as in <i>Four Diamonds</i>. Here, we present the method commonly taught in Japan, which uses the middle fingers.' 
     },
-    premiumCourseId: 0,
+    premiumCourseId: 1,
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: null,
@@ -383,7 +383,7 @@ export const stringFigures: StringFigure[] = [
     directory: '10_magic-fingers',
     ...ASSETS_MAP['10_magic-fingers'],
     description: { ja: '世界中で親しまれているあやとりのトリックです', en: 'A world-renowned string figure trick.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: null
   },
   {
@@ -414,7 +414,7 @@ export const stringFigures: StringFigure[] = [
       ja: '中央にダイヤの形が9個並びます。手順は短いですが、途中で薬指を使う箇所があるので指を間違えないようにしましょう', 
       en: 'Nine diamond shapes line up across the center. The sequence is short, but be careful not to use the wrong finger, as there is a step that requires the ring fingers.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '日本、ハワイ', en: 'Japan, Hawaii' },
       source: '“Nine Eyes”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
@@ -432,7 +432,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'かわいい足あとができます。大きさや色を変えて何個か並べるとより面白いでしょう。糸を二重にして取るのもおすすめです', 
       en: 'You can make cute footprints with this string figure. Lining up several of them with different sizes and colors will make it even more fun. It is also recommended to take the string double.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: 'ボリビア', en: 'Bolivia' },
       source: '“Ulou”\nS. Rydén\n <i>South American String Figures</i> (1934)',
@@ -449,7 +449,7 @@ export const stringFigures: StringFigure[] = [
     description: { 
       ja: '4本のバナナが出来上がる、簡単な手順のあやとりです。最後に手から糸を外して完成します', 
       en: 'This easy string figure creates four bananas. To finish, you release the strings from your hands to reveal the completed shape.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: null,
@@ -531,7 +531,7 @@ export const stringFigures: StringFigure[] = [
     directory: '18_mt-fuji',
     ...ASSETS_MAP['18_mt-fuji'],
     description: { ja: '今回紹介するあやとり以外にも、日本には富士山を表すあやとりがたくさんあります', en: 'In addition to the figure presented this time, Japan has many other string figures that depict Mount Fuji.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“富士山”\n夏堀謹二郎\n <i>日本の綾取</i> (1986)',
@@ -568,7 +568,7 @@ export const stringFigures: StringFigure[] = [
       ja: '日本とナバホ族に伝わるあやとりです。日本では「つづみ」という名前で呼ばれますが、どちらも太鼓を表しています', 
       en: 'This string figure is found in both Japan and Navajo tradition. In Japan it is called “Tsuzumi,” and in both cultures the figure represents a drum.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: '日本、北アメリカ', en: 'Japan, North America' },
       source: '“Drum”\nW. Wirt, M. Sherman, M. Mitchell\n <i>String Games of the Navajo : 1999</i> (2000)',
@@ -586,7 +586,7 @@ export const stringFigures: StringFigure[] = [
       ja: '日本の家にはそれぞれ家紋があり、「菊水」もその一つです', 
       en: 'In Japan, families traditionally have their own crests, and <i>Kikusui</i> is one such family emblem.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“KIKUSUI”\nSAITO T. \n <i>Ayatori: The Traditional String Figures of Japan : 1970-99</i> (2004)',
@@ -601,7 +601,7 @@ export const stringFigures: StringFigure[] = [
     directory: '23_finger-stroll',
     ...ASSETS_MAP['23_finger-stroll'],
     description: { ja: '親指から小指まで順番に糸が移動していき、また戻ってくるあやとりです', en: 'This string figure moves the thread sequentially from the thumb to the little finger and then back again.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: null,
@@ -628,6 +628,24 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '78',
+    name: { ja: '鉄橋・かめ・ゴム・飛行機', en: 'Bridge・Turtle・Rubber・Plane' },
+    difficulty: 'medium',
+    directory: '78_bridge-turtle-plane',
+    ...ASSETS_MAP['78_bridge-turtle-plane'],
+    description: { 
+      ja: '鉄橋から始まり、かめ、ゴム、飛行機、かぶと、おたまじゃくしと連続してパターンを作るあやとりです。日本ではとても有名なあやとりで、さまざまなバリエーションがあります', 
+      en: 'This string figure begins with “Iron Bridge” and then continues through a sequence of patterns: turtle, rubber band, airplane, helmet, and tadpole. It is very well known in Japan and has many different variations.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本、他', en: 'Japan, Other Regions' },
+      source: '“Bridge, Turtle, and Plane”\n野口広\n<i>あやとり 続々</i> (1975)',
+      author: null,
+      references: null
+    }
+  },
+  {
     id: '26',
     name: { ja: 'ハンモック', en: 'Hammock' },
     difficulty: 'easy',
@@ -637,7 +655,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'あやとりが完成した状態が、左右の手の形も含めて赤ちゃんを寝かしつけている動きになる、愛らしいあやとりです', 
       en: 'This charming string figure depicts the motion of rocking a baby to sleep, including the posture of both hands once the figure is finished.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: 'ハワイ', en: 'Hawaii' },
       source: '“One Eye, Ahamaka, or Palai Huna Nui (hammock, extreme shyness)”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
@@ -655,7 +673,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'ハワイに伝わるあやとりです。ハワイ語で「weoweo」と呼ばれているキントキダイ科の赤い魚を表しています', 
       en: 'This string figure originates from Hawaii and depicts a bright red snapper known in Hawaiian as <i>weoweo</i>.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: 'ハワイ', en: 'Hawaii' },
       source: '“Weoweo”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
@@ -727,7 +745,7 @@ export const stringFigures: StringFigure[] = [
       ja: '日本の各地で、さまざまな名前で伝えられているあやとりです。手のひらの向きを変えることで、はたおり機が動きます', 
       en: 'This string figure is passed down across Japan under various names. By changing the orientation of your palms, the loom appears to move.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“はたおり”\n有木昭久, 湯浅清四郎\n <i>楽しいあやとり遊び</i> (1973)',
@@ -803,7 +821,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'アムワンギヨはナウル語で「枝」のことで、中央の幹から左右に枝が伸びている状態を表しています', 
       en: 'In Nauruan, <i>Amwangiyo</i> means “branches,” depicting the way branches spread outward from a central trunk.' 
     },
-    premiumCourseId: 1, // コレクション1
+    premiumCourseId: 2, // コレクション1
     data: {
       region: { ja: 'ナウル', en: 'Nauru' },
       source: '“Amwangiyo”\nH. C. Maude\n<i>The String Figures of Nauru Island</i> (1971)',
@@ -822,7 +840,7 @@ export const stringFigures: StringFigure[] = [
       ja: '同じ出来上がりのパターンになるあやとりが、様々な名称で世界中に伝承されています。ここではナウルに伝わる手順を紹介します', 
       en: 'String figures with the same final pattern are passed down around the world under various names. Here, we present the version traditionally taught in Nauru.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: 'ナウル、ミクロネシア、オーストラリア、他', en: 'Nauru, Micronesia, Australia, etc.' },
       source: 'Die Sonne (e kuan)\nP. Hambruch\n<i>Nauru</i> (1914)',
@@ -840,7 +858,7 @@ export const stringFigures: StringFigure[] = [
       ja: '山の頂上に大きな月が昇ってくる、日本の伝承あやとりです。両手を広げることで、月が小さくなりながら高く昇っていきます', 
       en: 'This is a traditional Japanese string figure depicting a large moon rising over the mountaintop. As you spread your hands apart, the moon becomes smaller and rises higher into the sky.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“山の上のお月さん”\nさいとうたま\n<i>あやとりいととり 2</i> (1982)',
@@ -981,7 +999,7 @@ export const stringFigures: StringFigure[] = [
     directory: '48_shovel',
     ...ASSETS_MAP['48_shovel'],
     description: { ja: 'カナダのイヌイットに伝わるあやとりです', en: 'This string figure comes from the Inuit of Canada.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“A Snow Shovel”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
@@ -1018,7 +1036,7 @@ export const stringFigures: StringFigure[] = [
       ja: '「シベリアの家」を2階建てにしたあやとりです。ひもを順番に外していくことで、家が壊れ、修復して1階建てになり、また壊れて中から子供が逃げ出します', 
       en: 'This is a two-story version of “Siberian House.” By removing the loops in sequence, the house collapses, is repaired into a single-story house, and then collapses again as the children escape from inside.' 
     },
-    premiumCourseId: 0, // 無料 
+    premiumCourseId: 1, // 無料 
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“taŋäүot”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
@@ -1073,7 +1091,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'カナダのイヌイットに伝わるあやとりです。手順は長くはありませんが、1つ1つの操作はかなり複雑です', 
       en: 'This string figure is traditionally passed down among the Inuit people of Canada. Although the overall sequence is short, each step is fairly complex.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“Two Fawns”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
@@ -1110,7 +1128,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'ティーピーはアメリカインディアンのうち、おもに平原の部族が利用する移動用住居です。「テントの幕」というあやとりがあり、このティーピーの出入口に掛ける幕を表しています', 
       en: 'A teepee is a movable home traditionally used by Native American tribes of the Great Plains. There is a string figure known as “A Tent Flap,” depicting the fabric hung at the entrance of the teepee.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: '“An Apache Teepee”\nC. F. Jayne\n<i>String Figures</i> (1906)',
@@ -1147,7 +1165,7 @@ export const stringFigures: StringFigure[] = [
       ja: '上下2層に分かれた平面が天と地を表している、美しいあやとりです。南アメリカのマプチェ族に伝わるあやとりです', 
       en: 'This beautiful string figure represents heaven and earth with two horizontal layers—an upper and a lower plane. It comes from the Mapuche people of South America.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: '南アメリカ', en: 'South America' },
       source: '“casa abandonada”\nJ. Braunstein, I. Balducci, M. Reca, O. Sturzenegger\n<i>Juegos y Lenguajes de Hilo en el Gran Chaco</i>(2017)',
@@ -1220,7 +1238,7 @@ export const stringFigures: StringFigure[] = [
       ja: '2000年にドイツ万博でナイジェリア男性から採集されたあやとりです。当時、完成形には名前が付いていませんでしたが、ディズニーの有名なキャラクターに似ていることから名前が付けられました', 
       en: 'This string figure was collected in 2000 from a Nigerian man at the World Expo in Germany. At the time, the completed form had no name, but it was later given one because it resembled a famous Disney character.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: 'ナイジェリア', en: 'Nigeria' },
       source: '“Mouse Face”\nA. Reichert (BISFA 9)\n<i>Some String Figures from Modern Africa : 2000</i> (2002)',
@@ -1238,7 +1256,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'モア島はトレス海峡に浮かぶ、小高い山がある島です。頂上にいつも雲がかかっている山の姿を表したあやとりです。', 
       en: '<i>The Island of Moa</i> is an island with a modest mountain located in the Torres Strait. This string figure represents the mountain, which is always covered with clouds at its summit.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // 無料
     data: {
       region: { ja: 'メラネシア', en: 'Melanesia' },
       source: '“The Island of Moa”\nK. Haddon\n<i>String Games for Beginners</i> (1934)',
@@ -1274,7 +1292,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'イヌイットのあやとりです。中央の満月は、地域によっては太陽を表します', 
       en: 'This is an Inuit string figure. The full moon in the center is interpreted as the sun in some regions.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“The Moon Between the Mountains”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
@@ -1292,7 +1310,7 @@ export const stringFigures: StringFigure[] = [
       ja: '「カヤックを漕ぐ人」から続けてとるあやとりで、漕いで行った人が遥か向こうに見た山並みを表しています。ここでは「カヤックを漕ぐ人」の完成形からの手順を紹介していますので、「カヤックを漕ぐ人」の作り方を先に習得してから始めて下さい', 
       en: 'This string figure continues from <i>The Kayaker</i> and represents the mountain range seen far in the distance by the paddler. The instructions here begin from the finished form of <i>The Kayaker,</i> so please learn how to make <i>The Kayaker</i> first before starting.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: '“The Range of the Mountains”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
@@ -1331,7 +1349,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'ひもを2重にして、指に巻きつけて作成するあやとりです。手を開閉することで糸を紡いでいるように見えます', 
       en: 'This figure is created by folding the string in half and wrapping it around your fingers. When you open and close your hands, the motion resembles spinning yarn.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: '“Spindle”\nF. D. McCarthy 1960\n <i>The String Figures of Yirrkalla</i> (1960)',
@@ -1348,7 +1366,7 @@ export const stringFigures: StringFigure[] = [
     description: { 
       ja: 'ベッドの中央で男が眠っている様子を表現したあやとりです。小指の糸を外すことで、ベッドが壊れて男が転げ落ちます', 
       en: 'This string figure shows a man sleeping at the center of a bed. When you release the strings from your little fingers, the bed collapses and the man falls off.' },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: 'メラネシア', en: 'Melanesia' },
       source: '“A Man and a Bed”\nC. F. Jayne\n <i>String Figures</i> (1906)',
@@ -1385,7 +1403,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'たつまきの形が立体的に表現された見事なあやとりです。ここでは「カヌー」の完成形からの手順を紹介していますので、「カヌー」の作り方を先に習得してから始めて下さい', 
       en: 'This is a remarkable string figure that expresses the shape of a tornado in three dimensions. The instructions here begin from the completed form of <i>A Canoe,</i> so please learn how to make <i>A Canoe</i> first before starting.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: 'オーストラリア', en: 'Australia' },
       source: '“The Waterspout (Mare)”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
@@ -1405,7 +1423,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'こうもりが群れになってぶら下がっている様子を表しているあやとりです。最後にこうもりは次々と飛び立って行きます', 
       en: 'This string figure represents a group of bats hanging together. In the final steps, the bats fly away one after another.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '南アメリカ', en: 'South America' },
       source: '“t\'afoloc (muchos pecaríes)”\nJ. Braunstein\n <i>Figuras y Juegos de Hilos de los Indios Maká </i> (1992)',
@@ -1413,24 +1431,7 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
-  {
-    id: '78',
-    name: { ja: '鉄橋・かめ・ゴム・飛行機', en: 'Bridge・Turtle・Rubber・Plane' },
-    difficulty: 'medium',
-    directory: '78_bridge-turtle-plane',
-    ...ASSETS_MAP['78_bridge-turtle-plane'],
-    description: { 
-      ja: '鉄橋から始まり、かめ、ゴム、飛行機、かぶと、おたまじゃくしと連続してパターンを作るあやとりです。日本ではとても有名なあやとりで、さまざまなバリエーションがあります', 
-      en: 'This string figure begins with “Iron Bridge” and then continues through a sequence of patterns: turtle, rubber band, airplane, helmet, and tadpole. It is very well known in Japan and has many different variations.' 
-    },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: '日本、他', en: 'Japan, Other Regions' },
-      source: '“Bridge, Turtle, and Plane”\n野口広\n<i>あやとり 続々</i> (1975)',
-      author: null,
-      references: null
-    }
-  },
+
   {
     id: '80',
     name: { ja: 'テリハボクの花', en: 'Blossom of the Calophyllum' },
@@ -1441,7 +1442,7 @@ export const stringFigures: StringFigure[] = [
       ja: '太平洋諸島などに自生する常緑高木「テリハボク」の花を表したあやとりです。テリハボクはナウルの"国の木"に指定されています', 
       en: 'This figure depicts the flower of <i>Calophyllum</i>, an evergreen tree found in places such as the Pacific Islands. In Nauru, this tree is recognized as the national tree.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: 'ナウル', en: 'Nauru' },
       source: '“Die Blüte des Calophyllum (e bŭr ĭn íjọ)”\nP. Hambruch\n<i>Nauru</i> (1914)',
@@ -1459,7 +1460,7 @@ export const stringFigures: StringFigure[] = [
       ja: '北アメリカのナバホ族に伝わるあやとりです。後半は「たくさんの星」と同じ手順で作成します', 
       en: 'This string figure comes from the Navajo people of North America. The second half is made using the same steps as <i>Many Stars.</i>' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 1, // 無料
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: '“Bat”\nW. Wirt, M. Sherman, M. Mitchell (BISFA 7)\n <i>String Games of the Navajo : 1999</i> (2000)',
@@ -1514,7 +1515,7 @@ export const stringFigures: StringFigure[] = [
       ja: '長い手順と複雑な操作が必要なあやとりですが、最後の手順で白鳥が首を伸ばす動きはとても優雅です。地域によっては白鳥が飛び立つ所まであやとりが続き、後には波紋だけが残ります', 
       en: 'This string figure involves many steps and intricate moves, but the final moment—when the swan gracefully extends its neck—is truly beautiful. In certain regions, the sequence goes on to show the swan taking flight, with only the ripples left in its wake.' 
     },
-    premiumCourseId: 0, // 無料
+    premiumCourseId: 2, // コレクション2
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“The Swan”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
@@ -1532,7 +1533,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'パプアニューギニアのあやとりです。右手を引くと、大きな荷物を担いだ二人が吊り橋を渡って行きます。ここではもう一人の人に手伝ってもらう手順を紹介していますが、棒を口でくわえる、などの方法で一人で取ることも可能です', 
       en: 'This string figure comes from Papua New Guinea. When you pull your right hand, a man carrying lumber crosses a suspension bridge. Here we introduce a method that involves assistance from another person, but it is also possible to perform it alone—for example, by holding the stick in your mouth.' 
     },
-    premiumCourseId: 0,
+    premiumCourseId: 2,
     data: {
       region: { ja: 'メラネシア', en: 'Melanesia' },
       source: '“Making Fire and Rope Bridge”\nSHISHIDO Y., NOGUCHI H. (BSFA 14)\n <i>Some String Figures of Highland People in Papua New Guinea : 1984</i> (1987)',
@@ -1568,7 +1569,7 @@ export const stringFigures: StringFigure[] = [
       ja: '同じパターンが様々な地域で伝承されているあやとりです。このあやとりが採取されたカロリン諸島には「二人の首長」というあやとりもありますが、難易度は「ひとりの首長」の方が高いです', 
       en: 'This string figure is a pattern that has been handed down in many different regions. In the Caroline Islands, where this figure was collected, there is also a version called <i>Two Chiefs,</i> but <i>One Chief</i> is considered the more difficult of the two.' 
     },
-    premiumCourseId: 0,
+    premiumCourseId: 1,
     data: {
       region: { ja: 'ミクロネシア', en: 'Micronesia' },
       source: '“One Chief”\nC. F. Jayne\n <i>String Figures</i> (1906)',
