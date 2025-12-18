@@ -375,6 +375,11 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/75_tornado/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/75_tornado/preview.mp4'),
   },
+  '76_sunrise-sunset': {
+    thumbnail: require('../../assets/string-figures/76_sunrise-sunset/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/76_sunrise-sunset/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/76_sunrise-sunset/preview.mp4'),
+  },
   '77_bats': {
     thumbnail: require('../../assets/string-figures/77_bats/thumbnail-kraft.gif'),
     patternImage: require('../../assets/string-figures/77_bats/pattern.jpg'),

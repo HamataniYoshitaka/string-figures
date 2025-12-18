@@ -69,10 +69,12 @@ import { FIGURE_69_MOON_BETWEEN_MOUNTAINS_VIDEOS } from './figure-69_moon-betwee
 import { FIGURE_70_MOUNTAINS_VIDEOS } from './figure-70_mountains';
 import { FIGURE_71_SIBERIAN_HOUSE_VIDEOS } from './figure-71_siberian-house';
 import { FIGURE_72_SPINDLE_VIDEOS } from './figure-72_spindle';
+import { FIGURE_73_SLEEPER_VIDEOS } from './figure-73_sleeper';
 import { FIGURE_74_CANOE_VIDEOS } from './figure-74_canoe';
 import { FIGURE_75_TORNADO_VIDEOS } from './figure-75_tornado';
+import { FIGURE_76_SUNRISE_SUNSET_VIDEOS } from './figure-76_sunrise-sunset';
 import { FIGURE_77_BATS_VIDEOS } from './figure-77_bats';
-import { FIGURE_73_SLEEPER_VIDEOS } from './figure-73_sleeper';
+import { FIGURE_78_BRIDGE_TURTLE_PLANE_VIDEOS } from './figure-78_bridge-turtle-plane';
 import { FIGURE_80_CALOPHYLLUM_VIDEOS } from './figure-80_calophyllum';
 import { FIGURE_81_BAT_VIDEOS } from './figure-81_bat';
 import { FIGURE_82_STORM_CLOUDS_VIDEOS } from './figure-82_storm-clouds';
@@ -82,12 +84,11 @@ import { FIGURE_86_ROPE_BRIDGE_VIDEOS } from './figure-86_rope-bridge';
 import { FIGURE_87_PALM_TREE_VIDEOS } from './figure-87_palm-tree';
 import { FIGURE_88_WRIST_MAGIC_VIDEOS } from './figure-88_wrist-magic';
 import { FIGURE_89_MOCHITSUKI_VIDEOS } from './figure-89_mochitsuki';
+import { FIGURE_90_RING_MAGIC_VIDEOS } from './figure-90_ring-magic';
 import { FIGURE_91_5DIAMONDS_VIDEOS } from './figure-91_5diamonds';
 import { FIGURE_92_6DIAMONDS_VIDEOS } from './figure-92_6diamonds';
 import { FIGURE_93_ONE_CHIEF_VIDEOS } from './figure-93_one-chief';
-import { FIGURE_90_RING_MAGIC_VIDEOS } from './figure-90_ring-magic';
 import { FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS } from './figure-95_2perople-sequence';
-import { FIGURE_78_BRIDGE_TURTLE_PLANE_VIDEOS } from './figure-78_bridge-turtle-plane';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -164,6 +165,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '72_spindle': FIGURE_72_SPINDLE_VIDEOS,
   '74_canoe': FIGURE_74_CANOE_VIDEOS,
   '75_tornado': FIGURE_75_TORNADO_VIDEOS,
+  '76_sunrise-sunset': FIGURE_76_SUNRISE_SUNSET_VIDEOS,
   '77_bats': FIGURE_77_BATS_VIDEOS,
   '78_bridge-turtle-plane': FIGURE_78_BRIDGE_TURTLE_PLANE_VIDEOS,
   '80_calophyllum': FIGURE_80_CALOPHYLLUM_VIDEOS,

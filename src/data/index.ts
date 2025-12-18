@@ -1432,6 +1432,24 @@ export const stringFigures: StringFigure[] = [
     relatedFigures: ['74']
   },
   {
+    id: '76',
+    name: { ja: '日の出・日の入り', en: 'Sunrise and Sunset' },
+    difficulty: 'medium',
+    directory: '76_sunrise-sunset',
+    ...ASSETS_MAP['76_sunrise-sunset'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '', en: '' },
+      source: '“Sunrise and Sunset”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
+  {
     id: '77',
     name: { ja: 'こうもりの群れ', en: 'Bats' },
     difficulty: 'hard',
