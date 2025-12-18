@@ -1467,7 +1467,24 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
-
+  {
+    id: '79',
+    name: { ja: 'お守り', en: 'Omamori' },
+    difficulty: 'hard',
+    directory: '79_omamori',
+    ...ASSETS_MAP['79_omamori'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Omamori”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
   {
     id: '80',
     name: { ja: 'テリハボクの花', en: 'Blossom of the Calophyllum' },
@@ -1613,6 +1630,24 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['19']
+  },
+  {
+    id: '96',
+    name: { ja: 'コーラル', en: 'Coral' },
+    difficulty: 'hard',
+    directory: '96_coral',
+    ...ASSETS_MAP['96_coral'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Coral”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
   },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },

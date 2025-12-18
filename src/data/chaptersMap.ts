@@ -78,6 +78,7 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '76_sunrise-sunset': require('../../assets/string-figures/76_sunrise-sunset/chapters.json'),
   '77_bats': require('../../assets/string-figures/77_bats/chapters.json'),
   '78_bridge-turtle-plane': require('../../assets/string-figures/78_bridge-turtle-plane/chapters.json'),
+  '79_omamori': require('../../assets/string-figures/79_omamori/chapters.json'),
   '80_calophyllum': require('../../assets/string-figures/80_calophyllum/chapters.json'),
   '81_bat': require('../../assets/string-figures/81_bat/chapters.json'),
   '82_storm-clouds': require('../../assets/string-figures/82_storm-clouds/chapters.json'),
@@ -92,4 +93,5 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '92_6diamonds': require('../../assets/string-figures/92_6diamonds/chapters.json'),
   '93_one-chief': require('../../assets/string-figures/93_one-chief/chapters.json'),
   '95_2people-sequence': require('../../assets/string-figures/95_2people-sequence/chapters.json'),
+  '96_coral': require('../../assets/string-figures/96_coral/chapters.json'),
 };

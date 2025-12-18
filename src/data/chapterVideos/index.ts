@@ -89,6 +89,8 @@ import { FIGURE_91_5DIAMONDS_VIDEOS } from './figure-91_5diamonds';
 import { FIGURE_92_6DIAMONDS_VIDEOS } from './figure-92_6diamonds';
 import { FIGURE_93_ONE_CHIEF_VIDEOS } from './figure-93_one-chief';
 import { FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS } from './figure-95_2perople-sequence';
+import { FIGURE_79_OMAMORI_VIDEOS } from './figure-79_omamori';
+import { FIGURE_96_CORAL_VIDEOS } from './figure-96_coral';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -168,6 +170,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '76_sunrise-sunset': FIGURE_76_SUNRISE_SUNSET_VIDEOS,
   '77_bats': FIGURE_77_BATS_VIDEOS,
   '78_bridge-turtle-plane': FIGURE_78_BRIDGE_TURTLE_PLANE_VIDEOS,
+  '79_omamori': FIGURE_79_OMAMORI_VIDEOS,
   '80_calophyllum': FIGURE_80_CALOPHYLLUM_VIDEOS,
   '81_bat': FIGURE_81_BAT_VIDEOS,
   '82_storm-clouds': FIGURE_82_STORM_CLOUDS_VIDEOS,
@@ -181,5 +184,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '91_5diamonds': FIGURE_91_5DIAMONDS_VIDEOS,
   '92_6diamonds': FIGURE_92_6DIAMONDS_VIDEOS,
   '93_one-chief': FIGURE_93_ONE_CHIEF_VIDEOS,
-  '95_2people-sequence': FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS
+  '95_2people-sequence': FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS,
+  '96_coral': FIGURE_96_CORAL_VIDEOS
 };
