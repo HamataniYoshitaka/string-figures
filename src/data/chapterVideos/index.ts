@@ -52,6 +52,7 @@ import { FIGURE_51_SEAGULL_VIDEOS } from './figure-51_seagull';
 import { FIGURE_52_MOUTH_VIDEOS } from './figure-52_mouth';
 import { FIGURE_53_2FAWNS_VIDEOS } from './figure-53_2fawns';
 import { FIGURE_54_CARIBOU_IN_WILLOWS_VIDEOS } from './figure-54_caribou-in-willows';
+import { FIGURE_55_PARROT_VIDEOS } from './figure-55_parrot';
 import { FIGURE_56_TEEPEE_VIDEOS } from './figure-56_teepee';
 import { FIGURE_57_THUNDER_VIDEOS } from './figure-57_thunder';
 import { FIGURE_58_EARTH_AND_SKY_VIDEOS } from './figure-58_earth-and-sky';
@@ -143,6 +144,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '52_mouth': FIGURE_52_MOUTH_VIDEOS,
   '53_2fawns': FIGURE_53_2FAWNS_VIDEOS,
   '54_caribou-in-willows': FIGURE_54_CARIBOU_IN_WILLOWS_VIDEOS,
+  '55_parrot': FIGURE_55_PARROT_VIDEOS,
   '56_teepee': FIGURE_56_TEEPEE_VIDEOS,
   '57_thunder': FIGURE_57_THUNDER_VIDEOS,
   '58_earth-and-sky': FIGURE_58_EARTH_AND_SKY_VIDEOS,

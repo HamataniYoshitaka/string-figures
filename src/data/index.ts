@@ -472,12 +472,12 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '16',
-    name: { ja: '松葉', en: 'Sensu' },
+    name: { ja: 'せんす', en: 'Sensu' },
     difficulty: 'easy',
     directory: '16_sensu',
     ...ASSETS_MAP['16_sensu'],
     description: { 
-      ja: '「扇子」とは日本の伝統的な折り畳むことができる団扇のことです。他にも「松葉」という名前で知られているあやとりです', 
+      ja: '「せんす」とは日本の伝統的な折り畳むことができる団扇のことです。他にも「松葉」という名前で知られているあやとりです', 
       en: '<i>Sensu</i> is a traditional Japanese folding fan. This string figure is also known by another name, “Pine Needles.”' 
     },
     premiumCourseId: 0, // 無料
@@ -1117,6 +1117,24 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['49']
+  },
+  {
+    id: '55',
+    name: { ja: 'おうむ', en: 'Parrot' },
+    difficulty: 'easy',
+    directory: '55_parrot',
+    ...ASSETS_MAP['55_parrot'],
+    description: { 
+      ja: 'ガイアナのパトモナ族に伝わるあやとりです。尾を引くとおうむが羽ばたきます', 
+      en: 'This string figure comes from the Patamona people of Guyana. When you pull the tail, the parrot flaps its wings.' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '南アメリカ', en: 'South America' },
+      source: '“Parrot”\nF. E. Lutz\n<i>String-figures from the Patomana Indians of British Guiana</i> (1912)',
+      author: null,
+      references: null
+    }
   },
   {
     id: '56',
