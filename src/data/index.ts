@@ -1433,18 +1433,18 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '76',
-    name: { ja: '日の出・日の入り', en: 'Sunrise and Sunset' },
+    name: { ja: '真昼の太陽 - 日没', en: 'Full Sun - Sun Falling' },
     difficulty: 'medium',
     directory: '76_sunrise-sunset',
     ...ASSETS_MAP['76_sunrise-sunset'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: '太陽と、ギラギラと照りつける太陽光線が表現されたあやとりです。ノースクイーンズランド周辺ではこのあと続けて「日没」まで取られ、太陽は水平線に沈みます', 
+      en: 'This string figure depicts the sun and its blazing rays. In parts of North Queensland, the sequence continues on to <i>Sun Falling,</i> where the sun sinks below the horizon.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: '', en: '' },
-      source: '“Sunrise and Sunset”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: 'メラネシア, 他', en: 'Melanesia, etc.' },
+      source: '“The Sun”\nG. A. V. Stanley 1926\n <i>String figures of the North Queensland Aborigines, part 1</i> (1926)',
       author: null,
       references: null
     }
@@ -1645,6 +1645,24 @@ export const stringFigures: StringFigure[] = [
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“Coral”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '97',
+    name: { ja: 'バーベッド・スピア', en: 'Barbed Spear' },
+    difficulty: 'medium',
+    directory: '97_barbed-spear',
+    ...ASSETS_MAP['97_barbed-spear'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Barbed Spear”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
       author: null,
       references: null
     }

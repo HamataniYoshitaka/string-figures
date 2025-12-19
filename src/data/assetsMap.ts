@@ -470,4 +470,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/96_coral/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/96_coral/preview.mp4'),
   },
+  '97_barbed-spear': {
+    thumbnail: require('../../assets/string-figures/97_barbed-spear/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/97_barbed-spear/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/97_barbed-spear/preview.mp4'),
+  },
 };
