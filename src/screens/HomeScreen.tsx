@@ -16,6 +16,7 @@ import * as Localization from 'expo-localization';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { RootStackParamList, StringFigure } from '../types';
 import DetailBottomSheet, { DetailBottomSheetRef } from '../components/DetailBottomSheet';
@@ -55,6 +56,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const bottomSheetRef = useRef<DetailBottomSheetRef>(null);
   const [selectedItem, setSelectedItem] = useState<StringFigure | null>(null);
   const { isTablet } = useDeviceInfo();
+  const insets = useSafeAreaInsets();
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
   
@@ -538,7 +540,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         <BlurView 
           intensity={20}
           tint="light"
-          style={styles.stickyFilterContainer}
+          style={[
+            styles.stickyFilterContainer,
+            { paddingTop: Platform.OS === 'android' ? insets.top : 0 }
+          ]}
         >
           <FilterButtons 
             selectedFilters={selectedFilters}
@@ -599,7 +604,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingBottom: 8,
+    paddingBottom: Platform.OS === 'android' ? 0 : 8,
     paddingTop: Platform.OS === 'android' ? 32 : 8, // Android用に12pt追加
   },
   title: {

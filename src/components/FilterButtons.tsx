@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontSize: 16,
+    lineHeight: 16,
   },
   filterTextSelected: {
     color: '#fafafa',
