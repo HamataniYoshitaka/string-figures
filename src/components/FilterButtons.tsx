@@ -185,17 +185,17 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
 
 const styles = StyleSheet.create({
   filterScrollView: {
-    paddingBottom: 15,
+    paddingVertical: 8,
   },
   filterContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     gap: 10,
   },
   filterButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingStart: 10,
+    paddingStart: 8,
     paddingEnd: 14,
     paddingVertical: 4,
     borderRadius: 20,
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     borderColor: '#57534D',
   },
   filterButtonUnselected: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#ecececbb',
     borderWidth: 1,
     borderColor: '#57534D',
   },

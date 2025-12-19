@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -534,7 +535,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         
         )}
         {/* フィルターボタン */}
-        <View style={styles.stickyFilterContainer}>
+        <BlurView 
+          intensity={20}
+          tint="light"
+          style={styles.stickyFilterContainer}
+        >
           <FilterButtons 
             selectedFilters={selectedFilters}
             onToggleFilter={toggleFilter}
@@ -543,7 +548,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             onToggleBookmarkFilter={handleBookmarkFilterToggle}
             showBookmarkButton={bookmarkedIds.length > 0}
           />
-        </View>
+        </BlurView>
 
         {/* あやとり一覧 */}
         <View style={styles.gridContainer}>
@@ -594,7 +599,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingBottom: 8,
     paddingTop: Platform.OS === 'android' ? 32 : 8, // Android用に12pt追加
   },
   title: {
@@ -620,6 +625,7 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: 'row',
     paddingHorizontal: 20,
+    paddingTop: 12,
     paddingBottom: 60,
     gap: 15,
   },
@@ -636,7 +642,7 @@ const styles = StyleSheet.create({
     lineHeight: 56,
   },
   stickyFilterContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'transparent',
     zIndex: 10,
   },
 });
