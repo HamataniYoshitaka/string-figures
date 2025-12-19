@@ -481,7 +481,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       locations={[0, 0.5, 1]}
     >
       <SafeAreaView style={styles.safeArea}>
-        <ScrollView style={styles.scrollView}>
+        <ScrollView 
+          style={styles.scrollView}
+          stickyHeaderIndices={[showCallout ? 2 : 1]}
+        >
         {/* ヘッダー */}
         <View style={[styles.header, isTablet && styles.headerTablet]}>
           <Text 
@@ -531,14 +534,16 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         
         )}
         {/* フィルターボタン */}
-        <FilterButtons 
-          selectedFilters={selectedFilters}
-          onToggleFilter={toggleFilter}
-          currentLanguage={currentLanguage}
-          isBookmarkFilterActive={isBookmarkFilterActive}
-          onToggleBookmarkFilter={handleBookmarkFilterToggle}
-          showBookmarkButton={bookmarkedIds.length > 0}
-        />
+        <View style={styles.stickyFilterContainer}>
+          <FilterButtons 
+            selectedFilters={selectedFilters}
+            onToggleFilter={toggleFilter}
+            currentLanguage={currentLanguage}
+            isBookmarkFilterActive={isBookmarkFilterActive}
+            onToggleBookmarkFilter={handleBookmarkFilterToggle}
+            showBookmarkButton={bookmarkedIds.length > 0}
+          />
+        </View>
 
         {/* あやとり一覧 */}
         <View style={styles.gridContainer}>
@@ -629,6 +634,10 @@ const styles = StyleSheet.create({
   titleTablet: {
     fontSize: 48,
     lineHeight: 56,
+  },
+  stickyFilterContainer: {
+    backgroundColor: '#ffffff',
+    zIndex: 10,
   },
 });
 
