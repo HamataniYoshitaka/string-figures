@@ -178,7 +178,7 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '89',
-    name: { ja: 'もちつき', en: 'Mochitsuki' },
+    name: { ja: 'もちつき', en: 'Clap Hands' },
     difficulty: 'two_people',
     directory: '89_mochitsuki',
     ...ASSETS_MAP['89_mochitsuki'],
@@ -490,7 +490,7 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '88',
-    name: { ja: '手首抜き', en: 'Wrist Magic' },
+    name: { ja: '手首抜き', en: 'Hand Trap' },
     difficulty: 'two_people',
     directory: '88_wrist-magic',
     ...ASSETS_MAP['88_wrist-magic'],
