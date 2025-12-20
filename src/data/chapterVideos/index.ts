@@ -92,6 +92,7 @@ import { FIGURE_93_ONE_CHIEF_VIDEOS } from './figure-93_one-chief';
 import { FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS } from './figure-95_2perople-sequence';
 import { FIGURE_96_CORAL_VIDEOS } from './figure-96_coral';
 import { FIGURE_97_BARBED_SPEAR_VIDEOS } from './figure-97_barbed-spear';
+import { FIGURE_98_FISH_TRAP_VIDEOS } from './figure-98_fish-trap';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -187,5 +188,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '93_one-chief': FIGURE_93_ONE_CHIEF_VIDEOS,
   '95_2people-sequence': FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS,
   '96_coral': FIGURE_96_CORAL_VIDEOS,
-  '97_barbed-spear': FIGURE_97_BARBED_SPEAR_VIDEOS
+  '97_barbed-spear': FIGURE_97_BARBED_SPEAR_VIDEOS,
+  '98_fish-trap': FIGURE_98_FISH_TRAP_VIDEOS
 };

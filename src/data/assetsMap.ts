@@ -475,4 +475,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/97_barbed-spear/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/97_barbed-spear/preview.mp4'),
   },
+  '98_fish-trap': {
+    thumbnail: require('../../assets/string-figures/98_fish-trap/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/98_fish-trap/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/98_fish-trap/preview.mp4'),
+  },
 };

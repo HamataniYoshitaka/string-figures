@@ -1667,6 +1667,24 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '98',
+    name: { ja: 'フィッシュ・トラップ', en: 'Fish Trap' },
+    difficulty: 'medium',
+    directory: '98_fish-trap',
+    ...ASSETS_MAP['98_fish-trap'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Fish Trap”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',
