@@ -1,9 +1,62 @@
 [
     {
         "subtitle": { 
-            "ja": "", 
-            "en": "" 
+            "ja": "左手の親指と小指に糸をかけて始めます。小指向こうの糸を右手で持ち、薬指と小指に2周巻き、薬指と小指で糸を挟みます", 
+            "en": "Begin with the string on the left thumb and little finger. With the right hand, take the far little-finger string, wrap it twice around the ring finger and little finger, and pinch the string between the ring finger and little finger." 
         }
     },
-
+    {
+        "subtitle": { 
+            "ja": "左薬指と小指で挟んだ糸を残したまま、巻き付けた2本の輪だけを外します", 
+            "en": "Leaving the string pinched between the left ring finger and little finger in place, remove only the two wrapped loops." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左小指向こうの糸を右手で持ち、左親指の糸を越えて左親指にかけます。元の左親指の糸を外し、薬指と小指の間にかけます", 
+            "en": "With the right hand, take the far little-finger string on the left hand, move over the left thumb string and place it onto the left thumb. Remove the original left thumb string and place it between the ring finger and little finger." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左薬指と小指の間から伸びている糸を右手で持ち、薬指と小指に2周巻き、薬指と小指で糸を挟みます", 
+            "en": "With the right hand, take the string running from between the left ring finger and little finger, wrap it twice around the ring finger and little finger, and pinch the string between the ring finger and little finger." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左薬指と小指で挟んだ糸を残したまま、巻き付けた2本の輪だけを外します", 
+            "en": "Leaving the string pinched between the left ring finger and little finger in place, remove only the two wrapped loops." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左小指にかかっている上の2本の糸を残したまま、下の2本の糸だけを外します", 
+            "en": "Leaving the upper two strings on the left little finger in place, remove only the lower two strings." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左親指手前の糸を右手で持って外し、左親指に逆回りで掛け直し、左薬指と小指で糸を挟みます", 
+            "en": "With the right hand, take and remove the near string on the left thumb, replace it onto the left thumb in the opposite direction, and pinch the string between the left ring finger and little finger." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左小指にかかっている上の1本の糸を残したまま、下の2本の糸だけを外します", 
+            "en": "Leaving the upper single string on the left little finger in place, remove only the lower two strings." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左手向こうに垂れている輪に、右手小指を下から入れます", 
+            "en": "Insert the right little finger from below into the loop hanging on the far side of the left hand." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左親指手前の糸に巻き付いた輪の右側に右親指を下から入れ、指先を向こう側に向けて完成です", 
+            "en": "Insert the right thumb from below into the right side of the loop wrapped around the near string on the left thumb, point the fingertip toward the far side, and finish." 
+        }
+    }
 ]
