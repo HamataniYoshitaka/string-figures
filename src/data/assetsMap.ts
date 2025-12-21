@@ -510,4 +510,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/104_baby-born/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/104_baby-born/preview.mp4'),
   },
+  '105_tieup-loop': {
+    thumbnail: require('../../assets/string-figures/105_tieup-loop/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/105_tieup-loop/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/105_tieup-loop/preview.mp4'),
+  },
 };

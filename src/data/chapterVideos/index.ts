@@ -99,6 +99,7 @@ import { FIGURE_101_POLA_BEAR_VIDEOS } from './figure-101_pola-bear';
 import { FIGURE_102_3D_HOUSE_VIDEOS } from './figure-102_3d-house';
 import { FIGURE_103_PAIR_THUNDERBIRD_VIDEOS } from './figure-103_pair-thunderbird';
 import { FIGURE_104_BABY_BORN_VIDEOS } from './figure-104_baby-born';
+import { FIGURE_105_TIEUP_LOOP_VIDEOS } from './figure-105_tieup-loop';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -201,5 +202,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '101_pola-bear': FIGURE_101_POLA_BEAR_VIDEOS,
   '102_3d-house': FIGURE_102_3D_HOUSE_VIDEOS,
   '103_pair-thunderbird': FIGURE_103_PAIR_THUNDERBIRD_VIDEOS,
-  '104_baby-born': FIGURE_104_BABY_BORN_VIDEOS
+  '104_baby-born': FIGURE_104_BABY_BORN_VIDEOS,
+  '105_tieup-loop': FIGURE_105_TIEUP_LOOP_VIDEOS
 };

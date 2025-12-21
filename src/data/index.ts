@@ -1796,6 +1796,24 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '105',
+    name: { ja: 'ひもの束ねかた', en: 'How to Tie loops' },
+    difficulty: 'basic',
+    directory: '105_tieup-loop',
+    ...ASSETS_MAP['105_tieup-loop'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Tie-Up Loop”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',
