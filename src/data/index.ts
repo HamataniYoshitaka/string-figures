@@ -1707,7 +1707,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '100',
     name: { ja: '空を掴む', en: 'Hold the Sky' },
-    difficulty: 'hard',
+    difficulty: 'medium',
     directory: '100_hold-the-sky',
     ...ASSETS_MAP['100_hold-the-sky'],
     description: { 
@@ -1741,24 +1741,24 @@ export const stringFigures: StringFigure[] = [
     },
     relatedFigures: ['84']
   },
-  {
-    id: '102',
-    name: { ja: '3Dハウス', en: '3D House' },
-    difficulty: 'hard',
-    directory: '102_3d-house',
-    ...ASSETS_MAP['102_3d-house'],
-    description: { 
-      ja: '', 
-      en: '' 
-    },
-    premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“3D House”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
-      author: null,
-      references: null
-    }
-  },
+  // {
+  //   id: '102',
+  //   name: { ja: '3Dハウス', en: '3D House' },
+  //   difficulty: 'hard',
+  //   directory: '102_3d-house',
+  //   ...ASSETS_MAP['102_3d-house'],
+  //   description: { 
+  //     ja: '', 
+  //     en: '' 
+  //   },
+  //   premiumCourseId: 0, // 無料
+  //   data: {
+  //     region: { ja: '日本', en: 'Japan' },
+  //     source: '“3D House”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+  //     author: null,
+  //     references: null
+  //   }
+  // },
   {
     id: '103',
     name: { ja: 'つがいのライチョウ', en: 'Two Ptarmigans' },
