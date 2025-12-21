@@ -93,6 +93,12 @@ import { FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS } from './figure-95_2perople-sequence
 import { FIGURE_96_CORAL_VIDEOS } from './figure-96_coral';
 import { FIGURE_97_BARBED_SPEAR_VIDEOS } from './figure-97_barbed-spear';
 import { FIGURE_98_FISH_TRAP_VIDEOS } from './figure-98_fish-trap';
+import { FIGURE_99_RAVEN_VIDEOS } from './figure-99_raven';
+import { FIGURE_100_HOLD_THE_SKY_VIDEOS } from './figure-100_hold-the-sky';
+import { FIGURE_101_POLA_BEAR_VIDEOS } from './figure-101_pola-bear';
+import { FIGURE_102_3D_HOUSE_VIDEOS } from './figure-102_3d-house';
+import { FIGURE_103_PAIR_THUNDERBIRD_VIDEOS } from './figure-103_pair-thunderbird';
+import { FIGURE_104_BABY_BORN_VIDEOS } from './figure-104_baby-born';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -189,5 +195,11 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '95_2people-sequence': FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS,
   '96_coral': FIGURE_96_CORAL_VIDEOS,
   '97_barbed-spear': FIGURE_97_BARBED_SPEAR_VIDEOS,
-  '98_fish-trap': FIGURE_98_FISH_TRAP_VIDEOS
+  '98_fish-trap': FIGURE_98_FISH_TRAP_VIDEOS,
+  '99_raven': FIGURE_99_RAVEN_VIDEOS,
+  '100_hold-the-sky': FIGURE_100_HOLD_THE_SKY_VIDEOS,
+  '101_pola-bear': FIGURE_101_POLA_BEAR_VIDEOS,
+  '102_3d-house': FIGURE_102_3D_HOUSE_VIDEOS,
+  '103_pair-thunderbird': FIGURE_103_PAIR_THUNDERBIRD_VIDEOS,
+  '104_baby-born': FIGURE_104_BABY_BORN_VIDEOS
 };

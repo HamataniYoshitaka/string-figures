@@ -1685,6 +1685,114 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '99',
+    name: { ja: 'ラヴェン', en: 'Raven' },
+    difficulty: 'hard',
+    directory: '99_raven',
+    ...ASSETS_MAP['99_raven'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Raven”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '100',
+    name: { ja: '空を掴む', en: 'Hold the Sky' },
+    difficulty: 'hard',
+    directory: '100_hold-the-sky',
+    ...ASSETS_MAP['100_hold-the-sky'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Hold the Sky”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '101',
+    name: { ja: 'ポラベア', en: 'Pola Bear' },
+    difficulty: 'hard',
+    directory: '101_pola-bear',
+    ...ASSETS_MAP['101_pola-bear'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Pola Bear”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '102',
+    name: { ja: '3Dハウス', en: '3D House' },
+    difficulty: 'hard',
+    directory: '102_3d-house',
+    ...ASSETS_MAP['102_3d-house'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“3D House”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '103',
+    name: { ja: 'シャコバンド', en: 'Thunderbird' },
+    difficulty: 'hard',
+    directory: '103_pair-thunderbird',
+    ...ASSETS_MAP['103_pair-thunderbird'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Thunderbird”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '104',
+    name: { ja: '赤ちゃんが生まれる', en: 'Baby Born' },
+    difficulty: 'hard',
+    directory: '104_baby-born',
+    ...ASSETS_MAP['104_baby-born'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, // 無料
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“Baby Born”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',

@@ -480,4 +480,34 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/98_fish-trap/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/98_fish-trap/preview.mp4'),
   },
+  '99_raven': {
+    thumbnail: require('../../assets/string-figures/99_raven/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/99_raven/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/99_raven/preview.mp4'),
+  },
+  '100_hold-the-sky': {
+    thumbnail: require('../../assets/string-figures/100_hold-the-sky/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/100_hold-the-sky/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/100_hold-the-sky/preview.mp4'),
+  },
+  '101_pola-bear': {
+    thumbnail: require('../../assets/string-figures/101_pola-bear/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/101_pola-bear/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/101_pola-bear/preview.mp4'),
+  },
+  '102_3d-house': {
+    thumbnail: require('../../assets/string-figures/102_3d-house/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/102_3d-house/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/102_3d-house/preview.mp4'),
+  },
+  '103_pair-thunderbird': {
+    thumbnail: require('../../assets/string-figures/103_pair-thunderbird/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/103_pair-thunderbird/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/103_pair-thunderbird/preview.mp4'),
+  },
+  '104_baby-born': {
+    thumbnail: require('../../assets/string-figures/104_baby-born/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/104_baby-born/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/104_baby-born/preview.mp4'),
+  },
 };

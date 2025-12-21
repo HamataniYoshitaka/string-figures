@@ -96,4 +96,10 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '96_coral': require('../../assets/string-figures/96_coral/chapters.json'),
   '97_barbed-spear': require('../../assets/string-figures/97_barbed-spear/chapters.json'),
   '98_fish-trap': require('../../assets/string-figures/98_fish-trap/chapters.json'),
+  '99_raven': require('../../assets/string-figures/99_raven/chapters.json'),
+  '100_hold-the-sky': require('../../assets/string-figures/100_hold-the-sky/chapters.json'),
+  '101_pola-bear': require('../../assets/string-figures/101_pola-bear/chapters.json'),
+  '102_3d-house': require('../../assets/string-figures/102_3d-house/chapters.json'),
+  '103_pair-thunderbird': require('../../assets/string-figures/103_pair-thunderbird/chapters.json'),
+  '104_baby-born': require('../../assets/string-figures/104_baby-born/chapters.json'),
 };
