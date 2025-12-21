@@ -1244,7 +1244,8 @@ export const stringFigures: StringFigure[] = [
       source: '“A Dog with Large Ears”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['101']
   },
   {
     id: '66',
@@ -1729,8 +1730,8 @@ export const stringFigures: StringFigure[] = [
     directory: '101_pola-bear',
     ...ASSETS_MAP['101_pola-bear'],
     description: { 
-      ja: '北極圏に広く伝承されているあやとりです。同じ北極圏のあやとり「白鳥」と手順がよく似ています。最後の手順が少しユニークで、手首を回して親指側を下に向けて完成となります', 
-      en: 'This string figure is widely passed down throughout the Arctic region. Its steps closely resemble those of another Arctic string figure, <i>Swan.</i> The final move is slightly unique: you rotate your wrists and finish with the thumbs facing downward.' 
+      ja: '北極圏に広く伝承されているあやとりです。同じ北極圏のあやとり「白鳥」と手順がよく似ています。最後の手順が少しユニークで、握りこぶしを回して親指側を下に向けて完成となります', 
+      en: 'This string figure is widely passed down throughout the Arctic region. Its steps closely resemble those of another Arctic string figure, <i>Swan.</i> The final move is slightly unique: you rotate your fists and finish with the thumbs facing downward.' 
     },
     premiumCourseId: 0, // 無料
     data: {
@@ -1739,7 +1740,7 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['84']
+    relatedFigures: ['65', '84']
   },
   // {
   //   id: '102',

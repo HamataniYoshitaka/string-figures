@@ -1,9 +1,92 @@
 [
     {
+        "subtitle": { "ja": "はじめの構えから始めます。左小指向こうの糸を、右親指の背で向こう側から取ります", "en": "Begin in \"Position 1.\" With the back of the right thumb, move over from the far side and pick down the far left–little-finger string." }
+    },
+    {
+        "subtitle": { "ja": "左親指の腹で、右小指向こうの糸を手前側から取ります", "en": "With the pad of the left thumb, move over from the near side and pick down the far right–little-finger string." }
+    },
+    {
         "subtitle": { 
-            "ja": "", 
-            "en": "" 
+            "ja": "左右の小指で、親指向こう側の糸を取ります", 
+            "en": "With both little fingers, pick up the far thumb strings." 
         }
     },
-
+    {
+        "subtitle": { "ja": "左右の小指から斜めにかかる糸を残したまま、小指同士を水平に繋ぐ糸だけを外します", "en": "Retain the diagonal strings running from both little fingers and release only the horizontal string linking the two little fingers." }
+    },
+    {
+        "subtitle": { "ja": "左右の小指で、親指向こうの糸を上から握ります。小指の背にかかっていた糸は自然に外れます", "en": "With both little fingers, move over and grasp the far thumb strings; the strings lying on the backs of the little fingers fall away naturally." }
+    },
+    {
+        "subtitle": { "ja": "左右の親指の輪に、人差し指を上から入れて手前側の糸を持ち上げ、人差し指を親指手前の糸に乗せます", "en": "Insert both index fingers from above into the thumb loops, lift the near strings, and place the index fingers onto the near thumb strings." }
+    },
+    {
+        "subtitle": { "ja": "左右の親指手前の糸を人差し指と中指で挟み、手前に回しながら糸を引き出します。挟んだ糸は人差し指にかかります", "en": "With the index and middle fingers, grasp the near thumb strings, draw them out while turning them toward you, and let the drawn-out strings fall onto the index fingers." }
+    },
+    {
+        "subtitle": { "ja": "左右の親指の全ての糸を外します", "en": "Release all strings from both thumbs." }
+    },
+    {
+        "subtitle": { 
+            "ja": "中央左右にある菱形の輪に、親指を手前側から入れ、人差し指側の糸を取ります", 
+            "en": "Insert the thumbs from the near side into the diamond-shaped loops on either side of the center, and pick up the index-finger-side strings." 
+        }
+    },
+    {
+        "subtitle": { "ja": "左親指の輪に、右親指を下から入れて輪を移します", "en": "Insert the right thumb from below into the loop on the left thumb, transferring the loop." }
+    },
+    {
+        "subtitle": { "ja": "右親指の2本の輪に、左親指を下から入れて輪を広げます", "en": "Insert the left thumb from below into the two right-thumb loops and open the loops." }
+    },
+    {
+        "subtitle": { "ja": "左右の人差し指の輪に、親指を下から入れて輪を広げます", "en": "Insert both thumbs from below into the index loops and open the loops." }
+    },
+    {
+        "subtitle": { "ja": "左右の親指にかかる上の1本の糸を残したまま、下の2本の糸だけを外します", "en": "Retain only the upper thumb string and release the two lower strings from both thumbs." }
+    },
+    {
+        "subtitle": { "ja": "左右の人差し指の糸を外します", "en": "Release the index strings from both hands." }
+    },
+    {
+        "subtitle": { 
+            "ja": "右薬指の前にある三角の輪に右人差し指と中指を入れ、右人差し指手前の2本の糸を引き出し、右親指の輪に2本の指を入れます", 
+            "en": "Insert the right index finger and middle finger into the triangular loop in front of the right ring finger, pull out the two near strings on the right index finger, then insert both fingers into the loop on the right thumb." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "中央右にある小指同士を繋ぐ糸を右人差し指と中指で挟んで引き出します", 
+            "en": "With the right index finger and middle finger, pinch the string connecting the little fingers on the right side of the center and pull it out." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "右親指の輪に右人差し指と中指を上から入れます", 
+            "en": "Insert the right index finger and middle finger from above into the loop on the right thumb." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左小指の糸を外します", 
+            "en": "Remove the string from the left little finger." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左小指と右中指の指先を合わせ、輪を移します", 
+            "en": "Touch the tips of the left little finger and the right middle finger together to transfer the loop." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "右薬指と小指でにぎっている輪から薬指を抜きます", 
+            "en": "Withdraw the ring finger from the loop held by the right ring finger and little finger." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "形を整え、両手を手前方向に半回転させて完成です", 
+            "en": "Adjust the figure, rotate both hands halfway toward you, and finish." 
+        }
+    }
 ]
