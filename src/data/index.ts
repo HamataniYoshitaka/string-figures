@@ -1574,7 +1574,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Swan”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['101']
   },
   {
     id: '86',
@@ -1687,18 +1688,18 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '99',
-    name: { ja: 'ラヴェン', en: 'Raven' },
+    name: { ja: 'わたりがらす', en: 'The Raven' },
     difficulty: 'hard',
     directory: '99_raven',
     ...ASSETS_MAP['99_raven'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: 'アラスカ地方に伝承されているあやとりです。渡鴉(わたりがらす)は世界中の神話や伝説に良く登場する鳥です', 
+      en: 'This string figure is passed down in the Alaska region. The raven is a bird that appears frequently in myths and legends around the world.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“Raven”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“The Raven”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
     }
@@ -1723,21 +1724,22 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '101',
-    name: { ja: 'ポラベア', en: 'Pola Bear' },
+    name: { ja: 'ホッキョクグマ', en: 'Polar Bear' },
     difficulty: 'hard',
     directory: '101_pola-bear',
     ...ASSETS_MAP['101_pola-bear'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: '北極圏に広く伝承されているあやとりです。同じ北極圏のあやとり「白鳥」と手順がよく似ています。最後の手順が少しユニークで、手首を回して親指側を下に向けて完成となります', 
+      en: 'This string figure is widely passed down throughout the Arctic region. Its steps closely resemble those of another Arctic string figure, <i>Swan.</i> The final move is slightly unique: you rotate your wrists and finish with the thumbs facing downward.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“Pola Bear”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“Polar Bear”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['84']
   },
   {
     id: '102',
@@ -1759,36 +1761,36 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '103',
-    name: { ja: 'シャコバンド', en: 'Thunderbird' },
+    name: { ja: 'つがいのライチョウ', en: 'Two Ptarmigans' },
     difficulty: 'hard',
     directory: '103_pair-thunderbird',
     ...ASSETS_MAP['103_pair-thunderbird'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: '左が雌で、右の長い尾を立てているのが雄の雷鳥を表しているあやとりです。手順のほとんどで左手の小指を使用する、とても珍しい取り方で作られます', 
+      en: 'This string figure represents ptarmigan, with the female on the left and the male on the right, distinguished by his raised long tail. It is created using a very unusual method that relies on the left little finger for most of the steps.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“Thunderbird”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: 'Two Ptarmigans\nG. B. Gordon\n <i>Notes on the Western Eskimo</i> (1906)',
       author: null,
       references: null
     }
   },
   {
     id: '104',
-    name: { ja: '赤ちゃんが生まれる', en: 'Baby Born' },
-    difficulty: 'hard',
+    name: { ja: '赤ちゃんが生まれる', en: 'Baby Being Born' },
+    difficulty: 'medium',
     directory: '104_baby-born',
     ...ASSETS_MAP['104_baby-born'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: 'アボリジニに伝わるあやとりです。赤ちゃんが産道を通って産まれてくる様子を表現しています', 
+      en: 'This string figure comes from Aboriginal tradition. It represents a baby being born as it passes through the birth canal.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“Baby Born”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: 'オーストラリア', en: 'Australia' },
+      source: '“Baby Being Born”\nD. S. Davidson\n <i>Aboriginal Australian String Figures</i> (1941)',
       author: null,
       references: null
     }
