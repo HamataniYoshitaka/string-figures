@@ -1475,13 +1475,13 @@ export const stringFigures: StringFigure[] = [
     directory: '79_omamori',
     ...ASSETS_MAP['79_omamori'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: '昔の日本の子供用の着物には、背中に魔除けの刺繍をする習慣がありました。このあやとりはその刺繍を表現したものです。', 
+      en: 'In the past, Japanese children’s kimonos often had protective embroidery on the back to ward off evil. This string figure represents that embroidery.' 
     },
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '日本', en: 'Japan' },
-      source: '“Omamori”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      source: '“OMAMORI”\nSAITO T. (BISFA 11)\n <i>Ayatori: The Traditional String Figures of Japan : 1970-99</i> (2006)',
       author: null,
       references: null
     }
