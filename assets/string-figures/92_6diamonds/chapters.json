@@ -13,8 +13,8 @@
     },
     {
         "subtitle": {
-          "ja": "両手の親指で、人差し指の手前の糸を超えて人差し指の向こう側の糸を取ります",
-          "en": "With both thumbs, move over the near index string and pick up the far index string."
+          "ja": "両手の親指で、中指の手前の糸を超えて中指の向こう側の糸を取ります",
+          "en": "With both thumbs, move over the near middle-finger string and pick up the far middle-finger string."
         }
     },
     {
@@ -25,8 +25,8 @@
     },
     {
         "subtitle": {
-          "ja": "両手の小指で、人差し指の糸をこえて親指の向こう側の糸を取ります",
-          "en": "With both little fingers, move over the index strings and pick up the far thumb strings."
+          "ja": "両手の小指で、中指の糸をこえて親指の向こう側の糸を取ります",
+          "en": "With both little fingers, move over the middle-finger strings and pick up the far thumb strings."
         }
     },
     {
@@ -37,20 +37,20 @@
     },
     {
         "subtitle": { 
-            "ja": "右小指と右親指を、それぞれ向こう側に1回転させて輪をねじります", 
-            "en": "Turn the right little finger and right thumb once away from you to twist the loops." 
+            "ja": "右小指と右中指を、それぞれ向こう側に1回転させて輪をねじります", 
+            "en": "Turn the right little finger and right middle finger once away from you to twist the loops." 
         }
     },
     {
         "subtitle": { 
-            "ja": "左小指と左親指を、それぞれ向こう側に1回転させて輪をねじります", 
-            "en": "Turn the left little finger and left thumb once away from you to twist the loops." 
+            "ja": "左小指と左中指を、それぞれ向こう側に1回転させて輪をねじります", 
+            "en": "Turn the left little finger and left middle finger once away from you to twist the loops." 
         }
     },
     {
         "subtitle": {
-          "ja": "両手の親指で、人差し指の糸を越えて小指手前の糸を取ります",
-          "en": "With both thumbs, move over the index strings and pick up the near little-finger strings."
+          "ja": "両手の親指で、中指の糸を越えて小指手前の糸を取ります",
+          "en": "With both thumbs, move over the middle-finger strings and pick up the near little-finger strings."
         }
     },
     {
