@@ -1106,7 +1106,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'カナダのイヌイットに伝わるあやとりです。手順は長くはありませんが、1つ1つの操作はかなり複雑です', 
       en: 'This string figure is traditionally passed down among the Inuit people of Canada. Although the overall sequence is short, each step is fairly complex.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“Two Fawns”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
@@ -1124,7 +1124,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'カリブーが柳の下で涼んでいる様子を表しています。後半から「カリブー」と同じ手順で形を作っていきます', 
       en: 'A Caribou is resting under the willow. The same procedure as <i>A Caribou</i> is used from the second half.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“The Caribou in the Willows”\nDiamond Jenness\n<i>Eskimo String Figures</i> (1924)',

@@ -126,6 +126,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
     if (!item) return '#217DFF';
     if (item.premiumCourseId === 1) return '#2B7FFF';
     if (item.premiumCourseId === 2) return '#E17100';
+    if (item.premiumCourseId === 3) return '#0d9488';
     return '#217DFF';
   };
 
@@ -253,6 +254,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 <PurchaseButton
                   onPress={onPurchasePress}
                   collectionId={item.premiumCourseId}
+                  currentLanguage={currentLanguage}
                   backgroundColor={getButtonBackgroundColor()}
                   disabled={purchasedItems.includes(item.premiumCourseId)}
                 />

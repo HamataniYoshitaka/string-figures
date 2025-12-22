@@ -257,6 +257,17 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         onImageLoad={handleImageLoad}
                     />
 
+                    <CollectionCard
+                        collectionId={3}
+                        backgroundColor="#0d9488"
+                        imageDimensions={imageDimensions}
+                        currentLanguage={currentLanguage}
+                        purchasedItems={purchasedItems}
+                        onPurchasePress={handlePurchasePress}
+                        onItemPress={handleItemPress}
+                        onImageLoad={handleImageLoad}
+                    />
+
                     <View style={styles.restorePurchaseContainer}>
                         <View style={styles.restorePurchaseContent}>
                             <Text style={styles.restorePurchaseOrText} maxFontSizeMultiplier={1.15}>または</Text>

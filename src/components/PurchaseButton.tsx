@@ -12,11 +12,12 @@ import { LockOpenIcon } from './icons';
 interface PurchaseButtonProps {
   onPress?: (collectionId: number) => void;
   collectionId: number;
+  currentLanguage: 'ja' | 'en';
   backgroundColor?: string;
   disabled?: boolean;
 }
 
-const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, backgroundColor, disabled = false }) => {
+const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, currentLanguage, backgroundColor, disabled = false }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -45,10 +46,13 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   };
 
   // 定数
-  const COLLECTION_NAME = `コレクション${collectionId}`;
-  const PURCHASE_TEXT = 'を購入する';
+  const COLLECTION_NAME_JA = `コレクション${collectionId}`;
+  const COLLECTION_NAME_EN = `Collection ${collectionId}`;
+  const PURCHASE_TEXT_JA = 'を購入する';
+  const PURCHASE_TEXT_EN = 'Purchase';
   const PRICE = '0';
-  const PURCHASED_TEXT = '購入済';
+  const PURCHASED_TEXT_JA = '購入済';
+  const PURCHASED_TEXT_EN = 'Purchased';
 
   // disabled時の背景色とテキスト色
   const buttonBackgroundColor = disabled ? '#E5E5E5' : backgroundColor;
@@ -82,15 +86,15 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
 
         {/* 中央: テキスト */}
         <View style={styles.textContainer}>
-          <Text style={[styles.collectionName, { color: textColor }]}>{COLLECTION_NAME}</Text>
-          {!disabled && <Text style={styles.purchaseText}>{PURCHASE_TEXT}</Text>}
+          <Text style={[styles.collectionName, { color: textColor }]}>{currentLanguage === 'ja' ? COLLECTION_NAME_JA : COLLECTION_NAME_EN}</Text>
+          {!disabled && <Text style={styles.purchaseText}>{currentLanguage === 'ja' ? PURCHASE_TEXT_JA : PURCHASE_TEXT_EN}</Text>}
         </View>
 
         {/* 右側: 価格または購入済 */}
         <View style={styles.priceContainer}>
           {disabled ? (
             <Text style={[styles.price, { color: textColor }]}>
-              {PURCHASED_TEXT}
+              {currentLanguage === 'ja' ? PURCHASED_TEXT_JA : PURCHASED_TEXT_EN}
             </Text>
           ) : (
             <>
@@ -109,7 +113,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#E17100',
     borderRadius: 32,
     paddingHorizontal: 12,
     paddingVertical: 8,

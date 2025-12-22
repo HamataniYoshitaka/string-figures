@@ -50,12 +50,15 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
               </View>
             )}
             <Text style={[styles.collectionTitle, { color: backgroundColor }]} maxFontSizeMultiplier={1.25}>
-              コレクション{collectionId}
+              {currentLanguage === 'ja' ? `コレクション${collectionId}` : `Collection ${collectionId}`}
             </Text>
           </View>
           <View style={styles.descriptionSpacer} />
           <Text style={styles.collectionDescription} maxFontSizeMultiplier={1.25} >
-            コレクション{collectionId}には、以下のあやとり{collectionFigures.length}パターンが収録されています。
+            {currentLanguage === 'en' ? 
+              `Collection ${collectionId} contains ${collectionFigures.length} string figures.`: 
+              `コレクション${collectionId}には、以下のあやとり${collectionFigures.length}パターンが収録されています。` 
+            }
           </Text>
         </View>
         
@@ -108,6 +111,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
         <PurchaseButton 
           onPress={onPurchasePress} 
           collectionId={collectionId}
+          currentLanguage={currentLanguage}
           backgroundColor={backgroundColor}
           disabled={purchasedItems.includes(collectionId)}
         />

@@ -144,6 +144,8 @@ const StringFigureCard: React.FC<Props> = ({
                       ? '#2B7FFF' 
                       : item.premiumCourseId === 2 
                         ? '#E17100' 
+                        : item.premiumCourseId === 3
+                          ? '#0d9488'
                         : undefined
                   }
                 ]}>
