@@ -1,53 +1,56 @@
 [
     {
-        "subtitle": { "ja": "人差し指の構えから始めます。親指の輪に4本の指を上から入れ、親指手前の糸を取ります。取った糸は手首向こう側に落ちます", "en": "" }
+        "subtitle": { 
+            "ja": "人差し指の構えから始めます。親指の輪に4本の指を上から入れ、親指手前の糸を取ります。取った糸は手首向こう側に落ちます", 
+            "en": "Begin from Opening A. Move the four fingers over and pick down into the thumb loops, and pick up the near thumb string. The picked-up string falls to the far side of the wrists." 
+        }
     },
     {
-        "subtitle": { "ja": "左右の人差し指の輪に親指を下から入れ、輪を移します", "en": "" }
+        "subtitle": { "ja": "左右の人差し指の輪に親指を下から入れ、輪を移します", "en": "Insert the thumbs from below into the loops on both index fingers, transferring the loops." }
     },
     {
-        "subtitle": { "ja": "小指の輪に4本の指を上から入れ、小指向こうの糸を取ります。取った糸は手首手前側に落ちます", "en": "" }
+        "subtitle": { "ja": "小指の輪に4本の指を上から入れ、小指向こうの糸を取ります。取った糸は手首手前側に落ちます", "en": "Move the four fingers over and pick down into the little-finger loops, and pick up the far little-finger strings. The picked-up strings fall to the near side of the wrists." }
     },
     {
-        "subtitle": { "ja": "左右の手首向こうの糸と小指手前の糸を、人差し指向こう側に移動させます", "en": "" }
+        "subtitle": { "ja": "左右の手首向こうの糸と小指手前の糸を、人差し指向こう側に移動させます", "en": "Move the far wrist strings and the near little-finger strings on both hands to the far side of the index fingers." }
     },
     {
-        "subtitle": { "ja": "左右の小指で、全ての糸の上を越えて親指向こうの糸を小指の背で取ります", "en": "" }
+        "subtitle": { "ja": "左右の小指で、全ての糸の上を越えて親指向こうの糸を小指の背で取ります", "en": "With both little fingers, move over all the strings and pick up the far thumb strings on the backs of the little fingers." }
     },
     {
-        "subtitle": { "ja": "左右の親指から全ての糸を外します", "en": "" }
+        "subtitle": { "ja": "左右の親指から全ての糸を外します", "en": "Remove all strings from both thumbs." }
     },
     {
-        "subtitle": { "ja": "左右の人差し指の輪に親指を下から入れ、人差し指向こうの2本の糸を押し下げます", "en": "" }
+        "subtitle": { "ja": "左右の人差し指の輪に親指を下から入れ、人差し指向こうの2本の糸を押し下げます", "en": "Insert the thumbs from below into the loops on both index fingers, and press down the two far index-finger strings." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指と人差し指の指先を合わせ、中央の菱形の輪に下から入れ指先を開きます", "en": "Bring the tips of the thumbs and index fingers together on both hands, insert them from below into the central diamond-shaped loop, and open the fingertips." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "中央にある水平な2本の糸の上の輪に人差し指を、下の輪に親指を上から入れて中央の2本の糸をそれぞれ取ります", "en": "Move the index fingers over and pick down into the upper loop of the two horizontal central strings, and move the thumbs over and pick down into the lower loop, picking up the two central strings respectively." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "中央の菱形の輪に左小指を入れて右手で小指の輪を持ち、小指から外します。向こう側に半回転させて右親指と人差し指にかけます", "en": "Insert the left little finger into the central diamond-shaped loop, with the right hand take the little-finger loop and remove it from the little finger. Turn it halfway to the far side and place it onto the right thumb and index finger." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "中央の菱形の輪に右小指を入れて左手で小指の輪を持ち、小指から外します。向こう側に半回転させて左親指と人差し指にかけます", "en": "Insert the right little finger into the central diamond-shaped loop, with the left hand take the little-finger loop and remove it from the little finger. Turn it halfway to the far side and place it onto the left thumb and index finger." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指から、上の2本の糸を残したまま、人差し指同士を繋ぐ下の1本の糸だけを外します", "en": "Leaving the upper two strings on both index fingers in place, remove only the lower string connecting the two index fingers." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指で、人差し指手前の水平な糸を越えて、中央の菱形の輪の向こう側にある糸の上の1本だけを取ります", "en": "With both index fingers, move over the near horizontal index-finger string and pick up only the upper string of the strings on the far side of the central diamond-shaped loop." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指から、上の2本の糸を残したまま、親指同士を繋ぐ下の1本の糸だけを外します", "en": "Leaving the upper two strings on both thumbs in place, remove only the lower string connecting the two thumbs." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指で、親指向こうの水平な糸を越えて、中央の菱形の輪の手前側にある糸の上の1本だけを取ります", "en": "With both thumbs, move over the far horizontal thumb string and pick up only the upper string of the strings on the near side of the central diamond-shaped loop." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の親指と人差し指の指先を合わせ、中央の菱形の輪に上から入れ指先を開きます", "en": "Bring the tips of the thumbs and index fingers together on both hands, insert them from above into the central diamond-shaped loop, and open the fingertips." }
     },
     {
-        "subtitle": { "ja": "", "en": "" }
+        "subtitle": { "ja": "左右の人差し指と親指を開くことで、中央に結び目が作られて完成です", "en": "Open the index fingers and thumbs on both hands, forming a knot in the center, and finish." }
     }
 ]
