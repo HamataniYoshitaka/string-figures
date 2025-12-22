@@ -14,12 +14,12 @@ import { ASSETS_MAP } from './assetsMap';
 export const stringFigures: StringFigure[] = [
   {
     id: '6',
-    name: { ja: '紐の結びかた', en: 'How to Tie Strings' },
+    name: { ja: 'ひもの結びかた', en: 'How to Tie a String Loop' },
     difficulty: 'basic',
     directory: '6_tieup',
     ...ASSETS_MAP['6_tieup'],
     description: { 
-      ja: 'まずはあやとりに使う紐を作りましょう\nここでは簡単で結び目の小さい「相引き結び（テグス結び）」を紹介します。\n何種類かの長さの紐を用意して使い分けると良いでしょう', 
+      ja: 'まずはあやとりに使うひもを作りましょう\nここでは簡単で結び目の小さい「相引き結び（テグス結び）」を紹介します。\n何種類かの長さのひもを用意して使い分けると良いでしょう', 
       en: 'First, learn how to tie the strings used for string figures.\nThis introduction will focus on the simple and small "Fisherman\'s Knot". It is recommended to prepare various lengths of strings to use them appropriately.' 
     },
     premiumCourseId: 0, // 無料
@@ -67,7 +67,7 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '1_star',
     ...ASSETS_MAP['1_star'],
-    description: { ja: '手のひらにかわいい星ができます。短め、太めの紐を使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
+    description: { ja: '手のひらにかわいい星ができます。短め、太めのひもを使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
     premiumCourseId: 0, // 無料
     data: null
   },
@@ -393,7 +393,7 @@ export const stringFigures: StringFigure[] = [
     directory: '11_wink',
     ...ASSETS_MAP['11_wink'],
     description: { 
-      ja: '紐を引くと目を閉じ、離すと目が開きます。アフリカでは「ニワトリの産卵」として知られているあやとりです', 
+      ja: 'ひもを引くと目を閉じ、離すと目が開きます。アフリカでは「ニワトリの産卵」として知られているあやとりです', 
       en: 'When you pull the string, the eyes close; when you release it, the eyes open. In Africa, this string figure is known as “The Hen\'s Vent”' 
     },
     premiumCourseId: 2, // コレクション2
@@ -464,7 +464,7 @@ export const stringFigures: StringFigure[] = [
     directory: '3_spiderweb',
     ...ASSETS_MAP['3_spiderweb'],
     description: { 
-      ja: '放射状の形が綺麗なあやとりです。紐を二重にすることで、よりバランスの取れた形を作りやすくなります', 
+      ja: '放射状の形が綺麗なあやとりです。ひもを二重にすることで、よりバランスの取れた形を作りやすくなります', 
       en: 'A beautiful string figure with a radial shape. By doubling the string, you can make it even more beautiful.' 
     },
     premiumCourseId: 1, // 有料コース1
@@ -1798,21 +1798,16 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '105',
-    name: { ja: 'ひもの束ねかた', en: 'How to Tie loops' },
+    name: { ja: 'ひもの束ねかた', en: 'How to Bundle a String Loop' },
     difficulty: 'basic',
     directory: '105_tieup-loop',
     ...ASSETS_MAP['105_tieup-loop'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: 'あやとりの輪をコンパクトにたたむ簡単な方法を紹介します', 
+      en: 'This section introduces a simple way to neatly fold a string figure loop.' 
     },
     premiumCourseId: 0, // 無料
-    data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“Tie-Up Loop”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
-      author: null,
-      references: null
-    }
+    data: null
   },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },

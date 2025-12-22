@@ -1,14 +1,14 @@
 [
     {
-        "subtitle": { "ja": "紐の端を左右の手に持ち、利き手側を上に重ねます", "en": "Hold the ends of the string in both hands, with the dominant side on top." }
+        "subtitle": { "ja": "ひもの端を左右の手に持ち、利き手側を上に重ねます", "en": "Hold the ends of the string in both hands, with the dominant side on top." }
     },
     {
-        "subtitle": { "ja": "利き手側で持っている紐を結びます", "en": "Tie the string held in the dominant hand." }
+        "subtitle": { "ja": "利き手側で持っているひもを結びます", "en": "Tie the string held in the dominant hand." }
     },
     {
-        "subtitle": { "ja": "紐を左右の手で持ち替え、残っている紐を結びます", "en": "Switch the string between your hands and tie the remaining string." }
+        "subtitle": { "ja": "ひもを左右の手で持ち替え、残っているひもを結びます", "en": "Switch the string between your hands and tie the remaining string." }
     },
     {
-        "subtitle": { "ja": "両手で紐を強く引っ張って紐の完成です", "en": "Pull the string tightly with both hands to complete the knot." }
+        "subtitle": { "ja": "両手でひもを強く引っ張ってひもの完成です", "en": "Pull the string tightly with both hands to complete the knot." }
     }
 ]

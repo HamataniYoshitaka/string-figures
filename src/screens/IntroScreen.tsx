@@ -188,7 +188,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
       difficulty: 'easy',
       directory: '1_star',
       ...ASSETS_MAP['1_star'],
-      description: { ja: '手のひらにかわいい星ができます。短め、太めの紐を使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
+      description: { ja: '手のひらにかわいい星ができます。短め、太めのひもを使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
       premiumCourseId: 0, // 無料
       data: null,
     },

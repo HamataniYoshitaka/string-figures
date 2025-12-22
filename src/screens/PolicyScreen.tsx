@@ -118,7 +118,7 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
                             style={styles.sectionDescription}
                         >
                             { getLocalizedText({ 
-                                ja: 'このアプリは、世界中に広く伝承されている「あやとり」を紹介することを目指したアプリです。両手に紐がかかって塞がっていても、画面に触らずに「声」で操作できるのが特徴です。', 
+                                ja: 'このアプリは、世界中に広く伝承されている「あやとり」を紹介することを目指したアプリです。両手にひもがかかって塞がっていても、画面に触らずに「声」で操作できるのが特徴です。', 
                                 en: 'This app is designed to introduce “String Figures (Ayatori, Cat’s Cradle),” a traditional practice that has been shared and passed down across many cultures around the world. It is characterized by the ability to operate without touching the screen even if the string is caught on your fingers.' }) 
                             }
                         </Text>
