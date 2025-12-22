@@ -227,7 +227,7 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '95',
-    name: { ja: 'ふたり連続あやとり', en: 'Two People Sequence' },
+    name: { ja: 'ふたり連続あやとり', en: 'Cat\'s Cradle' },
     difficulty: 'two_people',
     directory: '95_2people-sequence',
     ...ASSETS_MAP['95_2people-sequence'],

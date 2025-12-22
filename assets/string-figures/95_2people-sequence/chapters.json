@@ -2,103 +2,103 @@
     {
         "subtitle": { 
             "ja": "一人目: 右手を輪の中に下から入れ、右手首に糸を1回巻き付けます", 
-            "en": "" 
+            "en": "Player 1: Insert the right hand from below into the loop and wrap the string once around the right wrist." 
         }
     },
     {
         "subtitle": { 
             "ja": "一人目: 左手を輪の中に下から入れ、左手首に糸を1回巻き付けます", 
-            "en": "" 
+            "en": "Player 1: Insert the right hand from below into the loop and wrap the string once around the right wrist." 
         }
     },
     {
         "subtitle": { 
             "ja": "一人目: 左右の中指で、反対側の手首の糸を取り合います", 
-            "en": "" 
+            "en": "Player 1: With both middle fingers, pick up the wrist string of the opposite hand." 
         }
     },
     {
         "subtitle": { 
             "ja": "二人目: 左右の親指と人差し指で、糸が斜めに交差する部分を外側から指を入れてはさみます", 
-            "en": "" 
+            "en": "Player 2: With both thumbs and index fingers, insert the fingers from the outside and pinch the point where the strings cross diagonally." 
         }
     },
     {
         "subtitle": { 
             "ja": "二人目: 左右の親指と人差し指を外側に引き出し、手首の糸を下から取ります", 
-            "en": "" 
+            "en": "Player 2: Pull the thumbs and index fingers outward and pick up the wrist strings from below." 
         }
     },
     {
         "subtitle": { 
             "ja": "一人目: 左右の親指と人差し指で、中央で糸が斜めに交差する部分に上から指を入れてはさみます", 
-            "en": "" 
+            "en": "Player 1: With both thumbs and index fingers, move over and insert the fingers from above to pinch the point where the strings cross diagonally at the center." 
         }
     },
     {
         "subtitle": { 
-            "ja": "一人目: 左右の親指と人差し指を外側に引き出し、一人目の親指同士と人差し指同士を繋ぐ糸を下から取ります", 
-            "en": "" 
+            "ja": "一人目: 左右の親指と人差し指を外側に引き出し、二人目の親指同士と人差し指同士を繋ぐ糸を下から取ります", 
+            "en": "Player 1: Pull the thumbs and index fingers outward and pick up from below the strings connecting the Player 2's thumbs and the strings connecting the Player 2's index fingers." 
         }
     },
     {
         "subtitle": { 
             "ja": "二人目: 中央右の糸を左小指で、中央左の糸を右小指でにぎります", 
-            "en": "" 
+            "en": "Player 2: With the left little finger, grasp the string on the right side of the center, and with the right little finger, grasp the string on the left side of the center." 
         }
     },
     {
         "subtitle": { 
             "ja": "二人目: 左右の小指を外側に引き出し、一人目の親指同士と人差し指同士を繋ぐ糸を下から取ります", 
-            "en": "" 
+            "en": "Player 2: Pull both little fingers outward and pick up from below the strings connecting the Player 1's thumbs and the strings connecting the Player 1's index fingers." 
         }
     },
     {
         "subtitle": { 
             "ja": "一人目: 左右の親指と人差し指で、糸が斜めに交差する部分を外側から指を入れてはさみます", 
-            "en": "" 
+            "en": "Player 1: With both thumbs and index fingers, insert the fingers from the outside and pinch the point where the strings cross diagonally." 
         }
     },
     {
         "subtitle": { 
             "ja": "一人目: 左右の親指と人差し指を外側に引き出し、二人目の親指同士と人差し指同士を繋ぐ糸を上から取ります", 
-            "en": "" 
+            "en": "Player 1: Pull the thumbs and index fingers outward and pick up from above the strings connecting the Player 2's thumbs and the strings connecting the Player 2's index fingers." 
         }
     },
     {
         "subtitle": { 
             "ja": "二人目: 左右の親指と人差し指で、中央で糸が斜めに交差する部分に上から指を入れてはさんで引き出し、中央の輪に下から指を入れて広げます", 
-            "en": "" 
+            "en": "Player 2: With both thumbs and index fingers, move over and insert the fingers from above to pinch and pull out the point where the strings cross diagonally at the center, then insert the fingers from below into the central loop and open it." 
         }
     },
     {
         "subtitle": { 
             "ja": "一人目: 左右の親指と人差し指で、中央で糸が斜めに交差する部分に上から指を入れてはさみ、中央の輪に下から指を入れて広げます", 
-            "en": "" 
+            "en": "Player 1: With both thumbs and index fingers, move over and insert the fingers from above to pinch the point where the strings cross diagonally at the center, then insert the fingers from below into the central loop and open it." 
         }
     },
     {
         "subtitle": { 
             "ja": "二人目: 左右の親指と人差し指で、左右で糸が斜めに交差する部分に上から指を入れてはさみ、中央の2本の糸の間に指を下から入れて広げます", 
-            "en": "" 
+            "en": "Player 2: With both thumbs and index fingers, move over and insert the fingers from above to pinch the points where the strings cross diagonally on each side, then insert the fingers from below between the two central strings and open them." 
         }
     },
     {
         "subtitle": { 
             "ja": "二人目: 全体を時計回りに90°回します。一人目: 左右の糸を小指でにぎり、糸が斜めに交差する部分を上から親指と人差し指ではさみ、中央の輪に下から指を入れて広げます", 
-            "en": "" 
+            "en": "Player 2: Rotate the entire figure 90° clockwise. Player 1: With both little fingers, grasp the side strings, then move over and pinch the diagonally crossing point with the thumbs and index fingers, insert the fingers from below into the central loop, and open it." 
         }
     },
     {
         "subtitle": { 
             "ja": "二人目: 左右の親指と人差し指で、糸が斜めに交差する部分を外側から指を入れてはさみ、中央の輪に指を下から入れて広げます", 
-            "en": "" 
+            "en": "Player 2: With both thumbs and index fingers, insert the fingers from the outside to pinch the point where the strings cross diagonally, then insert the fingers from below into the central loop and open it." 
         }
     },
     {
         "subtitle": { 
             "ja": "同じ操作を何回も繰り返すことができます", 
-            "en": "" 
+            "en": "The same action can be repeated as many times as desired." 
         }
     }
 ]

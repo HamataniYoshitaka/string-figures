@@ -307,7 +307,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           <Text 
             maxFontSizeMultiplier={1.25}
             style={[
-              { fontSize: isTablet ? 18 : 16 },
+              { fontSize: isTablet ? 19 : 16 },
               styles.subtitleText
             ]}
           >
