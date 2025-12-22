@@ -843,7 +843,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // 無料
     data: {
       region: { ja: 'ナウル、ミクロネシア、オーストラリア、他', en: 'Nauru, Micronesia, Australia, etc.' },
-      source: 'Die Sonne (e kuan)\nP. Hambruch\n<i>Nauru</i> (1914)',
+      source: '“Die Sonne (e kuan)“\nP. Hambruch\n<i>Nauru</i> (1914)',
       author: null,
       references: null
     }
@@ -1058,7 +1058,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 1, // コレクション1
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
-      source: 'Sea Gull (t\'keyack)\nG. B. Gordon\n<i>Notes on the Western Eskimo</i> (1906)',
+      source: '“Sea Gull (t\'keyack)”\nG. B. Gordon\n<i>Notes on the Western Eskimo</i> (1906)',
       author: null,
       references: null
     }
@@ -1635,54 +1635,54 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '96',
-    name: { ja: 'コーラル', en: 'Coral' },
+    name: { ja: 'サンゴ', en: 'Coral' },
     difficulty: 'hard',
     directory: '96_coral',
     ...ASSETS_MAP['96_coral'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: '美しい珊瑚礁に囲まれた、カロリン諸島のヤップ島に伝承されているあやとりです。シンプルで美しい完成系ですが、手順はかなり複雑です', 
+      en: 'This string figure is passed down on Yap Island in the Caroline Islands, surrounded by beautiful coral reefs. Although the finished form is simple and elegant, the sequence of steps is quite complex.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“Coral”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: 'ミクロネシア', en: 'Micronesia' },
+      source: '“Coral”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
     }
   },
   {
     id: '97',
-    name: { ja: 'バーベッド・スピア', en: 'Barbed Spear' },
+    name: { ja: 'とげのある槍', en: 'Barbed Spear' },
     difficulty: 'medium',
     directory: '97_barbed-spear',
     ...ASSETS_MAP['97_barbed-spear'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: '\"かえし\"の付いた槍を表しているあやとりです。完成系は左右対称ですが、手順は左右で別々の操作を行なって作ります。最後に親指と小指を外すと槍が投げられ、一瞬で元の形に戻ります', 
+      en: 'This string figure represents a barbed spear. Although the finished form is symmetrical, it is created by performing different actions on the left and right sides. In the final step, releasing the strings from the thumbs and little fingers throws the spear and instantly returns it to its original shape.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“Barbed Spear”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: 'オーストラリア', en: 'Australia' },
+      source: '“Barbed Spears (Miral Kaiperi)”\nK. Haddon\n <i>Some Australian String Figures</i> (1918)',
       author: null,
       references: null
     }
   },
   {
     id: '98',
-    name: { ja: 'フィッシュ・トラップ', en: 'Fish Trap' },
+    name: { ja: '魚のわな', en: 'Fish Trap' },
     difficulty: 'medium',
     directory: '98_fish-trap',
     ...ASSETS_MAP['98_fish-trap'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: 'ガイアナのパトマナ族に伝わるあやとりです。魚を捕まえるために、川の中に仕掛ける罠を表しています', 
+      en: 'This string figure comes from the Patamona people of Guyana. It represents a trap set in a river to catch fish.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“Fish Trap”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: '南アメリカ', en: 'South America' },
+      source: '“Fish Trap”\nF. E. Lutz\n <i>String-figures from the Patomana Indians of British Guiana</i> (1912)',
       author: null,
       references: null
     }
@@ -1707,18 +1707,18 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '100',
-    name: { ja: '空を掴む', en: 'Hold the Sky' },
+    name: { ja: '空を持ち上げる', en: 'Holding up the sky' },
     difficulty: 'easy',
     directory: '100_hold-the-sky',
     ...ASSETS_MAP['100_hold-the-sky'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: '夜空に輝くたくさんの星たちを表しています。同じ完成系のあやとりは世界各地に見られますが、今回紹介するナウルの手順が比較的簡単です。長いひもを使うことで、星はいくつでも作ることができます', 
+      en: 'This string figure represents many stars shining in the night sky. Although string figures with the same final pattern can be found in many parts of the world, the Nauru method introduced here is relatively simple. By using a long string, you can create as many stars as you like.' 
     },
     premiumCourseId: 0, // 無料
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“Hold the Sky”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: 'ナウル', en: 'Nauru' },
+      source: '“Amet Dedogo Oeron (Holding up the sky)”\nH. C. Maude\n<i>The String Figures of Nauru Island</i> (1971)',
       author: null,
       references: null
     }
@@ -1773,7 +1773,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0, // 無料
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
-      source: 'Two Ptarmigans\nG. B. Gordon\n <i>Notes on the Western Eskimo</i> (1906)',
+      source: '“Two Ptarmigans”\nG. B. Gordon\n <i>Notes on the Western Eskimo</i> (1906)',
       author: null,
       references: null
     }
