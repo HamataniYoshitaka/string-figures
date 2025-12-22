@@ -1708,7 +1708,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '100',
     name: { ja: '空を掴む', en: 'Hold the Sky' },
-    difficulty: 'medium',
+    difficulty: 'easy',
     directory: '100_hold-the-sky',
     ...ASSETS_MAP['100_hold-the-sky'],
     description: { 

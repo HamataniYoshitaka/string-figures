@@ -9,9 +9,5 @@ export const FIGURE_100_HOLD_THE_SKY_VIDEOS = {
   8: require('../../../assets/string-figures/100_hold-the-sky/chapters/08.mp4'),
   9: require('../../../assets/string-figures/100_hold-the-sky/chapters/09.mp4'),
   10: require('../../../assets/string-figures/100_hold-the-sky/chapters/10.mp4'),
-  11: require('../../../assets/string-figures/100_hold-the-sky/chapters/11.mp4'),
-  12: require('../../../assets/string-figures/100_hold-the-sky/chapters/12.mp4'),
-  13: require('../../../assets/string-figures/100_hold-the-sky/chapters/13.mp4'),
-  14: require('../../../assets/string-figures/100_hold-the-sky/chapters/14.mp4'),
-  15: require('../../../assets/string-figures/100_hold-the-sky/chapters/15.mp4')
+  11: require('../../../assets/string-figures/100_hold-the-sky/chapters/11.mp4')
 };
