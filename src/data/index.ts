@@ -335,6 +335,25 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '64',
+    name: { ja: '上腕二頭筋を動かす男', en: 'A Man Flexing His Biceps' },
+    difficulty: 'hard',
+    directory: '64_a-man-flexing-his-biceps',
+    ...ASSETS_MAP['64_a-man-flexing-his-biceps'],
+    description: { 
+      ja: '力自慢のイヌイットを表したユーモラスなあやとりです。人差し指に合わせて男の腕が動きます', 
+      en: 'This humorous string figure represents a strong Inuit man. His arms move in sync with your index fingers.' 
+    },
+    premiumCourseId: 3, 
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“Aksatquligaciaq (Celui qui a le haut du bras)”\nG. Mary-Rousselière\n <i>Les Jeux de Ficelle des Arviligjuarmiut</i> (1969)',
+      author: null,
+      references: null
+    }
+  },
+
+  {
     id: '92',
     name: { ja: '6段ばしご', en: '6 Diamonds' },
     difficulty: 'easy',
@@ -344,7 +363,7 @@ export const stringFigures: StringFigure[] = [
       ja: '最も有名なあやとり「4段ばしご」の6段バージョンです。後半に1手順増えるだけで、他は「4段ばしご」と同じです。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
       en: 'This is the six-diamond version of the well-known string figure <i>Four Diamonds</i>. Only one additional step is added in the latter half; all other steps are the same as in <i>Four Diamonds</i>. Here, we present the method commonly taught in Japan, which uses the middle fingers.' 
     },
-    premiumCourseId: 1,
+    premiumCourseId: 3,
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: null,
@@ -428,7 +447,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'ひもを引くと目を閉じ、離すと目が開きます。アフリカでは「ニワトリの産卵」として知られているあやとりです', 
       en: 'When you pull the string, the eyes close; when you release it, the eyes open. In Africa, this string figure is known as “The Hen\'s Vent”' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: 'アフリカ, ハワイ, 他', en: 'Africa, Hawaii, etc.' },
       source: '“a Parrot\'s Tail”\nW. C. Farabee\n <i>The Central Arawaks</i> (1918)',
@@ -471,7 +490,44 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     }
+  },
+  {
+    id: '20',
+    name: { ja: 'つづみ', en: 'Drum' },
+    difficulty: 'easy',
+    directory: '20_tuzumi',
+    ...ASSETS_MAP['20_tuzumi'],
+    description: { 
+      ja: '日本とナバホ族に伝わるあやとりです。日本では「つづみ」という名前で呼ばれますが、どちらも太鼓を表しています', 
+      en: 'This string figure is found in both Japan and Navajo tradition. In Japan it is called “Tsuzumi,” and in both cultures the figure represents a drum.' 
     },
+    premiumCourseId: 2, 
+    data: {
+      region: { ja: '日本、北アメリカ', en: 'Japan, North America' },
+      source: '“Drum”\nW. Wirt, M. Sherman, M. Mitchell\n <i>String Games of the Navajo : 1999</i> (2000)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '104',
+    name: { ja: '赤ちゃんが生まれる', en: 'Baby Being Born' },
+    difficulty: 'medium',
+    directory: '104_baby-born',
+    ...ASSETS_MAP['104_baby-born'],
+    description: { 
+      ja: 'アボリジニに伝わるあやとりです。赤ちゃんが産道を通って産まれてくる様子を表現しています', 
+      en: 'This string figure comes from Aboriginal tradition. It represents a baby being born as it passes through the birth canal.' 
+    },
+    premiumCourseId: 2, 
+    data: {
+      region: { ja: 'オーストラリア', en: 'Australia' },
+      source: '“Baby Being Born”\nD. S. Davidson\n <i>Aboriginal Australian String Figures</i> (1941)',
+      author: null,
+      references: null
+    }
+  },
+
   {
     id: '15',
     name: { ja: 'バナナ', en: 'Banana' },
@@ -563,7 +619,7 @@ export const stringFigures: StringFigure[] = [
     directory: '18_mt-fuji',
     ...ASSETS_MAP['18_mt-fuji'],
     description: { ja: '今回紹介するあやとり以外にも、日本には富士山を表すあやとりがたくさんあります', en: 'In addition to the figure presented this time, Japan has many other string figures that depict Mount Fuji.' },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“富士山”\n夏堀謹二郎\n <i>日本の綾取</i> (1986)',
@@ -591,24 +647,6 @@ export const stringFigures: StringFigure[] = [
     relatedFigures: ['93']
   },
   {
-    id: '20',
-    name: { ja: 'つづみ', en: 'Drum' },
-    difficulty: 'easy',
-    directory: '20_tuzumi',
-    ...ASSETS_MAP['20_tuzumi'],
-    description: { 
-      ja: '日本とナバホ族に伝わるあやとりです。日本では「つづみ」という名前で呼ばれますが、どちらも太鼓を表しています', 
-      en: 'This string figure is found in both Japan and Navajo tradition. In Japan it is called “Tsuzumi,” and in both cultures the figure represents a drum.' 
-    },
-    premiumCourseId: 2, 
-    data: {
-      region: { ja: '日本、北アメリカ', en: 'Japan, North America' },
-      source: '“Drum”\nW. Wirt, M. Sherman, M. Mitchell\n <i>String Games of the Navajo : 1999</i> (2000)',
-      author: null,
-      references: null
-    }
-    },
-  {
     id: '21',
     name: { ja: '菊水', en: 'Kikusui' },
     difficulty: 'medium',
@@ -618,7 +656,7 @@ export const stringFigures: StringFigure[] = [
       ja: '日本の家にはそれぞれ家紋があり、「菊水」もその一つです', 
       en: 'In Japan, families traditionally have their own crests, and <i>Kikusui</i> is one such family emblem.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“KIKUSUI”\nSAITO T. \n <i>Ayatori: The Traditional String Figures of Japan : 1970-99</i> (2004)',
@@ -640,7 +678,7 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     }
-    },
+  },
   {
     id: '24',
     name: { ja: '流れ星', en: 'Shooting Star' },
@@ -835,7 +873,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'アムワンギヨはナウル語で「枝」のことで、中央の幹から左右に枝が伸びている状態を表しています', 
       en: 'In Nauruan, <i>Amwangiyo</i> means “branches,” depicting the way branches spread outward from a central trunk.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: 'ナウル', en: 'Nauru' },
       source: '“Amwangiyo”\nH. C. Maude\n<i>The String Figures of Nauru Island</i> (1971)',
@@ -947,7 +985,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'ナイジェリアやシエラレオネなどで伝承されているあやとりです。10本の指を全て使った複雑なパターンが出来上がりますが、最後に親指と小指から糸を外すことで一瞬で最初の状態に戻ります', 
       en: 'This string figure is traditionally practiced in regions including Nigeria and Sierra Leone. It forms a complex design that uses all ten fingers, yet with a simple motion—releasing the strings from your thumbs and little fingers—it snaps back to its starting form in an instant.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: 'アフリカ', en: 'Africa' },
       source: '“Ile Ubde (a parrot cage)”\nJ. Parkinson\n<i>Yöruba String Figures</i> (1906)',
@@ -1014,7 +1052,7 @@ export const stringFigures: StringFigure[] = [
     directory: '48_shovel',
     ...ASSETS_MAP['48_shovel'],
     description: { ja: 'カナダのイヌイットに伝わるあやとりです', en: 'This string figure comes from the Inuit of Canada.' },
-    premiumCourseId: 1, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“A Snow Shovel”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
@@ -1226,24 +1264,6 @@ export const stringFigures: StringFigure[] = [
     relatedFigures: ['70']
   },
   {
-    id: '64',
-    name: { ja: '上腕二頭筋を動かす男', en: 'A Man Flexing His Biceps' },
-    difficulty: 'hard',
-    directory: '64_a-man-flexing-his-biceps',
-    ...ASSETS_MAP['64_a-man-flexing-his-biceps'],
-    description: { 
-      ja: '力自慢のイヌイットを表したユーモラスなあやとりです。人差し指に合わせて男の腕が動きます', 
-      en: 'This humorous string figure represents a strong Inuit man. His arms move in sync with your index fingers.' 
-    },
-    premiumCourseId: 2, 
-    data: {
-      region: { ja: '北極圏', en: 'Arctic Circle' },
-      source: '“Aksatquligaciaq (Celui qui a le haut du bras)”\nG. Mary-Rousselière\n <i>Les Jeux de Ficelle des Arviligjuarmiut</i> (1969)',
-      author: null,
-      references: null
-    }
-  },
-  {
     id: '65',
     name: { ja: '耳の大きな犬', en: 'A Dog with Large Ears' },
     difficulty: 'hard',
@@ -1272,7 +1292,7 @@ export const stringFigures: StringFigure[] = [
       ja: '2000年にドイツ万博でナイジェリア男性から採集されたあやとりです。当時、完成形には名前が付いていませんでしたが、ディズニーの有名なキャラクターに似ていることから名前が付けられました', 
       en: 'This string figure was collected in 2000 from a Nigerian man at the World Expo in Germany. At the time, the completed form had no name, but it was later given one because it resembled a famous Disney character.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: 'ナイジェリア', en: 'Nigeria' },
       source: '“Mouse Face”\nA. Reichert (BISFA 9)\n<i>Some String Figures from Modern Africa : 2000</i> (2002)',
@@ -1326,7 +1346,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'イヌイットのあやとりです。中央の満月は、地域によっては太陽を表します', 
       en: 'This is an Inuit string figure. The full moon in the center is interpreted as the sun in some regions.' 
     },
-    premiumCourseId: 1, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“The Moon Between the Mountains”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
@@ -1344,7 +1364,7 @@ export const stringFigures: StringFigure[] = [
       ja: '「カヤックを漕ぐ人」から続けてとるあやとりで、漕いで行った人が遥か向こうに見た山並みを表しています。ここでは「カヤックを漕ぐ人」の完成形からの手順を紹介していますので、「カヤックを漕ぐ人」の作り方を先に習得してから始めて下さい', 
       en: 'This string figure continues from <i>The Kayaker</i> and represents the mountain range seen far in the distance by the paddler. The instructions here begin from the finished form of <i>The Kayaker,</i> so please learn how to make <i>The Kayaker</i> first before starting.' 
     },
-    premiumCourseId: 1, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: '“The Range of the Mountains”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
@@ -1383,7 +1403,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'ひもを2重にして、指に巻きつけて作成するあやとりです。手を開閉することで糸を紡いでいるように見えます', 
       en: 'This figure is created by folding the string in half and wrapping it around your fingers. When you open and close your hands, the motion resembles spinning yarn.' 
     },
-    premiumCourseId: 1, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: '“Spindle”\nF. D. McCarthy 1960\n <i>The String Figures of Yirrkalla</i> (1960)',
@@ -1437,7 +1457,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'たつまきの形が立体的に表現された見事なあやとりです。ここでは「カヌー」の完成形からの手順を紹介していますので、「カヌー」の作り方を先に習得してから始めて下さい', 
       en: 'This is a remarkable string figure that expresses the shape of a tornado in three dimensions. The instructions here begin from the completed form of <i>A Canoe,</i> so please learn how to make <i>A Canoe</i> first before starting.' 
     },
-    premiumCourseId: 1, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: 'オーストラリア', en: 'Australia' },
       source: '“The Waterspout (Mare)”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
@@ -1475,7 +1495,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'こうもりが群れになってぶら下がっている様子を表しているあやとりです。最後にこうもりは次々と飛び立って行きます', 
       en: 'This string figure represents a group of bats hanging together. In the final steps, the bats fly away one after another.' 
     },
-    premiumCourseId: 1, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '南アメリカ', en: 'South America' },
       source: '“t\'afoloc (muchos pecaríes)”\nJ. Braunstein\n <i>Figuras y Juegos de Hilos de los Indios Maká </i> (1992)',
@@ -1603,7 +1623,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'パプアニューギニアのあやとりです。右手を引くと、大きな荷物を担いだ二人が吊り橋を渡って行きます。ここではもう一人の人に手伝ってもらう手順を紹介していますが、棒を口でくわえる、などの方法で一人で取ることも可能です', 
       en: 'This string figure comes from Papua New Guinea. When you pull your right hand, a man carrying lumber crosses a suspension bridge. Here we introduce a method that involves assistance from another person, but it is also possible to perform it alone—for example, by holding the stick in your mouth.' 
     },
-    premiumCourseId: 2,
+    premiumCourseId: 3,
     data: {
       region: { ja: 'メラネシア', en: 'Melanesia' },
       source: '“Making Fire and Rope Bridge”\nSHISHIDO Y., NOGUCHI H. (BSFA 14)\n <i>Some String Figures of Highland People in Papua New Guinea : 1984</i> (1987)',
@@ -1658,7 +1678,7 @@ export const stringFigures: StringFigure[] = [
       ja: '美しい珊瑚礁に囲まれた、カロリン諸島のヤップ島に伝承されているあやとりです。シンプルで美しい完成系ですが、手順はかなり複雑です', 
       en: 'This string figure is passed down on Yap Island in the Caroline Islands, surrounded by beautiful coral reefs. Although the finished form is simple and elegant, the sequence of steps is quite complex.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: 'ミクロネシア', en: 'Micronesia' },
       source: '“Coral”\nC. F. Jayne\n <i>String Figures</i> (1906)',
@@ -1748,7 +1768,7 @@ export const stringFigures: StringFigure[] = [
       ja: '北極圏に広く伝承されているあやとりです。同じ北極圏のあやとり「白鳥」と手順がよく似ています。最後の手順が少しユニークで、握りこぶしを回して親指側を下に向けて完成となります', 
       en: 'This string figure is widely passed down throughout the Arctic region. Its steps closely resemble those of another Arctic string figure, <i>Swan.</i> The final move is slightly unique: you rotate your fists and finish with the thumbs facing downward.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“Polar Bear”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
@@ -1785,28 +1805,10 @@ export const stringFigures: StringFigure[] = [
       ja: '左が雌で、右の長い尾を立てているのが雄の雷鳥を表しているあやとりです。手順のほとんどで左手の小指を使用する、とても珍しい取り方で作られます', 
       en: 'This string figure represents ptarmigan, with the female on the left and the male on the right, distinguished by his raised long tail. It is created using a very unusual method that relies on the left little finger for most of the steps.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“Two Ptarmigans”\nG. B. Gordon\n <i>Notes on the Western Eskimo</i> (1906)',
-      author: null,
-      references: null
-    }
-  },
-  {
-    id: '104',
-    name: { ja: '赤ちゃんが生まれる', en: 'Baby Being Born' },
-    difficulty: 'medium',
-    directory: '104_baby-born',
-    ...ASSETS_MAP['104_baby-born'],
-    description: { 
-      ja: 'アボリジニに伝わるあやとりです。赤ちゃんが産道を通って産まれてくる様子を表現しています', 
-      en: 'This string figure comes from Aboriginal tradition. It represents a baby being born as it passes through the birth canal.' 
-    },
-    premiumCourseId: 2, 
-    data: {
-      region: { ja: 'オーストラリア', en: 'Australia' },
-      source: '“Baby Being Born”\nD. S. Davidson\n <i>Aboriginal Australian String Figures</i> (1941)',
       author: null,
       references: null
     }
