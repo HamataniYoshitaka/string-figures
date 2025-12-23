@@ -35,7 +35,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
     
     const { isTablet, isDeviceLandscape } = useDeviceInfo();
     const isAndroid = Platform.OS === 'android';
-    console.log('isAndroid', isAndroid);
+    
     // アニメーションヘルパー関数
     const createPressInHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {
@@ -270,13 +270,12 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
 
                     <View style={styles.restorePurchaseContainer}>
                         <View style={styles.restorePurchaseContent}>
-                            <Text style={styles.restorePurchaseOrText} maxFontSizeMultiplier={1.15}>または</Text>
+                            <Text style={styles.restorePurchaseOrText} maxFontSizeMultiplier={1.15}>{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
                             <View style={styles.restorePurchaseQuestionContainer}>
-                                <Text style={styles.restorePurchaseQuestionText} maxFontSizeMultiplier={1.25}>以前にコレクションを</Text>
-                                <Text style={styles.restorePurchaseQuestionText} maxFontSizeMultiplier={1.25}>購入しましたか？</Text>
+                                <Text style={styles.restorePurchaseQuestionText} maxFontSizeMultiplier={1.25}>{getLocalizedText({ja: '以前にコレクションを\n購入しましたか？', en: 'Have you previously purchased a collection?'})}</Text>
                             </View>
                             <TouchableOpacity onPress={() => {}}>
-                                <Text style={styles.restorePurchaseButtonText} maxFontSizeMultiplier={1.1}>購入情報を復元する</Text>
+                                <Text style={styles.restorePurchaseButtonText} maxFontSizeMultiplier={1.1}>{getLocalizedText({ja: '購入情報を復元する', en: 'Restore purchase information'})}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -373,10 +372,10 @@ const styles = StyleSheet.create({
     restorePurchaseContainer: {
         backgroundColor: 'rgba(255, 255, 255, 0.85)',
         borderRadius: 20,
-        padding: 12,
-        // marginHorizontal: 16,
+        paddingHorizontal: 12,
+        paddingVertical: 20,
         width: 260,
-        minHeight: 200,
+        minHeight: 300,
     },
     restorePurchaseContent: {
         flex: 1,

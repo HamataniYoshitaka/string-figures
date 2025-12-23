@@ -326,7 +326,7 @@ export const stringFigures: StringFigure[] = [
       ja: '最も有名なあやとり「4段ばしご」の5段バージョンです。後半に1手順増えるだけで、他は「4段ばしご」と同じです。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
       en: 'This is the five-diamond version of the well-known string figure <i>Four Diamonds</i>. Only one additional step is added in the second half; all other steps are the same as in <i>Four Diamonds</i>. Here, we present the method commonly taught in Japan, which uses the middle fingers.' 
     },
-    premiumCourseId: 1,
+    premiumCourseId: 0,
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: null,
@@ -363,7 +363,7 @@ export const stringFigures: StringFigure[] = [
       ja: '最も有名なあやとり「4段ばしご」の6段バージョンです。後半に1手順増えるだけで、他は「4段ばしご」と同じです。ここでは主に日本で伝わる、中指を使って取る方法を紹介します', 
       en: 'This is the six-diamond version of the well-known string figure <i>Four Diamonds</i>. Only one additional step is added in the latter half; all other steps are the same as in <i>Four Diamonds</i>. Here, we present the method commonly taught in Japan, which uses the middle fingers.' 
     },
-    premiumCourseId: 3,
+    premiumCourseId: 0,
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: null,
@@ -946,7 +946,7 @@ export const stringFigures: StringFigure[] = [
       ja: '複雑で美しいパターンが出来上がりますが、手順は意外と短いです。北アメリカのアパッチ族の伝統的な住居「ティーピー」の入り口に掛ける幕を表しています', 
       en: 'It creates a complex and beautiful pattern, yet the sequence of steps is surprisingly short. It represents the curtain hung at the entrance of a “teepee,” the traditional dwelling of the Apache people of North America.' 
     },
-    premiumCourseId: 0, 
+    premiumCourseId: 3, 
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: '“An Apache Door”\nC. F. Jayne\n<i>String Figures</i> (1906)',
@@ -1586,7 +1586,7 @@ export const stringFigures: StringFigure[] = [
       ja: '男女のダンサーが列を作って踊っているあやとりです。列の最後の輪はドラムを表しています。ダンサー達は次々と退場していき、最後はダンスハウスは無人になります', 
       en: 'This string figure shows male and female dancers lined up in a row. The last loop represents a drum. The dancers leave the line one by one, and in the end the dance house is left empty.' 
     },
-    premiumCourseId: 0, 
+    premiumCourseId: 1, 
     data: {
       region: { ja: '北極圏', en: 'Arctic Circle' },
       source: '“The Children (a series of dancers, the last one carrying the drum)”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
