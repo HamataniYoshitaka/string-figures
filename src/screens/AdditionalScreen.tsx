@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions,
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import Purchases from 'react-native-purchases';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,6 +12,7 @@ import CollectionCard from '../components/CollectionCard';
 import { StringFigure } from '../types';
 import DetailBottomSheet, { DetailBottomSheetRef } from '../components/DetailBottomSheet';
 import { stringFigures } from '../data/index';
+import { getProductIdForCollection } from '../utils/revenuecat';
 
 type AdditionalScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -171,29 +173,64 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
         try {
             console.log('handlePurchasePress', collectionId);
             
-            // 既存のpurchasedItemsを読み込む
-            const savedPurchasedItems = await AsyncStorage.getItem('purchasedItems');
-            let purchasedItems: number[] = [];
+            // 既に購入済みかチェック
+            if (purchasedItems.includes(collectionId)) {
+                console.log('既に購入済みです:', collectionId);
+                return;
+            }
             
-            if (savedPurchasedItems) {
-                const parsedItems = JSON.parse(savedPurchasedItems);
-                if (Array.isArray(parsedItems)) {
-                    purchasedItems = parsedItems;
+            // Product IDを取得
+            const productId = getProductIdForCollection(collectionId);
+            console.log('Purchasing product:', productId);
+            
+            // RevenueCatで購入処理を実行
+            const { customerInfo, productIdentifier } = await Purchases.purchaseProduct(productId);
+            
+            // 購入が成功した場合
+            if (productIdentifier === productId) {
+                console.log('Purchase successful:', productIdentifier);
+                
+                // 既存のpurchasedItemsを読み込む
+                const savedPurchasedItems = await AsyncStorage.getItem('purchasedItems');
+                let updatedPurchasedItems: number[] = [];
+                
+                if (savedPurchasedItems) {
+                    const parsedItems = JSON.parse(savedPurchasedItems);
+                    if (Array.isArray(parsedItems)) {
+                        updatedPurchasedItems = parsedItems;
+                    }
+                }
+                
+                // collectionIdが既に含まれていない場合のみ追加
+                if (!updatedPurchasedItems.includes(collectionId)) {
+                    updatedPurchasedItems.push(collectionId);
+                    await AsyncStorage.setItem('purchasedItems', JSON.stringify(updatedPurchasedItems));
+                    setPurchasedItems([...updatedPurchasedItems]);
+                    console.log('購入済みアイテムに追加しました:', collectionId);
+                    
+                    // 成功メッセージを表示
+                    const successTitle = currentLanguage === 'ja' ? '購入ありがとうございます' : 'Thank you for your purchase';
+                    const successMessage = currentLanguage === 'ja' 
+                        ? `コレクション${collectionId}を追加しました。引き続き、あやとりの世界をお楽しみください`
+                        : `Collection ${collectionId} has been added. Continue to enjoy the world of string figures`;
+                    Alert.alert(successTitle, successMessage, [{ text: 'OK', onPress: onGoBack }]);
                 }
             }
-            
-            // collectionIdが既に含まれていない場合のみ追加
-            if (!purchasedItems.includes(collectionId)) {
-                purchasedItems.push(collectionId);
-                await AsyncStorage.setItem('purchasedItems', JSON.stringify(purchasedItems));
-                setPurchasedItems([...purchasedItems]);
-                console.log('購入済みアイテムに追加しました:', collectionId);
-                Alert.alert('購入ありがとうございます', `コレクション${collectionId}を追加しました。引き続き、あやとりの世界をお楽しみください`, [{ text: 'OK', onPress: onGoBack }]);
+        } catch (error: any) {
+            // エラーハンドリング
+            // ユーザーが購入をキャンセルした場合（userCancelledプロパティをチェック）
+            if (error.userCancelled) {
+                console.log('購入がキャンセルされました');
+                // アラートは表示しない
             } else {
-                console.log('既に購入済みです:', collectionId);
+                // その他のエラー（ネットワークエラー、購入エラー等）
+                console.error('購入処理中にエラーが発生しました:', error);
+                const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
+                const errorMessage = currentLanguage === 'ja'
+                    ? '購入処理中にエラーが発生しました。もう一度お試しください。'
+                    : 'An error occurred during the purchase. Please try again.';
+                Alert.alert(errorTitle, errorMessage, [{ text: 'OK' }]);
             }
-        } catch (error) {
-            console.error('購入済みアイテムの保存に失敗しました:', error);
         }
     };
 

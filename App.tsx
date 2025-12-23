@@ -4,10 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import * as Font from 'expo-font';
-import { View, Text } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import Constants from 'expo-constants';
+import Purchases from 'react-native-purchases';
 import { RootStackParamList } from './src/types';
 import IntroScreen from './src/screens/IntroScreen';
 import IntroVideoScreen from './src/screens/IntroVideoScreen';
@@ -39,6 +41,18 @@ export default function App() {
           'NotoSerif-Regular': require('./assets/fonts/NotoSerif/NotoSerif-Regular.ttf'),
           'NotoSerif-Italic': require('./assets/fonts/NotoSerif/NotoSerif-Italic.ttf'),
         });
+
+        // RevenueCat SDKを初期化
+        const apiKey = Platform.OS === 'ios'
+          ? Constants.expoConfig?.extra?.revenueCatIosApiKey
+          : Constants.expoConfig?.extra?.revenueCatAndroidApiKey;
+        
+        if (apiKey) {
+          await Purchases.configure({ apiKey });
+          console.log('RevenueCat SDK initialized successfully');
+        } else {
+          console.warn('RevenueCat API key not found. Please set REVENUECAT_IOS_API_KEY and REVENUECAT_ANDROID_API_KEY in .env file');
+        }
 
         // イントロ完了状態を読み込む
         const completed = await AsyncStorage.getItem('introduction_completed');
