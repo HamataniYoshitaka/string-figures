@@ -1,0 +1,33 @@
+[
+    {
+        "subtitle": { 
+            "ja": "輪を好きな長さになるように重ねます。輪に両手の人差し指と中指を入れます", 
+            "en": "Adjust the loops to the desired length by stacking them. Insert both index fingers and middle fingers into the loops." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左手の人差し指と中指を手前側に1回転させて糸をねじります", 
+            "en": "Rotate the left index finger and middle finger one full turn toward you, twisting the string." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "右手人差し指手前側の糸を左手で持ち、左手の輪の中から引き出します", 
+            "en": "With the left hand, take the near string on the right index finger and pull it out through the loop on the left hand." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左手から外した糸を右手で持ち、右手の輪の中から引き出します", 
+            "en": "With the right hand, take the string removed from the left hand and pull it out through the loop on the right hand." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "両手を強く引いて完成です", 
+            "en": "Pull both hands firmly to finish." 
+        }
+    }
+]
+
