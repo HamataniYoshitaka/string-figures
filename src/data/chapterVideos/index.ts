@@ -101,6 +101,8 @@ import { FIGURE_103_PAIR_THUNDERBIRD_VIDEOS } from './figure-103_pair-thunderbir
 import { FIGURE_104_BABY_BORN_VIDEOS } from './figure-104_baby-born';
 import { FIGURE_105_TIEUP_LOOP_VIDEOS } from './figure-105_tieup-loop';
 import { FIGURE_106_SALT_HOUSE_VIDEOS } from './figure-106_salt-house';
+import { FIGURE_108_TOAD_VIDEOS } from './figure-108_toad';
+import { FIGURE_109_HEART_VIDEOS } from './figure-109_heart';
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
@@ -205,5 +207,7 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '103_pair-thunderbird': FIGURE_103_PAIR_THUNDERBIRD_VIDEOS,
   '104_baby-born': FIGURE_104_BABY_BORN_VIDEOS,
   '105_tieup-loop': FIGURE_105_TIEUP_LOOP_VIDEOS,
-  '106_salt-house': FIGURE_106_SALT_HOUSE_VIDEOS
+  '106_salt-house': FIGURE_106_SALT_HOUSE_VIDEOS,
+  '108_toad': FIGURE_108_TOAD_VIDEOS,
+  '109_heart': FIGURE_109_HEART_VIDEOS
 };

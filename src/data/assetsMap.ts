@@ -520,4 +520,14 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/106_salt-house/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/106_salt-house/preview.mp4'),
   },
+  '108_toad': {
+    thumbnail: require('../../assets/string-figures/108_toad/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/108_toad/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/108_toad/preview.mp4'),
+  },
+  '109_heart': {
+    thumbnail: require('../../assets/string-figures/109_heart/thumbnail-kraft.jpg'),
+    patternImage: require('../../assets/string-figures/109_heart/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/109_heart/preview.mp4'),
+  },
 };

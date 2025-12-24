@@ -1831,6 +1831,37 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '108',
+    name: { ja: 'カエル', en: 'Toad' },
+    difficulty: 'medium',
+    directory: '108_toad',
+    ...ASSETS_MAP['108_toad'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 2, 
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“塩屋”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '109',
+    name: { ja: '心', en: 'Heart' },
+    difficulty: 'hard',
+    directory: '109_heart',
+    ...ASSETS_MAP['109_heart'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, 
+    data: null
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',
