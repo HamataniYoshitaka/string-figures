@@ -1813,6 +1813,24 @@ export const stringFigures: StringFigure[] = [
       references: null
     }
   },
+  {
+    id: '106',
+    name: { ja: '塩の家', en: 'Salt House' },
+    difficulty: 'medium',
+    directory: '106_salt-house',
+    ...ASSETS_MAP['106_salt-house'],
+    description: { 
+      ja: '', 
+      en: '' 
+    },
+    premiumCourseId: 0, 
+    data: {
+      region: { ja: '日本', en: 'Japan' },
+      source: '“塩屋”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',

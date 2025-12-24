@@ -515,4 +515,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/105_tieup-loop/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/105_tieup-loop/preview.mp4'),
   },
+  '106_salt-house': {
+    thumbnail: require('../../assets/string-figures/106_salt-house/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/106_salt-house/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/106_salt-house/preview.mp4'),
+  },
 };

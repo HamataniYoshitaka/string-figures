@@ -103,4 +103,5 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '103_pair-thunderbird': require('../../assets/string-figures/103_pair-thunderbird/chapters.json'),
   '104_baby-born': require('../../assets/string-figures/104_baby-born/chapters.json'),
   '105_tieup-loop': require('../../assets/string-figures/105_tieup-loop/chapters.json'),
+  '106_salt-house': require('../../assets/string-figures/106_salt-house/chapters.json'),
 };
