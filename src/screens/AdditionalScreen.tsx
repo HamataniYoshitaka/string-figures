@@ -95,6 +95,57 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
         loadLanguageSetting();
         loadPurchasedItems();
         loadBookmarkedIds();
+        
+        // デバッグ用: マウント時に商品リストを取得してAlertで表示
+        const checkAvailableProducts = async () => {
+            try {
+                const productIds = [1, 2, 3].map(id => getProductIdForCollection(id));
+                console.log('Checking products:', productIds);
+                
+                const products = await Purchases.getProducts(productIds);
+                console.log('Available products on mount:', products.map(p => ({
+                    identifier: p.identifier,
+                    title: p.title,
+                    price: p.priceString,
+                })));
+                
+                // Alertで結果を表示
+                const productList = products.length > 0
+                    ? products.map(p => `- ${p.identifier}: ${p.title} (${p.priceString})`).join('\n')
+                    : 'なし';
+                
+                const message = currentLanguage === 'ja'
+                    ? `取得できたプロダクト:\n\n${productList}\n\n合計: ${products.length}個`
+                    : `Available products:\n\n${productList}\n\nTotal: ${products.length}`;
+                
+                // 開発モードのみAlertを表示
+                if (__DEV__) {
+                    Alert.alert(
+                        currentLanguage === 'ja' ? 'プロダクト確認' : 'Product Check',
+                        message,
+                        [{ text: 'OK' }]
+                    );
+                }
+            } catch (error: any) {
+                console.error('プロダクト取得エラー（マウント時）:', error);
+                if (__DEV__) {
+                    Alert.alert(
+                        currentLanguage === 'ja' ? 'エラー' : 'Error',
+                        currentLanguage === 'ja'
+                            ? `プロダクト取得に失敗しました:\n${error.message || JSON.stringify(error)}`
+                            : `Failed to retrieve products:\n${error.message || JSON.stringify(error)}`,
+                        [{ text: 'OK' }]
+                    );
+                }
+            }
+        };
+        
+        // 少し遅延させてから実行（他の初期化処理の後）
+        const timer = setTimeout(() => {
+            checkAvailableProducts();
+        }, 1000);
+        
+        return () => clearTimeout(timer);
     }, []);
 
     const loadBookmarkedIds = async () => {
@@ -183,6 +234,43 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
             const productId = getProductIdForCollection(collectionId);
             console.log('Purchasing product:', productId);
             
+            // プロダクトが利用可能か確認
+            try {
+                const products = await Purchases.getProducts([productId]);
+                console.log('Available products:', products.map(p => p.identifier));
+                
+                if (products.length === 0) {
+                    console.error('プロダクトが見つかりません:', productId);
+                    const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
+                    // シミュレータ環境ではプロダクトが取得できないため、適切なメッセージを表示
+                    const isDev = __DEV__;
+                    const errorMessage = currentLanguage === 'ja'
+                        ? isDev
+                            ? `プロダクト「${productId}」が見つかりません。\n\nシミュレータではアプリ内課金は動作しません。実機でテストしてください。\n\n実機でもエラーが出る場合は、RevenueCatの設定とストアでのプロダクト登録を確認してください。`
+                            : `プロダクト「${productId}」が見つかりません。RevenueCatの設定とストアでのプロダクト登録を確認してください。`
+                        : isDev
+                            ? `Product "${productId}" not found.\n\nIn-app purchases do not work on simulators. Please test on a real device.\n\nIf the error persists on a real device, please check your RevenueCat configuration and product registration in the store.`
+                            : `Product "${productId}" not found. Please check your RevenueCat configuration and product registration in the store.`;
+                    Alert.alert(errorTitle, errorMessage, [{ text: 'OK' }]);
+                    return;
+                }
+                
+                const product = products[0];
+                console.log('Product found:', {
+                    identifier: product.identifier,
+                    title: product.title,
+                    price: product.priceString,
+                });
+            } catch (productError: any) {
+                console.error('プロダクト取得エラー:', productError);
+                const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
+                const errorMessage = currentLanguage === 'ja'
+                    ? 'プロダクト情報の取得に失敗しました。ネットワーク接続を確認してください。'
+                    : 'Failed to retrieve product information. Please check your network connection.';
+                Alert.alert(errorTitle, errorMessage, [{ text: 'OK' }]);
+                return;
+            }
+            
             // RevenueCatで購入処理を実行
             const { customerInfo, productIdentifier } = await Purchases.purchaseProduct(productId);
             
@@ -225,10 +313,25 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
             } else {
                 // その他のエラー（ネットワークエラー、購入エラー等）
                 console.error('購入処理中にエラーが発生しました:', error);
+                console.error('エラー詳細:', {
+                    message: error.message,
+                    code: error.code,
+                    domain: error.domain,
+                    underlyingErrorMessage: error.underlyingErrorMessage,
+                });
+                
                 const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
-                const errorMessage = currentLanguage === 'ja'
+                let errorMessage = currentLanguage === 'ja'
                     ? '購入処理中にエラーが発生しました。もう一度お試しください。'
                     : 'An error occurred during the purchase. Please try again.';
+                
+                // プロダクトが見つからない場合の詳細メッセージ
+                if (error.message && error.message.includes("Couldn't find product")) {
+                    errorMessage = currentLanguage === 'ja'
+                        ? 'プロダクトが見つかりません。RevenueCatの設定とストアでのプロダクト登録を確認してください。'
+                        : 'Product not found. Please check your RevenueCat configuration and product registration in the store.';
+                }
+                
                 Alert.alert(errorTitle, errorMessage, [{ text: 'OK' }]);
             }
         }

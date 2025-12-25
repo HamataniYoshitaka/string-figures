@@ -501,7 +501,7 @@ export const stringFigures: StringFigure[] = [
       ja: '日本とナバホ族に伝わるあやとりです。日本では「つづみ」という名前で呼ばれますが、どちらも太鼓を表しています', 
       en: 'This string figure is found in both Japan and Navajo tradition. In Japan it is called “Tsuzumi,” and in both cultures the figure represents a drum.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 0, 
     data: {
       region: { ja: '日本、北アメリカ', en: 'Japan, North America' },
       source: '“Drum”\nW. Wirt, M. Sherman, M. Mitchell\n <i>String Games of the Navajo : 1999</i> (2000)',
@@ -537,7 +537,7 @@ export const stringFigures: StringFigure[] = [
     description: { 
       ja: '4本のバナナが出来上がる、簡単な手順のあやとりです。最後に手から糸を外して完成します', 
       en: 'This easy string figure creates four bananas. To finish, you release the strings from your hands to reveal the completed shape.' },
-    premiumCourseId: 2, 
+    premiumCourseId: 0, 
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: null,
@@ -797,7 +797,7 @@ export const stringFigures: StringFigure[] = [
       ja: '日本の各地で、さまざまな名前で伝えられているあやとりです。手のひらの向きを変えることで、はたおり機が動きます', 
       en: 'This string figure is passed down across Japan under various names. By changing the orientation of your palms, the loom appears to move.' 
     },
-    premiumCourseId: 2, 
+    premiumCourseId: 0, 
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“はたおり”\n有木昭久, 湯浅清四郎\n <i>楽しいあやとり遊び</i> (1973)',
@@ -1245,6 +1245,20 @@ export const stringFigures: StringFigure[] = [
     }
   },
   {
+    id: '109',
+    name: { ja: 'ハート', en: 'Heart' },
+    difficulty: 'hard',
+    directory: '109_heart',
+    ...ASSETS_MAP['109_heart'],
+    description: { 
+      ja: '両手の間にハートマークが浮かび上がる、とても愛らしいあやとりです。手順の途中で、取るべき糸が非常にわかりにくい箇所があるので注意が必要です', 
+      en: 'This is a very charming string figure in which a heart shape appears between your hands. There is a point in the process where the string to be picked up is especially hard to identify, so extra care is required.' 
+    },
+    premiumCourseId: 0, 
+    data: null
+  },
+
+  {
     id: '59',
     name: { ja: 'カヤックをこぐ人', en: 'The Kayaker' },
     difficulty: 'hard',
@@ -1568,7 +1582,7 @@ export const stringFigures: StringFigure[] = [
       ja: 'ナバホ族のあやとりです。同じ操作を繰り返すことで、雲はいくつでも作ることができます', 
       en: 'This is a Navajo string figure. By repeating the same motion, you can create as many clouds as you like.' 
     },
-    premiumCourseId: 0, 
+    premiumCourseId: 2, 
     data: {
       region: { ja: '北アメリカ', en: 'North America' },
       source: '“Storm Clouds”\nC. F. Jayne\n <i>String Figures</i> (1906)',
@@ -1823,7 +1837,7 @@ export const stringFigures: StringFigure[] = [
       ja: '', 
       en: '' 
     },
-    premiumCourseId: 0, 
+    premiumCourseId: 2, 
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“塩屋”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
@@ -1848,19 +1862,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     }
-  },
-  {
-    id: '109',
-    name: { ja: '心', en: 'Heart' },
-    difficulty: 'hard',
-    directory: '109_heart',
-    ...ASSETS_MAP['109_heart'],
-    description: { 
-      ja: '', 
-      en: '' 
-    },
-    premiumCourseId: 0, 
-    data: null
   },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },

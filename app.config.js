@@ -1,4 +1,6 @@
-export default {
+require('dotenv').config();
+
+module.exports = {
   expo: {
     name: 'String Figures',
     slug: 'string-figures',

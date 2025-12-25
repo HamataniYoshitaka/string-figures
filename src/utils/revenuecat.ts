@@ -4,8 +4,8 @@
  * @returns RevenueCatのProduct ID
  */
 export const getProductIdForCollection = (collectionId: number): string => {
-  // 形式1（優先）: collection_1, collection_2, collection_3
-  return `collection_${collectionId}`;
+  // 形式1（優先）: collection1, collection2, collection3
+  return `com.hamahouse.stringfigures.collection${collectionId}`;
   
   // フォールバック形式が必要な場合は、以下のように変更できます：
   // return `com.hamahouse.stringfigures.collection${collectionId}`;
