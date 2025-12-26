@@ -12,7 +12,6 @@ import CollectionCard from '../components/CollectionCard';
 import { StringFigure } from '../types';
 import DetailBottomSheet, { DetailBottomSheetRef } from '../components/DetailBottomSheet';
 import { stringFigures } from '../data/index';
-import { getProductIdForCollection } from '../utils/revenuecat';
 
 type AdditionalScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -95,58 +94,76 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
         loadLanguageSetting();
         loadPurchasedItems();
         loadBookmarkedIds();
-        
-        // デバッグ用: マウント時に商品リストを取得してAlertで表示
-        const checkAvailableProducts = async () => {
-            try {
-                const productIds = [1, 2, 3].map(id => getProductIdForCollection(id));
-                console.log('Checking products:', productIds);
                 
-                const products = await Purchases.getProducts(productIds);
-                console.log('Available products on mount:', products.map(p => ({
-                    identifier: p.identifier,
-                    title: p.title,
-                    price: p.priceString,
-                })));
-                
-                // Alertで結果を表示
-                const productList = products.length > 0
-                    ? products.map(p => `- ${p.identifier}: ${p.title} (${p.priceString})`).join('\n')
-                    : 'なし';
-                
-                const message = currentLanguage === 'ja'
-                    ? `取得できたプロダクト:\n\n${productList}\n\n合計: ${products.length}個`
-                    : `Available products:\n\n${productList}\n\nTotal: ${products.length}`;
-                
-                // 開発モードのみAlertを表示
-                if (__DEV__) {
-                    Alert.alert(
-                        currentLanguage === 'ja' ? 'プロダクト確認' : 'Product Check',
-                        message,
-                        [{ text: 'OK' }]
-                    );
-                }
-            } catch (error: any) {
-                console.error('プロダクト取得エラー（マウント時）:', error);
-                if (__DEV__) {
-                    Alert.alert(
-                        currentLanguage === 'ja' ? 'エラー' : 'Error',
-                        currentLanguage === 'ja'
-                            ? `プロダクト取得に失敗しました:\n${error.message || JSON.stringify(error)}`
-                            : `Failed to retrieve products:\n${error.message || JSON.stringify(error)}`,
-                        [{ text: 'OK' }]
-                    );
-                }
-            }
-        };
-        
-        // 少し遅延させてから実行（他の初期化処理の後）
-        const timer = setTimeout(() => {
-            checkAvailableProducts();
-        }, 1000);
-        
-        return () => clearTimeout(timer);
     }, []);
+
+    // デバッグ用: マウント時にオファリングを取得してAlertで表示
+    const checkOfferings = async () => {
+        // Alert.alert('Offerings Check', 'Offerings Check', [{ text: 'OK' }]);
+        try {
+            console.log('Checking offerings...');
+            
+            const offerings = await Purchases.getOfferings();
+            console.log('Offerings response:', JSON.stringify(offerings, null, 2));
+            
+            // オファリング情報を整形
+            let message = '';
+            if (offerings.current) {
+                const currentOffering = offerings.current;
+                message += currentLanguage === 'ja' 
+                    ? `現在のオファリング: ${currentOffering.identifier}\n\n`
+                    : `Current offering: ${currentOffering.identifier}\n\n`;
+                
+                if (currentOffering.availablePackages && currentOffering.availablePackages.length > 0) {
+                    const packagesList = currentOffering.availablePackages.map(pkg => {
+                        const product = pkg.product;
+                        return `- ${pkg.identifier}: ${product.title} (${product.priceString})`;
+                    }).join('\n');
+                    message += currentLanguage === 'ja'
+                        ? `パッケージ:\n${packagesList}\n\n合計: ${currentOffering.availablePackages.length}個`
+                        : `Packages:\n${packagesList}\n\nTotal: ${currentOffering.availablePackages.length}`;
+                } else {
+                    message += currentLanguage === 'ja' 
+                        ? 'パッケージ: なし'
+                        : 'Packages: None';
+                }
+            } else {
+                message = currentLanguage === 'ja'
+                    ? '現在のオファリングはありません'
+                    : 'No current offering available';
+            }
+            
+            // 全てのオファリング情報も追加（デバッグ用）
+            const allOfferingsInfo = Object.keys(offerings.all).map(key => {
+                const offering = offerings.all[key];
+                return `${key}: ${offering.identifier}`;
+            }).join('\n');
+            
+            if (allOfferingsInfo) {
+                message += `\n\n${currentLanguage === 'ja' ? '全てのオファリング' : 'All offerings'}:\n${allOfferingsInfo}`;
+            }
+            
+            // 開発モードのみAlertを表示
+            // if (__DEV__) {
+                Alert.alert(
+                    currentLanguage === 'ja' ? 'オファリング確認' : 'Offerings Check',
+                    message,
+                    [{ text: 'OK' }]
+                );
+            // }
+        } catch (error: any) {
+            console.error('オファリング取得エラー（マウント時）:', error);
+            // if (__DEV__) {
+                Alert.alert(
+                    currentLanguage === 'ja' ? 'エラー' : 'Error',
+                    currentLanguage === 'ja'
+                        ? `オファリング取得に失敗しました:\n${error.message || JSON.stringify(error)}`
+                        : `Failed to retrieve offerings:\n${error.message || JSON.stringify(error)}`,
+                    [{ text: 'OK' }]
+                );
+            // }
+        }
+    };
 
     const loadBookmarkedIds = async () => {
         try {
@@ -230,53 +247,60 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 return;
             }
             
-            // Product IDを取得
-            const productId = getProductIdForCollection(collectionId);
-            console.log('Purchasing product:', productId);
-            
-            // プロダクトが利用可能か確認
+            // オファリングから該当パッケージを取得
             try {
-                const products = await Purchases.getProducts([productId]);
-                console.log('Available products:', products.map(p => p.identifier));
+                const offerings = await Purchases.getOfferings();
+                console.log('Offerings retrieved:', JSON.stringify(offerings, null, 2));
                 
-                if (products.length === 0) {
-                    console.error('プロダクトが見つかりません:', productId);
+                if (!offerings.current) {
+                    console.error('現在のオファリングが見つかりません');
                     const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
-                    // シミュレータ環境ではプロダクトが取得できないため、適切なメッセージを表示
                     const isDev = __DEV__;
                     const errorMessage = currentLanguage === 'ja'
                         ? isDev
-                            ? `プロダクト「${productId}」が見つかりません。\n\nシミュレータではアプリ内課金は動作しません。実機でテストしてください。\n\n実機でもエラーが出る場合は、RevenueCatの設定とストアでのプロダクト登録を確認してください。`
-                            : `プロダクト「${productId}」が見つかりません。RevenueCatの設定とストアでのプロダクト登録を確認してください。`
+                            ? '現在のオファリングが見つかりません。\n\nシミュレータではアプリ内課金は動作しません。実機でテストしてください。\n\n実機でもエラーが出る場合は、RevenueCatの設定とストアでのプロダクト登録を確認してください。'
+                            : '現在のオファリングが見つかりません。RevenueCatの設定とストアでのプロダクト登録を確認してください。'
                         : isDev
-                            ? `Product "${productId}" not found.\n\nIn-app purchases do not work on simulators. Please test on a real device.\n\nIf the error persists on a real device, please check your RevenueCat configuration and product registration in the store.`
-                            : `Product "${productId}" not found. Please check your RevenueCat configuration and product registration in the store.`;
+                            ? 'No current offering found.\n\nIn-app purchases do not work on simulators. Please test on a real device.\n\nIf the error persists on a real device, please check your RevenueCat configuration and product registration in the store.'
+                            : 'No current offering found. Please check your RevenueCat configuration and product registration in the store.';
                     Alert.alert(errorTitle, errorMessage, [{ text: 'OK' }]);
                     return;
                 }
                 
-                const product = products[0];
-                console.log('Product found:', {
-                    identifier: product.identifier,
-                    title: product.title,
-                    price: product.priceString,
+                const currentOffering = offerings.current;
+                const packageIdentifier = `collection${collectionId}`;
+                
+                // パッケージを探す（identifierで一致するものを探す）
+                const targetPackage = currentOffering.availablePackages.find(
+                    pkg => pkg.identifier === packageIdentifier
+                );
+                
+                if (!targetPackage) {
+                    console.error('パッケージが見つかりません:', packageIdentifier);
+                    const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
+                    const isDev = __DEV__;
+                    const errorMessage = currentLanguage === 'ja'
+                        ? isDev
+                            ? `パッケージ「${packageIdentifier}」が見つかりません。\n\nシミュレータではアプリ内課金は動作しません。実機でテストしてください。\n\n実機でもエラーが出る場合は、RevenueCatの設定とストアでのプロダクト登録を確認してください。`
+                            : `パッケージ「${packageIdentifier}」が見つかりません。RevenueCatの設定とストアでのプロダクト登録を確認してください。`
+                        : isDev
+                            ? `Package "${packageIdentifier}" not found.\n\nIn-app purchases do not work on simulators. Please test on a real device.\n\nIf the error persists on a real device, please check your RevenueCat configuration and product registration in the store.`
+                            : `Package "${packageIdentifier}" not found. Please check your RevenueCat configuration and product registration in the store.`;
+                    Alert.alert(errorTitle, errorMessage, [{ text: 'OK' }]);
+                    return;
+                }
+                
+                console.log('Package found:', {
+                    identifier: targetPackage.identifier,
+                    productIdentifier: targetPackage.product.identifier,
+                    title: targetPackage.product.title,
+                    price: targetPackage.product.priceString,
                 });
-            } catch (productError: any) {
-                console.error('プロダクト取得エラー:', productError);
-                const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
-                const errorMessage = currentLanguage === 'ja'
-                    ? 'プロダクト情報の取得に失敗しました。ネットワーク接続を確認してください。'
-                    : 'Failed to retrieve product information. Please check your network connection.';
-                Alert.alert(errorTitle, errorMessage, [{ text: 'OK' }]);
-                return;
-            }
-            
-            // RevenueCatで購入処理を実行
-            const { customerInfo, productIdentifier } = await Purchases.purchaseProduct(productId);
-            
-            // 購入が成功した場合
-            if (productIdentifier === productId) {
-                console.log('Purchase successful:', productIdentifier);
+                
+                // RevenueCatで購入処理を実行（パッケージを使用）
+                const { customerInfo } = await Purchases.purchasePackage(targetPackage);
+                
+                console.log('Purchase successful:', targetPackage.identifier);
                 
                 // 既存のpurchasedItemsを読み込む
                 const savedPurchasedItems = await AsyncStorage.getItem('purchasedItems');
@@ -303,6 +327,14 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         : `Collection ${collectionId} has been added. Continue to enjoy the world of string figures`;
                     Alert.alert(successTitle, successMessage, [{ text: 'OK', onPress: onGoBack }]);
                 }
+            } catch (offeringError: any) {
+                console.error('オファリング取得エラー:', offeringError);
+                const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
+                const errorMessage = currentLanguage === 'ja'
+                    ? 'オファリング情報の取得に失敗しました。ネットワーク接続を確認してください。'
+                    : 'Failed to retrieve offering information. Please check your network connection.';
+                Alert.alert(errorTitle, errorMessage, [{ text: 'OK' }]);
+                return;
             }
         } catch (error: any) {
             // エラーハンドリング
@@ -325,11 +357,11 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                     ? '購入処理中にエラーが発生しました。もう一度お試しください。'
                     : 'An error occurred during the purchase. Please try again.';
                 
-                // プロダクトが見つからない場合の詳細メッセージ
-                if (error.message && error.message.includes("Couldn't find product")) {
+                // パッケージが見つからない場合の詳細メッセージ
+                if (error.message && (error.message.includes("Couldn't find product") || error.message.includes("package"))) {
                     errorMessage = currentLanguage === 'ja'
-                        ? 'プロダクトが見つかりません。RevenueCatの設定とストアでのプロダクト登録を確認してください。'
-                        : 'Product not found. Please check your RevenueCat configuration and product registration in the store.';
+                        ? 'パッケージが見つかりません。RevenueCatの設定とストアでのプロダクト登録を確認してください。'
+                        : 'Package not found. Please check your RevenueCat configuration and product registration in the store.';
                 }
                 
                 Alert.alert(errorTitle, errorMessage, [{ text: 'OK' }]);
@@ -337,6 +369,9 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
+    const handleRestorePurchase = async () => {
+        checkOfferings();
+    };
 
     return (    
         <View style={styles.wrapper}>
@@ -414,7 +449,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                             <View style={styles.restorePurchaseQuestionContainer}>
                                 <Text style={styles.restorePurchaseQuestionText} maxFontSizeMultiplier={1.25}>{getLocalizedText({ja: '以前にコレクションを\n購入しましたか？', en: 'Have you previously purchased a collection?'})}</Text>
                             </View>
-                            <TouchableOpacity onPress={() => {}}>
+                            <TouchableOpacity onPress={() => handleRestorePurchase()}>
                                 <Text style={styles.restorePurchaseButtonText} maxFontSizeMultiplier={1.1}>{getLocalizedText({ja: '購入情報を復元する', en: 'Restore purchase information'})}</Text>
                             </TouchableOpacity>
                         </View>

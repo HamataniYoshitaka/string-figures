@@ -98,7 +98,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
             </Text>
           ) : (
             <>
-              <Text style={[styles.currency, { color: textColor }]}>¥</Text>
+              <Text style={[styles.currency, { color: textColor }]}>$</Text>
               <Text style={[styles.price, { color: textColor }]}>{PRICE}</Text>
             </>
           )}
