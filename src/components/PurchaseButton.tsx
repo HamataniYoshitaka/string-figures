@@ -15,9 +15,11 @@ interface PurchaseButtonProps {
   currentLanguage: 'ja' | 'en';
   backgroundColor?: string;
   disabled?: boolean;
+  priceCurrency?: string;
+  priceAmount?: string;
 }
 
-const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, currentLanguage, backgroundColor, disabled = false }) => {
+const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, currentLanguage, backgroundColor, disabled = false, priceCurrency, priceAmount }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -50,7 +52,8 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   const COLLECTION_NAME_EN = `Collection ${collectionId}`;
   const PURCHASE_TEXT_JA = 'を購入する';
   const PURCHASE_TEXT_EN = 'Purchase';
-  const PRICE = '0';
+  const PRICE = priceAmount || '0';
+  const CURRENCY = priceCurrency || '$';
   const PURCHASED_TEXT_JA = '購入済';
   const PURCHASED_TEXT_EN = 'Purchased';
 
@@ -98,7 +101,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
             </Text>
           ) : (
             <>
-              <Text style={[styles.currency, { color: textColor }]}>$</Text>
+              <Text style={[styles.currency, { color: textColor }]}>{CURRENCY}</Text>
               <Text style={[styles.price, { color: textColor }]}>{PRICE}</Text>
             </>
           )}
