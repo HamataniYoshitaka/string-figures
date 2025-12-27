@@ -46,7 +46,11 @@ module.exports = {
       eas: {
         projectId: 'dbcd5e01-54ee-4bd0-aeff-5ddc545ca364',
       },
+      // iOS用APIキー: EASのSecrets/Environment variablesから読み込み（ビルド時）
+      // ローカル開発時は.envファイルから読み込み
       revenueCatIosApiKey: process.env.REVENUECAT_IOS_API_KEY || '',
+      // Android用APIキー: EASのSecrets/Environment variablesから読み込み（ビルド時）
+      // ローカル開発時は.envファイルから読み込み
       revenueCatAndroidApiKey: process.env.REVENUECAT_ANDROID_API_KEY || '',
     },
   },
