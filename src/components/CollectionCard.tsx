@@ -15,8 +15,7 @@ interface CollectionCardProps {
   onPurchasePress: (collectionId: number) => void;
   onItemPress: (item: StringFigure) => void;
   onImageLoad: (itemId: string, event: any) => void;
-  priceCurrency?: string;
-  priceAmount?: string;
+  priceString?: string;
 }
 
 const CollectionCard: React.FC<CollectionCardProps> = ({
@@ -28,8 +27,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
   onPurchasePress,
   onItemPress,
   onImageLoad,
-  priceCurrency,
-  priceAmount,
+  priceString,
 }) => {
   const collectionFigures = stringFigures.filter(figure => figure.premiumCourseId === collectionId);
 
@@ -118,8 +116,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
           currentLanguage={currentLanguage}
           backgroundColor={backgroundColor}
           disabled={purchasedItems.includes(collectionId)}
-          priceCurrency={priceCurrency}
-          priceAmount={priceAmount}
+          priceString={priceString}
         />
       </View>
     </View>

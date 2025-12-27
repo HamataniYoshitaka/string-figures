@@ -24,18 +24,13 @@ interface Props {
   route: AdditionalScreenRouteProp;
 }
 
-interface PriceInfo {
-    currency: string;
-    amount: string;
-}
-
 const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
     const [currentLanguage, setCurrentLanguage] = useState<'ja' | 'en'>('ja');
     const [purchasedItems, setPurchasedItems] = useState<number[]>([]);
     const [imageDimensions, setImageDimensions] = useState<{ [key: string]: { width: number; height: number } }>({});
     const [selectedItem, setSelectedItem] = useState<StringFigure | null>(null);
     const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
-    const [priceInfo, setPriceInfo] = useState<{ [collectionId: number]: PriceInfo }>({});
+    const [priceStrings, setPriceStrings] = useState<{ [collectionId: number]: string }>({});
     const bottomSheetRef = useRef<DetailBottomSheetRef>(null);
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
@@ -96,20 +91,6 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
-    // priceStringから通貨と金額を抽出する関数
-    const parsePriceString = (priceString: string): PriceInfo => {
-        // priceStringの例: "$1.99", "¥200", "€2.50"
-        // 通貨記号を抽出（最初の非数字文字）
-        const currencyMatch = priceString.match(/^[^\d\s]+/);
-        const currency = currencyMatch ? currencyMatch[0] : '$';
-        
-        // 金額を抽出（数字と小数点）
-        const amountMatch = priceString.match(/[\d.]+/);
-        const amount = amountMatch ? amountMatch[0] : '0';
-        
-        return { currency, amount };
-    };
-
     // マウント時にオファリングを取得して価格情報を設定
     const loadOfferings = async () => {
         try {
@@ -117,20 +98,19 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
             const offerings = await Purchases.getOfferings();
             
             if (offerings.current && offerings.current.availablePackages) {
-                const newPriceInfo: { [collectionId: number]: PriceInfo } = {};
+                const newPriceStrings: { [collectionId: number]: string } = {};
                 
                 offerings.current.availablePackages.forEach(pkg => {
                     // パッケージidentifierからcollectionIdを抽出（例: "collection1" -> 1）
                     const match = pkg.identifier.match(/collection(\d+)/);
                     if (match) {
                         const collectionId = parseInt(match[1], 10);
-                        const priceInfo = parsePriceString(pkg.product.priceString);
-                        newPriceInfo[collectionId] = priceInfo;
-                        console.log(`Collection ${collectionId}: ${priceInfo.currency}${priceInfo.amount}`);
+                        newPriceStrings[collectionId] = pkg.product.priceString;
+                        console.log(`Collection ${collectionId}: ${pkg.product.priceString}`);
                     }
                 });
                 
-                setPriceInfo(newPriceInfo);
+                setPriceStrings(newPriceStrings);
             }
         } catch (error) {
             console.error('オファリング取得エラー:', error);
@@ -466,8 +446,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         onPurchasePress={handlePurchasePress}
                         onItemPress={handleItemPress}
                         onImageLoad={handleImageLoad}
-                        priceCurrency={priceInfo[1]?.currency}
-                        priceAmount={priceInfo[1]?.amount}
+                        priceString={priceStrings[1]}
                     />
 
                     <CollectionCard
@@ -479,8 +458,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         onPurchasePress={handlePurchasePress}
                         onItemPress={handleItemPress}
                         onImageLoad={handleImageLoad}
-                        priceCurrency={priceInfo[2]?.currency}
-                        priceAmount={priceInfo[2]?.amount}
+                        priceString={priceStrings[2]}
                     />
 
                     <CollectionCard
@@ -492,8 +470,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         onPurchasePress={handlePurchasePress}
                         onItemPress={handleItemPress}
                         onImageLoad={handleImageLoad}
-                        priceCurrency={priceInfo[3]?.currency}
-                        priceAmount={priceInfo[3]?.amount}
+                        priceString={priceStrings[3]}
                     />
 
                     <View style={styles.restorePurchaseContainer}>

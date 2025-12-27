@@ -15,11 +15,10 @@ interface PurchaseButtonProps {
   currentLanguage: 'ja' | 'en';
   backgroundColor?: string;
   disabled?: boolean;
-  priceCurrency?: string;
-  priceAmount?: string;
+  priceString?: string;
 }
 
-const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, currentLanguage, backgroundColor, disabled = false, priceCurrency, priceAmount }) => {
+const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, currentLanguage, backgroundColor, disabled = false, priceString }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -52,10 +51,36 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
   const COLLECTION_NAME_EN = `Collection ${collectionId}`;
   const PURCHASE_TEXT_JA = 'を購入する';
   const PURCHASE_TEXT_EN = 'Purchase';
-  const PRICE = priceAmount || '0';
-  const CURRENCY = priceCurrency || '$';
   const PURCHASED_TEXT_JA = '購入済';
   const PURCHASED_TEXT_EN = 'Purchased';
+
+  // priceStringから通貨記号と金額を分離する関数
+  const parsePriceString = (priceStr: string): { currency: string; amount: string; isCurrencyBefore: boolean } => {
+    if (!priceStr) {
+      return { currency: '$', amount: '0', isCurrencyBefore: true };
+    }
+    
+    // 数字、カンマ、ピリオド、スペース以外の文字を抽出（通貨記号）
+    // 前後のどちらにも来る可能性がある
+    const currencyMatch = priceStr.match(/[^\d\s.,]+/g);
+    const currency = currencyMatch ? currencyMatch.join('') : '';
+    
+    // 数字、カンマ、ピリオドを抽出（金額）
+    const amountMatch = priceStr.match(/[\d.,]+/);
+    const amount = amountMatch ? amountMatch[0] : '0';
+    
+    // 通貨記号が前にあるか後ろにあるかを判定
+    const currencyIndex = priceStr.indexOf(currency);
+    const amountIndex = priceStr.indexOf(amount);
+    
+    return {
+      currency: currency || '$',
+      amount: amount || '0',
+      isCurrencyBefore: currencyIndex < amountIndex,
+    };
+  };
+
+  const priceParts = parsePriceString(priceString || '$0');
 
   // disabled時の背景色とテキスト色
   const buttonBackgroundColor = disabled ? '#E5E5E5' : backgroundColor;
@@ -101,8 +126,13 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
             </Text>
           ) : (
             <>
-              <Text style={[styles.currency, { color: textColor }]}>{CURRENCY}</Text>
-              <Text style={[styles.price, { color: textColor }]}>{PRICE}</Text>
+              {priceParts.isCurrencyBefore && (
+                <Text style={[styles.currency, { color: textColor }]}>{priceParts.currency}</Text>
+              )}
+              <Text style={[styles.price, { color: textColor }]}>{priceParts.amount}</Text>
+              {!priceParts.isCurrencyBefore && (
+                <Text style={[styles.currency, { color: textColor }]}>{priceParts.currency}</Text>
+              )}
             </>
           )}
         </View>
