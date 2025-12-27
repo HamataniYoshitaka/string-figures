@@ -8,6 +8,7 @@ import {
   ScrollView,
   Platform,
   Dimensions,
+  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
@@ -29,6 +30,7 @@ import { DotsVerticalIcon } from '../components/icons';
 import MicrophoneQuestionIcon from '../components/icons/MicrophoneQuestion';
 import { showLanguageSelectionDialog } from '../components/LanguageSwitchButton';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
+import Purchases from 'react-native-purchases';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -444,6 +446,99 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     showLanguageSelectionDialog(currentLanguage, saveLanguageSetting);
   };
 
+  // 購入情報を復元する関数
+  const handleRestorePurchase = async () => {
+    try {
+      console.log('購入情報を復元しています...');
+      
+      // RevenueCatから購入情報を復元
+      const customerInfo = await Purchases.restorePurchases();
+      console.log('Customer info:', JSON.stringify(customerInfo, null, 2));
+      
+      // 購入済みの製品IDを取得
+      const purchasedProductIds = customerInfo.allPurchasedProductIdentifiers;
+      console.log('購入済み製品ID:', purchasedProductIds);
+      
+      if (purchasedProductIds.length === 0) {
+        // 購入情報が見つからない場合
+        const title = currentLanguage === 'ja' ? '購入情報の復元' : 'Restore Purchase';
+        const message = currentLanguage === 'ja'
+          ? '復元できる購入情報が見つかりませんでした。'
+          : 'No purchase information found to restore.';
+        Alert.alert(title, message, [{ text: 'OK' }]);
+        return;
+      }
+      
+      // オファリングからパッケージ情報を取得して、購入済み製品IDとマッチング
+      const offerings = await Purchases.getOfferings();
+      const restoredCollectionIds: number[] = [];
+      
+      if (offerings.current && offerings.current.availablePackages) {
+        offerings.current.availablePackages.forEach(pkg => {
+          // パッケージの製品IDが購入済みリストに含まれているかチェック
+          if (purchasedProductIds.includes(pkg.product.identifier)) {
+            // パッケージidentifierからcollectionIdを抽出（例: "collection1" -> 1）
+            const match = pkg.identifier.match(/collection(\d+)/);
+            if (match) {
+              const collectionId = parseInt(match[1], 10);
+              restoredCollectionIds.push(collectionId);
+              console.log(`復元: コレクション${collectionId}`);
+            }
+          }
+        });
+      }
+      
+      if (restoredCollectionIds.length === 0) {
+        // マッチするコレクションが見つからない場合
+        const title = currentLanguage === 'ja' ? '購入情報の復元' : 'Restore Purchase';
+        const message = currentLanguage === 'ja'
+          ? '復元できるコレクションが見つかりませんでした。'
+          : 'No collections found to restore.';
+        Alert.alert(title, message, [{ text: 'OK' }]);
+        return;
+      }
+      
+      // 既存のpurchasedItemsを読み込む
+      const savedPurchasedItems = await AsyncStorage.getItem('purchasedItems');
+      let updatedPurchasedItems: number[] = [];
+      
+      if (savedPurchasedItems) {
+        const parsedItems = JSON.parse(savedPurchasedItems);
+        if (Array.isArray(parsedItems)) {
+          updatedPurchasedItems = parsedItems;
+        }
+      }
+      
+      // 復元されたコレクションIDを追加（重複を避ける）
+      const newCollectionIds = restoredCollectionIds.filter(id => !updatedPurchasedItems.includes(id));
+      if (newCollectionIds.length > 0) {
+        updatedPurchasedItems = [...updatedPurchasedItems, ...newCollectionIds];
+        await AsyncStorage.setItem('purchasedItems', JSON.stringify(updatedPurchasedItems));
+        setPurchasedItems([...updatedPurchasedItems]);
+        console.log('購入情報を復元しました:', newCollectionIds);
+      }
+      
+      // 成功メッセージを表示
+      const title = currentLanguage === 'ja' ? '購入情報の復元' : 'Restore Purchase';
+      const message = currentLanguage === 'ja'
+        ? newCollectionIds.length > 0
+          ? `コレクション${newCollectionIds.join('、')}を復元しました。`
+          : '全ての購入情報は既に復元済みです。'
+        : newCollectionIds.length > 0
+          ? `Restored collections: ${newCollectionIds.join(', ')}.`
+          : 'All purchase information has already been restored.';
+      Alert.alert(title, message, [{ text: 'OK' }]);
+      
+    } catch (error: any) {
+      console.error('購入情報の復元中にエラーが発生しました:', error);
+      const title = currentLanguage === 'ja' ? 'エラー' : 'Error';
+      const message = currentLanguage === 'ja'
+        ? '購入情報の復元中にエラーが発生しました。もう一度お試しください。'
+        : 'An error occurred while restoring purchases. Please try again.';
+      Alert.alert(title, message, [{ text: 'OK' }]);
+    }
+  };
+
   // ドロップダウンメニューの項目
   const dropDownItems = [
     {
@@ -469,8 +564,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       id: 'restore',
       label: currentLanguage === 'ja' ? '購入情報を復元' : 'Restore Purchase Information',
       onPress: () => {
-        // TODO: 購入情報復元処理
-        console.log('購入情報復元');
+        handleCloseDropDown();
+        // ドロップダウンが完全に閉じるまで少し待ってから復元処理を実行
+        setTimeout(() => {
+          handleRestorePurchase();
+        }, 300);
       },
     },
   ];
