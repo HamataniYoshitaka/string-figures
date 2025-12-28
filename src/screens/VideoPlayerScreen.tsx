@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -118,8 +119,10 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       }
     },
     onNetworkError: () => {
-      // ネットワークエラー時にSnackbarを表示
-      setSnackbarVisible(true);
+      // ネットワークエラー時にSnackbarを表示（iOSでは表示しない）
+      if (Platform.OS !== 'ios') {
+        setSnackbarVisible(true);
+      }
     },
   });
 
