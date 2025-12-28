@@ -1,32 +1,74 @@
 [
     {
         "subtitle": { 
-            "ja": "輪を好きな長さになるように重ねます。輪に両手の人差し指と中指を入れます", 
-            "en": "Adjust the loops to the desired length by stacking them. Insert both index fingers and middle fingers into the loops." 
+            "ja": "左手の親指と小指に糸をかけて始めます。左手のひらの糸を右手で引きます", 
+            "en": "Begin with the string on the left thumb and little finger. With the right hand, pull the palm string on the left hand." 
         }
     },
     {
         "subtitle": { 
-            "ja": "左手の人差し指と中指を手前側に1回転させて糸をねじります", 
-            "en": "Rotate the left index finger and middle finger one full turn toward you, twisting the string." 
+            "ja": "もう一度、左手のひらの糸を右手で引きます", 
+            "en": "Once more, with the right hand, pull the palm string on the left hand." 
         }
     },
     {
         "subtitle": { 
-            "ja": "右手人差し指手前側の糸を左手で持ち、左手の輪の中から引き出します", 
-            "en": "With the left hand, take the near string on the right index finger and pull it out through the loop on the left hand." 
+            "ja": "左手の輪に右手を上から入れ、左小指向こう側の糸を右人差し指で、左親指手前の糸を右親指でにぎり、右手を引きます", 
+            "en": "Insert the right hand from above into the loop on the left hand, grasp the far little-finger string of the left hand with the right index finger and the near thumb string of the left hand with the right thumb, and pull the right hand through." 
         }
     },
     {
         "subtitle": { 
-            "ja": "左手から外した糸を右手で持ち、右手の輪の中から引き出します", 
-            "en": "With the right hand, take the string removed from the left hand and pull it out through the loop on the right hand." 
+            "ja": "右親指の輪に左人差し指を、右人差し指の輪に左中指を上から入れます。右手の糸を左手の甲側に落とします", 
+            "en": "Move the left index finger over and insert it from above into the loop on the right thumb, and move the left middle finger over and insert it from above into the loop on the right index finger. Let the strings on the right hand fall onto the back of the left hand." 
         }
     },
     {
         "subtitle": { 
-            "ja": "両手を強く引いて完成です", 
-            "en": "Pull both hands firmly to finish." 
+            "ja": "左人差し指と中指で挟んでいる2本の糸を、左手のひらにかかる2本の糸の間から引き出します", 
+            "en": "Pull the two strings held between the left index finger and middle finger out between the two strings lying across the left palm." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "引き出した2本の輪の人差し指側に右人差し指を、中指側に右中指を上から入れて右手を引きます", 
+            "en": "Move the right index finger over and insert it from above into the index-finger side of the two extracted loops, and move the right middle finger over and insert it from above into the middle-finger side, then pull the right hand through." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "右人差し指の輪に左人差し指を、右中指の輪に左中指を上から入れます。右手の糸を左手の甲側に落とします", 
+            "en": "Move the left index finger over and insert it from above into the loop on the right index finger, and move the left middle finger over and insert it from above into the loop on the right middle finger. Let the strings on the right hand fall onto the back of the left hand." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左手の甲にある、人差し指の上の糸を右人差し指で、左中指の上の糸を右中指でにぎり、右手を引きます。左人差し指と中指の糸は全て外れます", 
+            "en": "With the right index finger, grasp the string lying above the left index finger on the back of the left hand, and with the right middle finger, grasp the string lying above the left middle finger, then pull the right hand through. All strings come off the left index finger and middle finger." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "右人差し指の輪に左人差し指を、右中指の輪に左中指を上から入れます。右手の糸を左手の甲側に落とします", 
+            "en": "Move the left index finger over and insert it from above into the loop on the right index finger, and move the left middle finger over and insert it from above into the loop on the right middle finger. Let the strings on the right hand fall onto the back of the left hand." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左人差し指と中指の間から出ているそれぞれの糸を、左手のひらにかかる2本の糸の下を通って右人差し指と中指でにぎって引き出します", 
+            "en": "With the right index finger and middle finger, pass under the two strings lying across the left palm, grasp the respective strings emerging between the left index finger and middle finger, and pull them out." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "右人差し指の輪に左人差し指を、右中指の輪に左中指を上から入れます。右手の糸を左手の甲側に落とします", 
+            "en": "Move the left index finger over and insert it from above into the loop on the right index finger, and move the left middle finger over and insert it from above into the loop on the right middle finger. Let the strings on the right hand fall onto the back of the left hand." 
+        }
+    },
+    {
+        "subtitle": { 
+            "ja": "左手の甲にある、人差し指の上の糸を右人差し指で、左中指の上の糸を右中指でにぎり、右手を引いて完成です", 
+            "en": "With the right index finger, grasp the upper string lying on the back of the left index finger, and with the right middle finger, grasp the upper string lying on the back of the left middle finger, then pull the right hand through to finish." 
         }
     }
 ]

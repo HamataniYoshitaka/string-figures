@@ -861,7 +861,7 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['34']
+    relatedFigures: ['34', '80']
   },
   {
     id: '34',
@@ -880,7 +880,7 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['38']
+    relatedFigures: ['38', '80']
   },
   {
     id: '39',
@@ -1375,7 +1375,7 @@ export const stringFigures: StringFigure[] = [
     directory: '70_mountains',
     ...ASSETS_MAP['70_mountains'],
     description: { 
-      ja: '「カヤックを漕ぐ人」から続けてとるあやとりで、漕いで行った人が遥か向こうに見た山並みを表しています。ここでは「カヤックを漕ぐ人」の完成形からの手順を紹介していますので、「カヤックを漕ぐ人」の作り方を先に習得してから始めて下さい', 
+      ja: '「カヤックをこぐ人」から続けてとるあやとりで、漕いで行った人が遥か向こうに見た山並みを表しています。ここでは「カヤックをこぐ人」の完成形からの手順を紹介していますので、「カヤックをこぐ人」の作り方を先に習得してから始めて下さい', 
       en: 'This string figure continues from <i>The Kayaker</i> and represents the mountain range seen far in the distance by the paddler. The instructions here begin from the finished form of <i>The Kayaker,</i> so please learn how to make <i>The Kayaker</i> first before starting.' 
     },
     premiumCourseId: 3, 
@@ -1551,7 +1551,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Die Blüte des Calophyllum (e bŭr ĭn íjọ)”\nP. Hambruch\n<i>Nauru</i> (1914)',
       author: null,
       references: null
-    }
+    },
+    relatedFigures: ['38', '34']
   },
   {
     id: '81',

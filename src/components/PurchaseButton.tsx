@@ -121,7 +121,7 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
         {/* 右側: 価格または購入済 */}
         <View style={styles.priceContainer}>
           {disabled ? (
-            <Text style={[styles.price, { color: textColor }]}>
+            <Text style={[styles.price, { color: textColor }, currentLanguage === 'en' && { fontSize: 15 }]}>
               {currentLanguage === 'ja' ? PURCHASED_TEXT_JA : PURCHASED_TEXT_EN}
             </Text>
           ) : (

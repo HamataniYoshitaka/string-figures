@@ -274,6 +274,36 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 return;
             }
             
+            // __DEV__の場合は、いきなり購入成功として処理
+            if (__DEV__) {
+                // 既存のpurchasedItemsを読み込む
+                const savedPurchasedItems = await AsyncStorage.getItem('purchasedItems');
+                let updatedPurchasedItems: number[] = [];
+                
+                if (savedPurchasedItems) {
+                    const parsedItems = JSON.parse(savedPurchasedItems);
+                    if (Array.isArray(parsedItems)) {
+                        updatedPurchasedItems = parsedItems;
+                    }
+                }
+                
+                // collectionIdが既に含まれていない場合のみ追加
+                if (!updatedPurchasedItems.includes(collectionId)) {
+                    updatedPurchasedItems.push(collectionId);
+                    await AsyncStorage.setItem('purchasedItems', JSON.stringify(updatedPurchasedItems));
+                    setPurchasedItems([...updatedPurchasedItems]);
+                    console.log('購入済みアイテムに追加しました:', collectionId);
+                    
+                    // 成功メッセージを表示
+                    const successTitle = currentLanguage === 'ja' ? '購入ありがとうございます' : 'Thank you for your purchase';
+                    const successMessage = currentLanguage === 'ja' 
+                        ? `コレクション${collectionId}を追加しました。引き続き、あやとりの世界をお楽しみください`
+                        : `Collection ${collectionId} has been added. Continue to enjoy the world of string figures`;
+                    Alert.alert(successTitle, successMessage, [{ text: 'OK', onPress: onGoBack }]);
+                }
+                return;
+            }
+            
             // オファリングから該当パッケージを取得
             try {
                 const offerings = await Purchases.getOfferings();
