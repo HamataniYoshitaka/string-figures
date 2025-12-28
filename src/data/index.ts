@@ -658,8 +658,8 @@ export const stringFigures: StringFigure[] = [
     },
     premiumCourseId: 3, 
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“KIKUSUI”\nSAITO T. \n <i>Ayatori: The Traditional String Figures of Japan : 1970-99</i> (2004)',
+      region: { ja: '日本, 他', en: 'Japan, etc.' },
+      source: '“KIKUSUI”\nSAITO T. (BISFA 11)\n <i>Ayatori: The Traditional String Figures of Japan</i> (2004)',
       author: null,
       references: null
     }
@@ -758,12 +758,12 @@ export const stringFigures: StringFigure[] = [
     directory: '29_two-fishes',
     ...ASSETS_MAP['29_two-fishes'],
     description: { 
-      ja: '最後に両手を広げると、2匹の魚が逃げて行きます。ここでは「2匹の魚」として紹介していますが、カロリン諸島に伝わるこのあやとりには名前が無く、明確なモチーフも不明です', 
-      en: 'When you spread your hands at the end, two fish appear to swim away. Here we introduce it as <i>Two Fishes</i> but this string figure from the Caroline Islands has no traditional name, and its intended motif is unknown..' 
+      ja: '最後に両手を広げると、2匹の魚が逃げて行きます。ここでは「2匹の魚」として紹介していますが、オセアニアやアフリカで広く伝承されているこのあやとりは、地域ごとに名前もモチーフもバラバラです', 
+      en: 'When you spread your hands at the end, two fish swim away. Here we introduce this figure as <i>Two Fish,</i> but it is widely known across Oceania and Africa under various names and with different interpretations.' 
     },
     premiumCourseId: 1, 
     data: {
-      region: { ja: 'ミクロネシア', en: 'Micronesia' },
+      region: { ja: 'オセアニア, アフリカ, 他', en: 'Oceania, Africa, etc.' },
       source: '“No Name”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
