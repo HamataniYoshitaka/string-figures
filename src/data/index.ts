@@ -233,7 +233,7 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['95_2people-sequence'],
     description: { 
       ja: '300年以上前から多くの日本人が遊んできた、日本で最も有名なあやとりです。日本語の「あやとり」は元来、この二人で糸を取り合う遊びのことを指していました。ここで紹介するもの以外にも、日本中にさまざまなバリエーションが伝承されています', 
-      en: 'This is the most famous string game in Japan, played by many people for over 300 years. Originally, the Japanese term <i>ayatori</i> referred specifically to this two-player string game. In addition to the versions introduced here, many other variations have been passed down throughout Japan.' 
+      en: 'This is one of the most well-known two-person string games, enjoyed by people around the world for centuries. Originally, the name “Cat’s Cradle” referred specifically to this game. Beyond the examples shown here, a wide variety of other versions have been handed down in different parts of the world.' 
     },
     premiumCourseId: 0,
     data: {
@@ -1835,31 +1835,31 @@ export const stringFigures: StringFigure[] = [
     directory: '106_salt-house',
     ...ASSETS_MAP['106_salt-house'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: 'ハワイで最も有名なあやとりです。親指を動かすことで、家の入り口を開閉させることができます。日本には「トンネル」と呼ばれる同じあやとりが伝承されていますが、入り口を閉じる動作はありません', 
+      en: 'This is one of the most famous string figures in Hawaii. By moving your thumbs, you can open and close the entrance of the house. In Japan, a similar figure known as <i>Tunnel</i> exists, but it does not include the motion of closing the entrance.' 
     },
     premiumCourseId: 2, 
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“塩屋”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: 'ポリネシア', en: 'Polynesia' },
+      source: '“A Man (He Kanaka)”\nJ. S. Emerson\n <i>Hawaiian String Games</i> (1924)',
       author: null,
       references: null
     }
   },
   {
     id: '108',
-    name: { ja: 'カエル', en: 'Toad' },
+    name: { ja: 'ひきがえる', en: 'The Toad' },
     difficulty: 'medium',
     directory: '108_toad',
     ...ASSETS_MAP['108_toad'],
     description: { 
-      ja: '', 
-      en: '' 
+      ja: 'ガイアナのパトマナ族に伝わるあやとりです。カエルの特徴的な胴体と後ろ足のフォルムが見事に表現されています', 
+      en: 'This string figure comes from the Patamona people of Guyana. It beautifully represents the distinctive body and hind legs of a frog.' 
     },
     premiumCourseId: 2, 
     data: {
-      region: { ja: '日本', en: 'Japan' },
-      source: '“塩屋”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
+      region: { ja: '南アメリカ', en: 'South America' },
+      source: '“The Toad”\nF. E. Lutz\n <i>String-figures from the Patomana Indians of British Guiana</i> (1912)',
       author: null,
       references: null
     }
