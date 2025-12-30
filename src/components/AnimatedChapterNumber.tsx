@@ -10,7 +10,7 @@ interface AnimatedChapterNumberProps {
 const AnimatedChapterNumber: React.FC<AnimatedChapterNumberProps> = ({
   chapterIndex,
   isEllipsis,
-  defaultOpacity = 1,
+  defaultOpacity = 0.4,
 }) => {
   const translateX = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current; // 初期値を0に変更

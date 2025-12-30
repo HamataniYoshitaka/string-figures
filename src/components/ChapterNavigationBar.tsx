@@ -58,11 +58,11 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
   // 表示する章の数を決定
   const getChaptersCount = (): number => {
     if (isTablet && isDeviceLandscape) {
-      return 7; // タブレット横：7個表示
+      return 6; // タブレット横：7個表示
     } else if (isTablet && !isDeviceLandscape) {
-      return 5; // タブレット縦：5個表示
+      return 4; // タブレット縦：5個表示
     } else {
-      return 3; // スマホ：3個表示（従来通り）
+      return 2; // スマホ：3個表示（従来通り）
     }
   };
 
@@ -177,7 +177,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
               <AnimatedChapterNumber
                 chapterIndex={chapterIndex}
                 isEllipsis={index === chaptersCount - 1 && chapterIndex !== null && currentChapterIndex < chapters.length - (chaptersCount + 1)}
-                defaultOpacity={0.4}
+                // defaultOpacity={0.4}
               />
             </View>
           ))}
