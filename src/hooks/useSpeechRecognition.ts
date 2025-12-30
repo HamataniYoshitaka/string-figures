@@ -56,17 +56,15 @@ export const useSpeechRecognition = ({
       next: ['つぎ', '次'],
       previous: ['まえ', '前'],
       replay: ['もういちど', 'もう一度'],
-      slower: ['ゆっくり'],
-      faster: ['はやく', '早く', '速く'],
       restart: ['はじめから', '初めから', '始めから'],
+      done: ['できた', '出来た'],
     },
     en: {
       next: ['next'],
       previous: ['previous'],
       replay: ['replay', 'reply'],
-      slower: ['slower'],
-      faster: ['faster'],
       restart: ['restart'],
+      done: ['done'],
     },
   };
 
@@ -76,9 +74,8 @@ export const useSpeechRecognition = ({
     ...currentKeywords.next,
     ...currentKeywords.previous,
     ...currentKeywords.replay,
-    ...currentKeywords.slower,
-    ...currentKeywords.faster,
     ...currentKeywords.restart,
+    ...currentKeywords.done,
   ];
 
   // 音声認識の状態管理
@@ -267,12 +264,10 @@ export const useSpeechRecognition = ({
           actionKeyword = language === 'ja' ? 'まえ' : 'previous';
         } else if (currentKeywords.replay.includes(matchedKeyword)) {
           actionKeyword = language === 'ja' ? 'もういちど' : 'replay';
-        } else if (currentKeywords.slower.includes(matchedKeyword)) {
-          actionKeyword = language === 'ja' ? 'ゆっくり' : 'slower';
-        } else if (currentKeywords.faster.includes(matchedKeyword)) {
-          actionKeyword = language === 'ja' ? 'はやく' : 'faster';
         } else if (currentKeywords.restart.includes(matchedKeyword)) {
           actionKeyword = language === 'ja' ? 'はじめから' : 'restart';
+        } else if (currentKeywords.done.includes(matchedKeyword)) {
+          actionKeyword = language === 'ja' ? 'できた' : 'done';
         }
         
         // コールバックを呼び出し

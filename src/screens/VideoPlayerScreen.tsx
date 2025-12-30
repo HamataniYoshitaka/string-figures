@@ -140,6 +140,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         await handleReplay();
       } else if (keyword === 'はじめから' || keyword === 'restart') {
         await handleRestartFromBeginning();
+      } else if (keyword === 'できた' || keyword === 'done') {
+        await handleComplete();
       }
       
       // 300ms後にボタンを無効化
