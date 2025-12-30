@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import PreviousChapterButton, { PreviousChapterButtonRef } from './PreviousChapterButton';
 import ReplayButton, { ReplayButtonRef } from './ReplayButton';
 import NextChapterButton, { NextChapterButtonRef } from './NextChapterButton';
+import RestartButton, { RestartButtonRef } from './RestartButton';
 import AnimatedChapterNumber from './AnimatedChapterNumber';
 import { Chapter } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
@@ -18,11 +19,13 @@ interface ChapterNavigationBarProps {
   previousChapterButtonRef: React.RefObject<PreviousChapterButtonRef | null>;
   replayButtonRef: React.RefObject<ReplayButtonRef | null>;
   nextChapterButtonRef: React.RefObject<NextChapterButtonRef | null>;
+  restartButtonRef: React.RefObject<RestartButtonRef | null>;
   // 追加のprops
   playbackPosition: number;
   isLastChapterCompleted: boolean;
   getChapterProgress: (chapterIndex: number) => number;
   isTemporarilyDisabled: boolean;
+  onRestart: () => void;
 }
 
 export interface ChapterNavigationBarRef {
@@ -39,10 +42,12 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
   previousChapterButtonRef,
   replayButtonRef,
   nextChapterButtonRef,
+  restartButtonRef,
   playbackPosition,
   isLastChapterCompleted,
   getChapterProgress,
   isTemporarilyDisabled,
+  onRestart,
 }, ref) => {
 
   // デバイス情報を取得
@@ -117,6 +122,18 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
   return (
     <View style={styles.container}>
       <View style={styles.navigationRow}>
+        
+        {/* さいしょからボタン */}
+        <View style={[styles.buttonContainer, { marginRight: 8 }]}>
+          <RestartButton
+            ref={restartButtonRef}
+            onPress={onRestart}
+            currentChapterIndex={currentChapterIndex}
+            getLocalizedText={getLocalizedText}
+            isTemporarilyDisabled={isTemporarilyDisabled}
+          />
+        </View>
+        
         {/* まえボタン */}
         <View style={styles.buttonContainer}>
           <PreviousChapterButton

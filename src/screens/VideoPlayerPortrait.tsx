@@ -29,6 +29,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   nextChapterButtonRef,
   replayButtonRef,
   previousChapterButtonRef,
+  restartButtonRef,
   playbackPosition,
   isLastChapterCompleted,
   isLandscapeMode,
@@ -328,6 +329,8 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         previousChapterButtonRef={previousChapterButtonRef}
         replayButtonRef={replayButtonRef}
         nextChapterButtonRef={nextChapterButtonRef}
+        restartButtonRef={restartButtonRef}
+        onRestart={onRestartFromBeginning}
         playbackPosition={playbackPosition}
         isLastChapterCompleted={isLastChapterCompleted}
         getChapterProgress={getChapterProgress}

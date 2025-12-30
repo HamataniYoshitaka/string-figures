@@ -1,63 +1,104 @@
-import React, { useRef } from 'react';
-import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
-import { SkipBackwardIcon } from './icons';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
+import { SkipBackwardIcon, SkipPreviousIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
+import BalloonTail from './icons/BalloonTail';
 
 interface RestartButtonProps {
   onPress: () => void;
+  currentChapterIndex: number;
   getLocalizedText: (text: { ja: string; en: string }) => string;
+  isTemporarilyDisabled?: boolean;
 }
 
-const RestartButton: React.FC<RestartButtonProps> = ({
+export interface RestartButtonRef {
+  triggerRipple: () => void;
+}
+
+const RestartButton = forwardRef<RestartButtonRef, RestartButtonProps>(({
   onPress,
+  currentChapterIndex,
   getLocalizedText,
-}) => {
-  const restartButtonScale = useRef(new Animated.Value(1)).current;
-  const rippleAnim = useRef(new Animated.Value(0)).current;
-  const rippleOpacity = useRef(new Animated.Value(0)).current;
+  isTemporarilyDisabled = false,
+}, ref) => {
+  const isDisabled = currentChapterIndex === 0 || isTemporarilyDisabled;
+  const [scaleAnim] = useState(new Animated.Value(1));
+  const [rippleAnim] = useState(new Animated.Value(0));
+  const [rippleOpacity] = useState(new Animated.Value(0));
+  const [balloonColorAnim] = useState(new Animated.Value(0));
 
-  const createPressInHandler = () => {
-    Animated.spring(restartButtonScale, {
-      toValue: 0.95,
-      useNativeDriver: true,
-      tension: 300,
-      friction: 8,
-    }).start();
+  const handlePressIn = () => {
+    if (!isDisabled) {
+      Animated.spring(scaleAnim, {
+        toValue: 0.95,
+        useNativeDriver: true,
+        tension: 300,
+        friction: 8,
+      }).start();
+    }
   };
 
-  const createPressOutHandler = () => {
-    Animated.spring(restartButtonScale, {
-      toValue: 1,
-      useNativeDriver: true,
-    }).start();
+  const triggerRippleEffect = () => {
+    if (currentChapterIndex > 1) {
+      rippleAnim.setValue(0);
+      rippleOpacity.setValue(1);
+      balloonColorAnim.setValue(1);
+      Animated.parallel([
+        Animated.timing(rippleAnim, {
+          toValue: 1,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+        Animated.timing(rippleOpacity, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: true,
+        }),
+        Animated.timing(balloonColorAnim, {
+          toValue: 0,
+          duration: 400,
+          useNativeDriver: false,
+        }),
+      ]).start();
+    } else {
+      rippleAnim.setValue(0);
+      rippleOpacity.setValue(0);
+      balloonColorAnim.setValue(0);
+    }
+  };
 
-    // リップルエフェクト開始
-    rippleAnim.setValue(0);
-    rippleOpacity.setValue(1);
-    Animated.parallel([
-      Animated.timing(rippleAnim, {
+  const handlePressOut = () => {
+    if (!isDisabled) {
+      Animated.spring(scaleAnim, {
         toValue: 1,
-        duration: 400,
         useNativeDriver: true,
-      }),
-      Animated.timing(rippleOpacity, {
-        toValue: 0,
-        duration: 400,
-        useNativeDriver: true,
-      }),
-    ]).start();
+      }).start();
+
+      // リップルエフェクト開始
+      triggerRippleEffect();
+    }
   };
+
+  useImperativeHandle(ref, () => ({
+    triggerRipple: triggerRippleEffect,
+  }));
 
   const rippleScale = rippleAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 1.5],
   });
 
+  const balloonColor = balloonColorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
+  });
+
   return (
-    <TouchableWithoutFeedback 
+    <TouchableWithoutFeedback
       onPress={onPress}
-      onPressIn={createPressInHandler}
-      onPressOut={createPressOutHandler}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      disabled={isDisabled}
     >
       <View style={styles.controlButton}>
         <View style={styles.buttonContainer}>
@@ -72,36 +113,50 @@ const RestartButton: React.FC<RestartButtonProps> = ({
             ]}
           />
           {/* ボタン本体 */}
-          <Animated.View
-            style={[
-              styles.floatingButton,
-              { transform: [{ scale: restartButtonScale }] }
-            ]}
-          >
-            <SkipBackwardIcon width={24} height={24} fillColor="#57534D" />
+          <Animated.View style={[
+            styles.floatingButton,
+            isDisabled && styles.disabledButton,
+            { transform: [{ scale: scaleAnim }] }
+          ]}>
+            <SkipBackwardIcon
+              width={24}
+              height={24}
+              fillColor="#44403c"
+              strokeColor='transparent'
+            />
           </Animated.View>
         </View>
-        <View style={[
-          styles.chapterBalloon,
-          styles.speedButtonTop
-        ]}>
-          <Text>{getLocalizedText({ ja: 'はじめから', en: 'Restart' })}</Text>
-          <SpeedButtonTail
-            fillColor={'rgba(209, 200, 194, 0.5)'}
-            isBottom={true}
-          />
+        <View style={styles.balloonContainer}>
+          <Animated.View style={[
+            styles.balloon,
+            isDisabled && styles.balloonDisabled,
+            !isDisabled && { backgroundColor: balloonColor }
+          ]}>
+            <Text 
+              maxFontSizeMultiplier={1.25}
+              style={[styles.controlButtonText]}
+            >
+              {getLocalizedText({ ja: 'はじめから', en: 'Restart' })}
+            </Text>
+            <BalloonTail
+              fillColor="rgba(209, 200, 194, 0.5)"
+              position="topcenter"
+            />
+          </Animated.View>
         </View>
       </View>
     </TouchableWithoutFeedback>
   );
-};
+});
 
 const styles = StyleSheet.create({
   controlButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-    gap: 12,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    minWidth: 48,
+    position: 'relative',
+    // paddingVertical: 12,
+    // gap: 10,
   },
   buttonContainer: {
     position: 'relative',
@@ -123,30 +178,36 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     backgroundColor: '#F7F5F2',
     borderWidth: 2,
-    borderColor: '#57534D',
+    borderColor: '#44403c',
     justifyContent: 'center',
     alignItems: 'center',
-    // shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
-    // elevation: 8,
   },
-  chapterBalloon: {
-    backgroundColor: 'rgba(209, 200, 194, 0.5)',
-    fontSize: 14,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+  balloonContainer: {
+    position: 'absolute',
+    left: -8,
+    bottom: -44,
+    width: 100,
+    height: 32,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  balloon: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
     borderRadius: 8,
-    position: 'relative',
-    color: '#57534D',
-    fontWeight: '400',
   },
-  speedButtonTop: {
-    borderBottomLeftRadius: 0,
+  controlButtonText: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 4,
+    fontWeight: '500',
+    lineHeight: 14,
+  },
+  disabledButton: {
+    opacity: 0.5,
+  },
+  balloonDisabled: {
+    opacity: 0.0,
   },
 });
 

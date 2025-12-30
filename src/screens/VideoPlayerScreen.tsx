@@ -16,6 +16,7 @@ import VideoPlayerPortrait from './VideoPlayerPortrait';
 import { NextChapterButtonRef } from '../components/NextChapterButton';
 import { ReplayButtonRef } from '../components/ReplayButton';
 import { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
+import { RestartButtonRef } from '../components/RestartButton';
 import { CHAPTERS_MAP } from '../data/chaptersMap';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
@@ -55,6 +56,7 @@ export interface VideoPlayerSharedProps {
   nextChapterButtonRef: React.RefObject<NextChapterButtonRef | null>;
   replayButtonRef: React.RefObject<ReplayButtonRef | null>;
   previousChapterButtonRef: React.RefObject<PreviousChapterButtonRef | null>;
+  restartButtonRef: React.RefObject<RestartButtonRef | null>;
   isLandscapeMode: boolean;
   PLAYBACK_RATES: number[];
   recognizing: boolean;
@@ -95,6 +97,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const nextChapterButtonRef = useRef<NextChapterButtonRef>(null);
   const replayButtonRef = useRef<ReplayButtonRef>(null);
   const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
+  const restartButtonRef = useRef<RestartButtonRef>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [isTemporarilyDisabled, setIsTemporarilyDisabled] = useState(false);
@@ -432,6 +435,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     nextChapterButtonRef,
     replayButtonRef,
     previousChapterButtonRef,
+    restartButtonRef,
     isLandscapeMode,
     PLAYBACK_RATES,
     recognizing,
