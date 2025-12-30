@@ -20,7 +20,7 @@ const RestartButtonVertical = forwardRef<RestartButtonVerticalRef, RestartButton
   getLocalizedText,
   isTemporarilyDisabled = false,
 }, ref) => {
-  const isDisabled = currentChapterIndex === 0 || isTemporarilyDisabled;
+  const isDisabled = isTemporarilyDisabled;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));
