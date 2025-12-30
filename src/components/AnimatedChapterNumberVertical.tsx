@@ -11,7 +11,7 @@ interface AnimatedChapterNumberVerticalProps {
 const AnimatedChapterNumberVertical: React.FC<AnimatedChapterNumberVerticalProps> = ({
   chapterIndex,
   isEllipsis,
-  defaultOpacity = 1,
+  defaultOpacity = 0.5,
 }) => {
   const translateY = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current; // 初期値を0に変更

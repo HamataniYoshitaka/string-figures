@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
 import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
 import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
+import RestartButtonVertical, { RestartButtonVerticalRef } from './RestartButtonVertical';
 import AnimatedChapterNumberVertical from './AnimatedChapterNumberVertical';
 import { Chapter, StringFigure } from '../types';
 
@@ -54,19 +55,17 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
   const getPreviousChapters = () => {
     const result = [];
     
-    if (currentChapterIndex <= 2) {
+    if (currentChapterIndex <= 0) {
       // 最初の方の章の場合：空白で埋めて、現在章より前を表示
       for (let i = 0; i < currentChapterIndex; i++) {
         result.push(i);
       }
       // 3つに満たない場合は null で埋める（空白表示用）
-      while (result.length < 3) {
+      while (result.length < 1) {
         result.unshift(null);
       }
     } else {
       // 中間以降の章の場合：現在章の直前3つを表示
-      result.push(currentChapterIndex - 3);
-      result.push(currentChapterIndex - 2);
       result.push(currentChapterIndex - 1);
     }
     
@@ -76,20 +75,18 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
   const getNextChapters = () => {
     const result = [];
     
-    if (currentChapterIndex >= chapters.length - 4) {
+    if (currentChapterIndex >= chapters.length - 2) {
       // 最後の方の章の場合：現在章より後をすべて表示
       for (let i = currentChapterIndex + 1; i < chapters.length; i++) {
         result.push(i);
       }
       // 3つに満たない場合は null で埋める（空白表示用）
-      while (result.length < 3) {
+      while (result.length < 1) {
         result.push(null);
       }
     } else {
       // 中間の章の場合：現在章の直後3つを表示
       result.push(currentChapterIndex + 1);
-      result.push(currentChapterIndex + 2);
-      result.push(currentChapterIndex + 3);
     }
     
     return result.slice(0, 3); // 最初の3つを取得
@@ -100,6 +97,16 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
 
   return (
     <View style={styles.container}>
+      {/* はじめからボタン */}
+      <View style={[styles.buttonWrapper, { marginBottom: 8 }]}>
+        <RestartButtonVertical
+          onPress={onRestartFromBeginning}
+          currentChapterIndex={currentChapterIndex}
+          getLocalizedText={getLocalizedText}
+          isTemporarilyDisabled={isTemporarilyDisabled}
+        />
+      </View>
+
       {/* まえボタン */}
       <View style={styles.buttonWrapper}>
         <PreviousChapterLandscapeButton
@@ -116,7 +123,8 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
         <View key={`prev-${index}`} style={styles.chapterNumberWrapper}>
           <AnimatedChapterNumberVertical
             chapterIndex={chapterIndex}
-            isEllipsis={index === 0 && chapterIndex !== null && currentChapterIndex > 3}
+            isEllipsis={false}
+            defaultOpacity={0.5}
           />
         </View>
       ))}
@@ -139,7 +147,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
         <View key={`next-${index}`} style={styles.chapterNumberWrapper}>
           <AnimatedChapterNumberVertical
             chapterIndex={chapterIndex}
-            isEllipsis={index === 2 && chapterIndex !== null && currentChapterIndex < chapters.length - 4}
+            isEllipsis={false}
             defaultOpacity={0.5}
           />
         </View>
