@@ -260,6 +260,15 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     return textObj[currentLanguage];
   };
 
+  // 今日の日付をYYYY-MM-DD形式で取得するヘルパー関数
+  const getTodayDateString = (): string => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   // 動画の再生状況を監視
   const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
     if (status.isLoaded) {
@@ -397,7 +406,44 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   // できた!ボタンの処理
   const handleComplete = async () => {
-    console.log('handleComplete!!');
+    try {
+      // AsyncStorageからcompleteDatesを取得
+      const savedCompleteDates = await AsyncStorage.getItem('completeDates');
+      let completeDates: Array<{ id: string; dates: string[] }> = [];
+      
+      if (savedCompleteDates) {
+        completeDates = JSON.parse(savedCompleteDates);
+      }
+      
+      const todayDateString = getTodayDateString();
+      
+      // stringFigure.idと一致するエントリを検索
+      const existingEntryIndex = completeDates.findIndex(
+        entry => entry.id === stringFigure.id
+      );
+      
+      if (existingEntryIndex === -1) {
+        // 一致するものがない場合：新規エントリを追加
+        completeDates.push({
+          id: stringFigure.id,
+          dates: [todayDateString],
+        });
+      } else {
+        // 一致するものがある場合：dates配列を確認
+        const existingEntry = completeDates[existingEntryIndex];
+        if (!existingEntry.dates.includes(todayDateString)) {
+          // 今日の日付が含まれていない場合：日付を追加
+          existingEntry.dates.push(todayDateString);
+          completeDates[existingEntryIndex] = existingEntry;
+        }
+        // 今日の日付が既に含まれている場合は何もしない
+      }
+      
+      // 更新されたcompleteDatesをAsyncStorageに保存
+      await AsyncStorage.setItem('completeDates', JSON.stringify(completeDates));
+    } catch (error) {
+      console.error('完了日付の保存に失敗しました:', error);
+    }
     
     // 背景色アニメーション: 0.6秒で#FF8904に変化
     Animated.timing(backgroundColorAnimValue, {

@@ -8,6 +8,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   BottomSheetModal,
   BottomSheetScrollView,
@@ -58,6 +59,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
   const isSmallScreen = screenDimensions.height <= 667;
+  const [lastCompleteDate, setLastCompleteDate] = useState<string | null>(null);
   
   // iPadかどうかを判定
   const isTablet = Math.max(screenDimensions.width, screenDimensions.height) >= 1024;
@@ -113,9 +115,60 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
     return () => subscription?.remove();
   }, []);
 
+  // completeDatesから最後の完成日を読み込む
+  useEffect(() => {
+    const loadLastCompleteDate = async () => {
+      if (!item) {
+        setLastCompleteDate(null);
+        return;
+      }
+
+      try {
+        const savedCompleteDates = await AsyncStorage.getItem('completeDates');
+        if (savedCompleteDates) {
+          const completeDates: Array<{ id: string; dates: string[] }> = JSON.parse(savedCompleteDates);
+          const entry = completeDates.find(entry => entry.id === item.id);
+          
+          if (entry && entry.dates && entry.dates.length > 0) {
+            // dates配列の最後の要素を取得
+            const lastDate = entry.dates[entry.dates.length - 1];
+            setLastCompleteDate(lastDate);
+          } else {
+            setLastCompleteDate(null);
+          }
+        } else {
+          setLastCompleteDate(null);
+        }
+      } catch (error) {
+        console.error('完了日付の読み込みに失敗しました:', error);
+        setLastCompleteDate(null);
+      }
+    };
+
+    loadLastCompleteDate();
+  }, [item]);
+
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
+  };
+
+  // 日付を読みやすい形式にフォーマットする関数
+  const formatDate = (dateString: string): string => {
+    try {
+      const date = new Date(dateString + 'T00:00:00'); // タイムゾーン問題を避けるため
+      if (currentLanguage === 'ja') {
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        return `${year}年${month}月${day}日`;
+      } else {
+        const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+      }
+    } catch (error) {
+      return dateString;
+    }
   };
 
   // 有料コレクションで未購入かどうかを判定
@@ -494,6 +547,27 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 )}
               </View>
             )}
+
+            {/* あなたが最後に完成した日 */}
+            {lastCompleteDate && (
+              <View style={styles.completeDateContainer}>
+                <View style={styles.completeDateRow}>
+                  <Text 
+                    maxFontSizeMultiplier={1.25}
+                    style={styles.completeDateLabel}
+                  >
+                    {getLocalizedText({ ja: 'あなたが最後に完成した日', en: 'Last Completed Date' })}
+                  </Text>
+                  <Text 
+                    maxFontSizeMultiplier={1.25}
+                    style={styles.referenceValue}
+                  >
+                    {formatDate(lastCompleteDate)}
+                  </Text>
+                </View>
+              </View>
+            )}
+
             {/* 関連するあやとり */}
             {!isAdditionalScene && item.relatedFigures && item.relatedFigures.length > 0 && (
               <RelatedFigures 
@@ -764,6 +838,19 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textDecorationLine: 'underline',
     color: '#000',
+  },
+  completeDateContainer: {
+    marginTop: 12,
+  },
+  completeDateRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  completeDateLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#57534D',
   },
 });
 
