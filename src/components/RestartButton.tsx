@@ -1,7 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
-import { SkipBackwardIcon, SkipPreviousIcon } from './icons';
-import SpeedButtonTail from './icons/SpeedButtonTail';
+import { SkipBackwardIcon } from './icons';
 import BalloonTail from './icons/BalloonTail';
 
 interface RestartButtonProps {
@@ -21,7 +20,7 @@ const RestartButton = forwardRef<RestartButtonRef, RestartButtonProps>(({
   getLocalizedText,
   isTemporarilyDisabled = false,
 }, ref) => {
-  const isDisabled = currentChapterIndex === 0 || isTemporarilyDisabled;
+  const isDisabled = isTemporarilyDisabled;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));
