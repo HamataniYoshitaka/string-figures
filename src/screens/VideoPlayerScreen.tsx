@@ -406,6 +406,9 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   // できた!ボタンの処理
   const handleComplete = async () => {
+    // isLastChapterCompletedがtrueでない場合は何もせず処理を返す
+    if (isLastChapterCompleted !== true) return;
+    
     try {
       // AsyncStorageからcompleteDatesを取得
       const savedCompleteDates = await AsyncStorage.getItem('completeDates');

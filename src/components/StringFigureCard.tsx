@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,9 @@ import {
   Animated,
   TouchableWithoutFeedback,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, BookmarkIcon, TutorialIcon, TwoPeopleIcon, LockIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, BookmarkIcon, TutorialIcon, TwoPeopleIcon, LockIcon, CheckSmallIcon } from './icons';
 
 interface Props {
   item: StringFigure;
@@ -35,6 +36,28 @@ const StringFigureCard: React.FC<Props> = ({
   onImageLoad,
 }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  // completeDatesからitem.idと一致するものがあるかチェック
+  useEffect(() => {
+    const checkCompletion = async () => {
+      try {
+        const savedCompleteDates = await AsyncStorage.getItem('completeDates');
+        if (savedCompleteDates) {
+          const completeDates: Array<{ id: string; dates: string[] }> = JSON.parse(savedCompleteDates);
+          const entry = completeDates.find(entry => entry.id === item.id);
+          setIsCompleted(!!entry && entry.dates && entry.dates.length > 0);
+        } else {
+          setIsCompleted(false);
+        }
+      } catch (error) {
+        console.error('完了日付の読み込みに失敗しました:', error);
+        setIsCompleted(false);
+      }
+    };
+
+    checkCompletion();
+  }, [item.id]);
 
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
@@ -164,7 +187,22 @@ const StringFigureCard: React.FC<Props> = ({
               >
                 {getLocalizedText(item.name)}
               </Text>
-              {!item.directNavigationDestination && getDifficultyIcon(item.difficulty, 24)}
+              {!item.directNavigationDestination && (
+                <View style={styles.difficultyIconContainer}>
+                  {getDifficultyIcon(item.difficulty, 24)}
+                  {/* 完了アイコン */}
+                  {isCompleted && (
+                    <View style={styles.completeIconContainer}>
+                      <CheckSmallIcon
+                        width={10}
+                        height={8}
+                        strokeColor="#222"
+                        strokeWidth={1.5}
+                      />
+                    </View>
+                  )}
+                </View>
+              )}
             </View>
           </View>
         )}
@@ -258,10 +296,28 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'KleeOne-SemiBold',
   },
+  difficultyIconContainer: {
+    position: 'relative',
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   difficultyIcon: {
     width: 24,
     height: 24,
     borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  completeIconContainer: {
+    position: 'absolute',
+    top: 14,
+    right: -6,
+    width: 15,
+    height: 15,
+    borderRadius: 8,
+    backgroundColor: '#F7F5F2',
     justifyContent: 'center',
     alignItems: 'center',
   },
