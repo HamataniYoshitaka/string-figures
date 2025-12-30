@@ -99,6 +99,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [isTemporarilyDisabled, setIsTemporarilyDisabled] = useState(false);
   const disableTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const enableTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 音声認識フック
   const {
@@ -110,19 +111,15 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   } = useSpeechRecognition({
     language: currentLanguage,
     onKeywordDetected: async (keyword) => {
-      // ボタンを一時的に無効化
-      setIsTemporarilyDisabled(true);
-      
       // 既存のタイマーをクリア
       if (disableTimerRef.current) {
         clearTimeout(disableTimerRef.current);
-      }
-      
-      // 1500ms後に無効化を解除
-      disableTimerRef.current = setTimeout(() => {
-        setIsTemporarilyDisabled(false);
         disableTimerRef.current = null;
-      }, 1500);
+      }
+      if (enableTimerRef.current) {
+        clearTimeout(enableTimerRef.current);
+        enableTimerRef.current = null;
+      }
       
       // キーワードに応じたアクションを実行
       if (keyword === 'つぎ' || keyword === 'next') {
@@ -134,6 +131,18 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       } else if (keyword === 'はじめから' || keyword === 'restart') {
         await handleRestartFromBeginning();
       }
+      
+      // 300ms後にボタンを無効化
+      disableTimerRef.current = setTimeout(() => {
+        setIsTemporarilyDisabled(true);
+        disableTimerRef.current = null;
+      }, 400);
+      
+      // 1500ms後に無効化を解除
+      enableTimerRef.current = setTimeout(() => {
+        setIsTemporarilyDisabled(false);
+        enableTimerRef.current = null;
+      }, 1500);
     },
     onNetworkError: () => {
       // ネットワークエラー時にSnackbarを表示（iOSでは表示しない）
@@ -168,6 +177,9 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       // タイマーをクリーンアップ
       if (disableTimerRef.current) {
         clearTimeout(disableTimerRef.current);
+      }
+      if (enableTimerRef.current) {
+        clearTimeout(enableTimerRef.current);
       }
     };
   }, []);
