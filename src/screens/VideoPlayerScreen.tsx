@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Platform, Animated } from 'react-native';
+import { Platform, Animated, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import { Video, AVPlaybackStatus } from 'expo-av';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import { Provider as PaperProvider, Snackbar } from 'react-native-paper';
+import ConfettiCannon from 'react-native-confetti-cannon';
 
 import { RootStackParamList, Chapter } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
@@ -105,6 +106,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isTemporarilyDisabled, setIsTemporarilyDisabled] = useState(false);
   const disableTimerRef = useRef<NodeJS.Timeout | null>(null);
   const enableTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [confettiKey, setConfettiKey] = useState(0);
   
   // 背景色アニメーション用
   const backgroundColorAnimValue = useRef(new Animated.Value(0)).current;
@@ -408,6 +410,9 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         useNativeDriver: false,
       }).start();
     });
+    
+    // 紙吹雪エフェクトを発火
+    setConfettiKey(prev => prev + 1);
   };
 
   // 進捗計算のヘルパー関数
@@ -499,12 +504,27 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     en: 'No network connection. Speech recognition is unavailable.',
   });
   
+  // 画面サイズを取得（紙吹雪の発射位置を計算するため）
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
+  
   return (
     <PaperProvider>
       {shouldUseLandscape ? (
         <VideoPlayerLandscape {...sharedProps} />
       ) : (
         <VideoPlayerPortrait {...sharedProps} />
+      )}
+      {confettiKey > 0 && (
+        <ConfettiCannon
+          key={confettiKey}
+          count={80}
+          origin={{ x: screenWidth / 2, y: 0 }}
+          explosionSpeed={350}
+          fallSpeed={5000}
+          fadeOut={true}
+          autoStart={true}
+        />
       )}
       <Snackbar
         visible={snackbarVisible}
