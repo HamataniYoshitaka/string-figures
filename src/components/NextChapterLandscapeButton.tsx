@@ -11,6 +11,7 @@ interface NextChapterLandscapeButtonProps {
   currentChapterIndex: number;
   isLastChapterCompleted: boolean;
   getLocalizedText: (text: { ja: string; en: string }) => string;
+  isTemporarilyDisabled?: boolean;
 }
 
 export interface NextChapterLandscapeButtonRef {
@@ -24,8 +25,9 @@ const NextChapterLandscapeButton = forwardRef<NextChapterLandscapeButtonRef, Nex
   stringFigure,
   currentChapterIndex,
   getLocalizedText,
+  isTemporarilyDisabled = false,
 }, ref) => {
-  const isDisabled = currentChapterIndex === chapters.length - 1 && !isLastChapterCompleted;
+  const isDisabled = (currentChapterIndex === chapters.length - 1 && !isLastChapterCompleted) || isTemporarilyDisabled;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));

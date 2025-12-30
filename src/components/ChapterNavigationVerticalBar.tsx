@@ -21,6 +21,7 @@ interface ChapterNavigationVerticalBarProps {
   replayButtonRef: React.RefObject<ReplayLandscapeButtonRef | null>;
   nextChapterButtonRef: React.RefObject<NextChapterLandscapeButtonRef | null>;
   getChapterProgress: (chapterIndex: number) => number;
+  isTemporarilyDisabled: boolean;
 }
 
 export interface ChapterNavigationVerticalBarRef {
@@ -42,6 +43,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
   replayButtonRef,
   nextChapterButtonRef,
   getChapterProgress,
+  isTemporarilyDisabled,
 }, ref) => {
   
   useImperativeHandle(ref, () => ({}));
@@ -103,6 +105,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
           onPress={onPreviousChapter}
           currentChapterIndex={currentChapterIndex}
           getLocalizedText={getLocalizedText}
+          isTemporarilyDisabled={isTemporarilyDisabled}
         />
       </View>
 
@@ -125,6 +128,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
           playbackPosition={playbackPosition}
           getLocalizedText={getLocalizedText}
           getChapterProgress={getChapterProgress}
+          isTemporarilyDisabled={isTemporarilyDisabled}
         />
       </View>
 
@@ -149,6 +153,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
           currentChapterIndex={currentChapterIndex}
           isLastChapterCompleted={isLastChapterCompleted}
           getLocalizedText={getLocalizedText}
+          isTemporarilyDisabled={isTemporarilyDisabled}
         />
       </View>
     </View>

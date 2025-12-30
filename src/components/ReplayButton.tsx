@@ -9,6 +9,7 @@ interface ReplayButtonProps {
   playbackPosition: number;
   getLocalizedText: (text: { ja: string; en: string }) => string;
   getChapterProgress: (chapterIndex: number) => number;
+  isTemporarilyDisabled?: boolean;
 }
 
 export interface ReplayButtonRef {
@@ -21,8 +22,9 @@ const ReplayButton = forwardRef<ReplayButtonRef, ReplayButtonProps>(({
   playbackPosition,
   getLocalizedText,
   getChapterProgress,
+  isTemporarilyDisabled = false,
 }, ref) => {
-  const isDisabled = currentChapterIndex === 0 && playbackPosition === 0;
+  const isDisabled = (currentChapterIndex === 0 && playbackPosition === 0) || isTemporarilyDisabled;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));

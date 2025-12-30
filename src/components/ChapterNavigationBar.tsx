@@ -22,6 +22,7 @@ interface ChapterNavigationBarProps {
   playbackPosition: number;
   isLastChapterCompleted: boolean;
   getChapterProgress: (chapterIndex: number) => number;
+  isTemporarilyDisabled: boolean;
 }
 
 export interface ChapterNavigationBarRef {
@@ -41,6 +42,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
   playbackPosition,
   isLastChapterCompleted,
   getChapterProgress,
+  isTemporarilyDisabled,
 }, ref) => {
 
   // デバイス情報を取得
@@ -122,6 +124,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
             onPress={onPreviousChapter}
             currentChapterIndex={currentChapterIndex}
             getLocalizedText={getLocalizedText}
+            isTemporarilyDisabled={isTemporarilyDisabled}
           />
         </View>
 
@@ -146,6 +149,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
             playbackPosition={playbackPosition}
             getLocalizedText={getLocalizedText}
             getChapterProgress={getChapterProgress}
+            isTemporarilyDisabled={isTemporarilyDisabled}
           />
         </View>
 
@@ -171,6 +175,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
             currentChapterIndex={currentChapterIndex}
             isLastChapterCompleted={isLastChapterCompleted}
             getLocalizedText={getLocalizedText}
+            isTemporarilyDisabled={isTemporarilyDisabled}
           />
         </View>
       </View>

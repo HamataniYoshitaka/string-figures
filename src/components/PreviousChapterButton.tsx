@@ -8,6 +8,7 @@ interface PreviousChapterButtonProps {
   onPress: () => void;
   currentChapterIndex: number;
   getLocalizedText: (text: { ja: string; en: string }) => string;
+  isTemporarilyDisabled?: boolean;
 }
 
 export interface PreviousChapterButtonRef {
@@ -18,8 +19,9 @@ const PreviousChapterButton = forwardRef<PreviousChapterButtonRef, PreviousChapt
   onPress,
   currentChapterIndex,
   getLocalizedText,
+  isTemporarilyDisabled = false,
 }, ref) => {
-  const isDisabled = currentChapterIndex === 0;
+  const isDisabled = currentChapterIndex === 0 || isTemporarilyDisabled;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));

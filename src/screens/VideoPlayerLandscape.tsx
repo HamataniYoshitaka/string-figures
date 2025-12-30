@@ -196,6 +196,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           onLandscapeToggle={restProps.onLandscapeToggle}
           getPlaybackRateDisplay={restProps.getPlaybackRateDisplay}
           getChapterProgress={getChapterProgress}
+          isTemporarilyDisabled={restProps.isTemporarilyDisabled}
         />
       }
     </View>

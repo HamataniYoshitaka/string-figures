@@ -40,6 +40,7 @@ interface VideoControlPanelProps {
   onLandscapeToggle: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
   getChapterProgress: (chapterIndex: number) => number;
+  isTemporarilyDisabled: boolean;
 }
 
 const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
@@ -66,6 +67,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   onLandscapeToggle,
   getPlaybackRateDisplay,
   getChapterProgress,
+  isTemporarilyDisabled,
 }) => {
 
   // 多言語対応のヘルパー関数
@@ -161,6 +163,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
           replayButtonRef={replayButtonRef}
           nextChapterButtonRef={nextChapterButtonRef}
           getChapterProgress={getChapterProgress}
+          isTemporarilyDisabled={isTemporarilyDisabled}
         />
       </View>
 

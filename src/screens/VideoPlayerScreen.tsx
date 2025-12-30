@@ -72,6 +72,7 @@ export interface VideoPlayerSharedProps {
   getPlaybackRateDisplay: (rate: number) => string;
   getLocalizedText: (textObj: { ja: string; en: string }) => string;
   getChapterProgress: (chapterIndex: number) => number;
+  isTemporarilyDisabled: boolean;
 }
 
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
@@ -96,6 +97,8 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [isTemporarilyDisabled, setIsTemporarilyDisabled] = useState(false);
+  const disableTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 音声認識フック
   const {
@@ -107,6 +110,20 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   } = useSpeechRecognition({
     language: currentLanguage,
     onKeywordDetected: async (keyword) => {
+      // ボタンを一時的に無効化
+      setIsTemporarilyDisabled(true);
+      
+      // 既存のタイマーをクリア
+      if (disableTimerRef.current) {
+        clearTimeout(disableTimerRef.current);
+      }
+      
+      // 1500ms後に無効化を解除
+      disableTimerRef.current = setTimeout(() => {
+        setIsTemporarilyDisabled(false);
+        disableTimerRef.current = null;
+      }, 1500);
+      
       // キーワードに応じたアクションを実行
       if (keyword === 'つぎ' || keyword === 'next') {
         await handleNextChapter();
@@ -148,6 +165,10 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       }
       // 画面スリープ防止を解除
       deactivateKeepAwake();
+      // タイマーをクリーンアップ
+      if (disableTimerRef.current) {
+        clearTimeout(disableTimerRef.current);
+      }
     };
   }, []);
 
@@ -416,6 +437,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     getPlaybackRateDisplay,
     getLocalizedText,
     getChapterProgress,
+    isTemporarilyDisabled,
   };
 
   // 画面向きに応じてコンポーネントを出し分け

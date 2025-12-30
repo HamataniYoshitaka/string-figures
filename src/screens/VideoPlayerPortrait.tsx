@@ -47,6 +47,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   bookmarked,
   getLocalizedText,
   getChapterProgress,
+  isTemporarilyDisabled,
   // getPlaybackRateDisplay,
 }) => {
   // アニメーション用のスケール値
@@ -330,6 +331,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         playbackPosition={playbackPosition}
         isLastChapterCompleted={isLastChapterCompleted}
         getChapterProgress={getChapterProgress}
+        isTemporarilyDisabled={isTemporarilyDisabled}
       />
     </SafeAreaView>
   );
