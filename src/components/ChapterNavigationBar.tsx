@@ -9,6 +9,7 @@ import { Chapter } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 
 interface ChapterNavigationBarProps {
+  currentLanguage: 'ja' | 'en';
   chapters: Chapter[];
   currentChapterIndex: number;
   onPreviousChapter: () => void;
@@ -33,6 +34,7 @@ export interface ChapterNavigationBarRef {
 }
 
 const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigationBarProps>(({
+  currentLanguage,
   chapters,
   currentChapterIndex,
   onPreviousChapter,
@@ -124,7 +126,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
       <View style={styles.navigationRow}>
         
         {/* さいしょからボタン */}
-        <View style={[styles.buttonContainer, { marginRight: 8 }]}>
+        <View style={[styles.buttonContainer, { marginRight: isTablet ? 24 : currentLanguage === 'ja' ? 20 : 8 }]}>
           <RestartButton
             ref={restartButtonRef}
             onPress={onRestart}

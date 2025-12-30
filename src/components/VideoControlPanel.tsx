@@ -149,6 +149,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
       {/* コントロールボタン */}
       <View style={styles.controlsContainer}>
         <ChapterNavigationVerticalBar
+          currentLanguage={currentLanguage}
           chapters={chapters}
           currentChapterIndex={currentChapterIndex}
           onPreviousChapter={onPreviousChapter}

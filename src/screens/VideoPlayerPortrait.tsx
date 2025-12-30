@@ -320,6 +320,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
 
       {/* チャプターナビゲーションバー */}
       <ChapterNavigationBar
+        currentLanguage={currentLanguage}
         chapters={chapters}
         currentChapterIndex={currentChapterIndex}
         onPreviousChapter={onPreviousChapter}

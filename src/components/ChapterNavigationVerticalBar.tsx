@@ -7,6 +7,7 @@ import AnimatedChapterNumberVertical from './AnimatedChapterNumberVertical';
 import { Chapter, StringFigure } from '../types';
 
 interface ChapterNavigationVerticalBarProps {
+  currentLanguage: 'ja' | 'en';
   chapters: Chapter[];
   currentChapterIndex: number;
   onPreviousChapter: () => void;
@@ -29,6 +30,7 @@ export interface ChapterNavigationVerticalBarRef {
 }
 
 const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef, ChapterNavigationVerticalBarProps>(({
+  currentLanguage,
   chapters,
   currentChapterIndex,
   onPreviousChapter,
