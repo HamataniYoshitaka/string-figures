@@ -29,6 +29,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   getChapterProgress,
   bookmarked,
   onToggleBookmark,
+  backgroundColorAnim,
   ...restProps
 }) => {
   
@@ -74,7 +75,8 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
       : 'Now Loading...';
 
     return (
-      <View style={styles.fallbackContainer}>
+      <Animated.View style={{ flex: 1, backgroundColor: backgroundColorAnim }}>
+        <View style={[styles.fallbackContainer, { backgroundColor: 'transparent' }]}>
         <View style={styles.header}>
           <TouchableWithoutFeedback
             onPress={restProps.onGoBack}
@@ -98,6 +100,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           <Text style={styles.errorText}>Now Loading...</Text>
         </View>
       </View>
+      </Animated.View>
     );
   }
   
@@ -105,7 +108,8 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
   const subtitle = getLocalizedText(chapters[currentChapterIndex].subtitle);
 
   return (
-    <View style={[styles.container, { paddingRight: containerPaddingRight }]}>
+    <Animated.View style={{ flex: 1, backgroundColor: backgroundColorAnim }}>
+      <View style={[styles.container, { paddingRight: containerPaddingRight, backgroundColor: 'transparent' }]}>
       {/* ブックマークボタン */}
       <TouchableOpacity
         style={styles.bookmarkButton}
@@ -201,6 +205,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
         />
       }
     </View>
+    </Animated.View>
   );
 };
 
@@ -209,13 +214,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    backgroundColor: '#F7F5F2',
     position: 'relative',
     paddingTop: Platform.OS === 'android' ? 16 : 0,
   },
   fallbackContainer: {
     flex: 1,
-    backgroundColor: '#F7F5F2',
     paddingTop: Platform.OS === 'android' ? 16 : 0,
   },
   header: {

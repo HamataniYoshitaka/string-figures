@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Animated } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -76,6 +76,7 @@ export interface VideoPlayerSharedProps {
   getLocalizedText: (textObj: { ja: string; en: string }) => string;
   getChapterProgress: (chapterIndex: number) => number;
   isTemporarilyDisabled: boolean;
+  backgroundColorAnim: Animated.AnimatedInterpolation<string>;
 }
 
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
@@ -104,6 +105,9 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [isTemporarilyDisabled, setIsTemporarilyDisabled] = useState(false);
   const disableTimerRef = useRef<NodeJS.Timeout | null>(null);
   const enableTimerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // 背景色アニメーション用
+  const backgroundColorAnimValue = useRef(new Animated.Value(0)).current;
 
   // 音声認識フック
   const {
@@ -390,6 +394,20 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // できた!ボタンの処理
   const handleComplete = async () => {
     console.log('handleComplete!!');
+    
+    // 背景色アニメーション: 0.6秒で#FF8904に変化
+    Animated.timing(backgroundColorAnimValue, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: false,
+    }).start(() => {
+      // 1.2秒で#F7F5F2に戻す
+      Animated.timing(backgroundColorAnimValue, {
+        toValue: 0,
+        duration: 1600,
+        useNativeDriver: false,
+      }).start();
+    });
   };
 
   // 進捗計算のヘルパー関数
@@ -426,6 +444,12 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
+  // 背景色のアニメーション値を計算
+  const backgroundColorAnim = backgroundColorAnimValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['#F7F5F2', '#FF8904'],
+  });
+
   // 共通プロパティ
   const sharedProps: VideoPlayerSharedProps = {
     stringFigure,
@@ -461,6 +485,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     getLocalizedText,
     getChapterProgress,
     isTemporarilyDisabled,
+    backgroundColorAnim,
   };
 
   // 画面向きに応じてコンポーネントを出し分け

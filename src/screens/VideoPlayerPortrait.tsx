@@ -50,6 +50,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   getLocalizedText,
   getChapterProgress,
   isTemporarilyDisabled,
+  backgroundColorAnim,
   // getPlaybackRateDisplay,
 }) => {
   // アニメーション用のスケール値
@@ -89,7 +90,8 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
     // console.log('VideoPlayerPortrait - Invalid stringFigure or chapter data');
     return (
-      <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom }]}>
+      <Animated.View style={{ flex: 1, backgroundColor: backgroundColorAnim }}>
+        <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
         <View style={styles.header}>
           <TouchableWithoutFeedback 
             onPress={onGoBack}
@@ -123,6 +125,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
           <Text style={styles.errorText}>Now Loading...</Text>
         </View>
       </SafeAreaView>
+      </Animated.View>
     );
   }
 
@@ -135,7 +138,8 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   };
 
   return (
-    <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom }]}>
+    <Animated.View style={{ flex: 1, backgroundColor: backgroundColorAnim }}>
+      <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
       <View style={styles.header}>
         <TouchableWithoutFeedback 
           onPress={onGoBack}
@@ -340,13 +344,13 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         isTemporarilyDisabled={isTemporarilyDisabled}
       />
     </SafeAreaView>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7F5F2',
     paddingTop: Platform.OS === 'android' ? 16 : 0,
   },
   errorContainer: {
