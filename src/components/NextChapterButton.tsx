@@ -1,6 +1,6 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import { TouchableWithoutFeedback, View, Text, StyleSheet, Animated } from 'react-native';
-import { ArrowRightIcon, PlayIcon, SkipBackwardIcon } from './icons';
+import { ArrowRightIcon, CheckIcon, PlayIcon, SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import { Chapter, StringFigure } from '../types';
 import BalloonTail from './icons/BalloonTail';
@@ -119,10 +119,12 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
               styles.floatingButton,
               { transform: [{ scale: scaleAnim }] }
             ]}>
-              <SkipBackwardIcon
+              <CheckIcon
                 width={26}
                 height={26}
                 fillColor="#44403c"
+                strokeWidth={1}
+                strokeColor="#44403c"
               />
             </Animated.View>
           ) : (
@@ -153,7 +155,7 @@ const NextChapterButton = forwardRef<NextChapterButtonRef, NextChapterButtonProp
               style={styles.controlButtonText}
             >
               {isLastChapterCompleted
-                ? getLocalizedText({ ja: 'はじめから', en: 'Restart' })
+                ? getLocalizedText({ ja: 'できた!', en: 'Done!' })
                 : getLocalizedText({ ja: 'つぎ', en: 'Next' })
               }
             </Text>

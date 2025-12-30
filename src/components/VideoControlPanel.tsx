@@ -9,9 +9,9 @@ import {
 
 import { CloseIcon } from './icons';
 import LandScapeIcon from './icons/LandScape';
-import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
-import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
-import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
+import { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
+import { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
+import { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
 import ChapterNavigationVerticalBar from './ChapterNavigationVerticalBar';
 // import SpeedControlLandscape from './SpeedControlLandscape';
 import { Chapter, StringFigure } from '../types';
@@ -32,6 +32,7 @@ interface VideoControlPanelProps {
   previousChapterButtonRef: React.RefObject<PreviousChapterLandscapeButtonRef | null>;
   onGoBack: () => void;
   onNextChapter: () => void;
+  onComplete: () => void;
   onReplay: () => void;
   onPreviousChapter: () => void;
   onRestartFromBeginning: () => void;
@@ -59,6 +60,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
   previousChapterButtonRef,
   onGoBack,
   onNextChapter,
+  onComplete,
   onReplay,
   onPreviousChapter,
   onRestartFromBeginning,
@@ -155,6 +157,7 @@ const VideoControlPanel: React.FC<VideoControlPanelProps> = ({
           onPreviousChapter={onPreviousChapter}
           onReplay={onReplay}
           onNextChapter={onNextChapter}
+          onComplete={onComplete}
           onRestartFromBeginning={onRestartFromBeginning}
           playbackPosition={playbackPosition}
           isLastChapterCompleted={isLastChapterCompleted}

@@ -188,6 +188,7 @@ const VideoPlayerLandscape: React.FC<VideoPlayerSharedProps> = ({
           previousChapterButtonRef={restProps.previousChapterButtonRef as React.RefObject<any>}
           onGoBack={restProps.onGoBack}
           onNextChapter={restProps.onNextChapter}
+          onComplete={restProps.onComplete}
           onReplay={restProps.onReplay}
           onPreviousChapter={restProps.onPreviousChapter}
           onRestartFromBeginning={restProps.onRestartFromBeginning}

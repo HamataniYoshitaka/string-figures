@@ -65,6 +65,7 @@ export interface VideoPlayerSharedProps {
   onPlaybackStatusUpdate: (status: AVPlaybackStatus) => void;
   onVideoLoad: () => Promise<void>;
   onNextChapter: () => Promise<void>;
+  onComplete: () => void;
   onGoBack: () => void;
   onReplay: () => Promise<void>;
   onPreviousChapter: () => Promise<void>;
@@ -386,6 +387,11 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
+  // できた!ボタンの処理
+  const handleComplete = async () => {
+    console.log('handleComplete!!');
+  };
+
   // 進捗計算のヘルパー関数
   const getChapterProgress = (chapterIndex: number) => {
     if (chapterIndex < currentChapterIndex) {
@@ -444,6 +450,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     onPlaybackStatusUpdate: handlePlaybackStatusUpdate,
     onVideoLoad: handleVideoLoad,
     onNextChapter: handleNextChapter,
+    onComplete: handleComplete,
     onGoBack: handleGoBack,
     onReplay: handleReplay,
     onPreviousChapter: handlePreviousChapter,

@@ -14,6 +14,7 @@ interface ChapterNavigationVerticalBarProps {
   onPreviousChapter: () => void;
   onReplay: () => void;
   onNextChapter: () => void;
+  onComplete: () => void;
   onRestartFromBeginning: () => void;
   playbackPosition: number;
   isLastChapterCompleted: boolean;
@@ -37,6 +38,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
   onPreviousChapter,
   onReplay,
   onNextChapter,
+  onComplete,
   onRestartFromBeginning,
   playbackPosition,
   isLastChapterCompleted,
@@ -158,7 +160,7 @@ const ChapterNavigationVerticalBar = forwardRef<ChapterNavigationVerticalBarRef,
         <NextChapterLandscapeButton
           ref={nextChapterButtonRef}
           chapters={chapters}
-          onPress={isLastChapterCompleted ? onRestartFromBeginning : onNextChapter}
+          onPress={isLastChapterCompleted ? onComplete : onNextChapter}
           stringFigure={stringFigure}
           currentChapterIndex={currentChapterIndex}
           isLastChapterCompleted={isLastChapterCompleted}

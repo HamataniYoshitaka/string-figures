@@ -38,6 +38,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   onVideoLoad,
   onGoBack,
   onNextChapter,
+  onComplete,
   onReplay,
   onPreviousChapter,
   onRestartFromBeginning,
@@ -326,6 +327,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         onPreviousChapter={onPreviousChapter}
         onReplay={onReplay}
         onNextChapter={handleMainButtonPress}
+        onComplete={onComplete}
         getLocalizedText={getLocalizedText}
         previousChapterButtonRef={previousChapterButtonRef}
         replayButtonRef={replayButtonRef}

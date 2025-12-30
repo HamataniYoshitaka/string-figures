@@ -15,6 +15,7 @@ interface ChapterNavigationBarProps {
   onPreviousChapter: () => void;
   onReplay: () => void;
   onNextChapter: () => void;
+  onComplete: () => void;
   getLocalizedText: (text: { ja: string; en: string }) => string;
   // 既存のボタンrefs
   previousChapterButtonRef: React.RefObject<PreviousChapterButtonRef | null>;
@@ -40,6 +41,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
   onPreviousChapter,
   onReplay,
   onNextChapter,
+  onComplete,
   getLocalizedText,
   previousChapterButtonRef,
   replayButtonRef,
@@ -190,7 +192,7 @@ const ChapterNavigationBar = forwardRef<ChapterNavigationBarRef, ChapterNavigati
           <NextChapterButton
             ref={nextChapterButtonRef}
             chapters={chapters}
-            onPress={isLastChapterCompleted ? onNextChapter : onNextChapter}
+            onPress={isLastChapterCompleted ? onComplete : onNextChapter}
             currentChapterIndex={currentChapterIndex}
             isLastChapterCompleted={isLastChapterCompleted}
             getLocalizedText={getLocalizedText}
