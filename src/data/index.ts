@@ -692,7 +692,7 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0,
     data: {
       region: null,
-      source: '“A Shooting Star”\nSHISHIDO Yukio\n<i>Geometrical Figures</i> (1980)',
+      source: '“Shooting Star III”\nSHISHIDO Yukio\n<i>Modern String Figures — (BISFA 4) </i> (1997)',
       author: { ja: 'SHISHIDO Yukio', en: 'SHISHIDO Yukio' },
       references: null
     }
