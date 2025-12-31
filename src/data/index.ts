@@ -1251,11 +1251,16 @@ export const stringFigures: StringFigure[] = [
     directory: '109_heart',
     ...ASSETS_MAP['109_heart'],
     description: { 
-      ja: '両手の間にハートマークが浮かび上がる、とても愛らしいあやとりです。手順の途中で、取るべき糸が非常にわかりにくい箇所があるので注意が必要です', 
-      en: 'This is a very charming string figure in which a heart shape appears between your hands. There is a point in the process where the string to be picked up is especially hard to identify, so extra care is required.' 
+      ja: '両手の間にハートマークが浮かび上がる、とても愛らしいあやとりです。手順の途中で、取るべき糸が非常にわかりにくい箇所があるので注意が必要です。ここでは「ハート」として紹介していますが、伝承元のアラスカでは「目と口」という名称で知られており、その名の通り途中で目の形を作り、最後にハート型の口を作ります', 
+      en: 'This is a very charming string figure in which a heart shape appears between your hands. There is a point in the process where the string to be picked up is especially hard to identify, so extra care is required. Here we introduce it as <i>Heart,</i> but in Alaska it is known as <i>Eyes and Mouth.</i> As the name suggests, the process forms eyes along the way and finishes with a heart-shaped mouth.' 
     },
     premiumCourseId: 0, 
-    data: null
+    data: {
+      region: { ja: '北極圏', en: 'Arctic Circle' },
+      source: '“Eyes and Mouth”\nK. Haddon\n<i>Artists in String</i> (1930)',
+      author: null,
+      references: null
+    },
   },
 
   {
