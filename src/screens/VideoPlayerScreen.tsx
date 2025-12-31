@@ -110,6 +110,9 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   
   // 背景色アニメーション用
   const backgroundColorAnimValue = useRef(new Animated.Value(0)).current;
+  
+  // リスタートレイヤーアニメーション用
+  const restartLayerOpacity = useRef(new Animated.Value(0)).current;
 
   // 音声認識フック
   const {
@@ -399,6 +402,21 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       setCurrentChapterIndex(0);
       setPlaybackPosition(0);
       setIsLastChapterCompleted(false);
+      
+      // レイヤーアニメーション: 0s:0 → 0.3s: 1 → 1.0s: 0
+      restartLayerOpacity.setValue(0);
+      Animated.sequence([
+        Animated.timing(restartLayerOpacity, {
+          toValue: 0.8,
+          duration: 150,
+          useNativeDriver: true,
+        }),
+        Animated.timing(restartLayerOpacity, {
+          toValue: 0,
+          duration: 700,
+          useNativeDriver: true,
+        }),
+      ]).start();
     } catch (error) {
       console.error('Error restarting from beginning:', error);
     }
@@ -585,6 +603,18 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       >
         {networkErrorMessage}
       </Snackbar>
+      <Animated.View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: '#f5f5f4',
+          opacity: restartLayerOpacity,
+          pointerEvents: 'none',
+        }}
+      />
     </PaperProvider>
   );
 };

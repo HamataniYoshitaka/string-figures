@@ -56,7 +56,7 @@ export const useSpeechRecognition = ({
       next: ['つぎ', '次'],
       previous: ['まえ', '前'],
       replay: ['もういちど', 'もう一度'],
-      restart: ['はじめから', '初めから', '始めから', '元から'],
+      restart: ['はじめから', '初めから', '始めから', '元から', '一から'],
       done: ['できた', '出来た'],
     },
     en: {
