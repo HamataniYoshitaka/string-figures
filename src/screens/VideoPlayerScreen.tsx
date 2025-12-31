@@ -448,13 +448,13 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       console.error('完了日付の保存に失敗しました:', error);
     }
     
-    // 背景色アニメーション: 0.6秒で#FF8904に変化
+    // 背景色アニメーション: 0.3秒で#FF8904に変化
     Animated.timing(backgroundColorAnimValue, {
       toValue: 1,
       duration: 300,
       useNativeDriver: false,
     }).start(() => {
-      // 1.2秒で#F7F5F2に戻す
+      // 1.6秒で#F7F5F2に戻す
       Animated.timing(backgroundColorAnimValue, {
         toValue: 0,
         duration: 1600,

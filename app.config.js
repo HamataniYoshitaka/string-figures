@@ -47,6 +47,7 @@ module.exports = {
         projectId: 'dbcd5e01-54ee-4bd0-aeff-5ddc545ca364',
       },
       // iOS用APIキー: EASのSecrets/Environment variablesから読み込み（ビルド時）
+      // ↑ と思ってEnvironment variables入れてみたけど動かなかった。以前.envからだと動いたのでそれに戻してみる
       // ローカル開発時は.envファイルから読み込み
       revenueCatIosApiKey: process.env.REVENUECAT_IOS_API_KEY || '',
       // Android用APIキー: EASのSecrets/Environment variablesから読み込み（ビルド時）

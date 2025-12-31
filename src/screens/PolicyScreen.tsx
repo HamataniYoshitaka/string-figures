@@ -165,8 +165,8 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
                             style={[styles.sectionDescription, { marginTop: 16 }]}
                         >
                             { getLocalizedText({ 
-                                ja: 'このアプリが認識できる単語は以下の4つのみです。\n・つぎ\n・もういちど\n・まえ\n・はじめから', 
-                                en: 'The only words that this app can recognize are the following four: \n- "next"\n- "replay"\n- "previous"\n- "restart".' }) 
+                                ja: 'このアプリが認識できる単語は以下の5つのみです。\n・つぎ\n・もういちど\n・まえ\n・はじめから\n・できた', 
+                                en: 'The only words that this app can recognize are the following five: \n- "next"\n- "replay"\n- "previous"\n- "restart"\n- "done".' }) 
                             }
                         </Text>
 
