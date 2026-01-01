@@ -53,11 +53,11 @@ export const useSpeechRecognition = ({
   // 言語に応じたキーワードマッピング
   const keywordMap = {
     ja: {
-      next: ['つぎ', '次'],
+      next: ['つぎ', '次', '注ぎ', '継ぎ', '嗣ぎ'],
       previous: ['まえ', '前'],
       replay: ['もういちど', 'もう一度'],
       restart: ['はじめから', '初めから', '始めから', '元から', '一から'],
-      done: ['できた', '出来た'],
+      done: ['できた', '出来た', 'で着た', 'で北', 'で来た' ],
     },
     en: {
       next: ['next'],
