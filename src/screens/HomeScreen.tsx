@@ -32,8 +32,9 @@ import { showLanguageSelectionDialog } from '../components/LanguageSwitchButton'
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 import Purchases from 'react-native-purchases';
 import * as StoreReview from 'expo-store-review';
+import * as Notifications from 'expo-notifications';
 import { getClearPoints, getHasReviewed, shouldShowReviewDialog, saveHasReviewed, shouldShowPushPermissionDialog } from '../utils/clearPoints';
-import { getHasRequestedPushPermission, requestAndRegisterPushNotification } from '../utils/pushNotifications';
+import { getHasRequestedPushPermission, requestAndRegisterPushNotification, registerPushTokenIfGranted } from '../utils/pushNotifications';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -136,6 +137,26 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       if (!isTablet) {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
       }
+      
+      // バッジをクリア
+      try {
+        await Notifications.setBadgeCountAsync(0);
+      } catch (error) {
+        console.warn('バッジのクリアに失敗しました:', error);
+      }
+
+      // アプリ起動時に毎回トークンをサーバーにPOST（既に許可されている場合）
+      setTimeout(async () => {
+        try {
+          const savedLanguage = await AsyncStorage.getItem('app_language');
+          const language = (savedLanguage === 'ja' || savedLanguage === 'en')
+            ? savedLanguage
+            : (Localization.getLocales()[0]?.languageCode === 'ja' ? 'ja' : 'en');
+          await registerPushTokenIfGranted(language as 'ja' | 'en');
+        } catch (error) {
+          console.error('プッシュ通知トークンの登録中にエラーが発生しました:', error);
+        }
+      }, 1500);
     };
     initializeSettings();
 

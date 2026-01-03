@@ -10,8 +10,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Constants from 'expo-constants';
 import Purchases from 'react-native-purchases';
-import * as Notifications from 'expo-notifications';
 import { RootStackParamList } from './src/types';
+import { registerPushTokenIfGranted } from './src/utils/pushNotifications';
+import * as Localization from 'expo-localization';
 import IntroScreen from './src/screens/IntroScreen';
 import IntroVideoScreen from './src/screens/IntroVideoScreen';
 import IntroVoiceScreen from './src/screens/IntroVoiceScreen';
@@ -59,12 +60,16 @@ export default function App() {
         const completed = await AsyncStorage.getItem('introduction_completed');
         setIntroductionCompleted(completed === 'true');
 
-        // バッジをクリア
-        try {
-          await Notifications.setBadgeCountAsync(0);
-        } catch (error) {
-          console.warn('バッジのクリアに失敗しました:', error);
-        }
+        // 言語設定を読み込んで、プッシュ通知トークンを登録（既に許可されている場合）
+        const savedLanguage = await AsyncStorage.getItem('app_language');
+        const language = (savedLanguage === 'ja' || savedLanguage === 'en') 
+          ? savedLanguage 
+          : (Localization.getLocales()[0]?.languageCode === 'ja' ? 'ja' : 'en');
+        
+        // アプリ起動時に毎回トークンをサーバーにPOST
+        setTimeout(() => {
+          registerPushTokenIfGranted(language as 'ja' | 'en');
+        }, 1000);
 
         setFontLoaded(true);
       } catch (error) {

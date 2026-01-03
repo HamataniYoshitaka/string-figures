@@ -147,3 +147,40 @@ export const requestAndRegisterPushNotification = async (
   }
 };
 
+/**
+ * 既にプッシュ通知の許可が得られている場合、トークンを取得してサーバーに登録
+ * アプリ起動時に毎回呼び出して、トークンの更新をサーバーに送信する
+ */
+export const registerPushTokenIfGranted = async (
+  language: 'ja' | 'en'
+): Promise<boolean> => {
+  try {
+    // 現在の許可状態を確認
+    const { status } = await Notifications.getPermissionsAsync();
+    if (status !== 'granted') {
+      console.log('プッシュ通知の許可が得られていないため、トークン登録をスキップします');
+      return false;
+    }
+
+    // トークンを取得
+    const token = await getPushToken();
+    if (!token) {
+      console.error('プッシュ通知トークンの取得に失敗しました');
+      return false;
+    }
+
+    // サーバーに登録
+    const locale = Localization.getLocales()?.[0]?.languageTag;
+    const success = await registerPushToken(token, language, locale);
+    
+    if (success) {
+      console.log('アプリ起動時にプッシュ通知トークンをサーバーに登録しました');
+    }
+
+    return success;
+  } catch (error) {
+    console.error('プッシュ通知トークンの登録中にエラーが発生しました:', error);
+    return false;
+  }
+};
+
