@@ -19,6 +19,7 @@ import { ReplayButtonRef } from '../components/ReplayButton';
 import { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
 import { RestartButtonRef } from '../components/RestartButton';
 import { CHAPTERS_MAP } from '../data/chaptersMap';
+import { getDifficultyPoints, addClearPoints } from '../utils/clearPoints';
 
 type VideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -285,6 +286,14 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         // 最後のチャプターが完了した場合
         if (currentChapterIndex === chapters.length - 1) {
           setIsLastChapterCompleted(true);
+          
+          // クリアポイントを加算
+          const points = getDifficultyPoints(stringFigure.difficulty);
+          if (points > 0) {
+            addClearPoints(points).catch(error => {
+              console.error('クリアポイントの加算に失敗しました:', error);
+            });
+          }
         }
       }
     }

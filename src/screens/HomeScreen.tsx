@@ -31,6 +31,8 @@ import MicrophoneQuestionIcon from '../components/icons/MicrophoneQuestion';
 import { showLanguageSelectionDialog } from '../components/LanguageSwitchButton';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 import Purchases from 'react-native-purchases';
+import * as StoreReview from 'expo-store-review';
+import { getClearPoints, getHasReviewed, shouldShowReviewDialog, saveHasReviewed } from '../utils/clearPoints';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -120,6 +122,37 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       }
     };
     requestMicrophonePermissions();
+
+    // 初回マウント時にもレビューダイアログをチェック
+    setTimeout(() => {
+      checkAndShowReview();
+    }, 1000);
+  }, [checkAndShowReview]);
+
+  // レビューダイアログの表示チェック関数
+  const checkAndShowReview = React.useCallback(async () => {
+    try {
+      const points = await getClearPoints();
+      const hasReviewed = await getHasReviewed();
+      
+      // レビュー済みの場合は表示しない
+      if (hasReviewed) {
+        return;
+      }
+      
+      // ポイントが15n+0〜15n+2の範囲（n >= 1）にあるかチェック
+      if (shouldShowReviewDialog(points)) {
+        // レビューダイアログを表示
+        const isAvailable = await StoreReview.isAvailableAsync();
+        if (isAvailable) {
+          await StoreReview.requestReview();
+          // 表示を試みた後、レビュー済みフラグを保存
+          await saveHasReviewed(true);
+        }
+      }
+    } catch (error) {
+      console.error('レビューダイアログの表示チェック中にエラーが発生しました:', error);
+    }
   }, []);
 
   // 画面にフォーカスが戻ってきた時にブックマーク情報を再読み込み
@@ -128,7 +161,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       loadBookmarkedIds();
       loadSelectedFilters();
       loadPurchasedItems();
-    }, [])
+      // レビューダイアログのチェックも実行
+      setTimeout(() => {
+        checkAndShowReview();
+      }, 500);
+    }, [checkAndShowReview])
   );
 
   // 画面サイズ変更の監視
