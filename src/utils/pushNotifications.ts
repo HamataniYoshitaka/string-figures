@@ -6,7 +6,7 @@ import Constants from 'expo-constants';
 
 const PUSH_PERMISSION_REQUESTED_KEY = 'pushPermissionRequested';
 const REGISTER_URL = 'https://hamahouse.sakura.ne.jp/stringfigures/push/register.php';
-const API_KEY = 'cX1%8S&pagBMp2D%';
+const API_KEY = Constants.expoConfig?.extra?.pushNotificationApiKey || '';
 
 /**
  * 既にプッシュ通知の許可をリクエストしたかチェック
@@ -82,7 +82,7 @@ export const registerPushToken = async (
 ): Promise<boolean> => {
   try {
     const platform = Platform.OS === 'ios' ? 'ios' : 'android';
-    
+
     const response = await fetch(REGISTER_URL, {
       method: 'POST',
       headers: {

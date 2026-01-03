@@ -41,7 +41,18 @@ module.exports = {
     web: {
       favicon: './assets/favicon.png',
     },
-    plugins: ['expo-font', 'expo-speech-recognition', 'expo-localization'],
+    plugins: [
+      'expo-font',
+      'expo-speech-recognition',
+      'expo-localization',
+      [
+        'expo-notifications',
+        {
+          icon: './assets/icon.png',
+          color: '#ffffff',
+        },
+      ],
+    ],
     extra: {
       eas: {
         projectId: 'dbcd5e01-54ee-4bd0-aeff-5ddc545ca364',
@@ -53,6 +64,8 @@ module.exports = {
       // Android用APIキー: EASのSecrets/Environment variablesから読み込み（ビルド時）
       // ローカル開発時は.envファイルから読み込み
       revenueCatAndroidApiKey: process.env.REVENUECAT_ANDROID_API_KEY || '',
+      // プッシュ通知APIキー: ローカル開発時は.envファイルから読み込み
+      pushNotificationApiKey: process.env.PUSH_NOTIFICATION_API_KEY || '',
     },
   },
 };
