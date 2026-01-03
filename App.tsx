@@ -10,6 +10,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Constants from 'expo-constants';
 import Purchases from 'react-native-purchases';
+import * as Notifications from 'expo-notifications';
 import { RootStackParamList } from './src/types';
 import IntroScreen from './src/screens/IntroScreen';
 import IntroVideoScreen from './src/screens/IntroVideoScreen';
@@ -57,6 +58,13 @@ export default function App() {
         // イントロ完了状態を読み込む
         const completed = await AsyncStorage.getItem('introduction_completed');
         setIntroductionCompleted(completed === 'true');
+
+        // バッジをクリア
+        try {
+          await Notifications.setBadgeCountAsync(0);
+        } catch (error) {
+          console.warn('バッジのクリアに失敗しました:', error);
+        }
 
         setFontLoaded(true);
       } catch (error) {

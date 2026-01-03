@@ -92,4 +92,18 @@ export const shouldShowReviewDialog = (points: number): boolean => {
   return remainder === 0 || remainder === 1 || remainder === 2;
 };
 
+/**
+ * ポイントが13n+0〜13n+2の範囲（n >= 1）にあるかチェック
+ */
+export const shouldShowPushPermissionDialog = (points: number): boolean => {
+  // n >= 1 なので、ポイントが13以上である必要がある
+  if (points < 13) {
+    return false;
+  }
+  
+  // ポイントを13で割った余りが0, 1, 2のいずれか
+  const remainder = points % 13;
+  return remainder === 0 || remainder === 1 || remainder === 2;
+};
+
 

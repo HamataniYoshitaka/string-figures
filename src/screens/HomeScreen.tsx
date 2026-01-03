@@ -32,7 +32,8 @@ import { showLanguageSelectionDialog } from '../components/LanguageSwitchButton'
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 import Purchases from 'react-native-purchases';
 import * as StoreReview from 'expo-store-review';
-import { getClearPoints, getHasReviewed, shouldShowReviewDialog, saveHasReviewed } from '../utils/clearPoints';
+import { getClearPoints, getHasReviewed, shouldShowReviewDialog, saveHasReviewed, shouldShowPushPermissionDialog } from '../utils/clearPoints';
+import { getHasRequestedPushPermission, requestAndRegisterPushNotification } from '../utils/pushNotifications';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -169,7 +170,21 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       setTimeout(() => {
         checkAndShowReview();
       }, 500);
-    }, [checkAndShowReview])
+      // プッシュ通知許可のチェックも実行
+      setTimeout(async () => {
+        try {
+          const points = await getClearPoints();
+          const hasRequested = await getHasRequestedPushPermission();
+          
+          // 条件を満たし、かつ未リクエストの場合のみ許可ダイアログを表示
+          if (shouldShowPushPermissionDialog(points) && !hasRequested) {
+            await requestAndRegisterPushNotification(currentLanguage);
+          }
+        } catch (error) {
+          console.error('プッシュ通知許可のチェック中にエラーが発生しました:', error);
+        }
+      }, 500);
+    }, [checkAndShowReview, currentLanguage])
   );
 
   // 画面サイズ変更の監視
