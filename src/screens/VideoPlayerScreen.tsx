@@ -286,14 +286,6 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
         // 最後のチャプターが完了した場合
         if (currentChapterIndex === chapters.length - 1) {
           setIsLastChapterCompleted(true);
-          
-          // クリアポイントを加算
-          const points = getDifficultyPoints(stringFigure.difficulty);
-          if (points > 0) {
-            addClearPoints(points).catch(error => {
-              console.error('クリアポイントの加算に失敗しました:', error);
-            });
-          }
         }
       }
     }
@@ -458,6 +450,13 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
           id: stringFigure.id,
           dates: [todayDateString],
         });
+        // ここでクリアポイントを加算
+        const points = getDifficultyPoints(stringFigure.difficulty);
+        if (points > 0) {
+          addClearPoints(points).catch(error => {
+            console.error('クリアポイントの加算に失敗しました:', error);
+          });
+        }
       } else {
         // 一致するものがある場合：dates配列を確認
         const existingEntry = completeDates[existingEntryIndex];
@@ -465,6 +464,13 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
           // 今日の日付が含まれていない場合：日付を追加
           existingEntry.dates.push(todayDateString);
           completeDates[existingEntryIndex] = existingEntry;
+          // ここでクリアポイントを加算
+          const points = getDifficultyPoints(stringFigure.difficulty);
+          if (points > 0) {
+            addClearPoints(points).catch(error => {
+              console.error('クリアポイントの加算に失敗しました:', error);
+            });
+          }
         }
         // 今日の日付が既に含まれている場合は何もしない
       }

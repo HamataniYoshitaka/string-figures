@@ -85,6 +85,34 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   // 画面幅の状態
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
+  // レビューダイアログの表示チェック関数
+  const checkAndShowReview = React.useCallback(async () => {
+    try {
+      const points = await getClearPoints();
+      console.log('クリアポイント:', points);
+      const hasReviewed = await getHasReviewed();
+      console.log('レビュー済みフラグ:', hasReviewed);
+      
+      // レビュー済みの場合は表示しない
+      if (hasReviewed) {
+        return;
+      }
+      
+      // ポイントが15n+0〜15n+2の範囲（n >= 1）にあるかチェック
+      if (shouldShowReviewDialog(points)) {
+        // レビューダイアログを表示
+        const isAvailable = await StoreReview.isAvailableAsync();
+        if (isAvailable) {
+          await StoreReview.requestReview();
+          // 表示を試みた後、レビュー済みフラグを保存
+          await saveHasReviewed(true);
+        }
+      }
+    } catch (error) {
+      console.error('レビューダイアログの表示チェック中にエラーが発生しました:', error);
+    }
+  }, []);
+
   // 段組み数を決定する関数
   const getColumnsCount = (width: number): number => {
     if (width < 600) { // スマホ縦
@@ -129,31 +157,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }, 1000);
   }, [checkAndShowReview]);
 
-  // レビューダイアログの表示チェック関数
-  const checkAndShowReview = React.useCallback(async () => {
-    try {
-      const points = await getClearPoints();
-      const hasReviewed = await getHasReviewed();
-      
-      // レビュー済みの場合は表示しない
-      if (hasReviewed) {
-        return;
-      }
-      
-      // ポイントが15n+0〜15n+2の範囲（n >= 1）にあるかチェック
-      if (shouldShowReviewDialog(points)) {
-        // レビューダイアログを表示
-        const isAvailable = await StoreReview.isAvailableAsync();
-        if (isAvailable) {
-          await StoreReview.requestReview();
-          // 表示を試みた後、レビュー済みフラグを保存
-          await saveHasReviewed(true);
-        }
-      }
-    } catch (error) {
-      console.error('レビューダイアログの表示チェック中にエラーが発生しました:', error);
-    }
-  }, []);
+
 
   // 画面にフォーカスが戻ってきた時にブックマーク情報を再読み込み
   useFocusEffect(
