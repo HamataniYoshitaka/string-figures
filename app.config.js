@@ -36,6 +36,7 @@ module.exports = {
       icon: './assets/icon.png',
       edgeToEdgeEnabled: true,
       package: 'com.hamahouse.stringfigures',
+      googleServicesFile: "./google-services.json",
       permissions: ['android.permission.RECORD_AUDIO'],
     },
     web: {
