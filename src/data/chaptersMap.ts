@@ -106,4 +106,5 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '106_salt-house': require('../../assets/string-figures/106_salt-house/chapters.json'),
   '108_toad': require('../../assets/string-figures/108_toad/chapters.json'),
   '109_heart': require('../../assets/string-figures/109_heart/chapters.json'),
+  '110_eikodowa': require('../../assets/string-figures/110_eikodowa/chapters.json'),
 };

@@ -1763,7 +1763,7 @@ export const stringFigures: StringFigure[] = [
   {
     id: '100',
     name: { ja: '空を持ち上げる', en: 'Holding up the sky' },
-    difficulty: 'easy',
+    difficulty: 'medium',
     directory: '100_hold-the-sky',
     ...ASSETS_MAP['100_hold-the-sky'],
     description: { 
@@ -1865,6 +1865,24 @@ export const stringFigures: StringFigure[] = [
     data: {
       region: { ja: '南アメリカ', en: 'South America' },
       source: '“The Toad”\nF. E. Lutz\n <i>String-figures from the Patomana Indians of British Guiana</i> (1912)',
+      author: null,
+      references: null
+    }
+  },
+  {
+    id: '110',
+    name: { ja: 'エイコドワ', en: 'Eikodowa' },
+    difficulty: 'easy',
+    directory: '110_eikodowa',
+    ...ASSETS_MAP['110_eikodowa'],
+    description: { 
+      ja: 'ギルバート諸島やナウルに伝承されているあやとりです。ナウルでは歌を歌いながら、最後にゴムの木を切り倒します。エイコドワとはその歌の中に登場する女性の名前です', 
+      en: 'This string figure comes from the Gilbert Islands and Nauru. In Nauru, it is traditionally made while singing, and the final action represents cutting down a rubber tree. The name <i>Eikodowa</i> refers to a woman mentioned in the song.' 
+    },
+    premiumCourseId: 0, 
+    data: {
+      region: { ja: 'ナウル, 他', en: 'Nauru, etc.' },
+      source: '“Bo Kabenga”\nH. C. & H. E. Maude\n <i>String-Figures from the Gilbert Islands</i> (1958)',
       author: null,
       references: null
     }

@@ -530,4 +530,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/109_heart/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/109_heart/preview.mp4'),
   },
+  '110_eikodowa': {
+    thumbnail: require('../../assets/string-figures/110_eikodowa/thumbnail-kraft.gif'),
+    patternImage: require('../../assets/string-figures/110_eikodowa/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/110_eikodowa/preview.mp4'),
+  },
 };
