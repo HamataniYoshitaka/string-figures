@@ -64,7 +64,7 @@ export const useSpeechRecognition = ({
       previous: ['previous'],
       replay: ['replay', 'reply'],
       restart: ['restart'],
-      done: ['done', 'down', 'dumb', 'dan'],
+      done: ['done', 'down', 'dumb', 'dan', 'don\'t', 'dont', 'dong'],
     },
   };
 

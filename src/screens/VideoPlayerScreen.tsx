@@ -361,7 +361,13 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     } catch (error) {
       console.error('画面向きの設定に失敗しました:', error);
     }
-    navigation.goBack();
+    // ナビゲーションスタックに戻れる画面があるかチェック
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      // 戻れる画面がない場合はHome画面に遷移
+      navigation.navigate('Home');
+    }
   };
 
   // もういちどボタンの処理
