@@ -27,7 +27,6 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
     
     const { isTablet, isDeviceLandscape } = useDeviceInfo();
     const isAndroid = Platform.OS === 'android';
-    console.log('isAndroid', isAndroid);
     // アニメーションヘルパー関数
     const createPressInHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {

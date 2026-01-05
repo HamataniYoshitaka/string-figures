@@ -89,7 +89,6 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     
     const { isTablet, isDeviceLandscape } = useDeviceInfo();
     const isAndroid = Platform.OS === 'android';
-    console.log('isAndroid', isAndroid);
     
     // 吹き出しタイマーの管理
     useEffect(() => {

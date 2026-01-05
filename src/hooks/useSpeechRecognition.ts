@@ -34,6 +34,10 @@ interface UseSpeechRecognitionReturn {
   isProcessingKeyword: boolean;
 }
 
+// no-speech, 及びタイマーが作動した場合の再起動インターバル（ミリ秒）
+const NO_SPEECH_RESTART_INTERVAL = 500;
+
+
 /**
  * 音声認識機能を管理するカスタムフック
  * 
@@ -115,7 +119,7 @@ export const useSpeechRecognition = ({
             setIsProcessingKeyword(false);
             startRecognition();
           }
-        }, pauseAfterKeywords);
+        }, NO_SPEECH_RESTART_INTERVAL);
       }
     }, inactivityTimeout);
   };
@@ -147,7 +151,7 @@ export const useSpeechRecognition = ({
       
       // 音声認識開始時に活動監視タイマーを開始
       resetActivityTimer();
-    } catch (error) {
+    } catch (error: any) {
       console.error('音声認識開始エラー:', error);
     }
   };
@@ -290,6 +294,24 @@ export const useSpeechRecognition = ({
     // 意図的な停止の場合は、audio-captureエラーを無視
     if (isIntentionallyStopped && event.error === 'audio-capture') {
       console.log('音声認識停止に伴う予期されるエラー (無視):', event.error);
+    } else if (event.error === 'no-speech') {
+      console.log('no-speech エラー 再起動します:');
+      // 活動監視タイマーをリセット
+      resetActivityTimer();
+      // 処理中フラグを設定（連続処理を防ぐ）
+      setIsProcessingKeyword(true);
+
+      // 音声認識を一時停止（意図的な停止フラグを設定）
+      setIsIntentionallyStopped(true);
+      stopRecognition();
+      // 少し遅延してから再開（ユーザーのアクションが完了するのを待つ）
+      keywordRestartTimerRef.current = setTimeout(() => {
+        if (isSupported) {
+          setIsIntentionallyStopped(false);
+          setIsProcessingKeyword(false);
+          startRecognition();
+        }
+      }, NO_SPEECH_RESTART_INTERVAL);
     } else {
       console.error('音声認識エラー:', event.error);
       
