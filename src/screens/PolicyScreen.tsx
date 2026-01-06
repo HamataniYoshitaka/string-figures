@@ -207,7 +207,38 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
                                 </View>
                             </View>
                         </View>
+                        <View style={{marginTop: 24}}>
 
+                            <Text 
+                                maxFontSizeMultiplier={1.35}
+                                style={styles.sectionDescription}
+                            >
+                                { getLocalizedText({ 
+                                    ja: 'また、国際あやとり協会(ISFA) 日本会員の皆様には、多くの助言、提案、協力をいただきました。この場を借りてお礼申し上げます。', 
+                                    en: 'Also, we would like to express our gratitude to all members of the International String Figure Association (ISFA) in Japan for their many helpful suggestions, proposals, and cooperation.' }) 
+                                }
+                            </Text>
+                            <View style={{marginTop: 12}}>
+                                <Text 
+                                    maxFontSizeMultiplier={1.35}
+                                    style={styles.sectionDescriptionBold}
+                                >
+                                    国際あやとり協会(日本) 
+                                </Text>
+                                <View style={styles.linkContainer}>
+                                    <Text 
+                                        maxFontSizeMultiplier={1.35}
+                                        style={styles.sectionDescriptionLink} 
+                                        onPress={() => Linking.openURL('https://isfa-jp.org/')}
+                                    >
+                                        https://isfa-jp.org/
+                                    </Text>
+                                    <View style={styles.externalLinkIconContainer}>
+                                        <ExternalLinkIcon width={18} height={18} strokeColor="#57534D" />
+                                    </View>
+                                </View>
+                            </View>
+                        </View>
                     </View>
                 </View>
             </ScrollView>
