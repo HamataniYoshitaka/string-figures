@@ -36,6 +36,7 @@ interface Props {
   onAdditionalCollectionPress?: () => void;
   isAdditionalScene?: boolean;
   onPurchasePress?: (collectionId: number) => void;
+  priceString?: string;
 }
 
 export interface DetailBottomSheetRef {
@@ -55,6 +56,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
   onAdditionalCollectionPress,
   isAdditionalScene = false,
   onPurchasePress,
+  priceString,
 }, ref) => {
   const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
   const orientation = useOrientation();
@@ -310,6 +312,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                   currentLanguage={currentLanguage}
                   backgroundColor={getButtonBackgroundColor()}
                   disabled={purchasedItems.includes(item.premiumCourseId)}
+                  priceString={priceString}
                 />
               </View>
             ) : isLocked ? (

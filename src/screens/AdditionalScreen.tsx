@@ -618,6 +618,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 onPrerequisitePress={handlePrerequisitePress}
                 isAdditionalScene={true}
                 onPurchasePress={handlePurchasePress}
+                priceString={selectedItem ? priceStrings[selectedItem.premiumCourseId] : undefined}
             />
         </View>
         
