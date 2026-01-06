@@ -84,6 +84,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   // 購入済みアイテムのリスト
   const [purchasedItems, setPurchasedItems] = useState<number[]>([]);
 
+  // StringFigureCardのリフレッシュ用キー
+  const [refreshKey, setRefreshKey] = useState<number>(Date.now());
+
   // 画面幅の状態
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
 
@@ -187,6 +190,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       loadBookmarkedIds();
       loadSelectedFilters();
       loadPurchasedItems();
+      // StringFigureCardのリフレッシュ用キーを更新
+      setRefreshKey(Date.now());
       // レビューダイアログのチェックも実行
       setTimeout(() => {
         checkAndShowReview();
@@ -423,6 +428,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         calculatedHeight={calculatedHeight}
         currentLanguage={currentLanguage}
         purchasedItems={purchasedItems}
+        refreshKey={refreshKey}
         onPress={handleItemPress}
         onImageLoad={handleImageLoad}
       />

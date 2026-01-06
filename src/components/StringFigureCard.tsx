@@ -20,6 +20,7 @@ interface Props {
   disabled?: boolean;
   hideTitle?: boolean;
   purchasedItems?: number[];
+  refreshKey?: number;
   onPress: (item: StringFigure) => void;
   onImageLoad: (itemId: string, event: any) => void;
 }
@@ -32,6 +33,7 @@ const StringFigureCard: React.FC<Props> = ({
   disabled = false,
   hideTitle = false,
   purchasedItems = [],
+  refreshKey,
   onPress,
   onImageLoad,
 }) => {
@@ -57,7 +59,7 @@ const StringFigureCard: React.FC<Props> = ({
     };
 
     checkCompletion();
-  }, [item.id]);
+  }, [item.id, refreshKey]);
 
   const handlePressIn = () => {
     Animated.spring(scaleAnim, {
