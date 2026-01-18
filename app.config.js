@@ -8,7 +8,7 @@ module.exports = {
       en: './locales/en.json',
       ja: './locales/ja.json',
     },
-    version: '1.0.0',
+    version: '1.0.1',
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
