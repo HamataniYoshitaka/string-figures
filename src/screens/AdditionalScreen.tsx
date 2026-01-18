@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, Image, TouchableOpacity, ActivityIndicator, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -31,6 +31,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
     const [selectedItem, setSelectedItem] = useState<StringFigure | null>(null);
     const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
     const [priceStrings, setPriceStrings] = useState<{ [collectionId: number]: string }>({});
+    const [isPurchasing, setIsPurchasing] = useState(false);
     const bottomSheetRef = useRef<DetailBottomSheetRef>(null);
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
@@ -265,6 +266,12 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     const handlePurchasePress = async (collectionId: number) => {
+        // 購入処理中の場合は何もしない（連打防止）
+        if (isPurchasing) {
+            console.log('購入処理中です。しばらくお待ちください。');
+            return;
+        }
+        
         try {
             console.log('handlePurchasePress', collectionId);
             
@@ -273,6 +280,9 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 console.log('既に購入済みです:', collectionId);
                 return;
             }
+            
+            // ローディング開始
+            setIsPurchasing(true);
             
             // __DEV__の場合は、いきなり購入成功として処理
             if (__DEV__) {
@@ -301,6 +311,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         : `Collection ${collectionId} has been added. Continue to enjoy the world of string figures`;
                     Alert.alert(successTitle, successMessage, [{ text: 'OK', onPress: onGoBack }]);
                 }
+                setIsPurchasing(false);
                 return;
             }
             
@@ -311,6 +322,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 
                 if (!offerings.current) {
                     console.error('現在のオファリングが見つかりません');
+                    setIsPurchasing(false);
                     const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
                     const isDev = __DEV__;
                     const errorMessage = currentLanguage === 'ja'
@@ -334,6 +346,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 
                 if (!targetPackage) {
                     console.error('パッケージが見つかりません:', packageIdentifier);
+                    setIsPurchasing(false);
                     const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
                     const isDev = __DEV__;
                     const errorMessage = currentLanguage === 'ja'
@@ -384,8 +397,10 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                         : `Collection ${collectionId} has been added. Continue to enjoy the world of string figures`;
                     Alert.alert(successTitle, successMessage, [{ text: 'OK', onPress: onGoBack }]);
                 }
+                setIsPurchasing(false);
             } catch (offeringError: any) {
                 console.error('オファリング取得エラー:', offeringError);
+                setIsPurchasing(false);
                 const errorTitle = currentLanguage === 'ja' ? '購入エラー' : 'Purchase Error';
                 const errorMessage = currentLanguage === 'ja'
                     ? 'オファリング情報の取得に失敗しました。ネットワーク接続を確認してください。'
@@ -395,6 +410,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
             }
         } catch (error: any) {
             // エラーハンドリング
+            setIsPurchasing(false);
             // ユーザーが購入をキャンセルした場合（userCancelledプロパティをチェック）
             if (error.userCancelled) {
                 console.log('購入がキャンセルされました');
@@ -620,6 +636,23 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                 onPurchasePress={handlePurchasePress}
                 priceString={selectedItem ? priceStrings[selectedItem.premiumCourseId] : undefined}
             />
+
+            {/* 購入処理中のローディングオーバーレイ */}
+            <Modal
+                visible={isPurchasing}
+                transparent={true}
+                animationType="fade"
+                statusBarTranslucent={true}
+            >
+                <View style={styles.loadingOverlay}>
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color="#FFFFFF" />
+                        <Text style={styles.loadingText}>
+                            {currentLanguage === 'ja' ? '処理中...' : 'Processing...'}
+                        </Text>
+                    </View>
+                </View>
+            </Modal>
         </View>
         
     );
@@ -732,6 +765,25 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         lineHeight: 32,
         textDecorationLine: 'underline',
+    },
+    loadingOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    loadingContainer: {
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        borderRadius: 16,
+        padding: 24,
+        alignItems: 'center',
+        gap: 12,
+    },
+    loadingText: {
+        fontFamily: 'KleeOne-SemiBold',
+        fontSize: 16,
+        color: '#FFFFFF',
+        textAlign: 'center',
     },
 
 });
