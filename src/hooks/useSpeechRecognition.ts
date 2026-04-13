@@ -32,6 +32,8 @@ interface UseSpeechRecognitionReturn {
   isIntentionallyStopped: boolean;
   /** キーワード処理中かどうか（内部処理用） */
   isProcessingKeyword: boolean;
+  /** 直近の音声認識テキスト（デバッグ用） */
+  lastTranscript: string;
 }
 
 // no-speech, 及びタイマーが作動した場合の再起動インターバル（ミリ秒）
@@ -87,7 +89,8 @@ export const useSpeechRecognition = ({
   const [isSupported, setIsSupported] = useState(false);
   const [isIntentionallyStopped, setIsIntentionallyStopped] = useState(false);
   const [isProcessingKeyword, setIsProcessingKeyword] = useState(false);
-  
+  const [lastTranscript, setLastTranscript] = useState('');
+
   // 音声認識活動監視用のタイマー
   const activityTimerRef = useRef<NodeJS.Timeout | null>(null);
   // キーワード検出後の再開用タイマー
@@ -238,8 +241,10 @@ export const useSpeechRecognition = ({
   useSpeechRecognitionEvent('result', (event) => {
     // 活動監視タイマーをリセット
     resetActivityTimer();
-    
+
     const transcript = event.results[0]?.transcript || '';
+    setLastTranscript(transcript);
+
     if (transcript && !isProcessingKeyword) {
       console.log('音声認識結果:', transcript);
       
@@ -371,5 +376,6 @@ export const useSpeechRecognition = ({
     cleanup,
     isIntentionallyStopped,
     isProcessingKeyword,
+    lastTranscript,
   };
 };

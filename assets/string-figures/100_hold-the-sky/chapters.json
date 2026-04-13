@@ -13,8 +13,8 @@
     },
     {
         "subtitle": { 
-            "ja": "左親指向こうの糸を右手で持ち、左小指に時計回りで1周巻きます", 
-            "en": "With the right hand, take the far string on the left thumb and wrap it once clockwise around the left little finger." 
+            "ja": "左親指向こうの糸を右手で持ち、左小指に反時計回りで1周巻きます", 
+            "en": "With the right hand, take the far string on the left thumb and wrap it once counterclockwise around the left little finger." 
         }
     },
     {
@@ -26,8 +26,8 @@
 
     {
         "subtitle": { 
-            "ja": "左小指手前の糸を右手で持ち、左親指に反時計回りで1周巻きます", 
-            "en": "With the right hand, take the near string on the left little finger and wrap it once counterclockwise around the left thumb." 
+            "ja": "左小指手前の糸を右手で持ち、左親指に時計回りで1周巻きます", 
+            "en": "With the right hand, take the near string on the left little finger and wrap it once clockwise around the left thumb." 
         }
     },
     {

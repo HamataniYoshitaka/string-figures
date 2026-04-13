@@ -6,7 +6,7 @@
         "subtitle": { "ja": "両手の親指で、小指の向こう側の糸を下から取って引き出します", "en": "With both thumbs, pass under all the strings and pick up from below the far little-finger strings." }
     },
     {
-        "subtitle": { "ja": "左右の親指で、人差し指の手前の糸を取ります", "en": "With both thumbs, pick up the near index strings." }
+        "subtitle": { "ja": "左右の親指で、人差し指の向こう側の糸を取ります", "en": "With both thumbs, pick up the far index strings." }
     },
     {
         "subtitle": { "ja": "左右の親指で、小指と繋がっている上の糸は外さずに、親指同士を繋いでいる下の糸だけを外します", "en": "With both thumbs, keep the upper strings that run to the little fingers, and release only the lower string that runs between the thumbs." }
