@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   Animated,
   Dimensions,
   Platform,
+  Pressable,
+  ScrollView,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Video, ResizeMode } from 'expo-av';
@@ -51,8 +53,35 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
   getChapterProgress,
   isTemporarilyDisabled,
   backgroundColorAnim,
+  lastSpeechTranscript,
   // getPlaybackRateDisplay,
 }) => {
+  const [speechDebugVisible, setSpeechDebugVisible] = useState(false);
+  const titleSecretTapCountRef = useRef(0);
+  const titleSecretTapResetTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const TITLE_SECRET_TAP_WINDOW_MS = 2000;
+  const TITLE_SECRET_TAP_COUNT = 5;
+
+  const handleTitleSecretTap = () => {
+    titleSecretTapCountRef.current += 1;
+    if (titleSecretTapResetTimerRef.current) {
+      clearTimeout(titleSecretTapResetTimerRef.current);
+    }
+    titleSecretTapResetTimerRef.current = setTimeout(() => {
+      titleSecretTapCountRef.current = 0;
+      titleSecretTapResetTimerRef.current = null;
+    }, TITLE_SECRET_TAP_WINDOW_MS);
+    if (titleSecretTapCountRef.current >= TITLE_SECRET_TAP_COUNT) {
+      titleSecretTapCountRef.current = 0;
+      if (titleSecretTapResetTimerRef.current) {
+        clearTimeout(titleSecretTapResetTimerRef.current);
+        titleSecretTapResetTimerRef.current = null;
+      }
+      setSpeechDebugVisible((v) => !v);
+    }
+  };
+
   // アニメーション用のスケール値
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const bookmarkButtonScale = useRef(new Animated.Value(1)).current;
@@ -107,19 +136,25 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               <CloseIcon width={24} height={24} fillColor="#79716B" />
             </Animated.View>
           </TouchableWithoutFeedback>
-          <Text 
-            maxFontSizeMultiplier={1.35}
-            numberOfLines={1}
-            style={[
-              styles.title, 
-              { 
-                fontSize: isTablet ? 22 : 18,
-                fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
-              }
-            ]}
+          <Pressable
+            style={styles.titlePressable}
+            onPress={handleTitleSecretTap}
+            android_ripple={null}
           >
-            {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
-          </Text>
+            <Text 
+              maxFontSizeMultiplier={1.35}
+              numberOfLines={1}
+              style={[
+                styles.title, 
+                { 
+                  fontSize: isTablet ? 22 : 18,
+                  fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                }
+              ]}
+            >
+              {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
+            </Text>
+          </Pressable>
         </View>
         <View style={styles.errorContainer}>
           <Text style={styles.errorText}>Now Loading...</Text>
@@ -155,19 +190,25 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
             <CloseIcon width={24} height={24} fillColor="#79716B" />
           </Animated.View>
         </TouchableWithoutFeedback>
-        <Text 
-          maxFontSizeMultiplier={1.35}
-          numberOfLines={1}
-          style={[
-            styles.title, 
-            { 
-              fontSize: isTablet ? 22 : 18,
-              fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
-            }
-          ]}
+        <Pressable
+          style={styles.titlePressable}
+          onPress={handleTitleSecretTap}
+          android_ripple={null}
         >
-          {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
-        </Text>
+          <Text 
+            maxFontSizeMultiplier={1.35}
+            numberOfLines={1}
+            style={[
+              styles.title, 
+              { 
+                fontSize: isTablet ? 22 : 18,
+                fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+              }
+            ]}
+          >
+            {getLocalizedText({ja: stringFigure.name.ja, en: stringFigure.name.en})}
+          </Text>
+        </Pressable>
         <TouchableWithoutFeedback 
           onPress={onToggleBookmark}
           onPressIn={createPressInHandler(bookmarkButtonScale)}
@@ -308,6 +349,25 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
         </View>
       </View>
 
+      {/* 音声認識デバッグ（タイトル5連タップで表示） */}
+      {speechDebugVisible && !isDeviceLandscape && (
+        <View style={styles.speechDebugOuter}>
+          <ScrollView
+            nestedScrollEnabled
+            style={styles.speechDebugScroll}
+            contentContainerStyle={styles.speechDebugScrollContent}
+          >
+            <Text
+              maxFontSizeMultiplier={1.2}
+              selectable
+              style={styles.speechDebugText}
+            >
+              {lastSpeechTranscript || '（音声入力待ち）'}
+            </Text>
+          </ScrollView>
+        </View>
+      )}
+
       {/* 字幕エリア - デバイスがランドスケープの場合は非表示 */}
       {!isDeviceLandscape && (
         <View style={styles.subtitleContainer}>
@@ -389,13 +449,38 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0)',
     borderRadius: 20,
   },
+  titlePressable: {
+    flex: 1,
+    marginHorizontal: 16,
+    justifyContent: 'center',
+  },
   title: {
     fontFamily: 'KleeOne-SemiBold',
     flex: 1,
     fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
-    marginHorizontal: 16,
+  },
+  speechDebugOuter: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 4,
+    maxHeight: 96,
+  },
+  speechDebugScroll: {
+    maxHeight: 96,
+  },
+  speechDebugScrollContent: {
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    backgroundColor: 'rgba(100, 100, 100, 0.08)',
+    borderRadius: 8,
+  },
+  speechDebugText: {
+    fontSize: 12,
+    lineHeight: 17,
+    color: '#666',
+    fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
   },
   shareButton: {
     padding: 8,

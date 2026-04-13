@@ -79,6 +79,8 @@ export interface VideoPlayerSharedProps {
   getChapterProgress: (chapterIndex: number) => number;
   isTemporarilyDisabled: boolean;
   backgroundColorAnim: Animated.AnimatedInterpolation<string>;
+  /** 直近の音声認識テキスト（デバッグオーバーレイ用） */
+  lastSpeechTranscript: string;
 }
 
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
@@ -122,6 +124,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     start: startRecognition,
     stop: stopRecognition,
     cleanup: cleanupRecognition,
+    lastTranscript: lastSpeechTranscript,
   } = useSpeechRecognition({
     language: currentLanguage,
     onKeywordDetected: async (keyword) => {
@@ -581,6 +584,7 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     getChapterProgress,
     isTemporarilyDisabled,
     backgroundColorAnim,
+    lastSpeechTranscript,
   };
 
   // 画面向きに応じてコンポーネントを出し分け
