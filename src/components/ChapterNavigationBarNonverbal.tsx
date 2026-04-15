@@ -1,8 +1,8 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { View, StyleSheet } from 'react-native';
-import PreviousChapterButton, { PreviousChapterButtonRef } from './PreviousChapterButton';
-import ReplayButton, { ReplayButtonRef } from './ReplayButton';
-import NextChapterButton, { NextChapterButtonRef } from './NextChapterButton';
+import NonverbalPreviousChapterButton, { PreviousChapterButtonRef } from './NonverbalPreviousChapterButton';
+import NonverbalReplayButton, { ReplayButtonRef } from './NonverbalReplayButton';
+import NonverbalNextChapterButton, { NextChapterButtonRef } from './NonverbalNextChapterButton';
 import AnimatedChapterNumber from './AnimatedChapterNumber';
 import { Chapter } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
@@ -119,7 +119,7 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
       <View style={styles.navigationRow}>
         {/* まえボタン */}
         <View style={styles.buttonContainer}>
-          <PreviousChapterButton
+          <NonverbalPreviousChapterButton
             ref={previousChapterButtonRef}
             onPress={onPreviousChapter}
             currentChapterIndex={currentChapterIndex}
@@ -142,7 +142,7 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
 
         {/* もういちどボタン */}
         <View style={styles.buttonContainer}>
-          <ReplayButton
+          <NonverbalReplayButton
             ref={replayButtonRef}
             onPress={onReplay}
             currentChapterIndex={currentChapterIndex}
@@ -167,7 +167,7 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
 
         {/* つぎボタン */}
         <View style={styles.buttonContainer}>
-          <NextChapterButton
+          <NonverbalNextChapterButton
             ref={nextChapterButtonRef}
             chapters={chapters}
             onPress={isLastChapterCompleted ? onComplete : onNextChapter}
