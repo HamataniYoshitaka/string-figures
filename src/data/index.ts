@@ -23,7 +23,8 @@ export const stringFigures: StringFigure[] = [
       en: 'First, learn how to tie the strings used for string figures.\nThis introduction will focus on the simple and small "Fisherman\'s Knot". It is recommended to prepare various lengths of strings to use them appropriately.' 
     },
     premiumCourseId: 0, 
-    data: null
+    data: null,
+    nonverbalFormat: true
   },
   {
     id: '60',
@@ -36,7 +37,8 @@ export const stringFigures: StringFigure[] = [
       en: 'The "Position 1" is the most basic position for most string figures.' 
     },
     premiumCourseId: 0, 
-    data: null
+    data: null,
+    nonverbalFormat: false
   },
   {
     id: '61',
@@ -46,7 +48,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['61_opening-a'],
     description: { ja: '世界中のあやとりの多くが、この「人差し指の構え」から始まります', en: 'Most string figures in the world start with this "Opening A".' },
     premiumCourseId: 0, 
-    data: null
+    data: null,
+    nonverbalFormat: false
   },
   {
     id: '62',
@@ -59,7 +62,8 @@ export const stringFigures: StringFigure[] = [
       en: 'Most string figures in Japan start with this "Japanese Opening".' 
     },
     premiumCourseId: 0, 
-    data: null
+    data: null,
+    nonverbalFormat: false
   },
   {
     id: '105',
@@ -72,7 +76,8 @@ export const stringFigures: StringFigure[] = [
       en: 'This section introduces a simple way to neatly fold a string figure loop.' 
     },
     premiumCourseId: 0, 
-    data: null
+    data: null,
+    nonverbalFormat: false
   },
   {
     id: '1',
@@ -82,7 +87,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['1_star'],
     description: { ja: '手のひらにかわいい星ができます。短め、太めのひもを使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
     premiumCourseId: 0, 
-    data: null
+    data: null,
+    nonverbalFormat: false
   },
   {
     id: '4',
@@ -97,7 +103,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Volcan”\nR. Martínez-Crovetto\n<i>Juegos de Hilo de los Aborígenes del Norte de Patagonia</i> (1970)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '78',
@@ -115,7 +122,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Bridge, Turtle, and Plane”\n野口広\n<i>あやとり 続々</i> (1975)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
 
   {
@@ -135,7 +143,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['81']
+    relatedFigures: ['81'],
+    nonverbalFormat: false
   },
   {
     id: '8',
@@ -156,7 +165,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Toemi”\nJ. C. Andersen\n <i>Māori String Figures</i> (1927)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '13',
@@ -173,7 +183,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Pitching a Tent”\nJ. Teit\n <i>The Thompson Indians of British Columbia</i> (1900)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '22',
@@ -191,7 +202,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Casting the Fish-Spear”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '25',
@@ -206,7 +218,8 @@ export const stringFigures: StringFigure[] = [
       source: null,
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '89',
@@ -223,7 +236,8 @@ export const stringFigures: StringFigure[] = [
       source: "“もちつき”\n有木昭久, 湯浅清四郎\n<i>楽しいあやとり遊び</i> (1973)",
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '95',
@@ -241,7 +255,8 @@ export const stringFigures: StringFigure[] = [
       source: null,
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
 
   {
@@ -260,7 +275,8 @@ export const stringFigures: StringFigure[] = [
       source: '“One Eye”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '36',
@@ -278,7 +294,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Osage Two Diamonds”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   { 
     id: '37',
@@ -296,7 +313,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Three Eyes”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '2',
@@ -314,7 +332,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Osage Diamonds”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '91',
@@ -332,7 +351,8 @@ export const stringFigures: StringFigure[] = [
       source: null,
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '64',
@@ -350,7 +370,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Aksatquligaciaq (Celui qui a le haut du bras)”\nG. Mary-Rousselière\n <i>Les Jeux de Ficelle des Arviligjuarmiut</i> (1969)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
 
   {
@@ -369,7 +390,8 @@ export const stringFigures: StringFigure[] = [
       source: null,
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '90',
@@ -387,7 +409,8 @@ export const stringFigures: StringFigure[] = [
       source: null,
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
 
   {
@@ -407,7 +430,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['41']
+    relatedFigures: ['41'],
+    nonverbalFormat: false
   },
   {
     id: '7',
@@ -425,7 +449,8 @@ export const stringFigures: StringFigure[] = [
       source: '“でんでん虫”\n有木昭久, 湯浅清四郎\n <i>世界のあやとり傑作選</i> (1974)',
       author: { ja: '有木昭久', en: 'ARIKI Teruhisa' },
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '10',
@@ -435,7 +460,8 @@ export const stringFigures: StringFigure[] = [
     ...ASSETS_MAP['10_magic-fingers'],
     description: { ja: '世界中で親しまれているあやとりのトリックです', en: 'A world-renowned string figure trick.' },
     premiumCourseId: 0, 
-    data: null
+    data: null,
+    nonverbalFormat: false
   },
   {
     id: '11',
@@ -453,7 +479,8 @@ export const stringFigures: StringFigure[] = [
       source: '“a Parrot\'s Tail”\nW. C. Farabee\n <i>The Central Arawaks</i> (1918)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '12',
@@ -471,7 +498,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Nine Eyes”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '14',
@@ -489,7 +517,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Ulou”\nS. Rydén\n <i>South American String Figures</i> (1934)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '20',
@@ -507,7 +536,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Drum”\nW. Wirt, M. Sherman, M. Mitchell\n <i>String Games of the Navajo : 1999</i> (2000)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '104',
@@ -525,7 +555,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Baby Being Born”\nD. S. Davidson\n <i>Aboriginal Australian String Figures</i> (1941)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
 
   {
@@ -543,7 +574,8 @@ export const stringFigures: StringFigure[] = [
       source: null,
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '3',
@@ -556,7 +588,8 @@ export const stringFigures: StringFigure[] = [
       en: 'A beautiful string figure with a radial shape. By doubling the string, you can make it even more beautiful.' 
     },
     premiumCourseId: 1, // 有料コース1
-    data: null
+    data: null,
+    nonverbalFormat: false
   },
   {
     id: '16',
@@ -574,7 +607,8 @@ export const stringFigures: StringFigure[] = [
       source: '“松葉”\n有木昭久, 湯浅清四郎\n <i>楽しいあやとり遊び</i> (1973)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '88',
@@ -592,7 +626,8 @@ export const stringFigures: StringFigure[] = [
       source: null,
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
 
   {
@@ -610,7 +645,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Salztrichter”\nG. Tessmann\n <i>Die Kinderspiele der Pangwe</i> (1912)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
     },
   {
     id: '18',
@@ -625,7 +661,8 @@ export const stringFigures: StringFigure[] = [
       source: '“富士山”\n夏堀謹二郎\n <i>日本の綾取</i> (1986)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
     },
   {
     id: '19',
@@ -644,7 +681,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['93']
+    relatedFigures: ['93'],
+    nonverbalFormat: false
   },
   {
     id: '21',
@@ -662,7 +700,8 @@ export const stringFigures: StringFigure[] = [
       source: '“KIKUSUI”\nSAITO T. (BISFA 11)\n <i>Ayatori: The Traditional String Figures of Japan</i> (2004)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '23',
@@ -677,7 +716,8 @@ export const stringFigures: StringFigure[] = [
       source: null,
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '24',
@@ -695,7 +735,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Shooting Star III”\nSHISHIDO Yukio\n<i>Modern String Figures — (BISFA 4) </i> (1997)',
       author: { ja: 'SHISHIDO Yukio', en: 'SHISHIDO Yukio' },
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '26',
@@ -713,7 +754,8 @@ export const stringFigures: StringFigure[] = [
       source: '“One Eye, Ahamaka, or Palai Huna Nui (hammock, extreme shyness)”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '27',
@@ -731,7 +773,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Weoweo”\nL. A. Dickey\n <i>String Figures from Hawaii</i> (1928)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '28',
@@ -749,7 +792,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Fa\'e Papa (The House of Atanua)”\nW. C. Handy\n <i>String Figures from the Marquesas and Society Islands</i> (1925)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
     },
   {
     id: '29',
@@ -767,7 +811,8 @@ export const stringFigures: StringFigure[] = [
       source: '“No Name”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
     },
   {
     id: '30',
@@ -785,7 +830,8 @@ export const stringFigures: StringFigure[] = [
       source: '“ほし”\nさいとうたま\n <i>あやとりいととり 1</i> (1982)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '31',
@@ -803,7 +849,8 @@ export const stringFigures: StringFigure[] = [
       source: '“はたおり”\n有木昭久, 湯浅清四郎\n <i>楽しいあやとり遊び</i> (1973)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '32',
@@ -822,7 +869,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['33']
+    relatedFigures: ['33'],
+    nonverbalFormat: false
   },
   {
     id: '33',
@@ -842,7 +890,8 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     prerequisite: '32',
-    relatedFigures: ['32']
+    relatedFigures: ['32'],
+    nonverbalFormat: false
   },
   { 
     id: '38',
@@ -861,7 +910,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['34', '80']
+    relatedFigures: ['34', '80'],
+    nonverbalFormat: false
   },
   {
     id: '34',
@@ -880,7 +930,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['38', '80']
+    relatedFigures: ['38', '80'],
+    nonverbalFormat: false
   },
   {
     id: '39',
@@ -898,7 +949,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Die Sonne (e kuan)“\nP. Hambruch\n<i>Nauru</i> (1914)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
     },
   {
     id: '40',
@@ -916,7 +968,8 @@ export const stringFigures: StringFigure[] = [
       source: '“山の上のお月さん”\nさいとうたま\n<i>あやとりいととり 2</i> (1982)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '45',
@@ -934,7 +987,8 @@ export const stringFigures: StringFigure[] = [
       source: '“あみ・お琴・ハンモック・バリカン”\n野口広\n<i>あやとり</i> (1973)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '42',
@@ -953,7 +1007,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['56']
+    relatedFigures: ['56'],
+    nonverbalFormat: false
   },
 
   { 
@@ -973,7 +1028,8 @@ export const stringFigures: StringFigure[] = [
       author: { ja: '夏堀謹二郎', en: 'NATSUBORI Kinjiro' },
       references: null
     },
-    relatedFigures: ['9']
+    relatedFigures: ['9'],
+    nonverbalFormat: false
   },
   {
     id: '43',
@@ -991,7 +1047,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Ile Ubde (a parrot cage)”\nJ. Parkinson\n<i>Yöruba String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
     },
   {
     id: '44',
@@ -1008,7 +1065,8 @@ export const stringFigures: StringFigure[] = [
       source: '“A Butterfly”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '46',
@@ -1026,7 +1084,8 @@ export const stringFigures: StringFigure[] = [
       source: '“A Rabbit”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '47',
@@ -1043,7 +1102,8 @@ export const stringFigures: StringFigure[] = [
       source: '“かめ”\n野口広\n<i>あやとり 続々</i> (1975)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '48',
@@ -1058,7 +1118,8 @@ export const stringFigures: StringFigure[] = [
       source: '“A Snow Shovel”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
     },
   {
     id: '49',
@@ -1077,7 +1138,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['54']
+    relatedFigures: ['54'],
+    nonverbalFormat: false
   },
   {
     id: '50',
@@ -1096,7 +1158,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['71']
+    relatedFigures: ['71'],
+    nonverbalFormat: false
   },
   {
     id: '51',
@@ -1114,7 +1177,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Sea Gull (t\'keyack)”\nG. B. Gordon\n<i>Notes on the Western Eskimo</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '52',
@@ -1132,7 +1196,8 @@ export const stringFigures: StringFigure[] = [
       source: '“A Mouth”\nC. F. Jayne\n<i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '53',
@@ -1150,7 +1215,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Two Fawns”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '54',
@@ -1169,7 +1235,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['49']
+    relatedFigures: ['49'],
+    nonverbalFormat: false
   },
   {
     id: '55',
@@ -1187,7 +1254,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Parrot”\nF. E. Lutz\n<i>String-figures from the Patomana Indians of British Guiana</i> (1912)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '56',
@@ -1206,7 +1274,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['42']
+    relatedFigures: ['42'],
+    nonverbalFormat: false
   },
   {
     id: '57',
@@ -1224,7 +1293,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Lightning”\nA. C. Haddon\n<i>A Few American String Figures and Tricks</i> (1903)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '58',
@@ -1242,7 +1312,8 @@ export const stringFigures: StringFigure[] = [
       source: '“casa abandonada”\nJ. Braunstein, I. Balducci, M. Reca, O. Sturzenegger\n<i>Juegos y Lenguajes de Hilo en el Gran Chaco</i>(2017)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '109',
@@ -1261,6 +1332,7 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
+    nonverbalFormat: false
   },
 
   {
@@ -1280,7 +1352,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['70']
+    relatedFigures: ['70'],
+    nonverbalFormat: false
   },
   {
     id: '65',
@@ -1299,7 +1372,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['101']
+    relatedFigures: ['101'],
+    nonverbalFormat: false
   },
   {
     id: '66',
@@ -1317,7 +1391,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Mouse Face”\nA. Reichert (BISFA 9)\n<i>Some String Figures from Modern Africa : 2000</i> (2002)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '67',
@@ -1335,7 +1410,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Island of Moa”\nK. Haddon\n<i>String Games for Beginners</i> (1934)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '68',
@@ -1353,7 +1429,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Laia Fruit, the Laia Flower”\nW. W. R. Ball\n<i>String Figures 3rd ed.</i> (1929)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '69',
@@ -1371,7 +1448,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Moon Between the Mountains”\nD. Jenness\n<i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '70',
@@ -1391,7 +1469,8 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     prerequisite: '59',
-    relatedFigures: ['59']
+    relatedFigures: ['59'],
+    nonverbalFormat: false
   },
   {
     id: '71',
@@ -1410,7 +1489,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['50']
+    relatedFigures: ['50'],
+    nonverbalFormat: false
   },
   {
     id: '72',
@@ -1428,7 +1508,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Spindle”\nF. D. McCarthy 1960\n <i>The String Figures of Yirrkalla</i> (1960)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '73',
@@ -1445,7 +1526,8 @@ export const stringFigures: StringFigure[] = [
       source: '“A Man and a Bed”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '74',
@@ -1464,7 +1546,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['75']
+    relatedFigures: ['75'],
+    nonverbalFormat: false
   },
   {
     id: '75',
@@ -1484,7 +1567,8 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     prerequisite: '74',
-    relatedFigures: ['74']
+    relatedFigures: ['74'],
+    nonverbalFormat: false
   },
   {
     id: '76',
@@ -1502,7 +1586,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Sun”\nG. A. V. Stanley 1926\n <i>String figures of the North Queensland Aborigines, part 1</i> (1926)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '77',
@@ -1520,7 +1605,8 @@ export const stringFigures: StringFigure[] = [
       source: '“t\'afoloc (muchos pecaríes)”\nJ. Braunstein\n <i>Figuras y Juegos de Hilos de los Indios Maká </i> (1992)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '79',
@@ -1538,7 +1624,8 @@ export const stringFigures: StringFigure[] = [
       source: '“OMAMORI”\nSAITO T. (BISFA 11)\n <i>Ayatori: The Traditional String Figures of Japan : 1970-99</i> (2006)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '80',
@@ -1557,7 +1644,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['38', '34']
+    relatedFigures: ['38', '34'],
+    nonverbalFormat: false
   },
   {
     id: '81',
@@ -1576,7 +1664,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['5']
+    relatedFigures: ['5'],
+    nonverbalFormat: false
   },
   {
     id: '82',
@@ -1594,7 +1683,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Storm Clouds”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '83',
@@ -1612,7 +1702,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Children (a series of dancers, the last one carrying the drum)”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '84',
@@ -1631,7 +1722,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['101']
+    relatedFigures: ['101'],
+    nonverbalFormat: false
   },
   {
     id: '86',
@@ -1649,7 +1741,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Making Fire and Rope Bridge”\nSHISHIDO Y., NOGUCHI H. (BSFA 14)\n <i>Some String Figures of Highland People in Papua New Guinea : 1984</i> (1987)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '87',
@@ -1667,7 +1760,8 @@ export const stringFigures: StringFigure[] = [
       source: '“A Palm Tree”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '93',
@@ -1686,7 +1780,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['19']
+    relatedFigures: ['19'],
+    nonverbalFormat: false
   },
   {
     id: '96',
@@ -1704,7 +1799,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Coral”\nC. F. Jayne\n <i>String Figures</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '97',
@@ -1722,7 +1818,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Barbed Spears (Miral Kaiperi)”\nK. Haddon\n <i>Some Australian String Figures</i> (1918)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '98',
@@ -1740,7 +1837,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Fish Trap”\nF. E. Lutz\n <i>String-figures from the Patomana Indians of British Guiana</i> (1912)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '99',
@@ -1758,7 +1856,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Raven”\nD. Jenness\n <i>Eskimo String Figures</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '100',
@@ -1776,7 +1875,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Amet Dedogo Oeron (Holding up the sky)”\nH. C. Maude\n<i>The String Figures of Nauru Island</i> (1971)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '101',
@@ -1795,7 +1895,8 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    relatedFigures: ['65', '84']
+    relatedFigures: ['65', '84'],
+    nonverbalFormat: false
   },
   // {
   //   id: '102',
@@ -1831,7 +1932,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Two Ptarmigans”\nG. B. Gordon\n <i>Notes on the Western Eskimo</i> (1906)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '106',
@@ -1849,7 +1951,8 @@ export const stringFigures: StringFigure[] = [
       source: '“A Man (He Kanaka)”\nJ. S. Emerson\n <i>Hawaiian String Games</i> (1924)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '108',
@@ -1867,7 +1970,8 @@ export const stringFigures: StringFigure[] = [
       source: '“The Toad”\nF. E. Lutz\n <i>String-figures from the Patomana Indians of British Guiana</i> (1912)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   {
     id: '110',
@@ -1885,7 +1989,8 @@ export const stringFigures: StringFigure[] = [
       source: '“Bo Kabenga”\nH. C. & H. E. Maude\n <i>String-Figures from the Gilbert Islands</i> (1958)',
       author: null,
       references: null
-    }
+    },
+    nonverbalFormat: false
   },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
@@ -1897,6 +2002,7 @@ export const stringFigures: StringFigure[] = [
     description: { ja: 'このアプリの操作方法の紹介です', en: 'Introduction to the operation of this app.' },
     premiumCourseId: 0,
     directNavigationDestination: 'Intro',
-    data: null
+    data: null,
+    nonverbalFormat: false
   },
 ];

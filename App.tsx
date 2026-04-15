@@ -19,6 +19,7 @@ import IntroVoiceScreen from './src/screens/IntroVoiceScreen';
 import IntroErrorScreen from './src/screens/IntroErrorScreen';  
 import HomeScreen from './src/screens/HomeScreen';
 import VideoPlayerScreen from './src/screens/VideoPlayerScreen';
+import NonverbalVideoPlayerScreen from './src/screens/NonverbalVideoPlayerScreen';
 import IntroCompleteScreen from './src/screens/IntroCompleteScreen';
 import AdditionalScreen from './src/screens/AdditionalScreen';
 import PolicyScreen from './src/screens/PolicyScreen';
@@ -113,6 +114,10 @@ export default function App() {
               options={{
                 gestureEnabled: true,
               }}
+            />
+            <Stack.Screen
+              name="NonverbalVideoPlayer"
+              component={NonverbalVideoPlayerScreen}
             />
             <Stack.Screen name="Additional" component={AdditionalScreen} />
             <Stack.Screen name="Policy" component={PolicyScreen} />
