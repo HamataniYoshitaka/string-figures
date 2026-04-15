@@ -251,76 +251,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               onPlaybackStatusUpdate={onPlaybackStatusUpdate}
               onLoad={onVideoLoad}
             />
-            {/* 字幕エリア - 動画の上に重ねて表示 */}
-            {isTablet && isDeviceLandscape && (
-              <View style={styles.subtitleContainerTabletLandscape}>
-                <View style={styles.subtitleStackTabletLandscape} pointerEvents="none">
-                  {/* 影だけを同じ位置に重ねる（回数で濃さ調整） */}
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[styles.subtitleTextTabletLandscape, styles.subtitleShadowTabletLandscape]}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-
-                  {/* 本体テキスト */}
-                  <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={styles.subtitleTextTabletLandscape}
-                  >
-                    {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-                  </Text>
-                </View>
-              </View>
-            )}
           </View>
         </View>
 
@@ -340,21 +270,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 {lastSpeechTranscript || '（音声入力待ち）'}
               </Text>
             </ScrollView>
-          </View>
-        )}
-
-        {/* 字幕エリア - デバイスがランドスケープの場合は非表示 */}
-        {!isDeviceLandscape && (
-          <View style={styles.subtitleContainer}>
-            <Text
-              maxFontSizeMultiplier={1.25}
-              style={[
-                { fontSize: isTablet ? 19 : 16 },
-                styles.subtitleText,
-              ]}
-            >
-              {getLocalizedText(chapters[currentChapterIndex].subtitle)}
-            </Text>
           </View>
         )}
 
@@ -495,51 +410,6 @@ const styles = StyleSheet.create({
   },
   speedButtonTopLeft: {
     borderTopLeftRadius: 0,
-  },
-  subtitleContainerTabletLandscape: {
-    position: 'absolute',
-    bottom: 0,
-    left: 20,
-    right: 20,
-    backgroundColor: 'transparent',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  subtitleStackTabletLandscape: {
-    position: 'relative',
-    alignItems: 'center',
-  },
-  subtitleTextTabletLandscape: {
-    fontSize: 18,
-    color: 'white',
-    textAlign: 'center',
-    lineHeight: 24,
-    fontWeight: '500',
-    textShadowColor: 'rgba(0, 0, 0, 1)',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 5,
-    fontFamily: 'KleeOne-SemiBold',
-  },
-  subtitleShadowTabletLandscape: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    textShadowColor: 'rgba(60, 60, 60, 1)',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 5,
-  },
-  subtitleContainer: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingVertical: 24,
-    justifyContent: 'center',
-  },
-  subtitleText: {
-    fontFamily: 'KleeOne-Regular',
-    color: '#333',
-    textAlign: 'center',
-    lineHeight: 24,
-    fontWeight: '500',
   },
   controlsContainer: {
     paddingHorizontal: 24,
