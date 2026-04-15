@@ -89,7 +89,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
 
   const balloonBackgroundColor = balloonColorAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
+    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(255, 98, 63, 0.5)'],
   });
   const pressTranslate = pressAnim.interpolate({
     inputRange: [0, 1],
@@ -119,7 +119,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
             <Animated.View
               style={[
                 styles.floatingButton,
-                { transform: [{ translateX: pressTranslate }, { translateY: pressTranslate }] },
+                { transform: [{ translateX: isDisabled ? 4 : pressTranslate }, { translateY: isDisabled ? 4 : pressTranslate }] },
               ]}
             >
               <CheckIcon
@@ -136,7 +136,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
                 styles.floatingButton,
                 { paddingLeft: 2 },
                 isDisabled && styles.disabledButton,
-                { transform: [{ translateX: pressTranslate }, { translateY: pressTranslate }] },
+                { transform: [{ translateX: isDisabled ? 4 : pressTranslate }, { translateY: isDisabled ? 4 : pressTranslate }] },
               ]}
             >
               <ArrowRightIcon
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#c2410c',
+    backgroundColor: '#FF623F',
   },
   shadowCircle: {
     position: 'absolute',

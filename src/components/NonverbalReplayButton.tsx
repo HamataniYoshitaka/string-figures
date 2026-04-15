@@ -25,7 +25,7 @@ const NonverbalReplayButton = forwardRef<ReplayButtonRef, NonverbalReplayButtonP
   isTemporarilyDisabled = false,
 }, ref) => {
   const isDisabled = (currentChapterIndex === 0 && playbackPosition === 0) || isTemporarilyDisabled;
-  const [scaleAnim] = useState(new Animated.Value(1));
+  const [pressAnim] = useState(new Animated.Value(0));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));
   const [balloonColorAnim] = useState(new Animated.Value(0));
@@ -107,8 +107,8 @@ const NonverbalReplayButton = forwardRef<ReplayButtonRef, NonverbalReplayButtonP
 
   const handlePressIn = () => {
     if (!isDisabled) {
-      Animated.spring(scaleAnim, {
-        toValue: 0.95,
+      Animated.spring(pressAnim, {
+        toValue: 1,
         useNativeDriver: true,
         tension: 300,
         friction: 8,
@@ -147,8 +147,8 @@ const NonverbalReplayButton = forwardRef<ReplayButtonRef, NonverbalReplayButtonP
 
   const handlePressOut = () => {
     if (!isDisabled) {
-      Animated.spring(scaleAnim, {
-        toValue: 1,
+      Animated.spring(pressAnim, {
+        toValue: 0,
         useNativeDriver: true,
       }).start();
 
@@ -167,7 +167,11 @@ const NonverbalReplayButton = forwardRef<ReplayButtonRef, NonverbalReplayButtonP
 
   const balloonColor = balloonColorAnim.interpolate({
     inputRange: [0, 1],
-    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
+    outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(255, 98, 63, 0.5)'],
+  });
+  const pressTranslate = pressAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 4],
   });
 
   return (
@@ -179,6 +183,7 @@ const NonverbalReplayButton = forwardRef<ReplayButtonRef, NonverbalReplayButtonP
     >
       <View style={styles.controlButton}>
         <View style={styles.buttonContainer}>
+          <View style={[styles.shadowCircle, isDisabled && styles.disabledButton]} />
           <Animated.View
             style={[
               styles.ripple,
@@ -192,7 +197,7 @@ const NonverbalReplayButton = forwardRef<ReplayButtonRef, NonverbalReplayButtonP
             style={[
               styles.floatingButton,
               isDisabled && styles.disabledButton,
-              { transform: [{ scale: scaleAnim }] },
+              { transform: [{ translateX: isDisabled ? 4 : pressTranslate }, { translateY: isDisabled ? 4 : pressTranslate }] },
             ]}
           >
             <View style={styles.progressContainer}>
@@ -281,7 +286,16 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#c2410c',
+    backgroundColor: '#FF623F',
+  },
+  shadowCircle: {
+    position: 'absolute',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#000',
+    left: 4,
+    top: 4,
   },
   floatingButton: {
     width: 48,
@@ -291,14 +305,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
   },
   progressContainer: {
     position: 'absolute',
