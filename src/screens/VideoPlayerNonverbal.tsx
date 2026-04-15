@@ -13,12 +13,16 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
+import Svg, { Path } from 'react-native-svg';
 import { CloseIcon, BookmarkIcon } from '../components/icons';
 import ChapterNavigationBarNonverbal from '../components/ChapterNavigationBarNonverbal';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { CHAPTER_VIDEOS } from '../data/chapterVideos';
+
+const VIDEO_PADDING_LARGE = 8;
+const VIDEO_PADDING_COMPACT = 36;
 
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -48,6 +52,9 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   lastSpeechTranscript,
 }) => {
   const [speechDebugVisible, setSpeechDebugVisible] = useState(false);
+  // scale ではなく左右パディングで見た目サイズを切り替える
+  const [topVideoCompact] = useState(false);
+  const [bottomVideoCompact] = useState(true);
   const secondaryVideoRef = useRef<Video>(null);
   const titleSecretTapCountRef = useRef(0);
   const titleSecretTapResetTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -124,8 +131,14 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
+    const fixedHeaderBackgroundHeight = insets.top + (isTablet ? 92 : 84);
     return (
       <Animated.View style={{ flex: 1, backgroundColor: backgroundColorAnim }}>
+        <View pointerEvents="none" style={styles.fixedHeaderBackground}>
+          <Svg width="100%" height={fixedHeaderBackgroundHeight} viewBox="0 0 428 86" preserveAspectRatio="none">
+            <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill="#9BB262" />
+          </Svg>
+        </View>
         <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
           <View style={styles.header}>
             <TouchableWithoutFeedback
@@ -178,8 +191,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     }
   };
 
+  const fixedHeaderBackgroundHeight = insets.top + (isTablet ? 92 : 84);
+
   return (
     <Animated.View style={{ flex: 1, backgroundColor: backgroundColorAnim }}>
+      <View pointerEvents="none" style={styles.fixedHeaderBackground}>
+        <Svg width="100%" height={fixedHeaderBackgroundHeight} viewBox="0 0 428 86" preserveAspectRatio="none">
+          <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill="#9BB262" />
+        </Svg>
+      </View>
       <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
         <View style={styles.header}>
           <TouchableWithoutFeedback
@@ -238,7 +258,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         </View>
 
         <View style={styles.videoCenterContainer}>
-          {/* 動画エリア（上下2枚・同一ソース。どちらも scale:1 で表示） */}
+          {/* 動画エリア（上下2枚・同一ソース。paddingHorizontal をフラグ連動で切替） */}
           <View
             style={[
               styles.videoArea,
@@ -249,11 +269,17 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               },
             ]}
           >
-            <View style={[styles.videoRow, styles.videoRowTop]}>
+            <View
+              style={[
+                styles.videoRow,
+                {
+                  paddingHorizontal: topVideoCompact ? VIDEO_PADDING_COMPACT : VIDEO_PADDING_LARGE,
+                },
+              ]}
+            >
               <View
                 style={[
                   styles.videoPlayer,
-                  !isTablet && { borderRadius: 0 },
                 ]}
               >
                 <Video
@@ -272,11 +298,17 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 />
               </View>
             </View>
-            <View style={[styles.videoRow, styles.videoRowBottom]}>
+            <View
+              style={[
+                styles.videoRow,
+                {
+                  paddingHorizontal: bottomVideoCompact ? VIDEO_PADDING_COMPACT : VIDEO_PADDING_LARGE,
+                },
+              ]}
+            >
               <View
                 style={[
                   styles.videoPlayer,
-                  !isTablet && { borderRadius: 0 },
                 ]}
               >
                 <Video
@@ -342,6 +374,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: Platform.OS === 'android' ? 16 : 0,
     backgroundColor: '#FFF9F0',
+    zIndex: 1,
+  },
+  fixedHeaderBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 0,
+    overflow: 'hidden',
   },
   errorContainer: {
     flex: 1,
@@ -426,12 +467,6 @@ const styles = StyleSheet.create({
     minHeight: 0,
     justifyContent: 'center',
   },
-  videoRowTop: {
-    paddingHorizontal: 8,
-  },
-  videoRowBottom: {
-    paddingHorizontal: 36,
-  },
   videoAreaTabletLandscape: {
     paddingTop: 0,
     flex: 1,
@@ -443,6 +478,8 @@ const styles = StyleSheet.create({
   videoPlayer: {
     aspectRatio: 16 / 9,
     backgroundColor: '#000',
+    borderWidth: 2,
+    borderColor: '#292524',
     borderRadius: 12,
     overflow: 'hidden',
   },
