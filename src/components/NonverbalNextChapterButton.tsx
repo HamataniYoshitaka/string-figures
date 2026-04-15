@@ -26,15 +26,15 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
   isTemporarilyDisabled = false,
 }, ref) => {
   const isDisabled = (currentChapterIndex === chapters.length - 1 && !isLastChapterCompleted) || isTemporarilyDisabled;
-  const [scaleAnim] = useState(new Animated.Value(1));
+  const [pressAnim] = useState(new Animated.Value(0));
   const [rippleAnim] = useState(new Animated.Value(0));
   const [rippleOpacity] = useState(new Animated.Value(0));
   const [balloonColorAnim] = useState(new Animated.Value(0));
 
   const handlePressIn = () => {
     if (!isDisabled) {
-      Animated.spring(scaleAnim, {
-        toValue: 0.95,
+      Animated.spring(pressAnim, {
+        toValue: 1,
         useNativeDriver: true,
         tension: 300,
         friction: 8,
@@ -69,8 +69,8 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
 
   const handlePressOut = () => {
     if (!isDisabled) {
-      Animated.spring(scaleAnim, {
-        toValue: 1,
+      Animated.spring(pressAnim, {
+        toValue: 0,
         useNativeDriver: true,
       }).start();
 
@@ -91,6 +91,10 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
     inputRange: [0, 1],
     outputRange: ['rgba(209, 200, 194, 0.5)', 'rgba(194, 65, 12, 0.5)'],
   });
+  const pressTranslate = pressAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 4],
+  });
 
   return (
     <TouchableWithoutFeedback
@@ -101,6 +105,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
     >
       <View style={styles.controlButton}>
         <View style={styles.buttonContainer}>
+          <View style={[styles.shadowCircle, isDisabled && styles.disabledButton]} />
           <Animated.View
             style={[
               styles.ripple,
@@ -114,7 +119,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
             <Animated.View
               style={[
                 styles.floatingButton,
-                { transform: [{ scale: scaleAnim }] },
+                { transform: [{ translateX: pressTranslate }, { translateY: pressTranslate }] },
               ]}
             >
               <CheckIcon
@@ -131,7 +136,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
                 styles.floatingButton,
                 { paddingLeft: 2 },
                 isDisabled && styles.disabledButton,
-                { transform: [{ scale: scaleAnim }] },
+                { transform: [{ translateX: pressTranslate }, { translateY: pressTranslate }] },
               ]}
             >
               <ArrowRightIcon
@@ -192,6 +197,15 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     backgroundColor: '#c2410c',
   },
+  shadowCircle: {
+    position: 'absolute',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#000',
+    left: 4,
+    top: 4,
+  },
   floatingButton: {
     width: 48,
     height: 48,
@@ -201,14 +215,6 @@ const styles = StyleSheet.create({
     borderColor: '#44403c',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 4,
   },
   balloonContainer: {
     position: 'absolute',
