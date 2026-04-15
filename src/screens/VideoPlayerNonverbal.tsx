@@ -12,7 +12,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Video, ResizeMode } from 'expo-av';
+import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import { CloseIcon, BookmarkIcon } from '../components/icons';
 import ChapterNavigationBarNonverbal from '../components/ChapterNavigationBarNonverbal';
 
@@ -48,6 +48,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   lastSpeechTranscript,
 }) => {
   const [speechDebugVisible, setSpeechDebugVisible] = useState(false);
+  const secondaryVideoRef = useRef<Video>(null);
   const titleSecretTapCountRef = useRef(0);
   const titleSecretTapResetTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -103,6 +104,22 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       tension: 300,
       friction: 8,
     }).start();
+  };
+
+  const chapterVideoSource = stringFigure
+    ? CHAPTER_VIDEOS[stringFigure.directory]?.[currentChapterIndex + 1]
+    : undefined;
+
+  const handleDualPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+    onPlaybackStatusUpdate(status);
+    if (!secondaryVideoRef.current || !status.isLoaded) return;
+    const positionMillis = status.positionMillis ?? 0;
+    void secondaryVideoRef.current.setPositionAsync(positionMillis);
+    if (status.isPlaying) {
+      void secondaryVideoRef.current.playAsync();
+    } else {
+      void secondaryVideoRef.current.pauseAsync();
+    }
   };
 
   // stringFigureが未定義の場合の早期リターン
@@ -220,38 +237,65 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
           </TouchableWithoutFeedback>
         </View>
 
-        {/* 動画エリア */}
-        <View
-          style={[
-            styles.videoArea,
-            !isTablet && { paddingHorizontal: 0 },
-            (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape,
-          ]}
-        >
+        <View style={styles.videoCenterContainer}>
+          {/* 動画エリア（上下2枚・同一ソース。どちらも scale:1 で表示） */}
           <View
             style={[
-              styles.videoPlayer,
-              !isTablet && { borderRadius: 0 },
-              (isTablet && isDeviceLandscape) && { height: Dimensions.get('window').height * 0.63 },
+              styles.videoArea,
+              !isTablet && { paddingHorizontal: 0 },
+              (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape,
+              (isTablet && isDeviceLandscape) && {
+                maxHeight: Dimensions.get('window').height * 0.63,
+              },
             ]}
           >
-            <Video
-              key={`chapter-${currentChapterIndex}`}
-              ref={videoRef}
-              source={CHAPTER_VIDEOS[stringFigure.directory]?.[currentChapterIndex + 1]}
-              style={styles.video}
-              resizeMode={ResizeMode.COVER}
-              shouldPlay={false}
-              isLooping={false}
-              isMuted={true}
-              useNativeControls={false}
-              rate={playbackRate}
-              onPlaybackStatusUpdate={onPlaybackStatusUpdate}
-              onLoad={onVideoLoad}
-            />
+            <View style={[styles.videoRow, styles.videoRowTop]}>
+              <View
+                style={[
+                  styles.videoPlayer,
+                  !isTablet && { borderRadius: 0 },
+                ]}
+              >
+                <Video
+                  key={`chapter-${currentChapterIndex}-primary`}
+                  ref={videoRef}
+                  source={chapterVideoSource}
+                  style={styles.video}
+                  resizeMode={ResizeMode.COVER}
+                  shouldPlay={false}
+                  isLooping={false}
+                  isMuted={true}
+                  useNativeControls={false}
+                  rate={playbackRate}
+                  onPlaybackStatusUpdate={handleDualPlaybackStatusUpdate}
+                  onLoad={onVideoLoad}
+                />
+              </View>
+            </View>
+            <View style={[styles.videoRow, styles.videoRowBottom]}>
+              <View
+                style={[
+                  styles.videoPlayer,
+                  !isTablet && { borderRadius: 0 },
+                ]}
+              >
+                <Video
+                  key={`chapter-${currentChapterIndex}-secondary`}
+                  ref={secondaryVideoRef}
+                  source={chapterVideoSource}
+                  style={styles.video}
+                  resizeMode={ResizeMode.COVER}
+                  shouldPlay={false}
+                  isLooping={false}
+                  isMuted={true}
+                  useNativeControls={false}
+                  rate={playbackRate}
+                />
+              </View>
+            </View>
           </View>
         </View>
-
+ 
         {/* 音声認識デバッグ（タイトル5連タップで表示） */}
         {speechDebugVisible && !isDeviceLandscape && (
           <View style={styles.speechDebugOuter}>
@@ -369,8 +413,24 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
   },
   videoArea: {
+    width: '100%',
     paddingHorizontal: 16,
     paddingTop: Platform.OS === 'android' ? 0 : 8,
+    gap: 40,
+  },
+  videoCenterContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  videoRow: {
+    minHeight: 0,
+    justifyContent: 'center',
+  },
+  videoRowTop: {
+    paddingHorizontal: 8,
+  },
+  videoRowBottom: {
+    paddingHorizontal: 36,
   },
   videoAreaTabletLandscape: {
     paddingTop: 0,
