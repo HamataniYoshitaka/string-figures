@@ -104,7 +104,7 @@ const NonverbalPreviousChapterButton = forwardRef<PreviousChapterButtonRef, Nonv
     >
       <View style={styles.controlButton}>
         <View style={styles.buttonContainer}>
-          <View style={[styles.shadowCircle, isDisabled && styles.disabledButton]} />
+          <View style={[styles.shadowCircle, isDisabled && styles.shadowHidden]} />
           <Animated.View
             style={[
               styles.ripple,
@@ -118,7 +118,7 @@ const NonverbalPreviousChapterButton = forwardRef<PreviousChapterButtonRef, Nonv
             style={[
               styles.floatingButton,
               isDisabled && styles.disabledButton,
-              { transform: [{ translateX: isDisabled ? 4 : pressTranslate }, { translateY: isDisabled ? 4 : pressTranslate }] },
+              { transform: [{ translateX: pressTranslate }, { translateY: pressTranslate }] },
             ]}
           >
             <ArrowLeftIcon
@@ -184,6 +184,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     left: 4,
     top: 4,
+  },
+  shadowHidden: {
+    opacity: 0,
   },
   floatingButton: {
     width: 48,

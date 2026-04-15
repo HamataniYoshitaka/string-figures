@@ -105,7 +105,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
     >
       <View style={styles.controlButton}>
         <View style={styles.buttonContainer}>
-          <View style={[styles.shadowCircle, isDisabled && styles.disabledButton]} />
+          <View style={[styles.shadowCircle, isDisabled && styles.shadowHidden]} />
           <Animated.View
             style={[
               styles.ripple,
@@ -119,7 +119,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
             <Animated.View
               style={[
                 styles.floatingButton,
-                { transform: [{ translateX: isDisabled ? 4 : pressTranslate }, { translateY: isDisabled ? 4 : pressTranslate }] },
+                { transform: [{ translateX: pressTranslate }, { translateY: pressTranslate }] },
               ]}
             >
               <CheckIcon
@@ -136,7 +136,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
                 styles.floatingButton,
                 { paddingLeft: 2 },
                 isDisabled && styles.disabledButton,
-                { transform: [{ translateX: isDisabled ? 4 : pressTranslate }, { translateY: isDisabled ? 4 : pressTranslate }] },
+                { transform: [{ translateX: pressTranslate }, { translateY: pressTranslate }] },
               ]}
             >
               <ArrowRightIcon
@@ -205,6 +205,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     left: 4,
     top: 4,
+  },
+  shadowHidden: {
+    opacity: 0,
   },
   floatingButton: {
     width: 48,
