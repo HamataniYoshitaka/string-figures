@@ -14,7 +14,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Video, ResizeMode } from 'expo-av';
 import { CloseIcon, BookmarkIcon } from '../components/icons';
-import ChapterNavigationBar from '../components/ChapterNavigationBar';
+import ChapterNavigationBarNonverbal from '../components/ChapterNavigationBarNonverbal';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
@@ -29,7 +29,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   nextChapterButtonRef,
   replayButtonRef,
   previousChapterButtonRef,
-  restartButtonRef,
   playbackPosition,
   isLastChapterCompleted,
   currentLanguage,
@@ -40,7 +39,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   onComplete,
   onReplay,
   onPreviousChapter,
-  onRestartFromBeginning,
   onToggleBookmark,
   bookmarked,
   getLocalizedText,
@@ -274,8 +272,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         )}
 
         {/* チャプターナビゲーションバー */}
-        <ChapterNavigationBar
-          currentLanguage={currentLanguage}
+        <ChapterNavigationBarNonverbal
           chapters={chapters}
           currentChapterIndex={currentChapterIndex}
           onPreviousChapter={onPreviousChapter}
@@ -286,8 +283,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
           previousChapterButtonRef={previousChapterButtonRef}
           replayButtonRef={replayButtonRef}
           nextChapterButtonRef={nextChapterButtonRef}
-          restartButtonRef={restartButtonRef}
-          onRestart={onRestartFromBeginning}
           playbackPosition={playbackPosition}
           isLastChapterCompleted={isLastChapterCompleted}
           getChapterProgress={getChapterProgress}
