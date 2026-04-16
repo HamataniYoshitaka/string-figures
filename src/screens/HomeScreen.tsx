@@ -3,20 +3,22 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
   ScrollView,
   Platform,
   Dimensions,
   Alert,
+  StatusBar,
 } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
-import Animated, { interpolateColor, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+import Animated, { interpolateColor, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
+import Svg, { Path } from 'react-native-svg';
 
 import { RootStackParamList, StringFigure } from '../types';
 import DetailBottomSheet, { DetailBottomSheetRef } from '../components/DetailBottomSheet';
@@ -57,6 +59,13 @@ const HOME_PAGE_BACKGROUND_COLORS = [
 
 const PAGE_SCROLL_INPUT_RANGE = HOME_PAGE_KEYS.map((_, i) => i);
 
+/** Figma 準拠のアーチ装飾（viewBox 428×345） */
+const ARCH_VIEWBOX = { w: 428, h: 345 };
+const ARCH_PATH_D =
+  'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
+
+const AnimatedPath = Animated.createAnimatedComponent(Path);
+
 const CommercialCollection1: StringFigure = { 
   id: '99998',
   name: { ja: '追加コレクションを見る', en: 'See Additional Collection' },
@@ -76,6 +85,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const pagerRef = useRef<PagerView>(null);
   const [selectedItem, setSelectedItem] = useState<StringFigure | null>(null);
   const { isTablet } = useDeviceInfo();
+  const insets = useSafeAreaInsets();
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
   
@@ -104,13 +114,16 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
   const pageScrollProgress = useSharedValue(HOME_PAGE_KEYS.indexOf(DEFAULT_HOME_PAGE));
-  const animatedTopSectionStyle = useAnimatedStyle(() => ({
-    backgroundColor: interpolateColor(
+
+  const archAnimatedProps = useAnimatedProps(() => ({
+    fill: interpolateColor(
       pageScrollProgress.value,
       PAGE_SCROLL_INPUT_RANGE,
       [...HOME_PAGE_BACKGROUND_COLORS]
     ),
   }));
+
+  const archDisplayHeight = screenWidth * (ARCH_VIEWBOX.h / ARCH_VIEWBOX.w);
 
   // レビューダイアログの表示チェック関数
   const checkAndShowReview = React.useCallback(async () => {
@@ -708,13 +721,35 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     },
   ];
 
+  const headerPaddingTop =
+    insets.top + (isTablet ? 32 : Platform.OS === 'android' ? 12 : 8);
+
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
+      <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
+      {/* SafeAreaView の外：ステータスバー直下までアーチを表示。タッチは通す */}
+      <Svg
+        width={screenWidth}
+        height={archDisplayHeight}
+        viewBox={`0 0 ${ARCH_VIEWBOX.w} ${ARCH_VIEWBOX.h}`}
+        preserveAspectRatio="xMidYMin meet"
+        pointerEvents="none"
+        style={[styles.archSvg, { width: screenWidth }]}
+      >
+        <AnimatedPath d={ARCH_PATH_D} animatedProps={archAnimatedProps} />
+      </Svg>
+
+      <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
         <View style={styles.contentContainer}>
-        <Animated.View style={animatedTopSectionStyle}>
+          <View style={styles.topSectionForeground}>
           {/* ヘッダー */}
-          <View style={[styles.header, isTablet && styles.headerTablet]}>
+          <View
+            style={[
+              styles.header,
+              isTablet && styles.headerTablet,
+              { paddingTop: headerPaddingTop },
+            ]}
+          >
             <Text 
               maxFontSizeMultiplier={1.35}
               style={[
@@ -770,9 +805,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
               currentLanguage={currentLanguage}
             />
           </View>
-        </Animated.View>
+        </View>
 
-        {/* あやとり一覧 */}
+        {/* あやとり一覧（アーチより手前に描画） */}
         <PagerView
           ref={pagerRef}
           style={styles.pagerView}
@@ -853,6 +888,8 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
+    zIndex: 1,
+    backgroundColor: 'transparent',
   },
   header: {
     flexDirection: 'row',
@@ -860,7 +897,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingBottom: Platform.OS === 'android' ? 0 : 8,
-    paddingTop: Platform.OS === 'android' ? 32 : 8, // Android用に12pt追加
   },
   title: {
     fontSize: 28,
@@ -881,9 +917,26 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
+    zIndex: 1,
+    backgroundColor: 'transparent',
+  },
+  archSvg: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 0,
+    elevation: 0,
+  },
+  topSectionForeground: {
+    position: 'relative',
+    zIndex: 1,
   },
   pagerView: {
     flex: 1,
+    zIndex: 2,
+    elevation: 2,
+    backgroundColor: 'transparent',
   },
   pageContainer: {
     flex: 1,

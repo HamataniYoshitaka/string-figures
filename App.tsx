@@ -7,6 +7,7 @@ import * as Font from 'expo-font';
 import { View, Text, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Constants from 'expo-constants';
 import Purchases from 'react-native-purchases';
@@ -93,6 +94,7 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
       <BottomSheetModalProvider>
         <NavigationContainer>
           <StatusBar style="auto" />
@@ -124,6 +126,7 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </BottomSheetModalProvider>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
