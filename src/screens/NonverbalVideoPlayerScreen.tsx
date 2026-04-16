@@ -65,6 +65,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [playbackRate, setPlaybackRate] = useState(0.6);
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const videoRef = useRef<Video>(null);
+  const secondaryVideoRef = useRef<Video>(null);
   const nextChapterButtonRef = useRef<NextChapterButtonRef>(null);
   const replayButtonRef = useRef<ReplayButtonRef>(null);
   const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
@@ -256,25 +257,19 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  // つぎへボタンの処理
+  // つぎへボタンの処理（playbackPosition はデュアル動画の合成位置）
   const handleNextChapter = async () => {
     if (!videoRef.current) return;
 
     try {
-      const status = await videoRef.current.getStatusAsync();
-
-      if (status.isLoaded) {
-        const currentPosition = status.positionMillis || 0;
-
-        if (currentChapterIndex === 0 && currentPosition === 0) {
-          await videoRef.current.playAsync();
-          nextChapterButtonRef.current?.triggerRipple();
-        } else if (currentChapterIndex < chapters.length - 1) {
-          setShouldAutoPlay(true);
-          setCurrentChapterIndex(prev => prev + 1);
-          setPlaybackPosition(0);
-          nextChapterButtonRef.current?.triggerRipple();
-        }
+      if (currentChapterIndex === 0 && playbackPosition === 0) {
+        await videoRef.current.playAsync();
+        nextChapterButtonRef.current?.triggerRipple();
+      } else if (currentChapterIndex < chapters.length - 1) {
+        setShouldAutoPlay(true);
+        setCurrentChapterIndex(prev => prev + 1);
+        setPlaybackPosition(0);
+        nextChapterButtonRef.current?.triggerRipple();
       }
     } catch (error) {
       console.error('Error handling next chapter:', error);
@@ -302,11 +297,13 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  // もういちどボタンの処理
+  // もういちどボタンの処理（前半・後半とも 0 に戻して前半から再生）
   const handleReplay = async () => {
     if (!videoRef.current) return;
 
     try {
+      await secondaryVideoRef.current?.setPositionAsync(0);
+      await secondaryVideoRef.current?.pauseAsync();
       await videoRef.current.setPositionAsync(0);
       setPlaybackPosition(0);
       await videoRef.current.playAsync();
@@ -452,6 +449,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     isLastChapterCompleted,
     playbackRate,
     videoRef,
+    secondaryVideoRef,
     nextChapterButtonRef,
     replayButtonRef,
     previousChapterButtonRef,

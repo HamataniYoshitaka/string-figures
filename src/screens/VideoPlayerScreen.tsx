@@ -55,6 +55,8 @@ export interface VideoPlayerSharedProps {
   isLastChapterCompleted: boolean;
   playbackRate: number;
   videoRef: React.RefObject<Video | null>;
+  /** 非言語デュアル再生時の後半動画（VideoPlayerNonverbal のみ） */
+  secondaryVideoRef?: React.RefObject<Video | null>;
   nextChapterButtonRef: React.RefObject<NextChapterButtonRef | null>;
   replayButtonRef: React.RefObject<ReplayButtonRef | null>;
   previousChapterButtonRef: React.RefObject<PreviousChapterButtonRef | null>;
