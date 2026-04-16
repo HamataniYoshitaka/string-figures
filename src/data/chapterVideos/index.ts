@@ -14,7 +14,11 @@ import { FIGURE_9_CHRYSANTHEMUM_VIDEOS } from './figure-9_chrysanthemum';
 import { FIGURE_10_MAGIC_FINGERS_VIDEOS } from './figure-10_magic-fingers';
 import { FIGURE_11_WINK_VIDEOS } from './figure-11_wink';
 import { FIGURE_12_9DIAMONDS_VIDEOS } from './figure-12_9-diamonds';
-import { FIGURE_13_EASY_BROOM_VIDEOS } from './figure-13_easy-broom';
+import {
+  FIGURE_13_EASY_BROOM_NONVERBAL_TOTAL_CHAPTERS,
+  FIGURE_13_EASY_BROOM_NONVERBAL_VIDEO_PAIRS,
+  FIGURE_13_EASY_BROOM_VIDEOS,
+} from './figure-13_easy-broom';
 import { FIGURE_14_FOOTPRINT_VIDEOS } from './figure-14_footrpint';
 import { FIGURE_15_BANANA_VIDEOS } from './figure-15_banana';
 import { FIGURE_16_SENSU_VIDEOS } from './figure-16_sensu';
@@ -225,8 +229,10 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
 
 export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, NonverbalChapterVideoPair>> = {
   '1_star': FIGURE_1_STAR_NONVERBAL_VIDEO_PAIRS,
+  '13_easy-broom': FIGURE_13_EASY_BROOM_NONVERBAL_VIDEO_PAIRS,
 };
 
 export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
   '1_star': FIGURE_1_STAR_NONVERBAL_TOTAL_CHAPTERS,
+  '13_easy-broom': FIGURE_13_EASY_BROOM_NONVERBAL_TOTAL_CHAPTERS,
 };
