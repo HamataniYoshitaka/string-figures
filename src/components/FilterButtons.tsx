@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -23,6 +23,35 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
   onSelectPage,
   currentLanguage,
 }) => {
+  const scrollViewRef = useRef<ScrollView>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [contentWidth, setContentWidth] = useState(0);
+  const [buttonLayouts, setButtonLayouts] = useState<Record<HomePageKey, { x: number; width: number }>>({
+    basic: { x: 0, width: 0 },
+    easy: { x: 0, width: 0 },
+    medium: { x: 0, width: 0 },
+    hard: { x: 0, width: 0 },
+    two_people: { x: 0, width: 0 },
+    bookmark: { x: 0, width: 0 },
+  });
+
+  const scrollSelectedButtonToCenter = (pageKey: HomePageKey, animated = true) => {
+    const layout = buttonLayouts[pageKey];
+    if (!layout || containerWidth <= 0 || contentWidth <= 0) {
+      return;
+    }
+
+    const buttonCenterX = layout.x + layout.width / 2;
+    const maxOffset = Math.max(contentWidth - containerWidth, 0);
+    const targetOffset = Math.max(0, Math.min(buttonCenterX - containerWidth / 2, maxOffset));
+
+    scrollViewRef.current?.scrollTo({ x: targetOffset, y: 0, animated });
+  };
+
+  useEffect(() => {
+    scrollSelectedButtonToCenter(selectedPageKey, true);
+  }, [selectedPageKey, buttonLayouts, containerWidth, contentWidth]);
+
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
@@ -69,10 +98,13 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
 
   return (
     <ScrollView 
+      ref={scrollViewRef}
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.filterContainer}
       style={styles.filterScrollView}
+      onLayout={(event) => setContainerWidth(event.nativeEvent.layout.width)}
+      onContentSizeChange={(width) => setContentWidth(width)}
     >
       {pages.map(pageKey => {
         const selected = selectedPageKey === pageKey;
@@ -84,7 +116,23 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
             styles.filterButton, 
             selected ? styles.filterButtonSelected : styles.filterButtonUnselected
           ]}
-          onPress={() => onSelectPage(pageKey)}
+          onLayout={(event) => {
+            const { x, width } = event.nativeEvent.layout;
+            setButtonLayouts(prev => {
+              const current = prev[pageKey];
+              if (current && current.x === x && current.width === width) {
+                return prev;
+              }
+              return {
+                ...prev,
+                [pageKey]: { x, width },
+              };
+            });
+          }}
+          onPress={() => {
+            onSelectPage(pageKey);
+            scrollSelectedButtonToCenter(pageKey);
+          }}
         >
           {renderPageIcon(pageKey, selected)}
           <Text 
