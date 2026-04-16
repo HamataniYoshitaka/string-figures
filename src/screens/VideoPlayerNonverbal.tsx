@@ -31,6 +31,8 @@ const PADDING_SWAP_DURATION_MS = 500;
 const POST_PADDING_PAUSE_BEFORE_SECONDARY_MS = 500;
 /** チャプター切替・リプレイ後にパディング初期値へ戻すアニメーション時間（ms） */
 const VIDEO_PADDING_RESET_MS = 400;
+/** chapter0 の secondary 再生待機中に被せる黒オーバーレイの濃さ */
+const SECONDARY_PREPLAY_OVERLAY_OPACITY = 0.45;
 
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -334,6 +336,11 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     inputRange: [0, 1],
     outputRange: [VIDEO_PADDING_COMPACT, VIDEO_PADDING_LARGE],
   });
+  const secondaryPreplayOverlayOpacity = videoRowPaddingSwap.interpolate({
+    inputRange: [0, 1],
+    outputRange: [SECONDARY_PREPLAY_OVERLAY_OPACITY, 0],
+  });
+  const shouldShowSecondaryPreplayOverlay = currentChapterIndex === 0;
 
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
@@ -519,6 +526,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   onPlaybackStatusUpdate={handleSecondaryPlaybackStatusUpdate}
                   onLoad={handleSecondaryLoad}
                 />
+                {shouldShowSecondaryPreplayOverlay && (
+                  <Animated.View
+                    pointerEvents="none"
+                    style={[
+                      styles.secondaryPreplayOverlay,
+                      { opacity: secondaryPreplayOverlayOpacity },
+                    ]}
+                  />
+                )}
               </View>
             </Animated.View>
           </View>
@@ -682,6 +698,10 @@ const styles = StyleSheet.create({
   video: {
     width: '100%',
     height: '100%',
+  },
+  secondaryPreplayOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#000',
   },
   progressContainer: {
     marginTop: 16,
