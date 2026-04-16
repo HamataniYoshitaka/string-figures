@@ -23,8 +23,12 @@ import { CHAPTER_VIDEOS, NONVERBAL_CHAPTER_VIDEO_PAIRS } from '../data/chapterVi
 
 const VIDEO_PADDING_LARGE = 8;
 const VIDEO_PADDING_COMPACT = 36;
-/** primary 終了後に secondary を再生するまでの間隔（ms） */
-const SECONDARY_AFTER_PRIMARY_GAP_MS = 500;
+/** primary 終了後、padding 切り替えを始めるまでの待機（ms） */
+const PRIMARY_END_POST_DELAY_MS = 500;
+/** primary 終了後の padding 切り替えアニメーション時間（ms） */
+const PADDING_SWAP_DURATION_MS = 500;
+/** padding 切り替え完了後、secondary 再生までの待機（ms） */
+const POST_PADDING_PAUSE_BEFORE_SECONDARY_MS = 500;
 /** チャプター切替・リプレイ後にパディング初期値へ戻すアニメーション時間（ms） */
 const VIDEO_PADDING_RESET_MS = 400;
 
@@ -71,6 +75,19 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   /** primary の didJustFinish から secondary 再生開始を一度だけ行う */
   const secondaryStartedFromPrimaryRef = useRef(false);
   const secondaryPlayDelayTimerRef = useRef<NodeJS.Timeout | null>(null);
+  /** padding アニメ終了後〜secondary 再生までの待機用 */
+  const secondaryPostPaddingTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const clearSecondarySequenceTimers = () => {
+    if (secondaryPlayDelayTimerRef.current) {
+      clearTimeout(secondaryPlayDelayTimerRef.current);
+      secondaryPlayDelayTimerRef.current = null;
+    }
+    if (secondaryPostPaddingTimerRef.current) {
+      clearTimeout(secondaryPostPaddingTimerRef.current);
+      secondaryPostPaddingTimerRef.current = null;
+    }
+  };
   const titleSecretTapCountRef = useRef(0);
   const titleSecretTapResetTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -148,10 +165,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   };
 
   useEffect(() => {
-    if (secondaryPlayDelayTimerRef.current) {
-      clearTimeout(secondaryPlayDelayTimerRef.current);
-      secondaryPlayDelayTimerRef.current = null;
-    }
+    clearSecondarySequenceTimers();
     segmentPhaseRef.current = 'idle';
     secondaryStartedFromPrimaryRef.current = false;
     primaryDurationMsRef.current = 0;
@@ -171,10 +185,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
   useEffect(() => {
     if (!nonverbalPaddingResetKey) return;
-    if (secondaryPlayDelayTimerRef.current) {
-      clearTimeout(secondaryPlayDelayTimerRef.current);
-      secondaryPlayDelayTimerRef.current = null;
-    }
+    clearSecondarySequenceTimers();
     videoRowPaddingSwap.stopAnimation();
     Animated.timing(videoRowPaddingSwap, {
       toValue: 0,
@@ -185,10 +196,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
   useEffect(() => {
     return () => {
-      if (secondaryPlayDelayTimerRef.current) {
-        clearTimeout(secondaryPlayDelayTimerRef.current);
-        secondaryPlayDelayTimerRef.current = null;
-      }
+      clearSecondarySequenceTimers();
       videoRowPaddingSwap.stopAnimation();
     };
   }, []);
@@ -238,28 +246,31 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       if (!secondaryStartedFromPrimaryRef.current) {
         secondaryStartedFromPrimaryRef.current = true;
         segmentPhaseRef.current = 'secondary';
-        if (secondaryPlayDelayTimerRef.current) {
-          clearTimeout(secondaryPlayDelayTimerRef.current);
-        }
+        clearSecondarySequenceTimers();
         videoRowPaddingSwap.stopAnimation();
-        Animated.timing(videoRowPaddingSwap, {
-          toValue: 1,
-          duration: SECONDARY_AFTER_PRIMARY_GAP_MS,
-          useNativeDriver: false,
-        }).start();
         secondaryPlayDelayTimerRef.current = setTimeout(() => {
           secondaryPlayDelayTimerRef.current = null;
-          queueMicrotask(() => {
-            void (async () => {
-              try {
-                await secondaryVideoRef.current?.setPositionAsync(0);
-                await secondaryVideoRef.current?.playAsync();
-              } catch {
-                /* noop */
-              }
-            })();
+          Animated.timing(videoRowPaddingSwap, {
+            toValue: 1,
+            duration: PADDING_SWAP_DURATION_MS,
+            useNativeDriver: false,
+          }).start(({ finished }) => {
+            if (!finished) return;
+            secondaryPostPaddingTimerRef.current = setTimeout(() => {
+              secondaryPostPaddingTimerRef.current = null;
+              queueMicrotask(() => {
+                void (async () => {
+                  try {
+                    await secondaryVideoRef.current?.setPositionAsync(0);
+                    await secondaryVideoRef.current?.playAsync();
+                  } catch {
+                    /* noop */
+                  }
+                })();
+              });
+            }, POST_PADDING_PAUSE_BEFORE_SECONDARY_MS);
           });
-        }, SECONDARY_AFTER_PRIMARY_GAP_MS);
+        }, PRIMARY_END_POST_DELAY_MS);
       }
       onPlaybackStatusUpdate({
         ...status,
