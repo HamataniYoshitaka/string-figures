@@ -17,7 +17,7 @@ import * as Localization from 'expo-localization';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import PagerView from 'react-native-pager-view';
 
 import { RootStackParamList, StringFigure } from '../types';
 import DetailBottomSheet, { DetailBottomSheetRef } from '../components/DetailBottomSheet';
@@ -42,7 +42,9 @@ interface Props {
   navigation: HomeScreenNavigationProp;
 }
 
-const DEFAULT_SELECTED_FILTERS: ('basic' | 'easy' | 'medium' | 'hard')[] = ['basic', 'easy'];
+type HomePageKey = 'basic' | 'easy' | 'medium' | 'hard' | 'two_people' | 'bookmark';
+const HOME_PAGE_KEYS: HomePageKey[] = ['basic', 'easy', 'medium', 'hard', 'two_people', 'bookmark'];
+const DEFAULT_HOME_PAGE: HomePageKey = 'basic';
 
 const CommercialCollection1: StringFigure = { 
   id: '99998',
@@ -60,14 +62,13 @@ const CommercialCollection1: StringFigure = {
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const bottomSheetRef = useRef<DetailBottomSheetRef>(null);
+  const pagerRef = useRef<PagerView>(null);
   const [selectedItem, setSelectedItem] = useState<StringFigure | null>(null);
   const { isTablet } = useDeviceInfo();
-  const insets = useSafeAreaInsets();
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
   
-  const [selectedFilters, setSelectedFilters] = useState<('basic' | 'easy' | 'medium' | 'hard' | 'two_people')[]>(DEFAULT_SELECTED_FILTERS);
-  const [isBookmarkFilterActive, setIsBookmarkFilterActive] = useState(false);
+  const [selectedPageKey, setSelectedPageKey] = useState<HomePageKey>(DEFAULT_HOME_PAGE);
 
   // ドロップダウンメニューの状態
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
@@ -89,6 +90,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   // 画面幅の状態
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
   // レビューダイアログの表示チェック関数
   const checkAndShowReview = React.useCallback(async () => {
@@ -135,7 +137,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     const initializeSettings = async () => {
       await loadLanguageSetting();
-      await Promise.all([loadBookmarkedIds(), loadSelectedFilters(), loadPurchasedItems()]);
+      await Promise.all([loadBookmarkedIds(), loadSelectedHomePage(), loadPurchasedItems()]);
       // スマホの場合、HomeScreen表示時は常に縦向きに設定
       if (!isTablet) {
         ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
@@ -188,7 +190,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       loadBookmarkedIds();
-      loadSelectedFilters();
+      loadSelectedHomePage();
       loadPurchasedItems();
       // StringFigureCardのリフレッシュ用キーを更新
       setRefreshKey(Date.now());
@@ -264,26 +266,50 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const loadSelectedFilters = async () => {
+  const isHomePageKey = (value: unknown): value is HomePageKey =>
+    value === 'basic' ||
+    value === 'easy' ||
+    value === 'medium' ||
+    value === 'hard' ||
+    value === 'two_people' ||
+    value === 'bookmark';
+
+  const saveSelectedHomePage = async (pageKey: HomePageKey) => {
     try {
-      const savedFilters = await AsyncStorage.getItem('selectedFilters');
-      if (!savedFilters) {
-        setSelectedFilters(DEFAULT_SELECTED_FILTERS);
-        saveSelectedFilters(DEFAULT_SELECTED_FILTERS);
-        return;
-      }
-      const parsedFilters = JSON.parse(savedFilters);
-      if (!Array.isArray(parsedFilters)) {
-        setSelectedFilters(DEFAULT_SELECTED_FILTERS);
-        saveSelectedFilters(DEFAULT_SELECTED_FILTERS);
-        return;
-      }
-      const validFilters = parsedFilters.filter((filter: unknown): filter is 'basic' | 'easy' | 'medium' | 'hard' | 'two_people' =>
-        filter === 'basic' || filter === 'easy' || filter === 'medium' || filter === 'hard' || filter === 'two_people'
-      );
-      setSelectedFilters(validFilters.length > 0 ? validFilters : []);
+      await AsyncStorage.setItem('selectedHomePage', pageKey);
     } catch (error) {
-      console.error('フィルターの読み込みに失敗しました:', error);
+      console.error('ホームページ選択状態の保存に失敗しました:', error);
+    }
+  };
+
+  const loadSelectedHomePage = async () => {
+    try {
+      const savedPage = await AsyncStorage.getItem('selectedHomePage');
+      if (savedPage && isHomePageKey(savedPage)) {
+        setSelectedPageKey(savedPage);
+        return;
+      }
+
+      const legacyFilters = await AsyncStorage.getItem('selectedFilters');
+      if (!legacyFilters) {
+        setSelectedPageKey(DEFAULT_HOME_PAGE);
+        saveSelectedHomePage(DEFAULT_HOME_PAGE);
+        return;
+      }
+
+      const parsedFilters = JSON.parse(legacyFilters);
+      if (!Array.isArray(parsedFilters)) {
+        setSelectedPageKey(DEFAULT_HOME_PAGE);
+        saveSelectedHomePage(DEFAULT_HOME_PAGE);
+        return;
+      }
+
+      const mappedPage = parsedFilters.find((filter: unknown): filter is HomePageKey => isHomePageKey(filter));
+      const nextPage = mappedPage ?? DEFAULT_HOME_PAGE;
+      setSelectedPageKey(nextPage);
+      saveSelectedHomePage(nextPage);
+    } catch (error) {
+      console.error('ホームページ選択状態の読み込みに失敗しました:', error);
     }
   };
 
@@ -313,30 +339,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     } catch (error) {
       console.error('ブックマークの保存に失敗しました:', error);
     }
-  };
-
-  const saveSelectedFilters = async (filters: ('basic' | 'easy' | 'medium' | 'hard' | 'two_people')[]) => {
-    try {
-      await AsyncStorage.setItem('selectedFilters', JSON.stringify(filters));
-    } catch (error) {
-      console.error('フィルターの保存に失敗しました:', error);
-    }
-  };
-
-  const toggleFilter = (filter: 'basic' | 'easy' | 'medium' | 'hard' | 'two_people') => {
-    setIsBookmarkFilterActive(false);
-    setSelectedFilters(prev => {
-      let updatedFilters: ('basic' | 'easy' | 'medium' | 'hard' | 'two_people')[];
-      if (prev.includes(filter)) {
-        // フィルターが既に選択されている場合は削除
-        updatedFilters = prev.filter(f => f !== filter);
-      } else {
-        // フィルターが選択されていない場合は追加
-        updatedFilters = [...prev, filter];
-      }
-      saveSelectedFilters(updatedFilters);
-      return updatedFilters;
-    });
   };
 
   // マルチカラムレイアウト用にカラムに分ける
@@ -375,33 +377,57 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     return columns;
   };
 
-  const handleBookmarkFilterToggle = () => {
-    setSelectedFilters([]);
-    saveSelectedFilters([]);
-    setIsBookmarkFilterActive(prev => !prev);
+  const selectHomePage = (pageKey: HomePageKey) => {
+    const pageIndex = HOME_PAGE_KEYS.indexOf(pageKey);
+    setSelectedPageKey(pageKey);
+    saveSelectedHomePage(pageKey);
+    if (pageIndex >= 0) {
+      setCurrentPageIndex(pageIndex);
+      pagerRef.current?.setPage(pageIndex);
+    }
   };
 
-  // フィルターされたデータを取得
-  const filteredStringFigures = useMemo(() => {
-    let figures = stringFigures;
-
-    if (isBookmarkFilterActive) {
-      figures = figures.filter(item => bookmarkedIds.includes(item.id));
+  const getFiguresByPage = (pageKey: HomePageKey): StringFigure[] => {
+    if (pageKey === 'bookmark') {
+      return stringFigures.filter(item => bookmarkedIds.includes(item.id));
     }
 
-    if (selectedFilters.length > 0) {
-      figures = figures.filter(item =>
-        selectedFilters.includes(item.difficulty as 'easy' | 'medium' | 'hard')
-      );
+    return stringFigures.filter(item => item.difficulty === pageKey);
+  };
+
+  const pageColumnsMap = useMemo(() => {
+    return HOME_PAGE_KEYS.reduce<Record<HomePageKey, StringFigure[][]>>((acc, pageKey) => {
+      const pageFigures = getFiguresByPage(pageKey);
+      acc[pageKey] = organizeIntoColumns(pageFigures, columnsCount);
+      return acc;
+    }, {
+      basic: [],
+      easy: [],
+      medium: [],
+      hard: [],
+      two_people: [],
+      bookmark: [],
+    });
+  }, [bookmarkedIds, columnsCount, purchasedItems]);
+
+  useEffect(() => {
+    const targetIndex = HOME_PAGE_KEYS.indexOf(selectedPageKey);
+    if (targetIndex >= 0 && targetIndex !== currentPageIndex) {
+      setCurrentPageIndex(targetIndex);
+      pagerRef.current?.setPageWithoutAnimation(targetIndex);
     }
+  }, [currentPageIndex, selectedPageKey]);
 
-    return figures;
-  }, [bookmarkedIds, isBookmarkFilterActive, selectedFilters]);
-
-  const columns = useMemo(() => 
-    organizeIntoColumns(filteredStringFigures, columnsCount),
-    [filteredStringFigures, columnsCount, purchasedItems]
-  );
+  const handlePageSelected = (position: number) => {
+    const pageKey = HOME_PAGE_KEYS[position];
+    if (!pageKey || pageKey === selectedPageKey) {
+      setCurrentPageIndex(position);
+      return;
+    }
+    setCurrentPageIndex(position);
+    setSelectedPageKey(pageKey);
+    saveSelectedHomePage(pageKey);
+  };
 
   const renderCard = (item: StringFigure) => {
     const imageInfo = imageDimensions[item.id];
@@ -499,9 +525,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       : [...bookmarkedIds, itemId];
     
     saveBookmarkedIds(newBookmarkedIds);
-    if (newBookmarkedIds.length === 0 && isBookmarkFilterActive) {
-      setIsBookmarkFilterActive(false);
-    }
   };
 
   const handlePrerequisitePress = (prerequisiteId: string) => {
@@ -672,10 +695,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       locations={[0, 0.5, 1]}
     >
       <SafeAreaView style={styles.safeArea}>
-        <ScrollView 
-          style={styles.scrollView}
-          stickyHeaderIndices={[showCallout ? 2 : 1]}
-        >
+        <View style={styles.contentContainer}>
         {/* ヘッダー */}
         <View style={[styles.header, isTablet && styles.headerTablet]}>
           <Text 
@@ -728,31 +748,58 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         <BlurView 
           intensity={20}
           tint="light"
-          style={[
-            styles.stickyFilterContainer,
-            { paddingTop: Platform.OS === 'android' ? insets.top : 0 }
-          ]}
+          style={styles.stickyFilterContainer}
         >
           <FilterButtons 
-            selectedFilters={selectedFilters}
-            onToggleFilter={toggleFilter}
+            pages={HOME_PAGE_KEYS}
+            selectedPageKey={selectedPageKey}
+            onSelectPage={selectHomePage}
             currentLanguage={currentLanguage}
-            isBookmarkFilterActive={isBookmarkFilterActive}
-            onToggleBookmarkFilter={handleBookmarkFilterToggle}
-            showBookmarkButton={bookmarkedIds.length > 0}
           />
         </BlurView>
 
         {/* あやとり一覧 */}
-        <View style={styles.gridContainer}>
-          {columns.map((column, index) => (
-            <View key={index} style={styles.column}>
-              {column.map(renderCard)}
-              {index === 0 && renderCard(CommercialCollection1)}
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+        <PagerView
+          ref={pagerRef}
+          style={styles.pagerView}
+          initialPage={HOME_PAGE_KEYS.indexOf(selectedPageKey)}
+          onPageSelected={(event) => handlePageSelected(event.nativeEvent.position)}
+        >
+          {HOME_PAGE_KEYS.map((pageKey) => {
+            const columns = pageColumnsMap[pageKey];
+            const isBookmarkPage = pageKey === 'bookmark';
+            const hasCards = columns.some(column => column.length > 0);
+
+            return (
+              <View key={pageKey} style={styles.pageContainer}>
+                <ScrollView
+                  style={styles.pageScrollView}
+                  contentContainerStyle={styles.pageScrollContent}
+                >
+                  <View style={styles.gridContainer}>
+                    {columns.map((column, index) => (
+                      <View key={`${pageKey}-${index}`} style={styles.column}>
+                        {column.map(renderCard)}
+                        {pageKey === 'basic' && index === 0 && renderCard(CommercialCollection1)}
+                      </View>
+                    ))}
+                  </View>
+                  {isBookmarkPage && !hasCards && (
+                    <Text
+                      maxFontSizeMultiplier={1.25}
+                      style={styles.emptyBookmarkText}
+                    >
+                      {currentLanguage === 'ja'
+                        ? 'ブックマークした作品はまだありません。'
+                        : 'No bookmarked figures yet.'}
+                    </Text>
+                  )}
+                </ScrollView>
+              </View>
+            );
+          })}
+        </PagerView>
+      </View>
 
       {/* 詳細ボトムシート */}
       <DetailBottomSheet
@@ -812,14 +859,25 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#5D4037',
   },
-  scrollView: {
+  contentContainer: {
     flex: 1,
+  },
+  pagerView: {
+    flex: 1,
+  },
+  pageContainer: {
+    flex: 1,
+  },
+  pageScrollView: {
+    flex: 1,
+  },
+  pageScrollContent: {
+    paddingBottom: 60,
   },
   gridContainer: {
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingTop: 12,
-    paddingBottom: 60,
     gap: 15,
   },
   column: {
@@ -837,6 +895,14 @@ const styles = StyleSheet.create({
   stickyFilterContainer: {
     backgroundColor: 'transparent',
     zIndex: 10,
+  },
+  emptyBookmarkText: {
+    color: '#57534D',
+    textAlign: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 24,
+    fontSize: 16,
+    lineHeight: 24,
   },
 });
 

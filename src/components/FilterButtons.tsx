@@ -8,39 +8,65 @@ import {
 } from 'react-native';
 import { BookmarkIcon, EasyIcon, NormalIcon, HardIcon, TutorialIcon, TwoPeopleIcon } from './icons';
 
+type HomePageKey = 'basic' | 'easy' | 'medium' | 'hard' | 'two_people' | 'bookmark';
+
 interface FilterButtonsProps {
-  selectedFilters: ('basic' | 'easy' | 'medium' | 'hard' | 'two_people')[];
-  onToggleFilter: (filter: 'basic' | 'easy' | 'medium' | 'hard' | 'two_people') => void;
+  pages: HomePageKey[];
+  selectedPageKey: HomePageKey;
+  onSelectPage: (page: HomePageKey) => void;
   currentLanguage: 'ja' | 'en';
-  isBookmarkFilterActive: boolean;
-  onToggleBookmarkFilter: () => void;
-  showBookmarkButton: boolean;
 }
 
 const FilterButtons: React.FC<FilterButtonsProps> = ({
-  selectedFilters,
-  onToggleFilter,
+  pages,
+  selectedPageKey,
+  onSelectPage,
   currentLanguage,
-  isBookmarkFilterActive,
-  onToggleBookmarkFilter,
-  showBookmarkButton,
 }) => {
   // 多言語対応のヘルパー関数
   const getLocalizedText = (textObj: { ja: string; en: string }) => {
     return textObj[currentLanguage];
   };
 
-  // 難易度テキストを取得
-  const getDifficultyText = (difficulty: 'basic' | 'easy' | 'medium' | 'hard' | 'two_people') => {
-    const difficultyTexts = {
+  const getPageText = (pageKey: HomePageKey) => {
+    const pageTexts: Record<HomePageKey, { ja: string; en: string }> = {
       basic: { ja: 'きほん', en: 'Basic' },
       easy: { ja: 'かんたん', en: 'Easy' },
       medium: { ja: 'ふつう', en: 'Normal' },
       hard: { ja: 'むずかしい', en: 'Hard' },
       two_people: { ja: 'ふたり', en: '2 People' },
+      bookmark: { ja: 'ブックマーク', en: 'Bookmark' },
     };
-    return getLocalizedText(difficultyTexts[difficulty]);
+    return getLocalizedText(pageTexts[pageKey]);
   };
+
+  const renderPageIcon = (pageKey: HomePageKey, selected: boolean) => {
+    const strokeColor = selected ? '#F7F5F2' : '#57534D';
+    if (pageKey === 'basic') {
+      return <TutorialIcon width={28} height={28} strokeColor={strokeColor} strokeWidth={1} />;
+    }
+    if (pageKey === 'easy') {
+      return <EasyIcon width={28} height={28} strokeColor={strokeColor} strokeWidth={1} />;
+    }
+    if (pageKey === 'medium') {
+      return <NormalIcon width={28} height={28} strokeColor={strokeColor} strokeWidth={1} />;
+    }
+    if (pageKey === 'hard') {
+      return <HardIcon width={28} height={28} strokeColor={strokeColor} strokeWidth={1} />;
+    }
+    if (pageKey === 'two_people') {
+      return <TwoPeopleIcon width={24} height={24} strokeColor={strokeColor} strokeWidth={1} />;
+    }
+    return (
+      <BookmarkIcon
+        width={24}
+        height={24}
+        strokeColor={strokeColor}
+        fillColor={selected ? '#F7F5F2' : 'transparent'}
+      />
+    );
+  };
+
   return (
     <ScrollView 
       horizontal
@@ -48,137 +74,31 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
       contentContainerStyle={styles.filterContainer}
       style={styles.filterScrollView}
     >
-      {showBookmarkButton && (
+      {pages.map(pageKey => {
+        const selected = selectedPageKey === pageKey;
+
+        return (
         <TouchableOpacity 
+          key={pageKey}
           style={[
-            styles.bookmarkButton,
-            isBookmarkFilterActive ? styles.bookmarkButtonSelected : styles.bookmarkButtonUnselected,
+            styles.filterButton, 
+            selected ? styles.filterButtonSelected : styles.filterButtonUnselected
           ]}
-          onPress={onToggleBookmarkFilter}
+          onPress={() => onSelectPage(pageKey)}
         >
-          <BookmarkIcon 
-            width={24} 
-            height={24} 
-            strokeColor={isBookmarkFilterActive ? '#F7F5F2' : '#57534D'} 
-            fillColor={isBookmarkFilterActive ? '#57534D' : 'transparent'}
-          />
+          {renderPageIcon(pageKey, selected)}
+          <Text 
+            maxFontSizeMultiplier={1.25}
+            style={[
+              styles.filterText, 
+              selected ? styles.filterTextSelected : styles.filterTextUnselected
+            ]}
+          >
+            {getPageText(pageKey)}
+          </Text>
         </TouchableOpacity>
-      )}
-      <TouchableOpacity 
-        style={[
-          styles.filterButton, 
-          selectedFilters.includes('basic') ? styles.filterButtonSelected : styles.filterButtonUnselected
-        ]}
-        onPress={() => onToggleFilter('basic')}
-      >
-        <TutorialIcon 
-          width={28} 
-          height={28} 
-          strokeColor={selectedFilters.includes('basic') ? '#F7F5F2' : '#57534D'} 
-          strokeWidth={1}
-        />
-        <Text 
-          maxFontSizeMultiplier={1.25}
-          style={[
-            styles.filterText, 
-            selectedFilters.includes('basic') ? styles.filterTextSelected : styles.filterTextUnselected
-          ]}
-        >
-          {getDifficultyText('basic')}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity 
-        style={[
-          styles.filterButton, 
-          selectedFilters.includes('easy') ? styles.filterButtonSelected : styles.filterButtonUnselected
-        ]}
-        onPress={() => onToggleFilter('easy')}
-      >
-        <EasyIcon 
-          width={28} 
-          height={28} 
-          strokeColor={selectedFilters.includes('easy') ? '#F7F5F2' : '#57534D'} 
-          strokeWidth={1}
-        />
-        <Text 
-          maxFontSizeMultiplier={1.25}
-          style={[
-            styles.filterText, 
-            selectedFilters.includes('easy') ? styles.filterTextSelected : styles.filterTextUnselected
-          ]}
-        >
-          {getDifficultyText('easy')}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity 
-        style={[
-          styles.filterButton, 
-          selectedFilters.includes('medium') ? styles.filterButtonSelected : styles.filterButtonUnselected
-        ]}
-        onPress={() => onToggleFilter('medium')}
-      >
-        <NormalIcon
-          width={28}
-          height={28}
-          strokeColor={selectedFilters.includes('medium') ? '#F7F5F2' : '#57534D'}
-          strokeWidth={1}
-        />
-        <Text 
-          maxFontSizeMultiplier={1.25}
-          style={[
-            styles.filterText, 
-            selectedFilters.includes('medium') ? styles.filterTextSelected : styles.filterTextUnselected
-          ]}
-        >
-          {getDifficultyText('medium')}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity 
-        style={[
-          styles.filterButton, 
-          selectedFilters.includes('hard') ? styles.filterButtonSelected : styles.filterButtonUnselected
-        ]}
-        onPress={() => onToggleFilter('hard')}
-      >
-        <HardIcon
-          width={28}
-          height={28}
-          strokeColor={selectedFilters.includes('hard') ? '#F7F5F2' : '#57534D'}
-          strokeWidth={1}
-        />
-        <Text 
-          maxFontSizeMultiplier={1.25}
-          style={[
-            styles.filterText, 
-            selectedFilters.includes('hard') ? styles.filterTextSelected : styles.filterTextUnselected
-          ]}
-        >
-          {getDifficultyText('hard')}
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity 
-        style={[
-          styles.filterButton, 
-          selectedFilters.includes('two_people') ? styles.filterButtonSelected : styles.filterButtonUnselected
-        ]}
-        onPress={() => onToggleFilter('two_people')}
-      >
-        <TwoPeopleIcon 
-          width={24}
-          height={24}
-          strokeColor={selectedFilters.includes('two_people') ? '#F7F5F2' : '#57534D'}
-          strokeWidth={1}
-        />
-        <Text 
-          maxFontSizeMultiplier={1.25}
-          style={[
-            styles.filterText, 
-            selectedFilters.includes('two_people') ? styles.filterTextSelected : styles.filterTextUnselected
-          ]}
-        >
-          {getDifficultyText('two_people')}
-        </Text>
-      </TouchableOpacity>
+        );
+      })}
     </ScrollView>
   );
 };
@@ -220,23 +140,6 @@ const styles = StyleSheet.create({
   },
   filterTextUnselected: {
     color: '#57534D',
-  },
-  bookmarkButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  bookmarkButtonSelected: {
-    backgroundColor: '#57534D',
-    borderWidth: 1,
-    borderColor: '#57534D',
-  },
-  bookmarkButtonUnselected: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: '#57534D',
   },
 });
 
