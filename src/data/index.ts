@@ -24,7 +24,7 @@ export const stringFigures: StringFigure[] = [
     },
     premiumCourseId: 0, 
     data: null,
-    nonverbalFormat: true
+    nonverbalFormat: false
   },
   {
     id: '60',
@@ -88,7 +88,7 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '手のひらにかわいい星ができます。短め、太めのひもを使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
     premiumCourseId: 0, 
     data: null,
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '4',

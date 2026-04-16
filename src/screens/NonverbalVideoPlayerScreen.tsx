@@ -17,6 +17,7 @@ import { ReplayButtonRef } from '../components/ReplayButton';
 import { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
 import { RestartButtonRef } from '../components/RestartButton';
 import { CHAPTERS_MAP } from '../data/chaptersMap';
+import { NONVERBAL_TOTAL_CHAPTERS } from '../data/chapterVideos';
 import { getDifficultyPoints, addClearPoints } from '../utils/clearPoints';
 
 type NonverbalVideoPlayerScreenNavigationProp = StackNavigationProp<
@@ -43,6 +44,12 @@ const getPlaybackRateDisplay = (rate: number): string => {
   if (rate === 1.25) return '1.25';
   if (rate === 0.75) return '0.75';
   return rate.toString();
+};
+
+const createPlaceholderChapters = (totalChapters: number): Chapter[] => {
+  return Array.from({ length: totalChapters }, () => ({
+    subtitle: { ja: '', en: '' },
+  }));
 };
 
 const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
@@ -158,6 +165,14 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const loadChapters = () => {
     try {
+      if (stringFigure.nonverbalFormat) {
+        const totalChapters = NONVERBAL_TOTAL_CHAPTERS[stringFigure.directory];
+        if (typeof totalChapters === 'number' && totalChapters > 0) {
+          setChapters(createPlaceholderChapters(totalChapters));
+          return;
+        }
+      }
+
       const chaptersData = CHAPTERS_MAP[stringFigure.directory];
       if (chaptersData) {
         setChapters(chaptersData);

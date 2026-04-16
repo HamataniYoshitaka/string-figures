@@ -19,7 +19,7 @@ import ChapterNavigationBarNonverbal from '../components/ChapterNavigationBarNon
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
-import { CHAPTER_VIDEOS } from '../data/chapterVideos';
+import { CHAPTER_VIDEOS, NONVERBAL_CHAPTER_VIDEO_PAIRS } from '../data/chapterVideos';
 
 const VIDEO_PADDING_LARGE = 8;
 const VIDEO_PADDING_COMPACT = 36;
@@ -113,9 +113,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     }).start();
   };
 
-  const chapterVideoSource = stringFigure
-    ? CHAPTER_VIDEOS[stringFigure.directory]?.[currentChapterIndex + 1]
+  const chapterNumber = currentChapterIndex + 1;
+  const fallbackVideoSource = stringFigure
+    ? CHAPTER_VIDEOS[stringFigure.directory]?.[chapterNumber]
     : undefined;
+  const nonverbalVideoPair = stringFigure?.nonverbalFormat
+    ? NONVERBAL_CHAPTER_VIDEO_PAIRS[stringFigure.directory]?.[chapterNumber]
+    : undefined;
+  const primaryVideoSource = nonverbalVideoPair?.primary ?? fallbackVideoSource;
+  const secondaryVideoSource = nonverbalVideoPair?.secondary ?? fallbackVideoSource;
 
   const handleDualPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
     onPlaybackStatusUpdate(status);
@@ -285,7 +291,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 <Video
                   key={`chapter-${currentChapterIndex}-primary`}
                   ref={videoRef}
-                  source={chapterVideoSource}
+                  source={primaryVideoSource}
                   style={styles.video}
                   resizeMode={ResizeMode.COVER}
                   shouldPlay={false}
@@ -314,7 +320,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 <Video
                   key={`chapter-${currentChapterIndex}-secondary`}
                   ref={secondaryVideoRef}
-                  source={chapterVideoSource}
+                  source={secondaryVideoSource}
                   style={styles.video}
                   resizeMode={ResizeMode.COVER}
                   shouldPlay={false}
