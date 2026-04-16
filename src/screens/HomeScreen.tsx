@@ -10,7 +10,6 @@ import {
   Dimensions,
   Alert,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
@@ -687,13 +686,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   ];
 
   return (
-    <LinearGradient
-      colors={['#e0e0e0', '#ffffff', '#EBE6D8']}
-      style={styles.container}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      locations={[0, 0.5, 1]}
-    >
+    <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.contentContainer}>
         {/* ヘッダー */}
@@ -823,13 +816,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         buttonPosition={menuButtonPosition}
       />
       </SafeAreaView>
-    </LinearGradient>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFF9F0',
   },
   safeArea: {
     flex: 1,
