@@ -16,6 +16,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
+import Animated, { interpolateColor, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 import { RootStackParamList, StringFigure } from '../types';
 import DetailBottomSheet, { DetailBottomSheetRef } from '../components/DetailBottomSheet';
@@ -43,6 +44,18 @@ interface Props {
 type HomePageKey = 'basic' | 'easy' | 'medium' | 'hard' | 'two_people' | 'bookmark';
 const HOME_PAGE_KEYS: HomePageKey[] = ['basic', 'easy', 'medium', 'hard', 'two_people', 'bookmark'];
 const DEFAULT_HOME_PAGE: HomePageKey = 'basic';
+
+/** HOME_PAGE_KEYS と同じ順。スワイプ中の背景色補間に使用 */
+const HOME_PAGE_BACKGROUND_COLORS = [
+  '#B5CFF0', // basic
+  '#9BB262', // easy
+  '#FDBBDF', // medium (normal)
+  '#FADA5E', // hard
+  '#7EB8D8', // two_people（上記以外のトーン）
+  '#D9B8E8', // bookmark
+] as const;
+
+const PAGE_SCROLL_INPUT_RANGE = HOME_PAGE_KEYS.map((_, i) => i);
 
 const CommercialCollection1: StringFigure = { 
   id: '99998',
@@ -89,6 +102,15 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   // 画面幅の状態
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
+
+  const pageScrollProgress = useSharedValue(HOME_PAGE_KEYS.indexOf(DEFAULT_HOME_PAGE));
+  const animatedTopSectionStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      pageScrollProgress.value,
+      PAGE_SCROLL_INPUT_RANGE,
+      [...HOME_PAGE_BACKGROUND_COLORS]
+    ),
+  }));
 
   // レビューダイアログの表示チェック関数
   const checkAndShowReview = React.useCallback(async () => {
@@ -413,10 +435,12 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     if (targetIndex >= 0 && targetIndex !== currentPageIndex) {
       setCurrentPageIndex(targetIndex);
       pagerRef.current?.setPageWithoutAnimation(targetIndex);
+      pageScrollProgress.value = targetIndex;
     }
   }, [currentPageIndex, selectedPageKey]);
 
   const handlePageSelected = (position: number) => {
+    pageScrollProgress.value = position;
     const pageKey = HOME_PAGE_KEYS[position];
     if (!pageKey || pageKey === selectedPageKey) {
       setCurrentPageIndex(position);
@@ -688,69 +712,76 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.contentContainer}>
-        {/* ヘッダー */}
-        <View style={[styles.header, isTablet && styles.headerTablet]}>
-          <Text 
-            maxFontSizeMultiplier={1.35}
-            style={[
-              styles.title, 
-              isTablet && styles.titleTablet,
-              { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
-            ]}
-          >
-            {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
-          </Text>
-          <TouchableOpacity 
-            ref={menuButtonRef}
-            style={styles.menuButton}
-            onPress={handleMenuPress}
-          >
-            <DotsVerticalIcon width={28} height={28} strokeColor="none" fillColor="#5D4037" />
-          </TouchableOpacity>
-        </View>
-
-        {showCallout && (
-          <View style={{ paddingHorizontal: 16, marginBottom: 16 }}>
-            <TouchableOpacity 
-              onPress={() => navigation.navigate('IntroError')}
-              activeOpacity={0.8}
-              style={{
-                borderRadius: 8,
-                padding: 12,
-                borderWidth: 2,
-                borderColor: '#cc7000ff',
-              }}
+        <Animated.View style={animatedTopSectionStyle}>
+          {/* ヘッダー */}
+          <View style={[styles.header, isTablet && styles.headerTablet]}>
+            <Text 
+              maxFontSizeMultiplier={1.35}
+              style={[
+                styles.title, 
+                isTablet && styles.titleTablet,
+                { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+              ]}
             >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <MicrophoneQuestionIcon width={24} height={24} fillColor="#533000ff" />
-                <Text 
-                  maxFontSizeMultiplier={1.25}
-                  style={{ color: '#533000ff', marginLeft: 8, flex: 1 }}
-                >
-                  {currentLanguage === 'ja'
-                    ? '音声認識が有効化されていません。このままでもアプリをご利用いただけますが、有効化することで「声」で操作できるようになり便利です'
-                    : 'The speech recognition is not enabled. You can still use the app as is, but enabling it will allow you to control the app with your voice.'}
-                </Text>
-              </View>
+              {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
+            </Text>
+            <TouchableOpacity 
+              ref={menuButtonRef}
+              style={styles.menuButton}
+              onPress={handleMenuPress}
+            >
+              <DotsVerticalIcon width={28} height={28} strokeColor="none" fillColor="#5D4037" />
             </TouchableOpacity>
           </View>
-        
-        )}
-        {/* フィルターボタン */}
-        <View style={styles.stickyFilterContainer}>
-          <FilterButtons 
-            pages={HOME_PAGE_KEYS}
-            selectedPageKey={selectedPageKey}
-            onSelectPage={selectHomePage}
-            currentLanguage={currentLanguage}
-          />
-        </View>
+
+          {showCallout && (
+            <View style={{ paddingHorizontal: 16, marginBottom: 16 }}>
+              <TouchableOpacity 
+                onPress={() => navigation.navigate('IntroError')}
+                activeOpacity={0.8}
+                style={{
+                  borderRadius: 8,
+                  padding: 12,
+                  borderWidth: 2,
+                  borderColor: '#cc7000ff',
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <MicrophoneQuestionIcon width={24} height={24} fillColor="#533000ff" />
+                  <Text 
+                    maxFontSizeMultiplier={1.25}
+                    style={{ color: '#533000ff', marginLeft: 8, flex: 1 }}
+                  >
+                    {currentLanguage === 'ja'
+                      ? '音声認識が有効化されていません。このままでもアプリをご利用いただけますが、有効化することで「声」で操作できるようになり便利です'
+                      : 'The speech recognition is not enabled. You can still use the app as is, but enabling it will allow you to control the app with your voice.'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          
+          )}
+          {/* フィルターボタン */}
+          <View style={styles.stickyFilterContainer}>
+            <FilterButtons 
+              pages={HOME_PAGE_KEYS}
+              selectedPageKey={selectedPageKey}
+              onSelectPage={selectHomePage}
+              currentLanguage={currentLanguage}
+            />
+          </View>
+        </Animated.View>
 
         {/* あやとり一覧 */}
         <PagerView
           ref={pagerRef}
           style={styles.pagerView}
           initialPage={HOME_PAGE_KEYS.indexOf(selectedPageKey)}
+          onPageScroll={(event) => {
+            const { position, offset } = event.nativeEvent;
+            const max = HOME_PAGE_KEYS.length - 1;
+            pageScrollProgress.value = Math.min(max, Math.max(0, position + offset));
+          }}
           onPageSelected={(event) => handlePageSelected(event.nativeEvent.position)}
         >
           {HOME_PAGE_KEYS.map((pageKey) => {
@@ -882,7 +913,6 @@ const styles = StyleSheet.create({
     lineHeight: 56,
   },
   stickyFilterContainer: {
-    backgroundColor: '#FFF9F0',
     zIndex: 10,
   },
   emptyBookmarkText: {
