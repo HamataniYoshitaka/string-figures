@@ -69,8 +69,8 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
     return getLocalizedText(pageTexts[pageKey]);
   };
 
-  const renderPageIcon = (pageKey: HomePageKey, selected: boolean) => {
-    const strokeColor = selected ? '#F7F5F2' : '#57534D';
+  const renderPageIcon = (pageKey: HomePageKey) => {
+    const strokeColor = '#292524';
     if (pageKey === 'basic') {
       return <TutorialIcon width={28} height={28} strokeColor={strokeColor} strokeWidth={1} />;
     }
@@ -91,7 +91,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
         width={24}
         height={24}
         strokeColor={strokeColor}
-        fillColor={selected ? '#F7F5F2' : 'transparent'}
+        fillColor="transparent"
       />
     );
   };
@@ -134,7 +134,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
             scrollSelectedButtonToCenter(pageKey);
           }}
         >
-          {renderPageIcon(pageKey, selected)}
+          {renderPageIcon(pageKey)}
           <Text 
             maxFontSizeMultiplier={1.25}
             style={[
@@ -170,24 +170,24 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   filterButtonSelected: {
-    backgroundColor: '#57534D',
+    backgroundColor: '#FFF9F0',
     borderWidth: 1,
-    borderColor: '#57534D',
+    borderColor: '#292524',
   },
   filterButtonUnselected: {
-    backgroundColor: '#ecececbb',
+    backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: '#57534D',
+    borderColor: '#292524',
   },
   filterText: {
     fontSize: 16,
     lineHeight: 16,
   },
   filterTextSelected: {
-    color: '#fafafa',
+    color: '#292524',
   },
   filterTextUnselected: {
-    color: '#57534D',
+    color: '#292524',
   },
 });
 

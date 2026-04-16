@@ -10,7 +10,6 @@ import {
   Dimensions,
   Alert,
 } from 'react-native';
-import { BlurView } from 'expo-blur';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -738,18 +737,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         
         )}
         {/* フィルターボタン */}
-        <BlurView 
-          intensity={20}
-          tint="light"
-          style={styles.stickyFilterContainer}
-        >
+        <View style={styles.stickyFilterContainer}>
           <FilterButtons 
             pages={HOME_PAGE_KEYS}
             selectedPageKey={selectedPageKey}
             onSelectPage={selectHomePage}
             currentLanguage={currentLanguage}
           />
-        </BlurView>
+        </View>
 
         {/* あやとり一覧 */}
         <PagerView
@@ -838,7 +833,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    color: '#57534D',
+    color: '#292524',
     fontFamily: 'KleeOne-SemiBold',
     fontWeight: '600',
     lineHeight: Platform.OS === 'android' ? 34 : 32, // Androidでより大きなlineHeight
@@ -887,11 +882,11 @@ const styles = StyleSheet.create({
     lineHeight: 56,
   },
   stickyFilterContainer: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#FFF9F0',
     zIndex: 10,
   },
   emptyBookmarkText: {
-    color: '#57534D',
+    color: '#292524',
     textAlign: 'center',
     paddingHorizontal: 24,
     paddingVertical: 24,
