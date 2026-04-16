@@ -37,6 +37,9 @@ interface Props {
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
+/** 再生指示後、primary を再生するまでの間隔（ms） */
+const NONVERBAL_PRIMARY_PLAY_DELAY_MS = 500;
+
 // 再生速度の表示文字列を取得する関数
 const getPlaybackRateDisplay = (rate: number): string => {
   if (rate === 2.0) return '2.0';
@@ -62,7 +65,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [playbackPosition, setPlaybackPosition] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
   const [isLastChapterCompleted, setIsLastChapterCompleted] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(0.6);
+  const [playbackRate, setPlaybackRate] = useState(1.0);
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const videoRef = useRef<Video>(null);
   const secondaryVideoRef = useRef<Video>(null);
@@ -248,6 +251,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
     if (shouldAutoPlay && videoRef.current) {
       try {
+        await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PRIMARY_PLAY_DELAY_MS));
         await videoRef.current.setPositionAsync(0);
         await videoRef.current.playAsync();
         setShouldAutoPlay(false);
@@ -263,6 +267,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
     try {
       if (currentChapterIndex === 0 && playbackPosition === 0) {
+        await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PRIMARY_PLAY_DELAY_MS));
         await videoRef.current.playAsync();
         nextChapterButtonRef.current?.triggerRipple();
       } else if (currentChapterIndex < chapters.length - 1) {
@@ -306,6 +311,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       await secondaryVideoRef.current?.pauseAsync();
       await videoRef.current.setPositionAsync(0);
       setPlaybackPosition(0);
+      await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PRIMARY_PLAY_DELAY_MS));
       await videoRef.current.playAsync();
       replayButtonRef.current?.triggerRipple();
     } catch (error) {

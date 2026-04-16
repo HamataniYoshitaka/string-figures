@@ -23,6 +23,8 @@ import { CHAPTER_VIDEOS, NONVERBAL_CHAPTER_VIDEO_PAIRS } from '../data/chapterVi
 
 const VIDEO_PADDING_LARGE = 8;
 const VIDEO_PADDING_COMPACT = 36;
+/** primary 終了後に secondary を再生するまでの間隔（ms） */
+const SECONDARY_AFTER_PRIMARY_GAP_MS = 500;
 
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -65,6 +67,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const secondaryDurationMsRef = useRef(0);
   /** primary の didJustFinish から secondary 再生開始を一度だけ行う */
   const secondaryStartedFromPrimaryRef = useRef(false);
+  const secondaryPlayDelayTimerRef = useRef<NodeJS.Timeout | null>(null);
   const titleSecretTapCountRef = useRef(0);
   const titleSecretTapResetTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -142,11 +145,24 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   };
 
   useEffect(() => {
+    if (secondaryPlayDelayTimerRef.current) {
+      clearTimeout(secondaryPlayDelayTimerRef.current);
+      secondaryPlayDelayTimerRef.current = null;
+    }
     segmentPhaseRef.current = 'idle';
     secondaryStartedFromPrimaryRef.current = false;
     primaryDurationMsRef.current = 0;
     secondaryDurationMsRef.current = 0;
   }, [currentChapterIndex]);
+
+  useEffect(() => {
+    return () => {
+      if (secondaryPlayDelayTimerRef.current) {
+        clearTimeout(secondaryPlayDelayTimerRef.current);
+        secondaryPlayDelayTimerRef.current = null;
+      }
+    };
+  }, []);
 
   const handlePrimaryLoad = (status: AVPlaybackStatus) => {
     if (status.isLoaded && status.durationMillis != null && status.durationMillis > 0) {
@@ -193,16 +209,22 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       if (!secondaryStartedFromPrimaryRef.current) {
         secondaryStartedFromPrimaryRef.current = true;
         segmentPhaseRef.current = 'secondary';
-        queueMicrotask(() => {
-          void (async () => {
-            try {
-              await secondaryVideoRef.current?.setPositionAsync(0);
-              await secondaryVideoRef.current?.playAsync();
-            } catch {
-              /* noop */
-            }
-          })();
-        });
+        if (secondaryPlayDelayTimerRef.current) {
+          clearTimeout(secondaryPlayDelayTimerRef.current);
+        }
+        secondaryPlayDelayTimerRef.current = setTimeout(() => {
+          secondaryPlayDelayTimerRef.current = null;
+          queueMicrotask(() => {
+            void (async () => {
+              try {
+                await secondaryVideoRef.current?.setPositionAsync(0);
+                await secondaryVideoRef.current?.playAsync();
+              } catch {
+                /* noop */
+              }
+            })();
+          });
+        }, SECONDARY_AFTER_PRIMARY_GAP_MS);
       }
       onPlaybackStatusUpdate({
         ...status,
