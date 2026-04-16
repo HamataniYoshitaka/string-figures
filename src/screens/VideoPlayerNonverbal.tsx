@@ -25,6 +25,8 @@ const VIDEO_PADDING_LARGE = 8;
 const VIDEO_PADDING_COMPACT = 36;
 /** primary 終了後に secondary を再生するまでの間隔（ms） */
 const SECONDARY_AFTER_PRIMARY_GAP_MS = 500;
+/** チャプター切替・リプレイ後にパディング初期値へ戻すアニメーション時間（ms） */
+const VIDEO_PADDING_RESET_MS = 400;
 
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -53,11 +55,12 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   isTemporarilyDisabled,
   backgroundColorAnim,
   lastSpeechTranscript,
+  nonverbalPaddingResetKey = 0,
 }) => {
   const [speechDebugVisible, setSpeechDebugVisible] = useState(false);
-  // scale ではなく左右パディングで見た目サイズを切り替える
-  const [topVideoCompact] = useState(false);
-  const [bottomVideoCompact] = useState(true);
+  /** 0: 上=LARGE・下=COMPACT（初期） / 1: 入れ替え（secondary 再生中） */
+  const videoRowPaddingSwap = useRef(new Animated.Value(0)).current;
+  const skipChapterPaddingResetRef = useRef(true);
   const internalSecondaryVideoRef = useRef<Video>(null);
   const secondaryVideoRef = secondaryVideoRefProp ?? internalSecondaryVideoRef;
 
@@ -153,7 +156,32 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     secondaryStartedFromPrimaryRef.current = false;
     primaryDurationMsRef.current = 0;
     secondaryDurationMsRef.current = 0;
+
+    if (skipChapterPaddingResetRef.current) {
+      skipChapterPaddingResetRef.current = false;
+    } else {
+      videoRowPaddingSwap.stopAnimation();
+      Animated.timing(videoRowPaddingSwap, {
+        toValue: 0,
+        duration: VIDEO_PADDING_RESET_MS,
+        useNativeDriver: false,
+      }).start();
+    }
   }, [currentChapterIndex]);
+
+  useEffect(() => {
+    if (!nonverbalPaddingResetKey) return;
+    if (secondaryPlayDelayTimerRef.current) {
+      clearTimeout(secondaryPlayDelayTimerRef.current);
+      secondaryPlayDelayTimerRef.current = null;
+    }
+    videoRowPaddingSwap.stopAnimation();
+    Animated.timing(videoRowPaddingSwap, {
+      toValue: 0,
+      duration: VIDEO_PADDING_RESET_MS,
+      useNativeDriver: false,
+    }).start();
+  }, [nonverbalPaddingResetKey]);
 
   useEffect(() => {
     return () => {
@@ -161,6 +189,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         clearTimeout(secondaryPlayDelayTimerRef.current);
         secondaryPlayDelayTimerRef.current = null;
       }
+      videoRowPaddingSwap.stopAnimation();
     };
   }, []);
 
@@ -212,6 +241,12 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         if (secondaryPlayDelayTimerRef.current) {
           clearTimeout(secondaryPlayDelayTimerRef.current);
         }
+        videoRowPaddingSwap.stopAnimation();
+        Animated.timing(videoRowPaddingSwap, {
+          toValue: 1,
+          duration: SECONDARY_AFTER_PRIMARY_GAP_MS,
+          useNativeDriver: false,
+        }).start();
         secondaryPlayDelayTimerRef.current = setTimeout(() => {
           secondaryPlayDelayTimerRef.current = null;
           queueMicrotask(() => {
@@ -279,6 +314,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       didJustFinish: false,
     } as AVPlaybackStatus);
   };
+
+  const topRowPaddingH = videoRowPaddingSwap.interpolate({
+    inputRange: [0, 1],
+    outputRange: [VIDEO_PADDING_LARGE, VIDEO_PADDING_COMPACT],
+  });
+  const bottomRowPaddingH = videoRowPaddingSwap.interpolate({
+    inputRange: [0, 1],
+    outputRange: [VIDEO_PADDING_COMPACT, VIDEO_PADDING_LARGE],
+  });
 
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
@@ -412,12 +456,10 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               },
             ]}
           >
-            <View
+            <Animated.View
               style={[
                 styles.videoRow,
-                {
-                  paddingHorizontal: topVideoCompact ? VIDEO_PADDING_COMPACT : VIDEO_PADDING_LARGE,
-                },
+                { paddingHorizontal: topRowPaddingH },
               ]}
             >
               <View
@@ -440,13 +482,11 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   onLoad={handlePrimaryLoad}
                 />
               </View>
-            </View>
-            <View
+            </Animated.View>
+            <Animated.View
               style={[
                 styles.videoRow,
-                {
-                  paddingHorizontal: bottomVideoCompact ? VIDEO_PADDING_COMPACT : VIDEO_PADDING_LARGE,
-                },
+                { paddingHorizontal: bottomRowPaddingH },
               ]}
             >
               <View
@@ -469,7 +509,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   onLoad={handleSecondaryLoad}
                 />
               </View>
-            </View>
+            </Animated.View>
           </View>
         </View>
  

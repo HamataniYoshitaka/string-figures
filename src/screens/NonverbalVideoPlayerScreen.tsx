@@ -79,6 +79,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const disableTimerRef = useRef<NodeJS.Timeout | null>(null);
   const enableTimerRef = useRef<NodeJS.Timeout | null>(null);
   const [confettiKey, setConfettiKey] = useState(0);
+  const [nonverbalPaddingResetKey, setNonverbalPaddingResetKey] = useState(0);
 
   // 非言語版は縦画面固定
   const isLandscapeMode = false;
@@ -307,6 +308,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     if (!videoRef.current) return;
 
     try {
+      setNonverbalPaddingResetKey((k) => k + 1);
       await secondaryVideoRef.current?.setPositionAsync(0);
       await secondaryVideoRef.current?.pauseAsync();
       await videoRef.current.setPositionAsync(0);
@@ -338,6 +340,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // はじめからボタンの処理
   const handleRestartFromBeginning = async () => {
     try {
+      setNonverbalPaddingResetKey((k) => k + 1);
       setShouldAutoPlay(false);
       setCurrentChapterIndex(0);
       setPlaybackPosition(0);
@@ -481,6 +484,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     isTemporarilyDisabled,
     backgroundColorAnim,
     lastSpeechTranscript,
+    nonverbalPaddingResetKey,
   };
 
   // ネットワークエラーメッセージ

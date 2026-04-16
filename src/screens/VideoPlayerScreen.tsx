@@ -83,6 +83,8 @@ export interface VideoPlayerSharedProps {
   backgroundColorAnim: Animated.AnimatedInterpolation<string>;
   /** 直近の音声認識テキスト（デバッグオーバーレイ用） */
   lastSpeechTranscript: string;
+  /** 非言語プレイヤー用: 動画行の左右パディングを初期状態へ戻すトリガー（リプレイ等で加算） */
+  nonverbalPaddingResetKey?: number;
 }
 
 const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
