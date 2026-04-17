@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -29,12 +29,27 @@ const VIDEO_ROW_PADDING_HORIZONTAL = 8;
 /** チャプター切り替え時の静止画帯スクロール時間（1Pぶん） */
 const NONVERBAL_STILL_STRIP_SCROLL_MS = 500;
 
-/** ダミー静止画帯（チャプターindexに同期して translateY で切り替え） */
-const NONVERBAL_DUMMY_STILLS = [
-  require('../../assets/string-figures/1_star/chapters/img01-1.jpg'),
-  require('../../assets/string-figures/1_star/chapters/img02-1.jpg'),
-  require('../../assets/string-figures/1_star/chapters/img03-1.jpg'),
-  require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+/** 縦並び2枚のあいだ */
+const NONVERBAL_STILL_VERTICAL_GAP = 12;
+
+/** チャプターごとの静止画2枚（*-1 が上、*-2 が下） */
+const NONVERBAL_CHAPTER_STILL_PAIRS = [
+  {
+    primary: require('../../assets/string-figures/1_star/chapters/img01-1.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img01-2.jpg'),
+  },
+  {
+    primary: require('../../assets/string-figures/1_star/chapters/img02-1.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img02-2.jpg'),
+  },
+  {
+    primary: require('../../assets/string-figures/1_star/chapters/img03-1.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img03-2.jpg'),
+  },
+  {
+    primary: require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img04-2.jpg'),
+  },
 ] as const;
 
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
@@ -116,8 +131,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const nonverbalStillStripImageWidth = windowWidth - VIDEO_ROW_PADDING_HORIZONTAL * 2;
   const nonverbalStillPageIndex = Math.min(
     currentChapterIndex,
-    NONVERBAL_DUMMY_STILLS.length - 1,
+    NONVERBAL_CHAPTER_STILL_PAIRS.length - 1,
   );
+
+  const stillPairStackScale = useMemo(() => {
+    const W = nonverbalStillStripImageWidth;
+    const hOne = (W * 9) / 16;
+    const total = hOne * 2 + NONVERBAL_STILL_VERTICAL_GAP;
+    return total > windowHeight * 0.92 ? (windowHeight * 0.92) / total : 1;
+  }, [nonverbalStillStripImageWidth, windowHeight]);
 
   useEffect(() => {
     const targetY = -nonverbalStillPageIndex * windowHeight;
@@ -364,7 +386,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       </View>
       <View pointerEvents="none" style={[styles.nonverbalStillStripViewport, { height: windowHeight }]}>
         <Animated.View style={{ transform: [{ translateY: stillStripTranslateY }] }}>
-          {NONVERBAL_DUMMY_STILLS.map((src, i) => (
+          {NONVERBAL_CHAPTER_STILL_PAIRS.map((pair, i) => (
             <View
               key={i}
               style={{
@@ -374,8 +396,26 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 justifyContent: 'center',
               }}
             >
-              <View style={[styles.videoPlayer, { width: nonverbalStillStripImageWidth }]}>
-                <Image source={src} style={StyleSheet.absoluteFillObject} resizeMode="cover" />
+              <View
+                style={{
+                  transform: [{ scale: stillPairStackScale }],
+                  alignItems: 'center',
+                }}
+              >
+                <View style={[styles.videoPlayer, { width: nonverbalStillStripImageWidth }]}>
+                  <Image source={pair.primary} style={StyleSheet.absoluteFillObject} resizeMode="cover" />
+                </View>
+                <View
+                  style={[
+                    styles.videoPlayer,
+                    {
+                      width: nonverbalStillStripImageWidth,
+                      marginTop: NONVERBAL_STILL_VERTICAL_GAP,
+                    },
+                  ]}
+                >
+                  <Image source={pair.secondary} style={StyleSheet.absoluteFillObject} resizeMode="cover" />
+                </View>
               </View>
             </View>
           ))}
@@ -455,12 +495,21 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL, opacity: 0 },
               ]}
             >
-              <View style={styles.videoPlayer}>
-                <Image
-                  source={NONVERBAL_DUMMY_STILLS[0]}
-                  style={styles.video}
-                  resizeMode="cover"
-                />
+              <View>
+                <View style={styles.videoPlayer}>
+                  <Image
+                    source={NONVERBAL_CHAPTER_STILL_PAIRS[nonverbalStillPageIndex].primary}
+                    style={styles.video}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View style={[styles.videoPlayer, { marginTop: NONVERBAL_STILL_VERTICAL_GAP }]}>
+                  <Image
+                    source={NONVERBAL_CHAPTER_STILL_PAIRS[nonverbalStillPageIndex].secondary}
+                    style={styles.video}
+                    resizeMode="cover"
+                  />
+                </View>
               </View>
             </View>
             <View
