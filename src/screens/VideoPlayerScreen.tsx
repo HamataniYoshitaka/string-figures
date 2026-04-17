@@ -55,8 +55,6 @@ export interface VideoPlayerSharedProps {
   isLastChapterCompleted: boolean;
   playbackRate: number;
   videoRef: React.RefObject<Video | null>;
-  /** 非言語デュアル再生時の後半動画（VideoPlayerNonverbal のみ） */
-  secondaryVideoRef?: React.RefObject<Video | null>;
   nextChapterButtonRef: React.RefObject<NextChapterButtonRef | null>;
   replayButtonRef: React.RefObject<ReplayButtonRef | null>;
   previousChapterButtonRef: React.RefObject<PreviousChapterButtonRef | null>;
@@ -83,7 +81,7 @@ export interface VideoPlayerSharedProps {
   backgroundColorAnim: Animated.AnimatedInterpolation<string>;
   /** 直近の音声認識テキスト（デバッグオーバーレイ用） */
   lastSpeechTranscript: string;
-  /** 非言語プレイヤー用: 動画行の左右パディングを初期状態へ戻すトリガー（リプレイ等で加算） */
+  /** 非言語プレイヤー用: 前半/後半シーケンスをリセットするトリガー（リプレイ等で加算） */
   nonverbalPaddingResetKey?: number;
 }
 

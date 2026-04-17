@@ -10,6 +10,7 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  Image,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
@@ -21,18 +22,10 @@ import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { CHAPTER_VIDEOS, NONVERBAL_CHAPTER_VIDEO_PAIRS } from '../data/chapterVideos';
 
-const VIDEO_PADDING_LARGE = 8;
-const VIDEO_PADDING_COMPACT = 36;
-/** primary 終了後、padding 切り替えを始めるまでの待機（ms） */
-const PRIMARY_END_POST_DELAY_MS = 500;
-/** primary 終了後の padding 切り替えアニメーション時間（ms） */
-const PADDING_SWAP_DURATION_MS = 500;
-/** padding 切り替え完了後、secondary 再生までの待機（ms） */
-const POST_PADDING_PAUSE_BEFORE_SECONDARY_MS = 500;
-/** チャプター切替・リプレイ後にパディング初期値へ戻すアニメーション時間（ms） */
-const VIDEO_PADDING_RESET_MS = 400;
-/** chapter0 の secondary 再生待機中に被せる黒オーバーレイの濃さ */
-const SECONDARY_PREPLAY_OVERLAY_OPACITY = 0.45;
+/** 上下行で共通の左右パディング（旧アニメーション廃止後の固定値） */
+const VIDEO_ROW_PADDING_HORIZONTAL = 8;
+
+const NONVERBAL_TOP_STILL_PLACEHOLDER = require('../../assets/string-figures/1_star/chapters/img01-1.jpg');
 
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -40,7 +33,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   currentChapterIndex,
   playbackRate,
   videoRef,
-  secondaryVideoRef: secondaryVideoRefProp,
   nextChapterButtonRef,
   replayButtonRef,
   previousChapterButtonRef,
@@ -64,32 +56,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   nonverbalPaddingResetKey = 0,
 }) => {
   const [speechDebugVisible, setSpeechDebugVisible] = useState(false);
-  /** 0: 上=LARGE・下=COMPACT（初期） / 1: 入れ替え（secondary 再生中） */
-  const videoRowPaddingSwap = useRef(new Animated.Value(0)).current;
-  const skipChapterPaddingResetRef = useRef(true);
-  const internalSecondaryVideoRef = useRef<Video>(null);
-  const secondaryVideoRef = secondaryVideoRefProp ?? internalSecondaryVideoRef;
+  /** 単一 Video のソース: 前半 *-1.mp4 / 後半 *-2.mp4 */
+  const [activeSegment, setActiveSegment] = useState<'primary' | 'secondary'>('primary');
 
   /** idle → primary → secondary → ended（チャプター内の前半・後半の進行） */
   const segmentPhaseRef = useRef<'idle' | 'primary' | 'secondary' | 'ended'>('idle');
   const primaryDurationMsRef = useRef(0);
   const secondaryDurationMsRef = useRef(0);
-  /** primary の didJustFinish から secondary 再生開始を一度だけ行う */
-  const secondaryStartedFromPrimaryRef = useRef(false);
-  const secondaryPlayDelayTimerRef = useRef<NodeJS.Timeout | null>(null);
-  /** padding アニメ終了後〜secondary 再生までの待機用 */
-  const secondaryPostPaddingTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const activeSegmentRef = useRef<'primary' | 'secondary'>('primary');
 
-  const clearSecondarySequenceTimers = () => {
-    if (secondaryPlayDelayTimerRef.current) {
-      clearTimeout(secondaryPlayDelayTimerRef.current);
-      secondaryPlayDelayTimerRef.current = null;
-    }
-    if (secondaryPostPaddingTimerRef.current) {
-      clearTimeout(secondaryPostPaddingTimerRef.current);
-      secondaryPostPaddingTimerRef.current = null;
-    }
-  };
   const titleSecretTapCountRef = useRef(0);
   const titleSecretTapResetTimerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -156,6 +131,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     : undefined;
   const primaryVideoSource = nonverbalVideoPair?.primary ?? fallbackVideoSource;
   const secondaryVideoSource = nonverbalVideoPair?.secondary ?? fallbackVideoSource;
+  const currentVideoSource = activeSegment === 'primary' ? primaryVideoSource : secondaryVideoSource;
 
   const getTotalDurationMs = () => {
     const d1 = primaryDurationMsRef.current;
@@ -167,138 +143,92 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   };
 
   useEffect(() => {
-    clearSecondarySequenceTimers();
     segmentPhaseRef.current = 'idle';
-    secondaryStartedFromPrimaryRef.current = false;
     primaryDurationMsRef.current = 0;
     secondaryDurationMsRef.current = 0;
-
-    if (skipChapterPaddingResetRef.current) {
-      skipChapterPaddingResetRef.current = false;
-    } else {
-      videoRowPaddingSwap.stopAnimation();
-      Animated.timing(videoRowPaddingSwap, {
-        toValue: 0,
-        duration: VIDEO_PADDING_RESET_MS,
-        useNativeDriver: false,
-      }).start();
-    }
+    activeSegmentRef.current = 'primary';
+    setActiveSegment('primary');
   }, [currentChapterIndex]);
 
   useEffect(() => {
     if (!nonverbalPaddingResetKey) return;
-    clearSecondarySequenceTimers();
-    videoRowPaddingSwap.stopAnimation();
-    Animated.timing(videoRowPaddingSwap, {
-      toValue: 0,
-      duration: VIDEO_PADDING_RESET_MS,
-      useNativeDriver: false,
-    }).start();
+    segmentPhaseRef.current = 'idle';
+    activeSegmentRef.current = 'primary';
+    setActiveSegment('primary');
   }, [nonverbalPaddingResetKey]);
 
-  useEffect(() => {
-    return () => {
-      clearSecondarySequenceTimers();
-      videoRowPaddingSwap.stopAnimation();
-    };
-  }, []);
-
-  const handlePrimaryLoad = (status: AVPlaybackStatus) => {
-    if (status.isLoaded && status.durationMillis != null && status.durationMillis > 0) {
-      primaryDurationMsRef.current = status.durationMillis;
+  const handleVideoLoad = (status: AVPlaybackStatus) => {
+    if (!status.isLoaded) return;
+    const seg = activeSegmentRef.current;
+    if (status.durationMillis != null && status.durationMillis > 0) {
+      if (seg === 'primary') {
+        primaryDurationMsRef.current = status.durationMillis;
+      } else {
+        secondaryDurationMsRef.current = status.durationMillis;
+      }
     }
-    void onVideoLoad();
+    if (seg === 'primary') {
+      void onVideoLoad();
+    } else {
+      void (async () => {
+        try {
+          await videoRef.current?.playAsync();
+        } catch {
+          /* noop */
+        }
+      })();
+    }
   };
 
-  const handleSecondaryLoad = (status: AVPlaybackStatus) => {
-    if (status.isLoaded && status.durationMillis != null && status.durationMillis > 0) {
-      secondaryDurationMsRef.current = status.durationMillis;
-    }
-  };
-
-  const handlePrimaryPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+  const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
     if (!status.isLoaded) {
       onPlaybackStatusUpdate(status);
       return;
     }
 
-    const phase = segmentPhaseRef.current;
-    if (phase === 'secondary') {
-      return;
-    }
-    if (phase === 'ended' && !status.isPlaying) {
+    if (segmentPhaseRef.current === 'ended' && !status.isPlaying) {
       return;
     }
 
-    if (status.durationMillis != null && status.durationMillis > 0) {
-      primaryDurationMsRef.current = status.durationMillis;
-    }
+    const seg = activeSegmentRef.current;
 
-    if (status.isPlaying) {
-      segmentPhaseRef.current = 'primary';
-      if ((status.positionMillis ?? 0) < 80) {
-        secondaryStartedFromPrimaryRef.current = false;
+    if (seg === 'primary') {
+      if (status.durationMillis != null && status.durationMillis > 0) {
+        primaryDurationMsRef.current = status.durationMillis;
       }
-    }
 
-    const d1 = primaryDurationMsRef.current;
-    const total = getTotalDurationMs();
+      if (status.isPlaying) {
+        segmentPhaseRef.current = 'primary';
+      }
 
-    if (status.didJustFinish) {
-      if (!secondaryStartedFromPrimaryRef.current) {
-        secondaryStartedFromPrimaryRef.current = true;
+      const d1 = primaryDurationMsRef.current;
+      const total = getTotalDurationMs();
+
+      if (status.didJustFinish) {
         segmentPhaseRef.current = 'secondary';
-        clearSecondarySequenceTimers();
-        videoRowPaddingSwap.stopAnimation();
-        secondaryPlayDelayTimerRef.current = setTimeout(() => {
-          secondaryPlayDelayTimerRef.current = null;
-          Animated.timing(videoRowPaddingSwap, {
-            toValue: 1,
-            duration: PADDING_SWAP_DURATION_MS,
-            useNativeDriver: false,
-          }).start(({ finished }) => {
-            if (!finished) return;
-            secondaryPostPaddingTimerRef.current = setTimeout(() => {
-              secondaryPostPaddingTimerRef.current = null;
-              queueMicrotask(() => {
-                void (async () => {
-                  try {
-                    await secondaryVideoRef.current?.setPositionAsync(0);
-                    await secondaryVideoRef.current?.playAsync();
-                  } catch {
-                    /* noop */
-                  }
-                })();
-              });
-            }, POST_PADDING_PAUSE_BEFORE_SECONDARY_MS);
-          });
-        }, PRIMARY_END_POST_DELAY_MS);
+        activeSegmentRef.current = 'secondary';
+        setActiveSegment('secondary');
+        onPlaybackStatusUpdate({
+          ...status,
+          isLoaded: true,
+          positionMillis: d1,
+          durationMillis: total,
+          didJustFinish: false,
+        } as AVPlaybackStatus);
+        return;
       }
+
+      const pos = status.positionMillis ?? 0;
       onPlaybackStatusUpdate({
         ...status,
-        isLoaded: true,
-        positionMillis: d1,
+        positionMillis: pos,
         durationMillis: total,
         didJustFinish: false,
       } as AVPlaybackStatus);
       return;
     }
 
-    const pos = status.positionMillis ?? 0;
-    onPlaybackStatusUpdate({
-      ...status,
-      positionMillis: pos,
-      durationMillis: total,
-      didJustFinish: false,
-    } as AVPlaybackStatus);
-  };
-
-  const handleSecondaryPlaybackStatusUpdate = (status: AVPlaybackStatus) => {
-    if (!status.isLoaded) return;
-    if (segmentPhaseRef.current !== 'secondary') {
-      return;
-    }
-
+    // secondary
     if (status.durationMillis != null && status.durationMillis > 0) {
       secondaryDurationMsRef.current = status.durationMillis;
     }
@@ -308,7 +238,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
     if (status.didJustFinish) {
       segmentPhaseRef.current = 'ended';
-      void secondaryVideoRef.current?.pauseAsync();
+      void videoRef.current?.pauseAsync();
       onPlaybackStatusUpdate({
         ...status,
         isLoaded: true,
@@ -327,20 +257,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       didJustFinish: false,
     } as AVPlaybackStatus);
   };
-
-  const topRowPaddingH = videoRowPaddingSwap.interpolate({
-    inputRange: [0, 1],
-    outputRange: [VIDEO_PADDING_LARGE, VIDEO_PADDING_COMPACT],
-  });
-  const bottomRowPaddingH = videoRowPaddingSwap.interpolate({
-    inputRange: [0, 1],
-    outputRange: [VIDEO_PADDING_COMPACT, VIDEO_PADDING_LARGE],
-  });
-  const secondaryPreplayOverlayOpacity = videoRowPaddingSwap.interpolate({
-    inputRange: [0, 1],
-    outputRange: [SECONDARY_PREPLAY_OVERLAY_OPACITY, 0],
-  });
-  const shouldShowSecondaryPreplayOverlay = currentChapterIndex === 0;
 
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
@@ -463,7 +379,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         </View>
 
         <View style={styles.videoCenterContainer}>
-          {/* 動画エリア（上下2枚・同一ソース。paddingHorizontal をフラグ連動で切替） */}
           <View
             style={[
               styles.videoArea,
@@ -474,21 +389,31 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               },
             ]}
           >
-            <Animated.View
+            <View
               style={[
                 styles.videoRow,
-                { paddingHorizontal: topRowPaddingH },
+                { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL },
               ]}
             >
-              <View
-                style={[
-                  styles.videoPlayer,
-                ]}
-              >
+              <View style={styles.videoPlayer}>
+                <Image
+                  source={NONVERBAL_TOP_STILL_PLACEHOLDER}
+                  style={styles.video}
+                  resizeMode="cover"
+                />
+              </View>
+            </View>
+            <View
+              style={[
+                styles.videoRow,
+                { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL },
+              ]}
+            >
+              <View style={styles.videoPlayer}>
                 <Video
-                  key={`chapter-${currentChapterIndex}-primary`}
+                  key={`ch${currentChapterIndex}-${activeSegment}`}
                   ref={videoRef}
-                  source={primaryVideoSource}
+                  source={currentVideoSource}
                   style={styles.video}
                   resizeMode={ResizeMode.COVER}
                   shouldPlay={false}
@@ -496,50 +421,14 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   isMuted={true}
                   useNativeControls={false}
                   rate={playbackRate}
-                  onPlaybackStatusUpdate={handlePrimaryPlaybackStatusUpdate}
-                  onLoad={handlePrimaryLoad}
+                  onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+                  onLoad={handleVideoLoad}
                 />
               </View>
-            </Animated.View>
-            <Animated.View
-              style={[
-                styles.videoRow,
-                { paddingHorizontal: bottomRowPaddingH },
-              ]}
-            >
-              <View
-                style={[
-                  styles.videoPlayer,
-                ]}
-              >
-                <Video
-                  key={`chapter-${currentChapterIndex}-secondary`}
-                  ref={secondaryVideoRef}
-                  source={secondaryVideoSource}
-                  style={styles.video}
-                  resizeMode={ResizeMode.COVER}
-                  shouldPlay={false}
-                  isLooping={false}
-                  isMuted={true}
-                  useNativeControls={false}
-                  rate={playbackRate}
-                  onPlaybackStatusUpdate={handleSecondaryPlaybackStatusUpdate}
-                  onLoad={handleSecondaryLoad}
-                />
-                {shouldShowSecondaryPreplayOverlay && (
-                  <Animated.View
-                    pointerEvents="none"
-                    style={[
-                      styles.secondaryPreplayOverlay,
-                      { opacity: secondaryPreplayOverlayOpacity },
-                    ]}
-                  />
-                )}
-              </View>
-            </Animated.View>
+            </View>
           </View>
         </View>
- 
+
         {/* 音声認識デバッグ（タイトル5連タップで表示） */}
         {speechDebugVisible && !isDeviceLandscape && (
           <View style={styles.speechDebugOuter}>
@@ -698,10 +587,6 @@ const styles = StyleSheet.create({
   video: {
     width: '100%',
     height: '100%',
-  },
-  secondaryPreplayOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#000',
   },
   progressContainer: {
     marginTop: 16,

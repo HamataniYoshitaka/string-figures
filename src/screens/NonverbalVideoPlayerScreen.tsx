@@ -68,7 +68,6 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const videoRef = useRef<Video>(null);
-  const secondaryVideoRef = useRef<Video>(null);
   const nextChapterButtonRef = useRef<NextChapterButtonRef>(null);
   const replayButtonRef = useRef<ReplayButtonRef>(null);
   const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
@@ -309,11 +308,9 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
     try {
       setNonverbalPaddingResetKey((k) => k + 1);
-      await secondaryVideoRef.current?.setPositionAsync(0);
-      await secondaryVideoRef.current?.pauseAsync();
-      await videoRef.current.setPositionAsync(0);
       setPlaybackPosition(0);
       await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PRIMARY_PLAY_DELAY_MS));
+      await videoRef.current.setPositionAsync(0);
       await videoRef.current.playAsync();
       replayButtonRef.current?.triggerRipple();
     } catch (error) {
@@ -458,7 +455,6 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     isLastChapterCompleted,
     playbackRate,
     videoRef,
-    secondaryVideoRef,
     nextChapterButtonRef,
     replayButtonRef,
     previousChapterButtonRef,
