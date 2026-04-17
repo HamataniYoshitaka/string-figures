@@ -11,6 +11,7 @@ import {
   Pressable,
   ScrollView,
   Image,
+  useWindowDimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
@@ -25,7 +26,16 @@ import { CHAPTER_VIDEOS, NONVERBAL_CHAPTER_VIDEO_PAIRS } from '../data/chapterVi
 /** 上下行で共通の左右パディング（旧アニメーション廃止後の固定値） */
 const VIDEO_ROW_PADDING_HORIZONTAL = 8;
 
-const NONVERBAL_TOP_STILL_PLACEHOLDER = require('../../assets/string-figures/1_star/chapters/img01-1.jpg');
+/** チャプター切り替え時の静止画帯スクロール時間（1Pぶん） */
+const NONVERBAL_STILL_STRIP_SCROLL_MS = 500;
+
+/** ダミー静止画帯（チャプターindexに同期して translateY で切り替え） */
+const NONVERBAL_DUMMY_STILLS = [
+  require('../../assets/string-figures/1_star/chapters/img01-1.jpg'),
+  require('../../assets/string-figures/1_star/chapters/img02-1.jpg'),
+  require('../../assets/string-figures/1_star/chapters/img03-1.jpg'),
+  require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+] as const;
 
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -94,11 +104,42 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const bookmarkButtonScale = useRef(new Animated.Value(1)).current;
 
+  const stillStripTranslateY = useRef(new Animated.Value(0)).current;
+  const prevNonverbalStillPageIndexRef = useRef<number | undefined>(undefined);
+
   // デバイス情報を取得
   const { isTablet, isDeviceLandscape } = useDeviceInfo();
 
   // セーフエリアインセットを取得
   const insets = useSafeAreaInsets();
+  const { width: windowWidth, height: windowHeight } = useWindowDimensions();
+  const nonverbalStillStripImageWidth = windowWidth - VIDEO_ROW_PADDING_HORIZONTAL * 2;
+  const nonverbalStillPageIndex = Math.min(
+    currentChapterIndex,
+    NONVERBAL_DUMMY_STILLS.length - 1,
+  );
+
+  useEffect(() => {
+    const targetY = -nonverbalStillPageIndex * windowHeight;
+
+    if (prevNonverbalStillPageIndexRef.current === undefined) {
+      prevNonverbalStillPageIndexRef.current = nonverbalStillPageIndex;
+      stillStripTranslateY.setValue(targetY);
+      return;
+    }
+
+    if (prevNonverbalStillPageIndexRef.current !== nonverbalStillPageIndex) {
+      prevNonverbalStillPageIndexRef.current = nonverbalStillPageIndex;
+      Animated.timing(stillStripTranslateY, {
+        toValue: targetY,
+        duration: NONVERBAL_STILL_STRIP_SCROLL_MS,
+        useNativeDriver: true,
+      }).start();
+      return;
+    }
+
+    stillStripTranslateY.setValue(targetY);
+  }, [nonverbalStillPageIndex, windowHeight, stillStripTranslateY]);
 
   // Androidでシステムバーがある場合のpaddingBottomを計算
   const containerPaddingBottom = Platform.OS === 'android' && insets.bottom > 30 ? 40 : 0;
@@ -321,6 +362,25 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
           <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill="#9BB262" />
         </Svg>
       </View>
+      <View pointerEvents="none" style={[styles.nonverbalStillStripViewport, { height: windowHeight }]}>
+        <Animated.View style={{ transform: [{ translateY: stillStripTranslateY }] }}>
+          {NONVERBAL_DUMMY_STILLS.map((src, i) => (
+            <View
+              key={i}
+              style={{
+                width: '100%',
+                height: windowHeight,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <View style={[styles.videoPlayer, { width: nonverbalStillStripImageWidth }]}>
+                <Image source={src} style={StyleSheet.absoluteFillObject} resizeMode="cover" />
+              </View>
+            </View>
+          ))}
+        </Animated.View>
+      </View>
       <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
         <View style={styles.header}>
           <TouchableWithoutFeedback
@@ -392,12 +452,12 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
             <View
               style={[
                 styles.videoRow,
-                { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL },
+                { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL, opacity: 0 },
               ]}
             >
               <View style={styles.videoPlayer}>
                 <Image
-                  source={NONVERBAL_TOP_STILL_PLACEHOLDER}
+                  source={NONVERBAL_DUMMY_STILLS[0]}
                   style={styles.video}
                   resizeMode="cover"
                 />
@@ -478,6 +538,14 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   fixedHeaderBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 0,
+    overflow: 'hidden',
+  },
+  nonverbalStillStripViewport: {
     position: 'absolute',
     top: 0,
     left: 0,
