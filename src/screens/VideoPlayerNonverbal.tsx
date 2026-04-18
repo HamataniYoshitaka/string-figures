@@ -29,8 +29,8 @@ const VIDEO_ROW_PADDING_HORIZONTAL = 8;
 /** チャプター切り替え時の静止画帯スクロール時間（1Pぶん） */
 const NONVERBAL_STILL_STRIP_SCROLL_MS = 500;
 
-/** 縦並び2枚のあいだ */
-const NONVERBAL_STILL_VERTICAL_GAP = 12;
+/** 縦並び2枚のあいだ（フィルムストリップ行間の固定 16pt と揃える） */
+const NONVERBAL_STILL_VERTICAL_GAP = 16;
 
 /** チャプターごとの静止画2枚（*-1 が上、*-2 が下） */
 const NONVERBAL_CHAPTER_STILL_PAIRS = [
@@ -64,7 +64,7 @@ const NONVERBAL_STRIP_SOURCES: readonly (number | null)[] = [
   null,
 ];
 
-/** visible 4行ウィンドウの先頭インデックスに対応する translateY=-index*rowHeight の最大 index */
+/** visible 4行ウィンドウの先頭インデックスに対応する translateY=-index*stripRowSlotHeight の最大 index */
 function getNonverbalMaxStripScrollIndex(stripLength: number): number {
   return Math.max(0, stripLength - 4);
 }
@@ -77,14 +77,18 @@ function getStripScrollTargetForChapterSegment(chapterIndex: number, segment: 'p
 /**
  * 4行ビューポートで上下1行はフェードアウト、中央2行は不透明になる opacity を
  * translateY から補間（行中心が H/2〜7H/2 の帯で 0→1→0 に滑らかに変化）
+ * rowStride: 行の高さ + 行間（スクロール1P分）
+ * verticalOffset: ストリップ全体を画面縦中央に置くためのオフセット（marginTop と同じ値）
  */
 function createStripRowOpacity(
   translateY: Animated.Value,
   rowIndex: number,
   rowHeight: number,
+  rowStride: number,
+  verticalOffset: number,
 ): Animated.AnimatedInterpolation<number> {
   const H = rowHeight;
-  const centerY = Animated.add(translateY, (rowIndex + 0.5) * H);
+  const centerY = Animated.add(translateY, verticalOffset + rowIndex * rowStride + H / 2);
   return centerY.interpolate({
     inputRange: [-2 * H, 0, H / 2, (3 * H) / 2, (5 * H) / 2, (7 * H) / 2, 4 * H, 6 * H],
     outputRange: [0, 0, 0, 1, 1, 0, 0, 0],
@@ -212,29 +216,47 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   // セーフエリアインセットを取得
   const insets = useSafeAreaInsets();
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
-  const nonverbalStillStripImageWidth = windowWidth - VIDEO_ROW_PADDING_HORIZONTAL * 2;
-  const stripRowHeight = windowHeight / 4;
+
+  /**
+   * 動画と同じく videoArea の左右パディング + videoRow の VIDEO_ROW_PADDING を反映した内側幅。
+   * 静止画・フィルムストリップもこれに合わせる。
+   */
+  const videoAreaHorizontalPadding = isTablet ? 16 : 0;
+  const videoContentWidth =
+    windowWidth - videoAreaHorizontalPadding * 2 - VIDEO_ROW_PADDING_HORIZONTAL * 2;
+
+  /** 動画 View と同じ 16:9 の高さ（画面高に合わせて縮めない） */
+  const stillCardHeight = videoContentWidth * (9 / 16);
+  const stripRowSlotHeight = stillCardHeight + NONVERBAL_STILL_VERTICAL_GAP;
+  const totalStripHeight =
+    NONVERBAL_STRIP_SOURCES.length * stillCardHeight +
+    (NONVERBAL_STRIP_SOURCES.length - 1) * NONVERBAL_STILL_VERTICAL_GAP;
+  /** ストリップ全体の縦中央を画面中央に合わせる（はみ出し可。負の値で上にシフト） */
+  const stripCenteringOffset = (windowHeight - totalStripHeight) / 2;
+
   const nonverbalStillPageIndex = Math.min(
     currentChapterIndex,
     NONVERBAL_CHAPTER_STILL_PAIRS.length - 1,
   );
 
-  /** 1行の高さに収まる 16:9 枠の幅（中央2行の見た目に近づける） */
-  const stripImageFrameWidth = useMemo(() => {
-    const maxH = stripRowHeight - 6;
-    const wFromHeight = (maxH * 16) / 9;
-    return Math.min(nonverbalStillStripImageWidth, wFromHeight);
-  }, [nonverbalStillStripImageWidth, stripRowHeight]);
-
   const stripRowOpacities = useMemo(
-    () => NONVERBAL_STRIP_SOURCES.map((_, i) => createStripRowOpacity(stillStripTranslateY, i, stripRowHeight)),
-    [stillStripTranslateY, stripRowHeight],
+    () =>
+      NONVERBAL_STRIP_SOURCES.map((_, i) =>
+        createStripRowOpacity(
+          stillStripTranslateY,
+          i,
+          stillCardHeight,
+          stripRowSlotHeight,
+          stripCenteringOffset,
+        ),
+      ),
+    [stillStripTranslateY, stillCardHeight, stripRowSlotHeight, stripCenteringOffset],
   );
 
   const setStripTranslateToIndex = (index: number, animated: boolean) => {
     const clamped = Math.max(0, Math.min(index, maxStripScrollIndex));
     scrollIndexRef.current = clamped;
-    const y = -clamped * stripRowHeight;
+    const y = -clamped * stripRowSlotHeight;
     if (animated) {
       Animated.timing(stillStripTranslateY, {
         toValue: y,
@@ -249,8 +271,8 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   /** window 高さ変化時は現在 index を維持して即時反映 */
   useEffect(() => {
     setStripTranslateToIndex(scrollIndexRef.current, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- stripRowHeight 変化時に translate を再適用するだけ
-  }, [stripRowHeight, maxStripScrollIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- strip 寸法・ストライド変化時に translate を再適用するだけ
+  }, [stillCardHeight, stripRowSlotHeight, stripCenteringOffset, maxStripScrollIndex]);
 
   /** 戻る・ジャンプ・リセット時はチャプター/セグメントに同期（次へで連続進行した場合は再生側でスクロール） */
   useEffect(() => {
@@ -393,7 +415,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
       if (status.didJustFinish) {
         const nextScrollIndex = Math.min(scrollIndexRef.current + 1, maxStripScrollIndex);
-        const nextY = -nextScrollIndex * stripRowHeight;
+        const nextY = -nextScrollIndex * stripRowSlotHeight;
         scrollIndexRef.current = nextScrollIndex;
         const ch = currentChapterIndex;
         Animated.parallel([
@@ -526,7 +548,12 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         </Svg>
       </View>
       <View pointerEvents="none" style={[styles.nonverbalStillStripViewport, { height: windowHeight }]}>
-        <Animated.View style={{ transform: [{ translateY: stillStripTranslateY }] }}>
+        <Animated.View
+          style={{
+            marginTop: stripCenteringOffset,
+            transform: [{ translateY: stillStripTranslateY }],
+          }}
+        >
           {NONVERBAL_STRIP_SOURCES.map((src, i) => {
             const stripChapterIndex =
               src != null && i >= 2 && i < 2 + NONVERBAL_STRIP_CHAPTER_COUNT ? i - 2 : null;
@@ -535,16 +562,17 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 key={i}
                 style={{
                   width: '100%',
-                  height: stripRowHeight,
+                  height: stillCardHeight,
+                  marginBottom: i < NONVERBAL_STRIP_SOURCES.length - 1 ? NONVERBAL_STILL_VERTICAL_GAP : 0,
                   alignItems: 'center',
                   justifyContent: 'center',
                   opacity: stripRowOpacities[i],
                 }}
               >
                 {src == null || stripChapterIndex === null ? (
-                  <View style={[styles.nonverbalStripEmptySlot, { width: stripImageFrameWidth }]} />
+                  <View style={[styles.nonverbalStripEmptySlot, { width: videoContentWidth }]} />
                 ) : (
-                  <View style={[styles.videoPlayer, { width: stripImageFrameWidth }]}>
+                  <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
                     <AnimatedStripImage
                       source={NONVERBAL_CHAPTER_STILL_PAIRS[stripChapterIndex].secondary}
                       style={[
@@ -645,14 +673,19 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               ]}
             >
               <View>
-                <View style={[styles.videoPlayer, { width: stripImageFrameWidth }]}>
+                <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
                   <Image
                     source={NONVERBAL_CHAPTER_STILL_PAIRS[nonverbalStillPageIndex].primary}
                     style={styles.video}
                     resizeMode="cover"
                   />
                 </View>
-                <View style={[styles.videoPlayer, { marginTop: NONVERBAL_STILL_VERTICAL_GAP, width: stripImageFrameWidth }]}>
+                <View
+                  style={[
+                    styles.videoPlayer,
+                    { marginTop: NONVERBAL_STILL_VERTICAL_GAP, width: videoContentWidth },
+                  ]}
+                >
                   <Image
                     source={NONVERBAL_CHAPTER_STILL_PAIRS[nonverbalStillPageIndex].secondary}
                     style={styles.video}
@@ -667,7 +700,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL },
               ]}
             >
-              <View style={styles.videoPlayer}>
+              <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
                 <Video
                   key={`ch${currentChapterIndex}-${activeSegment}`}
                   ref={videoRef}
