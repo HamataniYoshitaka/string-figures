@@ -11,7 +11,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 
 import { RootStackParamList, Chapter } from '../types';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
-import VideoPlayerNonverbal from './VideoPlayerNonverbal';
+import VideoPlayerNonverbal, { NONVERBAL_PLAY_START_DELAY_MS } from './VideoPlayerNonverbal';
 import { NextChapterButtonRef } from '../components/NextChapterButton';
 import { ReplayButtonRef } from '../components/ReplayButton';
 import { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
@@ -36,9 +36,6 @@ interface Props {
 
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
-
-/** 再生指示後、primary を再生するまでの間隔（ms） */
-const NONVERBAL_PRIMARY_PLAY_DELAY_MS = 500;
 
 // 再生速度の表示文字列を取得する関数
 const getPlaybackRateDisplay = (rate: number): string => {
@@ -251,7 +248,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
     if (shouldAutoPlay && videoRef.current) {
       try {
-        await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PRIMARY_PLAY_DELAY_MS));
+        await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PLAY_START_DELAY_MS));
         await videoRef.current.setPositionAsync(0);
         await videoRef.current.playAsync();
         setShouldAutoPlay(false);
@@ -267,7 +264,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
     try {
       if (currentChapterIndex === 0 && playbackPosition === 0) {
-        await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PRIMARY_PLAY_DELAY_MS));
+        await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PLAY_START_DELAY_MS));
         await videoRef.current.playAsync();
         nextChapterButtonRef.current?.triggerRipple();
       } else if (currentChapterIndex < chapters.length - 1) {
@@ -309,7 +306,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     try {
       setNonverbalPaddingResetKey((k) => k + 1);
       setPlaybackPosition(0);
-      await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PRIMARY_PLAY_DELAY_MS));
+      await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PLAY_START_DELAY_MS));
       await videoRef.current.setPositionAsync(0);
       await videoRef.current.playAsync();
       replayButtonRef.current?.triggerRipple();

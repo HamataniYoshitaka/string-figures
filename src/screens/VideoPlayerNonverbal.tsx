@@ -28,6 +28,12 @@ const VIDEO_ROW_PADDING_HORIZONTAL = 8;
 /** チャプター切り替え時の静止画帯スクロール時間（1Pぶん） */
 const NONVERBAL_STILL_STRIP_SCROLL_MS = 500;
 
+/** 再生指示から実際の再生開始まで（NonverbalVideoPlayerScreen の play 遅延と同値） */
+export const NONVERBAL_PLAY_START_DELAY_MS = 500;
+
+/** 前半（*-1）終了後、後半（*-2）の再生を始めるまでの待機 */
+const NONVERBAL_PRIMARY_SECONDARY_GAP_MS = 1500;
+
 /** 縦並び2枚のあいだ（フィルムストリップ行間の固定 16pt と揃える） */
 const NONVERBAL_STILL_VERTICAL_GAP = 16;
 
@@ -203,6 +209,14 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const scrollIndexRef = useRef(0);
   const prevChapterIndexForNavRef = useRef<number | undefined>(undefined);
   const prevNonverbalPaddingKeyRef = useRef(nonverbalPaddingResetKey);
+  const secondaryPlayDelayTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearSecondaryPlayDelayTimeout = () => {
+    if (secondaryPlayDelayTimeoutRef.current != null) {
+      clearTimeout(secondaryPlayDelayTimeoutRef.current);
+      secondaryPlayDelayTimeoutRef.current = null;
+    }
+  };
 
   const maxStripScrollIndex = useMemo(
     () => getNonverbalMaxStripScrollIndex(NONVERBAL_STRIP_SOURCES.length),
@@ -341,6 +355,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   };
 
   useEffect(() => {
+    clearSecondaryPlayDelayTimeout();
     segmentPhaseRef.current = 'idle';
     primaryDurationMsRef.current = 0;
     secondaryDurationMsRef.current = 0;
@@ -350,10 +365,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
   useEffect(() => {
     if (!nonverbalPaddingResetKey) return;
+    clearSecondaryPlayDelayTimeout();
     segmentPhaseRef.current = 'idle';
     activeSegmentRef.current = 'primary';
     setActiveSegment('primary');
   }, [nonverbalPaddingResetKey]);
+
+  useEffect(() => () => {
+    clearSecondaryPlayDelayTimeout();
+  }, []);
 
   const handleVideoLoad = (status: AVPlaybackStatus) => {
     if (!status.isLoaded) return;
@@ -366,15 +386,20 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       }
     }
     if (seg === 'primary') {
+      clearSecondaryPlayDelayTimeout();
       void onVideoLoad();
     } else {
-      void (async () => {
-        try {
-          await videoRef.current?.playAsync();
-        } catch {
-          /* noop */
-        }
-      })();
+      clearSecondaryPlayDelayTimeout();
+      secondaryPlayDelayTimeoutRef.current = setTimeout(() => {
+        secondaryPlayDelayTimeoutRef.current = null;
+        void (async () => {
+          try {
+            await videoRef.current?.playAsync();
+          } catch {
+            /* noop */
+          }
+        })();
+      }, NONVERBAL_PRIMARY_SECONDARY_GAP_MS);
     }
   };
 
