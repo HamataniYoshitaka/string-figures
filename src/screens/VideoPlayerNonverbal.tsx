@@ -6,7 +6,6 @@ import {
   TouchableWithoutFeedback,
   SafeAreaView,
   Animated,
-  Dimensions,
   Platform,
   Pressable,
   ScrollView,
@@ -232,10 +231,8 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const visibleFourStripRowsHeight =
     4 * stillCardHeight + 3 * NONVERBAL_STILL_VERTICAL_GAP;
   const stripCenteringOffset = windowHeight / 2 - visibleFourStripRowsHeight / 2;
-  /** 可視4行の3枚目（上から3番目）の上端 Y。strip と同じ式で H/2 + 8 に一致 */
-  const thirdStillTopFromScreenTop = stripCenteringOffset + 2 * stripRowSlotHeight;
-
-  const [headerLayoutHeight, setHeaderLayoutHeight] = useState(56);
+  /** 動画上端: 画面中央 + 8pt（端末共通。親は画面いっぱいの Animated.View） */
+  const videoTopFromScreenTop = windowHeight / 2 + 8;
 
   const stripRowOpacities = useMemo(
     () =>
@@ -243,18 +240,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         createStripRowOpacityFromTranslateY(stillStripTranslateY, i, stripRowSlotHeight),
       ),
     [stillStripTranslateY, stripRowSlotHeight],
-  );
-
-  const containerTopPadding = Platform.OS === 'android' ? 16 : 0;
-  const videoAreaPaddingTop = Platform.OS === 'android' ? 0 : 8;
-  const headerTopFromScreenTop = insets.top + containerTopPadding;
-  /** 動画上端を「可視4行の3枚目」の上端（画面中央+8pt）に合わせる */
-  const videoCenterPaddingTop = Math.max(
-    0,
-    thirdStillTopFromScreenTop -
-      headerTopFromScreenTop -
-      headerLayoutHeight -
-      videoAreaPaddingTop,
   );
 
   const setStripTranslateToIndex = (index: number, animated: boolean) => {
@@ -602,8 +587,14 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
           })}
         </Animated.View>
       </View>
-      <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
-        <View style={styles.header} onLayout={(e) => setHeaderLayoutHeight(e.nativeEvent.layout.height)}>
+      <SafeAreaView
+        pointerEvents="box-none"
+        style={[
+          styles.container,
+          { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent', zIndex: 2 },
+        ]}
+      >
+        <View style={styles.header}>
           <TouchableWithoutFeedback
             onPress={onGoBack}
             onPressIn={createPressInHandler(backButtonScale)}
@@ -659,42 +650,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
           </TouchableWithoutFeedback>
         </View>
 
-        <View style={[styles.videoCenterContainer, { paddingTop: videoCenterPaddingTop, justifyContent: 'flex-start' }]}>
-          <View
-            style={[
-              styles.videoArea,
-              !isTablet && { paddingHorizontal: 0 },
-              (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape,
-              (isTablet && isDeviceLandscape) && {
-                maxHeight: Dimensions.get('window').height * 0.63,
-              },
-            ]}
-          >
-            <View
-              style={[
-                styles.videoRow,
-                { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL },
-              ]}
-            >
-              <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
-                <Video
-                  key={`ch${currentChapterIndex}-${activeSegment}`}
-                  ref={videoRef}
-                  source={currentVideoSource}
-                  style={styles.video}
-                  resizeMode={ResizeMode.COVER}
-                  shouldPlay={false}
-                  isLooping={false}
-                  isMuted={true}
-                  useNativeControls={false}
-                  rate={playbackRate}
-                  onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-                  onLoad={handleVideoLoad}
-                />
-              </View>
-            </View>
-          </View>
-        </View>
+        <View style={styles.videoCenterSpacer} pointerEvents="none" />
 
         {/* 音声認識デバッグ（タイトル5連タップで表示） */}
         {speechDebugVisible && !isDeviceLandscape && (
@@ -733,6 +689,45 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
           isTemporarilyDisabled={isTemporarilyDisabled}
         />
       </SafeAreaView>
+
+      <View
+        pointerEvents="box-none"
+        style={[
+          styles.videoAbsoluteLayer,
+          {
+            top: videoTopFromScreenTop,
+            zIndex: 1,
+            ...(isTablet &&
+              isDeviceLandscape && {
+                maxHeight: windowHeight * 0.63,
+              }),
+          },
+        ]}
+      >
+        <View
+          style={[
+            styles.videoRow,
+            { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL },
+          ]}
+        >
+          <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
+            <Video
+              key={`ch${currentChapterIndex}-${activeSegment}`}
+              ref={videoRef}
+              source={currentVideoSource}
+              style={styles.video}
+              resizeMode={ResizeMode.COVER}
+              shouldPlay={false}
+              isLooping={false}
+              isMuted={true}
+              useNativeControls={false}
+              rate={playbackRate}
+              onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+              onLoad={handleVideoLoad}
+            />
+          </View>
+        </View>
+      </View>
     </Animated.View>
   );
 };
@@ -833,25 +828,17 @@ const styles = StyleSheet.create({
     color: '#666',
     fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
   },
-  videoArea: {
-    width: '100%',
-    paddingHorizontal: 16,
-    paddingTop: Platform.OS === 'android' ? 0 : 8,
-    gap: 40,
-  },
-  videoCenterContainer: {
+  videoCenterSpacer: {
     flex: 1,
+  },
+  videoAbsoluteLayer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
   },
   videoRow: {
     minHeight: 0,
-    justifyContent: 'center',
-  },
-  videoAreaTabletLandscape: {
-    paddingTop: 0,
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   videoPlayer: {
