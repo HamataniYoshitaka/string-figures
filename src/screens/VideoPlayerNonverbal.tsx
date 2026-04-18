@@ -32,6 +32,9 @@ const NONVERBAL_STILL_STRIP_SCROLL_MS = 500;
 /** 縦並び2枚のあいだ */
 const NONVERBAL_STILL_VERTICAL_GAP = 12;
 
+/** chapter index >= 1 の primary 冒頭でスクロールする再生位置しきい（ms） */
+const NONVERBAL_PRIMARY_ENTRY_SCROLL_POSITION_MS = 320;
+
 /** チャプターごとの静止画2枚（*-1 が上、*-2 が下） */
 const NONVERBAL_CHAPTER_STILL_PAIRS = [
   {
@@ -51,6 +54,28 @@ const NONVERBAL_CHAPTER_STILL_PAIRS = [
     secondary: require('../../assets/string-figures/1_star/chapters/img04-2.jpg'),
   },
 ] as const;
+
+/** img01-1 … img04-2 をこの順で1列に並べる */
+const NONVERBAL_STILL_IMAGES_FLAT = NONVERBAL_CHAPTER_STILL_PAIRS.flatMap((p) => [p.primary, p.secondary]);
+
+/** 先頭の空行1 + 8枚 + 末尾の空行4（下ピーク用） */
+const NONVERBAL_STRIP_SOURCES: readonly (number | null)[] = [
+  null,
+  ...NONVERBAL_STILL_IMAGES_FLAT,
+  null,
+  null,
+  null,
+  null,
+];
+
+/** visible 4行ウィンドウの先頭インデックスに対応する translateY=-index*rowHeight の最大 index */
+function getNonverbalMaxStripScrollIndex(stripLength: number): number {
+  return Math.max(0, stripLength - 4);
+}
+
+function getStripScrollTargetForChapterSegment(chapterIndex: number, segment: 'primary' | 'secondary'): number {
+  return 2 * chapterIndex + (segment === 'secondary' ? 1 : 0);
+}
 
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -120,7 +145,17 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const bookmarkButtonScale = useRef(new Animated.Value(1)).current;
 
   const stillStripTranslateY = useRef(new Animated.Value(0)).current;
-  const prevNonverbalStillPageIndexRef = useRef<number | undefined>(undefined);
+  /** フィルムストリップ先頭空き含むウィンドウ先頭行インデックス */
+  const scrollIndexRef = useRef(0);
+  const prevChapterIndexForNavRef = useRef<number | undefined>(undefined);
+  const prevNonverbalPaddingKeyRef = useRef(nonverbalPaddingResetKey);
+  /** chapter index >= 1 の primary 再生開始時の1コマスクロールを既に行ったか */
+  const primaryEntryScrollDoneRef = useRef(false);
+
+  const maxStripScrollIndex = useMemo(
+    () => getNonverbalMaxStripScrollIndex(NONVERBAL_STRIP_SOURCES.length),
+    [],
+  );
 
   // デバイス情報を取得
   const { isTablet, isDeviceLandscape } = useDeviceInfo();
@@ -129,39 +164,88 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const insets = useSafeAreaInsets();
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
   const nonverbalStillStripImageWidth = windowWidth - VIDEO_ROW_PADDING_HORIZONTAL * 2;
+  const stripRowHeight = windowHeight / 4;
   const nonverbalStillPageIndex = Math.min(
     currentChapterIndex,
     NONVERBAL_CHAPTER_STILL_PAIRS.length - 1,
   );
 
-  const stillPairStackScale = useMemo(() => {
-    const W = nonverbalStillStripImageWidth;
-    const hOne = (W * 9) / 16;
-    const total = hOne * 2 + NONVERBAL_STILL_VERTICAL_GAP;
-    return total > windowHeight * 0.92 ? (windowHeight * 0.92) / total : 1;
-  }, [nonverbalStillStripImageWidth, windowHeight]);
+  /** 1行の高さに収まる 16:9 枠の幅（中央2行の見た目に近づける） */
+  const stripImageFrameWidth = useMemo(() => {
+    const maxH = stripRowHeight - 6;
+    const wFromHeight = (maxH * 16) / 9;
+    return Math.min(nonverbalStillStripImageWidth, wFromHeight);
+  }, [nonverbalStillStripImageWidth, stripRowHeight]);
 
-  useEffect(() => {
-    const targetY = -nonverbalStillPageIndex * windowHeight;
-
-    if (prevNonverbalStillPageIndexRef.current === undefined) {
-      prevNonverbalStillPageIndexRef.current = nonverbalStillPageIndex;
-      stillStripTranslateY.setValue(targetY);
-      return;
-    }
-
-    if (prevNonverbalStillPageIndexRef.current !== nonverbalStillPageIndex) {
-      prevNonverbalStillPageIndexRef.current = nonverbalStillPageIndex;
+  const setStripTranslateToIndex = (index: number, animated: boolean) => {
+    const clamped = Math.max(0, Math.min(index, maxStripScrollIndex));
+    scrollIndexRef.current = clamped;
+    const y = -clamped * stripRowHeight;
+    if (animated) {
       Animated.timing(stillStripTranslateY, {
-        toValue: targetY,
+        toValue: y,
         duration: NONVERBAL_STILL_STRIP_SCROLL_MS,
         useNativeDriver: true,
       }).start();
+    } else {
+      stillStripTranslateY.setValue(y);
+    }
+  };
+
+  const bumpStripScrollByOne = (animated: boolean) => {
+    setStripTranslateToIndex(scrollIndexRef.current + 1, animated);
+  };
+
+  /** window 高さ変化時は現在 index を維持して即時反映 */
+  useEffect(() => {
+    setStripTranslateToIndex(scrollIndexRef.current, false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- stripRowHeight 変化時に translate を再適用するだけ
+  }, [stripRowHeight, maxStripScrollIndex]);
+
+  /** 戻る・ジャンプ・リセット時はチャプター/セグメントに同期（次へで連続進行した場合は再生側でスクロール） */
+  useEffect(() => {
+    const prevCh = prevChapterIndexForNavRef.current;
+    const paddingBumped = prevNonverbalPaddingKeyRef.current !== nonverbalPaddingResetKey;
+    prevNonverbalPaddingKeyRef.current = nonverbalPaddingResetKey;
+
+    if (paddingBumped) {
+      primaryEntryScrollDoneRef.current = false;
+      setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
+      prevChapterIndexForNavRef.current = currentChapterIndex;
       return;
     }
 
-    stillStripTranslateY.setValue(targetY);
-  }, [nonverbalStillPageIndex, windowHeight, stillStripTranslateY]);
+    if (prevCh === undefined) {
+      prevChapterIndexForNavRef.current = currentChapterIndex;
+      primaryEntryScrollDoneRef.current = false;
+      setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
+      return;
+    }
+
+    if (currentChapterIndex !== prevCh) {
+      const wentBack = currentChapterIndex < prevCh;
+      const forwardJump = currentChapterIndex > prevCh + 1;
+      if (wentBack || forwardJump) {
+        primaryEntryScrollDoneRef.current = false;
+        setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
+      } else if (currentChapterIndex === prevCh + 1) {
+        /** 次章へ（連続）はスクロールは再生ロジックに任せる */
+        primaryEntryScrollDoneRef.current = false;
+      }
+      prevChapterIndexForNavRef.current = currentChapterIndex;
+      return;
+    }
+  }, [currentChapterIndex, nonverbalPaddingResetKey, maxStripScrollIndex]);
+
+  const prevActiveSegmentRef = useRef(activeSegment);
+  useEffect(() => {
+    if (prevActiveSegmentRef.current === activeSegment) return;
+    const prev = prevActiveSegmentRef.current;
+    prevActiveSegmentRef.current = activeSegment;
+    if (activeSegment === 'primary' && prev === 'secondary') {
+      primaryEntryScrollDoneRef.current = false;
+    }
+  }, [activeSegment]);
 
   // Androidでシステムバーがある場合のpaddingBottomを計算
   const containerPaddingBottom = Platform.OS === 'android' && insets.bottom > 30 ? 40 : 0;
@@ -268,6 +352,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       const total = getTotalDurationMs();
 
       if (status.didJustFinish) {
+        bumpStripScrollByOne(true);
         segmentPhaseRef.current = 'secondary';
         activeSegmentRef.current = 'secondary';
         setActiveSegment('secondary');
@@ -282,6 +367,16 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       }
 
       const pos = status.positionMillis ?? 0;
+      if (
+        status.isPlaying &&
+        currentChapterIndex >= 1 &&
+        !primaryEntryScrollDoneRef.current &&
+        pos < NONVERBAL_PRIMARY_ENTRY_SCROLL_POSITION_MS
+      ) {
+        bumpStripScrollByOne(true);
+        primaryEntryScrollDoneRef.current = true;
+      }
+
       onPlaybackStatusUpdate({
         ...status,
         positionMillis: pos,
@@ -386,37 +481,23 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       </View>
       <View pointerEvents="none" style={[styles.nonverbalStillStripViewport, { height: windowHeight }]}>
         <Animated.View style={{ transform: [{ translateY: stillStripTranslateY }] }}>
-          {NONVERBAL_CHAPTER_STILL_PAIRS.map((pair, i) => (
+          {NONVERBAL_STRIP_SOURCES.map((src, i) => (
             <View
               key={i}
               style={{
                 width: '100%',
-                height: windowHeight,
+                height: stripRowHeight,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <View
-                style={{
-                  transform: [{ scale: stillPairStackScale }],
-                  alignItems: 'center',
-                }}
-              >
-                <View style={[styles.videoPlayer, { width: nonverbalStillStripImageWidth }]}>
-                  <Image source={pair.primary} style={styles.video} resizeMode="cover" />
+              {src == null ? (
+                <View style={[styles.nonverbalStripEmptySlot, { width: stripImageFrameWidth }]} />
+              ) : (
+                <View style={[styles.videoPlayer, { width: stripImageFrameWidth }]}>
+                  <Image source={src} style={styles.video} resizeMode="cover" />
                 </View>
-                <View
-                  style={[
-                    styles.videoPlayer,
-                    {
-                      width: nonverbalStillStripImageWidth,
-                      marginTop: NONVERBAL_STILL_VERTICAL_GAP,
-                    },
-                  ]}
-                >
-                  <Image source={pair.secondary} style={styles.video} resizeMode="cover" />
-                </View>
-              </View>
+              )}
             </View>
           ))}
         </Animated.View>
@@ -496,14 +577,14 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               ]}
             >
               <View>
-                <View style={styles.videoPlayer}>
+                <View style={[styles.videoPlayer, { width: stripImageFrameWidth }]}>
                   <Image
                     source={NONVERBAL_CHAPTER_STILL_PAIRS[nonverbalStillPageIndex].primary}
                     style={styles.video}
                     resizeMode="cover"
                   />
                 </View>
-                <View style={[styles.videoPlayer, { marginTop: NONVERBAL_STILL_VERTICAL_GAP }]}>
+                <View style={[styles.videoPlayer, { marginTop: NONVERBAL_STILL_VERTICAL_GAP, width: stripImageFrameWidth }]}>
                   <Image
                     source={NONVERBAL_CHAPTER_STILL_PAIRS[nonverbalStillPageIndex].secondary}
                     style={styles.video}
@@ -601,6 +682,10 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 0,
     overflow: 'hidden',
+  },
+  nonverbalStripEmptySlot: {
+    aspectRatio: 16 / 9,
+    backgroundColor: 'transparent',
   },
   errorContainer: {
     flex: 1,
