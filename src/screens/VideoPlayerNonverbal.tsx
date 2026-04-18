@@ -232,11 +232,10 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const visibleFourStripRowsHeight =
     4 * stillCardHeight + 3 * NONVERBAL_STILL_VERTICAL_GAP;
   const stripCenteringOffset = windowHeight / 2 - visibleFourStripRowsHeight / 2;
+  /** 可視4行の3枚目（上から3番目）の上端 Y。strip と同じ式で H/2 + 8 に一致 */
+  const thirdStillTopFromScreenTop = stripCenteringOffset + 2 * stripRowSlotHeight;
 
-  const nonverbalStillPageIndex = Math.min(
-    currentChapterIndex,
-    NONVERBAL_CHAPTER_STILL_PAIRS.length - 1,
-  );
+  const [headerLayoutHeight, setHeaderLayoutHeight] = useState(56);
 
   const stripRowOpacities = useMemo(
     () =>
@@ -244,6 +243,18 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         createStripRowOpacityFromTranslateY(stillStripTranslateY, i, stripRowSlotHeight),
       ),
     [stillStripTranslateY, stripRowSlotHeight],
+  );
+
+  const containerTopPadding = Platform.OS === 'android' ? 16 : 0;
+  const videoAreaPaddingTop = Platform.OS === 'android' ? 0 : 8;
+  const headerTopFromScreenTop = insets.top + containerTopPadding;
+  /** 動画上端を「可視4行の3枚目」の上端（画面中央+8pt）に合わせる */
+  const videoCenterPaddingTop = Math.max(
+    0,
+    thirdStillTopFromScreenTop -
+      headerTopFromScreenTop -
+      headerLayoutHeight -
+      videoAreaPaddingTop,
   );
 
   const setStripTranslateToIndex = (index: number, animated: boolean) => {
@@ -592,7 +603,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         </Animated.View>
       </View>
       <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
-        <View style={styles.header}>
+        <View style={styles.header} onLayout={(e) => setHeaderLayoutHeight(e.nativeEvent.layout.height)}>
           <TouchableWithoutFeedback
             onPress={onGoBack}
             onPressIn={createPressInHandler(backButtonScale)}
@@ -648,7 +659,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
           </TouchableWithoutFeedback>
         </View>
 
-        <View style={styles.videoCenterContainer}>
+        <View style={[styles.videoCenterContainer, { paddingTop: videoCenterPaddingTop, justifyContent: 'flex-start' }]}>
           <View
             style={[
               styles.videoArea,
@@ -659,34 +670,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               },
             ]}
           >
-            <View
-              style={[
-                styles.videoRow,
-                { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL, opacity: 0 },
-              ]}
-            >
-              <View>
-                <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
-                  <Image
-                    source={NONVERBAL_CHAPTER_STILL_PAIRS[nonverbalStillPageIndex].primary}
-                    style={styles.video}
-                    resizeMode="cover"
-                  />
-                </View>
-                <View
-                  style={[
-                    styles.videoPlayer,
-                    { marginTop: NONVERBAL_STILL_VERTICAL_GAP, width: videoContentWidth },
-                  ]}
-                >
-                  <Image
-                    source={NONVERBAL_CHAPTER_STILL_PAIRS[nonverbalStillPageIndex].secondary}
-                    style={styles.video}
-                    resizeMode="cover"
-                  />
-                </View>
-              </View>
-            </View>
             <View
               style={[
                 styles.videoRow,
@@ -858,7 +841,6 @@ const styles = StyleSheet.create({
   },
   videoCenterContainer: {
     flex: 1,
-    justifyContent: 'center',
   },
   videoRow: {
     minHeight: 0,
