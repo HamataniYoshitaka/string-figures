@@ -403,7 +403,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 }}
               >
                 <View style={[styles.videoPlayer, { width: nonverbalStillStripImageWidth }]}>
-                  <Image source={pair.primary} style={StyleSheet.absoluteFillObject} resizeMode="cover" />
+                  <Image source={pair.primary} style={styles.video} resizeMode="cover" />
                 </View>
                 <View
                   style={[
@@ -414,7 +414,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                     },
                   ]}
                 >
-                  <Image source={pair.secondary} style={StyleSheet.absoluteFillObject} resizeMode="cover" />
+                  <Image source={pair.secondary} style={styles.video} resizeMode="cover" />
                 </View>
               </View>
             </View>
