@@ -74,13 +74,26 @@ function getStripScrollTargetForChapterSegment(chapterIndex: number, segment: 'p
   return chapterIndex + (segment === 'secondary' ? 1 : 0);
 }
 
-/** 可視4行のうち上1・下1は 0、中央2行は 1（端末に依存しない） */
-function getStripRowOpacityForViewport(rowIndex: number, scrollIndex: number): number {
-  const vp = rowIndex - scrollIndex;
-  if (vp === 1 || vp === 2) {
-    return 1;
-  }
-  return 0;
+/**
+ * 可視4行のうち上1・下1は不透明に近づけ、中央2行は 1（translateY に同期して滑らかに変化）
+ * vp = rowIndex + translateY/rowSlotHeight が 0→1→2→3 と動く境界で線形フェード
+ */
+function createStripRowOpacityFromTranslateY(
+  translateY: Animated.Value,
+  rowIndex: number,
+  rowSlotHeight: number,
+): Animated.AnimatedInterpolation<number> {
+  const S = rowSlotHeight;
+  const t0 = -rowIndex * S;
+  const t1 = -(rowIndex - 1) * S;
+  const t2 = -(rowIndex - 2) * S;
+  const t3 = -(rowIndex - 3) * S;
+  const pad = 100000;
+  return translateY.interpolate({
+    inputRange: [-pad, t0, t1, t2, t3, pad],
+    outputRange: [0, 0, 1, 1, 0, 0],
+    extrapolate: 'clamp',
+  });
 }
 
 const NONVERBAL_STRIP_CHAPTER_COUNT = NONVERBAL_CHAPTER_STILL_PAIRS.length;
@@ -189,8 +202,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
   /** フィルムストリップ先頭空き含むウィンドウ先頭行インデックス */
   const scrollIndexRef = useRef(0);
-  /** 上と同期（opacity は補間せず scrollIndex から決める） */
-  const [stripScrollIndex, setStripScrollIndex] = useState(0);
   const prevChapterIndexForNavRef = useRef<number | undefined>(undefined);
   const prevNonverbalPaddingKeyRef = useRef(nonverbalPaddingResetKey);
 
@@ -227,10 +238,17 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     NONVERBAL_CHAPTER_STILL_PAIRS.length - 1,
   );
 
+  const stripRowOpacities = useMemo(
+    () =>
+      NONVERBAL_STRIP_SOURCES.map((_, i) =>
+        createStripRowOpacityFromTranslateY(stillStripTranslateY, i, stripRowSlotHeight),
+      ),
+    [stillStripTranslateY, stripRowSlotHeight],
+  );
+
   const setStripTranslateToIndex = (index: number, animated: boolean) => {
     const clamped = Math.max(0, Math.min(index, maxStripScrollIndex));
     scrollIndexRef.current = clamped;
-    setStripScrollIndex(clamped);
     const y = -clamped * stripRowSlotHeight;
     if (animated) {
       Animated.timing(stillStripTranslateY, {
@@ -392,7 +410,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         const nextScrollIndex = Math.min(scrollIndexRef.current + 1, maxStripScrollIndex);
         const nextY = -nextScrollIndex * stripRowSlotHeight;
         scrollIndexRef.current = nextScrollIndex;
-        setStripScrollIndex(nextScrollIndex);
         const ch = currentChapterIndex;
         Animated.parallel([
           Animated.timing(stillStripTranslateY, {
@@ -542,7 +559,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   marginBottom: i < NONVERBAL_STRIP_SOURCES.length - 1 ? NONVERBAL_STILL_VERTICAL_GAP : 0,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  opacity: getStripRowOpacityForViewport(i, stripScrollIndex),
+                  opacity: stripRowOpacities[i],
                 }}
               >
                 {src == null || stripChapterIndex === null ? (
