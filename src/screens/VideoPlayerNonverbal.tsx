@@ -32,9 +32,6 @@ const NONVERBAL_STILL_STRIP_SCROLL_MS = 500;
 /** 縦並び2枚のあいだ */
 const NONVERBAL_STILL_VERTICAL_GAP = 12;
 
-/** chapter index >= 1 の primary 冒頭でスクロールする再生位置しきい（ms） */
-const NONVERBAL_PRIMARY_ENTRY_SCROLL_POSITION_MS = 320;
-
 /** チャプターごとの静止画2枚（*-1 が上、*-2 が下） */
 const NONVERBAL_CHAPTER_STILL_PAIRS = [
   {
@@ -55,15 +52,14 @@ const NONVERBAL_CHAPTER_STILL_PAIRS = [
   },
 ] as const;
 
-/** img01-1 … img04-2 をこの順で1列に並べる */
-const NONVERBAL_STILL_IMAGES_FLAT = NONVERBAL_CHAPTER_STILL_PAIRS.flatMap((p) => [p.primary, p.secondary]);
+/** フィルムストリップ: img01-1 ～ img04-1 のみ */
+const NONVERBAL_STILL_PRIMARY_IMAGES = NONVERBAL_CHAPTER_STILL_PAIRS.map((p) => p.primary);
 
-/** 先頭の空行1 + 8枚 + 末尾の空行4（下ピーク用） */
+/** 先頭空2 + 4枚 + 末尾空2（ch1 初期 [空,空,01-1,02-1]、最終 ch [02-1,03-1,04-1,空] 等） */
 const NONVERBAL_STRIP_SOURCES: readonly (number | null)[] = [
   null,
-  ...NONVERBAL_STILL_IMAGES_FLAT,
   null,
-  null,
+  ...NONVERBAL_STILL_PRIMARY_IMAGES,
   null,
   null,
 ];
@@ -73,8 +69,9 @@ function getNonverbalMaxStripScrollIndex(stripLength: number): number {
   return Math.max(0, stripLength - 4);
 }
 
+/** *-01 終了のたびにストリップが +1 する前提でのナビ同期用インデックス */
 function getStripScrollTargetForChapterSegment(chapterIndex: number, segment: 'primary' | 'secondary'): number {
-  return 2 * chapterIndex + (segment === 'secondary' ? 1 : 0);
+  return chapterIndex + (segment === 'secondary' ? 1 : 0);
 }
 
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
@@ -149,8 +146,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const scrollIndexRef = useRef(0);
   const prevChapterIndexForNavRef = useRef<number | undefined>(undefined);
   const prevNonverbalPaddingKeyRef = useRef(nonverbalPaddingResetKey);
-  /** chapter index >= 1 の primary 再生開始時の1コマスクロールを既に行ったか */
-  const primaryEntryScrollDoneRef = useRef(false);
 
   const maxStripScrollIndex = useMemo(
     () => getNonverbalMaxStripScrollIndex(NONVERBAL_STRIP_SOURCES.length),
@@ -209,7 +204,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     prevNonverbalPaddingKeyRef.current = nonverbalPaddingResetKey;
 
     if (paddingBumped) {
-      primaryEntryScrollDoneRef.current = false;
       setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
       prevChapterIndexForNavRef.current = currentChapterIndex;
       return;
@@ -217,7 +211,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
     if (prevCh === undefined) {
       prevChapterIndexForNavRef.current = currentChapterIndex;
-      primaryEntryScrollDoneRef.current = false;
       setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
       return;
     }
@@ -226,26 +219,14 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       const wentBack = currentChapterIndex < prevCh;
       const forwardJump = currentChapterIndex > prevCh + 1;
       if (wentBack || forwardJump) {
-        primaryEntryScrollDoneRef.current = false;
         setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
       } else if (currentChapterIndex === prevCh + 1) {
-        /** 次章へ（連続）はスクロールは再生ロジックに任せる */
-        primaryEntryScrollDoneRef.current = false;
+        /** 次章へ（連続）: *-01 終了までスクロールは変えない */
       }
       prevChapterIndexForNavRef.current = currentChapterIndex;
       return;
     }
   }, [currentChapterIndex, nonverbalPaddingResetKey, maxStripScrollIndex]);
-
-  const prevActiveSegmentRef = useRef(activeSegment);
-  useEffect(() => {
-    if (prevActiveSegmentRef.current === activeSegment) return;
-    const prev = prevActiveSegmentRef.current;
-    prevActiveSegmentRef.current = activeSegment;
-    if (activeSegment === 'primary' && prev === 'secondary') {
-      primaryEntryScrollDoneRef.current = false;
-    }
-  }, [activeSegment]);
 
   // Androidでシステムバーがある場合のpaddingBottomを計算
   const containerPaddingBottom = Platform.OS === 'android' && insets.bottom > 30 ? 40 : 0;
@@ -367,16 +348,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       }
 
       const pos = status.positionMillis ?? 0;
-      if (
-        status.isPlaying &&
-        currentChapterIndex >= 1 &&
-        !primaryEntryScrollDoneRef.current &&
-        pos < NONVERBAL_PRIMARY_ENTRY_SCROLL_POSITION_MS
-      ) {
-        bumpStripScrollByOne(true);
-        primaryEntryScrollDoneRef.current = true;
-      }
-
       onPlaybackStatusUpdate({
         ...status,
         positionMillis: pos,
