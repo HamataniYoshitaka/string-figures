@@ -92,6 +92,28 @@ function createStripRowOpacity(
   });
 }
 
+const NONVERBAL_STRIP_CHAPTER_COUNT = NONVERBAL_CHAPTER_STILL_PAIRS.length;
+
+const AnimatedStripImage = Animated.createAnimatedComponent(Image);
+
+function applyStripChapterPrimaryOpacityTargets(
+  values: Animated.Value[],
+  chapterIndex: number,
+  segment: 'primary' | 'secondary',
+) {
+  for (let c = 0; c < NONVERBAL_STRIP_CHAPTER_COUNT; c++) {
+    const target =
+      c < chapterIndex || (c === chapterIndex && segment === 'secondary') ? 0 : 1;
+    values[c].setValue(target);
+  }
+}
+
+function resetStripChapterPrimaryOpacitiesToOne(values: Animated.Value[]) {
+  for (let c = 0; c < NONVERBAL_STRIP_CHAPTER_COUNT; c++) {
+    values[c].setValue(1);
+  }
+}
+
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
   chapters,
@@ -160,6 +182,20 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const bookmarkButtonScale = useRef(new Animated.Value(1)).current;
 
   const stillStripTranslateY = useRef(new Animated.Value(0)).current;
+  /** 各チャプター行の *-01 静止画の不透明度（1→0 で *-02 へクロスフェード） */
+  const stillChapterPrimaryOpacity = useRef(
+    Array.from({ length: NONVERBAL_STRIP_CHAPTER_COUNT }, () => new Animated.Value(1)),
+  ).current;
+
+  /** secondary レイヤー用: primary が 0 のとき 1 */
+  const stillChapterSecondaryOpacity = useMemo(
+    () =>
+      stillChapterPrimaryOpacity.map((v) =>
+        v.interpolate({ inputRange: [0, 1], outputRange: [1, 0] }),
+      ),
+    [stillChapterPrimaryOpacity],
+  );
+
   /** フィルムストリップ先頭空き含むウィンドウ先頭行インデックス */
   const scrollIndexRef = useRef(0);
   const prevChapterIndexForNavRef = useRef<number | undefined>(undefined);
@@ -210,10 +246,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     }
   };
 
-  const bumpStripScrollByOne = (animated: boolean) => {
-    setStripTranslateToIndex(scrollIndexRef.current + 1, animated);
-  };
-
   /** window 高さ変化時は現在 index を維持して即時反映 */
   useEffect(() => {
     setStripTranslateToIndex(scrollIndexRef.current, false);
@@ -228,6 +260,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
     if (paddingBumped) {
       setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
+      resetStripChapterPrimaryOpacitiesToOne(stillChapterPrimaryOpacity);
       prevChapterIndexForNavRef.current = currentChapterIndex;
       return;
     }
@@ -235,6 +268,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     if (prevCh === undefined) {
       prevChapterIndexForNavRef.current = currentChapterIndex;
       setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
+      applyStripChapterPrimaryOpacityTargets(stillChapterPrimaryOpacity, currentChapterIndex, 'primary');
       return;
     }
 
@@ -243,8 +277,10 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       const forwardJump = currentChapterIndex > prevCh + 1;
       if (wentBack || forwardJump) {
         setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
+        applyStripChapterPrimaryOpacityTargets(stillChapterPrimaryOpacity, currentChapterIndex, 'primary');
       } else if (currentChapterIndex === prevCh + 1) {
-        /** 次章へ（連続）: *-01 終了までスクロールは変えない */
+        /** 次章へ（連続）: スクロールは *-01 終了まで維持、静止画は章先頭＝primary に合わせる */
+        applyStripChapterPrimaryOpacityTargets(stillChapterPrimaryOpacity, currentChapterIndex, 'primary');
       }
       prevChapterIndexForNavRef.current = currentChapterIndex;
       return;
@@ -356,7 +392,23 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       const total = getTotalDurationMs();
 
       if (status.didJustFinish) {
-        bumpStripScrollByOne(true);
+        const nextScrollIndex = Math.min(scrollIndexRef.current + 1, maxStripScrollIndex);
+        const nextY = -nextScrollIndex * stripRowHeight;
+        scrollIndexRef.current = nextScrollIndex;
+        const ch = currentChapterIndex;
+        Animated.parallel([
+          Animated.timing(stillStripTranslateY, {
+            toValue: nextY,
+            duration: NONVERBAL_STILL_STRIP_SCROLL_MS,
+            useNativeDriver: true,
+          }),
+          Animated.timing(stillChapterPrimaryOpacity[ch], {
+            toValue: 0,
+            duration: NONVERBAL_STILL_STRIP_SCROLL_MS,
+            useNativeDriver: true,
+          }),
+        ]).start();
+
         segmentPhaseRef.current = 'secondary';
         activeSegmentRef.current = 'secondary';
         setActiveSegment('secondary');
@@ -475,26 +527,47 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       </View>
       <View pointerEvents="none" style={[styles.nonverbalStillStripViewport, { height: windowHeight }]}>
         <Animated.View style={{ transform: [{ translateY: stillStripTranslateY }] }}>
-          {NONVERBAL_STRIP_SOURCES.map((src, i) => (
-            <Animated.View
-              key={i}
-              style={{
-                width: '100%',
-                height: stripRowHeight,
-                alignItems: 'center',
-                justifyContent: 'center',
-                opacity: stripRowOpacities[i],
-              }}
-            >
-              {src == null ? (
-                <View style={[styles.nonverbalStripEmptySlot, { width: stripImageFrameWidth }]} />
-              ) : (
-                <View style={[styles.videoPlayer, { width: stripImageFrameWidth }]}>
-                  <Image source={src} style={styles.video} resizeMode="cover" />
-                </View>
-              )}
-            </Animated.View>
-          ))}
+          {NONVERBAL_STRIP_SOURCES.map((src, i) => {
+            const stripChapterIndex =
+              src != null && i >= 2 && i < 2 + NONVERBAL_STRIP_CHAPTER_COUNT ? i - 2 : null;
+            return (
+              <Animated.View
+                key={i}
+                style={{
+                  width: '100%',
+                  height: stripRowHeight,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  opacity: stripRowOpacities[i],
+                }}
+              >
+                {src == null || stripChapterIndex === null ? (
+                  <View style={[styles.nonverbalStripEmptySlot, { width: stripImageFrameWidth }]} />
+                ) : (
+                  <View style={[styles.videoPlayer, { width: stripImageFrameWidth }]}>
+                    <AnimatedStripImage
+                      source={NONVERBAL_CHAPTER_STILL_PAIRS[stripChapterIndex].secondary}
+                      style={[
+                        StyleSheet.absoluteFillObject,
+                        styles.video,
+                        { opacity: stillChapterSecondaryOpacity[stripChapterIndex] },
+                      ]}
+                      resizeMode="cover"
+                    />
+                    <AnimatedStripImage
+                      source={NONVERBAL_CHAPTER_STILL_PAIRS[stripChapterIndex].primary}
+                      style={[
+                        StyleSheet.absoluteFillObject,
+                        styles.video,
+                        { opacity: stillChapterPrimaryOpacity[stripChapterIndex] },
+                      ]}
+                      resizeMode="cover"
+                    />
+                  </View>
+                )}
+              </Animated.View>
+            );
+          })}
         </Animated.View>
       </View>
       <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
