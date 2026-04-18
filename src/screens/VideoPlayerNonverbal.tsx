@@ -44,19 +44,19 @@ const NONVERBAL_STILL_VERTICAL_GAP = 16;
 const NONVERBAL_CHAPTER_STILL_PAIRS = [
   {
     primary: require('../../assets/string-figures/1_star/chapters/img01-1.jpg'),
-    secondary: require('../../assets/string-figures/1_star/chapters/img01-2.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img01-1.jpg'),
   },
   {
     primary: require('../../assets/string-figures/1_star/chapters/img02-1.jpg'),
-    secondary: require('../../assets/string-figures/1_star/chapters/img02-2.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img02-1.jpg'),
   },
   {
     primary: require('../../assets/string-figures/1_star/chapters/img03-1.jpg'),
-    secondary: require('../../assets/string-figures/1_star/chapters/img03-2.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img03-1.jpg'),
   },
   {
     primary: require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
-    secondary: require('../../assets/string-figures/1_star/chapters/img04-2.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
   },
 ] as const;
 
@@ -194,6 +194,8 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const bookmarkButtonScale = useRef(new Animated.Value(1)).current;
 
   const stillStripTranslateY = useRef(new Animated.Value(0)).current;
+  /** 動画プレイヤー枠（黒背景・枠線含む）: 前半終了で即 0 → 後半再生直前に 1 */
+  const videoLayerOpacity = useRef(new Animated.Value(1)).current;
   /** 各チャプター行の *-01 静止画の不透明度（1→0 で *-02 へクロスフェード） */
   const stillChapterPrimaryOpacity = useRef(
     Array.from({ length: NONVERBAL_STRIP_CHAPTER_COUNT }, () => new Animated.Value(1)),
@@ -371,6 +373,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     clearSecondaryPlayDelayTimeout();
     clearStripScrollAfterPrimaryTimeout();
     secondaryPlayDeadlineMsRef.current = null;
+    videoLayerOpacity.setValue(1);
     segmentPhaseRef.current = 'idle';
     primaryDurationMsRef.current = 0;
     secondaryDurationMsRef.current = 0;
@@ -383,6 +386,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     clearSecondaryPlayDelayTimeout();
     clearStripScrollAfterPrimaryTimeout();
     secondaryPlayDeadlineMsRef.current = null;
+    videoLayerOpacity.setValue(1);
     segmentPhaseRef.current = 'idle';
     activeSegmentRef.current = 'primary';
     setActiveSegment('primary');
@@ -407,6 +411,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       clearSecondaryPlayDelayTimeout();
       clearStripScrollAfterPrimaryTimeout();
       secondaryPlayDeadlineMsRef.current = null;
+      videoLayerOpacity.setValue(1);
       void onVideoLoad();
     } else {
       clearSecondaryPlayDelayTimeout();
@@ -419,6 +424,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         secondaryPlayDelayTimeoutRef.current = null;
         void (async () => {
           try {
+            videoLayerOpacity.setValue(1);
             await videoRef.current?.playAsync();
           } catch {
             /* noop */
@@ -453,6 +459,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       const total = getTotalDurationMs();
 
       if (status.didJustFinish) {
+        videoLayerOpacity.setValue(0);
         const nextScrollIndex = Math.min(scrollIndexRef.current + 1, maxStripScrollIndex);
         const nextY = -nextScrollIndex * stripRowSlotHeight;
         scrollIndexRef.current = nextScrollIndex;
@@ -765,7 +772,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
             { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL },
           ]}
         >
-          <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
+          <Animated.View style={[styles.videoPlayer, { width: videoContentWidth, opacity: videoLayerOpacity }]}>
             <Video
               key={`ch${currentChapterIndex}-${activeSegment}`}
               ref={videoRef}
@@ -780,7 +787,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
               onLoad={handleVideoLoad}
             />
-          </View>
+          </Animated.View>
         </View>
       </View>
     </Animated.View>
