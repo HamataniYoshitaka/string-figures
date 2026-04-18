@@ -74,6 +74,24 @@ function getStripScrollTargetForChapterSegment(chapterIndex: number, segment: 'p
   return chapterIndex + (segment === 'secondary' ? 1 : 0);
 }
 
+/**
+ * 4行ビューポートで上下1行はフェードアウト、中央2行は不透明になる opacity を
+ * translateY から補間（行中心が H/2〜7H/2 の帯で 0→1→0 に滑らかに変化）
+ */
+function createStripRowOpacity(
+  translateY: Animated.Value,
+  rowIndex: number,
+  rowHeight: number,
+): Animated.AnimatedInterpolation<number> {
+  const H = rowHeight;
+  const centerY = Animated.add(translateY, (rowIndex + 0.5) * H);
+  return centerY.interpolate({
+    inputRange: [-2 * H, 0, H / 2, (3 * H) / 2, (5 * H) / 2, (7 * H) / 2, 4 * H, 6 * H],
+    outputRange: [0, 0, 0, 1, 1, 0, 0, 0],
+    extrapolate: 'clamp',
+  });
+}
+
 const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
   chapters,
@@ -171,6 +189,11 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     const wFromHeight = (maxH * 16) / 9;
     return Math.min(nonverbalStillStripImageWidth, wFromHeight);
   }, [nonverbalStillStripImageWidth, stripRowHeight]);
+
+  const stripRowOpacities = useMemo(
+    () => NONVERBAL_STRIP_SOURCES.map((_, i) => createStripRowOpacity(stillStripTranslateY, i, stripRowHeight)),
+    [stillStripTranslateY, stripRowHeight],
+  );
 
   const setStripTranslateToIndex = (index: number, animated: boolean) => {
     const clamped = Math.max(0, Math.min(index, maxStripScrollIndex));
@@ -453,13 +476,14 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       <View pointerEvents="none" style={[styles.nonverbalStillStripViewport, { height: windowHeight }]}>
         <Animated.View style={{ transform: [{ translateY: stillStripTranslateY }] }}>
           {NONVERBAL_STRIP_SOURCES.map((src, i) => (
-            <View
+            <Animated.View
               key={i}
               style={{
                 width: '100%',
                 height: stripRowHeight,
                 alignItems: 'center',
                 justifyContent: 'center',
+                opacity: stripRowOpacities[i],
               }}
             >
               {src == null ? (
@@ -469,7 +493,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   <Image source={src} style={styles.video} resizeMode="cover" />
                 </View>
               )}
-            </View>
+            </Animated.View>
           ))}
         </Animated.View>
       </View>
