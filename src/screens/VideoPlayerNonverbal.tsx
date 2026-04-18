@@ -74,26 +74,13 @@ function getStripScrollTargetForChapterSegment(chapterIndex: number, segment: 'p
   return chapterIndex + (segment === 'secondary' ? 1 : 0);
 }
 
-/**
- * 4行ビューポートで上下1行はフェードアウト、中央2行は不透明になる opacity を
- * translateY から補間（行中心が H/2〜7H/2 の帯で 0→1→0 に滑らかに変化）
- * rowStride: 行の高さ + 行間（スクロール1P分）
- * verticalOffset: ストリップ全体を画面縦中央に置くためのオフセット（marginTop と同じ値）
- */
-function createStripRowOpacity(
-  translateY: Animated.Value,
-  rowIndex: number,
-  rowHeight: number,
-  rowStride: number,
-  verticalOffset: number,
-): Animated.AnimatedInterpolation<number> {
-  const H = rowHeight;
-  const centerY = Animated.add(translateY, verticalOffset + rowIndex * rowStride + H / 2);
-  return centerY.interpolate({
-    inputRange: [-2 * H, 0, H / 2, (3 * H) / 2, (5 * H) / 2, (7 * H) / 2, 4 * H, 6 * H],
-    outputRange: [0, 0, 0, 1, 1, 0, 0, 0],
-    extrapolate: 'clamp',
-  });
+/** 可視4行のうち上1・下1は 0、中央2行は 1（端末に依存しない） */
+function getStripRowOpacityForViewport(rowIndex: number, scrollIndex: number): number {
+  const vp = rowIndex - scrollIndex;
+  if (vp === 1 || vp === 2) {
+    return 1;
+  }
+  return 0;
 }
 
 const NONVERBAL_STRIP_CHAPTER_COUNT = NONVERBAL_CHAPTER_STILL_PAIRS.length;
@@ -202,6 +189,8 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
 
   /** フィルムストリップ先頭空き含むウィンドウ先頭行インデックス */
   const scrollIndexRef = useRef(0);
+  /** 上と同期（opacity は補間せず scrollIndex から決める） */
+  const [stripScrollIndex, setStripScrollIndex] = useState(0);
   const prevChapterIndexForNavRef = useRef<number | undefined>(undefined);
   const prevNonverbalPaddingKeyRef = useRef(nonverbalPaddingResetKey);
 
@@ -228,34 +217,20 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   /** 動画 View と同じ 16:9 の高さ（画面高に合わせて縮めない） */
   const stillCardHeight = videoContentWidth * (9 / 16);
   const stripRowSlotHeight = stillCardHeight + NONVERBAL_STILL_VERTICAL_GAP;
-  const totalStripHeight =
-    NONVERBAL_STRIP_SOURCES.length * stillCardHeight +
-    (NONVERBAL_STRIP_SOURCES.length - 1) * NONVERBAL_STILL_VERTICAL_GAP;
-  /** ストリップ全体の縦中央を画面中央に合わせる（はみ出し可。負の値で上にシフト） */
-  const stripCenteringOffset = (windowHeight - totalStripHeight) / 2;
+  /** 可視4行（＋行間3つ）の高さ。ストリップ全体ではなくこの帯の中央を画面中央に合わせる */
+  const visibleFourStripRowsHeight =
+    4 * stillCardHeight + 3 * NONVERBAL_STILL_VERTICAL_GAP;
+  const stripCenteringOffset = windowHeight / 2 - visibleFourStripRowsHeight / 2;
 
   const nonverbalStillPageIndex = Math.min(
     currentChapterIndex,
     NONVERBAL_CHAPTER_STILL_PAIRS.length - 1,
   );
 
-  const stripRowOpacities = useMemo(
-    () =>
-      NONVERBAL_STRIP_SOURCES.map((_, i) =>
-        createStripRowOpacity(
-          stillStripTranslateY,
-          i,
-          stillCardHeight,
-          stripRowSlotHeight,
-          stripCenteringOffset,
-        ),
-      ),
-    [stillStripTranslateY, stillCardHeight, stripRowSlotHeight, stripCenteringOffset],
-  );
-
   const setStripTranslateToIndex = (index: number, animated: boolean) => {
     const clamped = Math.max(0, Math.min(index, maxStripScrollIndex));
     scrollIndexRef.current = clamped;
+    setStripScrollIndex(clamped);
     const y = -clamped * stripRowSlotHeight;
     if (animated) {
       Animated.timing(stillStripTranslateY, {
@@ -417,6 +392,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         const nextScrollIndex = Math.min(scrollIndexRef.current + 1, maxStripScrollIndex);
         const nextY = -nextScrollIndex * stripRowSlotHeight;
         scrollIndexRef.current = nextScrollIndex;
+        setStripScrollIndex(nextScrollIndex);
         const ch = currentChapterIndex;
         Animated.parallel([
           Animated.timing(stillStripTranslateY, {
@@ -566,7 +542,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   marginBottom: i < NONVERBAL_STRIP_SOURCES.length - 1 ? NONVERBAL_STILL_VERTICAL_GAP : 0,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  opacity: stripRowOpacities[i],
+                  opacity: getStripRowOpacityForViewport(i, stripScrollIndex),
                 }}
               >
                 {src == null || stripChapterIndex === null ? (
