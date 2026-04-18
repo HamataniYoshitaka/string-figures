@@ -34,11 +34,17 @@ const NONVERBAL_STRIP_SCROLL_AFTER_PRIMARY_END_DELAY_MS = 500;
 /** 再生指示から実際の再生開始まで（NonverbalVideoPlayerScreen の play 遅延と同値） */
 export const NONVERBAL_PLAY_START_DELAY_MS = 500;
 
-/** 前半（*-1）終了時刻から、後半（*-2）の再生開始までの経過時間 */
-const NONVERBAL_PRIMARY_END_TO_SECONDARY_PLAY_MS = 1500;
+/** 前半終了から後半（*-2）の Video をマウントしてロードを開始するまでの遅延 */
+const NONVERBAL_SECONDARY_MOUNT_DELAY_MS = 300;
+
+/** 前半終了から後半をフェードイン開始するまでの時間（この時点まで opacity は 0） */
+const NONVERBAL_SECONDARY_FADE_IN_START_MS = 1200;
 
 /** 縦並び2枚のあいだ（フィルムストリップ行間の固定 16pt と揃える） */
 const NONVERBAL_STILL_VERTICAL_GAP = 16;
+
+/** 動画レイヤーの不透明度 0↔1 のフェード時間（前半終了〜0、1.2s〜1 のフェードに使用） */
+const NONVERBAL_VIDEO_LAYER_OPACITY_MS = 300;
 
 /** チャプターごとの静止画（primary / secondary に加え、可視スロット2・3用の standby） */
 const NONVERBAL_CHAPTER_STILL_PAIRS = [
@@ -50,7 +56,7 @@ const NONVERBAL_CHAPTER_STILL_PAIRS = [
   {
     primary: require('../../assets/string-figures/1_star/chapters/img02-1.jpg'),
     secondary: require('../../assets/string-figures/1_star/chapters/img02-1.jpg'),
-    standby: require('../../assets/string-figures/1_star/chapters/img01-2.jpg'),
+    standby: require('../../assets/string-figures/1_star/chapters/img00.jpg'),
   },
   {
     primary: require('../../assets/string-figures/1_star/chapters/img03-1.jpg'),
@@ -59,19 +65,29 @@ const NONVERBAL_CHAPTER_STILL_PAIRS = [
   },
   {
     primary: require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
-    secondary: require('../../assets/string-figures/1_star/chapters/img04-2.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
     standby: require('../../assets/string-figures/1_star/chapters/img02-2.jpg'),
+  },
+  /** 再生は4章まで。ストリップ末尾のプレビュー用に [3] と同一画像 */
+  {
+    primary: require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+    standby: require('../../assets/string-figures/1_star/chapters/img03-2.jpg'),
   },
 ] as const;
 
-/** フィルムストリップ: img01-1 ～ img04-1 のみ */
-const NONVERBAL_STILL_PRIMARY_IMAGES = NONVERBAL_CHAPTER_STILL_PAIRS.map((p) => p.primary);
-
-/** 先頭空2 + 4枚 + 末尾空2（ch1 初期 [空,空,01-1,02-1]、最終 ch [02-1,03-1,04-1,空] 等） */
+/**
+ * ストリップ各行: null=空行、数=章インデックス（0..N-1）。
+ * 先頭空2 + 全章 + 末尾空2。末尾の章行が NONVERBAL_CHAPTER_STILL_PAIRS の最後の要素に対応する。
+ */
 const NONVERBAL_STRIP_SOURCES: readonly (number | null)[] = [
   null,
   null,
-  ...NONVERBAL_STILL_PRIMARY_IMAGES,
+  0,
+  1,
+  2,
+  3,
+  4,
   null,
   null,
 ];
@@ -225,8 +241,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const bookmarkButtonScale = useRef(new Animated.Value(1)).current;
 
   const stillStripTranslateY = useRef(new Animated.Value(0)).current;
-  /** 動画プレイヤー枠（黒背景・枠線含む）: 前半終了で即 0 → 後半再生直前に 1 */
+  /** 動画プレイヤー枠: 前半終了後 0.3s で 0 → 1.2s でフェードイン開始 → 1.5s で 1 */
   const videoLayerOpacity = useRef(new Animated.Value(1)).current;
+  const fadeVideoLayerOpacityTo = (toValue: number) => {
+    Animated.timing(videoLayerOpacity, {
+      toValue,
+      duration: NONVERBAL_VIDEO_LAYER_OPACITY_MS,
+      useNativeDriver: true,
+    }).start();
+  };
   /** 各チャプター行の *-02（上層）の不透明度。primary は常に 1 のまま、ここだけ 0→1 で重ねる */
   const stillChapterSecondaryOpacity = useRef(
     Array.from({ length: NONVERBAL_STRIP_CHAPTER_COUNT }, () => new Animated.Value(0)),
@@ -241,14 +264,20 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const prevChapterIndexForNavRef = useRef<number | undefined>(undefined);
   const prevNonverbalPaddingKeyRef = useRef(nonverbalPaddingResetKey);
   const secondaryPlayDelayTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  /** 前半終了時刻基準で後半 playAsync を呼ぶ締切（epoch ms） */
-  const secondaryPlayDeadlineMsRef = useRef<number | null>(null);
+  /** 前半終了から後半マウントまでの遅延用 */
+  const secondaryMountAfterPrimaryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** 前半が終了した時刻（epoch ms）。後半の固定タイムラインに使用 */
+  const primarySegmentEndedAtRef = useRef<number | null>(null);
   const stripScrollAfterPrimaryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearSecondaryPlayDelayTimeout = () => {
     if (secondaryPlayDelayTimeoutRef.current != null) {
       clearTimeout(secondaryPlayDelayTimeoutRef.current);
       secondaryPlayDelayTimeoutRef.current = null;
+    }
+    if (secondaryMountAfterPrimaryTimeoutRef.current != null) {
+      clearTimeout(secondaryMountAfterPrimaryTimeoutRef.current);
+      secondaryMountAfterPrimaryTimeoutRef.current = null;
     }
   };
 
@@ -402,7 +431,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   useEffect(() => {
     clearSecondaryPlayDelayTimeout();
     clearStripScrollAfterPrimaryTimeout();
-    secondaryPlayDeadlineMsRef.current = null;
+    primarySegmentEndedAtRef.current = null;
     videoLayerOpacity.setValue(1);
     segmentPhaseRef.current = 'idle';
     primaryDurationMsRef.current = 0;
@@ -415,7 +444,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     if (!nonverbalPaddingResetKey) return;
     clearSecondaryPlayDelayTimeout();
     clearStripScrollAfterPrimaryTimeout();
-    secondaryPlayDeadlineMsRef.current = null;
+    primarySegmentEndedAtRef.current = null;
     videoLayerOpacity.setValue(1);
     segmentPhaseRef.current = 'idle';
     activeSegmentRef.current = 'primary';
@@ -440,27 +469,20 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     if (seg === 'primary') {
       clearSecondaryPlayDelayTimeout();
       clearStripScrollAfterPrimaryTimeout();
-      secondaryPlayDeadlineMsRef.current = null;
-      videoLayerOpacity.setValue(1);
+      primarySegmentEndedAtRef.current = null;
+      fadeVideoLayerOpacityTo(1);
       void onVideoLoad();
     } else {
-      clearSecondaryPlayDelayTimeout();
-      const deadline = secondaryPlayDeadlineMsRef.current;
-      const delayMs =
-        deadline != null
-          ? Math.max(0, deadline - Date.now())
-          : NONVERBAL_PRIMARY_END_TO_SECONDARY_PLAY_MS;
-      secondaryPlayDelayTimeoutRef.current = setTimeout(() => {
-        secondaryPlayDelayTimeoutRef.current = null;
+      const startedAt = primarySegmentEndedAtRef.current;
+      if (startedAt != null && Date.now() >= startedAt + NONVERBAL_SECONDARY_FADE_IN_START_MS) {
         void (async () => {
           try {
-            videoLayerOpacity.setValue(1);
             await videoRef.current?.playAsync();
           } catch {
             /* noop */
           }
         })();
-      }, delayMs);
+      }
     }
   };
 
@@ -489,12 +511,29 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       const total = getTotalDurationMs();
 
       if (status.didJustFinish) {
-        videoLayerOpacity.setValue(0);
+        clearSecondaryPlayDelayTimeout();
+        primarySegmentEndedAtRef.current = Date.now();
+        fadeVideoLayerOpacityTo(0);
+        secondaryMountAfterPrimaryTimeoutRef.current = setTimeout(() => {
+          secondaryMountAfterPrimaryTimeoutRef.current = null;
+          activeSegmentRef.current = 'secondary';
+          setActiveSegment('secondary');
+        }, NONVERBAL_SECONDARY_MOUNT_DELAY_MS);
+        secondaryPlayDelayTimeoutRef.current = setTimeout(() => {
+          secondaryPlayDelayTimeoutRef.current = null;
+          void (async () => {
+            try {
+              fadeVideoLayerOpacityTo(1);
+              await videoRef.current?.playAsync();
+            } catch {
+              /* noop */
+            }
+          })();
+        }, NONVERBAL_SECONDARY_FADE_IN_START_MS);
         const nextScrollIndex = Math.min(scrollIndexRef.current + 1, maxStripScrollIndex);
         const nextY = -nextScrollIndex * stripRowSlotHeight;
         scrollIndexRef.current = nextScrollIndex;
         const ch = currentChapterIndex;
-        secondaryPlayDeadlineMsRef.current = Date.now() + NONVERBAL_PRIMARY_END_TO_SECONDARY_PLAY_MS;
         clearStripScrollAfterPrimaryTimeout();
         stripScrollAfterPrimaryTimeoutRef.current = setTimeout(() => {
           stripScrollAfterPrimaryTimeoutRef.current = null;
@@ -521,8 +560,6 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         }, NONVERBAL_STRIP_SCROLL_AFTER_PRIMARY_END_DELAY_MS);
 
         segmentPhaseRef.current = 'secondary';
-        activeSegmentRef.current = 'secondary';
-        setActiveSegment('secondary');
         onPlaybackStatusUpdate({
           ...status,
           isLoaded: true,
@@ -644,8 +681,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
           }}
         >
           {NONVERBAL_STRIP_SOURCES.map((src, i) => {
-            const stripChapterIndex =
-              src != null && i >= 2 && i < 2 + NONVERBAL_STRIP_CHAPTER_COUNT ? i - 2 : null;
+            const stripChapterIndex = typeof src === 'number' ? src : null;
             return (
               <Animated.View
                 key={i}
@@ -658,7 +694,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   opacity: stripRowOpacities[i],
                 }}
               >
-                {src == null || stripChapterIndex === null ? (
+                {stripChapterIndex === null ? (
                   <View style={[styles.nonverbalStripEmptySlot, { width: videoContentWidth }]} />
                 ) : (
                   <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
