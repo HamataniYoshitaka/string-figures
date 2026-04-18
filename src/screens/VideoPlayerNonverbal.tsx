@@ -40,23 +40,27 @@ const NONVERBAL_PRIMARY_END_TO_SECONDARY_PLAY_MS = 1500;
 /** 縦並び2枚のあいだ（フィルムストリップ行間の固定 16pt と揃える） */
 const NONVERBAL_STILL_VERTICAL_GAP = 16;
 
-/** チャプターごとの静止画2枚（*-1 が上、*-2 が下） */
+/** チャプターごとの静止画（primary / secondary に加え、可視スロット2・3用の standby） */
 const NONVERBAL_CHAPTER_STILL_PAIRS = [
   {
     primary: require('../../assets/string-figures/1_star/chapters/img01-1.jpg'),
-    secondary: require('../../assets/string-figures/1_star/chapters/img01-2.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img01-1.jpg'),
+    standby: require('../../assets/string-figures/1_star/chapters/img01-1.jpg'),
   },
   {
     primary: require('../../assets/string-figures/1_star/chapters/img02-1.jpg'),
-    secondary: require('../../assets/string-figures/1_star/chapters/img02-2.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img02-1.jpg'),
+    standby: require('../../assets/string-figures/1_star/chapters/img01-2.jpg'),
   },
   {
     primary: require('../../assets/string-figures/1_star/chapters/img03-1.jpg'),
-    secondary: require('../../assets/string-figures/1_star/chapters/img03-2.jpg'),
+    secondary: require('../../assets/string-figures/1_star/chapters/img03-1.jpg'),
+    standby: require('../../assets/string-figures/1_star/chapters/img01-2.jpg'),
   },
   {
     primary: require('../../assets/string-figures/1_star/chapters/img04-1.jpg'),
     secondary: require('../../assets/string-figures/1_star/chapters/img04-2.jpg'),
+    standby: require('../../assets/string-figures/1_star/chapters/img02-2.jpg'),
   },
 ] as const;
 
@@ -123,6 +127,33 @@ function applyStripChapterSecondaryOpacityTargets(
 function resetStripChapterSecondaryOpacitiesToZero(values: Animated.Value[]) {
   for (let c = 0; c < NONVERBAL_STRIP_CHAPTER_COUNT; c++) {
     values[c].setValue(0);
+  }
+}
+
+/** スロット3＝次章 standby、スロット2＝前半中は次章 standby／ブリッジでは次々章 standby（表 A/B/C） */
+function getStripChapterStandbyOpacityTargets(
+  chapterIndex: number,
+  segment: 'primary' | 'secondary',
+): number[] {
+  return Array.from({ length: NONVERBAL_STRIP_CHAPTER_COUNT }, (_, c) => {
+    if (segment === 'primary') {
+      return c === chapterIndex + 1 && c < NONVERBAL_STRIP_CHAPTER_COUNT ? 1 : 0;
+    }
+    if (c < NONVERBAL_STRIP_CHAPTER_COUNT && (c === chapterIndex + 1 || c === chapterIndex + 2)) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
+function applyStripChapterStandbyOpacityTargets(
+  values: Animated.Value[],
+  chapterIndex: number,
+  segment: 'primary' | 'secondary',
+) {
+  const targets = getStripChapterStandbyOpacityTargets(chapterIndex, segment);
+  for (let c = 0; c < NONVERBAL_STRIP_CHAPTER_COUNT; c++) {
+    values[c].setValue(targets[c]);
   }
 }
 
@@ -198,6 +229,10 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const videoLayerOpacity = useRef(new Animated.Value(1)).current;
   /** 各チャプター行の *-02（上層）の不透明度。primary は常に 1 のまま、ここだけ 0→1 で重ねる */
   const stillChapterSecondaryOpacity = useRef(
+    Array.from({ length: NONVERBAL_STRIP_CHAPTER_COUNT }, () => new Animated.Value(0)),
+  ).current;
+  /** スタンバイ静止画（最上層）。可視スロット2・3だけで primary/secondary と切り替え */
+  const stillChapterStandbyOpacity = useRef(
     Array.from({ length: NONVERBAL_STRIP_CHAPTER_COUNT }, () => new Animated.Value(0)),
   ).current;
 
@@ -292,6 +327,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     if (paddingBumped) {
       setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
       resetStripChapterSecondaryOpacitiesToZero(stillChapterSecondaryOpacity);
+      applyStripChapterStandbyOpacityTargets(stillChapterStandbyOpacity, currentChapterIndex, 'primary');
       prevChapterIndexForNavRef.current = currentChapterIndex;
       return;
     }
@@ -300,6 +336,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       prevChapterIndexForNavRef.current = currentChapterIndex;
       setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
       applyStripChapterSecondaryOpacityTargets(stillChapterSecondaryOpacity, currentChapterIndex, 'primary');
+      applyStripChapterStandbyOpacityTargets(stillChapterStandbyOpacity, currentChapterIndex, 'primary');
       return;
     }
 
@@ -309,9 +346,11 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       if (wentBack || forwardJump) {
         setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
         applyStripChapterSecondaryOpacityTargets(stillChapterSecondaryOpacity, currentChapterIndex, 'primary');
+        applyStripChapterStandbyOpacityTargets(stillChapterStandbyOpacity, currentChapterIndex, 'primary');
       } else if (currentChapterIndex === prevCh + 1) {
         /** 次章へ（連続）: スクロールは *-01 終了まで維持、静止画は章先頭＝primary に合わせる */
         applyStripChapterSecondaryOpacityTargets(stillChapterSecondaryOpacity, currentChapterIndex, 'primary');
+        applyStripChapterStandbyOpacityTargets(stillChapterStandbyOpacity, currentChapterIndex, 'primary');
       }
       prevChapterIndexForNavRef.current = currentChapterIndex;
       return;
@@ -459,6 +498,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         clearStripScrollAfterPrimaryTimeout();
         stripScrollAfterPrimaryTimeoutRef.current = setTimeout(() => {
           stripScrollAfterPrimaryTimeoutRef.current = null;
+          const standbyTargets = getStripChapterStandbyOpacityTargets(ch, 'secondary');
           Animated.parallel([
             Animated.timing(stillStripTranslateY, {
               toValue: nextY,
@@ -470,6 +510,13 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               duration: NONVERBAL_STILL_STRIP_SCROLL_MS,
               useNativeDriver: true,
             }),
+            ...stillChapterStandbyOpacity.map((v, c) =>
+              Animated.timing(v, {
+                toValue: standbyTargets[c],
+                duration: NONVERBAL_STILL_STRIP_SCROLL_MS,
+                useNativeDriver: true,
+              }),
+            ),
           ]).start();
         }, NONVERBAL_STRIP_SCROLL_AFTER_PRIMARY_END_DELAY_MS);
 
@@ -626,6 +673,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                         StyleSheet.absoluteFillObject,
                         styles.video,
                         { opacity: stillChapterSecondaryOpacity[stripChapterIndex] },
+                      ]}
+                      resizeMode="cover"
+                    />
+                    <AnimatedStripImage
+                      source={NONVERBAL_CHAPTER_STILL_PAIRS[stripChapterIndex].standby}
+                      style={[
+                        StyleSheet.absoluteFillObject,
+                        styles.video,
+                        { opacity: stillChapterStandbyOpacity[stripChapterIndex] },
                       ]}
                       resizeMode="cover"
                     />
