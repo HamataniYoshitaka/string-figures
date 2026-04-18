@@ -40,6 +40,13 @@ const NONVERBAL_SECONDARY_MOUNT_DELAY_MS = 300;
 /** 前半終了から後半をフェードイン開始するまでの時間（この時点まで opacity は 0） */
 const NONVERBAL_SECONDARY_FADE_IN_START_MS = 1200;
 
+/** 後半フェードイン開始から再生開始までの追加遅延 */
+const NONVERBAL_SECONDARY_PLAY_DELAY_MS = 500;
+
+/** 前半終了から後半の playAsync まで（= FADE_IN_START + PLAY_DELAY） */
+const NONVERBAL_SECONDARY_PLAY_START_MS =
+  NONVERBAL_SECONDARY_FADE_IN_START_MS + NONVERBAL_SECONDARY_PLAY_DELAY_MS;
+
 /** 縦並び2枚のあいだ（フィルムストリップ行間の固定 16pt と揃える） */
 const NONVERBAL_STILL_VERTICAL_GAP = 16;
 
@@ -241,7 +248,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const bookmarkButtonScale = useRef(new Animated.Value(1)).current;
 
   const stillStripTranslateY = useRef(new Animated.Value(0)).current;
-  /** 動画プレイヤー枠: 前半終了後 0.3s で 0 → 1.2s でフェードイン開始 → 1.5s で 1 */
+  /** 動画プレイヤー枠: 前半終了後 0.3s で 0 → 1.2s でフェードイン → 1.5s で opacity 1、再生は +0.5s */
   const videoLayerOpacity = useRef(new Animated.Value(1)).current;
   const fadeVideoLayerOpacityTo = (toValue: number) => {
     Animated.timing(videoLayerOpacity, {
@@ -263,6 +270,9 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const scrollIndexRef = useRef(0);
   const prevChapterIndexForNavRef = useRef<number | undefined>(undefined);
   const prevNonverbalPaddingKeyRef = useRef(nonverbalPaddingResetKey);
+  /** 前半終了から後半レイヤーをフェードインするタイマー */
+  const secondaryFadeInTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** 前半終了から後半 playAsync するタイマー */
   const secondaryPlayDelayTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   /** 前半終了から後半マウントまでの遅延用 */
   const secondaryMountAfterPrimaryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -271,6 +281,10 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
   const stripScrollAfterPrimaryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearSecondaryPlayDelayTimeout = () => {
+    if (secondaryFadeInTimeoutRef.current != null) {
+      clearTimeout(secondaryFadeInTimeoutRef.current);
+      secondaryFadeInTimeoutRef.current = null;
+    }
     if (secondaryPlayDelayTimeoutRef.current != null) {
       clearTimeout(secondaryPlayDelayTimeoutRef.current);
       secondaryPlayDelayTimeoutRef.current = null;
@@ -474,7 +488,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
       void onVideoLoad();
     } else {
       const startedAt = primarySegmentEndedAtRef.current;
-      if (startedAt != null && Date.now() >= startedAt + NONVERBAL_SECONDARY_FADE_IN_START_MS) {
+      if (startedAt != null && Date.now() >= startedAt + NONVERBAL_SECONDARY_PLAY_START_MS) {
         void (async () => {
           try {
             await videoRef.current?.playAsync();
@@ -519,17 +533,20 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
           activeSegmentRef.current = 'secondary';
           setActiveSegment('secondary');
         }, NONVERBAL_SECONDARY_MOUNT_DELAY_MS);
+        secondaryFadeInTimeoutRef.current = setTimeout(() => {
+          secondaryFadeInTimeoutRef.current = null;
+          fadeVideoLayerOpacityTo(1);
+        }, NONVERBAL_SECONDARY_FADE_IN_START_MS);
         secondaryPlayDelayTimeoutRef.current = setTimeout(() => {
           secondaryPlayDelayTimeoutRef.current = null;
           void (async () => {
             try {
-              fadeVideoLayerOpacityTo(1);
               await videoRef.current?.playAsync();
             } catch {
               /* noop */
             }
           })();
-        }, NONVERBAL_SECONDARY_FADE_IN_START_MS);
+        }, NONVERBAL_SECONDARY_PLAY_START_MS);
         const nextScrollIndex = Math.min(scrollIndexRef.current + 1, maxStripScrollIndex);
         const nextY = -nextScrollIndex * stripRowSlotHeight;
         scrollIndexRef.current = nextScrollIndex;
@@ -851,7 +868,12 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
             { paddingHorizontal: VIDEO_ROW_PADDING_HORIZONTAL },
           ]}
         >
-          <Animated.View style={[styles.videoPlayer, { width: videoContentWidth, opacity: videoLayerOpacity }]}>
+          <Animated.View
+            style={[styles.videoPlayer, { width: videoContentWidth, opacity: videoLayerOpacity }]}
+            // Android: Video 子要素と opacity アニメーションの合成で黒一色になるのを避ける（Surface のアルファ扱い）
+            needsOffscreenAlphaCompositing={Platform.OS === 'android'}
+            renderToHardwareTextureAndroid={Platform.OS === 'android'}
+          >
             <Video
               key={`ch${currentChapterIndex}-${activeSegment}`}
               ref={videoRef}
