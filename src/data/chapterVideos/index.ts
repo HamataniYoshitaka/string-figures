@@ -1,9 +1,15 @@
 import {
+  FIGURE_1_STAR_NONVERBAL_CHAPTER_STILL_PAIRS,
   FIGURE_1_STAR_NONVERBAL_TOTAL_CHAPTERS,
   FIGURE_1_STAR_NONVERBAL_VIDEO_PAIRS,
   FIGURE_1_STAR_VIDEOS,
 } from './figure-1_star';
-import { FIGURE_2_JACOBS_LADDER4_VIDEOS } from './figure-2_jacobs-ladder4';
+import {
+  FIGURE_2_JACOBS_LADDER4_NONVERBAL_CHAPTER_STILL_PAIRS,
+  FIGURE_2_JACOBS_LADDER4_NONVERBAL_TOTAL_CHAPTERS,
+  FIGURE_2_JACOBS_LADDER4_NONVERBAL_VIDEO_PAIRS,
+  FIGURE_2_JACOBS_LADDER4_VIDEOS,
+} from './figure-2_jacobs-ladder4';
 import { FIGURE_3_SPIDERWEB_VIDEOS } from './figure-3_spiderweb';
 import { FIGURE_4_VOLCANO_VIDEOS } from './figure-4_volcano';
 import { FIGURE_5_MANY_STARS_VIDEOS } from './figure-5_many-stars';
@@ -118,6 +124,12 @@ export type NonverbalChapterVideoPair = {
   secondary: any;
 };
 
+export type NonverbalChapterStillTriple = {
+  primary: any;
+  secondary: any;
+  standby: any;
+};
+
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '1_star': FIGURE_1_STAR_VIDEOS,
   '2_jacobs-ladder4': FIGURE_2_JACOBS_LADDER4_VIDEOS,
@@ -229,10 +241,18 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
 
 export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, NonverbalChapterVideoPair>> = {
   '1_star': FIGURE_1_STAR_NONVERBAL_VIDEO_PAIRS,
+  '2_jacobs-ladder4': FIGURE_2_JACOBS_LADDER4_NONVERBAL_VIDEO_PAIRS,
   '13_easy-broom': FIGURE_13_EASY_BROOM_NONVERBAL_VIDEO_PAIRS,
 };
 
 export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
   '1_star': FIGURE_1_STAR_NONVERBAL_TOTAL_CHAPTERS,
+  '2_jacobs-ladder4': FIGURE_2_JACOBS_LADDER4_NONVERBAL_TOTAL_CHAPTERS,
   '13_easy-broom': FIGURE_13_EASY_BROOM_NONVERBAL_TOTAL_CHAPTERS,
+};
+
+/** 非言語モードのフィルムストリップ用静止画（FIGURE ごとに件数・パスが異なる） */
+export const NONVERBAL_CHAPTER_STILL_PAIRS: Record<string, readonly NonverbalChapterStillTriple[]> = {
+  '1_star': FIGURE_1_STAR_NONVERBAL_CHAPTER_STILL_PAIRS,
+  '2_jacobs-ladder4': FIGURE_2_JACOBS_LADDER4_NONVERBAL_CHAPTER_STILL_PAIRS,
 };

@@ -25,3 +25,36 @@ export const FIGURE_1_STAR_NONVERBAL_VIDEO_PAIRS = {
 };
 
 export const FIGURE_1_STAR_NONVERBAL_TOTAL_CHAPTERS = 4;
+
+/**
+ * フィルムストリップ各行に対応する静止画（primary / secondary に加え、可視スロット2・3用の standby）。
+ * 要素数は「再生チャプター数 + 1」: 最後はストリップ末尾プレビュー用（最終章と同一構図の別カット等）。
+ */
+export const FIGURE_1_STAR_NONVERBAL_CHAPTER_STILL_PAIRS = [
+  {
+    primary: require('../../../assets/string-figures/1_star/chapters/img01-1.jpg'),
+    secondary: require('../../../assets/string-figures/1_star/chapters/img01-1.jpg'),
+    standby: require('../../../assets/string-figures/1_star/chapters/img01-1.jpg'),
+  },
+  {
+    primary: require('../../../assets/string-figures/1_star/chapters/img02-1.jpg'),
+    secondary: require('../../../assets/string-figures/1_star/chapters/img02-1.jpg'),
+    standby: require('../../../assets/string-figures/1_star/chapters/img00.jpg'),
+  },
+  {
+    primary: require('../../../assets/string-figures/1_star/chapters/img03-1.jpg'),
+    secondary: require('../../../assets/string-figures/1_star/chapters/img03-1.jpg'),
+    standby: require('../../../assets/string-figures/1_star/chapters/img01-2.jpg'),
+  },
+  {
+    primary: require('../../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+    secondary: require('../../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+    standby: require('../../../assets/string-figures/1_star/chapters/img02-2.jpg'),
+  },
+  /** 再生は最終章まで。ストリップ末尾のプレビュー用に直前スロットと別画像 */
+  {
+    primary: require('../../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+    secondary: require('../../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+    standby: require('../../../assets/string-figures/1_star/chapters/img03-2.jpg'),
+  },
+] as const;
