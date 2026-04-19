@@ -724,6 +724,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const headerPaddingTop =
     insets.top + (isTablet ? 32 : Platform.OS === 'android' ? 12 : 8);
 
+  /** ヘッダー＋フィルター帯の高さ（Pager 全画面時に各ページの content に同じ余白を付ける） */
+  const [topOverlayHeight, setTopOverlayHeight] = useState(() => {
+    const titleBlock =
+      (isTablet ? 56 : Platform.OS === 'android' ? 34 : 32) +
+      (Platform.OS === 'android' ? 0 : 8);
+    return headerPaddingTop + titleBlock + 56;
+  });
+
   return (
     <View style={styles.container}>
       <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
@@ -741,76 +749,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
       <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
         <View style={styles.contentContainer}>
-          <View style={styles.topSectionForeground}>
-          {/* ヘッダー */}
-          <View
-            style={[
-              styles.header,
-              isTablet && styles.headerTablet,
-              { paddingTop: headerPaddingTop },
-            ]}
-          >
-            <Text 
-              maxFontSizeMultiplier={1.35}
-              style={[
-                styles.title, 
-                isTablet && styles.titleTablet,
-                { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
-              ]}
-            >
-              {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
-            </Text>
-            <TouchableOpacity 
-              ref={menuButtonRef}
-              style={styles.menuButton}
-              onPress={handleMenuPress}
-            >
-              <DotsVerticalIcon width={28} height={28} strokeColor="none" fillColor="#5D4037" />
-            </TouchableOpacity>
-          </View>
-
-          {showCallout && (
-            <View style={{ paddingHorizontal: 16, marginBottom: 16 }}>
-              <TouchableOpacity 
-                onPress={() => navigation.navigate('IntroError')}
-                activeOpacity={0.8}
-                style={{
-                  borderRadius: 8,
-                  padding: 12,
-                  borderWidth: 2,
-                  borderColor: '#cc7000ff',
-                }}
-              >
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <MicrophoneQuestionIcon width={24} height={24} fillColor="#533000ff" />
-                  <Text 
-                    maxFontSizeMultiplier={1.25}
-                    style={{ color: '#533000ff', marginLeft: 8, flex: 1 }}
-                  >
-                    {currentLanguage === 'ja'
-                      ? '音声認識が有効化されていません。このままでもアプリをご利用いただけますが、有効化することで「声」で操作できるようになり便利です'
-                      : 'The speech recognition is not enabled. You can still use the app as is, but enabling it will allow you to control the app with your voice.'}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          
-          )}
-          {/* フィルターボタン */}
-          <View style={styles.stickyFilterContainer}>
-            <FilterButtons 
-              pages={HOME_PAGE_KEYS}
-              selectedPageKey={selectedPageKey}
-              onSelectPage={selectHomePage}
-              currentLanguage={currentLanguage}
-            />
-          </View>
-        </View>
-
-        {/* あやとり一覧（アーチより手前に描画） */}
+        {/* あやとり一覧（contentContainer 基準の absolute 全画面。ヘッダー帯の高さは paddingTop で確保） */}
         <PagerView
           ref={pagerRef}
-          style={styles.pagerView}
+          style={[styles.pagerView, styles.pagerViewFullScreen]}
           initialPage={HOME_PAGE_KEYS.indexOf(selectedPageKey)}
           onPageScroll={(event) => {
             const { position, offset } = event.nativeEvent;
@@ -828,7 +770,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
               <View key={pageKey} style={styles.pageContainer}>
                 <ScrollView
                   style={styles.pageScrollView}
-                  contentContainerStyle={styles.pageScrollContent}
+                  contentContainerStyle={[
+                    styles.pageScrollContent,
+                    { paddingTop: topOverlayHeight },
+                  ]}
                 >
                   <View style={styles.gridContainer}>
                     {columns.map((column, index) => (
@@ -853,6 +798,75 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             );
           })}
         </PagerView>
+
+          <View
+            style={styles.topSectionOverlay}
+            onLayout={(e) => setTopOverlayHeight(e.nativeEvent.layout.height)}
+            pointerEvents="box-none"
+          >
+            {/* ヘッダー */}
+            <View
+              style={[
+                styles.header,
+                isTablet && styles.headerTablet,
+                { paddingTop: headerPaddingTop },
+              ]}
+            >
+              <Text 
+                maxFontSizeMultiplier={1.35}
+                style={[
+                  styles.title, 
+                  isTablet && styles.titleTablet,
+                  { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+                ]}
+              >
+                {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
+              </Text>
+              <TouchableOpacity 
+                ref={menuButtonRef}
+                style={styles.menuButton}
+                onPress={handleMenuPress}
+              >
+                <DotsVerticalIcon width={28} height={28} strokeColor="none" fillColor="#5D4037" />
+              </TouchableOpacity>
+            </View>
+
+            {showCallout && (
+              <View style={{ paddingHorizontal: 16, marginBottom: 16 }}>
+                <TouchableOpacity 
+                  onPress={() => navigation.navigate('IntroError')}
+                  activeOpacity={0.8}
+                  style={{
+                    borderRadius: 8,
+                    padding: 12,
+                    borderWidth: 2,
+                    borderColor: '#cc7000ff',
+                  }}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <MicrophoneQuestionIcon width={24} height={24} fillColor="#533000ff" />
+                    <Text 
+                      maxFontSizeMultiplier={1.25}
+                      style={{ color: '#533000ff', marginLeft: 8, flex: 1 }}
+                    >
+                      {currentLanguage === 'ja'
+                        ? '音声認識が有効化されていません。このままでもアプリをご利用いただけますが、有効化することで「声」で操作できるようになり便利です'
+                        : 'The speech recognition is not enabled. You can still use the app as is, but enabling it will allow you to control the app with your voice.'}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            )}
+            {/* フィルターボタン */}
+            <View style={styles.stickyFilterContainer}>
+              <FilterButtons 
+                pages={HOME_PAGE_KEYS}
+                selectedPageKey={selectedPageKey}
+                onSelectPage={selectHomePage}
+                currentLanguage={currentLanguage}
+              />
+            </View>
+          </View>
       </View>
 
       {/* 詳細ボトムシート */}
@@ -928,15 +942,23 @@ const styles = StyleSheet.create({
     zIndex: 0,
     elevation: 0,
   },
-  topSectionForeground: {
-    position: 'relative',
+  topSectionOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     zIndex: 1,
-  },
-  pagerView: {
-    flex: 1,
-    zIndex: 2,
-    elevation: 2,
+    elevation: 4,
     backgroundColor: 'transparent',
+  },
+  /** Pager は背面。fixed は iOS の PagerView と相性が悪く非表示になることがあるため absoluteFill のみ */
+  pagerView: {
+    zIndex: 0,
+    elevation: 0,
+    backgroundColor: 'transparent',
+  },
+  pagerViewFullScreen: {
+    ...StyleSheet.absoluteFillObject,
   },
   pageContainer: {
     flex: 1,
