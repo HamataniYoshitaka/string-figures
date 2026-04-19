@@ -6,7 +6,7 @@ export const ASSETS_MAP: {
   };
 } = {
   '1_star': {
-    thumbnail: require('../../assets/string-figures/1_star/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/1_star/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
   },

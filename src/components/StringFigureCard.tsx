@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   Image,
-  Platform,
   Animated,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -120,34 +119,41 @@ const StringFigureCard: React.FC<Props> = ({
           },
         ]}
       >
-        <View style={styles.cardImageContainer}>
-          {item.thumbnail ? (
-            <Image 
-              source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail}
-              style={[
-                styles.cardImage,
-                { height: calculatedHeight }
-              ]}
-              resizeMode="cover"
-              onLoad={(event) => onImageLoad(item.id, event)}
-            />
-          ) : (
-            <View style={styles.cardImagePlaceholder}>
-              <Text style={styles.cardImageText}>画像</Text>
-            </View>
-          )}
-          {/* ブックマークアイコン - ブックマーク済みの場合のみ表示 */}
-          {bookmarked && (
-            <View style={styles.bookmarkContainer}>
-              <BookmarkIcon
-                width={24}
-                height={24}
-                strokeColor="#FB2C36"
-                fillColor="#FB2C36"
-                strokeWidth={1.5}
+        <View
+          style={[
+            styles.cardImageWrapper,
+            item.thumbnail ? { height: calculatedHeight } : styles.cardImageWrapperAutoHeight,
+          ]}
+        >
+          {/* シャドウのみ（背面に重ねる） */}
+          <View style={styles.cardImageShadow} pointerEvents="none" />
+          {/* 枠線・コンテンツ */}
+          <View style={styles.cardImageBordered}>
+            {item.thumbnail ? (
+              <Image
+                source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail}
+                style={styles.cardImage}
+                resizeMode="cover"
+                onLoad={(event) => onImageLoad(item.id, event)}
               />
-            </View>
-          )}
+            ) : (
+              <View style={styles.cardImagePlaceholder}>
+                <Text style={styles.cardImageText}>画像</Text>
+              </View>
+            )}
+            {/* ブックマークアイコン - ブックマーク済みの場合のみ表示 */}
+            {bookmarked && (
+              <View style={styles.bookmarkContainer}>
+                <BookmarkIcon
+                  width={24}
+                  height={24}
+                  strokeColor="#FB2C36"
+                  fillColor="#FB2C36"
+                  strokeWidth={1.5}
+                />
+              </View>
+            )}
+          </View>
         </View>
         {!hideTitle && (
           <View style={styles.cardContent}>
@@ -208,36 +214,47 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     padding: 0,
+    overflow: 'visible',
   },
-  cardImageContainer: {
+  cardImageWrapper: {
     position: 'relative',
     width: '100%',
-    backgroundColor: 'transparent',
-    borderRadius: 12,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 3,
-      },
-    }),
+    overflow: 'visible',
+    /** translate(4) 分、下方向のはみ出しでタイトルと被らないようにする */
+    marginBottom: 4,
+  },
+  cardImageWrapperAutoHeight: {
+    aspectRatio: 1,
+  },
+  /** ぼかしシャドウは使わず、枠と同色のソリッドをずらして重ねる（背面レイヤー） */
+  cardImageShadow: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 8,
+    backgroundColor: '#292524',
+    zIndex: 0,
+    transform: [{ translateX: 4 }, { translateY: 4 }],
+  },
+  cardImageBordered: {
+    ...StyleSheet.absoluteFillObject,
+    borderWidth: 2,
+    borderColor: '#292524',
+    borderRadius: 8,
+    overflow: 'hidden',
+    zIndex: 1,
+    backgroundColor: '#FFF9F0',
   },
   cardImage: {
     width: '100%',
-    backgroundColor: '#F5F5F5',
-    borderRadius: 12,
+    height: '100%',
+    backgroundColor: 'transparent',
+    mixBlendMode: 'multiply',
   },
   cardImagePlaceholder: {
     width: '100%',
-    aspectRatio: 1,
-    backgroundColor: '#F5F5F5',
+    height: '100%',
+    backgroundColor: '#FFF9F0',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 12,
   },
   cardImageText: {
     color: '#9E9E9E',
