@@ -20,6 +20,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
 import Animated, {
+  Extrapolation,
+  interpolate,
   interpolateColor,
   useAnimatedProps,
   useAnimatedStyle,
@@ -741,51 +743,85 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   });
 
   const HEADER_HIDE_MS = 300;
+  /** これより下にスクロールしたらヘッダー最小化 */
+  const HEADER_SCROLL_COLLAPSE_Y = 20;
+  /** ページ先頭とみなす contentOffset.y（これ以下で最大化） */
+  const HEADER_SCROLL_TOP_MAX_Y = 1;
+
   const titleBlockHeightRef = useRef(0);
   const headerTranslateY = useSharedValue(0);
+  /** 0: 最大化（アーチ色 alpha 0） / 1: 最小化（アーチ色不透明） */
+  const headerMinimizedSV = useSharedValue(0);
   const headerCollapsedRef = useRef(false);
-  const lastScrollYPerPage = useRef<number[]>(HOME_PAGE_KEYS.map(() => 0));
-  const skipScrollDeltaRef = useRef(false);
+  const scrollYPerPage = useRef<number[]>(HOME_PAGE_KEYS.map(() => 0));
 
+  /** translate のみ（背景は別レイヤーで opacity を変えると色相が安定し、二重 interpolateColor の実行時エラーも避けられる） */
   const overlayAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: headerTranslateY.value }],
   }));
 
-  useEffect(() => {
-    skipScrollDeltaRef.current = true;
+  const overlayHeaderBgAnimatedStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      pageScrollProgress.value,
+      PAGE_SCROLL_INPUT_RANGE,
+      [...HOME_PAGE_BACKGROUND_COLORS]
+    ),
+    opacity: interpolate(
+      headerMinimizedSV.value,
+      [0, 1],
+      [0, 1],
+      Extrapolation.CLAMP
+    ),
+  }));
+
+  const applyHeaderForScrollY = (yRaw: number, titleH: number) => {
+    const y = Math.max(0, yRaw);
+    if (y > HEADER_SCROLL_COLLAPSE_Y && !headerCollapsedRef.current) {
+      headerCollapsedRef.current = true;
+      headerTranslateY.value = withTiming(-titleH + 40, { duration: HEADER_HIDE_MS });
+      headerMinimizedSV.value = withTiming(1, { duration: HEADER_HIDE_MS });
+      return;
+    }
+    if (yRaw <= HEADER_SCROLL_TOP_MAX_Y && headerCollapsedRef.current) {
+      headerCollapsedRef.current = false;
+      headerTranslateY.value = withTiming(0, { duration: HEADER_HIDE_MS });
+      headerMinimizedSV.value = withTiming(0, { duration: HEADER_HIDE_MS });
+    }
+  };
+
+  const syncHeaderToCurrentPageScroll = React.useCallback(() => {
+    const titleH = titleBlockHeightRef.current;
+    if (titleH <= 0) {
+      return;
+    }
+    const yRaw = scrollYPerPage.current[currentPageIndex];
+    const shouldCollapse = Math.max(0, yRaw) > HEADER_SCROLL_COLLAPSE_Y;
+    headerCollapsedRef.current = shouldCollapse;
+    headerTranslateY.value = shouldCollapse
+      ? withTiming(-titleH, { duration: HEADER_HIDE_MS })
+      : withTiming(0, { duration: HEADER_HIDE_MS });
+    headerMinimizedSV.value = shouldCollapse
+      ? withTiming(1, { duration: HEADER_HIDE_MS })
+      : withTiming(0, { duration: HEADER_HIDE_MS });
   }, [currentPageIndex]);
+
+  useEffect(() => {
+    syncHeaderToCurrentPageScroll();
+  }, [syncHeaderToCurrentPageScroll]);
 
   const handleListScroll = (pageIndex: number) => (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (pageIndex !== currentPageIndex) {
       return;
     }
-    const y = Math.max(0, e.nativeEvent.contentOffset.y);
-    const titleH = titleBlockHeightRef.current - 40;
+    const yRaw = e.nativeEvent.contentOffset.y;
+    scrollYPerPage.current[pageIndex] = yRaw;
+
+    const titleH = titleBlockHeightRef.current;
     if (titleH <= 0) {
       return;
     }
 
-    if (skipScrollDeltaRef.current) {
-      skipScrollDeltaRef.current = false;
-      lastScrollYPerPage.current[pageIndex] = y;
-      return;
-    }
-
-    const lastY = lastScrollYPerPage.current[pageIndex];
-    lastScrollYPerPage.current[pageIndex] = y;
-    const dy = y - lastY;
-
-    // 指を上にスワイプ（一覧が上方向にスクロール）→ タイトル帯を隠す
-    if (dy > 4 && y > 20 && !headerCollapsedRef.current) {
-      headerCollapsedRef.current = true;
-      headerTranslateY.value = withTiming(-titleH, { duration: HEADER_HIDE_MS });
-      return;
-    }
-    // 下方向にスクロール、またはほぼ先頭 → タイトル帯を戻す
-    if ((dy < -4 || y <= 12) && headerCollapsedRef.current) {
-      headerCollapsedRef.current = false;
-      headerTranslateY.value = withTiming(0, { duration: HEADER_HIDE_MS });
-    }
+    applyHeaderForScrollY(yRaw, titleH);
   };
 
   return (
@@ -862,13 +898,17 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             onLayout={(e) => setTopOverlayHeight(e.nativeEvent.layout.height)}
             pointerEvents="box-none"
           >
+            <Animated.View
+              pointerEvents="none"
+              style={[styles.overlayHeaderBackdrop, overlayHeaderBgAnimatedStyle]}
+            />
             {/* ヘッダー */}
             <View
               onLayout={(e) => {
                 const h = e.nativeEvent.layout.height;
                 titleBlockHeightRef.current = h;
-                if (headerCollapsedRef.current && h > 0) {
-                  headerTranslateY.value = -h;
+                if (h > 0) {
+                  syncHeaderToCurrentPageScroll();
                 }
               }}
               style={[
@@ -1015,6 +1055,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
     elevation: 4,
     backgroundColor: 'transparent',
+  },
+  overlayHeaderBackdrop: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: -1,
   },
   /** Pager は背面。fixed は iOS の PagerView と相性が悪く非表示になることがあるため absoluteFill のみ */
   pagerView: {
