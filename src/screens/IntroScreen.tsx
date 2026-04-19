@@ -97,7 +97,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const renderCard = (item: StringFigure, disabled: boolean) => {
+  const renderCard = (item: StringFigure) => {
     const imageInfo = imageDimensions[item.id];
     let calculatedHeight = 200; // デフォルト高さ
     
@@ -113,7 +113,6 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
     return (
       <StringFigureCard
         key={item.id}
-        disabled={disabled}
         item={item}
         bookmarked={false}
         calculatedHeight={calculatedHeight}
@@ -440,9 +439,9 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
 
       {/* あやとり一覧 */}
       <View style={styles.gridContainer}>
-        {columns.map((column, index) => (
-          <View key={index} style={styles.column}>
-            {column.map((item, index2) => renderCard(item, (index > 0 || index2 > 0))) /* 最初の以外はdisabled*/}
+        {columns.map((column, columnIndex) => (
+          <View key={columnIndex} style={styles.column}>
+            {column.map((item) => renderCard(item))}
           </View>
         ))}
       </View>

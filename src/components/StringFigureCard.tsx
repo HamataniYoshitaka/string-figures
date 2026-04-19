@@ -17,7 +17,6 @@ interface Props {
   bookmarked: boolean;
   calculatedHeight: number;
   currentLanguage: 'ja' | 'en';
-  disabled?: boolean;
   hideTitle?: boolean;
   purchasedItems?: number[];
   refreshKey?: number;
@@ -30,7 +29,6 @@ const StringFigureCard: React.FC<Props> = ({
   bookmarked,
   calculatedHeight,
   currentLanguage,
-  disabled = false,
   hideTitle = false,
   purchasedItems = [],
   refreshKey,
@@ -113,23 +111,16 @@ const StringFigureCard: React.FC<Props> = ({
       onPress={() => onPress(item)}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      disabled={disabled}
     >
       <Animated.View
         style={[
           styles.card,
           {
             transform: [{ scale: scaleAnim }],
-            opacity: disabled ? 0.5 : 1,
           },
         ]}
       >
-        <View
-          style={[
-            styles.cardImageContainer,
-            disabled && styles.cardImageContainerDisabled,
-          ]}
-        >
+        <View style={styles.cardImageContainer}>
           {item.thumbnail ? (
             <Image 
               source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail}
@@ -232,19 +223,6 @@ const styles = StyleSheet.create({
       },
       android: {
         elevation: 3,
-      },
-    }),
-  },
-  cardImageContainerDisabled: {
-    ...Platform.select({
-      ios: {
-        shadowColor: 'transparent',
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0,
-        shadowRadius: 0,
-      },
-      android: {
-        elevation: 0,
       },
     }),
   },
