@@ -743,6 +743,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   });
 
   const HEADER_HIDE_MS = 300;
+  /** 最小化時にタイトル分だけ上げたあと、さらに下げる量（ステータスバーと被らないよう調整） */
+  const HEADER_MINIMIZE_TRANSLATE_DOWN_PT = 40;
   /** これより下にスクロールしたらヘッダー最小化 */
   const HEADER_SCROLL_COLLAPSE_Y = 20;
   /** ページ先頭とみなす contentOffset.y（これ以下で最大化） */
@@ -774,11 +776,24 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     ),
   }));
 
+  /** タイトル＋メニュー行：最小化時に 1→0（背景レイヤーと同じ headerMinimizedSV で同期） */
+  const headerTitleRowAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      headerMinimizedSV.value,
+      [0, 1],
+      [1, 0],
+      Extrapolation.CLAMP
+    ),
+  }));
+
   const applyHeaderForScrollY = (yRaw: number, titleH: number) => {
     const y = Math.max(0, yRaw);
     if (y > HEADER_SCROLL_COLLAPSE_Y && !headerCollapsedRef.current) {
       headerCollapsedRef.current = true;
-      headerTranslateY.value = withTiming(-titleH + 40, { duration: HEADER_HIDE_MS });
+      headerTranslateY.value = withTiming(
+        -titleH + HEADER_MINIMIZE_TRANSLATE_DOWN_PT,
+        { duration: HEADER_HIDE_MS }
+      );
       headerMinimizedSV.value = withTiming(1, { duration: HEADER_HIDE_MS });
       return;
     }
@@ -798,7 +813,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     const shouldCollapse = Math.max(0, yRaw) > HEADER_SCROLL_COLLAPSE_Y;
     headerCollapsedRef.current = shouldCollapse;
     headerTranslateY.value = shouldCollapse
-      ? withTiming(-titleH, { duration: HEADER_HIDE_MS })
+      ? withTiming(-titleH + HEADER_MINIMIZE_TRANSLATE_DOWN_PT, { duration: HEADER_HIDE_MS })
       : withTiming(0, { duration: HEADER_HIDE_MS });
     headerMinimizedSV.value = shouldCollapse
       ? withTiming(1, { duration: HEADER_HIDE_MS })
@@ -866,6 +881,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                     styles.pageScrollContent,
                     { paddingTop: topOverlayHeight },
                   ]}
+                  showsVerticalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={false}
                   scrollEventThrottle={16}
                   onScroll={handleListScroll(pageIndex)}
                 >
@@ -903,7 +920,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
               style={[styles.overlayHeaderBackdrop, overlayHeaderBgAnimatedStyle]}
             />
             {/* ヘッダー */}
-            <View
+            <Animated.View
               onLayout={(e) => {
                 const h = e.nativeEvent.layout.height;
                 titleBlockHeightRef.current = h;
@@ -915,6 +932,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 styles.header,
                 isTablet && styles.headerTablet,
                 { paddingTop: headerPaddingTop },
+                headerTitleRowAnimatedStyle,
               ]}
             >
               <Text 
@@ -934,7 +952,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
               >
                 <DotsVerticalIcon width={28} height={28} strokeColor="none" fillColor="#5D4037" />
               </TouchableOpacity>
-            </View>
+            </Animated.View>
 
             {showCallout && (
               <View style={{ paddingHorizontal: 16, marginBottom: 16 }}>
