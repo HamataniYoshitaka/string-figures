@@ -74,6 +74,14 @@ const ARCH_VIEWBOX = { w: 428, h: 345 };
 const ARCH_PATH_D =
   'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
 
+/** 下部アーチのベジエ（header 最小化で底辺 y→ARCH_MORPH_MIN_BOTTOM_Y の矩形・ハンドルは端点に収束） */
+const ARCH_BOTTOM_Y = 344.5;
+/** 最小化完了時の底辺 y（上辺 0 からの帯高さ＝矩形の高さ） */
+const ARCH_MORPH_MIN_BOTTOM_Y = 100;
+const ARCH_C1 = { x: 356.986, y: 221.5 };
+const ARCH_C2 = { x: 68.416, y: 226 };
+const ARCH_CURVE_END_X = 428;
+
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
 const CommercialCollection1: StringFigure = { 
@@ -124,14 +132,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
   const pageScrollProgress = useSharedValue(HOME_PAGE_KEYS.indexOf(DEFAULT_HOME_PAGE));
-
-  const archAnimatedProps = useAnimatedProps(() => ({
-    fill: interpolateColor(
-      pageScrollProgress.value,
-      PAGE_SCROLL_INPUT_RANGE,
-      [...HOME_PAGE_BACKGROUND_COLORS]
-    ),
-  }));
 
   const archDisplayHeight = screenWidth * (ARCH_VIEWBOX.h / ARCH_VIEWBOX.w);
 
@@ -743,6 +743,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   });
 
   const HEADER_HIDE_MS = 300;
+  /** アーチ SVG のパス変形のみこの長さ（ヘッダー本体のアニメは HEADER_HIDE_MS） */
+  const ARCH_MORPH_MS = 500;
   /** 最小化時にタイトル分だけ上げたあと、さらに下げる量（ステータスバーと被らないよう調整） */
   const HEADER_MINIMIZE_TRANSLATE_DOWN_PT = 40;
   /** これより下にスクロールしたらヘッダー最小化 */
@@ -754,8 +756,30 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const headerTranslateY = useSharedValue(0);
   /** 0: 最大化（アーチ色 alpha 0） / 1: 最小化（アーチ色不透明） */
   const headerMinimizedSV = useSharedValue(0);
+  /** アーチパス d のみ（0=通常アーチ / 1=直線化）。headerMinimizedSV と同じ目標値で duration だけ長い */
+  const headerArchMorphSV = useSharedValue(0);
   const headerCollapsedRef = useRef(false);
   const scrollYPerPage = useRef<number[]>(HOME_PAGE_KEYS.map(() => 0));
+
+  /** アーチ SVG：fill はページ色、パスは header 最小化で底辺 y=ARCH_MORPH_MIN_BOTTOM_Y の矩形へ */
+  const archAnimatedProps = useAnimatedProps(() => {
+    const t = headerArchMorphSV.value;
+    const yMin = ARCH_MORPH_MIN_BOTTOM_Y;
+    const yB = ARCH_BOTTOM_Y * (1 - t) + yMin * t;
+    const cx1 = ARCH_C1.x * (1 - t) + ARCH_CURVE_END_X * t;
+    const cy1 = ARCH_C1.y * (1 - t) + yMin * t;
+    const cx2 = ARCH_C2.x * (1 - t);
+    const cy2 = ARCH_C2.y * (1 - t) + yMin * t;
+    const d = `M0 0 H428 V${yB} C ${cx1} ${cy1} ${cx2} ${cy2} 0 ${yB} V0 Z`;
+    return {
+      fill: interpolateColor(
+        pageScrollProgress.value,
+        PAGE_SCROLL_INPUT_RANGE,
+        [...HOME_PAGE_BACKGROUND_COLORS]
+      ),
+      d,
+    };
+  });
 
   /** translate のみ（背景は別レイヤーで opacity を変えると色相が安定し、二重 interpolateColor の実行時エラーも避けられる） */
   const overlayAnimatedStyle = useAnimatedStyle(() => ({
@@ -795,12 +819,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         { duration: HEADER_HIDE_MS }
       );
       headerMinimizedSV.value = withTiming(1, { duration: HEADER_HIDE_MS });
+      headerArchMorphSV.value = withTiming(1, { duration: ARCH_MORPH_MS });
       return;
     }
     if (yRaw <= HEADER_SCROLL_TOP_MAX_Y && headerCollapsedRef.current) {
       headerCollapsedRef.current = false;
       headerTranslateY.value = withTiming(0, { duration: HEADER_HIDE_MS });
       headerMinimizedSV.value = withTiming(0, { duration: HEADER_HIDE_MS });
+      headerArchMorphSV.value = withTiming(0, { duration: ARCH_MORPH_MS });
     }
   };
 
@@ -818,6 +844,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     headerMinimizedSV.value = shouldCollapse
       ? withTiming(1, { duration: HEADER_HIDE_MS })
       : withTiming(0, { duration: HEADER_HIDE_MS });
+    headerArchMorphSV.value = shouldCollapse
+      ? withTiming(1, { duration: ARCH_MORPH_MS })
+      : withTiming(0, { duration: ARCH_MORPH_MS });
   }, [currentPageIndex]);
 
   useEffect(() => {
