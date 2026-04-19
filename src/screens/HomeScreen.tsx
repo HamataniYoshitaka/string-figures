@@ -9,6 +9,8 @@ import {
   Dimensions,
   Alert,
   StatusBar,
+  type NativeScrollEvent,
+  type NativeSyntheticEvent,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,7 +19,13 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
-import Animated, { interpolateColor, useAnimatedProps, useSharedValue } from 'react-native-reanimated';
+import Animated, {
+  interpolateColor,
+  useAnimatedProps,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
 
 import { RootStackParamList, StringFigure } from '../types';
@@ -732,6 +740,54 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     return headerPaddingTop + titleBlock + 56;
   });
 
+  const HEADER_HIDE_MS = 300;
+  const titleBlockHeightRef = useRef(0);
+  const headerTranslateY = useSharedValue(0);
+  const headerCollapsedRef = useRef(false);
+  const lastScrollYPerPage = useRef<number[]>(HOME_PAGE_KEYS.map(() => 0));
+  const skipScrollDeltaRef = useRef(false);
+
+  const overlayAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: headerTranslateY.value }],
+  }));
+
+  useEffect(() => {
+    skipScrollDeltaRef.current = true;
+  }, [currentPageIndex]);
+
+  const handleListScroll = (pageIndex: number) => (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (pageIndex !== currentPageIndex) {
+      return;
+    }
+    const y = Math.max(0, e.nativeEvent.contentOffset.y);
+    const titleH = titleBlockHeightRef.current - 40;
+    if (titleH <= 0) {
+      return;
+    }
+
+    if (skipScrollDeltaRef.current) {
+      skipScrollDeltaRef.current = false;
+      lastScrollYPerPage.current[pageIndex] = y;
+      return;
+    }
+
+    const lastY = lastScrollYPerPage.current[pageIndex];
+    lastScrollYPerPage.current[pageIndex] = y;
+    const dy = y - lastY;
+
+    // 指を上にスワイプ（一覧が上方向にスクロール）→ タイトル帯を隠す
+    if (dy > 4 && y > 20 && !headerCollapsedRef.current) {
+      headerCollapsedRef.current = true;
+      headerTranslateY.value = withTiming(-titleH, { duration: HEADER_HIDE_MS });
+      return;
+    }
+    // 下方向にスクロール、またはほぼ先頭 → タイトル帯を戻す
+    if ((dy < -4 || y <= 12) && headerCollapsedRef.current) {
+      headerCollapsedRef.current = false;
+      headerTranslateY.value = withTiming(0, { duration: HEADER_HIDE_MS });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
@@ -761,7 +817,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           }}
           onPageSelected={(event) => handlePageSelected(event.nativeEvent.position)}
         >
-          {HOME_PAGE_KEYS.map((pageKey) => {
+          {HOME_PAGE_KEYS.map((pageKey, pageIndex) => {
             const columns = pageColumnsMap[pageKey];
             const isBookmarkPage = pageKey === 'bookmark';
             const hasCards = columns.some(column => column.length > 0);
@@ -774,6 +830,8 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                     styles.pageScrollContent,
                     { paddingTop: topOverlayHeight },
                   ]}
+                  scrollEventThrottle={16}
+                  onScroll={handleListScroll(pageIndex)}
                 >
                   <View style={styles.gridContainer}>
                     {columns.map((column, index) => (
@@ -799,13 +857,20 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           })}
         </PagerView>
 
-          <View
-            style={styles.topSectionOverlay}
+          <Animated.View
+            style={[styles.topSectionOverlay, overlayAnimatedStyle]}
             onLayout={(e) => setTopOverlayHeight(e.nativeEvent.layout.height)}
             pointerEvents="box-none"
           >
             {/* ヘッダー */}
             <View
+              onLayout={(e) => {
+                const h = e.nativeEvent.layout.height;
+                titleBlockHeightRef.current = h;
+                if (headerCollapsedRef.current && h > 0) {
+                  headerTranslateY.value = -h;
+                }
+              }}
               style={[
                 styles.header,
                 isTablet && styles.headerTablet,
@@ -866,7 +931,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 currentLanguage={currentLanguage}
               />
             </View>
-          </View>
+          </Animated.View>
       </View>
 
       {/* 詳細ボトムシート */}
