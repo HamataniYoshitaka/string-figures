@@ -66,7 +66,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/12_9-diamonds/preview.mp4'),
   },
   '13_easy-broom': {
-    thumbnail: require('../../assets/string-figures/13_easy-broom/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/13_easy-broom/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/13_easy-broom/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/13_easy-broom/preview.mp4'),
   },

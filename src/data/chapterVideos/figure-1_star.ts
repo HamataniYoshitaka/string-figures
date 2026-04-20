@@ -54,7 +54,7 @@ export const FIGURE_1_STAR_NONVERBAL_CHAPTER_STILL_PAIRS = [
   /** 再生は最終章まで。ストリップ末尾のプレビュー用に直前スロットと別画像 */
   {
     primary: require('../../../assets/string-figures/1_star/chapters/img04-1.jpg'),
-    secondary: require('../../../assets/string-figures/1_star/chapters/img04-1.jpg'),
+    secondary: require('../../../assets/string-figures/1_star/chapters/img04-2.jpg'),
     standby: require('../../../assets/string-figures/1_star/chapters/img03-2.jpg'),
   },
 ] as const;

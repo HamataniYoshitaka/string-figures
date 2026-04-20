@@ -48,7 +48,7 @@ export const FIGURE_13_EASY_BROOM_NONVERBAL_CHAPTER_STILL_PAIRS = [
   /** 再生は最終章まで。ストリップ末尾のプレビュー用に直前スロットと別画像 */
   {
     primary: require('../../../assets/string-figures/13_easy-broom/chapters/04-1.jpg'),
-    secondary: require('../../../assets/string-figures/13_easy-broom/chapters/04-1.jpg'),
+    secondary: require('../../../assets/string-figures/13_easy-broom/chapters/04-2.jpg'),
     standby: require('../../../assets/string-figures/13_easy-broom/chapters/03-2.jpg'),
   },
 ] as const;

@@ -163,7 +163,7 @@ export const FIGURE_2_JACOBS_LADDER4_NONVERBAL_CHAPTER_STILL_PAIRS = [
   /** 再生は最終章まで。ストリップ末尾のプレビュー用に直前スロットと別画像 */
   {
     primary: require('../../../assets/string-figures/2_jacobs-ladder4/chapters/04-1.jpg'),
-    secondary: require('../../../assets/string-figures/2_jacobs-ladder4/chapters/04-1.jpg'),
+    secondary: require('../../../assets/string-figures/2_jacobs-ladder4/chapters/16-2.jpg'),
     standby: require('../../../assets/string-figures/2_jacobs-ladder4/chapters/15-2.jpg'),
   },
 ] as const;

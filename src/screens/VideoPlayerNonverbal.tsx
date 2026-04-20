@@ -57,15 +57,18 @@ const NONVERBAL_STILL_VERTICAL_GAP = 16;
 /** 動画レイヤーの不透明度 0↔1 のフェード時間（前半終了〜0、1.2s〜1 のフェードに使用） */
 const NONVERBAL_VIDEO_LAYER_OPACITY_MS = 300;
 
+type NonverbalStripSource = number | null | 'leadingPreview';
+
 /**
- * ストリップ各行: null=空行、数=静止画スロットインデックス（0..スロット数-1）。
- * 先頭空2 + 全スロット行 + 末尾空2。スロット数は NONVERBAL_CHAPTER_STILL_PAIRS[directory].length（再生章数 + 末尾プレビュー1）。
+ * ストリップ各行: null=空行、number=静止画スロットインデックス（0..スロット数-1）、leadingPreview=先頭プレビュー行。
+ * 先頭空1 + 先頭プレビュー1 + 全スロット行 + 末尾空2。
+ * スロット数は NONVERBAL_CHAPTER_STILL_PAIRS[directory].length（再生章数 + 末尾プレビュー1）。
  */
-function buildNonverbalStripSources(stripSlotCount: number): readonly (number | null)[] {
+function buildNonverbalStripSources(stripSlotCount: number): readonly NonverbalStripSource[] {
   if (stripSlotCount <= 0) {
     return [null, null, null, null];
   }
-  return [null, null, ...Array.from({ length: stripSlotCount }, (_, i) => i), null, null];
+  return [null, 'leadingPreview', ...Array.from({ length: stripSlotCount }, (_, i) => i), null, null];
 }
 
 /** visible 4行ウィンドウの先頭インデックスに対応する translateY=-index*stripRowSlotHeight の最大 index */
@@ -184,6 +187,8 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     [nonverbalFigureDirectory],
   );
   const nonverbalStripSlotCount = nonverbalChapterStillPairs.length;
+  const nonverbalLeadingPreviewSource =
+    nonverbalChapterStillPairs[nonverbalStripSlotCount - 1]?.secondary ?? null;
   const nonverbalStripSources = useMemo(
     () => buildNonverbalStripSources(nonverbalStripSlotCount),
     [nonverbalStripSlotCount],
@@ -734,6 +739,58 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
         >
           {nonverbalStripSources.map((src, i) => {
             const stripChapterIndex = typeof src === 'number' ? src : null;
+            const isLeadingPreview = src === 'leadingPreview';
+            let stripSlotContent: React.ReactNode;
+
+            if (stripChapterIndex === null && !isLeadingPreview) {
+              stripSlotContent = (
+                <View style={[styles.nonverbalStripEmptySlot, { width: videoContentWidth }]} />
+              );
+            } else if (isLeadingPreview) {
+              stripSlotContent = (
+                <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
+                  {nonverbalLeadingPreviewSource ? (
+                    <AnimatedStripImage
+                      source={nonverbalLeadingPreviewSource}
+                      style={[StyleSheet.absoluteFillObject, styles.video]}
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <View style={[styles.nonverbalStripEmptySlot, { width: videoContentWidth }]} />
+                  )}
+                </View>
+              );
+            } else {
+              const chapterIndex = stripChapterIndex as number;
+              stripSlotContent = (
+                <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
+                  <AnimatedStripImage
+                    source={nonverbalChapterStillPairs[chapterIndex].primary}
+                    style={[StyleSheet.absoluteFillObject, styles.video]}
+                    resizeMode="cover"
+                  />
+                  <AnimatedStripImage
+                    source={nonverbalChapterStillPairs[chapterIndex].secondary}
+                    style={[
+                      StyleSheet.absoluteFillObject,
+                      styles.video,
+                      { opacity: stillChapterSecondaryOpacity[chapterIndex] },
+                    ]}
+                    resizeMode="cover"
+                  />
+                  <AnimatedStripImage
+                    source={nonverbalChapterStillPairs[chapterIndex].standby}
+                    style={[
+                      StyleSheet.absoluteFillObject,
+                      styles.video,
+                      { opacity: stillChapterStandbyOpacity[chapterIndex] },
+                    ]}
+                    resizeMode="cover"
+                  />
+                </View>
+              );
+            }
+
             return (
               <Animated.View
                 key={i}
@@ -746,35 +803,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   opacity: stripRowOpacities[i],
                 }}
               >
-                {stripChapterIndex === null ? (
-                  <View style={[styles.nonverbalStripEmptySlot, { width: videoContentWidth }]} />
-                ) : (
-                  <View style={[styles.videoPlayer, { width: videoContentWidth }]}>
-                    <AnimatedStripImage
-                      source={nonverbalChapterStillPairs[stripChapterIndex].primary}
-                      style={[StyleSheet.absoluteFillObject, styles.video]}
-                      resizeMode="cover"
-                    />
-                    <AnimatedStripImage
-                      source={nonverbalChapterStillPairs[stripChapterIndex].secondary}
-                      style={[
-                        StyleSheet.absoluteFillObject,
-                        styles.video,
-                        { opacity: stillChapterSecondaryOpacity[stripChapterIndex] },
-                      ]}
-                      resizeMode="cover"
-                    />
-                    <AnimatedStripImage
-                      source={nonverbalChapterStillPairs[stripChapterIndex].standby}
-                      style={[
-                        StyleSheet.absoluteFillObject,
-                        styles.video,
-                        { opacity: stillChapterStandbyOpacity[stripChapterIndex] },
-                      ]}
-                      resizeMode="cover"
-                    />
-                  </View>
-                )}
+                {stripSlotContent}
               </Animated.View>
             );
           })}
