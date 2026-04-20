@@ -23,6 +23,7 @@ import { useOrientation } from '../hooks/useOrientation';
 import { stringFigures } from '../data/index';
 import RelatedFigures from './RelatedFigures';
 import PurchaseButton from './PurchaseButton';
+import DetailBottomSheetNonverbalHero from './DetailBottomSheetNonverbalHero';
 
 /** @gorhom/bottom-sheet の BottomSheetBackground 既定の borderRadius に合わせる */
 const SHEET_BACKGROUND_RADIUS = 15;
@@ -271,106 +272,127 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
 
         {/* コンテンツ */}
         <View style={styles.content}>
-          {/* プレビュー動画エリア */}
-          <View style={styles.imageContainer}>
-            {item.previewUrl ? (
-              <Video
-                source={typeof item.previewUrl === 'string' 
-                  ? { uri: item.previewUrl } 
-                  : item.previewUrl
-                }
-                style={styles.videoPreview}
-                shouldPlay={true}
-                isLooping={true}
-                isMuted={true}
-                resizeMode={ResizeMode.COVER}
-                useNativeControls={false}
-              />
-            ) : (
-              <View style={styles.imagePlaceholder}>
-                <Text style={styles.imageText}>
-                  {getLocalizedText({ ja: '動画プレビュー', en: 'Video Preview' })}
-                </Text>
-              </View>
-            )}
-            {/* 白のグラデーション */}
-            <LinearGradient
-              colors={['rgba(255,255,255,1.0)','rgba(255,255,255,0.4)', 'rgba(255,255,255,0.4)']}
-              style={styles.gradientOverlayTop}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
+          {item.nonverbalFormat ? (
+            <DetailBottomSheetNonverbalHero
+              item={item}
+              currentLanguage={currentLanguage}
+              isLocked={Boolean(isLocked)}
+              isAdditionalScene={isAdditionalScene}
+              purchasedItems={purchasedItems}
+              priceString={priceString}
+              onPlayPress={handlePlayPress}
+              onAdditionalCollectionPress={onAdditionalCollectionPress}
+              onPurchasePress={onPurchasePress}
+              getLocalizedText={getLocalizedText}
+              getButtonBackgroundColor={getButtonBackgroundColor}
             />
-            {/* 白のグラデーション */}
-            <LinearGradient
-              colors={['rgba(255,255,255,0.4)','rgba(255,255,255,0.4)', 'rgba(255,255,255,1.0)']}
-              style={styles.gradientOverlayBottom}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-            />
-            
-            {isAdditionalScene && item && item.premiumCourseId !== 0 ? (
-              <View style={styles.purchaseButtonWrapper}>
-                <PurchaseButton
-                  onPress={onPurchasePress}
-                  collectionId={item.premiumCourseId}
-                  currentLanguage={currentLanguage}
-                  backgroundColor={getButtonBackgroundColor()}
-                  disabled={purchasedItems.includes(item.premiumCourseId)}
-                  priceString={priceString}
+          ) : (
+            <>
+              {/* プレビュー動画エリア */}
+              <View style={styles.imageContainer}>
+                {item.previewUrl ? (
+                  <Video
+                    source={typeof item.previewUrl === 'string' 
+                      ? { uri: item.previewUrl } 
+                      : item.previewUrl
+                    }
+                    style={styles.videoPreview}
+                    shouldPlay={true}
+                    isLooping={true}
+                    isMuted={true}
+                    resizeMode={ResizeMode.COVER}
+                    useNativeControls={false}
+                  />
+                ) : (
+                  <View style={styles.imagePlaceholder}>
+                    <Text style={styles.imageText}>
+                      {getLocalizedText({ ja: '動画プレビュー', en: 'Video Preview' })}
+                    </Text>
+                  </View>
+                )}
+                {/* 白のグラデーション */}
+                <LinearGradient
+                  colors={['rgba(255,255,255,1.0)','rgba(255,255,255,0.4)', 'rgba(255,255,255,0.4)']}
+                  style={styles.gradientOverlayTop}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0, y: 1 }}
                 />
+                {/* 白のグラデーション */}
+                <LinearGradient
+                  colors={['rgba(255,255,255,0.4)','rgba(255,255,255,0.4)', 'rgba(255,255,255,1.0)']}
+                  style={styles.gradientOverlayBottom}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0, y: 1 }}
+                />
+                
+                {isAdditionalScene && item && item.premiumCourseId !== 0 ? (
+                  <View style={styles.purchaseButtonWrapper}>
+                    <PurchaseButton
+                      onPress={onPurchasePress}
+                      collectionId={item.premiumCourseId}
+                      currentLanguage={currentLanguage}
+                      backgroundColor={getButtonBackgroundColor()}
+                      disabled={purchasedItems.includes(item.premiumCourseId)}
+                      priceString={priceString}
+                    />
+                  </View>
+                ) : isLocked ? (
+                  <View style={styles.additionalCollectionButtonWrapper}>
+                    <TouchableOpacity
+                      style={[styles.additionalCollectionButton, { backgroundColor: getButtonBackgroundColor() }]}
+                      onPress={onAdditionalCollectionPress}
+                    >
+                      <LockIcon width={20} height={20} strokeWidth={0} fillColor="#ffffff" />
+                      <Text style={styles.additionalCollectionButtonText} maxFontSizeMultiplier={1.25}>
+                        {getLocalizedText({ ja: '追加コレクションを見る', en: 'See Additional Collection' })}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.playButton}
+                    onPress={handlePlayPress}
+                  >
+                    <PlayIcon width={24} height={28} strokeWidth={3} />
+                  </TouchableOpacity>
+                )}
               </View>
-            ) : isLocked ? (
-              <View style={styles.additionalCollectionButtonWrapper}>
-                <TouchableOpacity
-                  style={[styles.additionalCollectionButton, { backgroundColor: getButtonBackgroundColor() }]}
-                  onPress={onAdditionalCollectionPress}
-                >
-                  <LockIcon width={20} height={20} strokeWidth={0} fillColor="#ffffff" />
-                  <Text style={styles.additionalCollectionButtonText} maxFontSizeMultiplier={1.25}>
-                    {getLocalizedText({ ja: '追加コレクションを見る', en: 'See Additional Collection' })}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <TouchableOpacity
-                style={styles.playButton}
-                onPress={handlePlayPress}
-              >
-                <PlayIcon width={24} height={28} strokeWidth={3} />
-              </TouchableOpacity>
-            )}
-          </View>
 
-          {/* サムネイル - プレビュー動画エリアに重ねる */}
-          <View style={styles.thumbnailContainer}>
-            <View style={styles.thumbnail}>
-              {item.patternImage ? (
-                <Image 
-                  source={typeof item.patternImage === 'string' 
-                    ? { uri: item.patternImage } 
-                    : item.patternImage
-                  } 
-                  style={styles.thumbnailImage}
-                  resizeMode="cover"
-                />
-              ) : (
-                <Text style={styles.thumbnailText}>
-                  {getLocalizedText({ ja: '完成図', en: 'Pattern' })}
-                </Text>
-              )}
-            </View>
-          </View>
+              {/* サムネイル - プレビュー動画エリアに重ねる */}
+              <View style={styles.thumbnailContainer}>
+                <View style={styles.thumbnail}>
+                  {item.patternImage ? (
+                    <Image 
+                      source={typeof item.patternImage === 'string' 
+                        ? { uri: item.patternImage } 
+                        : item.patternImage
+                      } 
+                      style={styles.thumbnailImage}
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <Text style={styles.thumbnailText}>
+                      {getLocalizedText({ ja: '完成図', en: 'Pattern' })}
+                    </Text>
+                  )}
+                </View>
+              </View>
+            </>
+          )}
 
           {/* 作品情報 */}
-          <View style={styles.infoContainer}>
-            <Text 
-              maxFontSizeMultiplier={1.35}
-              style={[
-                styles.title,
-                { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
-              ]}
-            >
-              {getLocalizedText(item.name)}</Text>
+          <View style={[styles.infoContainer, item.nonverbalFormat && styles.infoContainerNonverbal]}>
+            {!item.nonverbalFormat && (
+              <Text 
+                maxFontSizeMultiplier={1.35}
+                style={[
+                  styles.title,
+                  { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+                ]}
+              >
+                {getLocalizedText(item.name)}
+              </Text>
+            )}
             <View style={styles.difficultyContainer}>
               {(() => {
                 const IconComponent = getDifficultyIcon(item.difficulty);
@@ -740,6 +762,9 @@ const styles = StyleSheet.create({
   infoContainer: {
     paddingHorizontal: 20,
     marginTop: 48,
+  },
+  infoContainerNonverbal: {
+    marginTop: 12,
   },
   title: {
     fontSize: 24,
