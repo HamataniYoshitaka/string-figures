@@ -11,7 +11,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
   },
   '2_jacobs-ladder4': {
-    thumbnail: require('../../assets/string-figures/2_jacobs-ladder4/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/2_jacobs-ladder4/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/2_jacobs-ladder4/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/2_jacobs-ladder4/preview.mp4'),
   },

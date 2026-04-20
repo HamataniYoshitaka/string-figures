@@ -24,6 +24,9 @@ import { stringFigures } from '../data/index';
 import RelatedFigures from './RelatedFigures';
 import PurchaseButton from './PurchaseButton';
 
+/** @gorhom/bottom-sheet の BottomSheetBackground 既定の borderRadius に合わせる */
+const SHEET_BACKGROUND_RADIUS = 15;
+
 interface Props {
   item: StringFigure | null;
   isBookmarked: boolean;
@@ -243,6 +246,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
       backdropComponent={renderBackdrop}
       enablePanDownToClose
       style={getTabletStyle()}
+      backgroundStyle={styles.sheetBackgroundBorder}
       handleIndicatorStyle={styles.handleIndicator}
     >
       <BottomSheetScrollView 
@@ -594,6 +598,11 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
 DetailBottomSheet.displayName = 'DetailBottomSheet';
 
 const styles = StyleSheet.create({
+  sheetBackgroundBorder: {
+    borderWidth: 2,
+    borderColor: '#292524',
+    borderRadius: SHEET_BACKGROUND_RADIUS,
+  },
   contentContainer: {
     flex: 1,
   },
