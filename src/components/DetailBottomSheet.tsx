@@ -644,7 +644,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'relative',
     marginBottom: 20,
-    width: '100%',
+    marginHorizontal: 2,
   },
   imagePlaceholder: {
     height: 240,
