@@ -226,7 +226,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/44_butterfly/preview.mp4'),
   },
   '45_hammock': {
-    thumbnail: require('../../assets/string-figures/45_hammock/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/45_hammock/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/45_hammock/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/45_hammock/preview.mp4'),
   },
