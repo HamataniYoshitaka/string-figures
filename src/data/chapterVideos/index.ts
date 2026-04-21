@@ -36,7 +36,12 @@ import { FIGURE_20_TUZUMI_VIDEOS } from './figure-20_tuzumi';
 import { FIGURE_21_KIKUSUI_VIDEOS } from './figure-21_kikusui';
 import { FIGURE_22_SPEAR_VIDEOS } from './figure-22_spear';
 import { FIGURE_23_FINGER_STROLL_VIDEOS } from './figure-23_finger-stroll';
-import { FIGURE_24_SHOOTING_STAR_VIDEOS } from './figure-24_shooting-star';
+import {
+  FIGURE_24_SHOOTING_STAR_NONVERBAL_CHAPTER_STILL_PAIRS,
+  FIGURE_24_SHOOTING_STAR_NONVERBAL_TOTAL_CHAPTERS,
+  FIGURE_24_SHOOTING_STAR_NONVERBAL_VIDEO_PAIRS,
+  FIGURE_24_SHOOTING_STAR_VIDEOS,
+} from './figure-24_shooting-star';
 import { FIGURE_25_FINGERS_MAGIC_VIDEOS } from './figure-25_fingers-magic';
 import { FIGURE_26_HAMMOCK_VIDEOS } from './figure-26_hammock';
 import { FIGURE_27_FISH_VIDEOS } from './figure-27_fish';
@@ -244,12 +249,14 @@ export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, Nonver
   '1_star': FIGURE_1_STAR_NONVERBAL_VIDEO_PAIRS,
   '2_jacobs-ladder4': FIGURE_2_JACOBS_LADDER4_NONVERBAL_VIDEO_PAIRS,
   '13_easy-broom': FIGURE_13_EASY_BROOM_NONVERBAL_VIDEO_PAIRS,
+  '24_shooting-star': FIGURE_24_SHOOTING_STAR_NONVERBAL_VIDEO_PAIRS,
 };
 
 export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
   '1_star': FIGURE_1_STAR_NONVERBAL_TOTAL_CHAPTERS,
   '2_jacobs-ladder4': FIGURE_2_JACOBS_LADDER4_NONVERBAL_TOTAL_CHAPTERS,
   '13_easy-broom': FIGURE_13_EASY_BROOM_NONVERBAL_TOTAL_CHAPTERS,
+  '24_shooting-star': FIGURE_24_SHOOTING_STAR_NONVERBAL_TOTAL_CHAPTERS,
 };
 
 /** 非言語モードのフィルムストリップ用静止画（FIGURE ごとに件数・パスが異なる） */
@@ -257,4 +264,5 @@ export const NONVERBAL_CHAPTER_STILL_PAIRS: Record<string, readonly NonverbalCha
   '1_star': FIGURE_1_STAR_NONVERBAL_CHAPTER_STILL_PAIRS,
   '2_jacobs-ladder4': FIGURE_2_JACOBS_LADDER4_NONVERBAL_CHAPTER_STILL_PAIRS,
   '13_easy-broom': FIGURE_13_EASY_BROOM_NONVERBAL_CHAPTER_STILL_PAIRS,
+  '24_shooting-star': FIGURE_24_SHOOTING_STAR_NONVERBAL_CHAPTER_STILL_PAIRS,
 };

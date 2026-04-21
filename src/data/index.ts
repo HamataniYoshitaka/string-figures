@@ -736,7 +736,7 @@ export const stringFigures: StringFigure[] = [
       author: { ja: 'SHISHIDO Yukio', en: 'SHISHIDO Yukio' },
       references: null
     },
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '26',

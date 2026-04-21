@@ -121,7 +121,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/23_finger-stroll/preview.mp4'),
   },
   '24_shooting-star': {
-    thumbnail: require('../../assets/string-figures/24_shooting-star/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/24_shooting-star/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/24_shooting-star/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/24_shooting-star/preview.mp4'),
   },
