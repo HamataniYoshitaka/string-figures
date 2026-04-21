@@ -94,7 +94,12 @@ import { FIGURE_62_JAPANESE_OPENING_VIDEOS } from './figure-62_japanese-opening'
 import { FIGURE_65_DOG_WALKING_VIDEOS } from './figure-65_dog-walking';
 import { FIGURE_66_MOUSE_VIDEOS } from './figure-66_mouse';
 import { FIGURE_67_ISLAND_MOA_VIDEOS } from './figure-67_island-moa';
-import { FIGURE_68_LAIA_FLOWER_VIDEOS } from './figure-68_laia-flower';
+import {
+  FIGURE_68_LAIA_FLOWER_NONVERBAL_CHAPTER_STILL_PAIRS,
+  FIGURE_68_LAIA_FLOWER_NONVERBAL_TOTAL_CHAPTERS,
+  FIGURE_68_LAIA_FLOWER_NONVERBAL_VIDEO_PAIRS,
+  FIGURE_68_LAIA_FLOWER_VIDEOS,
+} from './figure-68_laia-flower';
 import { FIGURE_69_MOON_BETWEEN_MOUNTAINS_VIDEOS } from './figure-69_moon-between-mountains';
 import { FIGURE_70_MOUNTAINS_VIDEOS } from './figure-70_mountains';
 import { FIGURE_71_SIBERIAN_HOUSE_VIDEOS } from './figure-71_siberian-house';
@@ -262,6 +267,7 @@ export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, Nonver
   '24_shooting-star': FIGURE_24_SHOOTING_STAR_NONVERBAL_VIDEO_PAIRS,
   '28_atanua-house': FIGURE_28_ATANUA_HOUSE_NONVERBAL_VIDEO_PAIRS,
   '45_hammock': FIGURE_45_HAMMOCK_NONVERBAL_VIDEO_PAIRS,
+  '68_laia-flower': FIGURE_68_LAIA_FLOWER_NONVERBAL_VIDEO_PAIRS,
 };
 
 export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
@@ -271,6 +277,7 @@ export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
   '24_shooting-star': FIGURE_24_SHOOTING_STAR_NONVERBAL_TOTAL_CHAPTERS,
   '28_atanua-house': FIGURE_28_ATANUA_HOUSE_NONVERBAL_TOTAL_CHAPTERS,
   '45_hammock': FIGURE_45_HAMMOCK_NONVERBAL_TOTAL_CHAPTERS,
+  '68_laia-flower': FIGURE_68_LAIA_FLOWER_NONVERBAL_TOTAL_CHAPTERS,
 };
 
 /** 非言語モードのフィルムストリップ用静止画（FIGURE ごとに件数・パスが異なる） */
@@ -281,4 +288,5 @@ export const NONVERBAL_CHAPTER_STILL_PAIRS: Record<string, readonly NonverbalCha
   '24_shooting-star': FIGURE_24_SHOOTING_STAR_NONVERBAL_CHAPTER_STILL_PAIRS,
   '28_atanua-house': FIGURE_28_ATANUA_HOUSE_NONVERBAL_CHAPTER_STILL_PAIRS,
   '45_hammock': FIGURE_45_HAMMOCK_NONVERBAL_CHAPTER_STILL_PAIRS,
+  '68_laia-flower': FIGURE_68_LAIA_FLOWER_NONVERBAL_CHAPTER_STILL_PAIRS,
 };

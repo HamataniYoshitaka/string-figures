@@ -336,7 +336,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/67_island-moa/preview.mp4'),
   },
   '68_laia-flower': {
-    thumbnail: require('../../assets/string-figures/68_laia-flower/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/68_laia-flower/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/68_laia-flower/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/68_laia-flower/preview.mp4'),
   },
