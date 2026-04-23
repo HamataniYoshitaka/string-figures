@@ -231,7 +231,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/45_hammock/preview.mp4'),
   },
   '46_rabit': {
-    thumbnail: require('../../assets/string-figures/46_rabit/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/46_rabit/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/46_rabit/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/46_rabit/preview.mp4'),
   },
