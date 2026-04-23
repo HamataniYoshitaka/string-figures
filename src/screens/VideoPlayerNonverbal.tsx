@@ -349,7 +349,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- strip 寸法・ストライド変化時に translate を再適用するだけ
   }, [stillCardHeight, stripRowSlotHeight, stripCenteringOffset, maxStripScrollIndex]);
 
-  /** 戻る・ジャンプ・リセット時はチャプター/セグメントに同期（次へで連続進行した場合は再生側でスクロール） */
+  /** チャプター移動（戻る/次へ/ジャンプ）・リセット時はチャプター先頭（primary）に即時同期 */
   useEffect(() => {
     const prevCh = prevChapterIndexForNavRef.current;
     const paddingBumped = prevNonverbalPaddingKeyRef.current !== nonverbalPaddingResetKey;
@@ -387,37 +387,19 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
     }
 
     if (currentChapterIndex !== prevCh) {
-      const wentBack = currentChapterIndex < prevCh;
-      const forwardJump = currentChapterIndex > prevCh + 1;
-      if (wentBack || forwardJump) {
-        setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
-        applyStripChapterSecondaryOpacityTargets(
-          stillChapterSecondaryOpacity,
-          currentChapterIndex,
-          'primary',
-          nonverbalStripSlotCount,
-        );
-        applyStripChapterStandbyOpacityTargets(
-          stillChapterStandbyOpacity,
-          currentChapterIndex,
-          'primary',
-          nonverbalStripSlotCount,
-        );
-      } else if (currentChapterIndex === prevCh + 1) {
-        /** 次章へ（連続）: スクロールは *-01 終了まで維持、静止画は章先頭＝primary に合わせる */
-        applyStripChapterSecondaryOpacityTargets(
-          stillChapterSecondaryOpacity,
-          currentChapterIndex,
-          'primary',
-          nonverbalStripSlotCount,
-        );
-        applyStripChapterStandbyOpacityTargets(
-          stillChapterStandbyOpacity,
-          currentChapterIndex,
-          'primary',
-          nonverbalStripSlotCount,
-        );
-      }
+      setStripTranslateToIndex(getStripScrollTargetForChapterSegment(currentChapterIndex, 'primary'), false);
+      applyStripChapterSecondaryOpacityTargets(
+        stillChapterSecondaryOpacity,
+        currentChapterIndex,
+        'primary',
+        nonverbalStripSlotCount,
+      );
+      applyStripChapterStandbyOpacityTargets(
+        stillChapterStandbyOpacity,
+        currentChapterIndex,
+        'primary',
+        nonverbalStripSlotCount,
+      );
       prevChapterIndexForNavRef.current = currentChapterIndex;
       return;
     }
