@@ -96,7 +96,9 @@ const DetailBottomSheetNonverbalHero: React.FC<DetailBottomSheetNonverbalHeroPro
             <Text style={styles.playButtonText} maxFontSizeMultiplier={1.2}>
               PLAY
             </Text>
-            <PlayIcon width={16} height={18} strokeWidth={1.5} strokeColor="#FFFFFF" fillColor="#FFFFFF" />
+            <View style={styles.playButtonIcon}>
+              <PlayIcon width={16} height={18} strokeWidth={1.5} strokeColor="#FFFFFF" fillColor="#FFFFFF" />
+            </View>
           </TouchableOpacity>
         )}
       </View>
@@ -163,6 +165,7 @@ const styles = StyleSheet.create({
   },
   playButton: {
     minWidth: 200,
+    position: 'relative',
     borderRadius: 12,
     borderWidth: 2,
     borderColor: '#292524',
@@ -185,6 +188,11 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     letterSpacing: 0.4,
     fontFamily: 'KronaOne-Regular',
+  },
+  playButtonIcon: {
+    position: 'absolute',
+    right: 16,
+    top: 12,
   },
 });
 

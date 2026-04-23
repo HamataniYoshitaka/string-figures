@@ -211,7 +211,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/41_dandelion/preview.mp4'),
   },
   '42_apaches-door': {
-    thumbnail: require('../../assets/string-figures/42_apaches-door/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/42_apaches-door/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/42_apaches-door/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/42_apaches-door/preview.mp4'),
   },
