@@ -286,7 +286,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/56_teepee/preview.mp4'),
   },
   '57_thunder': {
-    thumbnail: require('../../assets/string-figures/57_thunder/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/57_thunder/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/57_thunder/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/57_thunder/preview.mp4'),
   },
