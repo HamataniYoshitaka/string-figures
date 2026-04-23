@@ -139,6 +139,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
             maxFontSizeMultiplier={1.25}
             style={[
               styles.filterText, 
+              { fontFamily: currentLanguage === 'ja' ? 'LineSeed-Bold' : 'KronaOne-Regular' },
               selected ? styles.filterTextSelected : styles.filterTextUnselected
             ]}
           >
@@ -171,12 +172,12 @@ const styles = StyleSheet.create({
   },
   filterButtonSelected: {
     backgroundColor: '#FFF9F0',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#292524',
   },
   filterButtonUnselected: {
     backgroundColor: 'transparent',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#292524',
   },
   filterText: {

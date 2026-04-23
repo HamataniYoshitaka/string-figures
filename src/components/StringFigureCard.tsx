@@ -182,7 +182,10 @@ const StringFigureCard: React.FC<Props> = ({
               )}
               <Text 
                 maxFontSizeMultiplier={1.35}
-                style={styles.cardTitle}
+                style={[
+                  styles.cardTitle,
+                  { fontFamily: currentLanguage === 'ja' ? 'LineSeed-Bold' : 'KronaOne-Regular' },
+                ]}
               >
                 {getLocalizedText(item.name)}
               </Text>
@@ -289,9 +292,8 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#222',
+    color: '#292524',
     flex: 1,
-    fontFamily: 'LineSeed-Bold',
   },
   difficultyIconContainer: {
     position: 'relative',
