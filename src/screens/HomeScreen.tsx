@@ -969,7 +969,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 style={[
                   styles.title, 
                   isTablet && styles.titleTablet,
-                  { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+                  { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }
                 ]}
               >
                 {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}
@@ -1067,7 +1067,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     color: '#292524',
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: 'LineSeed-Bold',
     fontWeight: '600',
     lineHeight: Platform.OS === 'android' ? 34 : 32, // Androidでより大きなlineHeight
     includeFontPadding: false, // Androidの余分なパディングを削除

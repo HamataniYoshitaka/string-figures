@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
   cardImageText: {
     color: '#9E9E9E',
     fontSize: 16,
-    fontFamily: 'KleeOne-Regular',
+    fontFamily: 'LineSeed-Regular',
   },
   bookmarkContainer: {
     position: 'absolute',
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#222',
     flex: 1,
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: 'LineSeed-Bold',
   },
   difficultyIconContainer: {
     position: 'relative',

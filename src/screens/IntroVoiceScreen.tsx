@@ -236,7 +236,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                             styles.title, 
                             { 
                                 fontSize: isTablet ? 22 : 18,
-                                fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                                fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold'
                             }
                         ]} numberOfLines={1}
                     >
@@ -451,7 +451,7 @@ const styles = StyleSheet.create({
         lineHeight: 18,
     },
     subtitleText: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         fontSize: 24,
         color: '#57534d',
         lineHeight: 32,
@@ -519,7 +519,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#79716B',
     },
     voiceFallbackHeaderText: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         fontSize: 16,
         lineHeight: 32,
         color: '#79716B',
@@ -531,7 +531,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     voiceFallbackDescriptionText: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         fontSize: 16,
         lineHeight: 32,
         color: '#222',
@@ -543,7 +543,7 @@ const styles = StyleSheet.create({
         marginTop: 24,
     },
     voiceFallbackButtonText: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         fontSize: 18,
         lineHeight: 32,
         color: '#292524',

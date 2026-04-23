@@ -239,7 +239,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         styles.title, 
                         { 
                             fontSize: isTablet ? 22 : 18,
-                            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold'
                         }
                     ]} numberOfLines={1}
                 >
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
         lineHeight: 18,
     },
     subtitleText: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         fontSize: 16,
         color: '#57534d',
         lineHeight: 24,

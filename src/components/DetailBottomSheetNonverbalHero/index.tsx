@@ -44,7 +44,7 @@ const DetailBottomSheetNonverbalHero: React.FC<DetailBottomSheetNonverbalHeroPro
         maxFontSizeMultiplier={1.35}
         style={[
           styles.title,
-          { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' },
+          { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' },
         ]}
       >
         {getLocalizedText(item.name)}

@@ -687,7 +687,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     title: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         flex: 1,
         // fontSize: 20,
         fontWeight: '600',
@@ -707,7 +707,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     subtitleText: {
-        fontFamily: 'KleeOne-Regular',
+        fontFamily: 'LineSeed-Regular',
         fontSize: 16,
         color: '#333',
         textAlign: 'center',
@@ -742,7 +742,7 @@ const styles = StyleSheet.create({
         paddingVertical: 24,
     },
     restorePurchaseOrText: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         fontSize: 20,
         color: '#79716b',
         textAlign: 'center',
@@ -752,14 +752,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     restorePurchaseQuestionText: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         fontSize: 16,
         color: '#57534d',
         textAlign: 'center',
         lineHeight: 32,
     },
     restorePurchaseButtonText: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         fontSize: 22,
         color: '#292524',
         textAlign: 'center',
@@ -780,7 +780,7 @@ const styles = StyleSheet.create({
         gap: 12,
     },
     loadingText: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         fontSize: 16,
         color: '#FFFFFF',
         textAlign: 'center',

@@ -687,7 +687,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   styles.title,
                   {
                     fontSize: isTablet ? 22 : 18,
-                    fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold',
+                    fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold',
                   },
                 ]}
               >
@@ -825,7 +825,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 styles.title,
                 {
                   fontSize: isTablet ? 22 : 18,
-                  fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold',
+                  fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold',
                 },
               ]}
             >
@@ -1010,7 +1010,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: 'LineSeed-Bold',
     flex: 1,
     fontSize: 18,
     fontWeight: '600',

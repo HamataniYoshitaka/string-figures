@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   collectionTitle: {
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: 'LineSeed-Bold',
     fontSize: 24,
     fontWeight: '600',
   },
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     height: 4,
   },
   collectionDescription: {
-    fontFamily: 'KleeOne-Regular',
+    fontFamily: 'LineSeed-Regular',
     fontSize: 16,
     color: '#292524',
     lineHeight: 24,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     height: 8,
   },
   thumbnailCaption: {
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: 'LineSeed-Bold',
     fontSize: 16,
     color: '#292524',
     textAlign: 'center',

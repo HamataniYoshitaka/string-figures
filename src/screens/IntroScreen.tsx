@@ -425,7 +425,7 @@ const IntroScreen: React.FC<Props> = ({ navigation }) => {
           style={[
             styles.title, 
             isTablet && styles.titleTablet,
-            { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+            { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }
           ]}
         >
           {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}

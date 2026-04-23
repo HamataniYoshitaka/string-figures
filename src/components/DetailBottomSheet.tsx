@@ -387,7 +387,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 maxFontSizeMultiplier={1.35}
                 style={[
                   styles.title,
-                  { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }
+                  { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }
                 ]}
               >
                 {getLocalizedText(item.name)}
@@ -794,10 +794,10 @@ const styles = StyleSheet.create({
     color: '#333',
     lineHeight: 20,
     textAlign: 'center',
-    fontFamily: 'KleeOne-Regular',
+    fontFamily: 'LineSeed-Regular',
   },
   descriptionItalic: {
-    fontFamily: 'NotoSerif-Italic',
+    fontFamily: 'LineSeed-Bold',
   },
   bookmarkButton: {
     position: 'absolute',
@@ -835,10 +835,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#57534D',
     textAlign: 'right',
-    fontFamily: 'NotoSerif-Regular',
+    fontFamily: 'LineSeed-Regular',
   },
   referenceValueItalic: {
-    fontFamily: 'NotoSerif-Italic',
+    fontFamily: 'LineSeed-Bold',
   },
   referenceValueContainer: {
     flex: 1,

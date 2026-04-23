@@ -148,7 +148,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
                 styles.title, 
                 { 
                   fontSize: isTablet ? 22 : 18,
-                  fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                  fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold'
                 }
               ]}
             >
@@ -202,7 +202,7 @@ const VideoPlayerPortrait: React.FC<VideoPlayerSharedProps> = ({
               styles.title, 
               { 
                 fontSize: isTablet ? 22 : 18,
-                fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold'
               }
             ]}
           >
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: 'LineSeed-Bold',
     flex: 1,
     fontSize: 18,
     fontWeight: '600',
@@ -550,7 +550,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 1)',
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 5,  
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: 'LineSeed-Bold',
   },
   // 影用テキスト（同じ位置に配置して影だけを重ねる）
   subtitleShadowTabletLandscape: {
@@ -569,7 +569,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   subtitleText: {
-    fontFamily: 'KleeOne-Regular',
+    fontFamily: 'LineSeed-Regular',
     // fontSize: 16,
     color: '#333',
     textAlign: 'center',

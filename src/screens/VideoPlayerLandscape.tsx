@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   title: {
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: 'LineSeed-Bold',
     flex: 1,
     fontSize: 18,
     fontWeight: '600',
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(45, 45, 45, 1)',
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 7,  
-    fontFamily: 'KleeOne-SemiBold',
+    fontFamily: 'LineSeed-Bold',
   },
   // 影用テキスト（同じ位置に配置して影だけを重ねる）
   subtitleShadow: {

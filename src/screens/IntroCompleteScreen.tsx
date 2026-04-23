@@ -112,7 +112,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         styles.title, 
                         { 
                             fontSize: isTablet ? 22 : 18,
-                            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold'
+                            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold'
                         }
                     ]} numberOfLines={1}
                 >
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     titleText: {
-        fontFamily: 'KleeOne-Regular',
+        fontFamily: 'LineSeed-Regular',
         fontSize: 40,
         color: '#333',
         textAlign: 'center',
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     subtitleText: {
-        fontFamily: 'KleeOne-Regular',
+        fontFamily: 'LineSeed-Regular',
         fontSize: 20,
         color: '#333',
         textAlign: 'center',

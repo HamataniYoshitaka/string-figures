@@ -37,13 +37,11 @@ export default function App() {
       try {
         // フォントをロード
         await Font.loadAsync({
-          'KleeOne-Regular': require('./assets/fonts/Klee_One/KleeOne-Regular.ttf'),
-          'KleeOne-SemiBold': require('./assets/fonts/Klee_One/KleeOne-SemiBold.ttf'),
+          'LineSeed-Regular': require('./assets/fonts/LineSeed/LINESeedJP-Regular.ttf'),
+          'LineSeed-Bold': require('./assets/fonts/LineSeed/LINESeedJP-Bold.ttf'),
           'Merriweather-SemiBold': require('./assets/fonts/Merriweather/Merriweather-SemiBold.ttf'),
           'Roboto-Medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
           'Montserrat-SemiBold': require('./assets/fonts/Montserrat/Montserrat-SemiBold.ttf'),
-          'NotoSerif-Regular': require('./assets/fonts/NotoSerif/NotoSerif-Regular.ttf'),
-          'NotoSerif-Italic': require('./assets/fonts/NotoSerif/NotoSerif-Italic.ttf'),
         });
 
         // RevenueCat SDKを初期化

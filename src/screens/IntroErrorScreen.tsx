@@ -139,7 +139,7 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
                 </TouchableWithoutFeedback>
                 <Text 
                     maxFontSizeMultiplier={1.35}
-                    style={[styles.title, { fontSize: isTablet ? 22 : 18, fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'KleeOne-SemiBold' }]} numberOfLines={1}>
+                    style={[styles.title, { fontSize: isTablet ? 22 : 18, fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }]} numberOfLines={1}>
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
             </View>
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     title: {
-        fontFamily: 'KleeOne-SemiBold',
+        fontFamily: 'LineSeed-Bold',
         flex: 1,
         fontSize: 18,
         fontWeight: '600',
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     subtitleText: {
-        fontFamily: 'KleeOne-Regular',
+        fontFamily: 'LineSeed-Regular',
         fontSize: 16,
         color: '#222',
         textAlign: 'center',
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     outlinedButtonText: {
-        // fontFamily: 'KleeOne-SemiBold',
+        // fontFamily: 'LineSeed-Bold',
         fontWeight: '600',
         fontSize: 18,
         color: '#57534D',
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
     },
     textButtonLabel: {
-        // fontFamily: 'KleeOne-SemiBold',
+        // fontFamily: 'LineSeed-Bold',
         fontWeight: '600',
         fontSize: 18,
         color: '#57534D',
