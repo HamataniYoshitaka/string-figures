@@ -90,7 +90,7 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
                 </TouchableWithoutFeedback>
                 <Text 
                     maxFontSizeMultiplier={1.35}
-                    style={[styles.title, { fontSize: isTablet ? 22 : 18 , fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }]} numberOfLines={1}
+                    style={[styles.title, { fontSize: isTablet ? 22 : 18 , fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' }]} numberOfLines={1}
                 >
                     {getLocalizedText({ja: 'このアプリについて', en: 'About this app'})}
                 </Text>
@@ -105,7 +105,7 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
                     <View style={styles.sectionContainer}>
                         <Text 
                             maxFontSizeMultiplier={1.35}
-                            style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }]}
+                            style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' }]}
                         >
                             { getLocalizedText({ 
                                 ja: 'このアプリについて', 
@@ -124,7 +124,7 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
 
                         <Text 
                             maxFontSizeMultiplier={1.35}
-                            style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }]}
+                            style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' }]}
                         >
                             { getLocalizedText({ 
                                 ja: '音声による操作について', 
@@ -171,7 +171,7 @@ const PolicyScreen: React.FC<Props> = ({ navigation, route }) => {
 
                         <Text 
                             maxFontSizeMultiplier={1.35}
-                            style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }]}
+                            style={[styles.sectionTitle, { fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' }]}
                         >
                             { getLocalizedText({ 
                                 ja: '謝辞・参考', 

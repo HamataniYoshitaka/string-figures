@@ -39,9 +39,9 @@ export default function App() {
         await Font.loadAsync({
           'LineSeed-Regular': require('./assets/fonts/LineSeed/LINESeedJP-Regular.ttf'),
           'LineSeed-Bold': require('./assets/fonts/LineSeed/LINESeedJP-Bold.ttf'),
-          'Merriweather-SemiBold': require('./assets/fonts/Merriweather/Merriweather-SemiBold.ttf'),
           'Roboto-Medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
           'Montserrat-SemiBold': require('./assets/fonts/Montserrat/Montserrat-SemiBold.ttf'),
+          'KronaOne-Regular': require('./assets/fonts/KronaOne/KronaOne-Regular.ttf'),
         });
 
         // RevenueCat SDKを初期化

@@ -387,7 +387,7 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
                 maxFontSizeMultiplier={1.35}
                 style={[
                   styles.title,
-                  { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }
+                  { fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' }
                 ]}
               >
                 {getLocalizedText(item.name)}

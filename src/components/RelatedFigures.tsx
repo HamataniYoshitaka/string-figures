@@ -94,7 +94,7 @@ const RelatedFigures: React.FC<Props> = ({
         maxFontSizeMultiplier={1.35}
         style={[
           styles.sectionHeader,
-          { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }
+          { fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' }
         ]}
       >
         {getLocalizedText({ ja: '関連するあやとり', en: 'Related String Figures' })}

@@ -969,7 +969,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 style={[
                   styles.title, 
                   isTablet && styles.titleTablet,
-                  { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }
+                  { fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' }
                 ]}
               >
                 {currentLanguage === 'ja' ? 'あやとり' : 'String Figures'}

@@ -44,7 +44,7 @@ const DetailBottomSheetNonverbalHero: React.FC<DetailBottomSheetNonverbalHeroPro
         maxFontSizeMultiplier={1.35}
         style={[
           styles.title,
-          { fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' },
+          { fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' },
         ]}
       >
         {getLocalizedText(item.name)}
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   title: {
-    fontSize: 34,
+    fontSize: 28,
     color: '#333',
     marginTop: 4,
     marginBottom: 10,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 25,
     letterSpacing: 0.4,
-    fontFamily: 'Merriweather-SemiBold',
+    fontFamily: 'KronaOne-Regular',
   },
 });
 

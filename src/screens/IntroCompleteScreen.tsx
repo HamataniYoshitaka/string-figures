@@ -112,7 +112,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         styles.title, 
                         { 
                             fontSize: isTablet ? 22 : 18,
-                            fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold'
+                            fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold'
                         }
                     ]} numberOfLines={1}
                 >

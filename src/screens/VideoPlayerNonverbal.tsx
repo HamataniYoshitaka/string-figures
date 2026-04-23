@@ -687,7 +687,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   styles.title,
                   {
                     fontSize: isTablet ? 22 : 18,
-                    fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold',
+                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
                   },
                 ]}
               >
@@ -825,7 +825,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 styles.title,
                 {
                   fontSize: isTablet ? 22 : 18,
-                  fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold',
+                  fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
                 },
               ]}
             >

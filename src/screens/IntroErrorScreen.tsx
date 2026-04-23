@@ -139,7 +139,7 @@ const IntroErrorScreen: React.FC<Props> = ({ navigation, route }) => {
                 </TouchableWithoutFeedback>
                 <Text 
                     maxFontSizeMultiplier={1.35}
-                    style={[styles.title, { fontSize: isTablet ? 22 : 18, fontFamily: currentLanguage === 'en' ? 'Merriweather-SemiBold' : 'LineSeed-Bold' }]} numberOfLines={1}>
+                    style={[styles.title, { fontSize: isTablet ? 22 : 18, fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' }]} numberOfLines={1}>
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
             </View>
