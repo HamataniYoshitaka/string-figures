@@ -142,7 +142,12 @@ import { FIGURE_93_ONE_CHIEF_VIDEOS } from './figure-93_one-chief';
 import { FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS } from './figure-95_2perople-sequence';
 import { FIGURE_96_CORAL_VIDEOS } from './figure-96_coral';
 import { FIGURE_97_BARBED_SPEAR_VIDEOS } from './figure-97_barbed-spear';
-import { FIGURE_98_FISH_TRAP_VIDEOS } from './figure-98_fish-trap';
+import {
+  FIGURE_98_FISH_TRAP_NONVERBAL_CHAPTER_STILL_PAIRS,
+  FIGURE_98_FISH_TRAP_NONVERBAL_TOTAL_CHAPTERS,
+  FIGURE_98_FISH_TRAP_NONVERBAL_VIDEO_PAIRS,
+  FIGURE_98_FISH_TRAP_VIDEOS,
+} from './figure-98_fish-trap';
 import { FIGURE_99_RAVEN_VIDEOS } from './figure-99_raven';
 import { FIGURE_100_HOLD_THE_SKY_VIDEOS } from './figure-100_hold-the-sky';
 import { FIGURE_101_POLA_BEAR_VIDEOS } from './figure-101_pola-bear';
@@ -286,6 +291,7 @@ export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, Nonver
   '68_laia-flower': FIGURE_68_LAIA_FLOWER_NONVERBAL_VIDEO_PAIRS,
   '46_rabit': FIGURE_46_RABIT_NONVERBAL_VIDEO_PAIRS,
   '57_thunder': FIGURE_57_THUNDER_NONVERBAL_VIDEO_PAIRS,
+  '98_fish-trap': FIGURE_98_FISH_TRAP_NONVERBAL_VIDEO_PAIRS,
 };
 
 export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
@@ -299,6 +305,7 @@ export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
   '68_laia-flower': FIGURE_68_LAIA_FLOWER_NONVERBAL_TOTAL_CHAPTERS,
   '46_rabit': FIGURE_46_RABIT_NONVERBAL_TOTAL_CHAPTERS,
   '57_thunder': FIGURE_57_THUNDER_NONVERBAL_TOTAL_CHAPTERS,
+  '98_fish-trap': FIGURE_98_FISH_TRAP_NONVERBAL_TOTAL_CHAPTERS,
 };
 
 /** 非言語モードのフィルムストリップ用静止画（FIGURE ごとに件数・パスが異なる） */
@@ -313,4 +320,5 @@ export const NONVERBAL_CHAPTER_STILL_PAIRS: Record<string, readonly NonverbalCha
   '68_laia-flower': FIGURE_68_LAIA_FLOWER_NONVERBAL_CHAPTER_STILL_PAIRS,
   '46_rabit': FIGURE_46_RABIT_NONVERBAL_CHAPTER_STILL_PAIRS,
   '57_thunder': FIGURE_57_THUNDER_NONVERBAL_CHAPTER_STILL_PAIRS,
+  '98_fish-trap': FIGURE_98_FISH_TRAP_NONVERBAL_CHAPTER_STILL_PAIRS,
 };
