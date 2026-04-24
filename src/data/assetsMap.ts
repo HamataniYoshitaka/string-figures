@@ -46,7 +46,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/8_elastic-band/preview.mp4'),
   },
   '9_chrysanthemum': {
-    thumbnail: require('../../assets/string-figures/9_chrysanthemum/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/9_chrysanthemum/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/9_chrysanthemum/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/9_chrysanthemum/preview.mp4'),
   },
