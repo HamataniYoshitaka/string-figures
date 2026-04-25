@@ -351,7 +351,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/70_mountains/preview.mp4'),
   },
   '71_siberian-house': {
-    thumbnail: require('../../assets/string-figures/71_siberian-house/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/71_siberian-house/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/71_siberian-house/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/71_siberian-house/preview.mp4'),
   },
