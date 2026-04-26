@@ -191,7 +191,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/37_jacobs-ladder3/preview.mp4'),
   },
   '38_dance-stage': {
-    thumbnail: require('../../assets/string-figures/38_dance-stage/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/38_dance-stage/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/38_dance-stage/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/38_dance-stage/preview.mp4'),
   },
