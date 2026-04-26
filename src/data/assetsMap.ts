@@ -486,7 +486,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/99_raven/preview.mp4'),
   },
   '100_hold-the-sky': {
-    thumbnail: require('../../assets/string-figures/100_hold-the-sky/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/100_hold-the-sky/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/100_hold-the-sky/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/100_hold-the-sky/preview.mp4'),
   },
