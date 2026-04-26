@@ -1992,6 +1992,17 @@ export const stringFigures: StringFigure[] = [
     },
     nonverbalFormat: false
   },
+  {
+    id: '111',
+    name: { ja: '七夕', en: 'Binary Stars' },
+    difficulty: 'medium',
+    directory: '111_binary-stars',
+    ...ASSETS_MAP['111_binary-stars'],
+    description: { ja: 'このあやとりは、2つの星があることで有名です。手順はかなり複雑ですが、完成系はとても美しいです', en: 'This string figure is famous for having two stars. The sequence is quite complex, but the finished form is very beautiful.' },
+    premiumCourseId: 0, 
+    data: null,
+    nonverbalFormat: true
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',

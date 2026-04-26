@@ -351,7 +351,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/70_mountains/preview.mp4'),
   },
   '71_siberian-house': {
-    thumbnail: require('../../assets/string-figures/71_siberian-house/thumbnail-nonverbal.png'),
+    thumbnail: require('../../assets/string-figures/71_siberian-house/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/71_siberian-house/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/71_siberian-house/preview.mp4'),
   },
@@ -533,6 +533,11 @@ export const ASSETS_MAP: {
   '110_eikodowa': {
     thumbnail: require('../../assets/string-figures/110_eikodowa/thumbnail-kraft.gif'),
     patternImage: require('../../assets/string-figures/110_eikodowa/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/110_eikodowa/preview.mp4'),
+  },
+  '111_binary-stars': {
+    thumbnail: require('../../assets/string-figures/111_binary-stars/thumbnail-nonverbal.png'),
+    patternImage: require('../../assets/string-figures/111_binary-stars/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/110_eikodowa/preview.mp4'),
   },
 };

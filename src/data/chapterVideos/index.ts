@@ -169,6 +169,12 @@ import { FIGURE_106_SALT_HOUSE_VIDEOS } from './figure-106_salt-house';
 import { FIGURE_108_TOAD_VIDEOS } from './figure-108_toad';
 import { FIGURE_109_HEART_VIDEOS } from './figure-109_heart';
 import { FIGURE_110_EIKODOWA_VIDEOS } from './figure-110_eikodowa';
+import { 
+  FIGURE_111_BINARY_STARS_NONVERBAL_CHAPTER_STILL_PAIRS, 
+  FIGURE_111_BINARY_STARS_NONVERBAL_TOTAL_CHAPTERS, 
+  FIGURE_111_BINARY_STARS_NONVERBAL_VIDEO_PAIRS,
+  FIGURE_111_BINARY_STARS_VIDEOS,
+} from './figure-111_binary-stars';
 
 export type NonverbalChapterVideoPair = {
   primary: any;
@@ -287,7 +293,8 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '106_salt-house': FIGURE_106_SALT_HOUSE_VIDEOS,
   '108_toad': FIGURE_108_TOAD_VIDEOS,
   '109_heart': FIGURE_109_HEART_VIDEOS,
-  '110_eikodowa': FIGURE_110_EIKODOWA_VIDEOS
+  '110_eikodowa': FIGURE_110_EIKODOWA_VIDEOS,
+  '111_binary-stars': FIGURE_111_BINARY_STARS_VIDEOS,
 };
 
 export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, NonverbalChapterVideoPair>> = {
@@ -304,6 +311,7 @@ export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, Nonver
   '57_thunder': FIGURE_57_THUNDER_NONVERBAL_VIDEO_PAIRS,
   '98_fish-trap': FIGURE_98_FISH_TRAP_NONVERBAL_VIDEO_PAIRS,
   '71_siberian-house': FIGURE_71_SIBERIAN_HOUSE_NONVERBAL_VIDEO_PAIRS,
+  '111_binary-stars': FIGURE_111_BINARY_STARS_NONVERBAL_VIDEO_PAIRS,
 };
 
 export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
@@ -320,6 +328,7 @@ export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
   '57_thunder': FIGURE_57_THUNDER_NONVERBAL_TOTAL_CHAPTERS,
   '71_siberian-house': FIGURE_71_SIBERIAN_HOUSE_NONVERBAL_TOTAL_CHAPTERS,
   '98_fish-trap': FIGURE_98_FISH_TRAP_NONVERBAL_TOTAL_CHAPTERS,
+  '111_binary-stars': FIGURE_111_BINARY_STARS_NONVERBAL_TOTAL_CHAPTERS,
 };
 
 /** 非言語モードのフィルムストリップ用静止画（FIGURE ごとに件数・パスが異なる） */
@@ -337,4 +346,5 @@ export const NONVERBAL_CHAPTER_STILL_PAIRS: Record<string, readonly NonverbalCha
   '57_thunder': FIGURE_57_THUNDER_NONVERBAL_CHAPTER_STILL_PAIRS,
   '71_siberian-house': FIGURE_71_SIBERIAN_HOUSE_NONVERBAL_CHAPTER_STILL_PAIRS,
   '98_fish-trap': FIGURE_98_FISH_TRAP_NONVERBAL_CHAPTER_STILL_PAIRS,
+  '111_binary-stars': FIGURE_111_BINARY_STARS_NONVERBAL_CHAPTER_STILL_PAIRS,
 };
