@@ -450,7 +450,7 @@ export const stringFigures: StringFigure[] = [
       author: { ja: '有木昭久', en: 'ARIKI Teruhisa' },
       references: null
     },
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '10',

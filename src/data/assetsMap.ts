@@ -36,8 +36,8 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/6_tieup/preview.mp4'),
   },
   '7_snail': {
-    thumbnail: require('../../assets/string-figures/7_snail/thumbnail-kraft.jpg'),
-    patternImage: require('../../assets/string-figures/7_snail/pattern.png'),
+    thumbnail: require('../../assets/string-figures/7_snail/thumbnail-nonverbal.png'),
+    patternImage: require('../../assets/string-figures/7_snail/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/7_snail/preview.mp4'),
   },
   '8_elastic-band': {
