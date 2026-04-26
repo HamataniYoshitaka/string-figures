@@ -326,7 +326,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/65_dog-walking/preview.mp4'),
   },
   '66_mouse': {
-    thumbnail: require('../../assets/string-figures/66_mouse/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/66_mouse/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/66_mouse/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/66_mouse/preview.mp4'),
   },
