@@ -236,7 +236,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/46_rabit/preview.mp4'),
   },
   '47_turtle': {
-    thumbnail: require('../../assets/string-figures/47_turtle/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/47_turtle/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/47_turtle/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/47_turtle/preview.mp4'),
   },
