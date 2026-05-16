@@ -16,6 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import Svg, { Path } from 'react-native-svg';
 import { CloseIcon, BookmarkIcon } from '../components/icons';
+import LandScapeIcon from '../components/icons/LandScape';
 import ChapterNavigationBarNonverbal from '../components/ChapterNavigationBarNonverbal';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
@@ -672,7 +673,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                   { transform: [{ scale: backButtonScale }] },
                 ]}
               >
-                <CloseIcon width={24} height={24} fillColor="#79716B" />
+                <CloseIcon width={28} height={28} fillColor="#000000" />
               </Animated.View>
             </TouchableWithoutFeedback>
             <Pressable
@@ -694,6 +695,14 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 {getLocalizedText({ ja: stringFigure.name.ja, en: stringFigure.name.en })}
               </Text>
             </Pressable>
+          </View>
+          <View
+            style={styles.landscapeButtonPlaceholder}
+            pointerEvents="none"
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+          >
+            <LandScapeIcon width={24} height={24} fillColor="#79716B" />
           </View>
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>Now Loading...</Text>
@@ -810,7 +819,7 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
                 { transform: [{ scale: backButtonScale }] },
               ]}
             >
-              <CloseIcon width={24} height={24} fillColor="#79716B" />
+              <CloseIcon width={28} height={28} fillColor="#000000" />
             </Animated.View>
           </TouchableWithoutFeedback>
           <Pressable
@@ -852,6 +861,15 @@ const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
               />
             </Animated.View>
           </TouchableWithoutFeedback>
+        </View>
+
+        <View
+          style={styles.landscapeButtonPlaceholder}
+          pointerEvents="none"
+          accessibilityElementsHidden
+          importantForAccessibility="no-hide-descendants"
+        >
+          <LandScapeIcon width={24} height={24} fillColor="#79716B" />
         </View>
 
         <View style={styles.videoCenterSpacer} pointerEvents="none" />
@@ -983,6 +1001,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
+  /** Close 直下（機能は未配線）。ヘッダー行の閉じるボタン高さに合わせた top */
+  landscapeButtonPlaceholder: {
+    position: 'absolute',
+    left: 16,
+    top: Platform.OS === 'android' ? 68 : 52,
+    padding: 8,
+    borderRadius: 20,
+    zIndex: 3,
+  },
   tabletLandscapeCloseButtonContainer: {
     position: 'absolute',
     top: 16,
@@ -995,12 +1022,12 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   backButton: {
-    padding: 8,
+    padding: 4,
     backgroundColor: 'rgba(0, 0, 0, 0)',
     borderRadius: 20,
   },
   bookmarkButton: {
-    padding: 8,
+    padding: 4,
     backgroundColor: 'rgba(0, 0, 0, 0)',
     borderRadius: 20,
   },
