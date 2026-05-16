@@ -154,7 +154,7 @@ function applyStripChapterStandbyOpacityTargets(
   }
 }
 
-const VideoPlayerNonverbal: React.FC<VideoPlayerSharedProps> = ({
+const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
   chapters,
   currentChapterIndex,
@@ -1117,4 +1117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VideoPlayerNonverbal;
+export default VideoPlayerNonverbalPortrait;

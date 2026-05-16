@@ -11,7 +11,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 
 import { RootStackParamList, Chapter } from '../types';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
-import VideoPlayerNonverbal, { NONVERBAL_PLAY_START_DELAY_MS } from './VideoPlayerNonverbal';
+import VideoPlayerNonverbalPortrait, { NONVERBAL_PLAY_START_DELAY_MS } from './VideoPlayerNonverbalPortrait';
 import { NextChapterButtonRef } from '../components/NextChapterButton';
 import { ReplayButtonRef } from '../components/ReplayButton';
 import { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
@@ -491,7 +491,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <PaperProvider>
-      <VideoPlayerNonverbal {...sharedProps} />
+      <VideoPlayerNonverbalPortrait {...sharedProps} />
       {confettiKey > 0 && (
         <ConfettiCannon
           key={confettiKey}
