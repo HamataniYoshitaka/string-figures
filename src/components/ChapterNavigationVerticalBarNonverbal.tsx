@@ -1,9 +1,12 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { View, StyleSheet } from 'react-native';
-import PreviousChapterLandscapeButton, { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
-import ReplayLandscapeButton, { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
-import NextChapterLandscapeButton, { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
-import RestartButtonVertical from './RestartButtonVertical';
+import NonverbalPreviousChapterLandscapeButton from './NonverbalPreviousChapterLandscapeButton';
+import { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
+import NonverbalReplayLandscapeButton from './NonverbalReplayLandscapeButton';
+import { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
+import NonverbalNextChapterLandscapeButton from './NonverbalNextChapterLandscapeButton';
+import { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
+import NonverbalRestartButtonVertical from './NonverbalRestartButtonVertical';
 import AnimatedChapterNumberVertical from './AnimatedChapterNumberVertical';
 import { Chapter, StringFigure } from '../types';
 
@@ -104,7 +107,7 @@ const ChapterNavigationVerticalBarNonverbal = forwardRef<
     <View style={styles.container}>
       {/* はじめからボタン */}
       <View style={[styles.buttonWrapper, { marginBottom: 8 }]}>
-        <RestartButtonVertical
+        <NonverbalRestartButtonVertical
           onPress={onRestartFromBeginning}
           currentChapterIndex={currentChapterIndex}
           getLocalizedText={getLocalizedText}
@@ -114,7 +117,7 @@ const ChapterNavigationVerticalBarNonverbal = forwardRef<
 
       {/* まえボタン */}
       <View style={styles.buttonWrapper}>
-        <PreviousChapterLandscapeButton
+        <NonverbalPreviousChapterLandscapeButton
           ref={previousChapterButtonRef}
           onPress={onPreviousChapter}
           currentChapterIndex={currentChapterIndex}
@@ -136,7 +139,7 @@ const ChapterNavigationVerticalBarNonverbal = forwardRef<
 
       {/* もういちどボタン（現在の章） */}
       <View style={styles.buttonWrapper}>
-        <ReplayLandscapeButton
+        <NonverbalReplayLandscapeButton
           ref={replayButtonRef}
           onPress={onReplay}
           currentChapterIndex={currentChapterIndex}
@@ -160,7 +163,7 @@ const ChapterNavigationVerticalBarNonverbal = forwardRef<
 
       {/* つぎボタン */}
       <View style={styles.buttonWrapper}>
-        <NextChapterLandscapeButton
+        <NonverbalNextChapterLandscapeButton
           ref={nextChapterButtonRef}
           chapters={chapters}
           onPress={isLastChapterCompleted ? onComplete : onNextChapter}
