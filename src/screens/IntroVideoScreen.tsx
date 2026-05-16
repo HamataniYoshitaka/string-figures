@@ -1,13 +1,25 @@
 import React, { useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Platform } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Platform, Dimensions, StatusBar } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronRightIcon, CloseIcon } from '../components/icons';
 import ProgressDots from '../components/ProgressDots';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
+
+const INTRO_HERO_TEXT = {
+    line1: {
+        ja: '世界中のあやとり',
+        en: 'String figures from around the world',
+    },
+    line2: {
+        ja: 'を紹介します',
+        en: '— introduced here',
+    },
+} as const;
 
 type IntroVideoScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -19,6 +31,12 @@ interface Props {
   navigation: IntroVideoScreenNavigationProp;
   route: IntroVideoScreenRouteProp;
 }
+
+/** Figma 準拠のアーチ装飾（viewBox 428×345） */
+const ARCH_VIEWBOX = { w: 428, h: 345 };
+const ARCH_PATH_D =
+  'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
+const ARCH_FILL_COLOR = '#FF623F';
 
 const chapters = [
     { subtitle: { ja: '', en: '' } },
@@ -33,7 +51,20 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const backButtonScale = useRef(new Animated.Value(1)).current;
     const nextStepButtonScale = useRef(new Animated.Value(1)).current;
     
-    const { isTablet, isDeviceLandscape } = useDeviceInfo();
+    const { isTablet } = useDeviceInfo();
+    const insets = useSafeAreaInsets();
+
+    const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+    const headerPaddingTop =
+        insets.top + (isTablet ? 16 : Platform.OS === 'android' ? 12 : 8);
+    const archDisplayHeight = screenWidth * (ARCH_VIEWBOX.h / ARCH_VIEWBOX.w);
+    /** アーチ下端（viewBox 底辺）を画面垂直中央に合わせる */
+    const archTop = screenHeight / 2 - archDisplayHeight;
+    /** SVG 上端より上だけ埋める（画面半分だとアーチ曲線が同色で見えなくなる） */
+    const archTopFillHeight = Math.max(0, archTop);
+    const headerContentHeight = isTablet ? 56 : 48;
+    const introHeroHeight =
+        screenHeight / 2 - headerPaddingTop - headerContentHeight;
     
     // アニメーションヘルパー関数
     const createPressInHandler = (scale: Animated.Value) => () => {
@@ -91,8 +122,37 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     }
 
     return (    
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
+        <View style={styles.container}>
+            <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+            {archTopFillHeight > 0 && (
+                <View
+                    pointerEvents="none"
+                    style={[
+                        styles.archTopFill,
+                        { height: archTopFillHeight },
+                    ]}
+                />
+            )}
+            <Svg
+                width={screenWidth}
+                height={archDisplayHeight}
+                viewBox={`0 0 ${ARCH_VIEWBOX.w} ${ARCH_VIEWBOX.h}`}
+                preserveAspectRatio="xMidYMin meet"
+                pointerEvents="none"
+                style={[
+                    styles.archSvg,
+                    {
+                        width: screenWidth,
+                        height: archDisplayHeight,
+                        top: archTop,
+                    },
+                ]}
+            >
+                <Path d={ARCH_PATH_D} fill={ARCH_FILL_COLOR} />
+            </Svg>
+
+            <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
+            <View style={[styles.header, { paddingTop: headerPaddingTop }]}>
                 <TouchableWithoutFeedback 
                     onPress={onGoBack}
                     onPressIn={createPressInHandler(backButtonScale)}
@@ -104,7 +164,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         { transform: [{ scale: backButtonScale }] }
                     ]}
                     >
-                    <CloseIcon width={24} height={24} fillColor="#292524" />
+                    <CloseIcon width={28} height={28} fillColor="#FFFFFF" strokeWidth={0} strokeColor="#FFFFFF" />
                     </Animated.View>
                 </TouchableWithoutFeedback>
                 <Text 
@@ -113,7 +173,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         styles.title, 
                         { 
                             fontSize: isTablet ? 22 : 18,
-                            fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold'
+                            fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                            color: '#FFFFFF',
                         }
                     ]} numberOfLines={1}
                 >
@@ -121,18 +182,45 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 </Text>
             </View>
 
-            <View style={[
-                styles.videoArea,
-                !isTablet && { paddingHorizontal: 0 },
-                (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape
-            ]}>
-                <View style={styles.progressContainer}>
-                    <ProgressDots 
-                        chapters={chapters}
-                        currentChapterIndex={currentChapterIndex}
-                        getChapterProgress={getChapterProgress}
-                    />
-                </View>
+            <View
+                style={[
+                    styles.introHero,
+                    { height: Math.max(introHeroHeight, 0) },
+                ]}
+            >
+                <Text
+                    maxFontSizeMultiplier={1.25}
+                    style={[
+                        styles.introHeroLine,
+                        {
+                            fontSize: currentLanguage === 'ja' ? 24 : 22,
+                            fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                        },
+                    ]}
+                >
+                    {getLocalizedText(INTRO_HERO_TEXT.line1)}
+                </Text>
+                <Text
+                    maxFontSizeMultiplier={1.25}
+                    style={[
+                        styles.introHeroLine,
+                        styles.introHeroLineSecond,
+                        {
+                            fontSize: currentLanguage === 'ja' ? 24 : 22,
+                            fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                        },
+                    ]}
+                >
+                    {getLocalizedText(INTRO_HERO_TEXT.line2)}
+                </Text>
+            </View>
+
+            <View style={styles.progressContainer}>
+                <ProgressDots
+                    chapters={chapters}
+                    currentChapterIndex={currentChapterIndex}
+                    getChapterProgress={getChapterProgress}
+                />
             </View>
 
             <View style={styles.subtitleContainerWrapper}>
@@ -180,9 +268,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     </TouchableWithoutFeedback>
                 </View>
             </View>
-            
-        </SafeAreaView>
-        
+            </SafeAreaView>
+        </View>
     );
 }
 
@@ -190,6 +277,27 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7F5F2',
+    },
+    safeArea: {
+        flex: 1,
+        zIndex: 1,
+        backgroundColor: 'transparent',
+    },
+    archTopFill: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: ARCH_FILL_COLOR,
+        zIndex: 0,
+        elevation: 0,
+    },
+    archSvg: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        zIndex: 1,
+        elevation: 1,
     },
     header: {
         flexDirection: 'row',
@@ -207,15 +315,19 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: 16,
     },
-    videoArea: {
-        paddingHorizontal: 16,
-    },
-    videoAreaTabletLandscape: {
-        paddingTop: 0,
-        display: 'flex',
-        flexDirection: 'column',
+    introHero: {
+        justifyContent: 'center',
         alignItems: 'center',
-        height: 340,
+        paddingHorizontal: 24,
+    },
+    introHeroLine: {
+        color: '#FFFFFF',
+        textAlign: 'center',
+        lineHeight: 34,
+        fontWeight: '600',
+    },
+    introHeroLineSecond: {
+        marginTop: 4,
     },
     progressContainer: {
         marginTop: 16,
