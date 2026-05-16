@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
   Animated,
   Platform,
-  Dimensions,
 } from 'react-native';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -19,6 +18,11 @@ import { CHAPTER_VIDEOS, NONVERBAL_CHAPTER_VIDEO_PAIRS } from '../data/chapterVi
 
 /** 前半（*-1）終了後、1枚目 Video レイヤーをフェードアウトする時間 */
 const NONVERBAL_PRIMARY_FADE_OUT_MS = 300;
+
+/** 動画エリアの上下・右余白（天地と右を揃える） */
+const VIDEO_AREA_EDGE_INSET = 20;
+/** 動画エリアの左余白（コントロールボタン用） */
+const VIDEO_AREA_LEFT_INSET = 120;
 
 const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -36,10 +40,8 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
   nonverbalPaddingResetKey = 0,
   ...restProps
 }) => {
-  const { width: screenWidth } = Dimensions.get('window');
   const insets = useSafeAreaInsets();
   const containerPaddingRight = Platform.OS === 'android' && insets.right > 30 ? 30 : 0;
-  const isSmallScreen = screenWidth <= 667;
 
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const secondaryVideoRef = useRef<Video>(null);
@@ -319,15 +321,7 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
           />
         </TouchableOpacity>
 
-        <View
-          style={[
-            styles.videoArea,
-            isSmallScreen && {
-              paddingTop: 40,
-              paddingBottom: 40,
-            },
-          ]}
-        >
+        <View style={styles.videoArea}>
           <View style={styles.videoPlayer}>
             {hasVideoPair && nonverbalVideoPair ? (
               <>
@@ -459,9 +453,10 @@ const styles = StyleSheet.create({
   videoArea: {
     flex: 1,
     alignItems: 'flex-end',
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingRight: 20,
+    paddingTop: VIDEO_AREA_EDGE_INSET,
+    paddingBottom: VIDEO_AREA_EDGE_INSET,
+    paddingRight: VIDEO_AREA_EDGE_INSET,
+    paddingLeft: VIDEO_AREA_LEFT_INSET,
   },
   videoPlayer: {
     flex: 1,
