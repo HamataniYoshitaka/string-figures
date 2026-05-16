@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Animated,
   Platform,
+  LayoutChangeEvent,
 } from 'react-native';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -21,8 +22,7 @@ const NONVERBAL_PRIMARY_FADE_OUT_MS = 300;
 
 /** 動画エリアの上下・右余白（天地と右を揃える） */
 const VIDEO_AREA_EDGE_INSET = 20;
-/** 動画エリアの左余白（コントロールボタン用） */
-const VIDEO_AREA_LEFT_INSET = 120;
+const VIDEO_ASPECT_RATIO = 16 / 9;
 
 const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
   stringFigure,
@@ -42,6 +42,28 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
 }) => {
   const insets = useSafeAreaInsets();
   const containerPaddingRight = Platform.OS === 'android' && insets.right > 30 ? 30 : 0;
+
+  const [videoAreaSize, setVideoAreaSize] = useState({ width: 0, height: 0 });
+  const videoContentHeight = Math.max(0, videoAreaSize.height - VIDEO_AREA_EDGE_INSET * 2);
+  const maxVideoWidth = Math.max(0, videoAreaSize.width - VIDEO_AREA_EDGE_INSET);
+  let videoPlayerHeight = videoContentHeight;
+  let videoPlayerWidth = videoContentHeight * VIDEO_ASPECT_RATIO;
+  if (videoPlayerWidth > maxVideoWidth && maxVideoWidth > 0) {
+    videoPlayerWidth = maxVideoWidth;
+    videoPlayerHeight = maxVideoWidth / VIDEO_ASPECT_RATIO;
+  }
+
+  const handleVideoAreaLayout = useCallback((event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setVideoAreaSize((prev) =>
+      prev.width === width && prev.height === height ? prev : { width, height },
+    );
+  }, []);
+
+  const videoPlayerSizeStyle =
+    videoPlayerWidth > 0 && videoPlayerHeight > 0
+      ? { width: videoPlayerWidth, height: videoPlayerHeight }
+      : null;
 
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const secondaryVideoRef = useRef<Video>(null);
@@ -321,12 +343,10 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
           />
         </TouchableOpacity>
 
-        <View style={styles.videoArea}>
-          <View style={styles.videoPlayer}>
+        <View style={styles.videoArea} onLayout={handleVideoAreaLayout}>
+          <View style={[styles.videoPlayer, videoPlayerSizeStyle]}>
             {hasVideoPair && nonverbalVideoPair ? (
               <>
-                {/* absolute のみだと alignItems:flex-end で幅が 0 になるため、レイアウト用の in-flow プレースホルダ */}
-                <View style={styles.videoSizer} pointerEvents="none" />
                 <View style={styles.videoLayer}>
                   <Video
                     key={`ch${currentChapterIndex}-secondary`}
@@ -358,7 +378,7 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
                 key={`chapter-${currentChapterIndex}`}
                 ref={videoRef}
                 source={fallbackVideoSource}
-                style={styles.video}
+                style={styles.videoFill}
                 {...sharedVideoProps}
                 onPlaybackStatusUpdate={onPlaybackStatusUpdate}
                 onLoad={onVideoLoad}
@@ -453,27 +473,19 @@ const styles = StyleSheet.create({
   videoArea: {
     flex: 1,
     alignItems: 'flex-end',
+    justifyContent: 'center',
     paddingTop: VIDEO_AREA_EDGE_INSET,
     paddingBottom: VIDEO_AREA_EDGE_INSET,
     paddingRight: VIDEO_AREA_EDGE_INSET,
-    paddingLeft: VIDEO_AREA_LEFT_INSET,
   },
   videoPlayer: {
-    flex: 1,
-    alignSelf: 'stretch',
-    width: '100%',
+    alignSelf: 'flex-end',
     backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
     borderRadius: 32,
     overflow: 'hidden',
-  },
-  /** デュアル Video 用: 親の flex 領域いっぱいに広がる in-flow サイザー */
-  videoSizer: {
-    width: '100%',
-    flex: 1,
-    minHeight: 0,
   },
   videoLayer: {
     ...StyleSheet.absoluteFillObject,
@@ -482,11 +494,6 @@ const styles = StyleSheet.create({
   },
   videoFill: {
     ...StyleSheet.absoluteFillObject,
-  },
-  video: {
-    width: '100%',
-    height: '100%',
-    aspectRatio: 16 / 9,
   },
   progressContainer: {
     paddingVertical: 16,
