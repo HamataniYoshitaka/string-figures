@@ -92,29 +92,42 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
     return 0;
   }, []);
 
-  const resetDualVideoState = useCallback(async () => {
-    primaryFadeAnimationRef.current?.stop();
-    primaryFadeAnimationRef.current = null;
-    primaryLayerOpacity.setValue(1);
-    segmentPhaseRef.current = 'idle';
-    primaryDurationMsRef.current = 0;
-    secondaryDurationMsRef.current = 0;
-    try {
-      await secondaryVideoRef.current?.pauseAsync();
-      await secondaryVideoRef.current?.setPositionAsync(0);
-    } catch {
-      /* noop */
-    }
-  }, [primaryLayerOpacity]);
+  const resetDualVideoState = useCallback(
+    async (options?: { resetDurations?: boolean }) => {
+      primaryFadeAnimationRef.current?.stop();
+      primaryFadeAnimationRef.current = null;
+      segmentPhaseRef.current = 'idle';
+
+      if (options?.resetDurations) {
+        primaryDurationMsRef.current = 0;
+        secondaryDurationMsRef.current = 0;
+      }
+
+      // 終了フレームが見えないよう、先頭に戻してから primary を表示する
+      primaryLayerOpacity.setValue(0);
+
+      try {
+        await secondaryVideoRef.current?.pauseAsync();
+        await secondaryVideoRef.current?.setPositionAsync(0);
+        await videoRef.current?.pauseAsync();
+        await videoRef.current?.setPositionAsync(0);
+      } catch {
+        /* noop */
+      }
+
+      primaryLayerOpacity.setValue(1);
+    },
+    [primaryLayerOpacity, videoRef],
+  );
 
   useEffect(() => {
     if (!hasVideoPair) return;
-    void resetDualVideoState();
+    void resetDualVideoState({ resetDurations: true });
   }, [currentChapterIndex, hasVideoPair, resetDualVideoState]);
 
   useEffect(() => {
     if (!hasVideoPair || !nonverbalPaddingResetKey) return;
-    void resetDualVideoState();
+    void resetDualVideoState({ resetDurations: false });
   }, [nonverbalPaddingResetKey, hasVideoPair, resetDualVideoState]);
 
   useEffect(() => {
