@@ -326,7 +326,7 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
               <Animated.View
                 style={[styles.backButton, { transform: [{ scale: backButtonScale }] }]}
               >
-                <CloseIcon width={24} height={24} fillColor="#79716B" />
+                <CloseIcon width={24} height={24} fillColor="#292524" />
               </Animated.View>
             </TouchableWithoutFeedback>
             <Text style={styles.title} numberOfLines={1}>
@@ -499,6 +499,8 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderRadius: 32,
     overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: '#292524',
   },
   videoLayer: {
     ...StyleSheet.absoluteFillObject,

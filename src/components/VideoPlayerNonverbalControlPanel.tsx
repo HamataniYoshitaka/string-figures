@@ -123,7 +123,7 @@ const VideoPlayerNonverbalControlPanel: React.FC<VideoPlayerNonverbalControlPane
               { transform: [{ scale: backButtonScale }] },
             ]}
           >
-            <CloseIcon width={32} height={32} fillColor="#79716B" />
+            <CloseIcon width={32} height={32} fillColor="#292524" />
           </Animated.View>
         </TouchableWithoutFeedback>
 
