@@ -13,7 +13,7 @@ import { Video, ResizeMode } from 'expo-av';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
-import VideoControlPanel from '../components/VideoControlPanel';
+import VideoPlayerNonverbalControlPanel from '../components/VideoPlayerNonverbalControlPanel';
 import { BookmarkIcon, CloseIcon } from '../components/icons';
 import { CHAPTER_VIDEOS } from '../data/chapterVideos';
 
@@ -176,7 +176,7 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
 
       {/* コントロールエリア */}
       {chapters.length > 0 && 
-        <VideoControlPanel
+        <VideoPlayerNonverbalControlPanel
           stringFigure={stringFigure}
           chapters={chapters}
           currentChapterIndex={currentChapterIndex}
