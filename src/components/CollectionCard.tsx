@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardScrollContent: {
-    paddingBottom: 80,
+    paddingBottom: 88,
   },
   collectionHeader: {
     padding: 12,
@@ -203,8 +203,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 12,
-    paddingBottom: 12,
+    paddingLeft: 12,
+    paddingRight: 16,
+    paddingBottom: 16,
   },
 });
 

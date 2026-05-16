@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
   Animated,
-  Platform,
 } from 'react-native';
 import { LockOpenIcon } from './icons';
 
@@ -18,13 +17,16 @@ interface PurchaseButtonProps {
   priceString?: string;
 }
 
+const SHADOW_OFFSET = 4;
+
 const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, currentLanguage, backgroundColor, disabled = false, priceString }) => {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const pressAnim = useRef(new Animated.Value(0)).current;
+  const [buttonLayout, setButtonLayout] = useState({ width: 0, height: 0 });
 
   const handlePressIn = () => {
     if (disabled) return;
-    Animated.spring(scaleAnim, {
-      toValue: 0.95,
+    Animated.spring(pressAnim, {
+      toValue: 1,
       useNativeDriver: true,
       tension: 300,
       friction: 8,
@@ -33,13 +35,18 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
 
   const handlePressOut = () => {
     if (disabled) return;
-    Animated.spring(scaleAnim, {
-      toValue: 1,
+    Animated.spring(pressAnim, {
+      toValue: 0,
       useNativeDriver: true,
       tension: 300,
       friction: 8,
     }).start();
   };
+
+  const pressTranslate = pressAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, SHADOW_OFFSET],
+  });
 
   const handlePress = () => {
     if (disabled) return;
@@ -93,55 +100,102 @@ const PurchaseButton: React.FC<PurchaseButtonProps> = ({ onPress, collectionId, 
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
     >
-      <Animated.View
-        style={[
-          styles.button,
-          { transform: [{ scale: scaleAnim }] },
-          { backgroundColor: buttonBackgroundColor },
-          disabled && styles.buttonDisabled,
-        ]}
-      >
-        {/* 左側: アイコン */}
-        <View style={styles.iconContainer}>
-          <LockOpenIcon
-            width={24}
-            height={24}
-            strokeColor="transparent"
-            fillColor={iconColor}
-            strokeWidth={0}
-          />
-        </View>
-
-        {/* 中央: テキスト */}
-        <View style={styles.textContainer}>
-          <Text style={[styles.collectionName, { color: textColor }]}>{currentLanguage === 'ja' ? COLLECTION_NAME_JA : COLLECTION_NAME_EN}</Text>
-          {!disabled && <Text style={styles.purchaseText}>{currentLanguage === 'ja' ? PURCHASE_TEXT_JA : PURCHASE_TEXT_EN}</Text>}
-        </View>
-
-        {/* 右側: 価格または購入済 */}
-        <View style={styles.priceContainer}>
-          {disabled ? (
-            <Text style={[styles.price, { color: textColor }, currentLanguage === 'en' && { fontSize: 15 }]}>
-              {currentLanguage === 'ja' ? PURCHASED_TEXT_JA : PURCHASED_TEXT_EN}
-            </Text>
-          ) : (
-            <>
-              {priceParts.isCurrencyBefore && (
-                <Text style={[styles.currency, { color: textColor }]}>{priceParts.currency}</Text>
-              )}
-              <Text style={[styles.price, { color: textColor }]}>{priceParts.amount}</Text>
-              {!priceParts.isCurrencyBefore && (
-                <Text style={[styles.currency, { color: textColor }]}>{priceParts.currency}</Text>
-              )}
-            </>
+      <View style={[styles.buttonWrapper, !disabled && styles.buttonWrapperEnabled]}>
+        <View style={styles.buttonContainer}>
+          {!disabled && buttonLayout.width > 0 && (
+            <View
+              style={[
+                styles.buttonShadow,
+                {
+                  width: buttonLayout.width,
+                  height: buttonLayout.height,
+                },
+              ]}
+            />
           )}
+          <Animated.View
+            style={[
+              styles.button,
+              disabled ? styles.buttonDisabled : styles.buttonEnabled,
+              { backgroundColor: buttonBackgroundColor },
+              !disabled && {
+                transform: [{ translateX: pressTranslate }, { translateY: pressTranslate }],
+              },
+            ]}
+            onLayout={(event) => {
+              const { width, height } = event.nativeEvent.layout;
+              setButtonLayout((prev) =>
+                prev.width === width && prev.height === height ? prev : { width, height },
+              );
+            }}
+          >
+            {/* 左側: アイコン */}
+            <View style={styles.iconContainer}>
+              <LockOpenIcon
+                width={24}
+                height={24}
+                strokeColor="transparent"
+                fillColor={iconColor}
+                strokeWidth={0}
+              />
+            </View>
+
+            {/* 中央: テキスト */}
+            <View style={styles.textContainer}>
+              <Text style={[styles.collectionName, { color: textColor }]}>
+                {currentLanguage === 'ja' ? COLLECTION_NAME_JA : COLLECTION_NAME_EN}
+              </Text>
+              {!disabled && (
+                <Text style={styles.purchaseText}>
+                  {currentLanguage === 'ja' ? PURCHASE_TEXT_JA : PURCHASE_TEXT_EN}
+                </Text>
+              )}
+            </View>
+
+            {/* 右側: 価格または購入済 */}
+            <View style={styles.priceContainer}>
+              {disabled ? (
+                <Text style={[styles.price, { color: textColor }, currentLanguage === 'en' && { fontSize: 15 }]}>
+                  {currentLanguage === 'ja' ? PURCHASED_TEXT_JA : PURCHASED_TEXT_EN}
+                </Text>
+              ) : (
+                <>
+                  {priceParts.isCurrencyBefore && (
+                    <Text style={[styles.currency, { color: textColor }]}>{priceParts.currency}</Text>
+                  )}
+                  <Text style={[styles.price, { color: textColor }]}>{priceParts.amount}</Text>
+                  {!priceParts.isCurrencyBefore && (
+                    <Text style={[styles.currency, { color: textColor }]}>{priceParts.currency}</Text>
+                  )}
+                </>
+              )}
+            </View>
+          </Animated.View>
         </View>
-      </Animated.View>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
+  buttonWrapper: {
+    alignSelf: 'stretch',
+  },
+  buttonWrapperEnabled: {
+    paddingRight: SHADOW_OFFSET,
+    paddingBottom: SHADOW_OFFSET,
+  },
+  buttonContainer: {
+    position: 'relative',
+    overflow: 'visible',
+  },
+  buttonShadow: {
+    position: 'absolute',
+    left: SHADOW_OFFSET,
+    top: SHADOW_OFFSET,
+    borderRadius: 32,
+    backgroundColor: '#000000',
+  },
   button: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -149,21 +203,13 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     paddingHorizontal: 12,
     paddingVertical: 8,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+  },
+  buttonEnabled: {
+    borderWidth: 2,
+    borderColor: '#292524',
   },
   buttonDisabled: {
-    shadowOpacity: 0,
-    elevation: 0,
+    borderWidth: 0,
   },
   iconContainer: {
     justifyContent: 'center',
