@@ -12,6 +12,8 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 import { RootStackParamList, Chapter } from '../types';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import VideoPlayerNonverbalPortrait, { NONVERBAL_PLAY_START_DELAY_MS } from './VideoPlayerNonverbalPortrait';
+import VideoPlayerNonverbalLandscape from './VideoPlayerNonverbalLandscape';
+import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { NextChapterButtonRef } from '../components/NextChapterButton';
 import { ReplayButtonRef } from '../components/ReplayButton';
 import { PreviousChapterButtonRef } from '../components/PreviousChapterButton';
@@ -55,6 +57,7 @@ const createPlaceholderChapters = (totalChapters: number): Chapter[] => {
 const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const { stringFigure } = route.params;
   const { currentLanguage } = route.params;
+  const { isTablet, isDeviceLandscape } = useDeviceInfo();
 
   // ステート管理
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
@@ -77,8 +80,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [confettiKey, setConfettiKey] = useState(0);
   const [nonverbalPaddingResetKey, setNonverbalPaddingResetKey] = useState(0);
 
-  // 非言語版は縦画面固定
-  const isLandscapeMode = false;
+  const [isLandscapeMode, setIsLandscapeMode] = useState(false);
 
   // 背景色アニメーション用
   const backgroundColorAnimValue = useRef(new Animated.Value(0)).current;
@@ -139,21 +141,40 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     },
   });
 
+  const loadOrientationSetting = async () => {
+    try {
+      const savedIsLandscapeMode = await AsyncStorage.getItem('isLandscapeMode');
+      if (savedIsLandscapeMode === 'true') {
+        setIsLandscapeMode(true);
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
+      } else {
+        setIsLandscapeMode(false);
+      }
+    } catch (error) {
+      console.error('画面向き設定の読み込みに失敗しました:', error);
+    }
+  };
+
   // 初期化
   useEffect(() => {
     console.log('stringFigure.directory', stringFigure.directory);
     loadChapters();
     loadBookmarkedIds();
 
-    // 縦画面固定
-    void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+    if (!isTablet) {
+      void loadOrientationSetting();
+    } else {
+      void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+    }
 
     // 画面スリープを防止
     activateKeepAwakeAsync();
 
     // クリーンアップ
     return () => {
-      void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+      if (!isTablet) {
+        void ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+      }
       deactivateKeepAwake();
       if (disableTimerRef.current) {
         clearTimeout(disableTimerRef.current);
@@ -430,10 +451,25 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     }
   };
 
-  // 非言語版は縦画面固定のため、切り替えは無効
   const handleLandscapeToggle = async () => {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+    if (isTablet) return;
+
+    try {
+      const newIsLandscapeMode = !isLandscapeMode;
+      setIsLandscapeMode(newIsLandscapeMode);
+      await AsyncStorage.setItem('isLandscapeMode', JSON.stringify(newIsLandscapeMode));
+
+      if (newIsLandscapeMode) {
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
+      } else {
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP);
+      }
+    } catch (error) {
+      console.error('AsyncStorageへのisLandscape保存に失敗:', error);
+    }
   };
+
+  const shouldUseNonverbalLandscape = !isTablet && isDeviceLandscape;
 
   // 背景色のアニメーション値を計算
   const backgroundColorAnim = backgroundColorAnimValue.interpolate({
@@ -491,7 +527,11 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   return (
     <PaperProvider>
-      <VideoPlayerNonverbalPortrait {...sharedProps} />
+      {shouldUseNonverbalLandscape ? (
+        <VideoPlayerNonverbalLandscape {...sharedProps} />
+      ) : (
+        <VideoPlayerNonverbalPortrait {...sharedProps} />
+      )}
       {confettiKey > 0 && (
         <ConfettiCannon
           key={confettiKey}

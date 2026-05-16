@@ -181,6 +181,8 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   backgroundColorAnim,
   lastSpeechTranscript,
   nonverbalPaddingResetKey = 0,
+  isLandscapeMode,
+  onLandscapeToggle,
 }) => {
   const nonverbalFigureDirectory = stringFigure?.directory ?? '';
   const nonverbalChapterStillPairs = useMemo(
@@ -233,6 +235,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   // アニメーション用のスケール値
   const backButtonScale = useRef(new Animated.Value(1)).current;
   const bookmarkButtonScale = useRef(new Animated.Value(1)).current;
+  const landscapeButtonScale = useRef(new Animated.Value(1)).current;
 
   const stillStripTranslateY = useRef(new Animated.Value(0)).current;
   /** 動画プレイヤー枠: 前半終了後 0.3s で 0 → 1.2s でフェードイン → 1.5s で opacity 1、再生は +0.5s */
@@ -696,14 +699,26 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
               </Text>
             </Pressable>
           </View>
-          <View
-            style={styles.landscapeButtonPlaceholder}
-            pointerEvents="none"
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-          >
-            <LandScapeIcon width={24} height={24} fillColor="#79716B" />
-          </View>
+          {!isTablet && (
+            <TouchableWithoutFeedback
+              onPress={onLandscapeToggle}
+              onPressIn={createPressInHandler(landscapeButtonScale)}
+              onPressOut={createPressOutHandler(landscapeButtonScale)}
+            >
+              <Animated.View
+                style={[
+                  styles.landscapeButtonPlaceholder,
+                  { transform: [{ scale: landscapeButtonScale }] },
+                ]}
+              >
+                <LandScapeIcon
+                  width={24}
+                  height={24}
+                  fillColor={isLandscapeMode ? '#1862cfff' : '#79716B'}
+                />
+              </Animated.View>
+            </TouchableWithoutFeedback>
+          )}
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>Now Loading...</Text>
           </View>
@@ -863,14 +878,26 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
           </TouchableWithoutFeedback>
         </View>
 
-        <View
-          style={styles.landscapeButtonPlaceholder}
-          pointerEvents="none"
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-        >
-          <LandScapeIcon width={24} height={24} fillColor="#79716B" />
-        </View>
+        {!isTablet && (
+          <TouchableWithoutFeedback
+            onPress={onLandscapeToggle}
+            onPressIn={createPressInHandler(landscapeButtonScale)}
+            onPressOut={createPressOutHandler(landscapeButtonScale)}
+          >
+            <Animated.View
+              style={[
+                styles.landscapeButtonPlaceholder,
+                { transform: [{ scale: landscapeButtonScale }] },
+              ]}
+            >
+              <LandScapeIcon
+                width={24}
+                height={24}
+                fillColor={isLandscapeMode ? '#1862cfff' : '#79716B'}
+              />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+        )}
 
         <View style={styles.videoCenterSpacer} pointerEvents="none" />
 
@@ -1001,7 +1028,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
-  /** Close 直下（機能は未配線）。ヘッダー行の閉じるボタン高さに合わせた top */
+  /** Close 直下。スマホのみタップでランドスケープ表示へ（VideoPlayerPortrait と同様） */
   landscapeButtonPlaceholder: {
     position: 'absolute',
     left: 16,
