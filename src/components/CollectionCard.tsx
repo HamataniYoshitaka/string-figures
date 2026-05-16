@@ -30,9 +30,10 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
   priceString,
 }) => {
   const collectionFigures = stringFigures.filter(figure => figure.premiumCourseId === collectionId);
+  const purchaseButtonColor = '#FF623F';
 
   return (
-    <View style={styles.collectionCard}>
+    <View style={[styles.collectionCard, { backgroundColor }]}>
       <ScrollView 
         style={styles.cardScrollView}
         contentContainerStyle={styles.cardScrollContent}
@@ -41,7 +42,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
         <View style={styles.collectionHeader}>
           <View style={styles.titleContainer}>
             {!purchasedItems.includes(collectionId) && (
-              <View style={[styles.lockIconContainer, { backgroundColor }]}>
+              <View style={styles.lockIconContainer}>
                 <LockIcon 
                   width={16} 
                   height={16} 
@@ -51,10 +52,11 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
                 />
               </View>
             )}
-            <Text style={[styles.collectionTitle, { color: backgroundColor }]} maxFontSizeMultiplier={1.25}>
+            <Text style={styles.collectionTitle} maxFontSizeMultiplier={1.25}>
               {currentLanguage === 'ja' ? `コレクション${collectionId}` : `Collection ${collectionId}`}
             </Text>
           </View>
+          <View style={styles.headerDivider} />
           <View style={styles.descriptionSpacer} />
           <Text style={styles.collectionDescription} maxFontSizeMultiplier={1.25} >
             {currentLanguage === 'en' ? 
@@ -114,7 +116,7 @@ const CollectionCard: React.FC<CollectionCardProps> = ({
           onPress={onPurchasePress} 
           collectionId={collectionId}
           currentLanguage={currentLanguage}
-          backgroundColor={backgroundColor}
+          backgroundColor={purchaseButtonColor}
           disabled={purchasedItems.includes(collectionId)}
           priceString={priceString}
         />
@@ -127,7 +129,6 @@ const styles = StyleSheet.create({
   collectionCard: {
     width: 260,
     marginRight: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.85)',
     borderRadius: 16,
     overflow: 'hidden',
     height: '100%',
@@ -150,6 +151,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -157,14 +159,20 @@ const styles = StyleSheet.create({
     fontFamily: 'LineSeed-Bold',
     fontSize: 24,
     fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  headerDivider: {
+    height: 1,
+    backgroundColor: '#FFFFFF',
+    marginTop: 8,
   },
   descriptionSpacer: {
-    height: 4,
+    height: 8,
   },
   collectionDescription: {
     fontFamily: 'LineSeed-Regular',
     fontSize: 16,
-    color: '#292524',
+    color: '#FFFFFF',
     lineHeight: 24,
     fontWeight: '500',
   },
@@ -184,7 +192,7 @@ const styles = StyleSheet.create({
   thumbnailCaption: {
     fontFamily: 'LineSeed-Bold',
     fontSize: 16,
-    color: '#292524',
+    color: '#FFFFFF',
     textAlign: 'center',
     lineHeight: 18,
     fontWeight: '600',

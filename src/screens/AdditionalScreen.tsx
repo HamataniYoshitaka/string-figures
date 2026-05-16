@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, Image, TouchableOpacity, ActivityIndicator, Modal } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert, Platform, ScrollView, TouchableOpacity, ActivityIndicator, Modal } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -536,11 +536,6 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
 
     return (    
         <View style={styles.wrapper}>
-            <Image 
-                source={require('../../assets/bg-additional-screen.jpg')}
-                style={styles.backgroundImage}
-                resizeMode="cover"
-            />
             <SafeAreaView style={styles.container}>
                 <View style={styles.header}>
                     <TouchableWithoutFeedback 
@@ -554,7 +549,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
                             { transform: [{ scale: backButtonScale }] }
                         ]}
                         >
-                        <CloseIcon width={28} height={28} fillColor="#FFFFFF" strokeWidth={0} />
+                        <CloseIcon width={28} height={28} fillColor="#292524" strokeWidth={0} />
                         </Animated.View>
                     </TouchableWithoutFeedback>
                     <Text maxFontSizeMultiplier={1.35} style={[styles.title, { fontSize: isTablet ? 24 : 20 }]} numberOfLines={1}>
@@ -661,15 +656,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
-    },
-    backgroundImage: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        width: '100%',
-        height: '100%',
+        backgroundColor: '#FFF9F0',
     },
     container: {
         flex: 1,
@@ -693,7 +680,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         textAlign: 'center',
         marginHorizontal: 16,
-        color: '#FFFFFF',
+        color: '#292524',
     },
 
     progressContainer: {
