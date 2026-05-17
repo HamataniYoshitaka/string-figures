@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Image, Platform, Dimensions, StatusBar } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Image, Platform, Dimensions, StatusBar, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import PagerView from 'react-native-pager-view';
 import { ChevronRightIcon, CloseIcon } from '../components/icons';
 import ProgressDots from '../components/ProgressDots';
 
@@ -65,8 +64,12 @@ const chapters = [
 ];
 
 const AUTO_SCROLL_TO_P2_DELAY_MS = 5000;
+const AUTO_SCROLL_TO_P2_DURATION_MS = 600;
 const NEXT_STEP_BUTTON_REVEAL_DELAY_MS = 10000;
 const PAGE_INDEX_P2 = 1;
+
+const easeInOut = (t: number) =>
+    t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
@@ -75,7 +78,9 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const [page1Progress, setPage1Progress] = useState(0);
     const [page2Progress, setPage2Progress] = useState(0);
 
-    const pagerRef = useRef<PagerView>(null);
+    const pagerScrollRef = useRef<ScrollView>(null);
+    const autoScrollRafRef = useRef<number | null>(null);
+    const isAutoScrollingRef = useRef(false);
     const autoScrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const buttonRevealTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const hasStartedButtonRevealTimerRef = useRef(false);
@@ -94,6 +99,9 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const insets = useSafeAreaInsets();
 
     const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+    const pagerWidthRef = useRef(screenWidth);
+    const [pagerWidth, setPagerWidth] = useState(screenWidth);
+    const [isPagerAutoScrolling, setIsPagerAutoScrolling] = useState(false);
     const headerPaddingTop =
         insets.top + (isTablet ? 16 : Platform.OS === 'android' ? 12 : 8);
     const archDisplayHeight = screenWidth * (ARCH_VIEWBOX.h / ARCH_VIEWBOX.w);
@@ -255,11 +263,68 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         page2ProgressRafRef.current = requestAnimationFrame(tick);
     };
 
+    const stopAutoScrollAnimation = () => {
+        if (autoScrollRafRef.current !== null) {
+            cancelAnimationFrame(autoScrollRafRef.current);
+            autoScrollRafRef.current = null;
+        }
+        isAutoScrollingRef.current = false;
+        setIsPagerAutoScrolling(false);
+    };
+
     const clearAutoScrollTimer = () => {
         if (autoScrollTimerRef.current) {
             clearTimeout(autoScrollTimerRef.current);
             autoScrollTimerRef.current = null;
         }
+    };
+
+    const autoScrollToP2 = () => {
+        const pageWidth = pagerWidthRef.current;
+        if (pageWidth <= 0) {
+            return;
+        }
+
+        stopAutoScrollAnimation();
+        isAutoScrollingRef.current = true;
+        setIsPagerAutoScrolling(true);
+        const startMs = Date.now();
+
+        const tick = () => {
+            const elapsed = Date.now() - startMs;
+            const linearProgress = Math.min(elapsed / AUTO_SCROLL_TO_P2_DURATION_MS, 1);
+            const easedProgress = easeInOut(linearProgress);
+            pagerScrollRef.current?.scrollTo({
+                x: pageWidth * easedProgress,
+                animated: false,
+            });
+
+            if (linearProgress < 1) {
+                autoScrollRafRef.current = requestAnimationFrame(tick);
+                return;
+            }
+
+            autoScrollRafRef.current = null;
+            isAutoScrollingRef.current = false;
+            setIsPagerAutoScrolling(false);
+            handlePageSelected(PAGE_INDEX_P2);
+        };
+
+        autoScrollRafRef.current = requestAnimationFrame(tick);
+    };
+
+    const handlePagerScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+        if (isAutoScrollingRef.current) {
+            return;
+        }
+
+        const pageWidth = pagerWidthRef.current;
+        if (pageWidth <= 0) {
+            return;
+        }
+
+        const position = Math.round(event.nativeEvent.contentOffset.x / pageWidth);
+        handlePageSelected(position);
     };
 
     const startButtonRevealTimer = () => {
@@ -276,11 +341,12 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         startPage1ProgressAnimation();
         autoScrollTimerRef.current = setTimeout(() => {
             autoScrollTimerRef.current = null;
-            pagerRef.current?.setPage(PAGE_INDEX_P2);
+            autoScrollToP2();
         }, AUTO_SCROLL_TO_P2_DELAY_MS);
 
         return () => {
             clearAutoScrollTimer();
+            stopAutoScrollAnimation();
             stopPage1ProgressAnimation();
             stopPage2ProgressAnimation();
             if (buttonRevealTimerRef.current) {
@@ -371,15 +437,29 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 />
             </View>
 
-            <PagerView
-                ref={pagerRef}
+            <ScrollView
+                ref={pagerScrollRef}
+                horizontal
+                pagingEnabled
+                bounces={false}
+                scrollEnabled={!isPagerAutoScrolling}
+                showsHorizontalScrollIndicator={false}
+                decelerationRate="fast"
                 style={styles.pagerView}
-                initialPage={0}
-                scrollEnabled
-                overdrag={false}
-                onPageSelected={(event) => handlePageSelected(event.nativeEvent.position)}
+                onLayout={(event) => {
+                    const { width } = event.nativeEvent.layout;
+                    if (width > 0 && width !== pagerWidthRef.current) {
+                        pagerWidthRef.current = width;
+                        setPagerWidth(width);
+                    }
+                }}
+                onMomentumScrollEnd={handlePagerScrollEnd}
             >
-                <View key="intro-page-1" style={styles.pagerPage} collapsable={false}>
+                <View
+                    key="intro-page-1"
+                    style={[styles.pagerPage, { width: pagerWidth }]}
+                    collapsable={false}
+                >
                     <View
                         style={[
                             styles.introHero,
@@ -433,7 +513,11 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     </View>
                 </View>
 
-                <View key="intro-page-2" style={styles.pagerPage} collapsable={false}>
+                <View
+                    key="intro-page-2"
+                    style={[styles.pagerPage, { width: pagerWidth }]}
+                    collapsable={false}
+                >
                     <View style={styles.page2TopSection}>
                         <Text
                             maxFontSizeMultiplier={1.25}
@@ -494,7 +578,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         </View>
                     </View>
                 </View>
-            </PagerView>
+            </ScrollView>
 
             <View style={styles.bottomChrome}>
                 <View style={styles.progressContainer}>
@@ -706,6 +790,7 @@ const styles = StyleSheet.create({
         mixBlendMode: 'multiply',
     },
     controlsContainer: {
+        marginTop: 24,
         paddingHorizontal: 16,
         paddingBottom: 16,
     },
