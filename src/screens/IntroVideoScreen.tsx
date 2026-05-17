@@ -51,6 +51,8 @@ const ARCH_FILL_COLOR = '#FF623F';
 const NEXT_STEP_BUTTON_COLOR = '#FF623F';
 const NEXT_STEP_BUTTON_SHADOW_OFFSET = 4;
 const PHONE_FRAME_SHADOW_OFFSET = 4;
+/** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
+const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
 const PHONE_FRAME_SHADOW_COLOR = '#292524';
 const INTRO_ILLUSTRATION = require('../../assets/introduction/01.png');
 const introIllustrationSource = Image.resolveAssetSource(INTRO_ILLUSTRATION);
@@ -83,11 +85,23 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     /** SVG 上端より上だけ埋める（画面半分だとアーチ曲線が同色で見えなくなる） */
     const archTopFillHeight = Math.max(0, archTop);
     const headerContentHeight = isTablet ? 56 : 48;
-    const introHeroHeight =
-        screenHeight / 2 - headerPaddingTop - headerContentHeight;
+    const headerTotalHeight = headerPaddingTop + headerContentHeight + 16;
+    const INTRO_HERO_LINE_HEIGHT = 34;
+    const INTRO_HERO_LINE_GAP = 4;
+    const introHeroTextBlockHalfHeight =
+        (INTRO_HERO_LINE_HEIGHT * 2 + INTRO_HERO_LINE_GAP) / 2;
+    /** 画面上半分の中央（25vh）にヒーロー文の中心を合わせる */
+    const introHeroTop =
+        screenHeight * 0.25 - headerTotalHeight - introHeroTextBlockHalfHeight;
+    const bottomChromeEstimate = 152;
+    const bottomChromeTotalHeight = bottomChromeEstimate + insets.bottom;
     const illustrationWidth = Math.min(screenWidth * 0.58, isTablet ? 360 : 280);
     const illustrationHeight = illustrationWidth / INTRO_ILLUSTRATION_ASPECT;
-    const bottomChromeEstimate = 152;
+    /** ProgressDots・ボタンを除いた画面下半分の中央（75vh − bottomChrome/2）にイラスト中心を合わせる */
+    const illustrationCenterY =
+        screenHeight * 0.75 - bottomChromeTotalHeight / 2;
+    const illustrationTop =
+        illustrationCenterY - headerTotalHeight - illustrationHeight / 2;
     const page2TopSectionEstimate = 88;
     const maxPhoneFrameHeight = Math.max(
         120,
@@ -230,6 +244,12 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 >
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
+                <View
+                    style={styles.headerSideSpacer}
+                    pointerEvents="none"
+                    accessibilityElementsHidden
+                    importantForAccessibility="no-hide-descendants"
+                />
             </View>
 
             <PagerView
@@ -243,7 +263,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     <View
                         style={[
                             styles.introHero,
-                            { height: Math.max(introHeroHeight, 0) },
+                            { top: Math.max(introHeroTop, 0) },
                         ]}
                     >
                         <Text
@@ -273,7 +293,12 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         </Text>
                     </View>
 
-                    <View style={styles.illustrationContainer}>
+                    <View
+                        style={[
+                            styles.illustrationContainer,
+                            { top: Math.max(illustrationTop, 0) },
+                        ]}
+                    >
                         <Image
                             source={INTRO_ILLUSTRATION}
                             style={[
@@ -474,15 +499,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0)',
         borderRadius: 20,
     },
+    headerSideSpacer: {
+        width: HEADER_BACK_BUTTON_WIDTH,
+    },
     title: {
         flex: 1,
         textAlign: 'center',
-        marginHorizontal: 16,
     },
     introHero: {
-        justifyContent: 'center',
+        position: 'absolute',
+        left: 0,
+        right: 0,
         alignItems: 'center',
         paddingHorizontal: 24,
+        zIndex: 1,
     },
     introHeroLine: {
         color: '#FFFFFF',
@@ -522,6 +552,7 @@ const styles = StyleSheet.create({
     },
     pagerPage: {
         flex: 1,
+        position: 'relative',
     },
     bottomChrome: {
         maxWidth: 500,
@@ -533,12 +564,12 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
     },
     illustrationContainer: {
-        flex: 1,
-        justifyContent: 'center',
+        position: 'absolute',
+        left: 0,
+        right: 0,
         alignItems: 'center',
         paddingHorizontal: 24,
-        paddingTop: 8,
-        paddingBottom: 16,
+        zIndex: 0,
     },
     illustrationImage: {
         backgroundColor: 'transparent',

@@ -39,6 +39,8 @@ interface Props {
 const ARCH_VIEWBOX = { w: 428, h: 345 };
 const ARCH_PATH_D = 'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
 const ARCH_FILL_COLOR = '#FF623F';
+/** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
+const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
 
 const INTRO_VOICE_ILLUSTRATION = require('../../assets/introduction/02.png');
 const introVoiceIllustrationSource = Image.resolveAssetSource(INTRO_VOICE_ILLUSTRATION);
@@ -229,6 +231,12 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
                         >
                             {getLocalizedText({ ja: 'はじめに', en: 'Introduction' })}
                         </Text>
+                        <View
+                            style={styles.headerSideSpacer}
+                            pointerEvents="none"
+                            accessibilityElementsHidden
+                            importantForAccessibility="no-hide-descendants"
+                        />
                     </View>
 
                     <ScrollView
@@ -397,10 +405,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0)',
         borderRadius: 20,
     },
+    headerSideSpacer: {
+        width: HEADER_BACK_BUTTON_WIDTH,
+    },
     title: {
         flex: 1,
         textAlign: 'center',
-        marginHorizontal: 16,
     },
     scrollView: {
         flex: 1,

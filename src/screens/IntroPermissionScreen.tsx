@@ -49,6 +49,8 @@ const NEXT_STEP_BUTTON_COLOR = '#FF623F';
 const NEXT_STEP_BUTTON_SHADOW_OFFSET = 4;
 const PHONE_FRAME_SHADOW_OFFSET = 4;
 const PHONE_FRAME_SHADOW_COLOR = '#292524';
+/** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
+const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
 
 const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
@@ -211,6 +213,12 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                     >
                         {getLocalizedText({ ja: 'はじめに', en: 'Introduction' })}
                     </Text>
+                    <View
+                        style={styles.headerSideSpacer}
+                        pointerEvents="none"
+                        accessibilityElementsHidden
+                        importantForAccessibility="no-hide-descendants"
+                    />
                 </View>
 
                 <View style={styles.content}>
@@ -389,10 +397,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0)',
         borderRadius: 20,
     },
+    headerSideSpacer: {
+        width: HEADER_BACK_BUTTON_WIDTH,
+    },
     title: {
         flex: 1,
         textAlign: 'center',
-        marginHorizontal: 16,
     },
     content: {
         flex: 1,
