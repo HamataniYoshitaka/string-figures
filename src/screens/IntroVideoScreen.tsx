@@ -71,6 +71,10 @@ const PAGE_INDEX_P2 = 1;
 const easeInOut = (t: number) =>
     t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
+const INTRO_HERO_FADE_IN_DELAY_MS = 300;
+const INTRO_HERO_FADE_IN_DURATION_MS = 500;
+const INTRO_HERO_FADE_IN_TRANSLATE_Y = 16;
+
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -93,6 +97,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
     const nextStepButtonPressAnim = useRef(new Animated.Value(0)).current;
+    const introHeroOpacity = useRef(new Animated.Value(0)).current;
+    const introHeroTranslateY = useRef(new Animated.Value(INTRO_HERO_FADE_IN_TRANSLATE_Y)).current;
     const [nextStepButtonLayout, setNextStepButtonLayout] = useState({ width: 0, height: 0 });
     
     const { isTablet } = useDeviceInfo();
@@ -338,6 +344,25 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     useEffect(() => {
+        const heroFadeInTimer = setTimeout(() => {
+            Animated.parallel([
+                Animated.timing(introHeroOpacity, {
+                    toValue: 1,
+                    duration: INTRO_HERO_FADE_IN_DURATION_MS,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(introHeroTranslateY, {
+                    toValue: 0,
+                    duration: INTRO_HERO_FADE_IN_DURATION_MS,
+                    useNativeDriver: true,
+                }),
+            ]).start();
+        }, INTRO_HERO_FADE_IN_DELAY_MS);
+
+        return () => clearTimeout(heroFadeInTimer);
+    }, [introHeroOpacity, introHeroTranslateY]);
+
+    useEffect(() => {
         startPage1ProgressAnimation();
         autoScrollTimerRef.current = setTimeout(() => {
             autoScrollTimerRef.current = null;
@@ -460,10 +485,14 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     style={[styles.pagerPage, { width: pagerWidth }]}
                     collapsable={false}
                 >
-                    <View
+                    <Animated.View
                         style={[
                             styles.introHero,
                             { top: Math.max(introHeroTop, 0) },
+                            {
+                                opacity: introHeroOpacity,
+                                transform: [{ translateY: introHeroTranslateY }],
+                            },
                         ]}
                     >
                         <Text
@@ -491,7 +520,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         >
                             {getLocalizedText(INTRO_HERO_TEXT.line2)}
                         </Text>
-                    </View>
+                    </Animated.View>
 
                     <View
                         style={[
