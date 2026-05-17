@@ -72,11 +72,18 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
     const [isNextStepButtonVisible, setIsNextStepButtonVisible] = useState(false);
+    const [page1Progress, setPage1Progress] = useState(0);
+    const [page2Progress, setPage2Progress] = useState(0);
 
     const pagerRef = useRef<PagerView>(null);
     const autoScrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const buttonRevealTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const hasStartedButtonRevealTimerRef = useRef(false);
+    const hasStartedPage2ProgressRef = useRef(false);
+    const page1ProgressRafRef = useRef<number | null>(null);
+    const page2ProgressRafRef = useRef<number | null>(null);
+    const page1ProgressStartMsRef = useRef<number | null>(null);
+    const page2ProgressStartMsRef = useRef<number | null>(null);
 
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
@@ -184,7 +191,68 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     const getChapterProgress = (chapterIndex: number) => {
-        return chapterIndex < currentPageIndex ? 1 : 0;
+        if (chapterIndex === 0) {
+            return page1Progress;
+        }
+        if (chapterIndex === 1) {
+            return page2Progress;
+        }
+        return 0;
+    };
+
+    const stopPage1ProgressAnimation = () => {
+        if (page1ProgressRafRef.current !== null) {
+            cancelAnimationFrame(page1ProgressRafRef.current);
+            page1ProgressRafRef.current = null;
+        }
+    };
+
+    const stopPage2ProgressAnimation = () => {
+        if (page2ProgressRafRef.current !== null) {
+            cancelAnimationFrame(page2ProgressRafRef.current);
+            page2ProgressRafRef.current = null;
+        }
+    };
+
+    const completePage1Progress = () => {
+        stopPage1ProgressAnimation();
+        setPage1Progress(1);
+    };
+
+    const startPage1ProgressAnimation = () => {
+        page1ProgressStartMsRef.current = Date.now();
+        const tick = () => {
+            const startMs = page1ProgressStartMsRef.current ?? Date.now();
+            const elapsed = Date.now() - startMs;
+            const progress = Math.min(elapsed / AUTO_SCROLL_TO_P2_DELAY_MS, 1);
+            setPage1Progress(progress);
+            if (progress < 1) {
+                page1ProgressRafRef.current = requestAnimationFrame(tick);
+            } else {
+                page1ProgressRafRef.current = null;
+            }
+        };
+        page1ProgressRafRef.current = requestAnimationFrame(tick);
+    };
+
+    const startPage2ProgressAnimation = () => {
+        if (hasStartedPage2ProgressRef.current) {
+            return;
+        }
+        hasStartedPage2ProgressRef.current = true;
+        page2ProgressStartMsRef.current = Date.now();
+        const tick = () => {
+            const startMs = page2ProgressStartMsRef.current ?? Date.now();
+            const elapsed = Date.now() - startMs;
+            const progress = Math.min(elapsed / NEXT_STEP_BUTTON_REVEAL_DELAY_MS, 1);
+            setPage2Progress(progress);
+            if (progress < 1) {
+                page2ProgressRafRef.current = requestAnimationFrame(tick);
+            } else {
+                page2ProgressRafRef.current = null;
+            }
+        };
+        page2ProgressRafRef.current = requestAnimationFrame(tick);
     };
 
     const clearAutoScrollTimer = () => {
@@ -205,6 +273,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     };
 
     useEffect(() => {
+        startPage1ProgressAnimation();
         autoScrollTimerRef.current = setTimeout(() => {
             autoScrollTimerRef.current = null;
             pagerRef.current?.setPage(PAGE_INDEX_P2);
@@ -212,6 +281,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
         return () => {
             clearAutoScrollTimer();
+            stopPage1ProgressAnimation();
+            stopPage2ProgressAnimation();
             if (buttonRevealTimerRef.current) {
                 clearTimeout(buttonRevealTimerRef.current);
             }
@@ -222,8 +293,10 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         setCurrentPageIndex(position);
 
         if (position === PAGE_INDEX_P2) {
+            completePage1Progress();
             clearAutoScrollTimer();
             startButtonRevealTimer();
+            startPage2ProgressAnimation();
         }
     };
 
@@ -429,6 +502,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         chapters={chapters}
                         currentChapterIndex={currentPageIndex}
                         getChapterProgress={getChapterProgress}
+                        progressAnimationDuration={0}
                     />
                 </View>
 

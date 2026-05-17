@@ -10,12 +10,15 @@ interface ProgressDotsProps {
     chapters: Chapter[];
     currentChapterIndex: number;
     getChapterProgress: (chapterIndex: number) => number;
+    /** 進捗バー fill のアニメーション時間（ms）。0 で即時反映 */
+    progressAnimationDuration?: number;
 }
 
 const ProgressDots: React.FC<ProgressDotsProps> = ({
     chapters,
     currentChapterIndex,
     getChapterProgress,
+    progressAnimationDuration = 600,
 }) => {
     const { isTablet, isDeviceLandscape } = useDeviceInfo();
     const windowHeight = Dimensions.get('window').height;
@@ -56,11 +59,11 @@ const ProgressDots: React.FC<ProgressDotsProps> = ({
         const progress = getChapterProgress(index);
         Animated.timing(animatedProgress[index], {
           toValue: progress,
-          duration: 600,
+          duration: progressAnimationDuration,
           useNativeDriver: false,
         }).start();
       });
-    }, [chapters.map((_, index) => getChapterProgress(index)).join(',')]);
+    }, [chapters.map((_, index) => getChapterProgress(index)).join(','), progressAnimationDuration]);
       
       return (
         <View style={ { width: progressBarWidth }}>
