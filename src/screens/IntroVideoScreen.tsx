@@ -22,6 +22,17 @@ const INTRO_HERO_TEXT = {
     },
 } as const;
 
+const INTRO_PAGE2_TEXT = {
+    line1: {
+        ja: '両手に糸がかかったままでも',
+        en: 'Even with string on your hands',
+    },
+    line2: {
+        ja: '「声」で操作できます',
+        en: 'you can control it by voice',
+    },
+} as const;
+
 type IntroVideoScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   'IntroVideo'
@@ -38,6 +49,10 @@ const ARCH_VIEWBOX = { w: 428, h: 345 };
 const ARCH_PATH_D =
   'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
 const ARCH_FILL_COLOR = '#FF623F';
+const NEXT_STEP_BUTTON_COLOR = '#FF623F';
+const NEXT_STEP_BUTTON_SHADOW_OFFSET = 4;
+const PHONE_FRAME_SHADOW_OFFSET = 4;
+const PHONE_FRAME_SHADOW_COLOR = '#292524';
 const INTRO_ILLUSTRATION = require('../../assets/introduction/01.png');
 const introIllustrationSource = Image.resolveAssetSource(INTRO_ILLUSTRATION);
 const INTRO_ILLUSTRATION_ASPECT =
@@ -55,7 +70,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
-    const nextStepButtonScale = useRef(new Animated.Value(1)).current;
+    const nextStepButtonPressAnim = useRef(new Animated.Value(0)).current;
+    const [nextStepButtonLayout, setNextStepButtonLayout] = useState({ width: 0, height: 0 });
     
     const { isTablet } = useDeviceInfo();
     const insets = useSafeAreaInsets();
@@ -73,6 +89,26 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         screenHeight / 2 - headerPaddingTop - headerContentHeight;
     const illustrationWidth = Math.min(screenWidth * 0.58, isTablet ? 360 : 280);
     const illustrationHeight = illustrationWidth / INTRO_ILLUSTRATION_ASPECT;
+    const bottomChromeEstimate = 152;
+    const page2TopSectionEstimate = 88;
+    const maxPhoneFrameHeight = Math.max(
+        120,
+        screenHeight
+            - headerPaddingTop
+            - headerContentHeight
+            - page2TopSectionEstimate
+            - bottomChromeEstimate
+            - insets.bottom
+            - PHONE_FRAME_SHADOW_OFFSET
+            - 36,
+    );
+    let phoneFrameWidth = Math.min(screenWidth * 0.56, isTablet ? 260 : 232);
+    let phoneFrameHeight = phoneFrameWidth * (19 / 9);
+    if (phoneFrameHeight > maxPhoneFrameHeight) {
+        phoneFrameHeight = maxPhoneFrameHeight;
+        phoneFrameWidth = phoneFrameHeight * (9 / 19);
+    }
+    const phoneFrameBorderRadius = phoneFrameWidth * 0.14;
     
     // アニメーションヘルパー関数
     const createPressInHandler = (scale: Animated.Value) => () => {
@@ -91,6 +127,29 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             friction: 8,
         }).start();
     };
+
+    const handleNextStepPressIn = () => {
+        Animated.spring(nextStepButtonPressAnim, {
+            toValue: 1,
+            useNativeDriver: true,
+            tension: 300,
+            friction: 8,
+        }).start();
+    };
+
+    const handleNextStepPressOut = () => {
+        Animated.spring(nextStepButtonPressAnim, {
+            toValue: 0,
+            useNativeDriver: true,
+            tension: 300,
+            friction: 8,
+        }).start();
+    };
+
+    const nextStepPressTranslate = nextStepButtonPressAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, NEXT_STEP_BUTTON_SHADOW_OFFSET],
+    });
 
     const onGoBack = async () => {
         console.log('onGoBack');
@@ -252,7 +311,67 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     </View>
                 </View>
 
-                <View key="intro-page-2" style={styles.pagerPage} collapsable={false} />
+                <View key="intro-page-2" style={styles.pagerPage} collapsable={false}>
+                    <View style={styles.page2TopSection}>
+                        <Text
+                            maxFontSizeMultiplier={1.25}
+                            style={[
+                                styles.introHeroLine,
+                                {
+                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
+                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                                },
+                            ]}
+                        >
+                            {getLocalizedText(INTRO_PAGE2_TEXT.line1)}
+                        </Text>
+                        <Text
+                            maxFontSizeMultiplier={1.25}
+                            style={[
+                                styles.introHeroLine,
+                                styles.introHeroLineSecond,
+                                {
+                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
+                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                                },
+                            ]}
+                        >
+                            {getLocalizedText(INTRO_PAGE2_TEXT.line2)}
+                        </Text>
+                    </View>
+
+                    <View style={styles.phoneFrameContainer}>
+                        <View
+                            style={{
+                                width: phoneFrameWidth + PHONE_FRAME_SHADOW_OFFSET,
+                                height: phoneFrameHeight + PHONE_FRAME_SHADOW_OFFSET,
+                            }}
+                        >
+                            <View
+                                style={[
+                                    styles.phoneFrameHardShadow,
+                                    {
+                                        width: phoneFrameWidth,
+                                        height: phoneFrameHeight,
+                                        borderRadius: phoneFrameBorderRadius,
+                                        left: PHONE_FRAME_SHADOW_OFFSET,
+                                        top: PHONE_FRAME_SHADOW_OFFSET,
+                                    },
+                                ]}
+                            />
+                            <View
+                                style={[
+                                    styles.phoneFrame,
+                                    {
+                                        width: phoneFrameWidth,
+                                        height: phoneFrameHeight,
+                                        borderRadius: phoneFrameBorderRadius,
+                                    },
+                                ]}
+                            />
+                        </View>
+                    </View>
+                </View>
             </PagerView>
 
             <View style={styles.bottomChrome}>
@@ -267,44 +386,72 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 <View style={styles.controlsContainer}>
                     <TouchableWithoutFeedback 
                         onPress={onNextChapter}
-                        onPressIn={createPressInHandler(nextStepButtonScale)}
-                        onPressOut={createPressOutHandler(nextStepButtonScale)}
+                        onPressIn={handleNextStepPressIn}
+                        onPressOut={handleNextStepPressOut}
                     >
-                        <Animated.View 
-                            style={[
-                                styles.nextStepButton,
-                                { transform: [{ scale: nextStepButtonScale }] }
-                            ]}
-                        >
-                            <Text 
-                                maxFontSizeMultiplier={1.25}
-                                style={[
-                                    styles.nextStepLabel,
-                                    { fontSize: currentLanguage === 'ja' ? 24 : 22 }
-                                ]}
-                            >
-                                Next Step
-                            </Text>
-                            <View style={styles.nextStepTitleContainer}>
-                                <Text 
-                                    maxFontSizeMultiplier={1.25}
+                        <View style={styles.nextStepButtonWrapper}>
+                            <View style={styles.nextStepButtonContainer}>
+                                {nextStepButtonLayout.width > 0 && (
+                                    <View
+                                        style={[
+                                            styles.nextStepButtonShadow,
+                                            {
+                                                width: nextStepButtonLayout.width,
+                                                height: nextStepButtonLayout.height,
+                                            },
+                                        ]}
+                                    />
+                                )}
+                                <Animated.View
                                     style={[
-                                        styles.nextStepTitle,
-                                        { fontSize: currentLanguage === 'ja' ? 15 : 14 }
+                                        styles.nextStepButton,
+                                        {
+                                            transform: [
+                                                { translateX: nextStepPressTranslate },
+                                                { translateY: nextStepPressTranslate },
+                                            ],
+                                        },
                                     ]}
-                                    numberOfLines={2}
+                                    onLayout={(event) => {
+                                        const { width, height } = event.nativeEvent.layout;
+                                        setNextStepButtonLayout((prev) =>
+                                            prev.width === width && prev.height === height
+                                                ? prev
+                                                : { width, height },
+                                        );
+                                    }}
                                 >
-                                    {getLocalizedText({ ja: '音声認識について', en: 'About voice recognition' })}
-                                </Text>
+                                    <Text 
+                                        maxFontSizeMultiplier={1.25}
+                                        style={[
+                                            styles.nextStepLabel,
+                                            { fontSize: currentLanguage === 'ja' ? 24 : 22 }
+                                        ]}
+                                    >
+                                        Next Step
+                                    </Text>
+                                    <View style={styles.nextStepTitleContainer}>
+                                        <Text 
+                                            maxFontSizeMultiplier={1.25}
+                                            style={[
+                                                styles.nextStepTitle,
+                                                { fontSize: currentLanguage === 'ja' ? 15 : 14 }
+                                            ]}
+                                            numberOfLines={2}
+                                        >
+                                            {getLocalizedText({ ja: '音声認識について', en: 'About voice recognition' })}
+                                        </Text>
+                                    </View>
+                                    <ChevronRightIcon
+                                        width={27}
+                                        height={27}
+                                        fillColor="#FFFFFF"
+                                        strokeColor="#FFFFFF"
+                                        strokeWidth={0}
+                                    />
+                                </Animated.View>
                             </View>
-                            <ChevronRightIcon
-                                width={27}
-                                height={27}
-                                fillColor="#FFFFFF"
-                                strokeColor="#FFFFFF"
-                                strokeWidth={0}
-                            />
-                        </Animated.View>
+                        </View>
                     </TouchableWithoutFeedback>
                 </View>
             </View>
@@ -369,6 +516,31 @@ const styles = StyleSheet.create({
     introHeroLineSecond: {
         marginTop: 4,
     },
+    page2TopSection: {
+        paddingTop: 8,
+        paddingHorizontal: 24,
+        alignItems: 'center',
+    },
+    phoneFrameContainer: {
+        flex: 1,
+        alignItems: 'center',
+        paddingTop: 20,
+        paddingHorizontal: 24,
+        paddingBottom: 16,
+    },
+    phoneFrameHardShadow: {
+        position: 'absolute',
+        backgroundColor: PHONE_FRAME_SHADOW_COLOR,
+    },
+    phoneFrame: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        borderWidth: 3,
+        borderColor: '#292524',
+        backgroundColor: '#FFFFFF',
+        overflow: 'hidden',
+    },
     pagerView: {
         flex: 1,
     },
@@ -400,24 +572,34 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingBottom: 16,
     },
-    nextStepButton: {
-        backgroundColor: '#57534d',
+    nextStepButtonWrapper: {
+        alignSelf: 'stretch',
+        paddingRight: NEXT_STEP_BUTTON_SHADOW_OFFSET,
+        paddingBottom: NEXT_STEP_BUTTON_SHADOW_OFFSET,
+    },
+    nextStepButtonContainer: {
+        position: 'relative',
+        overflow: 'visible',
+    },
+    nextStepButtonShadow: {
+        position: 'absolute',
+        left: NEXT_STEP_BUTTON_SHADOW_OFFSET,
+        top: NEXT_STEP_BUTTON_SHADOW_OFFSET,
         borderRadius: 12,
+        backgroundColor: '#000000',
+    },
+    nextStepButton: {
+        backgroundColor: NEXT_STEP_BUTTON_COLOR,
+        borderRadius: 12,
+        borderWidth: 2,
+        borderColor: '#292524',
         paddingLeft: 16,
         paddingRight: 8,
         paddingVertical: 12,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.35,
-        shadowRadius: 3,
-        elevation: 3,
-        gap: 4
+        gap: 4,
     },
     nextStepLabel: {
         fontFamily: 'Montserrat-SemiBold',
