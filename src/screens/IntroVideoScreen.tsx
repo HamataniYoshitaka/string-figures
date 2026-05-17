@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Image, Platform, Dimensions, StatusBar } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -64,9 +64,19 @@ const chapters = [
     { subtitle: { ja: '', en: '' } },
 ];
 
+const AUTO_SCROLL_TO_P2_DELAY_MS = 5000;
+const NEXT_STEP_BUTTON_REVEAL_DELAY_MS = 10000;
+const PAGE_INDEX_P2 = 1;
+
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
+    const [isNextStepButtonVisible, setIsNextStepButtonVisible] = useState(false);
+
+    const pagerRef = useRef<PagerView>(null);
+    const autoScrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const buttonRevealTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const hasStartedButtonRevealTimerRef = useRef(false);
 
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
@@ -177,8 +187,44 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         return chapterIndex < currentPageIndex ? 1 : 0;
     };
 
+    const clearAutoScrollTimer = () => {
+        if (autoScrollTimerRef.current) {
+            clearTimeout(autoScrollTimerRef.current);
+            autoScrollTimerRef.current = null;
+        }
+    };
+
+    const startButtonRevealTimer = () => {
+        if (hasStartedButtonRevealTimerRef.current) {
+            return;
+        }
+        hasStartedButtonRevealTimerRef.current = true;
+        buttonRevealTimerRef.current = setTimeout(() => {
+            setIsNextStepButtonVisible(true);
+        }, NEXT_STEP_BUTTON_REVEAL_DELAY_MS);
+    };
+
+    useEffect(() => {
+        autoScrollTimerRef.current = setTimeout(() => {
+            autoScrollTimerRef.current = null;
+            pagerRef.current?.setPage(PAGE_INDEX_P2);
+        }, AUTO_SCROLL_TO_P2_DELAY_MS);
+
+        return () => {
+            clearAutoScrollTimer();
+            if (buttonRevealTimerRef.current) {
+                clearTimeout(buttonRevealTimerRef.current);
+            }
+        };
+    }, []);
+
     const handlePageSelected = (position: number) => {
         setCurrentPageIndex(position);
+
+        if (position === PAGE_INDEX_P2) {
+            clearAutoScrollTimer();
+            startButtonRevealTimer();
+        }
     };
 
     const onNextChapter = () => {
@@ -253,6 +299,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             </View>
 
             <PagerView
+                ref={pagerRef}
                 style={styles.pagerView}
                 initialPage={0}
                 scrollEnabled
@@ -386,12 +433,21 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 </View>
 
                 <View style={styles.controlsContainer}>
-                    <TouchableWithoutFeedback 
+                    <TouchableWithoutFeedback
+                        disabled={!isNextStepButtonVisible}
                         onPress={onNextChapter}
                         onPressIn={handleNextStepPressIn}
                         onPressOut={handleNextStepPressOut}
                     >
-                        <View style={styles.nextStepButtonWrapper}>
+                        <View
+                            style={[
+                                styles.nextStepButtonWrapper,
+                                {
+                                    opacity: isNextStepButtonVisible ? 1 : 0,
+                                },
+                            ]}
+                            pointerEvents={isNextStepButtonVisible ? 'auto' : 'none'}
+                        >
                             <View style={styles.nextStepButtonContainer}>
                                 {nextStepButtonLayout.width > 0 && (
                                     <View
