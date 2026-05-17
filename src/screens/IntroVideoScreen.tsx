@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Platform, Dimensions, StatusBar } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Image, Platform, Dimensions, StatusBar } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import PagerView from 'react-native-pager-view';
 import { ChevronRightIcon, CloseIcon } from '../components/icons';
 import ProgressDots from '../components/ProgressDots';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
@@ -37,6 +38,10 @@ const ARCH_VIEWBOX = { w: 428, h: 345 };
 const ARCH_PATH_D =
   'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
 const ARCH_FILL_COLOR = '#FF623F';
+const INTRO_ILLUSTRATION = require('../../assets/introduction/01.png');
+const introIllustrationSource = Image.resolveAssetSource(INTRO_ILLUSTRATION);
+const INTRO_ILLUSTRATION_ASPECT =
+    introIllustrationSource.width / introIllustrationSource.height;
 
 const chapters = [
     { subtitle: { ja: '', en: '' } },
@@ -46,6 +51,7 @@ const chapters = [
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
     const [currentChapterIndex, setCurrentChapterIndex] = useState<number>(0);
+    const pagerRef = useRef<PagerView>(null);
 
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
@@ -65,6 +71,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const headerContentHeight = isTablet ? 56 : 48;
     const introHeroHeight =
         screenHeight / 2 - headerPaddingTop - headerContentHeight;
+    const illustrationWidth = Math.min(screenWidth * 0.58, isTablet ? 360 : 280);
+    const illustrationHeight = illustrationWidth / INTRO_ILLUSTRATION_ASPECT;
     
     // アニメーションヘルパー関数
     const createPressInHandler = (scale: Animated.Value) => () => {
@@ -101,8 +109,13 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         return 0;
     };
 
+    const handlePageSelected = (position: number) => {
+        setCurrentChapterIndex(position);
+    };
+
     const onNextChapter = async () => {
         if (currentChapterIndex === 0) {
+            pagerRef.current?.setPage(1);
             setCurrentChapterIndex(1);
         } else if (currentChapterIndex === 1) {
             try {
@@ -182,48 +195,75 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 </Text>
             </View>
 
-            <View
-                style={[
-                    styles.introHero,
-                    { height: Math.max(introHeroHeight, 0) },
-                ]}
+            <PagerView
+                ref={pagerRef}
+                style={styles.pagerView}
+                initialPage={0}
+                scrollEnabled
+                overdrag={false}
+                onPageSelected={(event) => handlePageSelected(event.nativeEvent.position)}
             >
-                <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[
-                        styles.introHeroLine,
-                        {
-                            fontSize: currentLanguage === 'ja' ? 24 : 22,
-                            fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
-                        },
-                    ]}
-                >
-                    {getLocalizedText(INTRO_HERO_TEXT.line1)}
-                </Text>
-                <Text
-                    maxFontSizeMultiplier={1.25}
-                    style={[
-                        styles.introHeroLine,
-                        styles.introHeroLineSecond,
-                        {
-                            fontSize: currentLanguage === 'ja' ? 24 : 22,
-                            fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
-                        },
-                    ]}
-                >
-                    {getLocalizedText(INTRO_HERO_TEXT.line2)}
-                </Text>
-            </View>
+                <View key="intro-page-1" style={styles.pagerPage} collapsable={false}>
+                    <View
+                        style={[
+                            styles.introHero,
+                            { height: Math.max(introHeroHeight, 0) },
+                        ]}
+                    >
+                        <Text
+                            maxFontSizeMultiplier={1.25}
+                            style={[
+                                styles.introHeroLine,
+                                {
+                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
+                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                                },
+                            ]}
+                        >
+                            {getLocalizedText(INTRO_HERO_TEXT.line1)}
+                        </Text>
+                        <Text
+                            maxFontSizeMultiplier={1.25}
+                            style={[
+                                styles.introHeroLine,
+                                styles.introHeroLineSecond,
+                                {
+                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
+                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                                },
+                            ]}
+                        >
+                            {getLocalizedText(INTRO_HERO_TEXT.line2)}
+                        </Text>
+                    </View>
 
-            <View style={styles.progressContainer}>
-                <ProgressDots
-                    chapters={chapters}
-                    currentChapterIndex={currentChapterIndex}
-                    getChapterProgress={getChapterProgress}
-                />
-            </View>
+                    <View style={styles.illustrationContainer}>
+                        <Image
+                            source={INTRO_ILLUSTRATION}
+                            style={[
+                                styles.illustrationImage,
+                                {
+                                    width: illustrationWidth,
+                                    height: illustrationHeight,
+                                },
+                            ]}
+                            resizeMode="contain"
+                        />
+                    </View>
+                </View>
 
-            <View style={styles.subtitleContainerWrapper}>
+                <View key="intro-page-2" style={styles.pagerPage} collapsable={false} />
+            </PagerView>
+
+            <View style={styles.bottomChrome}>
+                <View style={styles.progressContainer}>
+                    <ProgressDots
+                        chapters={chapters}
+                        currentChapterIndex={currentChapterIndex}
+                        getChapterProgress={getChapterProgress}
+                    />
+                </View>
+
                 <View style={styles.controlsContainer}>
                     <TouchableWithoutFeedback 
                         onPress={onNextChapter}
@@ -329,15 +369,32 @@ const styles = StyleSheet.create({
     introHeroLineSecond: {
         marginTop: 4,
     },
+    pagerView: {
+        flex: 1,
+    },
+    pagerPage: {
+        flex: 1,
+    },
+    bottomChrome: {
+        maxWidth: 500,
+        width: '100%',
+        marginHorizontal: 'auto',
+    },
     progressContainer: {
         marginTop: 16,
         paddingLeft: 16,
     },
-    subtitleContainerWrapper: {
+    illustrationContainer: {
         flex: 1,
-        justifyContent: 'flex-end',
-        maxWidth: 500,
-        marginHorizontal: 'auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 24,
+        paddingTop: 8,
+        paddingBottom: 16,
+    },
+    illustrationImage: {
+        backgroundColor: 'transparent',
+        mixBlendMode: 'multiply',
     },
     controlsContainer: {
         paddingHorizontal: 16,
