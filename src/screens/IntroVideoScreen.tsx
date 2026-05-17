@@ -63,17 +63,20 @@ const chapters = [
     { subtitle: { ja: '', en: '' } },
 ];
 
-const AUTO_SCROLL_TO_P2_DELAY_MS = 5000;
+const AUTO_SCROLL_TO_P2_DELAY_MS = 3500;
 const AUTO_SCROLL_TO_P2_DURATION_MS = 600;
-const NEXT_STEP_BUTTON_REVEAL_DELAY_MS = 10000;
+const NEXT_STEP_BUTTON_REVEAL_DELAY_MS = 8500;
 const PAGE_INDEX_P2 = 1;
 
 const easeInOut = (t: number) =>
     t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
-const INTRO_HERO_FADE_IN_DELAY_MS = 300;
-const INTRO_HERO_FADE_IN_DURATION_MS = 500;
-const INTRO_HERO_FADE_IN_TRANSLATE_Y = 16;
+const INTRO_HERO_FADE_IN_DELAY_MS = 600;
+const INTRO_ILLUSTRATION_FADE_IN_DELAY_MS = 1000;
+const INTRO_FADE_IN_DURATION_MS = 500;
+const INTRO_FADE_IN_TRANSLATE_Y = 16;
+const INTRO_PAGE2_TEXT_FADE_IN_DELAY_MS = 300;
+const INTRO_PAGE2_PHONE_FADE_IN_DELAY_MS = 900;
 
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
@@ -98,7 +101,18 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const backButtonScale = useRef(new Animated.Value(1)).current;
     const nextStepButtonPressAnim = useRef(new Animated.Value(0)).current;
     const introHeroOpacity = useRef(new Animated.Value(0)).current;
-    const introHeroTranslateY = useRef(new Animated.Value(INTRO_HERO_FADE_IN_TRANSLATE_Y)).current;
+    const introHeroTranslateY = useRef(new Animated.Value(INTRO_FADE_IN_TRANSLATE_Y)).current;
+    const illustrationOpacity = useRef(new Animated.Value(0)).current;
+    const illustrationTranslateY = useRef(new Animated.Value(INTRO_FADE_IN_TRANSLATE_Y)).current;
+    const page2TextOpacity = useRef(new Animated.Value(0)).current;
+    const page2TextTranslateY = useRef(new Animated.Value(INTRO_FADE_IN_TRANSLATE_Y)).current;
+    const page2PhoneOpacity = useRef(new Animated.Value(0)).current;
+    const page2PhoneTranslateY = useRef(new Animated.Value(INTRO_FADE_IN_TRANSLATE_Y)).current;
+    const nextStepButtonOpacity = useRef(new Animated.Value(0)).current;
+    const nextStepButtonFadeTranslateY = useRef(new Animated.Value(INTRO_FADE_IN_TRANSLATE_Y)).current;
+    const hasPlayedPage2EntranceAnimRef = useRef(false);
+    const page2TextFadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const page2PhoneFadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [nextStepButtonLayout, setNextStepButtonLayout] = useState({ width: 0, height: 0 });
     
     const { isTablet } = useDeviceInfo();
@@ -333,14 +347,86 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         handlePageSelected(position);
     };
 
+    const revealNextStepButton = () => {
+        setIsNextStepButtonVisible(true);
+        Animated.parallel([
+            Animated.timing(nextStepButtonOpacity, {
+                toValue: 1,
+                duration: INTRO_FADE_IN_DURATION_MS,
+                useNativeDriver: true,
+            }),
+            Animated.timing(nextStepButtonFadeTranslateY, {
+                toValue: 0,
+                duration: INTRO_FADE_IN_DURATION_MS,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    };
+
     const startButtonRevealTimer = () => {
         if (hasStartedButtonRevealTimerRef.current) {
             return;
         }
         hasStartedButtonRevealTimerRef.current = true;
         buttonRevealTimerRef.current = setTimeout(() => {
-            setIsNextStepButtonVisible(true);
+            buttonRevealTimerRef.current = null;
+            revealNextStepButton();
         }, NEXT_STEP_BUTTON_REVEAL_DELAY_MS);
+    };
+
+    const clearPage2EntranceTimers = () => {
+        if (page2TextFadeTimerRef.current) {
+            clearTimeout(page2TextFadeTimerRef.current);
+            page2TextFadeTimerRef.current = null;
+        }
+        if (page2PhoneFadeTimerRef.current) {
+            clearTimeout(page2PhoneFadeTimerRef.current);
+            page2PhoneFadeTimerRef.current = null;
+        }
+    };
+
+    const startPage2EntranceAnimations = () => {
+        if (hasPlayedPage2EntranceAnimRef.current) {
+            return;
+        }
+        hasPlayedPage2EntranceAnimRef.current = true;
+
+        page2TextOpacity.setValue(0);
+        page2TextTranslateY.setValue(INTRO_FADE_IN_TRANSLATE_Y);
+        page2PhoneOpacity.setValue(0);
+        page2PhoneTranslateY.setValue(INTRO_FADE_IN_TRANSLATE_Y);
+
+        page2TextFadeTimerRef.current = setTimeout(() => {
+            page2TextFadeTimerRef.current = null;
+            Animated.parallel([
+                Animated.timing(page2TextOpacity, {
+                    toValue: 1,
+                    duration: INTRO_FADE_IN_DURATION_MS,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(page2TextTranslateY, {
+                    toValue: 0,
+                    duration: INTRO_FADE_IN_DURATION_MS,
+                    useNativeDriver: true,
+                }),
+            ]).start();
+        }, INTRO_PAGE2_TEXT_FADE_IN_DELAY_MS);
+
+        page2PhoneFadeTimerRef.current = setTimeout(() => {
+            page2PhoneFadeTimerRef.current = null;
+            Animated.parallel([
+                Animated.timing(page2PhoneOpacity, {
+                    toValue: 1,
+                    duration: INTRO_FADE_IN_DURATION_MS,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(page2PhoneTranslateY, {
+                    toValue: 0,
+                    duration: INTRO_FADE_IN_DURATION_MS,
+                    useNativeDriver: true,
+                }),
+            ]).start();
+        }, INTRO_PAGE2_PHONE_FADE_IN_DELAY_MS);
     };
 
     useEffect(() => {
@@ -348,12 +434,12 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             Animated.parallel([
                 Animated.timing(introHeroOpacity, {
                     toValue: 1,
-                    duration: INTRO_HERO_FADE_IN_DURATION_MS,
+                    duration: INTRO_FADE_IN_DURATION_MS,
                     useNativeDriver: true,
                 }),
                 Animated.timing(introHeroTranslateY, {
                     toValue: 0,
-                    duration: INTRO_HERO_FADE_IN_DURATION_MS,
+                    duration: INTRO_FADE_IN_DURATION_MS,
                     useNativeDriver: true,
                 }),
             ]).start();
@@ -361,6 +447,25 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
         return () => clearTimeout(heroFadeInTimer);
     }, [introHeroOpacity, introHeroTranslateY]);
+
+    useEffect(() => {
+        const illustrationFadeInTimer = setTimeout(() => {
+            Animated.parallel([
+                Animated.timing(illustrationOpacity, {
+                    toValue: 1,
+                    duration: INTRO_FADE_IN_DURATION_MS,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(illustrationTranslateY, {
+                    toValue: 0,
+                    duration: INTRO_FADE_IN_DURATION_MS,
+                    useNativeDriver: true,
+                }),
+            ]).start();
+        }, INTRO_ILLUSTRATION_FADE_IN_DELAY_MS);
+
+        return () => clearTimeout(illustrationFadeInTimer);
+    }, [illustrationOpacity, illustrationTranslateY]);
 
     useEffect(() => {
         startPage1ProgressAnimation();
@@ -374,6 +479,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             stopAutoScrollAnimation();
             stopPage1ProgressAnimation();
             stopPage2ProgressAnimation();
+            clearPage2EntranceTimers();
             if (buttonRevealTimerRef.current) {
                 clearTimeout(buttonRevealTimerRef.current);
             }
@@ -388,6 +494,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             clearAutoScrollTimer();
             startButtonRevealTimer();
             startPage2ProgressAnimation();
+            startPage2EntranceAnimations();
         }
     };
 
@@ -522,10 +629,14 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         </Text>
                     </Animated.View>
 
-                    <View
+                    <Animated.View
                         style={[
                             styles.illustrationContainer,
                             { top: Math.max(illustrationTop, 0) },
+                            {
+                                opacity: illustrationOpacity,
+                                transform: [{ translateY: illustrationTranslateY }],
+                            },
                         ]}
                     >
                         <Image
@@ -539,7 +650,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                             ]}
                             resizeMode="contain"
                         />
-                    </View>
+                    </Animated.View>
                 </View>
 
                 <View
@@ -547,7 +658,15 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     style={[styles.pagerPage, { width: pagerWidth }]}
                     collapsable={false}
                 >
-                    <View style={styles.page2TopSection}>
+                    <Animated.View
+                        style={[
+                            styles.page2TopSection,
+                            {
+                                opacity: page2TextOpacity,
+                                transform: [{ translateY: page2TextTranslateY }],
+                            },
+                        ]}
+                    >
                         <Text
                             maxFontSizeMultiplier={1.25}
                             style={[
@@ -573,13 +692,15 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         >
                             {getLocalizedText(INTRO_PAGE2_TEXT.line2)}
                         </Text>
-                    </View>
+                    </Animated.View>
 
                     <View style={styles.phoneFrameContainer}>
-                        <View
+                        <Animated.View
                             style={{
                                 width: phoneFrameWidth + PHONE_FRAME_SHADOW_OFFSET,
                                 height: phoneFrameHeight + PHONE_FRAME_SHADOW_OFFSET,
+                                opacity: page2PhoneOpacity,
+                                transform: [{ translateY: page2PhoneTranslateY }],
                             }}
                         >
                             <View
@@ -604,7 +725,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                     },
                                 ]}
                             />
-                        </View>
+                        </Animated.View>
                     </View>
                 </View>
             </ScrollView>
@@ -626,11 +747,12 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         onPressIn={handleNextStepPressIn}
                         onPressOut={handleNextStepPressOut}
                     >
-                        <View
+                        <Animated.View
                             style={[
                                 styles.nextStepButtonWrapper,
                                 {
-                                    opacity: isNextStepButtonVisible ? 1 : 0,
+                                    opacity: nextStepButtonOpacity,
+                                    transform: [{ translateY: nextStepButtonFadeTranslateY }],
                                 },
                             ]}
                             pointerEvents={isNextStepButtonVisible ? 'auto' : 'none'}
@@ -696,7 +818,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                     />
                                 </Animated.View>
                             </View>
-                        </View>
+                        </Animated.View>
                     </TouchableWithoutFeedback>
                 </View>
             </View>
