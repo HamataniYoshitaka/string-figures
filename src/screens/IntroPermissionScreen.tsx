@@ -253,7 +253,7 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                                 styles.permissionText,
                                 {
                                     fontSize: currentLanguage === 'ja' ? 16 : 15,
-                                    fontFamily: currentLanguage === 'en' ? 'Roboto' : 'LineSeed-Regular',
+                                    fontFamily: currentLanguage === 'en' ? 'Roboto' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >
@@ -265,7 +265,7 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                                 styles.permissionFootnote,
                                 {
                                     fontSize: currentLanguage === 'ja' ? 14 : 13,
-                                    fontFamily: currentLanguage === 'en' ? 'Roboto' : 'LineSeed-Regular',
+                                    fontFamily: currentLanguage === 'en' ? 'Roboto' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >

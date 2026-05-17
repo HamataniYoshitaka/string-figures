@@ -43,6 +43,7 @@ export default function App() {
           'Roboto-Medium': require('./assets/fonts/Roboto/Roboto-Medium.ttf'),
           'Montserrat-SemiBold': require('./assets/fonts/Montserrat/Montserrat-SemiBold.ttf'),
           'KronaOne-Regular': require('./assets/fonts/KronaOne/KronaOne-Regular.ttf'),
+          'KiwiMaru-Medium': require('./assets/fonts/Kiwi/KiwiMaru-Medium-subset.ttf'),
         });
 
         // RevenueCat SDKを初期化

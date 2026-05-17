@@ -1,116 +1,105 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Animated, Text, Dimensions, Alert, ScrollView } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    TouchableOpacity,
+    Animated,
+    Text,
+    Image,
+    Platform,
+    Dimensions,
+    StatusBar,
+    ScrollView,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Svg, { Path } from 'react-native-svg';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CloseIcon } from '../components/icons';
-import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
-import ProgressDots from '../components/ProgressDots';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { activateKeepAwakeAsync, deactivateKeepAwake } from 'expo-keep-awake';
 import { Provider as PaperProvider, Snackbar } from 'react-native-paper';
 
 type IntroVoiceScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'IntroVoice'
+    RootStackParamList,
+    'IntroVoice'
 >;
 type IntroVoiceScreenRouteProp = RouteProp<RootStackParamList, 'IntroVoice'>;
 
 interface Props {
-  navigation: IntroVoiceScreenNavigationProp;
-  route: IntroVoiceScreenRouteProp;
+    navigation: IntroVoiceScreenNavigationProp;
+    route: IntroVoiceScreenRouteProp;
 }
 
-const chapters = [
-    {
-        title: { ja: '', en: '' },
-        subtitle: { ja: '', en: '' },
-        video: require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4')
-    },
-    {
-        title: { ja: '', en: '' },
-        subtitle: { ja: '', en: '' },
-        video: require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4')
-    },
-    {
-        title: { ja: '音声テスト', en: 'Voice test' },
-        subtitle: { ja: '「つぎ」と話しかけて下さい', en: 'Please say "next"' },
-        video: {ja: require('../../assets/string-figures/0_introduction/intro3.mp4'), en: require('../../assets/string-figures/0_introduction/intro3-en.mp4')}
-    },
-    {
-        title: { ja: '', en: '' },
-        subtitle: { ja: 'このアプリを使う準備が完了しました!\n世界中に伝承されている\n「あやとり」をお楽しみ下さい!', en: 'The preparation for using this app is complete!\nEnjoy the "String figures" that have been passed down through generations around the world!' },
-        video: require('../../assets/string-figures/0_introduction/intro3.mp4')
-    }
-];  
+/** Figma 準拠のアーチ装飾（viewBox 428×345） */
+const ARCH_VIEWBOX = { w: 428, h: 345 };
+const ARCH_PATH_D = 'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
+const ARCH_FILL_COLOR = '#FF623F';
 
-const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
+const INTRO_VOICE_ILLUSTRATION = require('../../assets/introduction/02.png');
+const introVoiceIllustrationSource = Image.resolveAssetSource(INTRO_VOICE_ILLUSTRATION);
+const INTRO_VOICE_ILLUSTRATION_ASPECT =
+    introVoiceIllustrationSource.width / introVoiceIllustrationSource.height;
+
+const INTRO_VOICE_TEXT = {
+    keyword: { ja: 'つぎ', en: 'next' },
+    particle: { ja: 'と', en: '' },
+    instruction: {
+        ja: '話しかけてください',
+        en: 'Please say "next"',
+    },
+} as const;
+
+const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
-    const videoRef = useRef<Video>(null);
-    const [playbackRate, setPlaybackRate] = useState<number>(1.0);
-    const [currentChapterIndex, setCurrentChapterIndex] = useState<number>(2);
-    const [playbackPosition, setPlaybackPosition] = useState(0);
-    const [videoDuration, setVideoDuration] = useState(0);
     const [snackbarVisible, setSnackbarVisible] = useState(false);
-    const [screenDimensions, setScreenDimensions] = useState(Dimensions.get('window'));
-    const isSmallScreen = screenDimensions.height <= 667;
+    const isSmallScreen = Dimensions.get('window').height <= 667;
 
-
-    // 音声認識フック
     const {
         recognizing,
-        isSupported: isRecognitionSupported,
-        start: startRecognition,
         stop: stopRecognition,
         cleanup,
-      } = useSpeechRecognition({
+    } = useSpeechRecognition({
         language: currentLanguage,
         onKeywordDetected: async (keyword) => {
-          // キーワードに応じたアクションを実行
-          if (keyword === 'つぎ' || keyword === 'next') {
-            await handleNextScreen();
-          } 
+            if (keyword === 'つぎ' || keyword === 'next') {
+                await handleNextScreen();
+            }
         },
         onNetworkError: () => {
-          // ネットワークエラー時にSnackbarを表示
-          setSnackbarVisible(true);
+            setSnackbarVisible(true);
         },
     });
 
-    // アプリ起動時に保存された言語設定を読み込む
     useEffect(() => {
-    
-        // 画面スリープを防止
         activateKeepAwakeAsync();
-    
-        // クリーンアップ: スマホの場合はアンマウント時に画面の向きをportraitに戻す
         return () => {
-          // 画面スリープ防止を解除
-          deactivateKeepAwake();
+            deactivateKeepAwake();
         };
     }, []);
 
-    const handleNextScreen = async () => {
-        // 音声認識を停止
-        if (recognizing) {
-            await stopRecognition();
-        }
-        cleanup();
-        // 300ms待機してから進む
-        await new Promise(resolve => setTimeout(resolve, 300));
-
-        navigation.navigate('IntroComplete');
-    }
-
-    // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
-    
-    const { isTablet, isDeviceLandscape } = useDeviceInfo();
+    const { isTablet } = useDeviceInfo();
+    const insets = useSafeAreaInsets();
 
-    // アニメーションヘルパー関数
+    const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+    const headerPaddingTop =
+        insets.top + (isTablet ? 16 : Platform.OS === 'android' ? 12 : 8);
+    const archDisplayHeight = screenWidth * (ARCH_VIEWBOX.h / ARCH_VIEWBOX.w);
+    const archTop = screenHeight / 2 - archDisplayHeight;
+    const archTopFillHeight = Math.max(0, archTop);
+    const headerContentHeight = isTablet ? 56 : 48;
+    const introHeroHeight =
+        screenHeight / 2 - headerPaddingTop - headerContentHeight;
+    const illustrationWidth = Math.min(screenWidth * 0.72, isTablet ? 360 : 300);
+    const illustrationHeight = illustrationWidth / INTRO_VOICE_ILLUSTRATION_ASPECT;
+    const keywordFontSize = isTablet ? 72 : currentLanguage === 'ja' ? 64 : 56;
+    const particleFontSize = isTablet ? 32 : 28;
+
     const createPressInHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {
             toValue: 0.95,
@@ -129,20 +118,25 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         }).start();
     };
 
-    const onGoBack = async () => {
-        console.log('onGoBack');
-        // 音声認識を停止
+    const handleNextScreen = async () => {
         if (recognizing) {
             await stopRecognition();
         }
         cleanup();
-        // 300ms待機してから戻る
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        navigation.navigate('IntroComplete');
+    };
+
+    const onGoBack = async () => {
+        if (recognizing) {
+            await stopRecognition();
+        }
+        cleanup();
+        await new Promise((resolve) => setTimeout(resolve, 300));
         navigation.goBack();
     };
 
     const onSkip = async () => {
-        console.log('onSkip to HomeScreen');
         try {
             await AsyncStorage.setItem('introduction_completed', 'true');
             navigation.reset({
@@ -154,210 +148,206 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
-    // 多言語対応のヘルパー関数
     const getLocalizedText = (textObj: { ja: string; en: string }) => {
         return textObj[currentLanguage];
     };
 
-
-    // 動画の再生状況を監視
-    const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
-        if (status.isLoaded) {
-            setPlaybackPosition(status.positionMillis || 0);
-            setVideoDuration(status.durationMillis || 0);
-            
-            if (status.didJustFinish) {
-                // 動画が終了した場合
-                console.log('Video finished');
-                // 最初に戻してループ再生
-                setPlaybackPosition(0);
-                videoRef.current?.setPositionAsync(0);
-                videoRef.current?.playAsync();
-            }
-        }
-    };
-    // 動画がロードされた時の処理
-    const handleVideoLoad = async () => {
-        setPlaybackPosition(0); // 新しい動画読み込み時は進捗をリセット
-        try {
-            // videoRef.currentがnullでないことを確認してからメソッドを呼ぶ
-            const video = videoRef.current;
-            if (!video) return;
-            // 動画を最初の位置（0秒）にセットしてから再生
-            await video.setPositionAsync(0);
-            await video.playAsync();
-        } catch (error) {
-            console.error('Error auto-playing video:', error);
-        }
-    };
-
-        // 進捗計算のヘルパー関数
-    const getChapterProgress = (chapterIndex: number) => {
-        if (chapterIndex < currentChapterIndex) {
-        // 完了したチャプター
-        return 1;
-        } else if (chapterIndex === currentChapterIndex) {
-        // 現在のチャプター
-        return videoDuration > 0 ? playbackPosition / videoDuration : 0;
-        } else {
-        // 未開始のチャプター
-        return 0;
-        }
-    };    
-
-
-    // ネットワークエラーメッセージ
     const networkErrorMessage = getLocalizedText({
         ja: 'ネットワーク接続がありません。音声認識機能を使用できません。',
         en: 'No network connection. Speech recognition is unavailable.',
     });
 
-    return (    
+    const keywordFontFamily =
+        currentLanguage === 'en' ? 'Montserrat-SemiBold' : 'KiwiMaru-Medium';
+    const instructionFontFamily =
+        currentLanguage === 'en' ? 'Roboto-Medium' : 'KiwiMaru-Medium';
+
+    return (
         <PaperProvider>
-            <SafeAreaView style={styles.container}>
-                <View style={styles.header}>
-                    <TouchableWithoutFeedback 
-                        onPress={onGoBack}
-                        onPressIn={createPressInHandler(backButtonScale)}
-                        onPressOut={createPressOutHandler(backButtonScale)}
-                    >
-                        <Animated.View 
-                        style={[
-                            styles.backButton,
-                            { transform: [{ scale: backButtonScale }] }
-                        ]}
-                        >
-                        <CloseIcon width={24} height={24} fillColor="#79716B" />
-                        </Animated.View>
-                    </TouchableWithoutFeedback>
-                    <Text 
-                        maxFontSizeMultiplier={1.35}
-                        style={[
-                            styles.title, 
-                            { 
-                                fontSize: isTablet ? 22 : 18,
-                                fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold'
-                            }
-                        ]} numberOfLines={1}
-                    >
-                        {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
-                    </Text>
-                </View>
-
-                {/* 動画エリア */}
-                <View style={[
-                    styles.videoArea,
-                    !isTablet && { paddingHorizontal: 0 },
-                    (isTablet && isDeviceLandscape) && styles.videoAreaTabletLandscape
-                ]}>
-                    <View style={[
-                        styles.videoPlayer,
-                        !isTablet && { borderRadius: 0 },
-                    ]}>
-                    <Video
-                        key={`chapter-${currentChapterIndex}`}
-                        ref={videoRef}
-                        source={ currentLanguage === 'ja' ? chapters[currentChapterIndex].video.ja : chapters[currentChapterIndex].video.en }
-                        style={styles.video}
-                        resizeMode={ResizeMode.COVER}
-                        shouldPlay={false}
-                        isLooping={false}
-                        isMuted={true}
-                        useNativeControls={false}
-                        rate={playbackRate}
-                        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-                        onLoad={handleVideoLoad}
+            <View style={styles.container}>
+                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+                {archTopFillHeight > 0 && (
+                    <View
+                        pointerEvents="none"
+                        style={[styles.archTopFill, { height: archTopFillHeight }]}
                     />
-                    
-                    </View>
-
-                    {/* 進捗バー */}
-                    <View style={[
-                        styles.progressContainer,
-                    ]}>
-                    <ProgressDots 
-                        chapters={chapters}
-                        currentChapterIndex={currentChapterIndex}
-                        getChapterProgress={getChapterProgress}
-                    />
-                    </View>
-
-                </View>
-
-                <ScrollView 
-                    style={styles.scrollContainer}
-                    contentContainerStyle={styles.scrollContent}
-                    showsVerticalScrollIndicator={false}
+                )}
+                <Svg
+                    width={screenWidth}
+                    height={archDisplayHeight}
+                    viewBox={`0 0 ${ARCH_VIEWBOX.w} ${ARCH_VIEWBOX.h}`}
+                    preserveAspectRatio="xMidYMin meet"
+                    pointerEvents="none"
+                    style={[
+                        styles.archSvg,
+                        {
+                            width: screenWidth,
+                            height: archDisplayHeight,
+                            top: archTop,
+                        },
+                    ]}
                 >
-                    {/* 字幕エリア */}
-                    <View style={styles.subtitleContainer}>
-                        {(() => {
-                            const currentChapter = chapters[currentChapterIndex];
-                            const title = currentChapter.title ? getLocalizedText(currentChapter.title) : '';
-                            const subtitle = getLocalizedText(currentChapter.subtitle);
-                            
-                            return (
-                                <>
-                                    {title && (
-                                        <View style={styles.titleContainer}>
-                                            <Text 
-                                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                                style={styles.stepNumber}
-                                            >
-                                                Step {currentChapterIndex + 1}
-                                            </Text>
-                                            <Text 
-                                                maxFontSizeMultiplier={1.25}
-                                                style={styles.stepTitle}
-                                            >
-                                                {title}
-                                            </Text>
-                                        </View>
-                                    )}
-                                    {subtitle && (
-                                        <Text 
-                                            maxFontSizeMultiplier={isSmallScreen? 1.0 : 1.25}
-                                            style={styles.subtitleText}
-                                        >
-                                            {subtitle}
-                                        </Text>
-                                    )}
-                                </>
-                            );
-                        })()}
+                    <Path d={ARCH_PATH_D} fill={ARCH_FILL_COLOR} />
+                </Svg>
+
+                <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
+                    <View style={[styles.header, { paddingTop: headerPaddingTop }]}>
+                        <TouchableWithoutFeedback
+                            onPress={onGoBack}
+                            onPressIn={createPressInHandler(backButtonScale)}
+                            onPressOut={createPressOutHandler(backButtonScale)}
+                        >
+                            <Animated.View
+                                style={[
+                                    styles.backButton,
+                                    { transform: [{ scale: backButtonScale }] },
+                                ]}
+                            >
+                                <CloseIcon
+                                    width={28}
+                                    height={28}
+                                    fillColor="#FFFFFF"
+                                    strokeWidth={0}
+                                    strokeColor="#FFFFFF"
+                                />
+                            </Animated.View>
+                        </TouchableWithoutFeedback>
+                        <Text
+                            maxFontSizeMultiplier={1.35}
+                            style={[
+                                styles.title,
+                                {
+                                    fontSize: isTablet ? 22 : 18,
+                                    fontFamily:
+                                        currentLanguage === 'en'
+                                            ? 'KronaOne-Regular'
+                                            : 'LineSeed-Bold',
+                                    color: '#FFFFFF',
+                                },
+                            ]}
+                            numberOfLines={1}
+                        >
+                            {getLocalizedText({ ja: 'はじめに', en: 'Introduction' })}
+                        </Text>
                     </View>
 
-                    <View style={styles.voiceFallbackCard}>
-                        <View style={styles.voiceFallbackHeader}>
-                            <View style={styles.voiceFallbackDivider} />
-                            <Text 
-                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                style={styles.voiceFallbackHeaderText}
-                            >{getLocalizedText({ja: 'または', en: 'Or'})}</Text>
-                            <View style={styles.voiceFallbackDivider} />
+                    <ScrollView
+                        style={styles.scrollView}
+                        contentContainerStyle={styles.scrollContent}
+                        showsVerticalScrollIndicator={false}
+                        bounces={false}
+                    >
+                        <View
+                            style={[
+                                styles.introHero,
+                                { minHeight: Math.max(introHeroHeight, 0) },
+                            ]}
+                        >
+                            <View style={styles.keywordRow}>
+                                <Text
+                                    maxFontSizeMultiplier={1.15}
+                                    style={[
+                                        styles.keywordText,
+                                        {
+                                            fontSize: keywordFontSize,
+                                            fontFamily: keywordFontFamily,
+                                        },
+                                    ]}
+                                >
+                                    {getLocalizedText(INTRO_VOICE_TEXT.keyword)}
+                                </Text>
+                                {currentLanguage === 'ja' && (
+                                    <Text
+                                        maxFontSizeMultiplier={1.15}
+                                        style={[
+                                            styles.particleText,
+                                            {
+                                                fontSize: particleFontSize,
+                                                fontFamily: keywordFontFamily,
+                                            },
+                                        ]}
+                                    >
+                                        {INTRO_VOICE_TEXT.particle.ja}
+                                    </Text>
+                                )}
+                            </View>
+                            <Text
+                                maxFontSizeMultiplier={1.25}
+                                style={[
+                                    styles.instructionText,
+                                    {
+                                        fontSize: currentLanguage === 'ja' ? 22 : 20,
+                                        fontFamily: instructionFontFamily,
+                                    },
+                                ]}
+                            >
+                                {getLocalizedText(INTRO_VOICE_TEXT.instruction)}
+                            </Text>
                         </View>
 
-                        <View style={styles.voiceFallbackDescription}>
-                            <Text 
-                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                style={styles.voiceFallbackDescriptionText}
-                            >{getLocalizedText({ja: 'あなたの声に反応しないですか？', en: 'Is your voice not responding?'})}</Text>
-                            <Text 
-                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                style={styles.voiceFallbackDescriptionText}
-                            >{getLocalizedText({ja: 'このアプリは音声認識無しでも楽しむことができます', en: 'This app can be enjoyed without voice recognition'})}</Text>
+                        <View style={styles.illustrationContainer}>
+                            <Image
+                                source={INTRO_VOICE_ILLUSTRATION}
+                                style={{
+                                    width: illustrationWidth,
+                                    height: illustrationHeight,
+                                }}
+                                resizeMode="contain"
+                            />
                         </View>
 
-                        <TouchableOpacity activeOpacity={0.7} style={styles.voiceFallbackButton} onPress={onSkip}>
-                            <Text 
-                                maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                style={styles.voiceFallbackButtonText}
-                            >{getLocalizedText({ja: 'このまま次に進む', en: 'Skip to next'})}</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-                
-            </SafeAreaView>
+                        <View style={styles.voiceFallbackCard}>
+                            <View style={styles.voiceFallbackHeader}>
+                                <View style={styles.voiceFallbackDivider} />
+                                <Text
+                                    maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                    style={styles.voiceFallbackHeaderText}
+                                >
+                                    {getLocalizedText({ ja: 'または', en: 'Or' })}
+                                </Text>
+                                <View style={styles.voiceFallbackDivider} />
+                            </View>
+
+                            <View style={styles.voiceFallbackDescription}>
+                                <Text
+                                    maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                    style={styles.voiceFallbackDescriptionText}
+                                >
+                                    {getLocalizedText({
+                                        ja: 'あなたの声に反応しないですか？',
+                                        en: 'Is your voice not responding?',
+                                    })}
+                                </Text>
+                                <Text
+                                    maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                    style={styles.voiceFallbackDescriptionText}
+                                >
+                                    {getLocalizedText({
+                                        ja: 'このアプリは音声認識無しでも楽しむことができます',
+                                        en: 'This app can be enjoyed without voice recognition',
+                                    })}
+                                </Text>
+                            </View>
+
+                            <TouchableOpacity
+                                activeOpacity={0.7}
+                                style={styles.voiceFallbackButton}
+                                onPress={onSkip}
+                            >
+                                <Text
+                                    maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                    style={styles.voiceFallbackButtonText}
+                                >
+                                    {getLocalizedText({
+                                        ja: 'このまま次に進む',
+                                        en: 'Skip to next',
+                                    })}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+            </View>
             <Snackbar
                 visible={snackbarVisible}
                 onDismiss={() => setSnackbarVisible(false)}
@@ -368,12 +358,33 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             </Snackbar>
         </PaperProvider>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7F5F2',
+    },
+    safeArea: {
+        flex: 1,
+        zIndex: 1,
+        backgroundColor: 'transparent',
+    },
+    archTopFill: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: ARCH_FILL_COLOR,
+        zIndex: 0,
+        elevation: 0,
+    },
+    archSvg: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        zIndex: 1,
+        elevation: 1,
     },
     header: {
         flexDirection: 'row',
@@ -388,119 +399,49 @@ const styles = StyleSheet.create({
     },
     title: {
         flex: 1,
-        fontSize: 18,
         textAlign: 'center',
         marginHorizontal: 16,
     },
-    videoArea: {
-        paddingHorizontal: 16,
-        paddingTop: 16,
-    },
-    videoAreaTabletLandscape: {
-        paddingTop: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        height: 340,
-    },
-    videoPlayer: {
-        aspectRatio: 16 / 9,
-        backgroundColor: '#000',
-        borderRadius: 12,
-        overflow: 'hidden',
-    },
-    video: {
-        width: '100%',
-        height: '100%',
-    },
-    progressContainer: {
-        marginTop: 16,
-        paddingLeft: 16,
-    },
-    scrollContainer: {
+    scrollView: {
         flex: 1,
     },
     scrollContent: {
         flexGrow: 1,
     },
-    subtitleContainer: {
-        paddingHorizontal: 16,
-        paddingVertical: 24,
+    introHero: {
         justifyContent: 'center',
-        maxWidth: 560,
-        marginHorizontal: 'auto',
-    },
-    titleContainer: {
-        flexDirection: 'row',
         alignItems: 'center',
+        paddingHorizontal: 24,
+    },
+    keywordRow: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    },
+    keywordText: {
+        color: '#FFFFFF',
+        lineHeight: 72,
+        includeFontPadding: false,
+    },
+    particleText: {
+        color: '#FFFFFF',
+        marginLeft: 4,
         marginBottom: 10,
-        paddingBottom: 12,
+        lineHeight: 32,
+        includeFontPadding: false,
     },
-    stepNumber: {
-        fontFamily: 'Montserrat-SemiBold',
-        fontSize: 40,
-        color: '#292524',
-        lineHeight: 40,
-        marginRight: 12,
-    },
-    stepTitle: {
-        flex: 1,
-        fontSize: 18,
-        color: '#000',
-        fontWeight: '600',
-        lineHeight: 18,
-    },
-    subtitleText: {
-        fontFamily: 'LineSeed-Bold',
-        fontSize: 24,
-        color: '#57534d',
+    instructionText: {
+        color: '#FFFFFF',
+        textAlign: 'center',
+        marginTop: 8,
         lineHeight: 32,
         fontWeight: '600',
-        textAlign: 'center',
     },
-    controlsContainer: {
+    illustrationContainer: {
+        alignItems: 'center',
         paddingHorizontal: 24,
-        paddingBottom: 32,
-    },
-    controlButton: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        minWidth: 80,
-        paddingVertical: 12,
-        gap: 10,
-    },
-    buttonContainer: {
-        position: 'relative',
-        width: 48,
-        height: 48,
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 12,
-    },
-    floatingButton: {
-        width: 48,
-        height: 48,
-        borderRadius: 24,
-        backgroundColor: '#F7F5F2',
-        borderWidth: 2,
-        borderColor: '#57534D',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    balloon: {
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        borderRadius: 8,
-        position: 'relative',
-    },
-    balloonTopLeft: {
-        borderTopLeftRadius: 0,
-    },
-    controlButtonText: {
-        fontSize: 14,
-        color: '#555',
-        marginTop: 4,
-        fontWeight: '500',
+        paddingTop: 8,
+        paddingBottom: 16,
     },
     voiceFallbackCard: {
         marginHorizontal: 24,
@@ -552,4 +493,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default IntroVideoScreen;
+export default IntroVoiceScreen;

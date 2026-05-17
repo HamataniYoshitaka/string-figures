@@ -252,7 +252,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 styles.introHeroLine,
                                 {
                                     fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >
@@ -265,7 +265,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 styles.introHeroLineSecond,
                                 {
                                     fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >
@@ -296,7 +296,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 styles.introHeroLine,
                                 {
                                     fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >
@@ -309,7 +309,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 styles.introHeroLineSecond,
                                 {
                                     fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >
@@ -488,7 +488,6 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         textAlign: 'center',
         lineHeight: 34,
-        fontWeight: '600',
     },
     introHeroLineSecond: {
         marginTop: 4,
