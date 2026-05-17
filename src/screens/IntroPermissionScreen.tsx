@@ -18,14 +18,14 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ChevronRightIcon, CloseIcon } from '../components/icons';
 import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
-const INTRO_PAGE2_TEXT = {
-    line1: {
-        ja: '両手に糸がかかったままでも',
-        en: 'Even with string on your hands',
+const PERMISSION_DESCRIPTION = {
+    body: {
+        ja: '音声認識とマイクの使用確認画面が出ますので、どちらも許可して下さい',
+        en: "You'll be asked to allow speech recognition and microphone access. Please allow both.",
     },
-    line2: {
-        ja: '「声」で操作できます',
-        en: 'you can control it by voice',
+    footnote: {
+        ja: '※ 音声の保存・収集は一切行っておりません',
+        en: '※ We do not save or collect any audio.',
     },
 } as const;
 
@@ -68,13 +68,13 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
     const archTopFillHeight = Math.max(0, archTop);
     const headerContentHeight = isTablet ? 56 : 48;
     const bottomChromeEstimate = 88;
-    const page2TopSectionEstimate = 88;
+    const permissionTextEstimate = 100;
     const maxPhoneFrameHeight = Math.max(
         120,
         screenHeight
             - headerPaddingTop
             - headerContentHeight
-            - page2TopSectionEstimate
+            - permissionTextEstimate
             - bottomChromeEstimate
             - insets.bottom
             - PHONE_FRAME_SHADOW_OFFSET
@@ -214,34 +214,6 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                 </View>
 
                 <View style={styles.content}>
-                    <View style={styles.page2TopSection}>
-                        <Text
-                            maxFontSizeMultiplier={1.25}
-                            style={[
-                                styles.introHeroLine,
-                                {
-                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
-                                },
-                            ]}
-                        >
-                            {getLocalizedText(INTRO_PAGE2_TEXT.line1)}
-                        </Text>
-                        <Text
-                            maxFontSizeMultiplier={1.25}
-                            style={[
-                                styles.introHeroLine,
-                                styles.introHeroLineSecond,
-                                {
-                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
-                                },
-                            ]}
-                        >
-                            {getLocalizedText(INTRO_PAGE2_TEXT.line2)}
-                        </Text>
-                    </View>
-
                     <View style={styles.phoneFrameContainer}>
                         <View
                             style={{
@@ -272,6 +244,33 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                                 ]}
                             />
                         </View>
+                    </View>
+
+                    <View style={styles.permissionTextSection}>
+                        <Text
+                            maxFontSizeMultiplier={1.25}
+                            style={[
+                                styles.permissionText,
+                                {
+                                    fontSize: currentLanguage === 'ja' ? 16 : 15,
+                                    fontFamily: currentLanguage === 'en' ? 'Roboto' : 'LineSeed-Regular',
+                                },
+                            ]}
+                        >
+                            {getLocalizedText(PERMISSION_DESCRIPTION.body)}
+                        </Text>
+                        <Text
+                            maxFontSizeMultiplier={1.25}
+                            style={[
+                                styles.permissionFootnote,
+                                {
+                                    fontSize: currentLanguage === 'ja' ? 14 : 13,
+                                    fontFamily: currentLanguage === 'en' ? 'Roboto' : 'LineSeed-Regular',
+                                },
+                            ]}
+                        >
+                            {getLocalizedText(PERMISSION_DESCRIPTION.footnote)}
+                        </Text>
                     </View>
                 </View>
 
@@ -332,7 +331,7 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                                                 ]}
                                                 numberOfLines={2}
                                             >
-                                                {getLocalizedText({ ja: '音声認識について', en: 'About voice recognition' })}
+                                                {getLocalizedText({ ja: 'マイクの利用許可', en: 'Microphone access' })}
                                             </Text>
                                         </View>
                                         <ChevronRightIcon
@@ -398,26 +397,28 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
     },
-    introHeroLine: {
-        color: '#FFFFFF',
-        textAlign: 'center',
-        lineHeight: 34,
-        fontWeight: '600',
-    },
-    introHeroLineSecond: {
-        marginTop: 4,
-    },
-    page2TopSection: {
-        paddingTop: 8,
-        paddingHorizontal: 24,
-        alignItems: 'center',
-    },
     phoneFrameContainer: {
-        flex: 1,
         alignItems: 'center',
         paddingTop: 20,
         paddingHorizontal: 24,
-        paddingBottom: 16,
+    },
+    permissionTextSection: {
+        paddingHorizontal: 24,
+        paddingTop: 20,
+        paddingBottom: 8,
+        alignItems: 'center',
+    },
+    permissionText: {
+        color: '#292524',
+        textAlign: 'center',
+        lineHeight: 24,
+        fontWeight: '600',
+    },
+    permissionFootnote: {
+        color: '#292524',
+        textAlign: 'center',
+        lineHeight: 20,
+        marginTop: 12,
     },
     phoneFrameHardShadow: {
         position: 'absolute',
