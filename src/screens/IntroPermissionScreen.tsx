@@ -1,25 +1,22 @@
 import React, { useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Image, Platform, Dimensions, StatusBar } from 'react-native';
+import {
+    View,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    Animated,
+    Text,
+    Platform,
+    Dimensions,
+    StatusBar,
+} from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import PagerView from 'react-native-pager-view';
 import { ChevronRightIcon, CloseIcon } from '../components/icons';
-import ProgressDots from '../components/ProgressDots';
-
-const INTRO_HERO_TEXT = {
-    line1: {
-        ja: '世界中のあやとり',
-        en: 'String figures from around the world',
-    },
-    line2: {
-        ja: 'を紹介します',
-        en: '— introduced here',
-    },
-} as const;
+import { ExpoSpeechRecognitionModule } from 'expo-speech-recognition';
 
 const INTRO_PAGE2_TEXT = {
     line1: {
@@ -32,45 +29,34 @@ const INTRO_PAGE2_TEXT = {
     },
 } as const;
 
-type IntroVideoScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'IntroVideo'
+type IntroPermissionScreenNavigationProp = StackNavigationProp<
+    RootStackParamList,
+    'IntroPermission'
 >;
-type IntroVideoScreenRouteProp = RouteProp<RootStackParamList, 'IntroVideo'>;
+type IntroPermissionScreenRouteProp = RouteProp<RootStackParamList, 'IntroPermission'>;
 
 interface Props {
-  navigation: IntroVideoScreenNavigationProp;
-  route: IntroVideoScreenRouteProp;
+    navigation: IntroPermissionScreenNavigationProp;
+    route: IntroPermissionScreenRouteProp;
 }
 
 /** Figma 準拠のアーチ装飾（viewBox 428×345） */
 const ARCH_VIEWBOX = { w: 428, h: 345 };
 const ARCH_PATH_D =
-  'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
+    'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
 const ARCH_FILL_COLOR = '#FF623F';
 const NEXT_STEP_BUTTON_COLOR = '#FF623F';
 const NEXT_STEP_BUTTON_SHADOW_OFFSET = 4;
 const PHONE_FRAME_SHADOW_OFFSET = 4;
 const PHONE_FRAME_SHADOW_COLOR = '#292524';
-const INTRO_ILLUSTRATION = require('../../assets/introduction/01.png');
-const introIllustrationSource = Image.resolveAssetSource(INTRO_ILLUSTRATION);
-const INTRO_ILLUSTRATION_ASPECT =
-    introIllustrationSource.width / introIllustrationSource.height;
 
-const chapters = [
-    { subtitle: { ja: '', en: '' } },
-    { subtitle: { ja: '', en: '' } },
-];
-
-const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
+const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
-    const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
-    // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
     const nextStepButtonPressAnim = useRef(new Animated.Value(0)).current;
     const [nextStepButtonLayout, setNextStepButtonLayout] = useState({ width: 0, height: 0 });
-    
+
     const { isTablet } = useDeviceInfo();
     const insets = useSafeAreaInsets();
 
@@ -78,16 +64,10 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const headerPaddingTop =
         insets.top + (isTablet ? 16 : Platform.OS === 'android' ? 12 : 8);
     const archDisplayHeight = screenWidth * (ARCH_VIEWBOX.h / ARCH_VIEWBOX.w);
-    /** アーチ下端（viewBox 底辺）を画面垂直中央に合わせる */
     const archTop = screenHeight / 2 - archDisplayHeight;
-    /** SVG 上端より上だけ埋める（画面半分だとアーチ曲線が同色で見えなくなる） */
     const archTopFillHeight = Math.max(0, archTop);
     const headerContentHeight = isTablet ? 56 : 48;
-    const introHeroHeight =
-        screenHeight / 2 - headerPaddingTop - headerContentHeight;
-    const illustrationWidth = Math.min(screenWidth * 0.58, isTablet ? 360 : 280);
-    const illustrationHeight = illustrationWidth / INTRO_ILLUSTRATION_ASPECT;
-    const bottomChromeEstimate = 152;
+    const bottomChromeEstimate = 88;
     const page2TopSectionEstimate = 88;
     const maxPhoneFrameHeight = Math.max(
         120,
@@ -107,8 +87,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         phoneFrameWidth = phoneFrameHeight * (9 / 19);
     }
     const phoneFrameBorderRadius = phoneFrameWidth * 0.14;
-    
-    // アニメーションヘルパー関数
+
     const createPressInHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {
             toValue: 0.95,
@@ -149,29 +128,30 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         outputRange: [0, NEXT_STEP_BUTTON_SHADOW_OFFSET],
     });
 
-    const onGoBack = async () => {
-        console.log('onGoBack');
+    const onGoBack = () => {
         navigation.goBack();
     };
 
-    // 多言語対応のヘルパー関数
     const getLocalizedText = (textObj: { ja: string; en: string }) => {
         return textObj[currentLanguage];
     };
 
-    const getChapterProgress = (chapterIndex: number) => {
-        return chapterIndex < currentPageIndex ? 1 : 0;
+    const onNextStep = async () => {
+        try {
+            const { granted } = await ExpoSpeechRecognitionModule.requestPermissionsAsync();
+
+            if (!granted) {
+                navigation.replace('IntroError');
+                return;
+            }
+
+            navigation.replace('IntroVoice', { currentLanguage });
+        } catch (error) {
+            console.error('音声認識の許可リクエストエラー:', error);
+        }
     };
 
-    const handlePageSelected = (position: number) => {
-        setCurrentPageIndex(position);
-    };
-
-    const onNextChapter = () => {
-        navigation.navigate('IntroPermission', { currentLanguage });
-    };
-
-    return (    
+    return (
         <View style={styles.container}>
             <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
             {archTopFillHeight > 0 && (
@@ -202,93 +182,38 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             </Svg>
 
             <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
-            <View style={[styles.header, { paddingTop: headerPaddingTop }]}>
-                <TouchableWithoutFeedback 
-                    onPress={onGoBack}
-                    onPressIn={createPressInHandler(backButtonScale)}
-                    onPressOut={createPressOutHandler(backButtonScale)}
-                >
-                    <Animated.View 
-                    style={[
-                        styles.backButton,
-                        { transform: [{ scale: backButtonScale }] }
-                    ]}
+                <View style={[styles.header, { paddingTop: headerPaddingTop }]}>
+                    <TouchableWithoutFeedback
+                        onPress={onGoBack}
+                        onPressIn={createPressInHandler(backButtonScale)}
+                        onPressOut={createPressOutHandler(backButtonScale)}
                     >
-                    <CloseIcon width={28} height={28} fillColor="#FFFFFF" strokeWidth={0} strokeColor="#FFFFFF" />
-                    </Animated.View>
-                </TouchableWithoutFeedback>
-                <Text 
-                    maxFontSizeMultiplier={1.35}
-                    style={[
-                        styles.title, 
-                        { 
-                            fontSize: isTablet ? 22 : 18,
-                            fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
-                            color: '#FFFFFF',
-                        }
-                    ]} numberOfLines={1}
-                >
-                    {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
-                </Text>
-            </View>
-
-            <PagerView
-                style={styles.pagerView}
-                initialPage={0}
-                scrollEnabled
-                overdrag={false}
-                onPageSelected={(event) => handlePageSelected(event.nativeEvent.position)}
-            >
-                <View key="intro-page-1" style={styles.pagerPage} collapsable={false}>
-                    <View
+                        <Animated.View
+                            style={[
+                                styles.backButton,
+                                { transform: [{ scale: backButtonScale }] },
+                            ]}
+                        >
+                            <CloseIcon width={28} height={28} fillColor="#FFFFFF" strokeWidth={0} strokeColor="#FFFFFF" />
+                        </Animated.View>
+                    </TouchableWithoutFeedback>
+                    <Text
+                        maxFontSizeMultiplier={1.35}
                         style={[
-                            styles.introHero,
-                            { height: Math.max(introHeroHeight, 0) },
+                            styles.title,
+                            {
+                                fontSize: isTablet ? 22 : 18,
+                                fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                                color: '#FFFFFF',
+                            },
                         ]}
+                        numberOfLines={1}
                     >
-                        <Text
-                            maxFontSizeMultiplier={1.25}
-                            style={[
-                                styles.introHeroLine,
-                                {
-                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
-                                },
-                            ]}
-                        >
-                            {getLocalizedText(INTRO_HERO_TEXT.line1)}
-                        </Text>
-                        <Text
-                            maxFontSizeMultiplier={1.25}
-                            style={[
-                                styles.introHeroLine,
-                                styles.introHeroLineSecond,
-                                {
-                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
-                                },
-                            ]}
-                        >
-                            {getLocalizedText(INTRO_HERO_TEXT.line2)}
-                        </Text>
-                    </View>
-
-                    <View style={styles.illustrationContainer}>
-                        <Image
-                            source={INTRO_ILLUSTRATION}
-                            style={[
-                                styles.illustrationImage,
-                                {
-                                    width: illustrationWidth,
-                                    height: illustrationHeight,
-                                },
-                            ]}
-                            resizeMode="contain"
-                        />
-                    </View>
+                        {getLocalizedText({ ja: 'はじめに', en: 'Introduction' })}
+                    </Text>
                 </View>
 
-                <View key="intro-page-2" style={styles.pagerPage} collapsable={false}>
+                <View style={styles.content}>
                     <View style={styles.page2TopSection}>
                         <Text
                             maxFontSizeMultiplier={1.25}
@@ -349,93 +274,84 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                         </View>
                     </View>
                 </View>
-            </PagerView>
 
-            <View style={styles.bottomChrome}>
-                <View style={styles.progressContainer}>
-                    <ProgressDots
-                        chapters={chapters}
-                        currentChapterIndex={currentPageIndex}
-                        getChapterProgress={getChapterProgress}
-                    />
-                </View>
-
-                <View style={styles.controlsContainer}>
-                    <TouchableWithoutFeedback 
-                        onPress={onNextChapter}
-                        onPressIn={handleNextStepPressIn}
-                        onPressOut={handleNextStepPressOut}
-                    >
-                        <View style={styles.nextStepButtonWrapper}>
-                            <View style={styles.nextStepButtonContainer}>
-                                {nextStepButtonLayout.width > 0 && (
-                                    <View
+                <View style={styles.bottomChrome}>
+                    <View style={styles.controlsContainer}>
+                        <TouchableWithoutFeedback
+                            onPress={onNextStep}
+                            onPressIn={handleNextStepPressIn}
+                            onPressOut={handleNextStepPressOut}
+                        >
+                            <View style={styles.nextStepButtonWrapper}>
+                                <View style={styles.nextStepButtonContainer}>
+                                    {nextStepButtonLayout.width > 0 && (
+                                        <View
+                                            style={[
+                                                styles.nextStepButtonShadow,
+                                                {
+                                                    width: nextStepButtonLayout.width,
+                                                    height: nextStepButtonLayout.height,
+                                                },
+                                            ]}
+                                        />
+                                    )}
+                                    <Animated.View
                                         style={[
-                                            styles.nextStepButtonShadow,
+                                            styles.nextStepButton,
                                             {
-                                                width: nextStepButtonLayout.width,
-                                                height: nextStepButtonLayout.height,
+                                                transform: [
+                                                    { translateX: nextStepPressTranslate },
+                                                    { translateY: nextStepPressTranslate },
+                                                ],
                                             },
                                         ]}
-                                    />
-                                )}
-                                <Animated.View
-                                    style={[
-                                        styles.nextStepButton,
-                                        {
-                                            transform: [
-                                                { translateX: nextStepPressTranslate },
-                                                { translateY: nextStepPressTranslate },
-                                            ],
-                                        },
-                                    ]}
-                                    onLayout={(event) => {
-                                        const { width, height } = event.nativeEvent.layout;
-                                        setNextStepButtonLayout((prev) =>
-                                            prev.width === width && prev.height === height
-                                                ? prev
-                                                : { width, height },
-                                        );
-                                    }}
-                                >
-                                    <Text 
-                                        maxFontSizeMultiplier={1.25}
-                                        style={[
-                                            styles.nextStepLabel,
-                                            { fontSize: currentLanguage === 'ja' ? 24 : 22 }
-                                        ]}
+                                        onLayout={(event) => {
+                                            const { width, height } = event.nativeEvent.layout;
+                                            setNextStepButtonLayout((prev) =>
+                                                prev.width === width && prev.height === height
+                                                    ? prev
+                                                    : { width, height },
+                                            );
+                                        }}
                                     >
-                                        Next Step
-                                    </Text>
-                                    <View style={styles.nextStepTitleContainer}>
-                                        <Text 
+                                        <Text
                                             maxFontSizeMultiplier={1.25}
                                             style={[
-                                                styles.nextStepTitle,
-                                                { fontSize: currentLanguage === 'ja' ? 15 : 14 }
+                                                styles.nextStepLabel,
+                                                { fontSize: currentLanguage === 'ja' ? 24 : 22 },
                                             ]}
-                                            numberOfLines={2}
                                         >
-                                            {getLocalizedText({ ja: '音声認識について', en: 'About voice recognition' })}
+                                            Next Step
                                         </Text>
-                                    </View>
-                                    <ChevronRightIcon
-                                        width={27}
-                                        height={27}
-                                        fillColor="#FFFFFF"
-                                        strokeColor="#FFFFFF"
-                                        strokeWidth={0}
-                                    />
-                                </Animated.View>
+                                        <View style={styles.nextStepTitleContainer}>
+                                            <Text
+                                                maxFontSizeMultiplier={1.25}
+                                                style={[
+                                                    styles.nextStepTitle,
+                                                    { fontSize: currentLanguage === 'ja' ? 15 : 14 },
+                                                ]}
+                                                numberOfLines={2}
+                                            >
+                                                {getLocalizedText({ ja: '音声認識について', en: 'About voice recognition' })}
+                                            </Text>
+                                        </View>
+                                        <ChevronRightIcon
+                                            width={27}
+                                            height={27}
+                                            fillColor="#FFFFFF"
+                                            strokeColor="#FFFFFF"
+                                            strokeWidth={0}
+                                        />
+                                    </Animated.View>
+                                </View>
                             </View>
-                        </View>
-                    </TouchableWithoutFeedback>
+                        </TouchableWithoutFeedback>
+                    </View>
                 </View>
-            </View>
             </SafeAreaView>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -479,10 +395,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginHorizontal: 16,
     },
-    introHero: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 24,
+    content: {
+        flex: 1,
     },
     introHeroLine: {
         color: '#FFFFFF',
@@ -518,32 +432,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         overflow: 'hidden',
     },
-    pagerView: {
-        flex: 1,
-    },
-    pagerPage: {
-        flex: 1,
-    },
     bottomChrome: {
         maxWidth: 500,
         width: '100%',
         marginHorizontal: 'auto',
-    },
-    progressContainer: {
-        marginTop: 16,
-        paddingLeft: 16,
-    },
-    illustrationContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingHorizontal: 24,
-        paddingTop: 8,
-        paddingBottom: 16,
-    },
-    illustrationImage: {
-        backgroundColor: 'transparent',
-        mixBlendMode: 'multiply',
     },
     controlsContainer: {
         paddingHorizontal: 16,
@@ -595,7 +487,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: '600',
     },
-
 });
 
-export default IntroVideoScreen;
+export default IntroPermissionScreen;

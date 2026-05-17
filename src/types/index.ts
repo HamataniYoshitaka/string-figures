@@ -41,6 +41,7 @@ export interface DropdownMenuState {
 export type RootStackParamList = {
   Intro: undefined;
   IntroVideo: { currentLanguage: 'ja' | 'en' };
+  IntroPermission: { currentLanguage: 'ja' | 'en' };
   IntroVoice: { currentLanguage: 'ja' | 'en' };
   IntroComplete: undefined;
   IntroError: undefined;

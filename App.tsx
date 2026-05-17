@@ -16,6 +16,7 @@ import { registerPushTokenIfGranted } from './src/utils/pushNotifications';
 import * as Localization from 'expo-localization';
 import IntroScreen from './src/screens/IntroScreen';
 import IntroVideoScreen from './src/screens/IntroVideoScreen';
+import IntroPermissionScreen from './src/screens/IntroPermissionScreen';
 import IntroVoiceScreen from './src/screens/IntroVoiceScreen';
 import IntroErrorScreen from './src/screens/IntroErrorScreen';  
 import HomeScreen from './src/screens/HomeScreen';
@@ -104,6 +105,7 @@ export default function App() {
           >
             <Stack.Screen name="Intro" component={IntroScreen} />
             <Stack.Screen name="IntroVideo" component={IntroVideoScreen} />
+            <Stack.Screen name="IntroPermission" component={IntroPermissionScreen} />
             <Stack.Screen name="IntroVoice" component={IntroVoiceScreen} />
             <Stack.Screen name="IntroComplete" component={IntroCompleteScreen} />
             <Stack.Screen name="IntroError" component={IntroErrorScreen} />
