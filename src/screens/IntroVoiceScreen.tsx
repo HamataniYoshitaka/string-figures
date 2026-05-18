@@ -42,7 +42,7 @@ const ARCH_FILL_COLOR = '#FF623F';
 /** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
 const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
 
-const INTRO_VOICE_ILLUSTRATION = require('../../assets/introduction/02.png');
+const INTRO_VOICE_ILLUSTRATION = require('../../assets/introduction/02.webp');
 const introVoiceIllustrationSource = Image.resolveAssetSource(INTRO_VOICE_ILLUSTRATION);
 const INTRO_VOICE_ILLUSTRATION_ASPECT =
     introVoiceIllustrationSource.width / introVoiceIllustrationSource.height;
@@ -95,8 +95,20 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
     const archTop = screenHeight / 2 - archDisplayHeight;
     const archTopFillHeight = Math.max(0, archTop);
     const headerContentHeight = isTablet ? 56 : 48;
-    const introHeroHeight =
-        screenHeight / 2 - headerPaddingTop - headerContentHeight;
+    const headerTotalHeight = headerPaddingTop + headerContentHeight + 16;
+    const INTRO_HERO_KEYWORD_LINE_HEIGHT = 72;
+    const INTRO_HERO_INSTRUCTION_MARGIN_TOP = 8;
+    const INTRO_HERO_INSTRUCTION_LINE_HEIGHT = 32;
+    const introHeroTextBlockHeight =
+        INTRO_HERO_KEYWORD_LINE_HEIGHT +
+        INTRO_HERO_INSTRUCTION_MARGIN_TOP +
+        INTRO_HERO_INSTRUCTION_LINE_HEIGHT;
+    const introHeroTextBlockHalfHeight = introHeroTextBlockHeight / 2;
+    /** 画面上半分の中央（25vh）にヒーロー文の中心を合わせる */
+    const introHeroTop =
+        screenHeight * 0.25 - headerTotalHeight - introHeroTextBlockHalfHeight;
+    const scrollContentPaddingTop =
+        Math.max(introHeroTop, 0) + introHeroTextBlockHeight + 8;
     const illustrationWidth = Math.min(screenWidth * 0.72, isTablet ? 360 : 300);
     const illustrationHeight = illustrationWidth / INTRO_VOICE_ILLUSTRATION_ASPECT;
     const keywordFontSize = isTablet ? 72 : currentLanguage === 'ja' ? 64 : 56;
@@ -239,16 +251,11 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
                         />
                     </View>
 
-                    <ScrollView
-                        style={styles.scrollView}
-                        contentContainerStyle={styles.scrollContent}
-                        showsVerticalScrollIndicator={false}
-                        bounces={false}
-                    >
+                    <View style={styles.mainContent}>
                         <View
                             style={[
                                 styles.introHero,
-                                { minHeight: Math.max(introHeroHeight, 0) },
+                                { top: Math.max(introHeroTop, 0) },
                             ]}
                         >
                             <View style={styles.keywordRow}>
@@ -293,67 +300,77 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
                             </Text>
                         </View>
 
-                        <View style={styles.illustrationContainer}>
-                            <Image
-                                source={INTRO_VOICE_ILLUSTRATION}
-                                style={{
-                                    width: illustrationWidth,
-                                    height: illustrationHeight,
-                                }}
-                                resizeMode="contain"
-                            />
-                        </View>
-
-                        <View style={styles.voiceFallbackCard}>
-                            <View style={styles.voiceFallbackHeader}>
-                                <View style={styles.voiceFallbackDivider} />
-                                <Text
-                                    maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                    style={styles.voiceFallbackHeaderText}
-                                >
-                                    {getLocalizedText({ ja: 'または', en: 'Or' })}
-                                </Text>
-                                <View style={styles.voiceFallbackDivider} />
+                        <ScrollView
+                            style={styles.scrollView}
+                            contentContainerStyle={[
+                                styles.scrollContent,
+                                { paddingTop: scrollContentPaddingTop },
+                            ]}
+                            showsVerticalScrollIndicator={false}
+                            bounces={false}
+                        >
+                            <View style={styles.illustrationContainer}>
+                                <Image
+                                    source={INTRO_VOICE_ILLUSTRATION}
+                                    style={{
+                                        width: illustrationWidth,
+                                        height: illustrationHeight,
+                                    }}
+                                    resizeMode="contain"
+                                />
                             </View>
 
-                            <View style={styles.voiceFallbackDescription}>
-                                <Text
-                                    maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                    style={styles.voiceFallbackDescriptionText}
-                                >
-                                    {getLocalizedText({
-                                        ja: 'あなたの声に反応しないですか？',
-                                        en: 'Is your voice not responding?',
-                                    })}
-                                </Text>
-                                <Text
-                                    maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                    style={styles.voiceFallbackDescriptionText}
-                                >
-                                    {getLocalizedText({
-                                        ja: 'このアプリは音声認識無しでも楽しむことができます',
-                                        en: 'This app can be enjoyed without voice recognition',
-                                    })}
-                                </Text>
-                            </View>
+                            <View style={styles.voiceFallbackCard}>
+                                <View style={styles.voiceFallbackHeader}>
+                                    <View style={styles.voiceFallbackDivider} />
+                                    <Text
+                                        maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                        style={styles.voiceFallbackHeaderText}
+                                    >
+                                        {getLocalizedText({ ja: 'または', en: 'Or' })}
+                                    </Text>
+                                    <View style={styles.voiceFallbackDivider} />
+                                </View>
 
-                            <TouchableOpacity
-                                activeOpacity={0.7}
-                                style={styles.voiceFallbackButton}
-                                onPress={onSkip}
-                            >
-                                <Text
-                                    maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
-                                    style={styles.voiceFallbackButtonText}
+                                <View style={styles.voiceFallbackDescription}>
+                                    <Text
+                                        maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                        style={styles.voiceFallbackDescriptionText}
+                                    >
+                                        {getLocalizedText({
+                                            ja: 'あなたの声に反応しないですか？',
+                                            en: 'Is your voice not responding?',
+                                        })}
+                                    </Text>
+                                    <Text
+                                        maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                        style={styles.voiceFallbackDescriptionText}
+                                    >
+                                        {getLocalizedText({
+                                            ja: 'このアプリは音声認識無しでも楽しむことができます',
+                                            en: 'This app can be enjoyed without voice recognition',
+                                        })}
+                                    </Text>
+                                </View>
+
+                                <TouchableOpacity
+                                    activeOpacity={0.7}
+                                    style={styles.voiceFallbackButton}
+                                    onPress={onSkip}
                                 >
-                                    {getLocalizedText({
-                                        ja: 'このまま次に進む',
-                                        en: 'Skip to next',
-                                    })}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
+                                    <Text
+                                        maxFontSizeMultiplier={isSmallScreen ? 1.0 : 1.25}
+                                        style={styles.voiceFallbackButtonText}
+                                    >
+                                        {getLocalizedText({
+                                            ja: 'このまま次に進む',
+                                            en: 'Skip to next',
+                                        })}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </View>
                 </SafeAreaView>
             </View>
             <Snackbar
@@ -412,6 +429,10 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
     },
+    mainContent: {
+        flex: 1,
+        position: 'relative',
+    },
     scrollView: {
         flex: 1,
     },
@@ -419,9 +440,12 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
     introHero: {
-        justifyContent: 'center',
+        position: 'absolute',
+        left: 0,
+        right: 0,
         alignItems: 'center',
         paddingHorizontal: 24,
+        zIndex: 1,
     },
     keywordRow: {
         flexDirection: 'row',
@@ -450,8 +474,8 @@ const styles = StyleSheet.create({
     illustrationContainer: {
         alignItems: 'center',
         paddingHorizontal: 24,
-        paddingTop: 8,
-        paddingBottom: 16,
+        paddingTop: 36,
+        paddingBottom: 36,
     },
     voiceFallbackCard: {
         marginHorizontal: 24,

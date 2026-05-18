@@ -53,7 +53,7 @@ const PHONE_FRAME_SHADOW_OFFSET = 4;
 /** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
 const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
 const PHONE_FRAME_SHADOW_COLOR = '#292524';
-const INTRO_ILLUSTRATION = require('../../assets/introduction/01.png');
+const INTRO_ILLUSTRATION = require('../../assets/introduction/01.webp');
 const introIllustrationSource = Image.resolveAssetSource(INTRO_ILLUSTRATION);
 const INTRO_ILLUSTRATION_ASPECT =
     introIllustrationSource.width / introIllustrationSource.height;
@@ -63,9 +63,9 @@ const chapters = [
     { subtitle: { ja: '', en: '' } },
 ];
 
-const AUTO_SCROLL_TO_P2_DELAY_MS = 3500;
+const AUTO_SCROLL_TO_P2_DELAY_MS = 4000;
 const AUTO_SCROLL_TO_P2_DURATION_MS = 600;
-const NEXT_STEP_BUTTON_REVEAL_DELAY_MS = 8500;
+const NEXT_STEP_BUTTON_REVEAL_DELAY_MS = 9000;
 const PAGE_INDEX_P2 = 1;
 
 const easeInOut = (t: number) =>
@@ -140,7 +140,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         screenHeight * 0.25 - headerTotalHeight - introHeroTextBlockHalfHeight;
     const bottomChromeEstimate = 152;
     const bottomChromeTotalHeight = bottomChromeEstimate + insets.bottom;
-    const illustrationWidth = Math.min(screenWidth * 0.58, isTablet ? 360 : 280);
+    const illustrationWidth = Math.min(screenWidth * 0.68, isTablet ? 360 : 280);
     const illustrationHeight = illustrationWidth / INTRO_ILLUSTRATION_ASPECT;
     /** ProgressDots・ボタンを除いた画面下半分の中央（75vh − bottomChrome/2）にイラスト中心を合わせる */
     const illustrationCenterY =

@@ -2007,7 +2007,7 @@ export const stringFigures: StringFigure[] = [
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',
     directory: '0_introduction',
-    thumbnail: require('../../assets/string-figures/0_introduction/thumbnail.jpg'),
+    thumbnail: require('../../assets/string-figures/0_introduction/thumbnail.webp'),
     patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
     description: { ja: 'このアプリの操作方法の紹介です', en: 'Introduction to the operation of this app.' },
