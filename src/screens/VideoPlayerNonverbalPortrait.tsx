@@ -55,9 +55,6 @@ const NONVERBAL_SECONDARY_PLAY_START_MS =
 /** 縦並び2枚のあいだ（フィルムストリップ行間の固定 16pt と揃える） */
 const NONVERBAL_STILL_VERTICAL_GAP = 16;
 
-/** Close ボタン下端から Landscape ボタン上端までの距離 */
-const LANDSCAPE_BUTTON_GAP_BELOW_CLOSE_PT = 80;
-
 /** 動画レイヤーの不透明度 0↔1 のフェード時間（前半終了〜0、1.2s〜1 のフェードに使用） */
 const NONVERBAL_VIDEO_LAYER_OPACITY_MS = 300;
 
@@ -309,15 +306,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   const insets = useSafeAreaInsets();
   const { width: windowWidth, height: windowHeight } = useWindowDimensions();
 
-  /** Close（backButton）下端 + 60pt。SafeAreaView 内の absolute 座標 */
-  const landscapeButtonTop = useMemo(() => {
-    const containerPaddingTop = Platform.OS === 'android' ? 16 : 0;
-    const headerPaddingTop = 8;
-    const closeButtonHeight = 8 + 28; // backButton paddingVertical + CloseIcon
-    return (
-      containerPaddingTop + headerPaddingTop + closeButtonHeight + LANDSCAPE_BUTTON_GAP_BELOW_CLOSE_PT
-    );
-  }, []);
+  const containerPaddingTop = Platform.OS === 'android' ? 16 : 0;
 
   /**
    * 動画と同じく videoArea の左右パディング + videoRow の VIDEO_ROW_PADDING を反映した内側幅。
@@ -334,6 +323,13 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   const visibleFourStripRowsHeight =
     4 * stillCardHeight + 3 * NONVERBAL_STILL_VERTICAL_GAP;
   const stripCenteringOffset = windowHeight / 2 - visibleFourStripRowsHeight / 2;
+  /** 可視4行の上段（leadingPreview 行）静止画枠の画面座標。ストリップ index 0 は空行 */
+  const topStillFrameTopFromScreenTop = stripCenteringOffset + stripRowSlotHeight;
+  const topStillFrameLeftFromScreenLeft = (windowWidth - videoContentWidth) / 2;
+  /** SafeAreaView 内 absolute 用（ストリップは画面 top:0、ボタンは SafeArea 内） */
+  const landscapeButtonTop =
+    topStillFrameTopFromScreenTop - insets.top - containerPaddingTop + 20;
+  const landscapeButtonLeft = topStillFrameLeftFromScreenLeft;
   /** 動画上端: 画面中央 + 8pt（端末共通。親は画面いっぱいの Animated.View） */
   const videoTopFromScreenTop = windowHeight / 2 + 8;
 
@@ -721,7 +717,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
               <Animated.View
                 style={[
                   styles.landscapeButtonPlaceholder,
-                  { top: landscapeButtonTop },
+                  { top: landscapeButtonTop, left: landscapeButtonLeft },
                   { transform: [{ scale: landscapeButtonScale }] },
                 ]}
               >
@@ -901,7 +897,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
             <Animated.View
               style={[
                 styles.landscapeButtonPlaceholder,
-                { top: landscapeButtonTop },
+                { top: landscapeButtonTop, left: landscapeButtonLeft },
                 { transform: [{ scale: landscapeButtonScale }] },
               ]}
             >
@@ -1043,10 +1039,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
   },
-  /** Close 直下（top は landscapeButtonTop で Close 下端 + 60pt）。スマホのみ */
+  /** 静止画ストリップ上段枠の左上（top/left は landscapeButtonTop/Left）。スマホのみ */
   landscapeButtonPlaceholder: {
     position: 'absolute',
-    left: 12,
     padding: 8,
     borderRadius: 20,
     zIndex: 3,
