@@ -25,6 +25,7 @@ import NonverbalVideoPlayerScreen from './src/screens/NonverbalVideoPlayerScreen
 import IntroCompleteScreen from './src/screens/IntroCompleteScreen';
 import AdditionalScreen from './src/screens/AdditionalScreen';
 import PolicyScreen from './src/screens/PolicyScreen';
+import SwitchingExplanationVideoScreen from './src/screens/SwitchingExplanationVideoScreen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -124,6 +125,10 @@ export default function App() {
             />
             <Stack.Screen name="Additional" component={AdditionalScreen} />
             <Stack.Screen name="Policy" component={PolicyScreen} />
+            <Stack.Screen
+              name="SwitchingExplanationVideo"
+              component={SwitchingExplanationVideoScreen}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </BottomSheetModalProvider>

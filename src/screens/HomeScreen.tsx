@@ -527,6 +527,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       if (item.directNavigationDestination === 'Intro') {
         navigation.navigate('IntroVideo', { currentLanguage: currentLanguage });
       }
+      if (item.directNavigationDestination === 'SwitchingExplanationVideo') {
+        navigation.navigate('SwitchingExplanationVideo');
+      }
       return;
     }
     setSelectedItem(item);

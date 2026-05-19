@@ -50,4 +50,5 @@ export type RootStackParamList = {
   NonverbalVideoPlayer: { stringFigure: StringFigure; currentLanguage: 'ja' | 'en' };
   Additional: undefined;  
   Policy: undefined;
+  SwitchingExplanationVideo: undefined;
 };
