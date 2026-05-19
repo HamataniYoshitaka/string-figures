@@ -89,17 +89,27 @@ const DetailBottomSheetNonverbalHero: React.FC<DetailBottomSheetNonverbalHeroPro
             </Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity
-            style={styles.playButton}
-            onPress={onPlayPress}
-          >
-            <Text style={styles.playButtonText} maxFontSizeMultiplier={1.2}>
-              PLAY
-            </Text>
-            <View style={styles.playButtonIcon}>
-              <PlayIcon width={16} height={18} strokeWidth={1.5} strokeColor="#FFFFFF" fillColor="#FFFFFF" />
-            </View>
-          </TouchableOpacity>
+          <View style={styles.playButtonContainer}>
+            <View style={styles.playButtonShadow} />
+            <TouchableOpacity
+              style={styles.playButton}
+              onPress={onPlayPress}
+              activeOpacity={1}
+            >
+              <Text
+                style={[
+                  styles.playButtonText,
+                  { fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' },
+                ]}
+                maxFontSizeMultiplier={1.2}
+              >
+                {getLocalizedText({ ja: 'スタート', en: 'Play' })}
+              </Text>
+              <View style={styles.playButtonIcon}>
+                <PlayIcon width={16} height={18} strokeWidth={1.5} strokeColor="#FFFFFF" fillColor="#FFFFFF" />
+              </View>
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     </View>
@@ -163,8 +173,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
   },
+  playButtonContainer: {
+    position: 'relative',
+    marginRight: 4,
+    marginBottom: 4,
+  },
+  playButtonShadow: {
+    position: 'absolute',
+    left: 4,
+    top: 4,
+    minWidth: 200,
+    minHeight: 46,
+    borderRadius: 12,
+    backgroundColor: '#000',
+  },
   playButton: {
     minWidth: 200,
+    minHeight: 46,
     position: 'relative',
     borderRadius: 12,
     borderWidth: 2,
@@ -176,18 +201,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 1.8,
-    elevation: 3,
   },
   playButtonText: {
     color: '#FFFFFF',
     fontSize: 22,
     lineHeight: 25,
     letterSpacing: 0.4,
-    fontFamily: 'KronaOne-Regular',
   },
   playButtonIcon: {
     position: 'absolute',

@@ -728,7 +728,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
                 <LandScapeIcon
                   width={24}
                   height={24}
-                  fillColor={isLandscapeMode ? '#1862cfff' : '#79716B'}
+                  fillColor={isLandscapeMode ? '#1862cfff' : '#ffffff'}
                 />
               </Animated.View>
             </TouchableWithoutFeedback>
@@ -908,7 +908,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
               <LandScapeIcon
                 width={24}
                 height={24}
-                fillColor={isLandscapeMode ? '#1862cfff' : '#79716B'}
+                fillColor={isLandscapeMode ? '#1862cfff' : '#ffffff'}
               />
             </Animated.View>
           </TouchableWithoutFeedback>
@@ -1046,7 +1046,7 @@ const styles = StyleSheet.create({
   /** Close 直下（top は landscapeButtonTop で Close 下端 + 60pt）。スマホのみ */
   landscapeButtonPlaceholder: {
     position: 'absolute',
-    left: 16,
+    left: 12,
     padding: 8,
     borderRadius: 20,
     zIndex: 3,
