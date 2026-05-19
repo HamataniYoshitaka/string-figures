@@ -446,7 +446,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/90_ring-magic/preview.mp4'),
   },
   '91_5diamonds': {
-    thumbnail: require('../../assets/string-figures/91_5diamonds/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/91_5diamonds/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/91_5diamonds/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/91_5diamonds/preview.mp4'),
   },

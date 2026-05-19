@@ -176,7 +176,12 @@ import { FIGURE_87_PALM_TREE_VIDEOS } from './figure-87_palm-tree';
 import { FIGURE_88_WRIST_MAGIC_VIDEOS } from './figure-88_wrist-magic';
 import { FIGURE_89_MOCHITSUKI_VIDEOS } from './figure-89_mochitsuki';
 import { FIGURE_90_RING_MAGIC_VIDEOS } from './figure-90_ring-magic';
-import { FIGURE_91_5DIAMONDS_VIDEOS } from './figure-91_5diamonds';
+import {
+  FIGURE_91_5DIAMONDS_NONVERBAL_CHAPTER_STILL_PAIRS,
+  FIGURE_91_5DIAMONDS_NONVERBAL_TOTAL_CHAPTERS,
+  FIGURE_91_5DIAMONDS_NONVERBAL_VIDEO_PAIRS,
+  FIGURE_91_5DIAMONDS_VIDEOS,
+} from './figure-91_5diamonds';
 import { FIGURE_92_6DIAMONDS_VIDEOS } from './figure-92_6diamonds';
 import { FIGURE_93_ONE_CHIEF_VIDEOS } from './figure-93_one-chief';
 import { FIGURE_95_2PEOPLE_SEQUENCE_VIDEOS } from './figure-95_2perople-sequence';
@@ -360,6 +365,7 @@ export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, Nonver
   '100_hold-the-sky': FIGURE_100_HOLD_THE_SKY_NONVERBAL_VIDEO_PAIRS,
   '110_eikodowa': FIGURE_110_EIKODOWA_NONVERBAL_VIDEO_PAIRS,
   '111_binary-stars': FIGURE_111_BINARY_STARS_NONVERBAL_VIDEO_PAIRS,
+  '91_5diamonds': FIGURE_91_5DIAMONDS_NONVERBAL_VIDEO_PAIRS,
 };
 
 export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
@@ -385,6 +391,7 @@ export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
   '100_hold-the-sky': FIGURE_100_HOLD_THE_SKY_NONVERBAL_TOTAL_CHAPTERS,
   '110_eikodowa': FIGURE_110_EIKODOWA_NONVERBAL_TOTAL_CHAPTERS,
   '111_binary-stars': FIGURE_111_BINARY_STARS_NONVERBAL_TOTAL_CHAPTERS,
+  '91_5diamonds': FIGURE_91_5DIAMONDS_NONVERBAL_TOTAL_CHAPTERS,
 };
 
 /** 非言語モードのフィルムストリップ用静止画（FIGURE ごとに件数・パスが異なる） */
@@ -411,4 +418,5 @@ export const NONVERBAL_CHAPTER_STILL_PAIRS: Record<string, readonly NonverbalCha
   '100_hold-the-sky': FIGURE_100_HOLD_THE_SKY_NONVERBAL_CHAPTER_STILL_PAIRS,
   '110_eikodowa': FIGURE_110_EIKODOWA_NONVERBAL_CHAPTER_STILL_PAIRS,
   '111_binary-stars': FIGURE_111_BINARY_STARS_NONVERBAL_CHAPTER_STILL_PAIRS,
+  '91_5diamonds': FIGURE_91_5DIAMONDS_NONVERBAL_CHAPTER_STILL_PAIRS,
 };
