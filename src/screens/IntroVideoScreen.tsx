@@ -66,6 +66,12 @@ const INTRO_FADE_IN_DURATION_MS = 500;
 const INTRO_FADE_IN_TRANSLATE_Y = 16;
 const INTRO_PAGE2_TEXT_FADE_IN_DELAY_MS = 300;
 const INTRO_PAGE2_PHONE_FADE_IN_DELAY_MS = 900;
+const PAGE2_VIDEO_PLAY_DELAY_MS = 1500;
+const PAGE2_BALLOON_FADE_IN_DELAY_MS = 200;
+const PAGE2_BALLOON_VISIBLE_DURATION_MS = 2000;
+const PAGE2_BALLOON_FADE_DURATION_MS = 500;
+const PAGE2_BALLOON_FADE_IN_TRANSLATE_Y = 16;
+const PAGE2_BALLOON_FADE_OUT_TRANSLATE_Y = -16;
 
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
@@ -97,11 +103,18 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const page2TextTranslateY = useRef(new Animated.Value(INTRO_FADE_IN_TRANSLATE_Y)).current;
     const page2PhoneOpacity = useRef(new Animated.Value(0)).current;
     const page2PhoneTranslateY = useRef(new Animated.Value(INTRO_FADE_IN_TRANSLATE_Y)).current;
+    const page2BalloonOpacity = useRef(new Animated.Value(0)).current;
+    const page2BalloonTranslateY = useRef(
+        new Animated.Value(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y),
+    ).current;
     const nextStepButtonOpacity = useRef(new Animated.Value(0)).current;
     const nextStepButtonFadeTranslateY = useRef(new Animated.Value(INTRO_FADE_IN_TRANSLATE_Y)).current;
     const hasPlayedPage2EntranceAnimRef = useRef(false);
     const page2TextFadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const page2PhoneFadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const page2BalloonFadeInTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const page2BalloonAnimRef = useRef<Animated.CompositeAnimation | null>(null);
+    const page2VideoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const introPhoneVideoRef = useRef<Video>(null);
     const [nextStepButtonLayout, setNextStepButtonLayout] = useState({ width: 0, height: 0 });
     
@@ -356,6 +369,56 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
+    const clearPage2BalloonAnimation = useCallback(() => {
+        if (page2BalloonFadeInTimerRef.current) {
+            clearTimeout(page2BalloonFadeInTimerRef.current);
+            page2BalloonFadeInTimerRef.current = null;
+        }
+        page2BalloonAnimRef.current?.stop();
+        page2BalloonAnimRef.current = null;
+        page2BalloonOpacity.setValue(0);
+        page2BalloonTranslateY.setValue(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y);
+    }, [page2BalloonOpacity, page2BalloonTranslateY]);
+
+    const startPage2BalloonAnimation = useCallback(() => {
+        clearPage2BalloonAnimation();
+        page2BalloonFadeInTimerRef.current = setTimeout(() => {
+            page2BalloonFadeInTimerRef.current = null;
+            page2BalloonOpacity.setValue(0);
+            page2BalloonTranslateY.setValue(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y);
+            page2BalloonAnimRef.current = Animated.sequence([
+                Animated.parallel([
+                    Animated.timing(page2BalloonOpacity, {
+                        toValue: 1,
+                        duration: PAGE2_BALLOON_FADE_DURATION_MS,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(page2BalloonTranslateY, {
+                        toValue: 0,
+                        duration: PAGE2_BALLOON_FADE_DURATION_MS,
+                        useNativeDriver: true,
+                    }),
+                ]),
+                Animated.delay(PAGE2_BALLOON_VISIBLE_DURATION_MS),
+                Animated.parallel([
+                    Animated.timing(page2BalloonOpacity, {
+                        toValue: 0,
+                        duration: PAGE2_BALLOON_FADE_DURATION_MS,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(page2BalloonTranslateY, {
+                        toValue: PAGE2_BALLOON_FADE_OUT_TRANSLATE_Y,
+                        duration: PAGE2_BALLOON_FADE_DURATION_MS,
+                        useNativeDriver: true,
+                    }),
+                ]),
+            ]);
+            page2BalloonAnimRef.current.start(() => {
+                page2BalloonAnimRef.current = null;
+            });
+        }, PAGE2_BALLOON_FADE_IN_DELAY_MS);
+    }, [clearPage2BalloonAnimation, page2BalloonOpacity, page2BalloonTranslateY]);
+
     const startPage2EntranceAnimations = () => {
         if (hasPlayedPage2EntranceAnimRef.current) {
             return;
@@ -366,6 +429,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         page2TextTranslateY.setValue(INTRO_FADE_IN_TRANSLATE_Y);
         page2PhoneOpacity.setValue(0);
         page2PhoneTranslateY.setValue(INTRO_FADE_IN_TRANSLATE_Y);
+        clearPage2BalloonAnimation();
 
         page2TextFadeTimerRef.current = setTimeout(() => {
             page2TextFadeTimerRef.current = null;
@@ -451,13 +515,24 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             stopPage1ProgressAnimation();
             stopPage2ProgressAnimation();
             clearPage2EntranceTimers();
+            clearPage2BalloonAnimation();
+            clearPage2VideoPlayTimer();
             if (buttonRevealTimerRef.current) {
                 clearTimeout(buttonRevealTimerRef.current);
             }
         };
     }, []);
 
+    const clearPage2VideoPlayTimer = useCallback(() => {
+        if (page2VideoPlayTimerRef.current) {
+            clearTimeout(page2VideoPlayTimerRef.current);
+            page2VideoPlayTimerRef.current = null;
+        }
+    }, []);
+
     const pauseIntroPhoneVideo = useCallback(async () => {
+        clearPage2VideoPlayTimer();
+        clearPage2BalloonAnimation();
         const video = introPhoneVideoRef.current;
         if (!video) {
             return;
@@ -468,7 +543,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         } catch (error) {
             console.error('Error pausing intro phone video:', error);
         }
-    }, []);
+    }, [clearPage2BalloonAnimation, clearPage2VideoPlayTimer]);
 
     const playIntroPhoneVideo = useCallback(async () => {
         const video = introPhoneVideoRef.current;
@@ -478,26 +553,35 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         try {
             await video.setPositionAsync(0);
             await video.playAsync();
+            startPage2BalloonAnimation();
         } catch (error) {
             console.error('Error playing intro phone video:', error);
         }
-    }, []);
+    }, [startPage2BalloonAnimation]);
+
+    const scheduleIntroPhoneVideoPlay = useCallback(() => {
+        clearPage2VideoPlayTimer();
+        page2VideoPlayTimerRef.current = setTimeout(() => {
+            page2VideoPlayTimerRef.current = null;
+            void playIntroPhoneVideo();
+        }, PAGE2_VIDEO_PLAY_DELAY_MS);
+    }, [clearPage2VideoPlayTimer, playIntroPhoneVideo]);
 
     const handleIntroPhoneVideoLoad = useCallback(async () => {
         if (currentPageIndex === PAGE_INDEX_P2) {
-            await playIntroPhoneVideo();
+            scheduleIntroPhoneVideoPlay();
             return;
         }
         await pauseIntroPhoneVideo();
-    }, [currentPageIndex, pauseIntroPhoneVideo, playIntroPhoneVideo]);
+    }, [currentPageIndex, pauseIntroPhoneVideo, scheduleIntroPhoneVideoPlay]);
 
     useEffect(() => {
         if (currentPageIndex === PAGE_INDEX_P2) {
-            void playIntroPhoneVideo();
+            scheduleIntroPhoneVideoPlay();
             return;
         }
         void pauseIntroPhoneVideo();
-    }, [currentPageIndex, pauseIntroPhoneVideo, playIntroPhoneVideo]);
+    }, [currentPageIndex, pauseIntroPhoneVideo, scheduleIntroPhoneVideoPlay]);
 
     useEffect(() => {
         return () => {
@@ -679,6 +763,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     page2TextTranslateY={page2TextTranslateY}
                     page2PhoneOpacity={page2PhoneOpacity}
                     page2PhoneTranslateY={page2PhoneTranslateY}
+                    page2BalloonOpacity={page2BalloonOpacity}
+                    page2BalloonTranslateY={page2BalloonTranslateY}
                     introPhoneVideoRef={introPhoneVideoRef}
                     onIntroPhoneVideoLoad={handleIntroPhoneVideoLoad}
                     getLocalizedText={getLocalizedText}

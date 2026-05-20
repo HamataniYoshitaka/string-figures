@@ -56,6 +56,8 @@ export interface IntroVideoPage2Props {
     page2TextTranslateY: Animated.Value;
     page2PhoneOpacity: Animated.Value;
     page2PhoneTranslateY: Animated.Value;
+    page2BalloonOpacity: Animated.Value;
+    page2BalloonTranslateY: Animated.Value;
     introPhoneVideoRef: React.RefObject<Video | null>;
     onIntroPhoneVideoLoad: () => void | Promise<void>;
     getLocalizedText: (textObj: { ja: string; en: string }) => string;
@@ -68,6 +70,8 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
     page2TextTranslateY,
     page2PhoneOpacity,
     page2PhoneTranslateY,
+    page2BalloonOpacity,
+    page2BalloonTranslateY,
     introPhoneVideoRef,
     onIntroPhoneVideoLoad,
     getLocalizedText,
@@ -275,7 +279,7 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
                             </View>
                         </View>
                     </View>
-                    <Image
+                    <Animated.Image
                         key={currentLanguage}
                         source={introPage2BalloonImage}
                         style={[
@@ -285,6 +289,8 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
                                 height: phoneFrameBalloonHeight,
                                 top: phoneFrameBalloonTop,
                                 left: phoneFrameBalloonLeft,
+                                opacity: page2BalloonOpacity,
+                                transform: [{ translateY: page2BalloonTranslateY }],
                             },
                         ]}
                         resizeMode="contain"
