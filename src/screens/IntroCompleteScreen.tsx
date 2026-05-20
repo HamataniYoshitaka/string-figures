@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Dimensions, Alert } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Animated, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CheckCircleOutlineIcon, CloseIcon } from '../components/icons';
+import { CheckCircleOutlineIcon, CloseIcon, PlayIcon } from '../components/icons';
 
 type IntroCompleteScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -40,7 +40,6 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     
     // アニメーション用のスケール値
     const backButtonScale = useRef(new Animated.Value(1)).current;
-    const startButtonScale = useRef(new Animated.Value(1)).current;
     
     const { isTablet, isDeviceLandscape } = useDeviceInfo();
 
@@ -146,25 +145,38 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             <View style={styles.controlsContainer}>
                 <View style={styles.controlButton}>
                     <View style={styles.buttonContainer}>
-                        <TouchableWithoutFeedback
-                            onPress={onGoBack}
-                            onPressIn={createPressInHandler(startButtonScale)}
-                            onPressOut={createPressOutHandler(startButtonScale)}
-                        >
-                            <Animated.View
-                                style={[
-                                    styles.startButton,
-                                    { transform: [{ scale: startButtonScale }] },
-                                ]}
+                        <View style={styles.playButtonContainer}>
+                            <View style={styles.playButtonShadow} />
+                            <TouchableOpacity
+                                style={styles.playButton}
+                                onPress={onGoBack}
+                                activeOpacity={1}
                             >
-                                <Text 
-                                    maxFontSizeMultiplier={1.25}
-                                    style={styles.startButtonText}
+                                <Text
+                                    style={[
+                                        styles.playButtonText,
+                                        {
+                                            fontFamily:
+                                                currentLanguage === 'en'
+                                                    ? 'KronaOne-Regular'
+                                                    : 'LineSeed-Bold',
+                                        },
+                                    ]}
+                                    maxFontSizeMultiplier={1.2}
                                 >
                                     {getLocalizedText({ ja: 'はじめる', en: 'Start' })}
                                 </Text>
-                            </Animated.View>
-                        </TouchableWithoutFeedback>
+                                <View style={styles.playButtonIcon}>
+                                    <PlayIcon
+                                        width={16}
+                                        height={18}
+                                        strokeWidth={1.5}
+                                        strokeColor="#FFFFFF"
+                                        fillColor="#FFFFFF"
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -243,21 +255,45 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 8,
     },
-    startButton: {
-        backgroundColor: '#FF6A00',
-        borderRadius: 9999,
-        borderWidth: 3,
-        borderColor: '#FFFFFF',
-        paddingVertical: 12,
-        width: 240,
-        alignSelf: 'stretch',
+    playButtonContainer: {
+        position: 'relative',
+        marginRight: 4,
+        marginBottom: 4,
     },
-    startButtonText: {
-        fontWeight: '600',
-        fontSize: 20,
+    playButtonShadow: {
+        position: 'absolute',
+        left: 4,
+        top: 4,
+        minWidth: 200,
+        minHeight: 46,
+        borderRadius: 12,
+        backgroundColor: '#000',
+    },
+    playButton: {
+        minWidth: 200,
+        minHeight: 46,
+        position: 'relative',
+        borderRadius: 12,
+        borderWidth: 2,
+        borderColor: '#292524',
+        backgroundColor: '#FF5B3A',
+        paddingVertical: 9,
+        paddingHorizontal: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10,
+    },
+    playButtonText: {
         color: '#FFFFFF',
-        textAlign: 'center',
-        letterSpacing: 1,
+        fontSize: 22,
+        lineHeight: 25,
+        letterSpacing: 0.4,
+    },
+    playButtonIcon: {
+        position: 'absolute',
+        right: 16,
+        top: 12,
     },
     floatingButton: {
         width: 48,
