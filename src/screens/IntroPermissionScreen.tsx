@@ -10,6 +10,7 @@ import {
     StatusBar,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { Video, ResizeMode } from 'expo-av';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
@@ -55,8 +56,15 @@ const PHONE_FRAME_SHADOW_COLOR = '#292524';
 /** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
 const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
 
+const INTRO2_PERMISSION_PREVIEW_VIDEO_JA = require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4');
+const INTRO2_PERMISSION_PREVIEW_VIDEO_EN = require('../../assets/string-figures/0_introduction/intro2-ios-en.mp4');
+
 const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
+    const intro2PermissionPreviewSource =
+        currentLanguage === 'ja'
+            ? INTRO2_PERMISSION_PREVIEW_VIDEO_JA
+            : INTRO2_PERMISSION_PREVIEW_VIDEO_EN;
 
     const backButtonScale = useRef(new Animated.Value(1)).current;
     const nextStepButtonPressAnim = useRef(new Animated.Value(0)).current;
@@ -83,10 +91,10 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
             - bottomChromeEstimate
             - insets.bottom
             - PHONE_FRAME_SHADOW_OFFSET
-            - 36,
+            - 6,
     );
     let phoneFrameWidth = Math.min(screenWidth * 0.56, isTablet ? 260 : 232);
-    let phoneFrameHeight = phoneFrameWidth * (19 / 9);
+    let phoneFrameHeight = phoneFrameWidth * (17 / 9);
     if (phoneFrameHeight > maxPhoneFrameHeight) {
         phoneFrameHeight = maxPhoneFrameHeight;
         phoneFrameWidth = phoneFrameHeight * (10 / 19);
@@ -285,22 +293,18 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                                             },
                                         ]}
                                     >
-                                        <Svg
-                                            width={phoneFrameInnerContentWidth}
-                                            height={phoneFrameArchDisplayHeight}
-                                            viewBox={`0 0 ${ARCH_VIEWBOX.w} ${ARCH_VIEWBOX.h}`}
-                                            preserveAspectRatio="xMidYMin meet"
-                                            pointerEvents="none"
-                                            style={[
-                                                styles.phoneFrameArchSvg,
-                                                {
-                                                    width: phoneFrameInnerContentWidth,
-                                                    height: phoneFrameArchDisplayHeight,
-                                                },
-                                            ]}
-                                        >
-                                            <Path d={ARCH_PATH_D} fill={ARCH_FILL_COLOR} />
-                                        </Svg>
+                                        <View style={styles.phoneFrameVideoWrap}>
+                                            <Video
+                                                key={currentLanguage}
+                                                source={intro2PermissionPreviewSource}
+                                                style={styles.phoneFrameVideo}
+                                                resizeMode={ResizeMode.COVER}
+                                                shouldPlay
+                                                isLooping
+                                                isMuted
+                                                useNativeControls={false}
+                                            />
+                                        </View>
                                     </View>
                                 </View>
                             </View>
@@ -509,6 +513,14 @@ const styles = StyleSheet.create({
         position: 'relative',
         backgroundColor: '#F7F5F2',
         overflow: 'hidden',
+    },
+    phoneFrameVideoWrap: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: '#F7F5F2',
+    },
+    phoneFrameVideo: {
+        width: '100%',
+        height: '100%',
     },
     phoneFrameArchSvg: {
         position: 'absolute',
