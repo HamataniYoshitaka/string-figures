@@ -6,6 +6,7 @@ import {
     Text,
     Platform,
     Dimensions,
+    Image,
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { Video, ResizeMode } from 'expo-av';
@@ -34,9 +35,19 @@ const INTRO_PHONE_MOCK_TITLE = { ja: 'たくさんの星', en: 'Many Stars' } as
 const PHONE_FRAME_SHADOW_COLOR = '#292524';
 const PHONE_FRAME_OUTER_BORDER_WIDTH = 3;
 const INTRO_PHONE_MOCK_VIDEO = require('../../assets/string-figures/0_introduction/intro1.mp4');
+const INTRO_PAGE2_BALLOON_TSUGI = require('../../assets/string-figures/0_introduction/balloon-tsugi.png');
+const INTRO_PAGE2_BALLOON_NEXT = require('../../assets/string-figures/0_introduction/balloon-next.png');
+const introPage2BalloonSource = Image.resolveAssetSource(INTRO_PAGE2_BALLOON_TSUGI);
+const INTRO_PAGE2_BALLOON_ASPECT =
+    introPage2BalloonSource.width / introPage2BalloonSource.height;
 
 const PAGE2_TOP_SECTION_ESTIMATE = 88;
 const BOTTOM_CHROME_ESTIMATE = 152;
+const PHONE_FRAME_CONTAINER_PADDING_HORIZONTAL = 24;
+/** バルーン左端の画面左からのオフセット（px） */
+const PAGE2_BALLOON_LEFT_FROM_SCREEN = 16;
+const PAGE2_BALLOON_WIDTH_RATIO = 0.5;
+const PAGE2_BALLOON_EN_WIDTH_SCALE = 1.2;
 
 export interface IntroVideoPage2Props {
     pagerWidth: number;
@@ -103,6 +114,24 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
     const phoneFrameHeaderHeight =
         phoneFrameInnerContentWidth
         * (PHONE_FRAME_HEADER_ARCH_VIEWBOX.h / PHONE_FRAME_HEADER_ARCH_VIEWBOX.w);
+    const phoneFrameBalloonWidth =
+        phoneFrameWidth
+        * PAGE2_BALLOON_WIDTH_RATIO
+        * (currentLanguage === 'en' ? PAGE2_BALLOON_EN_WIDTH_SCALE : 1);
+    const phoneFrameBalloonHeight = phoneFrameBalloonWidth / INTRO_PAGE2_BALLOON_ASPECT;
+    const introPage2BalloonImage =
+        currentLanguage === 'en' ? INTRO_PAGE2_BALLOON_NEXT : INTRO_PAGE2_BALLOON_TSUGI;
+    const phoneFrameBalloonTop =
+        PHONE_FRAME_OUTER_BORDER_WIDTH
+        + PHONE_FRAME_INSET
+        + PHONE_FRAME_INNER_BORDER_WIDTH + 20;
+    const phoneWrapperWidth = phoneFrameWidth + PHONE_FRAME_SHADOW_OFFSET;
+    const phoneFrameContainerContentWidth =
+        pagerWidth - PHONE_FRAME_CONTAINER_PADDING_HORIZONTAL * 2;
+    const phoneLeftFromScreen =
+        PHONE_FRAME_CONTAINER_PADDING_HORIZONTAL
+        + (phoneFrameContainerContentWidth - phoneWrapperWidth) / 2;
+    const phoneFrameBalloonLeft = PAGE2_BALLOON_LEFT_FROM_SCREEN - phoneLeftFromScreen;
 
     return (
         <View
@@ -246,6 +275,20 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
                             </View>
                         </View>
                     </View>
+                    <Image
+                        key={currentLanguage}
+                        source={introPage2BalloonImage}
+                        style={[
+                            styles.phoneFrameBalloon,
+                            {
+                                width: phoneFrameBalloonWidth,
+                                height: phoneFrameBalloonHeight,
+                                top: phoneFrameBalloonTop,
+                                left: phoneFrameBalloonLeft,
+                            },
+                        ]}
+                        resizeMode="contain"
+                    />
                 </Animated.View>
             </View>
         </View>
@@ -274,7 +317,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingTop: 20,
-        paddingHorizontal: 24,
+        paddingHorizontal: PHONE_FRAME_CONTAINER_PADDING_HORIZONTAL,
         paddingBottom: 16,
     },
     phoneFrameHardShadow: {
@@ -336,6 +379,11 @@ const styles = StyleSheet.create({
         color: '#292524',
         textAlign: 'center',
         fontWeight: '600',
+    },
+    phoneFrameBalloon: {
+        position: 'absolute',
+        zIndex: 2,
+        elevation: 2,
     },
 });
 
