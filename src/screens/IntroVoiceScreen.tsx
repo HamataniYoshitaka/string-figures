@@ -47,18 +47,24 @@ const introVoiceIllustrationSource = Image.resolveAssetSource(INTRO_VOICE_ILLUST
 const INTRO_VOICE_ILLUSTRATION_ASPECT =
     introVoiceIllustrationSource.width / introVoiceIllustrationSource.height;
 const INTRO_VOICE_BALLOON_TSUGI = require('../../assets/string-figures/0_introduction/balloon-tsugi.png');
+const INTRO_VOICE_BALLOON_NEXT = require('../../assets/string-figures/0_introduction/balloon-next.png');
 const introVoiceBalloonSource = Image.resolveAssetSource(INTRO_VOICE_BALLOON_TSUGI);
 const INTRO_VOICE_BALLOON_ASPECT =
     introVoiceBalloonSource.width / introVoiceBalloonSource.height;
 
-const INTRO_VOICE_TEXT = {
-    keyword: { ja: 'つぎ', en: 'next' },
-    particle: { ja: 'と', en: '' },
-    instruction: {
-        ja: '話しかけてください',
-        en: 'Please say "next"',
-    },
+const INTRO_VOICE_TEXT_JA = {
+    keyword: 'つぎ',
+    particle: 'と',
+    instruction: '話しかけてください',
 } as const;
+
+const INTRO_VOICE_TEXT_EN = {
+    introLine: 'please say',
+    keyword: 'NEXT',
+} as const;
+
+const KEYWORD_QUOTE_OPEN = '\u201c';
+const KEYWORD_QUOTE_CLOSE = '\u201d';
 
 const BALLOON_FADE_IN_DURATION_MS = 500;
 const BALLOON_VISIBLE_DURATION_MS = 4000;
@@ -146,13 +152,20 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
     const archTopFillHeight = Math.max(0, archTop);
     const headerContentHeight = isTablet ? 56 : 48;
     const headerTotalHeight = headerPaddingTop + headerContentHeight + 16;
-    const INTRO_HERO_KEYWORD_LINE_HEIGHT = 72;
-    const INTRO_HERO_INSTRUCTION_MARGIN_TOP = 8;
-    const INTRO_HERO_INSTRUCTION_LINE_HEIGHT = 32;
+    const INTRO_HERO_JA_KEYWORD_LINE_HEIGHT = 72;
+    const INTRO_HERO_JA_INSTRUCTION_MARGIN_TOP = 8;
+    const INTRO_HERO_JA_INSTRUCTION_LINE_HEIGHT = 32;
+    const INTRO_HERO_EN_INTRO_LINE_HEIGHT = 26;
+    const INTRO_HERO_EN_LINE_GAP = 4;
+    const INTRO_HERO_EN_KEYWORD_LINE_HEIGHT = 72;
     const introHeroTextBlockHeight =
-        INTRO_HERO_KEYWORD_LINE_HEIGHT +
-        INTRO_HERO_INSTRUCTION_MARGIN_TOP +
-        INTRO_HERO_INSTRUCTION_LINE_HEIGHT;
+        currentLanguage === 'ja'
+            ? INTRO_HERO_JA_KEYWORD_LINE_HEIGHT +
+              INTRO_HERO_JA_INSTRUCTION_MARGIN_TOP +
+              INTRO_HERO_JA_INSTRUCTION_LINE_HEIGHT
+            : INTRO_HERO_EN_INTRO_LINE_HEIGHT +
+              INTRO_HERO_EN_LINE_GAP +
+              INTRO_HERO_EN_KEYWORD_LINE_HEIGHT;
     const introHeroTextBlockHalfHeight = introHeroTextBlockHeight / 2;
     /** 画面上半分の中央（25vh）にヒーロー文の中心を合わせる */
     const introHeroTop =
@@ -163,8 +176,12 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
     const illustrationHeight = illustrationWidth / INTRO_VOICE_ILLUSTRATION_ASPECT;
     const illustrationBalloonWidth = illustrationWidth * 0.40;
     const illustrationBalloonHeight = illustrationBalloonWidth / INTRO_VOICE_BALLOON_ASPECT;
-    const keywordFontSize = isTablet ? 72 : currentLanguage === 'ja' ? 64 : 56;
-    const particleFontSize = isTablet ? 32 : 28;
+    const introVoiceBalloonImage =
+        currentLanguage === 'en' ? INTRO_VOICE_BALLOON_NEXT : INTRO_VOICE_BALLOON_TSUGI;
+    const jaKeywordFontSize = isTablet ? 72 : 64;
+    const jaParticleFontSize = isTablet ? 32 : 28;
+    const enIntroLineFontSize = isTablet ? 24 : 20;
+    const enKeywordLineFontSize = isTablet ? 72 : 56;
 
     const createPressInHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {
@@ -223,10 +240,6 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
         en: 'No network connection. Speech recognition is unavailable.',
     });
 
-    const keywordFontFamily =
-        currentLanguage === 'en' ? 'Montserrat-SemiBold' : 'KiwiMaru-Medium';
-    const instructionFontFamily =
-        currentLanguage === 'en' ? 'Roboto-Medium' : 'KiwiMaru-Medium';
 
     return (
         <PaperProvider>
@@ -310,46 +323,78 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
                                 { top: Math.max(introHeroTop, 0) },
                             ]}
                         >
-                            <View style={styles.keywordRow}>
-                                <Text
-                                    maxFontSizeMultiplier={1.15}
-                                    style={[
-                                        styles.keywordText,
-                                        {
-                                            fontSize: keywordFontSize,
-                                            fontFamily: keywordFontFamily,
-                                        },
-                                    ]}
-                                >
-                                    {getLocalizedText(INTRO_VOICE_TEXT.keyword)}
-                                </Text>
-                                {currentLanguage === 'ja' && (
+                            {currentLanguage === 'ja' ? (
+                                <View style={styles.introHeroJa}>
+                                    <View style={styles.keywordRow}>
+                                        <Text
+                                            maxFontSizeMultiplier={1.15}
+                                            style={[
+                                                styles.keywordText,
+                                                {
+                                                    fontSize: jaKeywordFontSize,
+                                                    fontFamily: 'KiwiMaru-Medium',
+                                                },
+                                            ]}
+                                        >
+                                            {INTRO_VOICE_TEXT_JA.keyword}
+                                        </Text>
+                                        <Text
+                                            maxFontSizeMultiplier={1.15}
+                                            style={[
+                                                styles.particleText,
+                                                {
+                                                    fontSize: jaParticleFontSize,
+                                                    fontFamily: 'KiwiMaru-Medium',
+                                                },
+                                            ]}
+                                        >
+                                            {INTRO_VOICE_TEXT_JA.particle}
+                                        </Text>
+                                    </View>
                                     <Text
-                                        maxFontSizeMultiplier={1.15}
+                                        maxFontSizeMultiplier={1.25}
                                         style={[
-                                            styles.particleText,
+                                            styles.instructionText,
                                             {
-                                                fontSize: particleFontSize,
-                                                fontFamily: keywordFontFamily,
+                                                fontSize: 22,
+                                                fontFamily: 'KiwiMaru-Medium',
                                             },
                                         ]}
                                     >
-                                        {INTRO_VOICE_TEXT.particle.ja}
+                                        {INTRO_VOICE_TEXT_JA.instruction}
                                     </Text>
-                                )}
-                            </View>
-                            <Text
-                                maxFontSizeMultiplier={1.25}
-                                style={[
-                                    styles.instructionText,
-                                    {
-                                        fontSize: currentLanguage === 'ja' ? 22 : 20,
-                                        fontFamily: instructionFontFamily,
-                                    },
-                                ]}
-                            >
-                                {getLocalizedText(INTRO_VOICE_TEXT.instruction)}
-                            </Text>
+                                </View>
+                            ) : (
+                                <View style={styles.introHeroEn}>
+                                    <Text
+                                        maxFontSizeMultiplier={1.25}
+                                        style={[
+                                            styles.introHeroEnIntroLine,
+                                            {
+                                                fontSize: enIntroLineFontSize,
+                                                lineHeight: INTRO_HERO_EN_INTRO_LINE_HEIGHT,
+                                            },
+                                        ]}
+                                    >
+                                        {INTRO_VOICE_TEXT_EN.introLine}
+                                    </Text>
+                                    <Text
+                                        maxFontSizeMultiplier={1.15}
+                                        style={[
+                                            styles.introHeroEnKeywordLine,
+                                            {
+                                                fontSize: enKeywordLineFontSize,
+                                                lineHeight: INTRO_HERO_EN_KEYWORD_LINE_HEIGHT,
+                                                marginTop: INTRO_HERO_EN_LINE_GAP,
+                                            },
+                                        ]}
+                                    >
+                                        {KEYWORD_QUOTE_OPEN}
+                                        {INTRO_VOICE_TEXT_EN.keyword}
+                                        {KEYWORD_QUOTE_CLOSE}
+                                    </Text>
+                                </View>
+                            )}
                         </View>
 
                         <ScrollView
@@ -380,7 +425,8 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
                                         resizeMode="contain"
                                     />
                                     <Animated.Image
-                                        source={INTRO_VOICE_BALLOON_TSUGI}
+                                        key={currentLanguage}
+                                        source={introVoiceBalloonImage}
                                         style={[
                                             styles.illustrationBalloon,
                                             {
@@ -522,6 +568,26 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         zIndex: 1,
     },
+    introHeroJa: {
+        alignItems: 'center',
+    },
+    introHeroEn: {
+        alignItems: 'center',
+    },
+    introHeroEnIntroLine: {
+        color: '#FFFFFF',
+        textAlign: 'center',
+        fontFamily: 'Roboto-Medium',
+        includeFontPadding: false,
+        textTransform: 'lowercase',
+    },
+    introHeroEnKeywordLine: {
+        color: '#FFFFFF',
+        textAlign: 'center',
+        fontFamily: 'Montserrat-SemiBold',
+        includeFontPadding: false,
+        textTransform: 'uppercase',
+    },
     keywordRow: {
         flexDirection: 'row',
         alignItems: 'flex-end',
@@ -589,7 +655,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     voiceFallbackDescriptionText: {
-        fontFamily: 'LineSeed-Bold',
+        fontFamily: 'LineSeed-Medium',
         fontSize: 16,
         lineHeight: 32,
         color: '#222',
