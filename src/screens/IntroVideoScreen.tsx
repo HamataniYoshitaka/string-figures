@@ -14,11 +14,11 @@ import IntroVideoPage2 from './IntroVideoPage2';
 const INTRO_HERO_TEXT = {
     line1: {
         ja: '世界中のあやとり',
-        en: 'String figures from around the world',
+        en: 'This app introduces you to',
     },
     line2: {
         ja: 'を紹介します',
-        en: '— introduced here',
+        en: 'string figures from around the world',
     },
 } as const;
 

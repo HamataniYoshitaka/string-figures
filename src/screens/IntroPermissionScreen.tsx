@@ -99,7 +99,7 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
             - PHONE_FRAME_SHADOW_OFFSET
             - 6,
     );
-    let phoneFrameWidth = Math.min(screenWidth * 0.56, isTablet ? 260 : 232);
+    let phoneFrameWidth = Math.min(screenWidth * 0.54, isTablet ? 260 : 232);
     let phoneFrameHeight = phoneFrameWidth * (17 / 9);
     if (phoneFrameHeight > maxPhoneFrameHeight) {
         phoneFrameHeight = maxPhoneFrameHeight;

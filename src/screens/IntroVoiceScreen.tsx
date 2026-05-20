@@ -616,7 +616,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 24,
         paddingTop: 36,
-        paddingBottom: 36,
+        paddingBottom:26,
     },
     illustrationWrapper: {
         position: 'relative',
@@ -651,7 +651,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 12,
     },
     voiceFallbackDescription: {
-        marginTop: 16,
+        marginTop: 6,
         alignItems: 'center',
     },
     voiceFallbackDescriptionText: {
