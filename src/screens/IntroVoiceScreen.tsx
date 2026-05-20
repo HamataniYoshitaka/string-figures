@@ -46,6 +46,10 @@ const INTRO_VOICE_ILLUSTRATION = require('../../assets/introduction/02.webp');
 const introVoiceIllustrationSource = Image.resolveAssetSource(INTRO_VOICE_ILLUSTRATION);
 const INTRO_VOICE_ILLUSTRATION_ASPECT =
     introVoiceIllustrationSource.width / introVoiceIllustrationSource.height;
+const INTRO_VOICE_BALLOON_TSUGI = require('../../assets/string-figures/0_introduction/balloon-tsugi.png');
+const introVoiceBalloonSource = Image.resolveAssetSource(INTRO_VOICE_BALLOON_TSUGI);
+const INTRO_VOICE_BALLOON_ASPECT =
+    introVoiceBalloonSource.width / introVoiceBalloonSource.height;
 
 const INTRO_VOICE_TEXT = {
     keyword: { ja: 'つぎ', en: 'next' },
@@ -55,6 +59,12 @@ const INTRO_VOICE_TEXT = {
         en: 'Please say "next"',
     },
 } as const;
+
+const BALLOON_FADE_IN_DURATION_MS = 500;
+const BALLOON_VISIBLE_DURATION_MS = 4000;
+const BALLOON_FADE_OUT_DURATION_MS = 500;
+const BALLOON_HIDDEN_DURATION_MS = 1000;
+const BALLOON_SCALE_MIN = 0.88;
 
 const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
@@ -77,6 +87,10 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
         },
     });
 
+    const backButtonScale = useRef(new Animated.Value(1)).current;
+    const balloonOpacity = useRef(new Animated.Value(0)).current;
+    const balloonScale = useRef(new Animated.Value(BALLOON_SCALE_MIN)).current;
+
     useEffect(() => {
         activateKeepAwakeAsync();
         return () => {
@@ -84,7 +98,43 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
         };
     }, []);
 
-    const backButtonScale = useRef(new Animated.Value(1)).current;
+    useEffect(() => {
+        const balloonLoop = Animated.loop(
+            Animated.sequence([
+                Animated.parallel([
+                    Animated.timing(balloonOpacity, {
+                        toValue: 1,
+                        duration: BALLOON_FADE_IN_DURATION_MS,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(balloonScale, {
+                        toValue: 1,
+                        duration: BALLOON_FADE_IN_DURATION_MS,
+                        useNativeDriver: true,
+                    }),
+                ]),
+                Animated.delay(BALLOON_VISIBLE_DURATION_MS),
+                Animated.parallel([
+                    Animated.timing(balloonOpacity, {
+                        toValue: 0,
+                        duration: BALLOON_FADE_OUT_DURATION_MS,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(balloonScale, {
+                        toValue: BALLOON_SCALE_MIN,
+                        duration: BALLOON_FADE_OUT_DURATION_MS,
+                        useNativeDriver: true,
+                    }),
+                ]),
+                Animated.delay(BALLOON_HIDDEN_DURATION_MS),
+            ]),
+        );
+
+        balloonLoop.start();
+        return () => {
+            balloonLoop.stop();
+        };
+    }, [balloonOpacity, balloonScale]);
     const { isTablet } = useDeviceInfo();
     const insets = useSafeAreaInsets();
 
@@ -111,6 +161,8 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
         Math.max(introHeroTop, 0) + introHeroTextBlockHeight + 8;
     const illustrationWidth = Math.min(screenWidth * 0.72, isTablet ? 360 : 300);
     const illustrationHeight = illustrationWidth / INTRO_VOICE_ILLUSTRATION_ASPECT;
+    const illustrationBalloonWidth = illustrationWidth * 0.40;
+    const illustrationBalloonHeight = illustrationBalloonWidth / INTRO_VOICE_BALLOON_ASPECT;
     const keywordFontSize = isTablet ? 72 : currentLanguage === 'ja' ? 64 : 56;
     const particleFontSize = isTablet ? 32 : 28;
 
@@ -310,14 +362,37 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
                             bounces={false}
                         >
                             <View style={styles.illustrationContainer}>
-                                <Image
-                                    source={INTRO_VOICE_ILLUSTRATION}
-                                    style={{
-                                        width: illustrationWidth,
-                                        height: illustrationHeight,
-                                    }}
-                                    resizeMode="contain"
-                                />
+                                <View
+                                    style={[
+                                        styles.illustrationWrapper,
+                                        {
+                                            width: illustrationWidth,
+                                            height: illustrationHeight,
+                                        },
+                                    ]}
+                                >
+                                    <Image
+                                        source={INTRO_VOICE_ILLUSTRATION}
+                                        style={{
+                                            width: illustrationWidth,
+                                            height: illustrationHeight,
+                                        }}
+                                        resizeMode="contain"
+                                    />
+                                    <Animated.Image
+                                        source={INTRO_VOICE_BALLOON_TSUGI}
+                                        style={[
+                                            styles.illustrationBalloon,
+                                            {
+                                                width: illustrationBalloonWidth,
+                                                height: illustrationBalloonHeight,
+                                                opacity: balloonOpacity,
+                                                transform: [{ scale: balloonScale }],
+                                            },
+                                        ]}
+                                        resizeMode="contain"
+                                    />
+                                </View>
                             </View>
 
                             <View style={styles.voiceFallbackCard}>
@@ -476,6 +551,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: 24,
         paddingTop: 36,
         paddingBottom: 36,
+    },
+    illustrationWrapper: {
+        position: 'relative',
+    },
+    illustrationBalloon: {
+        position: 'absolute',
+        top: -30,
+        right: -30,
     },
     voiceFallbackCard: {
         marginHorizontal: 24,

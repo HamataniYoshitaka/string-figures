@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Image, Platform, Dimensions, StatusBar, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { Video, ResizeMode } from 'expo-av';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
@@ -50,9 +51,18 @@ const ARCH_FILL_COLOR = '#FF623F';
 const NEXT_STEP_BUTTON_COLOR = '#FF623F';
 const NEXT_STEP_BUTTON_SHADOW_OFFSET = 4;
 const PHONE_FRAME_SHADOW_OFFSET = 4;
+const PHONE_FRAME_INSET = 4;
+const PHONE_FRAME_INNER_BORDER_WIDTH = 2;
+const PHONE_FRAME_HEADER_FILL = '#9BB262';
+const PHONE_FRAME_HEADER_ARCH_VIEWBOX = { w: 428, h: 86 };
+const PHONE_FRAME_HEADER_ARCH_PATH_D =
+    'M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z';
+const INTRO_PHONE_MOCK_TITLE = { ja: 'たくさんの星', en: 'Many Stars' } as const;
 /** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
 const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
 const PHONE_FRAME_SHADOW_COLOR = '#292524';
+const PHONE_FRAME_OUTER_BORDER_WIDTH = 3;
+const INTRO_PHONE_MOCK_VIDEO = require('../../assets/string-figures/0_introduction/intro1.mp4');
 const INTRO_ILLUSTRATION = require('../../assets/introduction/01.webp');
 const introIllustrationSource = Image.resolveAssetSource(INTRO_ILLUSTRATION);
 const INTRO_ILLUSTRATION_ASPECT =
@@ -113,6 +123,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const hasPlayedPage2EntranceAnimRef = useRef(false);
     const page2TextFadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const page2PhoneFadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const introPhoneVideoRef = useRef<Video>(null);
     const [nextStepButtonLayout, setNextStepButtonLayout] = useState({ width: 0, height: 0 });
     
     const { isTablet } = useDeviceInfo();
@@ -157,16 +168,32 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             - bottomChromeEstimate
             - insets.bottom
             - PHONE_FRAME_SHADOW_OFFSET
-            - 36,
+            - 6,
     );
     let phoneFrameWidth = Math.min(screenWidth * 0.56, isTablet ? 260 : 232);
     let phoneFrameHeight = phoneFrameWidth * (19 / 9);
     if (phoneFrameHeight > maxPhoneFrameHeight) {
         phoneFrameHeight = maxPhoneFrameHeight;
-        phoneFrameWidth = phoneFrameHeight * (9 / 19);
+        phoneFrameWidth = phoneFrameHeight * (10 / 19);
     }
     const phoneFrameBorderRadius = phoneFrameWidth * 0.14;
-    
+    const phoneFrameInnerBorderRadius = Math.max(
+        8,
+        phoneFrameBorderRadius - PHONE_FRAME_INSET,
+    );
+    const phoneFrameInnerContentRadius = Math.max(
+        6,
+        phoneFrameInnerBorderRadius - PHONE_FRAME_INNER_BORDER_WIDTH,
+    );
+    const phoneFrameInnerContentWidth =
+        phoneFrameWidth
+        - PHONE_FRAME_OUTER_BORDER_WIDTH * 2
+        - PHONE_FRAME_INSET * 2
+        - PHONE_FRAME_INNER_BORDER_WIDTH * 2;
+    const phoneFrameHeaderHeight =
+        phoneFrameInnerContentWidth
+        * (PHONE_FRAME_HEADER_ARCH_VIEWBOX.h / PHONE_FRAME_HEADER_ARCH_VIEWBOX.w);
+
     // アニメーションヘルパー関数
     const createPressInHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {
@@ -486,6 +513,54 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         };
     }, []);
 
+    const pauseIntroPhoneVideo = useCallback(async () => {
+        const video = introPhoneVideoRef.current;
+        if (!video) {
+            return;
+        }
+        try {
+            await video.pauseAsync();
+            await video.setPositionAsync(0);
+        } catch (error) {
+            console.error('Error pausing intro phone video:', error);
+        }
+    }, []);
+
+    const playIntroPhoneVideo = useCallback(async () => {
+        const video = introPhoneVideoRef.current;
+        if (!video) {
+            return;
+        }
+        try {
+            await video.setPositionAsync(0);
+            await video.playAsync();
+        } catch (error) {
+            console.error('Error playing intro phone video:', error);
+        }
+    }, []);
+
+    const handleIntroPhoneVideoLoad = useCallback(async () => {
+        if (currentPageIndex === PAGE_INDEX_P2) {
+            await playIntroPhoneVideo();
+            return;
+        }
+        await pauseIntroPhoneVideo();
+    }, [currentPageIndex, pauseIntroPhoneVideo, playIntroPhoneVideo]);
+
+    useEffect(() => {
+        if (currentPageIndex === PAGE_INDEX_P2) {
+            void playIntroPhoneVideo();
+            return;
+        }
+        void pauseIntroPhoneVideo();
+    }, [currentPageIndex, pauseIntroPhoneVideo, playIntroPhoneVideo]);
+
+    useEffect(() => {
+        return () => {
+            void pauseIntroPhoneVideo();
+        };
+    }, [pauseIntroPhoneVideo]);
+
     const handlePageSelected = (position: number) => {
         setCurrentPageIndex(position);
 
@@ -608,7 +683,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 styles.introHeroLine,
                                 {
                                     fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'KiwiMaru-Medium',
+                                    fontFamily: currentLanguage === 'en' ? 'LineSeed-Regular' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >
@@ -621,7 +696,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 styles.introHeroLineSecond,
                                 {
                                     fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'KiwiMaru-Medium',
+                                    fontFamily: currentLanguage === 'en' ? 'LineSeed-Regular' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >
@@ -672,8 +747,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                             style={[
                                 styles.introHeroLine,
                                 {
-                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'KiwiMaru-Medium',
+                                    fontSize: currentLanguage === 'ja' ? 24 : 20,
+                                    fontFamily: currentLanguage === 'en' ? 'LineSeed-Regular' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >
@@ -685,8 +760,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                 styles.introHeroLine,
                                 styles.introHeroLineSecond,
                                 {
-                                    fontSize: currentLanguage === 'ja' ? 24 : 22,
-                                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'KiwiMaru-Medium',
+                                    fontSize: currentLanguage === 'ja' ? 24 : 20,
+                                    fontFamily: currentLanguage === 'en' ? 'LineSeed-Regular' : 'KiwiMaru-Medium',
                                 },
                             ]}
                         >
@@ -724,7 +799,76 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                                         borderRadius: phoneFrameBorderRadius,
                                     },
                                 ]}
-                            />
+                            >
+                                <View
+                                    style={[
+                                        styles.phoneFrameInner,
+                                        {
+                                            borderRadius: phoneFrameInnerBorderRadius,
+                                        },
+                                    ]}
+                                >
+                                    <View
+                                        style={[
+                                            styles.phoneFrameInnerContent,
+                                            {
+                                                borderRadius: phoneFrameInnerContentRadius,
+                                            },
+                                        ]}
+                                    >
+                                        <View style={styles.phoneFrameBody}>
+                                            <Video
+                                                ref={introPhoneVideoRef}
+                                                source={INTRO_PHONE_MOCK_VIDEO}
+                                                style={styles.phoneFrameVideo}
+                                                resizeMode={ResizeMode.CONTAIN}
+                                                shouldPlay={false}
+                                                isMuted
+                                                useNativeControls={false}
+                                                onLoad={handleIntroPhoneVideoLoad}
+                                            />
+                                        </View>
+                                        <View
+                                            style={[
+                                                styles.phoneFrameHeader,
+                                                { height: phoneFrameHeaderHeight },
+                                            ]}
+                                            pointerEvents="none"
+                                        >
+                                            <Svg
+                                                width="100%"
+                                                height={phoneFrameHeaderHeight}
+                                                viewBox={`0 0 ${PHONE_FRAME_HEADER_ARCH_VIEWBOX.w} ${PHONE_FRAME_HEADER_ARCH_VIEWBOX.h}`}
+                                                preserveAspectRatio="none"
+                                                style={styles.phoneFrameHeaderArch}
+                                            >
+                                                <Path
+                                                    d={PHONE_FRAME_HEADER_ARCH_PATH_D}
+                                                    fill={PHONE_FRAME_HEADER_FILL}
+                                                />
+                                            </Svg>
+                                            <View style={styles.phoneFrameTitleWrap}>
+                                                <Text
+                                                    maxFontSizeMultiplier={1.25}
+                                                    numberOfLines={1}
+                                                    style={[
+                                                        styles.phoneFrameTitle,
+                                                        {
+                                                            fontSize: isTablet ? 14 : 12,
+                                                            fontFamily:
+                                                                currentLanguage === 'en'
+                                                                    ? 'KronaOne-Regular'
+                                                                    : 'LineSeed-Bold',
+                                                        },
+                                                    ]}
+                                                >
+                                                    {getLocalizedText(INTRO_PHONE_MOCK_TITLE)}
+                                                </Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
                         </Animated.View>
                     </View>
                 </View>
@@ -907,10 +1051,57 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        borderWidth: 3,
+        borderWidth: PHONE_FRAME_OUTER_BORDER_WIDTH,
         borderColor: '#292524',
         backgroundColor: '#FFFFFF',
         overflow: 'hidden',
+        padding: PHONE_FRAME_INSET,
+    },
+    phoneFrameInner: {
+        flex: 1,
+        borderWidth: PHONE_FRAME_INNER_BORDER_WIDTH,
+        borderColor: '#292524',
+        backgroundColor: '#F7F5F2',
+        overflow: 'hidden',
+    },
+    phoneFrameInnerContent: {
+        flex: 1,
+        position: 'relative',
+        backgroundColor: '#F7F5F2',
+        overflow: 'hidden',
+    },
+    phoneFrameBody: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: '#F7F5F2',
+        overflow: 'hidden',
+    },
+    phoneFrameVideo: {
+        width: '100%',
+        height: '100%',
+    },
+    phoneFrameHeader: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1,
+        elevation: 1,
+        overflow: 'hidden',
+    },
+    phoneFrameHeaderArch: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    phoneFrameTitleWrap: {
+        ...StyleSheet.absoluteFillObject,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 8,
+        paddingBottom: 6,
+    },
+    phoneFrameTitle: {
+        color: '#292524',
+        textAlign: 'center',
+        fontWeight: '600',
     },
     pagerView: {
         flex: 1,
