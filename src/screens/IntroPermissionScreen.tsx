@@ -48,6 +48,9 @@ const ARCH_FILL_COLOR = '#FF623F';
 const NEXT_STEP_BUTTON_COLOR = '#FF623F';
 const NEXT_STEP_BUTTON_SHADOW_OFFSET = 4;
 const PHONE_FRAME_SHADOW_OFFSET = 4;
+const PHONE_FRAME_INSET = 4;
+const PHONE_FRAME_INNER_BORDER_WIDTH = 2;
+const PHONE_FRAME_OUTER_BORDER_WIDTH = 3;
 const PHONE_FRAME_SHADOW_COLOR = '#292524';
 /** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
 const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
@@ -86,9 +89,24 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
     let phoneFrameHeight = phoneFrameWidth * (19 / 9);
     if (phoneFrameHeight > maxPhoneFrameHeight) {
         phoneFrameHeight = maxPhoneFrameHeight;
-        phoneFrameWidth = phoneFrameHeight * (9 / 19);
+        phoneFrameWidth = phoneFrameHeight * (10 / 19);
     }
     const phoneFrameBorderRadius = phoneFrameWidth * 0.14;
+    const phoneFrameInnerBorderRadius = Math.max(
+        8,
+        phoneFrameBorderRadius - PHONE_FRAME_INSET,
+    );
+    const phoneFrameInnerContentRadius = Math.max(
+        6,
+        phoneFrameInnerBorderRadius - PHONE_FRAME_INNER_BORDER_WIDTH,
+    );
+    const phoneFrameInnerContentWidth =
+        phoneFrameWidth
+        - PHONE_FRAME_OUTER_BORDER_WIDTH * 2
+        - PHONE_FRAME_INSET * 2
+        - PHONE_FRAME_INNER_BORDER_WIDTH * 2;
+    const phoneFrameArchDisplayHeight =
+        phoneFrameInnerContentWidth * (ARCH_VIEWBOX.h / ARCH_VIEWBOX.w);
 
     const createPressInHandler = (scale: Animated.Value) => () => {
         Animated.spring(scale, {
@@ -250,7 +268,42 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                                         borderRadius: phoneFrameBorderRadius,
                                     },
                                 ]}
-                            />
+                            >
+                                <View
+                                    style={[
+                                        styles.phoneFrameInner,
+                                        {
+                                            borderRadius: phoneFrameInnerBorderRadius,
+                                        },
+                                    ]}
+                                >
+                                    <View
+                                        style={[
+                                            styles.phoneFrameInnerContent,
+                                            {
+                                                borderRadius: phoneFrameInnerContentRadius,
+                                            },
+                                        ]}
+                                    >
+                                        <Svg
+                                            width={phoneFrameInnerContentWidth}
+                                            height={phoneFrameArchDisplayHeight}
+                                            viewBox={`0 0 ${ARCH_VIEWBOX.w} ${ARCH_VIEWBOX.h}`}
+                                            preserveAspectRatio="xMidYMin meet"
+                                            pointerEvents="none"
+                                            style={[
+                                                styles.phoneFrameArchSvg,
+                                                {
+                                                    width: phoneFrameInnerContentWidth,
+                                                    height: phoneFrameArchDisplayHeight,
+                                                },
+                                            ]}
+                                        >
+                                            <Path d={ARCH_PATH_D} fill={ARCH_FILL_COLOR} />
+                                        </Svg>
+                                    </View>
+                                </View>
+                            </View>
                         </View>
                     </View>
 
@@ -438,10 +491,30 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         top: 0,
-        borderWidth: 3,
+        borderWidth: PHONE_FRAME_OUTER_BORDER_WIDTH,
         borderColor: '#292524',
         backgroundColor: '#FFFFFF',
         overflow: 'hidden',
+        padding: PHONE_FRAME_INSET,
+    },
+    phoneFrameInner: {
+        flex: 1,
+        borderWidth: PHONE_FRAME_INNER_BORDER_WIDTH,
+        borderColor: '#292524',
+        backgroundColor: '#F7F5F2',
+        overflow: 'hidden',
+    },
+    phoneFrameInnerContent: {
+        flex: 1,
+        position: 'relative',
+        backgroundColor: '#F7F5F2',
+        overflow: 'hidden',
+    },
+    phoneFrameArchSvg: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
     },
     bottomChrome: {
         maxWidth: 500,
