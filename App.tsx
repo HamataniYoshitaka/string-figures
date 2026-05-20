@@ -14,7 +14,6 @@ import Purchases from 'react-native-purchases';
 import { RootStackParamList } from './src/types';
 import { registerPushTokenIfGranted } from './src/utils/pushNotifications';
 import * as Localization from 'expo-localization';
-import IntroScreen from './src/screens/IntroScreen';
 import IntroVideoScreen from './src/screens/IntroVideoScreen';
 import IntroPermissionScreen from './src/screens/IntroPermissionScreen';
 import IntroVoiceScreen from './src/screens/IntroVoiceScreen';
@@ -32,6 +31,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
   const [introductionCompleted, setIntroductionCompleted] = useState<boolean | null>(null);
+  const [bootstrapLanguage, setBootstrapLanguage] = useState<'ja' | 'en'>('ja');
 
   useEffect(() => {
     // フォントと初期設定の読み込み
@@ -63,15 +63,23 @@ export default function App() {
         const completed = await AsyncStorage.getItem('introduction_completed');
         setIntroductionCompleted(completed === 'true');
 
-        // 言語設定を読み込んで、プッシュ通知トークンを登録（既に許可されている場合）
+        // 言語（IntroVideo の initialParams 用。未保存なら OS に合わせて保存）
         const savedLanguage = await AsyncStorage.getItem('app_language');
-        const language = (savedLanguage === 'ja' || savedLanguage === 'en') 
-          ? savedLanguage 
-          : (Localization.getLocales()[0]?.languageCode === 'ja' ? 'ja' : 'en');
+        let language: 'ja' | 'en';
+        if (savedLanguage === 'ja' || savedLanguage === 'en') {
+          language = savedLanguage;
+        } else {
+          language =
+            Localization.getLocales()[0]?.languageCode === 'ja' ? 'ja' : 'en';
+          await AsyncStorage.setItem('app_language', language);
+        }
+        setBootstrapLanguage(language);
+
+        // プッシュ通知トークンを登録（既に許可されている場合）
         
         // アプリ起動時に毎回トークンをサーバーにPOST
         setTimeout(() => {
-          registerPushTokenIfGranted(language as 'ja' | 'en');
+          registerPushTokenIfGranted(language);
         }, 1000);
 
         setFontLoaded(true);
@@ -100,13 +108,19 @@ export default function App() {
         <NavigationContainer>
           <StatusBar style="auto" />
           <Stack.Navigator
-            initialRouteName={introductionCompleted ? 'Home' : 'Intro'}
+            initialRouteName={introductionCompleted ? 'Home' : 'IntroVideo'}
             screenOptions={{
               headerShown: false,
             }}
           >
-            <Stack.Screen name="Intro" component={IntroScreen} />
-            <Stack.Screen name="IntroVideo" component={IntroVideoScreen} />
+            <Stack.Screen
+              name="IntroVideo"
+              component={IntroVideoScreen}
+              initialParams={{
+                currentLanguage: bootstrapLanguage,
+                ...(introductionCompleted ? {} : { hideCloseButton: true }),
+              }}
+            />
             <Stack.Screen name="IntroPermission" component={IntroPermissionScreen} />
             <Stack.Screen name="IntroVoice" component={IntroVoiceScreen} />
             <Stack.Screen name="IntroComplete" component={IntroCompleteScreen} />

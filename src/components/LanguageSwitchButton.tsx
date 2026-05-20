@@ -14,6 +14,8 @@ interface LanguageSwitchButtonProps {
   currentLanguage: Language;
   onSelectLanguage: (language: Language) => void | Promise<void>;
   isTablet?: boolean;
+  /** 明るい背景上のデフォルト / 濃色・オレンジ等のヘッダー上で白系 */
+  appearance?: 'default' | 'inverse';
 }
 
 export const showLanguageSelectionDialog = (
@@ -45,28 +47,39 @@ const LanguageSwitchButton: React.FC<LanguageSwitchButtonProps> = ({
   currentLanguage,
   onSelectLanguage,
   isTablet = false,
+  appearance = 'default',
 }) => {
   const handlePress = () => {
     showLanguageSelectionDialog(currentLanguage, onSelectLanguage);
   };
 
+  const inverse = appearance === 'inverse';
+  const iconColor = inverse ? '#FFFFFF' : '#57534D';
+  const textStyle = [
+    styles.buttonText,
+    isTablet && styles.buttonTextTablet,
+    inverse && styles.buttonTextInverse,
+  ];
+  const buttonStyle = [
+    styles.button,
+    isTablet && styles.buttonTablet,
+    inverse && styles.buttonInverse,
+  ];
+
   return (
     <TouchableOpacity
-      style={[styles.button, isTablet && styles.buttonTablet]}
+      style={buttonStyle}
       activeOpacity={0.8}
       onPress={handlePress}
     >
       <TranslateIcon
         width={isTablet ? 28 : 20}
         height={isTablet ? 28 : 20}
-        fillColor="#57534D"
-        strokeColor="#57534D"
+        fillColor={iconColor}
+        strokeColor={iconColor}
         strokeWidth={0}
       />
-      <Text 
-        maxFontSizeMultiplier={1.25}
-        style={[styles.buttonText, isTablet && styles.buttonTextTablet]}
-      >
+      <Text maxFontSizeMultiplier={1.25} style={textStyle}>
         {currentLanguage === 'ja' ? '日本語' : 'English'}
       </Text>
     </TouchableOpacity>
@@ -95,6 +108,13 @@ const styles = StyleSheet.create({
   },
   buttonTextTablet: {
     fontSize: 18,
+  },
+  buttonInverse: {
+    borderColor: 'rgba(255, 255, 255, 0.85)',
+    backgroundColor: 'rgba(0, 0, 0, 0.12)',
+  },
+  buttonTextInverse: {
+    color: '#FFFFFF',
   },
 });
 

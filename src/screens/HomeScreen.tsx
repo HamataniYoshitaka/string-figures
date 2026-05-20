@@ -525,7 +525,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         navigation.navigate('Policy');
       }
       if (item.directNavigationDestination === 'Intro') {
-        navigation.navigate('IntroVideo', { currentLanguage: currentLanguage });
+        navigation.navigate('IntroVideo', {
+          currentLanguage: currentLanguage,
+          hideCloseButton: false,
+        });
       }
       if (item.directNavigationDestination === 'SwitchingExplanationVideo') {
         navigation.navigate('SwitchingExplanationVideo');

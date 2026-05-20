@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Animated, Text, Image, Platform, Dimensions, StatusBar, ScrollView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Svg, { Path } from 'react-native-svg';
 import { Video } from 'expo-av';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -8,6 +9,7 @@ import { RootStackParamList } from '../types';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronRightIcon, CloseIcon } from '../components/icons';
+import LanguageSwitchButton from '../components/LanguageSwitchButton';
 import ProgressDots from '../components/ProgressDots';
 import IntroVideoPage2 from './IntroVideoPage2';
 
@@ -109,7 +111,8 @@ const createPage2BalloonFadeInOutSequence = (
     ]);
 
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
-    const { currentLanguage } = route.params;
+    const currentLanguage = route.params.currentLanguage;
+    const hideCloseButton = route.params.hideCloseButton === true;
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
     const [isNextStepButtonVisible, setIsNextStepButtonVisible] = useState(false);
     const [page1Progress, setPage1Progress] = useState(0);
@@ -237,6 +240,18 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         console.log('onGoBack');
         navigation.goBack();
     };
+
+    const handleSelectLanguage = useCallback(
+        async (language: 'ja' | 'en') => {
+            try {
+                await AsyncStorage.setItem('app_language', language);
+                navigation.setParams({ currentLanguage: language });
+            } catch (error) {
+                console.error('言語設定の保存に失敗しました:', error);
+            }
+        },
+        [navigation],
+    );
 
     // 多言語対応のヘルパー関数
     const getLocalizedText = (textObj: { ja: string; en: string }) => {
@@ -701,20 +716,35 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
             <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
             <View style={[styles.header, { paddingTop: headerPaddingTop }]}>
-                <TouchableWithoutFeedback 
-                    onPress={onGoBack}
-                    onPressIn={createPressInHandler(backButtonScale)}
-                    onPressOut={createPressOutHandler(backButtonScale)}
-                >
-                    <Animated.View 
-                    style={[
-                        styles.backButton,
-                        { transform: [{ scale: backButtonScale }] }
-                    ]}
+                {hideCloseButton ? (
+                    <View
+                        style={styles.headerLeadSlot}
+                        pointerEvents="none"
+                        accessibilityElementsHidden
+                        importantForAccessibility="no-hide-descendants"
+                    />
+                ) : (
+                    <TouchableWithoutFeedback
+                        onPress={onGoBack}
+                        onPressIn={createPressInHandler(backButtonScale)}
+                        onPressOut={createPressOutHandler(backButtonScale)}
                     >
-                    <CloseIcon width={28} height={28} fillColor="#FFFFFF" strokeWidth={0} strokeColor="#FFFFFF" />
-                    </Animated.View>
-                </TouchableWithoutFeedback>
+                        <Animated.View
+                            style={[
+                                styles.backButton,
+                                { transform: [{ scale: backButtonScale }] },
+                            ]}
+                        >
+                            <CloseIcon
+                                width={28}
+                                height={28}
+                                fillColor="#FFFFFF"
+                                strokeWidth={0}
+                                strokeColor="#FFFFFF"
+                            />
+                        </Animated.View>
+                    </TouchableWithoutFeedback>
+                )}
                 <Text 
                     maxFontSizeMultiplier={1.35}
                     style={[
@@ -728,12 +758,14 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                 >
                     {getLocalizedText({ja: 'はじめに', en: 'Introduction'})}
                 </Text>
-                <View
-                    style={styles.headerSideSpacer}
-                    pointerEvents="none"
-                    accessibilityElementsHidden
-                    importantForAccessibility="no-hide-descendants"
-                />
+                <View style={styles.headerLanguageSlot}>
+                    <LanguageSwitchButton
+                        currentLanguage={currentLanguage}
+                        onSelectLanguage={handleSelectLanguage}
+                        isTablet={isTablet}
+                        appearance="inverse"
+                    />
+                </View>
             </View>
 
             <ScrollView
@@ -971,8 +1003,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0)',
         borderRadius: 20,
     },
-    headerSideSpacer: {
-        width: HEADER_BACK_BUTTON_WIDTH,
+    headerLeadSlot: {
+        minWidth: HEADER_BACK_BUTTON_WIDTH,
+        alignSelf: 'stretch',
+    },
+    headerLanguageSlot: {
+        minWidth: HEADER_BACK_BUTTON_WIDTH,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
     },
     title: {
         flex: 1,
