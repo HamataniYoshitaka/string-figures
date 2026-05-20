@@ -37,9 +37,14 @@ const PHONE_FRAME_OUTER_BORDER_WIDTH = 3;
 const INTRO_PHONE_MOCK_VIDEO = require('../../assets/string-figures/0_introduction/intro1.mp4');
 const INTRO_PAGE2_BALLOON_TSUGI = require('../../assets/string-figures/0_introduction/balloon-tsugi.png');
 const INTRO_PAGE2_BALLOON_NEXT = require('../../assets/string-figures/0_introduction/balloon-next.png');
+const INTRO_PAGE2_BALLOON_MOUICHIDO = require('../../assets/string-figures/0_introduction/balloon-mouichido.png');
+const INTRO_PAGE2_BALLOON_REPLAY = require('../../assets/string-figures/0_introduction/balloon-replay.png');
 const introPage2BalloonSource = Image.resolveAssetSource(INTRO_PAGE2_BALLOON_TSUGI);
+const introPage2ReplayBalloonSource = Image.resolveAssetSource(INTRO_PAGE2_BALLOON_MOUICHIDO);
 const INTRO_PAGE2_BALLOON_ASPECT =
     introPage2BalloonSource.width / introPage2BalloonSource.height;
+const INTRO_PAGE2_REPLAY_BALLOON_ASPECT =
+    introPage2ReplayBalloonSource.width / introPage2ReplayBalloonSource.height;
 
 const PAGE2_TOP_SECTION_ESTIMATE = 88;
 const BOTTOM_CHROME_ESTIMATE = 152;
@@ -48,6 +53,7 @@ const PHONE_FRAME_CONTAINER_PADDING_HORIZONTAL = 24;
 const PAGE2_BALLOON_LEFT_FROM_SCREEN = 16;
 const PAGE2_BALLOON_WIDTH_RATIO = 0.5;
 const PAGE2_BALLOON_EN_WIDTH_SCALE = 1.2;
+const PAGE2_REPLAY_BALLOON_SCALE = 1.1;
 
 export interface IntroVideoPage2Props {
     pagerWidth: number;
@@ -58,6 +64,8 @@ export interface IntroVideoPage2Props {
     page2PhoneTranslateY: Animated.Value;
     page2BalloonOpacity: Animated.Value;
     page2BalloonTranslateY: Animated.Value;
+    page2ReplayBalloonOpacity: Animated.Value;
+    page2ReplayBalloonTranslateY: Animated.Value;
     introPhoneVideoRef: React.RefObject<Video | null>;
     onIntroPhoneVideoLoad: () => void | Promise<void>;
     getLocalizedText: (textObj: { ja: string; en: string }) => string;
@@ -72,6 +80,8 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
     page2PhoneTranslateY,
     page2BalloonOpacity,
     page2BalloonTranslateY,
+    page2ReplayBalloonOpacity,
+    page2ReplayBalloonTranslateY,
     introPhoneVideoRef,
     onIntroPhoneVideoLoad,
     getLocalizedText,
@@ -125,6 +135,11 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
     const phoneFrameBalloonHeight = phoneFrameBalloonWidth / INTRO_PAGE2_BALLOON_ASPECT;
     const introPage2BalloonImage =
         currentLanguage === 'en' ? INTRO_PAGE2_BALLOON_NEXT : INTRO_PAGE2_BALLOON_TSUGI;
+    const phoneFrameReplayBalloonWidth = phoneFrameBalloonWidth * PAGE2_REPLAY_BALLOON_SCALE;
+    const phoneFrameReplayBalloonHeight =
+        phoneFrameReplayBalloonWidth / INTRO_PAGE2_REPLAY_BALLOON_ASPECT;
+    const introPage2ReplayBalloonImage =
+        currentLanguage === 'en' ? INTRO_PAGE2_BALLOON_REPLAY : INTRO_PAGE2_BALLOON_MOUICHIDO;
     const phoneFrameBalloonTop =
         PHONE_FRAME_OUTER_BORDER_WIDTH
         + PHONE_FRAME_INSET
@@ -280,7 +295,7 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
                         </View>
                     </View>
                     <Animated.Image
-                        key={currentLanguage}
+                        key={`tsugi-${currentLanguage}`}
                         source={introPage2BalloonImage}
                         style={[
                             styles.phoneFrameBalloon,
@@ -291,6 +306,22 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
                                 left: phoneFrameBalloonLeft,
                                 opacity: page2BalloonOpacity,
                                 transform: [{ translateY: page2BalloonTranslateY }],
+                            },
+                        ]}
+                        resizeMode="contain"
+                    />
+                    <Animated.Image
+                        key={`replay-${currentLanguage}`}
+                        source={introPage2ReplayBalloonImage}
+                        style={[
+                            styles.phoneFrameBalloon,
+                            {
+                                width: phoneFrameReplayBalloonWidth,
+                                height: phoneFrameReplayBalloonHeight,
+                                top: phoneFrameBalloonTop,
+                                left: phoneFrameBalloonLeft,
+                                opacity: page2ReplayBalloonOpacity,
+                                transform: [{ translateY: page2ReplayBalloonTranslateY }],
                             },
                         ]}
                         resizeMode="contain"

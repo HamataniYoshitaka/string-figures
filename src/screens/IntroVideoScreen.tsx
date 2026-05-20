@@ -72,6 +72,41 @@ const PAGE2_BALLOON_VISIBLE_DURATION_MS = 2000;
 const PAGE2_BALLOON_FADE_DURATION_MS = 500;
 const PAGE2_BALLOON_FADE_IN_TRANSLATE_Y = 16;
 const PAGE2_BALLOON_FADE_OUT_TRANSLATE_Y = -16;
+const PAGE2_REPLAY_BALLOON_FADE_IN_DELAY_MS = 12000;
+const PAGE2_REPLAY_BALLOON_VISIBLE_DURATION_MS = 2000;
+
+const createPage2BalloonFadeInOutSequence = (
+    opacity: Animated.Value,
+    translateY: Animated.Value,
+    visibleDurationMs: number,
+): Animated.CompositeAnimation =>
+    Animated.sequence([
+        Animated.parallel([
+            Animated.timing(opacity, {
+                toValue: 1,
+                duration: PAGE2_BALLOON_FADE_DURATION_MS,
+                useNativeDriver: true,
+            }),
+            Animated.timing(translateY, {
+                toValue: 0,
+                duration: PAGE2_BALLOON_FADE_DURATION_MS,
+                useNativeDriver: true,
+            }),
+        ]),
+        Animated.delay(visibleDurationMs),
+        Animated.parallel([
+            Animated.timing(opacity, {
+                toValue: 0,
+                duration: PAGE2_BALLOON_FADE_DURATION_MS,
+                useNativeDriver: true,
+            }),
+            Animated.timing(translateY, {
+                toValue: PAGE2_BALLOON_FADE_OUT_TRANSLATE_Y,
+                duration: PAGE2_BALLOON_FADE_DURATION_MS,
+                useNativeDriver: true,
+            }),
+        ]),
+    ]);
 
 const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
@@ -107,6 +142,10 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const page2BalloonTranslateY = useRef(
         new Animated.Value(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y),
     ).current;
+    const page2ReplayBalloonOpacity = useRef(new Animated.Value(0)).current;
+    const page2ReplayBalloonTranslateY = useRef(
+        new Animated.Value(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y),
+    ).current;
     const nextStepButtonOpacity = useRef(new Animated.Value(0)).current;
     const nextStepButtonFadeTranslateY = useRef(new Animated.Value(INTRO_FADE_IN_TRANSLATE_Y)).current;
     const hasPlayedPage2EntranceAnimRef = useRef(false);
@@ -114,6 +153,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
     const page2PhoneFadeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const page2BalloonFadeInTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const page2BalloonAnimRef = useRef<Animated.CompositeAnimation | null>(null);
+    const page2ReplayBalloonFadeInTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const page2ReplayBalloonAnimRef = useRef<Animated.CompositeAnimation | null>(null);
     const page2VideoPlayTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const introPhoneVideoRef = useRef<Video>(null);
     const [nextStepButtonLayout, setNextStepButtonLayout] = useState({ width: 0, height: 0 });
@@ -369,7 +410,31 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         }
     };
 
-    const clearPage2BalloonAnimation = useCallback(() => {
+    const clearPage2BalloonAnimations = useCallback(() => {
+        if (page2BalloonFadeInTimerRef.current) {
+            clearTimeout(page2BalloonFadeInTimerRef.current);
+            page2BalloonFadeInTimerRef.current = null;
+        }
+        if (page2ReplayBalloonFadeInTimerRef.current) {
+            clearTimeout(page2ReplayBalloonFadeInTimerRef.current);
+            page2ReplayBalloonFadeInTimerRef.current = null;
+        }
+        page2BalloonAnimRef.current?.stop();
+        page2BalloonAnimRef.current = null;
+        page2ReplayBalloonAnimRef.current?.stop();
+        page2ReplayBalloonAnimRef.current = null;
+        page2BalloonOpacity.setValue(0);
+        page2BalloonTranslateY.setValue(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y);
+        page2ReplayBalloonOpacity.setValue(0);
+        page2ReplayBalloonTranslateY.setValue(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y);
+    }, [
+        page2BalloonOpacity,
+        page2BalloonTranslateY,
+        page2ReplayBalloonOpacity,
+        page2ReplayBalloonTranslateY,
+    ]);
+
+    const startPage2BalloonAnimation = useCallback(() => {
         if (page2BalloonFadeInTimerRef.current) {
             clearTimeout(page2BalloonFadeInTimerRef.current);
             page2BalloonFadeInTimerRef.current = null;
@@ -378,46 +443,44 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         page2BalloonAnimRef.current = null;
         page2BalloonOpacity.setValue(0);
         page2BalloonTranslateY.setValue(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y);
-    }, [page2BalloonOpacity, page2BalloonTranslateY]);
-
-    const startPage2BalloonAnimation = useCallback(() => {
-        clearPage2BalloonAnimation();
         page2BalloonFadeInTimerRef.current = setTimeout(() => {
             page2BalloonFadeInTimerRef.current = null;
             page2BalloonOpacity.setValue(0);
             page2BalloonTranslateY.setValue(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y);
-            page2BalloonAnimRef.current = Animated.sequence([
-                Animated.parallel([
-                    Animated.timing(page2BalloonOpacity, {
-                        toValue: 1,
-                        duration: PAGE2_BALLOON_FADE_DURATION_MS,
-                        useNativeDriver: true,
-                    }),
-                    Animated.timing(page2BalloonTranslateY, {
-                        toValue: 0,
-                        duration: PAGE2_BALLOON_FADE_DURATION_MS,
-                        useNativeDriver: true,
-                    }),
-                ]),
-                Animated.delay(PAGE2_BALLOON_VISIBLE_DURATION_MS),
-                Animated.parallel([
-                    Animated.timing(page2BalloonOpacity, {
-                        toValue: 0,
-                        duration: PAGE2_BALLOON_FADE_DURATION_MS,
-                        useNativeDriver: true,
-                    }),
-                    Animated.timing(page2BalloonTranslateY, {
-                        toValue: PAGE2_BALLOON_FADE_OUT_TRANSLATE_Y,
-                        duration: PAGE2_BALLOON_FADE_DURATION_MS,
-                        useNativeDriver: true,
-                    }),
-                ]),
-            ]);
+            page2BalloonAnimRef.current = createPage2BalloonFadeInOutSequence(
+                page2BalloonOpacity,
+                page2BalloonTranslateY,
+                PAGE2_BALLOON_VISIBLE_DURATION_MS,
+            );
             page2BalloonAnimRef.current.start(() => {
                 page2BalloonAnimRef.current = null;
             });
         }, PAGE2_BALLOON_FADE_IN_DELAY_MS);
-    }, [clearPage2BalloonAnimation, page2BalloonOpacity, page2BalloonTranslateY]);
+    }, [page2BalloonOpacity, page2BalloonTranslateY]);
+
+    const startPage2ReplayBalloonAnimation = useCallback(() => {
+        if (page2ReplayBalloonFadeInTimerRef.current) {
+            clearTimeout(page2ReplayBalloonFadeInTimerRef.current);
+            page2ReplayBalloonFadeInTimerRef.current = null;
+        }
+        page2ReplayBalloonAnimRef.current?.stop();
+        page2ReplayBalloonAnimRef.current = null;
+        page2ReplayBalloonOpacity.setValue(0);
+        page2ReplayBalloonTranslateY.setValue(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y);
+        page2ReplayBalloonFadeInTimerRef.current = setTimeout(() => {
+            page2ReplayBalloonFadeInTimerRef.current = null;
+            page2ReplayBalloonOpacity.setValue(0);
+            page2ReplayBalloonTranslateY.setValue(PAGE2_BALLOON_FADE_IN_TRANSLATE_Y);
+            page2ReplayBalloonAnimRef.current = createPage2BalloonFadeInOutSequence(
+                page2ReplayBalloonOpacity,
+                page2ReplayBalloonTranslateY,
+                PAGE2_REPLAY_BALLOON_VISIBLE_DURATION_MS,
+            );
+            page2ReplayBalloonAnimRef.current.start(() => {
+                page2ReplayBalloonAnimRef.current = null;
+            });
+        }, PAGE2_REPLAY_BALLOON_FADE_IN_DELAY_MS);
+    }, [page2ReplayBalloonOpacity, page2ReplayBalloonTranslateY]);
 
     const startPage2EntranceAnimations = () => {
         if (hasPlayedPage2EntranceAnimRef.current) {
@@ -429,7 +492,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         page2TextTranslateY.setValue(INTRO_FADE_IN_TRANSLATE_Y);
         page2PhoneOpacity.setValue(0);
         page2PhoneTranslateY.setValue(INTRO_FADE_IN_TRANSLATE_Y);
-        clearPage2BalloonAnimation();
+        clearPage2BalloonAnimations();
 
         page2TextFadeTimerRef.current = setTimeout(() => {
             page2TextFadeTimerRef.current = null;
@@ -515,7 +578,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             stopPage1ProgressAnimation();
             stopPage2ProgressAnimation();
             clearPage2EntranceTimers();
-            clearPage2BalloonAnimation();
+            clearPage2BalloonAnimations();
             clearPage2VideoPlayTimer();
             if (buttonRevealTimerRef.current) {
                 clearTimeout(buttonRevealTimerRef.current);
@@ -532,7 +595,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
 
     const pauseIntroPhoneVideo = useCallback(async () => {
         clearPage2VideoPlayTimer();
-        clearPage2BalloonAnimation();
+        clearPage2BalloonAnimations();
         const video = introPhoneVideoRef.current;
         if (!video) {
             return;
@@ -543,7 +606,7 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
         } catch (error) {
             console.error('Error pausing intro phone video:', error);
         }
-    }, [clearPage2BalloonAnimation, clearPage2VideoPlayTimer]);
+    }, [clearPage2BalloonAnimations, clearPage2VideoPlayTimer]);
 
     const playIntroPhoneVideo = useCallback(async () => {
         const video = introPhoneVideoRef.current;
@@ -554,10 +617,11 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
             await video.setPositionAsync(0);
             await video.playAsync();
             startPage2BalloonAnimation();
+            startPage2ReplayBalloonAnimation();
         } catch (error) {
             console.error('Error playing intro phone video:', error);
         }
-    }, [startPage2BalloonAnimation]);
+    }, [startPage2BalloonAnimation, startPage2ReplayBalloonAnimation]);
 
     const scheduleIntroPhoneVideoPlay = useCallback(() => {
         clearPage2VideoPlayTimer();
@@ -765,6 +829,8 @@ const IntroVideoScreen: React.FC<Props> = ({ navigation, route }) => {
                     page2PhoneTranslateY={page2PhoneTranslateY}
                     page2BalloonOpacity={page2BalloonOpacity}
                     page2BalloonTranslateY={page2BalloonTranslateY}
+                    page2ReplayBalloonOpacity={page2ReplayBalloonOpacity}
+                    page2ReplayBalloonTranslateY={page2ReplayBalloonTranslateY}
                     introPhoneVideoRef={introPhoneVideoRef}
                     onIntroPhoneVideoLoad={handleIntroPhoneVideoLoad}
                     getLocalizedText={getLocalizedText}
