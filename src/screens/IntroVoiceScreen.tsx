@@ -272,7 +272,7 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
                 <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
                     <View style={[styles.header, { paddingTop: headerPaddingTop }]}>
                         <TouchableWithoutFeedback
-                            onPress={onGoBack}
+                            onPress={onSkip}
                             onPressIn={createPressInHandler(backButtonScale)}
                             onPressOut={createPressOutHandler(backButtonScale)}
                         >
