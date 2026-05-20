@@ -56,15 +56,21 @@ const PHONE_FRAME_SHADOW_COLOR = '#292524';
 /** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
 const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
 
-const INTRO2_PERMISSION_PREVIEW_VIDEO_JA = require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4');
-const INTRO2_PERMISSION_PREVIEW_VIDEO_EN = require('../../assets/string-figures/0_introduction/intro2-ios-en.mp4');
+const INTRO2_PERMISSION_PREVIEW_VIDEO_IOS_JA = require('../../assets/string-figures/0_introduction/intro2-ios-ja.mp4');
+const INTRO2_PERMISSION_PREVIEW_VIDEO_IOS_EN = require('../../assets/string-figures/0_introduction/intro2-ios-en.mp4');
+const INTRO2_PERMISSION_PREVIEW_VIDEO_ANDROID_JA = require('../../assets/string-figures/0_introduction/intro2-android-ja.mp4');
+const INTRO2_PERMISSION_PREVIEW_VIDEO_ANDROID_EN = require('../../assets/string-figures/0_introduction/intro2-android-en.mp4');
 
 const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
     const { currentLanguage } = route.params;
     const intro2PermissionPreviewSource =
-        currentLanguage === 'ja'
-            ? INTRO2_PERMISSION_PREVIEW_VIDEO_JA
-            : INTRO2_PERMISSION_PREVIEW_VIDEO_EN;
+        Platform.OS === 'android'
+            ? currentLanguage === 'ja'
+                ? INTRO2_PERMISSION_PREVIEW_VIDEO_ANDROID_JA
+                : INTRO2_PERMISSION_PREVIEW_VIDEO_ANDROID_EN
+            : currentLanguage === 'ja'
+                ? INTRO2_PERMISSION_PREVIEW_VIDEO_IOS_JA
+                : INTRO2_PERMISSION_PREVIEW_VIDEO_IOS_EN;
 
     const backButtonScale = useRef(new Animated.Value(1)).current;
     const nextStepButtonPressAnim = useRef(new Animated.Value(0)).current;
@@ -295,7 +301,7 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                                     >
                                         <View style={styles.phoneFrameVideoWrap}>
                                             <Video
-                                                key={currentLanguage}
+                                                key={`${currentLanguage}-${Platform.OS}`}
                                                 source={intro2PermissionPreviewSource}
                                                 style={styles.phoneFrameVideo}
                                                 resizeMode={ResizeMode.COVER}
