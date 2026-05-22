@@ -116,7 +116,12 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
   const isBalloonAbove = isTablet && isDeviceLandscape;
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        isBalloonAbove && styles.containerTabletLandscape,
+      ]}
+    >
       <View style={styles.navigationRow}>
         {/* まえボタン */}
         <View style={styles.buttonContainer}>
@@ -190,6 +195,11 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingBottom: 52,
+  },
+  /** バルーンがボタン上側のため、下の余白（旧バルーン分）は不要 */
+  containerTabletLandscape: {
+    paddingBottom: 12,
+    paddingTop: 8,
   },
   navigationRow: {
     flexDirection: 'row',
