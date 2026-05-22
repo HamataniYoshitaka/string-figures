@@ -26,7 +26,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/4_volcano/preview.mp4'),
   },
   '5_many-stars': {
-    thumbnail: require('../../assets/string-figures/5_many-stars/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/5_many-stars/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/5_many-stars/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/5_many-stars/preview.mp4'),
   },

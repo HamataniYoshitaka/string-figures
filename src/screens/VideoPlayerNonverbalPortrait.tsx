@@ -326,9 +326,15 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   /** 可視4行の上段（leadingPreview 行）静止画枠の画面座標。ストリップ index 0 は空行 */
   const topStillFrameTopFromScreenTop = stripCenteringOffset + stripRowSlotHeight;
   const topStillFrameLeftFromScreenLeft = (windowWidth - videoContentWidth) / 2;
-  /** SafeAreaView 内 absolute 用（ストリップは画面 top:0、ボタンは SafeArea 内） */
+  /**
+   * SafeAreaView 内 absolute 用（ストリップは画面 top:0、ボタンは SafeArea 内）。
+   * react-native の SafeAreaView は iOS で top inset を padding 済みのため insets.top は引かない
+   * （引くとノッチ付き大画面ほど上段枠より上にはみ出す）。Android のみ container の paddingTop を差し引く。
+   */
   const landscapeButtonTop =
-    topStillFrameTopFromScreenTop - insets.top - containerPaddingTop + 20;
+    topStillFrameTopFromScreenTop -
+    (Platform.OS === 'android' ? containerPaddingTop : 0) +
+    10;
   const landscapeButtonLeft = topStillFrameLeftFromScreenLeft;
   /** 動画上端: 画面中央 + 8pt（端末共通。親は画面いっぱいの Animated.View） */
   const videoTopFromScreenTop = windowHeight / 2 + 8;
