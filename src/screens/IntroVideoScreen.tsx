@@ -1046,7 +1046,7 @@ const styles = StyleSheet.create({
     },
     progressContainer: {
         marginTop: 16,
-        paddingLeft: 16,
+        alignItems: 'center',
     },
     illustrationContainer: {
         position: 'absolute',
