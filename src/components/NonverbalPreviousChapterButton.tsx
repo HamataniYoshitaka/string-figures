@@ -8,6 +8,7 @@ interface NonverbalPreviousChapterButtonProps {
   currentChapterIndex: number;
   getLocalizedText: (text: { ja: string; en: string }) => string;
   isTemporarilyDisabled?: boolean;
+  isBalloonAbove?: boolean;
 }
 
 export interface PreviousChapterButtonRef {
@@ -19,6 +20,7 @@ const NonverbalPreviousChapterButton = forwardRef<PreviousChapterButtonRef, Nonv
   currentChapterIndex,
   getLocalizedText,
   isTemporarilyDisabled = false,
+  isBalloonAbove = false,
 }, ref) => {
   const isDisabled = currentChapterIndex === 0 || isTemporarilyDisabled;
   const [pressAnim] = useState(new Animated.Value(0));
@@ -129,24 +131,24 @@ const NonverbalPreviousChapterButton = forwardRef<PreviousChapterButtonRef, Nonv
             />
           </Animated.View>
         </View>
-        <View style={styles.balloonContainer}>
+        <View style={[styles.balloonContainer, isBalloonAbove && styles.balloonContainerAbove]}>
           <Animated.View
             style={[
               styles.balloon,
-              styles.balloonTopLeft,
+              !isBalloonAbove && styles.balloonTopLeft,
               isDisabled && styles.balloonDisabled,
               !isDisabled && { backgroundColor: balloonColor },
             ]}
           >
             <Text
               maxFontSizeMultiplier={1.25}
-              style={styles.controlButtonText}
+              style={[styles.controlButtonText, isBalloonAbove && styles.controlButtonTextAbove]}
             >
               {getLocalizedText({ ja: 'まえ', en: 'Previous' })}
             </Text>
             <BalloonTail
               fillColor="rgba(209, 200, 194, 0.5)"
-              position="topleft"
+              position={isBalloonAbove ? 'bottomcenter' : 'topleft'}
             />
           </Animated.View>
         </View>
@@ -207,6 +209,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
+  balloonContainerAbove: {
+    bottom: undefined,
+    top: -44,
+  },
   balloon: {
     paddingHorizontal: 10,
     paddingVertical: 6,
@@ -221,6 +227,10 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontWeight: '500',
     lineHeight: 14,
+  },
+  controlButtonTextAbove: {
+    marginTop: 0,
+    marginBottom: 4,
   },
   disabledButton: {
     opacity: 0.5,

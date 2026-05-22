@@ -113,6 +113,7 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
 
   const leftChapters = getLeftChapters();
   const rightChapters = getRightChapters();
+  const isBalloonAbove = isTablet && isDeviceLandscape;
 
   return (
     <View style={styles.container}>
@@ -125,6 +126,7 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
             currentChapterIndex={currentChapterIndex}
             getLocalizedText={getLocalizedText}
             isTemporarilyDisabled={isTemporarilyDisabled}
+            isBalloonAbove={isBalloonAbove}
           />
         </View>
 
@@ -150,6 +152,7 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
             getLocalizedText={getLocalizedText}
             getChapterProgress={getChapterProgress}
             isTemporarilyDisabled={isTemporarilyDisabled}
+            isBalloonAbove={isBalloonAbove}
           />
         </View>
 
@@ -175,6 +178,7 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
             isLastChapterCompleted={isLastChapterCompleted}
             getLocalizedText={getLocalizedText}
             isTemporarilyDisabled={isTemporarilyDisabled}
+            isBalloonAbove={isBalloonAbove}
           />
         </View>
       </View>

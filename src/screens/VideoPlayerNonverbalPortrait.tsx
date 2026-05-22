@@ -301,6 +301,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
 
   // デバイス情報を取得
   const { isTablet, isDeviceLandscape } = useDeviceInfo();
+  const isTabletLandscape = isTablet && isDeviceLandscape;
 
   // セーフエリアインセットを取得
   const insets = useSafeAreaInsets();
@@ -313,10 +314,25 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
    * 静止画・フィルムストリップもこれに合わせる。
    */
   const videoAreaHorizontalPadding = isTablet ? 16 : 0;
-  const videoContentWidth =
+  let videoContentWidth =
     windowWidth - videoAreaHorizontalPadding * 2 - VIDEO_ROW_PADDING_HORIZONTAL * 2;
 
-  /** 動画 View と同じ 16:9 の高さ（画面高に合わせて縮めない） */
+  /**
+   * iPad 横向き: 幅基準の 16:9 だとスロットが画面いっぱいになりすぎるため、
+   * ヘッダー・チャプターナビ分を除いた縦余白と画面幅比の両方で cap する。
+   */
+  if (isTabletLandscape) {
+    const tabletLandscapeVerticalReserve =
+      insets.top + (isTablet ? 92 : 84) + 120 + insets.bottom;
+    const maxStillCardHeightFromLayout =
+      (windowHeight - tabletLandscapeVerticalReserve) / 2 -
+      NONVERBAL_STILL_VERTICAL_GAP / 2;
+    const maxVideoContentWidth = windowWidth * 0.48;
+    const widthFromHeightCap = maxStillCardHeightFromLayout * (16 / 9);
+    videoContentWidth = Math.min(videoContentWidth, maxVideoContentWidth, widthFromHeightCap);
+  }
+
+  /** 動画 View と同じ 16:9 の高さ */
   const stillCardHeight = videoContentWidth * (9 / 16);
   const stripRowSlotHeight = stillCardHeight + NONVERBAL_STILL_VERTICAL_GAP;
   /** 可視4行（＋行間3つ）の高さ。ストリップ全体ではなくこの帯の中央を画面中央に合わせる */
@@ -963,10 +979,6 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
           {
             top: videoTopFromScreenTop,
             zIndex: 1,
-            ...(isTablet &&
-              isDeviceLandscape && {
-                maxHeight: windowHeight * 0.63,
-              }),
           },
         ]}
       >
@@ -977,7 +989,11 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
           ]}
         >
           <Animated.View
-            style={[styles.videoPlayer, { width: videoContentWidth, opacity: videoLayerOpacity }]}
+            style={[
+              styles.videoPlayer,
+              { width: videoContentWidth, opacity: videoLayerOpacity },
+              isTabletLandscape && { height: stillCardHeight },
+            ]}
             // Android: Video 子要素と opacity アニメーションの合成で黒一色になるのを避ける（Surface のアルファ扱い）
             needsOffscreenAlphaCompositing={Platform.OS === 'android'}
             renderToHardwareTextureAndroid={Platform.OS === 'android'}

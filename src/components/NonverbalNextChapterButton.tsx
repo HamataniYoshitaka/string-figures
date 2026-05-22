@@ -11,6 +11,7 @@ interface NonverbalNextChapterButtonProps {
   currentChapterIndex: number;
   getLocalizedText: (text: { ja: string; en: string }) => string;
   isTemporarilyDisabled?: boolean;
+  isBalloonAbove?: boolean;
 }
 
 export interface NextChapterButtonRef {
@@ -24,6 +25,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
   currentChapterIndex,
   getLocalizedText,
   isTemporarilyDisabled = false,
+  isBalloonAbove = false,
 }, ref) => {
   const isDisabled = (currentChapterIndex === chapters.length - 1 && !isLastChapterCompleted) || isTemporarilyDisabled;
   const [pressAnim] = useState(new Animated.Value(0));
@@ -148,18 +150,18 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
             </Animated.View>
           )}
         </View>
-        <View style={styles.balloonContainer}>
+        <View style={[styles.balloonContainer, isBalloonAbove && styles.balloonContainerAbove]}>
           <Animated.View
             style={[
               styles.balloon,
-              styles.balloonTopRight,
+              !isBalloonAbove && styles.balloonTopRight,
               isDisabled && styles.balloonDisabled,
               { backgroundColor: balloonBackgroundColor },
             ]}
           >
             <Text
               maxFontSizeMultiplier={1.25}
-              style={styles.controlButtonText}
+              style={[styles.controlButtonText, isBalloonAbove && styles.controlButtonTextAbove]}
             >
               {isLastChapterCompleted
                 ? getLocalizedText({ ja: 'できた!', en: 'Done!' })
@@ -167,7 +169,7 @@ const NonverbalNextChapterButton = forwardRef<NextChapterButtonRef, NonverbalNex
             </Text>
             <BalloonTail
               fillColor="rgba(209, 200, 194, 0.5)"
-              position="topright"
+              position={isBalloonAbove ? 'bottomcenter' : 'topright'}
             />
           </Animated.View>
         </View>
@@ -228,6 +230,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
+  balloonContainerAbove: {
+    bottom: undefined,
+    top: -44,
+  },
   balloon: {
     paddingHorizontal: 10,
     paddingVertical: 6,
@@ -243,6 +249,10 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     textAlign: 'right',
     lineHeight: 14,
+  },
+  controlButtonTextAbove: {
+    marginTop: 0,
+    marginBottom: 4,
   },
   disabledButton: {
     opacity: 0.5,
