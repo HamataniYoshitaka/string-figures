@@ -105,7 +105,10 @@ const IntroVideoPage2: React.FC<IntroVideoPage2Props> = ({
             - PHONE_FRAME_SHADOW_OFFSET
             - 6,
     );
-    let phoneFrameWidth = Math.min(screenWidth * 0.56, isTablet ? 260 : 232);
+    let phoneFrameWidth = Math.min(
+        screenWidth * (isTablet ? 0.44 : 0.56),
+        isTablet ? 320 : 232,
+    );
     let phoneFrameHeight = phoneFrameWidth * (19 / 9);
     if (phoneFrameHeight > maxPhoneFrameHeight) {
         phoneFrameHeight = maxPhoneFrameHeight;

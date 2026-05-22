@@ -99,7 +99,10 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
             - PHONE_FRAME_SHADOW_OFFSET
             - 6,
     );
-    let phoneFrameWidth = Math.min(screenWidth * 0.54, isTablet ? 260 : 232);
+    let phoneFrameWidth = Math.min(
+        screenWidth * (isTablet ? 0.44 : 0.54),
+        isTablet ? 320 : 232,
+    );
     let phoneFrameHeight = phoneFrameWidth * (17 / 9);
     if (phoneFrameHeight > maxPhoneFrameHeight) {
         phoneFrameHeight = maxPhoneFrameHeight;
@@ -323,7 +326,9 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                             style={[
                                 styles.permissionText,
                                 {
-                                    fontSize: currentLanguage === 'ja' ? 16 : 15,
+                                    fontSize: isTablet
+                                        ? currentLanguage === 'ja' ? 20 : 17
+                                        : currentLanguage === 'ja' ? 16 : 15,
                                     fontFamily: currentLanguage === 'en' ? 'Roboto' : 'KiwiMaru-Medium',
                                 },
                             ]}
@@ -335,7 +340,9 @@ const IntroPermissionScreen: React.FC<Props> = ({ navigation, route }) => {
                             style={[
                                 styles.permissionFootnote,
                                 {
-                                    fontSize: currentLanguage === 'ja' ? 14 : 13,
+                                    fontSize: isTablet
+                                        ? currentLanguage === 'ja' ? 16 : 15
+                                        : currentLanguage === 'ja' ? 14 : 13,
                                     fontFamily: currentLanguage === 'en' ? 'Roboto' : 'KiwiMaru-Medium',
                                 },
                             ]}
