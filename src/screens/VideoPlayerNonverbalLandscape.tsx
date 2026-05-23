@@ -350,7 +350,7 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
           <BookmarkIcon
             width={40}
             height={40}
-            strokeColor={bookmarked ? 'transparent' : '#ffffff'}
+            strokeColor='#292524'
             fillColor={bookmarked ? '#FB2C36' : '#aaa'}
             strokeWidth={1.5}
           />

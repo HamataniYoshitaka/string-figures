@@ -263,8 +263,8 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
             <BookmarkIcon
               width={32}
               height={32}
-              strokeColor={isBookmarked ? '#DC2626' : '#ffffff'}
-              fillColor={isBookmarked ? '#DC2626' : '#aaa'}
+              strokeColor='#292524'
+              fillColor={isBookmarked ? '#DC2626' : '#00000000'}
               strokeWidth={1.5}
             />
           </TouchableOpacity>
@@ -801,7 +801,7 @@ const styles = StyleSheet.create({
   },
   bookmarkButton: {
     position: 'absolute',
-    top: -12,
+    top: -2,
     right: 12,
     width: 48,
     height: 48,

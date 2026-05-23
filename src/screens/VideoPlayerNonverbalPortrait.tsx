@@ -909,8 +909,8 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
               <BookmarkIcon
                 width={24}
                 height={24}
-                strokeColor="#ffffff"
-                fillColor={bookmarked ? '#FB2C36' : '#aaa'}
+                strokeColor="#292524"
+                fillColor={bookmarked ? '#FB2C36' : '#00000000'}
                 strokeWidth={1.5}
               />
             </Animated.View>
