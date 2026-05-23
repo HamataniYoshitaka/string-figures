@@ -46,9 +46,9 @@ const getWrapperStyle = (
     case 'topright':
       return { ...base, right: 0, top: -height };
     case 'topcenter':
-      return { ...base, left: '50%', top: -height, marginLeft: width / 2 };
+      return { ...base, left: '50%', top: -height, marginLeft: -width / 2 };
     case 'bottomcenter':
-      return { ...base, left: '50%', bottom: -height, marginLeft: width / 2 };
+      return { ...base, left: '50%', bottom: -height, marginLeft: -width / 2 };
     case 'bottomright':
       return { ...base, right: 0, bottom: -height };
     case 'lefttop':

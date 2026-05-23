@@ -18,6 +18,7 @@ import Svg, { Path } from 'react-native-svg';
 import { CloseIcon, BookmarkIcon } from '../components/icons';
 import LandScapeIcon from '../components/icons/LandScape';
 import ChapterNavigationBarNonverbal from '../components/ChapterNavigationBarNonverbal';
+import NonverbalRestartTopBalloon from '../components/NonverbalRestartTopBalloon';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
@@ -163,6 +164,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   nextChapterButtonRef,
   replayButtonRef,
   previousChapterButtonRef,
+  restartButtonRef,
   playbackPosition,
   isLastChapterCompleted,
   currentLanguage,
@@ -173,6 +175,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   onComplete,
   onReplay,
   onPreviousChapter,
+  onRestartFromBeginning,
   onToggleBookmark,
   bookmarked,
   getLocalizedText,
@@ -697,6 +700,22 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
             <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill="#9BB262" />
           </Svg>
         </View>
+        <View
+          pointerEvents="box-none"
+          style={[
+            styles.restartTopBalloonContainer,
+            { top: fixedHeaderBackgroundHeight - 30 },
+          ]}
+        >
+          <NonverbalRestartTopBalloon
+            ref={restartButtonRef}
+            onPress={onRestartFromBeginning}
+            currentChapterIndex={currentChapterIndex}
+            getLocalizedText={getLocalizedText}
+            isTemporarilyDisabled={isTemporarilyDisabled}
+            currentLanguage={currentLanguage}
+          />
+        </View>
         <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
           <View style={styles.header}>
             <TouchableWithoutFeedback
@@ -772,6 +791,22 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
         <Svg width="100%" height={fixedHeaderBackgroundHeight} viewBox="0 0 428 86" preserveAspectRatio="none">
           <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill="#9BB262" />
         </Svg>
+      </View>
+      <View
+        pointerEvents="box-none"
+        style={[
+          styles.restartTopBalloonContainer,
+          { top: fixedHeaderBackgroundHeight - 30 },
+        ]}
+      >
+        <NonverbalRestartTopBalloon
+          ref={restartButtonRef}
+          onPress={onRestartFromBeginning}
+          currentChapterIndex={currentChapterIndex}
+          currentLanguage={currentLanguage}
+          getLocalizedText={getLocalizedText}
+          isTemporarilyDisabled={isTemporarilyDisabled}
+        />
       </View>
       <View pointerEvents="none" style={[styles.nonverbalStillStripViewport, { height: windowHeight }]}>
         <Animated.View
@@ -1040,6 +1075,13 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 0,
     overflow: 'hidden',
+  },
+  restartTopBalloonContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 3,
   },
   nonverbalStillStripViewport: {
     position: 'absolute',
