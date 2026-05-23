@@ -23,6 +23,21 @@ interface NonverbalReplayLandscapeButtonProps {
   isTemporarilyDisabled?: boolean;
 }
 
+const BUTTON_SIZE = 48;
+const INNER_RADIUS = 23;
+const INNER_STROKE_WIDTH = 2;
+const BUTTON_OUTER_RADIUS = INNER_RADIUS + INNER_STROKE_WIDTH / 2;
+const PROGRESS_STROKE_WIDTH = 6;
+const PROGRESS_RADIUS = BUTTON_OUTER_RADIUS + PROGRESS_STROKE_WIDTH / 2;
+const PROGRESS_COLOR = '#FF623Fbb';
+const PROGRESS_CIRCUMFERENCE = PROGRESS_RADIUS * 2 * Math.PI;
+const SVG_CANVAS_SIZE = (PROGRESS_RADIUS + PROGRESS_STROKE_WIDTH / 2) * 2;
+const SVG_CENTER = SVG_CANVAS_SIZE / 2;
+const SVG_OFFSET = (BUTTON_SIZE - SVG_CANVAS_SIZE) / 2;
+const SHADOW_OFFSET_X = 3;
+const SHADOW_OFFSET_Y = 4;
+const SHADOW_COLOR = '#3D3835';
+
 const NonverbalReplayLandscapeButton = forwardRef<
   ReplayLandscapeButtonRef,
   NonverbalReplayLandscapeButtonProps
@@ -219,26 +234,35 @@ const NonverbalReplayLandscapeButton = forwardRef<
               ]}
             >
               <View style={styles.progressContainer}>
-                <Svg width={48} height={48} style={styles.progressSvg}>
+                <Svg width={SVG_CANVAS_SIZE} height={SVG_CANVAS_SIZE} style={styles.progressSvg}>
                   <Circle
-                    cx={24}
-                    cy={24}
-                    r={23}
-                    stroke="#a8a29e"
-                    strokeWidth={2}
-                    fill="none"
+                    cx={SVG_CENTER + SHADOW_OFFSET_X}
+                    cy={SVG_CENTER + SHADOW_OFFSET_Y}
+                    r={INNER_RADIUS}
+                    fill={SHADOW_COLOR}
+                    opacity={isDisabled ? 0 : 0.35}
                   />
+                  {progressValue > 0 && (
+                    <Circle
+                      cx={SVG_CENTER}
+                      cy={SVG_CENTER}
+                      r={PROGRESS_RADIUS}
+                      stroke={PROGRESS_COLOR}
+                      strokeWidth={PROGRESS_STROKE_WIDTH}
+                      fill="none"
+                      strokeDasharray={PROGRESS_CIRCUMFERENCE}
+                      strokeDashoffset={PROGRESS_CIRCUMFERENCE * (1 - progressValue)}
+                      strokeLinecap="butt"
+                      transform={`rotate(-90 ${SVG_CENTER} ${SVG_CENTER})`}
+                    />
+                  )}
                   <Circle
-                    cx={24}
-                    cy={24}
-                    r={23}
-                    stroke="#44403c"
-                    strokeWidth={2}
-                    fill="none"
-                    strokeDasharray={23 * 2 * Math.PI}
-                    strokeDashoffset={23 * 2 * Math.PI * (1 - progressValue)}
-                    strokeLinecap="round"
-                    transform="rotate(-90 24 24)"
+                    cx={SVG_CENTER}
+                    cy={SVG_CENTER}
+                    r={INNER_RADIUS}
+                    fill="#FFFFFF"
+                    stroke="#2D2926"
+                    strokeWidth={INNER_STROKE_WIDTH}
                   />
                 </Svg>
               </View>
@@ -287,19 +311,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+    overflow: 'visible',
   },
   buttonContainer: {
     position: 'relative',
-    width: 48,
-    height: 48,
+    width: BUTTON_SIZE,
+    height: BUTTON_SIZE,
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'visible',
   },
   shadowCircle: {
     position: 'absolute',
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: BUTTON_SIZE,
+    height: BUTTON_SIZE,
+    borderRadius: BUTTON_SIZE / 2,
     backgroundColor: '#000',
     left: 4,
     top: 4,
@@ -309,26 +335,26 @@ const styles = StyleSheet.create({
   },
   ripple: {
     position: 'absolute',
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#FF623F',
+    width: BUTTON_SIZE,
+    height: BUTTON_SIZE,
+    borderRadius: BUTTON_SIZE / 2,
+    backgroundColor: PROGRESS_COLOR,
   },
   floatingButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#F7F5F2',
+    width: BUTTON_SIZE,
+    height: BUTTON_SIZE,
+    borderRadius: BUTTON_SIZE / 2,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
+    overflow: 'visible',
   },
   progressContainer: {
     position: 'absolute',
-    width: 48,
-    height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: SVG_CANVAS_SIZE,
+    height: SVG_CANVAS_SIZE,
+    left: SVG_OFFSET,
+    top: SVG_OFFSET,
   },
   progressSvg: {
     position: 'absolute',
@@ -336,6 +362,7 @@ const styles = StyleSheet.create({
   chapterNumberContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 1,
   },
   disabledButton: {
     opacity: 0.5,
