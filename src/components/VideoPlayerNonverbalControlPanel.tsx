@@ -15,12 +15,16 @@ import { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeBut
 import ChapterNavigationVerticalBarNonverbal from './ChapterNavigationVerticalBarNonverbal';
 // import SpeedControlLandscape from './SpeedControlLandscape';
 import { Chapter, StringFigure } from '../types';
+import {
+  EMPTY_NONVERBAL_SEGMENT_PLAYBACK,
+  type NonverbalSegmentPlayback,
+} from '../utils/nonverbalChapterPlayback';
 
 interface VideoPlayerNonverbalControlPanelProps {
   stringFigure: StringFigure;
   chapters: Chapter[];
   currentChapterIndex: number;
-  playbackPosition: number;
+  nonverbalSegmentPlayback?: NonverbalSegmentPlayback;
   isLastChapterCompleted: boolean;
   playbackRate: number;
   PLAYBACK_RATES: number[];
@@ -40,7 +44,6 @@ interface VideoPlayerNonverbalControlPanelProps {
   // onFasterSpeed: () => void;
   onLandscapeToggle: () => Promise<void>;
   getPlaybackRateDisplay: (rate: number) => string;
-  getChapterProgress: (chapterIndex: number) => number;
   isTemporarilyDisabled: boolean;
 }
 
@@ -48,7 +51,7 @@ const VideoPlayerNonverbalControlPanel: React.FC<VideoPlayerNonverbalControlPane
   stringFigure,
   chapters,
   currentChapterIndex,
-  playbackPosition,
+  nonverbalSegmentPlayback = EMPTY_NONVERBAL_SEGMENT_PLAYBACK,
   isLastChapterCompleted,
   playbackRate,
   PLAYBACK_RATES,
@@ -68,7 +71,6 @@ const VideoPlayerNonverbalControlPanel: React.FC<VideoPlayerNonverbalControlPane
   // onFasterSpeed,
   onLandscapeToggle,
   getPlaybackRateDisplay,
-  getChapterProgress,
   isTemporarilyDisabled,
 }) => {
 
@@ -159,14 +161,13 @@ const VideoPlayerNonverbalControlPanel: React.FC<VideoPlayerNonverbalControlPane
           onNextChapter={onNextChapter}
           onComplete={onComplete}
           onRestartFromBeginning={onRestartFromBeginning}
-          playbackPosition={playbackPosition}
+          nonverbalSegmentPlayback={nonverbalSegmentPlayback}
           isLastChapterCompleted={isLastChapterCompleted}
           stringFigure={stringFigure}
           getLocalizedText={getLocalizedText}
           previousChapterButtonRef={previousChapterButtonRef}
           replayButtonRef={replayButtonRef}
           nextChapterButtonRef={nextChapterButtonRef}
-          getChapterProgress={getChapterProgress}
           isTemporarilyDisabled={isTemporarilyDisabled}
         />
       </View>

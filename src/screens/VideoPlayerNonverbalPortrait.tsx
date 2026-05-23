@@ -21,6 +21,7 @@ import ChapterNavigationBarNonverbal from '../components/ChapterNavigationBarNon
 import NonverbalRestartTopBalloon from '../components/NonverbalRestartTopBalloon';
 
 import { VideoPlayerSharedProps } from './VideoPlayerScreen';
+import { EMPTY_NONVERBAL_SEGMENT_PLAYBACK } from '../utils/nonverbalChapterPlayback';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import {
   CHAPTER_VIDEOS,
@@ -169,6 +170,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   isLastChapterCompleted,
   currentLanguage,
   onPlaybackStatusUpdate,
+  onNonverbalSegmentPlaybackUpdate,
   onVideoLoad,
   onGoBack,
   onNextChapter,
@@ -179,7 +181,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   onToggleBookmark,
   bookmarked,
   getLocalizedText,
-  getChapterProgress,
+  nonverbalSegmentPlayback,
   isTemporarilyDisabled,
   backgroundColorAnim,
   lastSpeechTranscript,
@@ -479,13 +481,28 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   const secondaryVideoSource = nonverbalVideoPair?.secondary ?? fallbackVideoSource;
   const currentVideoSource = activeSegment === 'primary' ? primaryVideoSource : secondaryVideoSource;
 
-  const getTotalDurationMs = () => {
-    const d1 = primaryDurationMsRef.current;
-    const d2 = secondaryDurationMsRef.current;
-    if (d1 > 0 && d2 > 0) return d1 + d2;
-    if (d1 > 0) return d1;
-    if (d2 > 0) return d2;
-    return 0;
+  const pushSegmentPlayback = (update: Partial<{
+    primaryDurationMs: number;
+    primaryPlaybackPositionMs: number;
+    secondaryDurationMs: number;
+    secondaryPlaybackPositionMs: number;
+  }>) => {
+    if (!nonverbalVideoPair) return;
+    onNonverbalSegmentPlaybackUpdate?.({
+      primaryDurationMs: primaryDurationMsRef.current,
+      primaryPlaybackPositionMs: 0,
+      secondaryDurationMs: secondaryDurationMsRef.current,
+      secondaryPlaybackPositionMs: 0,
+      ...update,
+    });
+  };
+
+  const handleSecondaryDurationProbeLoad = (status: AVPlaybackStatus) => {
+    if (!status.isLoaded || status.durationMillis == null || status.durationMillis <= 0) {
+      return;
+    }
+    secondaryDurationMsRef.current = status.durationMillis;
+    pushSegmentPlayback({ secondaryDurationMs: status.durationMillis });
   };
 
   useEffect(() => {
@@ -531,6 +548,13 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
       clearStripScrollAfterPrimaryTimeout();
       primarySegmentEndedAtRef.current = null;
       fadeVideoLayerOpacityTo(1);
+      if (status.durationMillis != null && status.durationMillis > 0) {
+        pushSegmentPlayback({
+          primaryDurationMs: status.durationMillis,
+          primaryPlaybackPositionMs: 0,
+          secondaryPlaybackPositionMs: 0,
+        });
+      }
       void onVideoLoad();
     } else {
       const startedAt = primarySegmentEndedAtRef.current;
@@ -548,6 +572,13 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
 
   const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
     if (!status.isLoaded) {
+      if (!nonverbalVideoPair) {
+        onPlaybackStatusUpdate(status);
+      }
+      return;
+    }
+
+    if (!nonverbalVideoPair) {
       onPlaybackStatusUpdate(status);
       return;
     }
@@ -568,7 +599,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
       }
 
       const d1 = primaryDurationMsRef.current;
-      const total = getTotalDurationMs();
+      const d2 = secondaryDurationMsRef.current;
 
       if (status.didJustFinish) {
         clearSecondaryPlayDelayTimeout();
@@ -640,54 +671,63 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
         }, NONVERBAL_STRIP_SCROLL_AFTER_PRIMARY_END_DELAY_MS);
 
         segmentPhaseRef.current = 'secondary';
-        onPlaybackStatusUpdate({
-          ...status,
-          isLoaded: true,
-          positionMillis: d1,
-          durationMillis: total,
-          didJustFinish: false,
-        } as AVPlaybackStatus);
+        pushSegmentPlayback({
+          primaryDurationMs: d1,
+          primaryPlaybackPositionMs: d1,
+          secondaryDurationMs: d2,
+          secondaryPlaybackPositionMs: 0,
+        });
         return;
       }
 
-      const pos = status.positionMillis ?? 0;
-      onPlaybackStatusUpdate({
-        ...status,
-        positionMillis: pos,
-        durationMillis: total,
-        didJustFinish: false,
-      } as AVPlaybackStatus);
+      pushSegmentPlayback({
+        primaryDurationMs: status.durationMillis ?? d1,
+        primaryPlaybackPositionMs: status.positionMillis ?? 0,
+        secondaryDurationMs: d2,
+        secondaryPlaybackPositionMs: 0,
+      });
       return;
     }
 
     // secondary
+    if (segmentPhaseRef.current === 'ended') {
+      return;
+    }
+
     if (status.durationMillis != null && status.durationMillis > 0) {
       secondaryDurationMsRef.current = status.durationMillis;
     }
 
-    const d1 = primaryDurationMsRef.current;
-    const total = getTotalDurationMs();
+    const d1Secondary = primaryDurationMsRef.current;
+    const d2Secondary = secondaryDurationMsRef.current;
 
     if (status.didJustFinish) {
       segmentPhaseRef.current = 'ended';
       void videoRef.current?.pauseAsync();
+      pushSegmentPlayback({
+        primaryDurationMs: d1Secondary,
+        primaryPlaybackPositionMs: d1Secondary,
+        secondaryDurationMs: d2Secondary,
+        secondaryPlaybackPositionMs: d2Secondary,
+      });
       onPlaybackStatusUpdate({
         ...status,
         isLoaded: true,
-        positionMillis: total,
-        durationMillis: total,
         didJustFinish: true,
       } as AVPlaybackStatus);
       return;
     }
 
-    const pos = d1 + (status.positionMillis ?? 0);
-    onPlaybackStatusUpdate({
-      ...status,
-      positionMillis: pos,
-      durationMillis: total,
-      didJustFinish: false,
-    } as AVPlaybackStatus);
+    const secondaryPosition = status.positionMillis ?? 0;
+    pushSegmentPlayback({
+      primaryDurationMs: d1Secondary,
+      primaryPlaybackPositionMs: d1Secondary,
+      secondaryDurationMs:
+        status.durationMillis != null && status.durationMillis > 0
+          ? status.durationMillis
+          : d2Secondary,
+      secondaryPlaybackPositionMs: secondaryPosition,
+    });
   };
 
   // stringFigureが未定義の場合の早期リターン
@@ -1011,9 +1051,8 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
           previousChapterButtonRef={previousChapterButtonRef}
           replayButtonRef={replayButtonRef}
           nextChapterButtonRef={nextChapterButtonRef}
-          playbackPosition={playbackPosition}
+          nonverbalSegmentPlayback={nonverbalSegmentPlayback ?? EMPTY_NONVERBAL_SEGMENT_PLAYBACK}
           isLastChapterCompleted={isLastChapterCompleted}
-          getChapterProgress={getChapterProgress}
           isTemporarilyDisabled={isTemporarilyDisabled}
         />
       </SafeAreaView>
@@ -1058,6 +1097,19 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
               onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
               onLoad={handleVideoLoad}
             />
+            {nonverbalVideoPair != null && (
+              <Video
+                key={`ch${currentChapterIndex}-secondary-probe`}
+                source={secondaryVideoSource}
+                style={styles.durationProbeVideo}
+                resizeMode={ResizeMode.COVER}
+                shouldPlay={false}
+                isLooping={false}
+                isMuted
+                useNativeControls={false}
+                onLoad={handleSecondaryDurationProbeLoad}
+              />
+            )}
           </Animated.View>
         </View>
       </View>
@@ -1204,6 +1256,12 @@ const styles = StyleSheet.create({
     borderColor: '#292524',
     borderRadius: 12,
     overflow: 'hidden',
+  },
+  durationProbeVideo: {
+    position: 'absolute',
+    width: 1,
+    height: 1,
+    opacity: 0,
   },
   video: {
     width: '100%',

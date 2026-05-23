@@ -21,6 +21,13 @@ import { RestartButtonRef } from '../components/RestartButton';
 import { CHAPTERS_MAP } from '../data/chaptersMap';
 import { NONVERBAL_TOTAL_CHAPTERS } from '../data/chapterVideos';
 import { getDifficultyPoints, addClearPoints } from '../utils/clearPoints';
+import {
+  EMPTY_NONVERBAL_SEGMENT_PLAYBACK,
+  getNonverbalChapterTotalDurationMs,
+  getNonverbalCompositePlaybackPositionMs,
+  getNonverbalCurrentChapterProgress,
+  type NonverbalSegmentPlayback,
+} from '../utils/nonverbalChapterPlayback';
 
 type NonverbalVideoPlayerScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -64,6 +71,9 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
   const [playbackPosition, setPlaybackPosition] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
+  const [nonverbalSegmentPlayback, setNonverbalSegmentPlayback] = useState<NonverbalSegmentPlayback>(
+    EMPTY_NONVERBAL_SEGMENT_PLAYBACK,
+  );
   const [isLastChapterCompleted, setIsLastChapterCompleted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
@@ -248,23 +258,60 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     return `${year}-${month}-${day}`;
   };
 
-  // 動画の再生状況を監視
-  const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
-    if (status.isLoaded) {
-      setPlaybackPosition(status.positionMillis || 0);
-      setVideoDuration(status.durationMillis || 0);
+  const resetNonverbalSegmentPlayback = () => {
+    setNonverbalSegmentPlayback(EMPTY_NONVERBAL_SEGMENT_PLAYBACK);
+    setPlaybackPosition(0);
+    setVideoDuration(0);
+  };
 
-      if (status.didJustFinish) {
-        if (currentChapterIndex === chapters.length - 1) {
-          setIsLastChapterCompleted(true);
-        }
+  const handleNonverbalSegmentPlaybackUpdate = (update: Partial<NonverbalSegmentPlayback>) => {
+    setNonverbalSegmentPlayback((prev) => {
+      const next = { ...prev, ...update };
+      const total = getNonverbalChapterTotalDurationMs(
+        next.primaryDurationMs,
+        next.secondaryDurationMs,
+      );
+      setPlaybackPosition(getNonverbalCompositePlaybackPositionMs(next));
+      if (total > 0) {
+        setVideoDuration(total);
       }
+      return next;
+    });
+  };
+
+  // 単一動画フォールバック用（非言語デュアル再生では segment 更新のみ使う）
+  const handlePlaybackStatusUpdate = (status: AVPlaybackStatus) => {
+    if (!status.isLoaded) return;
+
+    if (stringFigure?.nonverbalFormat) {
+      if (status.didJustFinish && currentChapterIndex === chapters.length - 1) {
+        setIsLastChapterCompleted(true);
+      }
+      return;
+    }
+
+    const fallback: NonverbalSegmentPlayback = {
+      primaryDurationMs: status.durationMillis || 0,
+      primaryPlaybackPositionMs: status.positionMillis || 0,
+      secondaryDurationMs: 0,
+      secondaryPlaybackPositionMs: 0,
+    };
+    setNonverbalSegmentPlayback(fallback);
+    setPlaybackPosition(status.positionMillis || 0);
+    setVideoDuration(status.durationMillis || 0);
+
+    if (status.didJustFinish && currentChapterIndex === chapters.length - 1) {
+      setIsLastChapterCompleted(true);
     }
   };
 
+  useEffect(() => {
+    resetNonverbalSegmentPlayback();
+  }, [currentChapterIndex]);
+
   // 動画がロードされた時の処理
   const handleVideoLoad = async () => {
-    setPlaybackPosition(0);
+    resetNonverbalSegmentPlayback();
     setIsLastChapterCompleted(false);
 
     if (shouldAutoPlay && videoRef.current) {
@@ -284,14 +331,17 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     if (!videoRef.current) return;
 
     try {
-      if (currentChapterIndex === 0 && playbackPosition === 0) {
+      if (
+        currentChapterIndex === 0 &&
+        getNonverbalCompositePlaybackPositionMs(nonverbalSegmentPlayback) === 0
+      ) {
         await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PLAY_START_DELAY_MS));
         await videoRef.current.playAsync();
         nextChapterButtonRef.current?.triggerRipple();
       } else if (currentChapterIndex < chapters.length - 1) {
         setShouldAutoPlay(true);
         setCurrentChapterIndex(prev => prev + 1);
-        setPlaybackPosition(0);
+        resetNonverbalSegmentPlayback();
         nextChapterButtonRef.current?.triggerRipple();
       }
     } catch (error) {
@@ -326,7 +376,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
     try {
       setNonverbalPaddingResetKey((k) => k + 1);
-      setPlaybackPosition(0);
+      resetNonverbalSegmentPlayback();
       await new Promise<void>((resolve) => setTimeout(resolve, NONVERBAL_PLAY_START_DELAY_MS));
       await videoRef.current.setPositionAsync(0);
       await videoRef.current.playAsync();
@@ -344,7 +394,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       if (currentChapterIndex > 0) {
         setShouldAutoPlay(true);
         setCurrentChapterIndex(prev => prev - 1);
-        setPlaybackPosition(0);
+        resetNonverbalSegmentPlayback();
         previousChapterButtonRef.current?.triggerRipple();
       }
     } catch (error) {
@@ -358,7 +408,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
       setNonverbalPaddingResetKey((k) => k + 1);
       setShouldAutoPlay(false);
       setCurrentChapterIndex(0);
-      setPlaybackPosition(0);
+      resetNonverbalSegmentPlayback();
       setIsLastChapterCompleted(false);
 
       restartLayerOpacity.setValue(0);
@@ -445,7 +495,7 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     if (chapterIndex < currentChapterIndex) {
       return 1;
     } else if (chapterIndex === currentChapterIndex) {
-      return videoDuration > 0 ? playbackPosition / videoDuration : 0;
+      return getNonverbalCurrentChapterProgress(nonverbalSegmentPlayback);
     } else {
       return 0;
     }
@@ -485,6 +535,8 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
     currentLanguage,
     playbackPosition,
     videoDuration,
+    nonverbalSegmentPlayback,
+    onNonverbalSegmentPlaybackUpdate: handleNonverbalSegmentPlaybackUpdate,
     isLastChapterCompleted,
     playbackRate,
     videoRef,

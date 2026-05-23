@@ -10,6 +10,7 @@ import { Provider as PaperProvider, Snackbar } from 'react-native-paper';
 import ConfettiCannon from 'react-native-confetti-cannon';
 
 import { RootStackParamList, Chapter } from '../types';
+import type { NonverbalSegmentPlayback } from '../utils/nonverbalChapterPlayback';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import VideoPlayerLandscape from './VideoPlayerLandscape';
@@ -52,6 +53,8 @@ export interface VideoPlayerSharedProps {
   currentLanguage: 'ja' | 'en';
   playbackPosition: number;
   videoDuration: number;
+  nonverbalSegmentPlayback?: NonverbalSegmentPlayback;
+  onNonverbalSegmentPlaybackUpdate?: (update: Partial<NonverbalSegmentPlayback>) => void;
   isLastChapterCompleted: boolean;
   playbackRate: number;
   videoRef: React.RefObject<Video | null>;

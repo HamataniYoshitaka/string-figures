@@ -31,9 +31,9 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
   playbackRate,
   videoRef,
   onPlaybackStatusUpdate,
+  onNonverbalSegmentPlaybackUpdate,
   onVideoLoad,
   getLocalizedText,
-  getChapterProgress,
   bookmarked,
   onToggleBookmark,
   backgroundColorAnim,
@@ -83,14 +83,24 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
       : undefined;
   const hasVideoPair = Boolean(nonverbalVideoPair);
 
-  const getTotalDurationMs = useCallback(() => {
-    const d1 = primaryDurationMsRef.current;
-    const d2 = secondaryDurationMsRef.current;
-    if (d1 > 0 && d2 > 0) return d1 + d2;
-    if (d1 > 0) return d1;
-    if (d2 > 0) return d2;
-    return 0;
-  }, []);
+  const pushSegmentPlayback = useCallback(
+    (update: Partial<{
+      primaryDurationMs: number;
+      primaryPlaybackPositionMs: number;
+      secondaryDurationMs: number;
+      secondaryPlaybackPositionMs: number;
+    }>) => {
+      if (!hasVideoPair) return;
+      onNonverbalSegmentPlaybackUpdate?.({
+        primaryDurationMs: primaryDurationMsRef.current,
+        primaryPlaybackPositionMs: 0,
+        secondaryDurationMs: secondaryDurationMsRef.current,
+        secondaryPlaybackPositionMs: 0,
+        ...update,
+      });
+    },
+    [hasVideoPair, onNonverbalSegmentPlaybackUpdate],
+  );
 
   const resetDualVideoState = useCallback(
     async (options?: { resetDurations?: boolean }) => {
@@ -154,15 +164,27 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
       if (!status.isLoaded) return;
       if (status.durationMillis != null && status.durationMillis > 0) {
         primaryDurationMsRef.current = status.durationMillis;
+        pushSegmentPlayback({
+          primaryDurationMs: status.durationMillis,
+          primaryPlaybackPositionMs: 0,
+          secondaryPlaybackPositionMs: 0,
+        });
       }
       await onVideoLoad();
     },
-    [onVideoLoad],
+    [onVideoLoad, pushSegmentPlayback],
   );
 
   const handlePrimaryPlaybackStatusUpdate = useCallback(
     (status: AVPlaybackStatus) => {
       if (!status.isLoaded) {
+        if (!hasVideoPair) {
+          onPlaybackStatusUpdate(status);
+        }
+        return;
+      }
+
+      if (!hasVideoPair) {
         onPlaybackStatusUpdate(status);
         return;
       }
@@ -184,7 +206,7 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
       }
 
       const d1 = primaryDurationMsRef.current;
-      const total = getTotalDurationMs();
+      const d2 = secondaryDurationMsRef.current;
 
       if (status.didJustFinish) {
         segmentPhaseRef.current = 'secondary';
@@ -207,25 +229,23 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
           }
         });
 
-        onPlaybackStatusUpdate({
-          ...status,
-          isLoaded: true,
-          positionMillis: d1,
-          durationMillis: total,
-          didJustFinish: false,
-        } as AVPlaybackStatus);
+        pushSegmentPlayback({
+          primaryDurationMs: d1,
+          primaryPlaybackPositionMs: d1,
+          secondaryDurationMs: d2,
+          secondaryPlaybackPositionMs: 0,
+        });
         return;
       }
 
-      const pos = status.positionMillis ?? 0;
-      onPlaybackStatusUpdate({
-        ...status,
-        positionMillis: pos,
-        durationMillis: total,
-        didJustFinish: false,
-      } as AVPlaybackStatus);
+      pushSegmentPlayback({
+        primaryDurationMs: status.durationMillis ?? d1,
+        primaryPlaybackPositionMs: status.positionMillis ?? 0,
+        secondaryDurationMs: d2,
+        secondaryPlaybackPositionMs: 0,
+      });
     },
-    [getTotalDurationMs, onPlaybackStatusUpdate, primaryLayerOpacity],
+    [hasVideoPair, onPlaybackStatusUpdate, primaryLayerOpacity, pushSegmentPlayback],
   );
 
   const handleSecondaryPlaybackStatusUpdate = useCallback(
@@ -240,6 +260,7 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
       ) {
         if (status.durationMillis != null && status.durationMillis > 0) {
           secondaryDurationMsRef.current = status.durationMillis;
+          pushSegmentPlayback({ secondaryDurationMs: status.durationMillis });
         }
         return;
       }
@@ -248,35 +269,46 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
         return;
       }
 
+      if (segmentPhaseRef.current === 'ended') {
+        return;
+      }
+
       if (status.durationMillis != null && status.durationMillis > 0) {
         secondaryDurationMsRef.current = status.durationMillis;
       }
 
       const d1 = primaryDurationMsRef.current;
-      const total = getTotalDurationMs();
+      const d2 = secondaryDurationMsRef.current;
 
       if (status.didJustFinish) {
         segmentPhaseRef.current = 'ended';
         void secondaryVideoRef.current?.pauseAsync();
+        pushSegmentPlayback({
+          primaryDurationMs: d1,
+          primaryPlaybackPositionMs: d1,
+          secondaryDurationMs: d2,
+          secondaryPlaybackPositionMs: d2,
+        });
         onPlaybackStatusUpdate({
           ...status,
           isLoaded: true,
-          positionMillis: total,
-          durationMillis: total,
           didJustFinish: true,
         } as AVPlaybackStatus);
         return;
       }
 
-      const pos = d1 + (status.positionMillis ?? 0);
-      onPlaybackStatusUpdate({
-        ...status,
-        positionMillis: pos,
-        durationMillis: total,
-        didJustFinish: false,
-      } as AVPlaybackStatus);
+      const secondaryPosition = status.positionMillis ?? 0;
+      pushSegmentPlayback({
+        primaryDurationMs: d1,
+        primaryPlaybackPositionMs: d1,
+        secondaryDurationMs:
+          status.durationMillis != null && status.durationMillis > 0
+            ? status.durationMillis
+            : d2,
+        secondaryPlaybackPositionMs: secondaryPosition,
+      });
     },
-    [getTotalDurationMs, onPlaybackStatusUpdate],
+    [onPlaybackStatusUpdate, pushSegmentPlayback],
   );
 
   const createPressInHandler = (scale: Animated.Value) => () => {
@@ -405,7 +437,7 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
             stringFigure={stringFigure}
             chapters={chapters}
             currentChapterIndex={currentChapterIndex}
-            playbackPosition={restProps.playbackPosition}
+            nonverbalSegmentPlayback={restProps.nonverbalSegmentPlayback}
             isLastChapterCompleted={restProps.isLastChapterCompleted}
             playbackRate={playbackRate}
             PLAYBACK_RATES={restProps.PLAYBACK_RATES}
@@ -423,7 +455,6 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
             onRestartFromBeginning={restProps.onRestartFromBeginning}
             onLandscapeToggle={restProps.onLandscapeToggle}
             getPlaybackRateDisplay={restProps.getPlaybackRateDisplay}
-            getChapterProgress={getChapterProgress}
             isTemporarilyDisabled={restProps.isTemporarilyDisabled}
           />
         )}

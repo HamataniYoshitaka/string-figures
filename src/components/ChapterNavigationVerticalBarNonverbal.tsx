@@ -9,6 +9,7 @@ import { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
 import NonverbalRestartButtonVertical from './NonverbalRestartButtonVertical';
 import AnimatedChapterNumberVertical from './AnimatedChapterNumberVertical';
 import { Chapter, StringFigure } from '../types';
+import type { NonverbalSegmentPlayback } from '../utils/nonverbalChapterPlayback';
 
 interface ChapterNavigationVerticalBarNonverbalProps {
   currentLanguage: 'ja' | 'en';
@@ -19,14 +20,13 @@ interface ChapterNavigationVerticalBarNonverbalProps {
   onNextChapter: () => void;
   onComplete: () => void;
   onRestartFromBeginning: () => void;
-  playbackPosition: number;
+  nonverbalSegmentPlayback: NonverbalSegmentPlayback;
   isLastChapterCompleted: boolean;
   stringFigure: StringFigure;
   getLocalizedText: (text: { ja: string; en: string }) => string;
   previousChapterButtonRef: React.RefObject<PreviousChapterLandscapeButtonRef | null>;
   replayButtonRef: React.RefObject<ReplayLandscapeButtonRef | null>;
   nextChapterButtonRef: React.RefObject<NextChapterLandscapeButtonRef | null>;
-  getChapterProgress: (chapterIndex: number) => number;
   isTemporarilyDisabled: boolean;
 }
 
@@ -46,14 +46,13 @@ const ChapterNavigationVerticalBarNonverbal = forwardRef<
   onNextChapter,
   onComplete,
   onRestartFromBeginning,
-  playbackPosition,
+  nonverbalSegmentPlayback,
   isLastChapterCompleted,
   stringFigure,
   getLocalizedText,
   previousChapterButtonRef,
   replayButtonRef,
   nextChapterButtonRef,
-  getChapterProgress,
   isTemporarilyDisabled,
 }, ref) => {
 
@@ -143,9 +142,8 @@ const ChapterNavigationVerticalBarNonverbal = forwardRef<
           ref={replayButtonRef}
           onPress={onReplay}
           currentChapterIndex={currentChapterIndex}
-          playbackPosition={playbackPosition}
+          nonverbalSegmentPlayback={nonverbalSegmentPlayback}
           getLocalizedText={getLocalizedText}
-          getChapterProgress={getChapterProgress}
           isTemporarilyDisabled={isTemporarilyDisabled}
         />
       </View>

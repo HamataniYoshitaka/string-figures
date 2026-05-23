@@ -5,6 +5,7 @@ import NonverbalReplayButton, { ReplayButtonRef } from './NonverbalReplayButton'
 import NonverbalNextChapterButton, { NextChapterButtonRef } from './NonverbalNextChapterButton';
 import AnimatedChapterNumber from './AnimatedChapterNumber';
 import { Chapter } from '../types';
+import type { NonverbalSegmentPlayback } from '../utils/nonverbalChapterPlayback';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 
 interface ChapterNavigationBarNonverbalProps {
@@ -20,9 +21,8 @@ interface ChapterNavigationBarNonverbalProps {
   replayButtonRef: React.RefObject<ReplayButtonRef | null>;
   nextChapterButtonRef: React.RefObject<NextChapterButtonRef | null>;
   // 追加のprops
-  playbackPosition: number;
+  nonverbalSegmentPlayback: NonverbalSegmentPlayback;
   isLastChapterCompleted: boolean;
-  getChapterProgress: (chapterIndex: number) => number;
   isTemporarilyDisabled: boolean;
 }
 
@@ -41,9 +41,8 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
   previousChapterButtonRef,
   replayButtonRef,
   nextChapterButtonRef,
-  playbackPosition,
+  nonverbalSegmentPlayback,
   isLastChapterCompleted,
-  getChapterProgress,
   isTemporarilyDisabled,
 }, ref) => {
   // デバイス情報を取得
@@ -153,9 +152,8 @@ const ChapterNavigationBarNonverbal = forwardRef<ChapterNavigationBarNonverbalRe
             ref={replayButtonRef}
             onPress={onReplay}
             currentChapterIndex={currentChapterIndex}
-            playbackPosition={playbackPosition}
+            nonverbalSegmentPlayback={nonverbalSegmentPlayback}
             getLocalizedText={getLocalizedText}
-            getChapterProgress={getChapterProgress}
             isTemporarilyDisabled={isTemporarilyDisabled}
             isBalloonAbove={isBalloonAbove}
           />

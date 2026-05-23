@@ -9,13 +9,17 @@ import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'reac
 import { Svg, Circle } from 'react-native-svg';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import type { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
+import {
+  getNonverbalCompositePlaybackPositionMs,
+  getNonverbalCurrentChapterProgress,
+  type NonverbalSegmentPlayback,
+} from '../utils/nonverbalChapterPlayback';
 
 interface NonverbalReplayLandscapeButtonProps {
   onPress: () => void;
   currentChapterIndex: number;
-  playbackPosition: number;
+  nonverbalSegmentPlayback: NonverbalSegmentPlayback;
   getLocalizedText: (text: { ja: string; en: string }) => string;
-  getChapterProgress: (chapterIndex: number) => number;
   isTemporarilyDisabled?: boolean;
 }
 
@@ -27,14 +31,17 @@ const NonverbalReplayLandscapeButton = forwardRef<
     {
       onPress,
       currentChapterIndex,
-      playbackPosition,
+      nonverbalSegmentPlayback,
       getLocalizedText,
-      getChapterProgress,
       isTemporarilyDisabled = false,
     },
     ref,
   ) => {
-    const isDisabled = (currentChapterIndex === 0 && playbackPosition === 0) || isTemporarilyDisabled;
+    const compositePlaybackPositionMs = getNonverbalCompositePlaybackPositionMs(
+      nonverbalSegmentPlayback,
+    );
+    const isDisabled =
+      (currentChapterIndex === 0 && compositePlaybackPositionMs === 0) || isTemporarilyDisabled;
     const [pressAnim] = useState(new Animated.Value(0));
     const [rippleAnim] = useState(new Animated.Value(0));
     const [rippleOpacity] = useState(new Animated.Value(0));
@@ -98,13 +105,13 @@ const NonverbalReplayLandscapeButton = forwardRef<
     }, [currentChapterIndex, opacity, translateX]);
 
     useEffect(() => {
-      const progress = getChapterProgress(currentChapterIndex) * 1.1;
+      const progress = getNonverbalCurrentChapterProgress(nonverbalSegmentPlayback) * 1.1;
       Animated.timing(animatedProgress, {
         toValue: progress > 1 ? 1 : progress,
         duration: 600,
         useNativeDriver: false,
       }).start();
-    }, [currentChapterIndex, playbackPosition, getChapterProgress, animatedProgress]);
+    }, [currentChapterIndex, nonverbalSegmentPlayback, animatedProgress]);
 
     useEffect(() => {
       const listenerId = animatedProgress.addListener(({ value }) => {
