@@ -76,8 +76,13 @@ const ARCH_PATH_D =
 
 /** 下部アーチのベジエ（header 最小化で底辺 y→ARCH_MORPH_MIN_BOTTOM_Y の矩形・ハンドルは端点に収束） */
 const ARCH_BOTTOM_Y = 344.5;
-/** 最小化完了時の底辺 y（上辺 0 からの帯高さ＝矩形の高さ） */
+/** 最小化完了時の底辺 y（上辺 0 からの帯高さ＝矩形の高さ）— iPhone 縦 */
 const ARCH_MORPH_MIN_BOTTOM_Y = 100;
+/** viewBox 内でアーチ曲線が最も上に張り出す y（ヘッダー下端との位置合わせに使用） */
+const ARCH_CURVE_CENTER_Y = 221;
+/** iPad 最小化時の底辺 y（帯を薄くしてヘッダー背面に隠す） */
+const ARCH_MORPH_MIN_BOTTOM_Y_TABLET_PORTRAIT = 62;
+const ARCH_MORPH_MIN_BOTTOM_Y_TABLET_LANDSCAPE = 52;
 const ARCH_C1 = { x: 356.986, y: 221.5 };
 const ARCH_C2 = { x: 68.416, y: 226 };
 const ARCH_CURVE_END_X = 428;
@@ -102,7 +107,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const bottomSheetRef = useRef<DetailBottomSheetRef>(null);
   const pagerRef = useRef<PagerView>(null);
   const [selectedItem, setSelectedItem] = useState<StringFigure | null>(null);
-  const { isTablet } = useDeviceInfo();
+  const { isTablet, isDeviceLandscape } = useDeviceInfo();
   const insets = useSafeAreaInsets();
 
   const [imageDimensions, setImageDimensions] = useState<{[key: string]: {width: number, height: number}}>({});
@@ -134,6 +139,12 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const pageScrollProgress = useSharedValue(HOME_PAGE_KEYS.indexOf(DEFAULT_HOME_PAGE));
 
   const archDisplayHeight = screenWidth * (ARCH_VIEWBOX.h / ARCH_VIEWBOX.w);
+
+  const archMorphMinBottomY = isTablet
+    ? isDeviceLandscape
+      ? ARCH_MORPH_MIN_BOTTOM_Y_TABLET_LANDSCAPE
+      : ARCH_MORPH_MIN_BOTTOM_Y_TABLET_PORTRAIT
+    : ARCH_MORPH_MIN_BOTTOM_Y;
 
   // レビューダイアログの表示チェック関数
   const checkAndShowReview = React.useCallback(async () => {
@@ -748,6 +759,17 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     return headerPaddingTop + titleBlock + 56;
   });
 
+  /** iPad のみ: アーチ曲線の山をヘッダー下端に合わせる（iPhone 縦は 0 のまま） */
+  const archTopOffset = useMemo(() => {
+    if (!isTablet) {
+      return 0;
+    }
+    const archCurveScreenY =
+      archDisplayHeight * (ARCH_CURVE_CENTER_Y / ARCH_VIEWBOX.h);
+    const alignTune = isDeviceLandscape ? 14 : 6;
+    return topOverlayHeight - archCurveScreenY - alignTune;
+  }, [isTablet, isDeviceLandscape, topOverlayHeight, archDisplayHeight]);
+
   const HEADER_HIDE_MS = 300;
   /** アーチ SVG のパス変形のみこの長さ（ヘッダー本体のアニメは HEADER_HIDE_MS） */
   const ARCH_MORPH_MS = 500;
@@ -770,7 +792,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   /** アーチ SVG：fill はページ色、パスは header 最小化で底辺 y=ARCH_MORPH_MIN_BOTTOM_Y の矩形へ */
   const archAnimatedProps = useAnimatedProps(() => {
     const t = headerArchMorphSV.value;
-    const yMin = ARCH_MORPH_MIN_BOTTOM_Y;
+    const yMin = archMorphMinBottomY;
     const yB = ARCH_BOTTOM_Y * (1 - t) + yMin * t;
     const cx1 = ARCH_C1.x * (1 - t) + ARCH_CURVE_END_X * t;
     const cy1 = ARCH_C1.y * (1 - t) + yMin * t;
@@ -792,18 +814,14 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     transform: [{ translateY: headerTranslateY.value }],
   }));
 
+  /** ヘッダー背面: 常にページ色を表示（拡大時の透明化アニメは無効） */
   const overlayHeaderBgAnimatedStyle = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(
       pageScrollProgress.value,
       PAGE_SCROLL_INPUT_RANGE,
       [...HOME_PAGE_BACKGROUND_COLORS]
     ),
-    opacity: interpolate(
-      headerMinimizedSV.value,
-      [0, 1],
-      [0, 1],
-      Extrapolation.CLAMP
-    ),
+    opacity: 1,
   }));
 
   /** タイトル＋メニュー行：最小化時に 1→0（背景レイヤーと同じ headerMinimizedSV で同期） */
@@ -884,7 +902,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         viewBox={`0 0 ${ARCH_VIEWBOX.w} ${ARCH_VIEWBOX.h}`}
         preserveAspectRatio="xMidYMin meet"
         pointerEvents="none"
-        style={[styles.archSvg, { width: screenWidth }]}
+        style={[styles.archSvg, { width: screenWidth, top: archTopOffset }]}
       >
         <AnimatedPath d={ARCH_PATH_D} animatedProps={archAnimatedProps} />
       </Svg>
@@ -1094,7 +1112,6 @@ const styles = StyleSheet.create({
   },
   archSvg: {
     position: 'absolute',
-    top: 0,
     left: 0,
     right: 0,
     zIndex: 0,
