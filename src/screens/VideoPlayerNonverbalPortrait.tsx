@@ -702,10 +702,11 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
         </View>
         <View
           pointerEvents="box-none"
-          style={[
-            styles.restartTopBalloonContainer,
-            { top: fixedHeaderBackgroundHeight - 30 },
-          ]}
+          style={
+            isTabletLandscape
+              ? styles.restartTopBalloonContainerTabletLandscape
+              : [styles.restartTopBalloonContainer, { top: fixedHeaderBackgroundHeight - 30 }]
+          }
         >
           <NonverbalRestartTopBalloon
             ref={restartButtonRef}
@@ -714,6 +715,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
             getLocalizedText={getLocalizedText}
             isTemporarilyDisabled={isTemporarilyDisabled}
             currentLanguage={currentLanguage}
+            isTabletLandscape={isTabletLandscape}
           />
         </View>
         <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
@@ -794,10 +796,11 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
       </View>
       <View
         pointerEvents="box-none"
-        style={[
-          styles.restartTopBalloonContainer,
-          { top: fixedHeaderBackgroundHeight - 30 },
-        ]}
+        style={
+          isTabletLandscape
+            ? styles.restartTopBalloonContainerTabletLandscape
+            : [styles.restartTopBalloonContainer, { top: fixedHeaderBackgroundHeight - 30 }]
+        }
       >
         <NonverbalRestartTopBalloon
           ref={restartButtonRef}
@@ -806,6 +809,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
           currentLanguage={currentLanguage}
           getLocalizedText={getLocalizedText}
           isTemporarilyDisabled={isTemporarilyDisabled}
+          isTabletLandscape={isTabletLandscape}
         />
       </View>
       <View pointerEvents="none" style={[styles.nonverbalStillStripViewport, { height: windowHeight }]}>
@@ -1081,6 +1085,15 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: 'center',
+    zIndex: 3,
+  },
+  /** iPad 横向き: 画面中央左 */
+  restartTopBalloonContainerTabletLandscape: {
+    position: 'absolute',
+    left: 16,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
     zIndex: 3,
   },
   nonverbalStillStripViewport: {

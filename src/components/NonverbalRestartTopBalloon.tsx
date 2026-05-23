@@ -16,6 +16,8 @@ interface NonverbalRestartTopBalloonProps {
   currentLanguage: string;
   getLocalizedText: (text: { ja: string; en: string }) => string;
   isTemporarilyDisabled?: boolean;
+  /** iPad 横向き: 画面中央左・tail は右中央 */
+  isTabletLandscape?: boolean;
 }
 
 const BALLOON_BG = 'rgba(209, 200, 194, 0.5)';
@@ -23,7 +25,7 @@ const BALLOON_BG = 'rgba(209, 200, 194, 0.5)';
 const NonverbalRestartTopBalloon = forwardRef<
   RestartButtonRef,
   NonverbalRestartTopBalloonProps
->(({ onPress, currentChapterIndex, currentLanguage, getLocalizedText, isTemporarilyDisabled = false }, ref) => {
+>(({ onPress, currentChapterIndex, currentLanguage, getLocalizedText, isTemporarilyDisabled = false, isTabletLandscape = false }, ref) => {
   const isDisabled = isTemporarilyDisabled;
   const [scaleAnim] = useState(new Animated.Value(1));
   const [balloonColorAnim] = useState(new Animated.Value(0));
@@ -81,6 +83,7 @@ const NonverbalRestartTopBalloon = forwardRef<
       <Animated.View
         style={[
           styles.balloonOuter,
+          isTabletLandscape && styles.balloonOuterTabletLandscape,
           isDisabled && styles.balloonDisabled,
           { width: currentLanguage === 'ja' ? 120 : 100 },
           { transform: [{ scale: scaleAnim }] },
@@ -89,6 +92,7 @@ const NonverbalRestartTopBalloon = forwardRef<
         <Animated.View
           style={[
             styles.balloon,
+            isTabletLandscape && styles.balloonTabletLandscape,
             !isDisabled && { backgroundColor: balloonColor },
           ]}
         >
@@ -102,7 +106,10 @@ const NonverbalRestartTopBalloon = forwardRef<
             {getLocalizedText({ ja: 'はじめから', en: 'Restart' })}
           </Text>
         </Animated.View>
-        <BalloonTail fillColor={BALLOON_BG} position="topcenter" />
+        <BalloonTail
+          fillColor={BALLOON_BG}
+          position={isTabletLandscape ? 'centerright' : 'topcenter'}
+        />
       </Animated.View>
     </TouchableWithoutFeedback>
   );
@@ -113,6 +120,9 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignSelf: 'center',
   },
+  balloonOuterTabletLandscape: {
+    alignSelf: 'flex-start',
+  },
   balloon: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -121,6 +131,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     backgroundColor: BALLOON_BG,
+  },
+  balloonTabletLandscape: {
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
   },
   balloonText: {
     fontSize: 14,
