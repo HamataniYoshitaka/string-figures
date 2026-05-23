@@ -318,16 +318,15 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
     windowWidth - videoAreaHorizontalPadding * 2 - VIDEO_ROW_PADDING_HORIZONTAL * 2;
 
   /**
-   * iPad 横向き: 幅基準の 16:9 だとスロットが画面いっぱいになりすぎるため、
-   * ヘッダー・チャプターナビ分を除いた縦余白と画面幅比の両方で cap する。
+   * iPad 横向き: 幅いっぱいの 16:9 だと横に伸びすぎるため幅比で cap する。
+   * 縦は下部チャプターナビ分のみ確保し、上部タイトル帯はスロットが覆う想定（strip の中央寄せで上にはみ出す）。
    */
   if (isTabletLandscape) {
-    const tabletLandscapeVerticalReserve =
-      insets.top + (isTablet ? 92 : 84) + 120 + insets.bottom;
+    const tabletLandscapeBottomReserve = 108 + insets.bottom;
     const maxStillCardHeightFromLayout =
-      (windowHeight - tabletLandscapeVerticalReserve) / 2 -
+      (windowHeight - tabletLandscapeBottomReserve) / 2 -
       NONVERBAL_STILL_VERTICAL_GAP / 2;
-    const maxVideoContentWidth = windowWidth * 0.48;
+    const maxVideoContentWidth = windowWidth * 0.58;
     const widthFromHeightCap = maxStillCardHeightFromLayout * (16 / 9);
     videoContentWidth = Math.min(videoContentWidth, maxVideoContentWidth, widthFromHeightCap);
   }
@@ -338,7 +337,9 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   /** 可視4行（＋行間3つ）の高さ。ストリップ全体ではなくこの帯の中央を画面中央に合わせる */
   const visibleFourStripRowsHeight =
     4 * stillCardHeight + 3 * NONVERBAL_STILL_VERTICAL_GAP;
-  const stripCenteringOffset = windowHeight / 2 - visibleFourStripRowsHeight / 2;
+  const stripCenteringOffset = isTabletLandscape
+    ? windowHeight * 0.46 - visibleFourStripRowsHeight / 2
+    : windowHeight / 2 - visibleFourStripRowsHeight / 2;
   /** 可視4行の上段（leadingPreview 行）静止画枠の画面座標。ストリップ index 0 は空行 */
   const topStillFrameTopFromScreenTop = stripCenteringOffset + stripRowSlotHeight;
   const topStillFrameLeftFromScreenLeft = (windowWidth - videoContentWidth) / 2;
@@ -352,8 +353,10 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
     (Platform.OS === 'android' ? containerPaddingTop : 0) +
     10;
   const landscapeButtonLeft = topStillFrameLeftFromScreenLeft;
-  /** 動画上端: 画面中央 + 8pt（端末共通。親は画面いっぱいの Animated.View） */
-  const videoTopFromScreenTop = windowHeight / 2 + 8;
+  /** 動画上端: 画面中央付近（iPad 横は静止画シームに合わせてやや上寄せ） */
+  const videoTopFromScreenTop = isTabletLandscape
+    ? windowHeight * 0.46 + 8
+    : windowHeight / 2 + 8;
 
   const stripRowOpacities = useMemo(
     () =>
@@ -715,19 +718,21 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
               onPress={handleTitleSecretTap}
               android_ripple={null}
             >
-              <Text
-                maxFontSizeMultiplier={1.35}
-                numberOfLines={1}
-                style={[
-                  styles.title,
-                  {
-                    fontSize: isTablet ? 22 : 18,
-                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
-                  },
-                ]}
-              >
-                {getLocalizedText({ ja: stringFigure.name.ja, en: stringFigure.name.en })}
-              </Text>
+              {!isTabletLandscape && (
+                <Text
+                  maxFontSizeMultiplier={1.35}
+                  numberOfLines={1}
+                  style={[
+                    styles.title,
+                    {
+                      fontSize: isTablet ? 22 : 18,
+                      fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                    },
+                  ]}
+                >
+                  {getLocalizedText({ ja: stringFigure.name.ja, en: stringFigure.name.en })}
+                </Text>
+              )}
             </Pressable>
           </View>
           {!isTablet && (
@@ -874,19 +879,21 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
             onPress={handleTitleSecretTap}
             android_ripple={null}
           >
-            <Text
-              maxFontSizeMultiplier={1.35}
-              numberOfLines={1}
-              style={[
-                styles.title,
-                {
-                  fontSize: isTablet ? 22 : 18,
-                  fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
-                },
-              ]}
-            >
-              {getLocalizedText({ ja: stringFigure.name.ja, en: stringFigure.name.en })}
-            </Text>
+            {!isTabletLandscape && (
+              <Text
+                maxFontSizeMultiplier={1.35}
+                numberOfLines={1}
+                style={[
+                  styles.title,
+                  {
+                    fontSize: isTablet ? 22 : 18,
+                    fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold',
+                  },
+                ]}
+              >
+                {getLocalizedText({ ja: stringFigure.name.ja, en: stringFigure.name.en })}
+              </Text>
+            )}
           </Pressable>
           <TouchableWithoutFeedback
             onPress={onToggleBookmark}
