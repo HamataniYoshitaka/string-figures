@@ -6,7 +6,7 @@ interface BalloonTailProps {
   width?: number;
   height?: number;
   fillColor?: string;
-  position?: 'topleft' | 'topright' | 'topcenter' | 'lefttop' | 'bottomright' | 'bottomcenter';
+  position?: 'topleft' | 'topright' | 'topcenter' | 'lefttop' | 'bottomright' | 'bottomcenter' | 'bottomleft';
 }
 
 const getTailPath = (position: BalloonTailProps['position']): string => {
@@ -17,6 +17,8 @@ const getTailPath = (position: BalloonTailProps['position']): string => {
       return 'M8 0 L8 8 L0 8 Z';
     case 'topcenter':
       return 'M4 0 L0 8 L8 8 Z';
+    case 'bottomleft':
+      return 'M0 0 L0 8 L8 0 Z';
     case 'bottomright':
       return 'M8 0 L8 8 L0 0 Z';
     case 'bottomcenter':
@@ -51,6 +53,8 @@ const getWrapperStyle = (
       return { ...base, right: 0, bottom: -height };
     case 'lefttop':
       return { ...base, left: -width, top: 0 };
+    case 'bottomleft':
+      return { ...base, left: 0, bottom: -height };
     default:
       return { ...base, left: 0, top: -height };
   }

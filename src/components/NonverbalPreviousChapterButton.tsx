@@ -135,7 +135,7 @@ const NonverbalPreviousChapterButton = forwardRef<PreviousChapterButtonRef, Nonv
           <Animated.View
             style={[
               styles.balloon,
-              !isBalloonAbove && styles.balloonTopLeft,
+              isBalloonAbove? styles.balloonBottomLeft : styles.balloonTopLeft,
               isDisabled && styles.balloonDisabled,
               !isDisabled && { backgroundColor: balloonColor },
             ]}
@@ -148,7 +148,7 @@ const NonverbalPreviousChapterButton = forwardRef<PreviousChapterButtonRef, Nonv
             </Text>
             <BalloonTail
               fillColor="rgba(209, 200, 194, 0.5)"
-              position={isBalloonAbove ? 'bottomcenter' : 'topleft'}
+              position={isBalloonAbove ? 'bottomleft' : 'topleft'}
             />
           </Animated.View>
         </View>
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   },
   balloonContainer: {
     position: 'absolute',
-    left: 16,
+    left: 4,
     bottom: -44,
     width: 100,
     height: 32,
@@ -220,6 +220,9 @@ const styles = StyleSheet.create({
   },
   balloonTopLeft: {
     borderTopLeftRadius: 0,
+  },
+  balloonBottomLeft: {
+    borderBottomLeftRadius: 0,
   },
   controlButtonText: {
     fontSize: 14,
