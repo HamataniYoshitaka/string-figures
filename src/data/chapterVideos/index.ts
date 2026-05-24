@@ -82,7 +82,12 @@ import { FIGURE_31_WEAVING_VIDEOS } from './figure-31_weaving';
 import { FIGURE_32_CANOE_VIDEOS } from './figure-32_canoe';
 import { FIGURE_33_CRUB_VIDEOS } from './figure-33_crub';
 import { FIGURE_34_AMWANGIYO_VIDEOS } from './figure-34_amwangiyo';
-import { FIGURE_35_JACOBS_LADDER1_VIDEOS } from './figure-35_jacobs-ladder1';
+import {
+  FIGURE_35_JACOBS_LADDER1_NONVERBAL_CHAPTER_STILL_PAIRS,
+  FIGURE_35_JACOBS_LADDER1_NONVERBAL_TOTAL_CHAPTERS,
+  FIGURE_35_JACOBS_LADDER1_NONVERBAL_VIDEO_PAIRS,
+  FIGURE_35_JACOBS_LADDER1_VIDEOS,
+} from './figure-35_jacobs-ladder1';
 import { FIGURE_36_JACOBS_LADDER2_VIDEOS } from './figure-36_jacobs-ladder2';
 import { FIGURE_37_JACOBS_LADDER3_VIDEOS } from './figure-37_jacobs-ladder3';
 import {
@@ -378,6 +383,7 @@ export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, Nonver
   '111_binary-stars': FIGURE_111_BINARY_STARS_NONVERBAL_VIDEO_PAIRS,
   '91_5diamonds': FIGURE_91_5DIAMONDS_NONVERBAL_VIDEO_PAIRS,
   '92_6diamonds': FIGURE_92_6DIAMONDS_NONVERBAL_VIDEO_PAIRS,
+  '35_jacobs-ladder1': FIGURE_35_JACOBS_LADDER1_NONVERBAL_VIDEO_PAIRS,
 };
 
 export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
@@ -406,6 +412,7 @@ export const NONVERBAL_TOTAL_CHAPTERS: Record<string, number> = {
   '111_binary-stars': FIGURE_111_BINARY_STARS_NONVERBAL_TOTAL_CHAPTERS,
   '91_5diamonds': FIGURE_91_5DIAMONDS_NONVERBAL_TOTAL_CHAPTERS,
   '92_6diamonds': FIGURE_92_6DIAMONDS_NONVERBAL_TOTAL_CHAPTERS,
+  '35_jacobs-ladder1': FIGURE_35_JACOBS_LADDER1_NONVERBAL_TOTAL_CHAPTERS,
 };
 
 /** 非言語モードのフィルムストリップ用静止画（FIGURE ごとに件数・パスが異なる） */
@@ -435,4 +442,5 @@ export const NONVERBAL_CHAPTER_STILL_PAIRS: Record<string, readonly NonverbalCha
   '111_binary-stars': FIGURE_111_BINARY_STARS_NONVERBAL_CHAPTER_STILL_PAIRS,
   '91_5diamonds': FIGURE_91_5DIAMONDS_NONVERBAL_CHAPTER_STILL_PAIRS,
   '92_6diamonds': FIGURE_92_6DIAMONDS_NONVERBAL_CHAPTER_STILL_PAIRS,
+  '35_jacobs-ladder1': FIGURE_35_JACOBS_LADDER1_NONVERBAL_CHAPTER_STILL_PAIRS,
 };
