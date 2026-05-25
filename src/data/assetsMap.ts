@@ -521,7 +521,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/106_salt-house/preview.mp4'),
   },
   '108_toad': {
-    thumbnail: require('../../assets/string-figures/108_toad/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/108_toad/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/108_toad/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/108_toad/preview.mp4'),
   },
