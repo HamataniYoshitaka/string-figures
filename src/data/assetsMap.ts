@@ -186,7 +186,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/36_jacobs-ladder2/preview.mp4'),
   },
   '37_jacobs-ladder3': {
-    thumbnail: require('../../assets/string-figures/37_jacobs-ladder3/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/37_jacobs-ladder3/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/37_jacobs-ladder3/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/37_jacobs-ladder3/preview.mp4'),
   },
