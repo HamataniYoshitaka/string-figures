@@ -246,7 +246,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/48_shovel/preview.mp4'),
   },
   '49_caribou': {
-    thumbnail: require('../../assets/string-figures/49_caribou/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/49_caribou/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/49_caribou/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/49_caribou/preview.mp4'),
   },
