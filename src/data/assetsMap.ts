@@ -8,12 +8,12 @@ export const ASSETS_MAP: {
   '1_star': {
     thumbnail: require('../../assets/string-figures/1_star/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/1_star/chapters/01-1.mp4'),
   },
   '2_jacobs-ladder4': {
     thumbnail: require('../../assets/string-figures/2_jacobs-ladder4/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/2_jacobs-ladder4/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/2_jacobs-ladder4/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/2_jacobs-ladder4/chapters/01-1.mp4'),
   },
   '3_spiderweb': {
     thumbnail: require('../../assets/string-figures/3_spiderweb/thumbnail-kraft.jpg'),
@@ -23,12 +23,12 @@ export const ASSETS_MAP: {
   '4_volcano': {
     thumbnail: require('../../assets/string-figures/4_volcano/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/4_volcano/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/4_volcano/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/4_volcano/chapters/01-1.mp4'),
   },
   '5_many-stars': {
     thumbnail: require('../../assets/string-figures/5_many-stars/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/5_many-stars/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/5_many-stars/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/5_many-stars/chapters/01-1.mp4'),
   },
   '6_tieup': {  
     thumbnail: require('../../assets/string-figures/6_tieup/thumbnail-kraft.jpg'),
@@ -38,7 +38,7 @@ export const ASSETS_MAP: {
   '7_snail': {
     thumbnail: require('../../assets/string-figures/7_snail/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/7_snail/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/7_snail/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/7_snail/chapters/01-1.mp4'),
   },
   '8_elastic-band': {
     thumbnail: require('../../assets/string-figures/8_elastic-band/thumbnail-kraft-s.gif'),
@@ -48,7 +48,7 @@ export const ASSETS_MAP: {
   '9_chrysanthemum': {
     thumbnail: require('../../assets/string-figures/9_chrysanthemum/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/9_chrysanthemum/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/9_chrysanthemum/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/9_chrysanthemum/chapters/01-1.mp4'),
   },
   '10_magic-fingers': {
     thumbnail: require('../../assets/string-figures/10_magic-fingers/thumbnail-kraft.gif'),
@@ -68,7 +68,7 @@ export const ASSETS_MAP: {
   '13_easy-broom': {
     thumbnail: require('../../assets/string-figures/13_easy-broom/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/13_easy-broom/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/13_easy-broom/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/13_easy-broom/chapters/01-1.mp4'),
   },
   '14_footprint': {
     thumbnail: require('../../assets/string-figures/14_footprint/thumbnail-kraft.jpg'),
@@ -88,7 +88,7 @@ export const ASSETS_MAP: {
   '17_broom': {
     thumbnail: require('../../assets/string-figures/17_broom/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/17_broom/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/17_broom/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/17_broom/chapters/01-1.mp4'),
   },
   '18_mt-fuji': {
     thumbnail: require('../../assets/string-figures/18_mt-fuji/thumbnail-kraft.jpg'),
@@ -98,7 +98,7 @@ export const ASSETS_MAP: {
   '19_two-chiefs': {
     thumbnail: require('../../assets/string-figures/19_two-chiefs/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/19_two-chiefs/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/19_two-chiefs/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/19_two-chiefs/chapters/01-1.mp4'),
   },
   '20_tuzumi': {
     thumbnail: require('../../assets/string-figures/20_tuzumi/thumbnail-kraft.jpg'),
@@ -113,7 +113,7 @@ export const ASSETS_MAP: {
   '22_spear': {
     thumbnail: require('../../assets/string-figures/22_spear/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/22_spear/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/22_spear/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/22_spear/chapters/01-1.mp4'),
   },
   '23_finger-stroll': {
     thumbnail: require('../../assets/string-figures/23_finger-stroll/thumbnail-kraft.gif'),
@@ -123,7 +123,7 @@ export const ASSETS_MAP: {
   '24_shooting-star': {
     thumbnail: require('../../assets/string-figures/24_shooting-star/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/24_shooting-star/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/24_shooting-star/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/24_shooting-star/chapters/01-1.mp4'),
   },
   '25_fingers-magic': {
     thumbnail: require('../../assets/string-figures/25_fingers-magic/thumbnail-kraft-s.gif'),
@@ -143,7 +143,7 @@ export const ASSETS_MAP: {
   '28_atanua-house': {
     thumbnail: require('../../assets/string-figures/28_atanua-house/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/28_atanua-house/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/28_atanua-house/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/28_atanua-house/chapters/01-1.mp4'),
   },
   '29_two-fishes': {
     thumbnail: require('../../assets/string-figures/29_two-fishes/thumbnail-kraft-s.gif'),
@@ -178,22 +178,22 @@ export const ASSETS_MAP: {
   '35_jacobs-ladder1': {
     thumbnail: require('../../assets/string-figures/35_jacobs-ladder1/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/35_jacobs-ladder1/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/35_jacobs-ladder1/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/35_jacobs-ladder1/chapters/01-1.mp4'),
   },
   '36_jacobs-ladder2': {
     thumbnail: require('../../assets/string-figures/36_jacobs-ladder2/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/36_jacobs-ladder2/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/36_jacobs-ladder2/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/36_jacobs-ladder2/chapters/01-1.mp4'),
   },
   '37_jacobs-ladder3': {
     thumbnail: require('../../assets/string-figures/37_jacobs-ladder3/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/37_jacobs-ladder3/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/37_jacobs-ladder3/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/37_jacobs-ladder3/chapters/01-1.mp4'),
   },
   '38_dance-stage': {
     thumbnail: require('../../assets/string-figures/38_dance-stage/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/38_dance-stage/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/38_dance-stage/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/38_dance-stage/chapters/01-1.mp4'),
   },
   '39_the-sun': {
     thumbnail: require('../../assets/string-figures/39_the-sun/thumbnail-kraft.jpg'),
@@ -213,7 +213,7 @@ export const ASSETS_MAP: {
   '42_apaches-door': {
     thumbnail: require('../../assets/string-figures/42_apaches-door/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/42_apaches-door/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/42_apaches-door/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/42_apaches-door/chapters/01-1.mp4'),
   },
   '43_trampoline': {
     thumbnail: require('../../assets/string-figures/43_trampoline/thumbnail-kraft.jpg'),
@@ -228,17 +228,17 @@ export const ASSETS_MAP: {
   '45_hammock': {
     thumbnail: require('../../assets/string-figures/45_hammock/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/45_hammock/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/45_hammock/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/45_hammock/chapters/01-1.mp4'),
   },
   '46_rabit': {
     thumbnail: require('../../assets/string-figures/46_rabit/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/46_rabit/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/46_rabit/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/46_rabit/chapters/01-1.mp4'),
   },
   '47_turtle': {
     thumbnail: require('../../assets/string-figures/47_turtle/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/47_turtle/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/47_turtle/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/47_turtle/chapters/01-1.mp4'),
   },
   '48_shovel': {
     thumbnail: require('../../assets/string-figures/48_shovel/thumbnail-kraft.jpg'),
@@ -248,7 +248,7 @@ export const ASSETS_MAP: {
   '49_caribou': {
     thumbnail: require('../../assets/string-figures/49_caribou/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/49_caribou/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/49_caribou/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/49_caribou/chapters/01-1-1.mp4'),
   },
   '50_2story-siberian-house': {
     thumbnail: require('../../assets/string-figures/50_2story-siberian-house/thumbnail-kraft.gif'),
@@ -273,7 +273,7 @@ export const ASSETS_MAP: {
   '54_caribou-in-willows': {
     thumbnail: require('../../assets/string-figures/54_caribou-in-willows/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/54_caribou-in-willows/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/54_caribou-in-willows/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/54_caribou-in-willows/chapters/01-1.mp4'),
   },
   '55_parrot': {
     thumbnail: require('../../assets/string-figures/55_parrot/thumbnail-kraft.gif'),
@@ -288,7 +288,7 @@ export const ASSETS_MAP: {
   '57_thunder': {
     thumbnail: require('../../assets/string-figures/57_thunder/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/57_thunder/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/57_thunder/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/57_thunder/chapters/01-1.mp4'),
   },
   '58_earth-and-sky': {
     thumbnail: require('../../assets/string-figures/58_earth-and-sky/thumbnail-kraft.jpg'),
@@ -328,7 +328,7 @@ export const ASSETS_MAP: {
   '66_mouse': {
     thumbnail: require('../../assets/string-figures/66_mouse/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/66_mouse/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/66_mouse/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/66_mouse/chapters/01-1.mp4'),
   },
   '67_island-moa': {
     thumbnail: require('../../assets/string-figures/67_island-moa/thumbnail-kraft.jpg'),
@@ -338,7 +338,7 @@ export const ASSETS_MAP: {
   '68_laia-flower': {
     thumbnail: require('../../assets/string-figures/68_laia-flower/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/68_laia-flower/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/68_laia-flower/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/68_laia-flower/chapters/01-1.mp4'),
   },
   '69_moon-between-mountains': {
     thumbnail: require('../../assets/string-figures/69_moon-between-mountains/thumbnail-kraft.jpg'),
@@ -353,7 +353,7 @@ export const ASSETS_MAP: {
   '71_siberian-house': {
     thumbnail: require('../../assets/string-figures/71_siberian-house/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/71_siberian-house/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/71_siberian-house/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/71_siberian-house/chapters/01-1.mp4'),
   },
   '72_spindle': {
     thumbnail: require('../../assets/string-figures/72_spindle/thumbnail-kraft.gif'),
@@ -403,7 +403,7 @@ export const ASSETS_MAP: {
   '81_bat': {
     thumbnail: require('../../assets/string-figures/81_bat/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/81_bat/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/81_bat/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/81_bat/chapters/01-1.mp4'),
   },
   '82_storm-clouds': {
     thumbnail: require('../../assets/string-figures/82_storm-clouds/thumbnail-kraft.jpg'),
@@ -448,12 +448,12 @@ export const ASSETS_MAP: {
   '91_5diamonds': {
     thumbnail: require('../../assets/string-figures/91_5diamonds/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/91_5diamonds/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/91_5diamonds/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/91_5diamonds/chapters/01-1.mp4'),
   },
   '92_6diamonds': {
     thumbnail: require('../../assets/string-figures/92_6diamonds/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/92_6diamonds/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/92_6diamonds/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/92_6diamonds/chapters/01-1.mp4'),
   },
   '93_one-chief': {
     thumbnail: require('../../assets/string-figures/93_one-chief/thumbnail-kraft.jpg'),
@@ -478,7 +478,7 @@ export const ASSETS_MAP: {
   '98_fish-trap': {
     thumbnail: require('../../assets/string-figures/98_fish-trap/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/98_fish-trap/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/98_fish-trap/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/98_fish-trap/chapters/01-1.mp4'),
   },
   '99_raven': {
     thumbnail: require('../../assets/string-figures/99_raven/thumbnail-kraft.jpg'),
@@ -488,7 +488,7 @@ export const ASSETS_MAP: {
   '100_hold-the-sky': {
     thumbnail: require('../../assets/string-figures/100_hold-the-sky/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/100_hold-the-sky/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/100_hold-the-sky/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/100_hold-the-sky/chapters/01-1.mp4'),
   },
   '101_pola-bear': {
     thumbnail: require('../../assets/string-figures/101_pola-bear/thumbnail-kraft.jpg'),
@@ -523,7 +523,7 @@ export const ASSETS_MAP: {
   '108_toad': {
     thumbnail: require('../../assets/string-figures/108_toad/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/108_toad/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/108_toad/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/108_toad/chapters/01-1.mp4'),
   },
   '109_heart': {
     thumbnail: require('../../assets/string-figures/109_heart/thumbnail-kraft.jpg'),
@@ -533,11 +533,11 @@ export const ASSETS_MAP: {
   '110_eikodowa': {
     thumbnail: require('../../assets/string-figures/110_eikodowa/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/110_eikodowa/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/110_eikodowa/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/110_eikodowa/chapters/01-1.mp4'),
   },
   '111_binary-stars': {
     thumbnail: require('../../assets/string-figures/111_binary-stars/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/111_binary-stars/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/110_eikodowa/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/111_binary-stars/chapters/01-1.mp4'),
   },
 };

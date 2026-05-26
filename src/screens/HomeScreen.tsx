@@ -96,7 +96,7 @@ const CommercialCollection1: StringFigure = {
   directory: '99998_additional-collection',
   thumbnail: require('../../assets/purchase/dummy-card1.jpg'),
   patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
-  previewUrl: require('../../assets/string-figures/1_star/preview.mp4'),
+  previewUrl: require('../../assets/string-figures/1_star/chapters/01-1.mp4'),
   description: { ja: '追加コレクションを見る', en: 'See Additional Collection.' },
   premiumCourseId: 0,
   directNavigationDestination: 'Additional',
