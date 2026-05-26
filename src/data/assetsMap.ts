@@ -96,7 +96,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/18_mt-fuji/preview.mp4'),
   },
   '19_two-chiefs': {
-    thumbnail: require('../../assets/string-figures/19_two-chiefs/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/19_two-chiefs/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/19_two-chiefs/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/19_two-chiefs/preview.mp4'),
   },
