@@ -60,6 +60,24 @@ const NONVERBAL_STILL_VERTICAL_GAP = 16;
 /** 動画レイヤーの不透明度 0↔1 のフェード時間（前半終了〜0、1.2s〜1 のフェードに使用） */
 const NONVERBAL_VIDEO_LAYER_OPACITY_MS = 300;
 
+/** HomeScreen の HOME_PAGE_BACKGROUND_COLORS（basic〜two_people）と同じ */
+const DIFFICULTY_HEADER_FILL_COLORS = {
+  basic: '#B5CFF0',
+  easy: '#9BB262',
+  medium: '#FDBBDF',
+  hard: '#FADA5E',
+  two_people: '#7EB8D8',
+} as const;
+
+type DifficultyHeaderFillKey = keyof typeof DIFFICULTY_HEADER_FILL_COLORS;
+
+function getDifficultyHeaderFill(difficulty: string | undefined): string {
+  if (difficulty && difficulty in DIFFICULTY_HEADER_FILL_COLORS) {
+    return DIFFICULTY_HEADER_FILL_COLORS[difficulty as DifficultyHeaderFillKey];
+  }
+  return DIFFICULTY_HEADER_FILL_COLORS.easy;
+}
+
 type NonverbalStripSource = number | null | 'leadingPreview';
 
 /**
@@ -730,6 +748,8 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
     });
   };
 
+  const headerBackgroundFill = getDifficultyHeaderFill(stringFigure?.difficulty);
+
   // stringFigureが未定義の場合の早期リターン
   if (!stringFigure || !chapters || !chapters[currentChapterIndex]) {
     const fixedHeaderBackgroundHeight = insets.top + (isTablet ? 92 : 84);
@@ -737,7 +757,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
       <Animated.View style={{ flex: 1, backgroundColor: backgroundColorAnim }}>
         <View pointerEvents="none" style={styles.fixedHeaderBackground}>
           <Svg width="100%" height={fixedHeaderBackgroundHeight} viewBox="0 0 428 86" preserveAspectRatio="none">
-            <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill="#9BB262" />
+            <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill={headerBackgroundFill} />
           </Svg>
         </View>
         <View
@@ -831,7 +851,7 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
     <Animated.View style={{ flex: 1, backgroundColor: backgroundColorAnim }}>
       <View pointerEvents="none" style={styles.fixedHeaderBackground}>
         <Svg width="100%" height={fixedHeaderBackgroundHeight} viewBox="0 0 428 86" preserveAspectRatio="none">
-          <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill="#9BB262" />
+          <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill={headerBackgroundFill} />
         </Svg>
       </View>
       <View

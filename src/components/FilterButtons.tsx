@@ -64,7 +64,7 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
       medium: { ja: 'ふつう', en: 'Normal' },
       hard: { ja: 'むずかしい', en: 'Hard' },
       two_people: { ja: 'ふたり', en: '2 People' },
-      bookmark: { ja: 'ブックマーク', en: 'Bookmark' },
+      bookmark: { ja: 'おきにいり', en: 'Bookmark' },
     };
     return getLocalizedText(pageTexts[pageKey]);
   };
