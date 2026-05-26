@@ -526,9 +526,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/108_toad/chapters/01-1.mp4'),
   },
   '109_heart': {
-    thumbnail: require('../../assets/string-figures/109_heart/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/109_heart/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/109_heart/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/109_heart/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/109_heart/chapters/01-1.mp4'),
   },
   '110_eikodowa': {
     thumbnail: require('../../assets/string-figures/110_eikodowa/thumbnail-nonverbal.gif'),
