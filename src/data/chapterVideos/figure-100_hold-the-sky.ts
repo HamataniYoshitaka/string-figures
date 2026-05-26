@@ -1,24 +1,3 @@
-export const FIGURE_100_HOLD_THE_SKY_VIDEOS = {
-  1: require('../../../assets/string-figures/100_hold-the-sky/chapters/01-1.mp4'),
-  2: require('../../../assets/string-figures/100_hold-the-sky/chapters/02-1.mp4'),
-  3: require('../../../assets/string-figures/100_hold-the-sky/chapters/03-1.mp4'),
-  4: require('../../../assets/string-figures/100_hold-the-sky/chapters/04-1.mp4'),
-  5: require('../../../assets/string-figures/100_hold-the-sky/chapters/05-1.mp4'),
-  6: require('../../../assets/string-figures/100_hold-the-sky/chapters/06_1.mp4'),
-  7: require('../../../assets/string-figures/100_hold-the-sky/chapters/07-1.mp4'),
-  8: require('../../../assets/string-figures/100_hold-the-sky/chapters/08-1.mp4'),
-  9: require('../../../assets/string-figures/100_hold-the-sky/chapters/09-1.mp4'),
-  10: require('../../../assets/string-figures/100_hold-the-sky/chapters/10-1.mp4'),
-  11: require('../../../assets/string-figures/100_hold-the-sky/chapters/11-1.mp4'),
-  12: require('../../../assets/string-figures/100_hold-the-sky/chapters/12-1.mp4'),
-  13: require('../../../assets/string-figures/100_hold-the-sky/chapters/13-1.mp4'),
-  14: require('../../../assets/string-figures/100_hold-the-sky/chapters/14-1.mp4'),
-  15: require('../../../assets/string-figures/100_hold-the-sky/chapters/15-1.mp4'),
-  16: require('../../../assets/string-figures/100_hold-the-sky/chapters/16-1.mp4'),
-  17: require('../../../assets/string-figures/100_hold-the-sky/chapters/17-1.mp4'),
-  18: require('../../../assets/string-figures/100_hold-the-sky/chapters/18-1.mp4'),
-};
-
 export const FIGURE_100_HOLD_THE_SKY_NONVERBAL_VIDEO_PAIRS = {
   1: {
     primary: require('../../../assets/string-figures/100_hold-the-sky/chapters/01-1.mp4'),

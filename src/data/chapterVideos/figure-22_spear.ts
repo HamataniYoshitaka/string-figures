@@ -1,11 +1,3 @@
-export const FIGURE_22_SPEAR_VIDEOS = {
-  1: require('../../../assets/string-figures/22_spear/chapters/01-1.mp4'),
-  2: require('../../../assets/string-figures/22_spear/chapters/02-1.mp4'),
-  3: require('../../../assets/string-figures/22_spear/chapters/03-1.mp4'),
-  4: require('../../../assets/string-figures/22_spear/chapters/04-1.mp4'),
-  5: require('../../../assets/string-figures/22_spear/chapters/05-1.mp4'),
-};
-
 export const FIGURE_22_SPEAR_NONVERBAL_VIDEO_PAIRS = {
   1: {
     primary: require('../../../assets/string-figures/22_spear/chapters/01-1.mp4'),

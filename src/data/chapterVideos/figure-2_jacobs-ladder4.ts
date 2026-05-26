@@ -1,11 +1,4 @@
 /** 一旦 2_jacobs-ladder4 と同一アセット・4章構成。本番用に差し替え時はパスと章数を更新する */
-export const FIGURE_2_JACOBS_LADDER4_VIDEOS = {
-  1: require('../../../assets/string-figures/2_jacobs-ladder4/chapters/01-1.mp4'),
-  2: require('../../../assets/string-figures/2_jacobs-ladder4/chapters/02-1.mp4'),
-  3: require('../../../assets/string-figures/2_jacobs-ladder4/chapters/03-1.mp4'),
-  4: require('../../../assets/string-figures/2_jacobs-ladder4/chapters/04-1.mp4'),
-};
-
 export const FIGURE_2_JACOBS_LADDER4_NONVERBAL_VIDEO_PAIRS = {
   1: {
     primary: require('../../../assets/string-figures/2_jacobs-ladder4/chapters/01-1.mp4'),

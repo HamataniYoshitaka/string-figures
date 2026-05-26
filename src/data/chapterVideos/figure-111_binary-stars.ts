@@ -1,8 +1,4 @@
 /** 一旦 2_jacobs-ladder4 と同一アセット・4章構成。本番用に差し替え時はパスと章数を更新する */
-export const FIGURE_111_BINARY_STARS_VIDEOS = {
-  1: require('../../../assets/string-figures/111_binary-stars/chapters/01-1.mp4'),
-};
-
 export const FIGURE_111_BINARY_STARS_NONVERBAL_VIDEO_PAIRS = {
   1: {
     primary: require('../../../assets/string-figures/111_binary-stars/chapters/01-1.mp4'),

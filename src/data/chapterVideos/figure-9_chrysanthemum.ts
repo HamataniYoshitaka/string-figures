@@ -1,12 +1,3 @@
-export const FIGURE_9_CHRYSANTHEMUM_VIDEOS = {
-  1: require('../../../assets/string-figures/9_chrysanthemum/chapters/01.mp4'),
-  2: require('../../../assets/string-figures/9_chrysanthemum/chapters/02.mp4'),
-  3: require('../../../assets/string-figures/9_chrysanthemum/chapters/03.mp4'),
-  4: require('../../../assets/string-figures/9_chrysanthemum/chapters/04.mp4'),
-  5: require('../../../assets/string-figures/9_chrysanthemum/chapters/05.mp4'),
-  6: require('../../../assets/string-figures/9_chrysanthemum/chapters/06.mp4'),
-};
-
 export const FIGURE_9_CHRYSANTHEMUM_NONVERBAL_VIDEO_PAIRS = {
   1: {
     primary: require('../../../assets/string-figures/9_chrysanthemum/chapters/01-1.mp4'),

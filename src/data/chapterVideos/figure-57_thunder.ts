@@ -1,15 +1,3 @@
-export const FIGURE_57_THUNDER_VIDEOS = {
-  1: require('../../../assets/string-figures/57_thunder/chapters/01-1.mp4'),
-  2: require('../../../assets/string-figures/57_thunder/chapters/02-1.mp4'),
-  3: require('../../../assets/string-figures/57_thunder/chapters/03-1.mp4'),
-  4: require('../../../assets/string-figures/57_thunder/chapters/04-1.mp4'),
-  5: require('../../../assets/string-figures/57_thunder/chapters/05-1.mp4'),
-  6: require('../../../assets/string-figures/57_thunder/chapters/06-1.mp4'),
-  7: require('../../../assets/string-figures/57_thunder/chapters/07-1.mp4'),
-  8: require('../../../assets/string-figures/57_thunder/chapters/08-1.mp4'),
-  9: require('../../../assets/string-figures/57_thunder/chapters/09-1.mp4'),
-};
-
 export const FIGURE_57_THUNDER_NONVERBAL_VIDEO_PAIRS = {
   1: {
     primary: require('../../../assets/string-figures/57_thunder/chapters/01-1.mp4'),
