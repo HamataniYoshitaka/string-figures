@@ -271,7 +271,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/53_2fawns/preview.mp4'),
   },
   '54_caribou-in-willows': {
-    thumbnail: require('../../assets/string-figures/54_caribou-in-willows/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/54_caribou-in-willows/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/54_caribou-in-willows/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/54_caribou-in-willows/preview.mp4'),
   },
