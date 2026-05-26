@@ -401,7 +401,7 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/80_calophyllum/preview.mp4'),
   },
   '81_bat': {
-    thumbnail: require('../../assets/string-figures/81_bat/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/81_bat/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/81_bat/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/81_bat/preview.mp4'),
   },
