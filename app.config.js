@@ -8,7 +8,7 @@ module.exports = {
       en: './locales/en.json',
       ja: './locales/ja.json',
     },
-    version: '1.0.2',
+    version: '1.1.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
@@ -16,7 +16,7 @@ module.exports = {
     splash: {
       image: './assets/splash-icon.png',
       resizeMode: 'contain',
-      backgroundColor: '#F7F5F2',
+      backgroundColor: '#FFF9EE',
     },
     ios: {
       supportsTablet: true,
@@ -31,7 +31,7 @@ module.exports = {
     android: {
       adaptiveIcon: {
         foregroundImage: './assets/adaptive-icon.png',
-        backgroundColor: '#F7F5F2',
+        backgroundColor: '#FFF9EE',
       },
       icon: './assets/icon.png',
       edgeToEdgeEnabled: true,
