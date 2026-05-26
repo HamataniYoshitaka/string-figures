@@ -290,11 +290,11 @@ const NonverbalReplayButton = forwardRef<ReplayButtonRef, NonverbalReplayButtonP
             >
               {getLocalizedText({ ja: 'もういちど', en: 'Replay' })}
             </Text>
-            <BalloonTail
-              fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
-              position={isBalloonAbove ? 'bottomcenter' : 'topcenter'}
-            />
           </Animated.View>
+          <BalloonTail
+            fillColor={isDisabled ? 'rgba(208, 205, 205, 0.3)' : 'rgba(209, 200, 194, 0.5)'}
+            position={isBalloonAbove ? 'bottomcenterReplay' : 'topcenterReplay'}
+          />
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -368,6 +368,7 @@ const styles = StyleSheet.create({
     height: 32,
     flexDirection: 'row',
     justifyContent: 'center',
+    overflow: 'visible',
   },
   balloonContainerAbove: {
     bottom: undefined,
@@ -377,7 +378,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
-    position: 'relative',
   },
   labelText: {
     fontSize: 24,

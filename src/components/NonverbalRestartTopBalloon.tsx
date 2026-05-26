@@ -105,11 +105,11 @@ const NonverbalRestartTopBalloon = forwardRef<
           <Text maxFontSizeMultiplier={1.25} style={styles.balloonText}>
             {getLocalizedText({ ja: 'はじめから', en: 'Restart' })}
           </Text>
+          <BalloonTail
+            fillColor={BALLOON_BG}
+            position={isTabletLandscape ? 'centerright' : 'topcenterRestart'}
+          />
         </Animated.View>
-        <BalloonTail
-          fillColor={BALLOON_BG}
-          position={isTabletLandscape ? 'centerright' : 'topcenter'}
-        />
       </Animated.View>
     </TouchableWithoutFeedback>
   );
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     backgroundColor: BALLOON_BG,
+    position: 'relative',
   },
   balloonTabletLandscape: {
     borderTopRightRadius: 8,
