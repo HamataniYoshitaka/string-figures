@@ -54,7 +54,7 @@ const chapters = [
     { subtitle: { ja: '', en: '' } },
 ];
 
-const AUTO_SCROLL_TO_P2_DELAY_MS = 4000;
+const AUTO_SCROLL_TO_P2_DELAY_MS = 4500;
 const AUTO_SCROLL_TO_P2_DURATION_MS = 600;
 const NEXT_STEP_BUTTON_REVEAL_DELAY_MS = 9000;
 const PAGE_INDEX_P2 = 1;
@@ -63,7 +63,7 @@ const easeInOut = (t: number) =>
     t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
 const INTRO_HERO_FADE_IN_DELAY_MS = 600;
-const INTRO_ILLUSTRATION_FADE_IN_DELAY_MS = 1000;
+const INTRO_ILLUSTRATION_FADE_IN_DELAY_MS = 1600;
 const INTRO_FADE_IN_DURATION_MS = 500;
 const INTRO_FADE_IN_TRANSLATE_Y = 16;
 const INTRO_PAGE2_TEXT_FADE_IN_DELAY_MS = 300;

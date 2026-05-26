@@ -240,9 +240,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
 
 
-  // 画面にフォーカスが戻ってきた時にブックマーク情報を再読み込み
+  // 画面にフォーカスが戻ってきた時に設定を再読み込み
   useFocusEffect(
     React.useCallback(() => {
+      loadLanguageSetting();
       loadBookmarkedIds();
       loadSelectedHomePage();
       loadPurchasedItems();

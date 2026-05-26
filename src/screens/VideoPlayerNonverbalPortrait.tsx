@@ -760,24 +760,26 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
             <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill={headerBackgroundFill} />
           </Svg>
         </View>
-        <View
-          pointerEvents="box-none"
-          style={
-            isTabletLandscape
-              ? styles.restartTopBalloonContainerTabletLandscape
-              : [styles.restartTopBalloonContainer, { top: fixedHeaderBackgroundHeight - 30 }]
-          }
-        >
-          <NonverbalRestartTopBalloon
-            ref={restartButtonRef}
-            onPress={onRestartFromBeginning}
-            currentChapterIndex={currentChapterIndex}
-            getLocalizedText={getLocalizedText}
-            isTemporarilyDisabled={isTemporarilyDisabled}
-            currentLanguage={currentLanguage}
-            isTabletLandscape={isTabletLandscape}
-          />
-        </View>
+        {currentChapterIndex !== 0 && (
+          <View
+            pointerEvents="box-none"
+            style={
+              isTabletLandscape
+                ? styles.restartTopBalloonContainerTabletLandscape
+                : [styles.restartTopBalloonContainer, { top: fixedHeaderBackgroundHeight - 30 }]
+            }
+          >
+            <NonverbalRestartTopBalloon
+              ref={restartButtonRef}
+              onPress={onRestartFromBeginning}
+              currentChapterIndex={currentChapterIndex}
+              getLocalizedText={getLocalizedText}
+              isTemporarilyDisabled={isTemporarilyDisabled}
+              currentLanguage={currentLanguage}
+              isTabletLandscape={isTabletLandscape}
+            />
+          </View>
+        )}
         <SafeAreaView style={[styles.container, { paddingBottom: containerPaddingBottom, backgroundColor: 'transparent' }]}>
           <View style={styles.header}>
             <TouchableWithoutFeedback
@@ -854,24 +856,26 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
           <Path d="M0 0H428V86C302.976 63.1349 123.158 63.4762 0 86V0Z" fill={headerBackgroundFill} />
         </Svg>
       </View>
-      <View
-        pointerEvents="box-none"
-        style={
-          isTabletLandscape
-            ? styles.restartTopBalloonContainerTabletLandscape
-            : [styles.restartTopBalloonContainer, { top: fixedHeaderBackgroundHeight - 30 }]
-        }
-      >
-        <NonverbalRestartTopBalloon
-          ref={restartButtonRef}
-          onPress={onRestartFromBeginning}
-          currentChapterIndex={currentChapterIndex}
-          currentLanguage={currentLanguage}
-          getLocalizedText={getLocalizedText}
-          isTemporarilyDisabled={isTemporarilyDisabled}
-          isTabletLandscape={isTabletLandscape}
-        />
-      </View>
+      {currentChapterIndex !== 0 && (
+        <View
+          pointerEvents="box-none"
+          style={
+            isTabletLandscape
+              ? styles.restartTopBalloonContainerTabletLandscape
+              : [styles.restartTopBalloonContainer, { top: fixedHeaderBackgroundHeight - 30 }]
+          }
+        >
+          <NonverbalRestartTopBalloon
+            ref={restartButtonRef}
+            onPress={onRestartFromBeginning}
+            currentChapterIndex={currentChapterIndex}
+            currentLanguage={currentLanguage}
+            getLocalizedText={getLocalizedText}
+            isTemporarilyDisabled={isTemporarilyDisabled}
+            isTabletLandscape={isTabletLandscape}
+          />
+        </View>
+      )}
       <View pointerEvents="none" style={[styles.nonverbalStillStripViewport, { height: windowHeight }]}>
         <Animated.View
           style={{
