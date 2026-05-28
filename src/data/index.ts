@@ -146,8 +146,8 @@ export const stringFigures: StringFigure[] = [
     directory: '5_many-stars',
     ...ASSETS_MAP['5_many-stars'],
     description: { 
-      ja: '北アメリカのナバホ族に伝わるあやとりです。複雑な模様が、満天の星のきらめきを美しく表現します', 
-      en: 'This string figure comes from the Navajo people of the United States. Its intricate pattern beautifully expresses the sparkle of a star-filled sky.' 
+      ja: '北アメリカのナバホ族に伝わるあやとりです。複雑な模様が、満天の星のきらめきを美しく表現します。ほとんど同じ手順のあやとりに「こうもり」があります', 
+      en: 'This string figure comes from the Navajo people of the United States. Its intricate pattern beautifully expresses the sparkle of a star-filled sky. There is another string figure with almost the same steps called "Bat."' 
     },
     premiumCourseId: 0, 
     data: {

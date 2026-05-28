@@ -35,6 +35,7 @@ interface Props {
 
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+const NEXT_CHAPTER_COOLDOWN_MS = 500;
 
 // 再生速度の表示文字列を取得する関数
 const getPlaybackRateDisplay = (rate: number): string => {
@@ -109,6 +110,10 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const replayButtonRef = useRef<ReplayButtonRef>(null);
   const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
   const restartButtonRef = useRef<RestartButtonRef>(null);
+  const nextChapterLastAcceptedAtRef = useRef(0);
+  const replayLastAcceptedAtRef = useRef(0);
+  const previousChapterLastAcceptedAtRef = useRef(0);
+  const restartFromBeginningLastAcceptedAtRef = useRef(0);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [isTemporarilyDisabled, setIsTemporarilyDisabled] = useState(false);
@@ -319,6 +324,11 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // つぎへボタンの処理
   const handleNextChapter = async () => {
     if (!videoRef.current) return;
+    const now = Date.now();
+    if (now - nextChapterLastAcceptedAtRef.current < NEXT_CHAPTER_COOLDOWN_MS) {
+      return;
+    }
+    nextChapterLastAcceptedAtRef.current = now;
 
     try {
       const status = await videoRef.current.getStatusAsync();
@@ -381,6 +391,11 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // もういちどボタンの処理
   const handleReplay = async () => {
     if (!videoRef.current) return;
+    const now = Date.now();
+    if (now - replayLastAcceptedAtRef.current < NEXT_CHAPTER_COOLDOWN_MS) {
+      return;
+    }
+    replayLastAcceptedAtRef.current = now;
 
     try {
       await videoRef.current.setPositionAsync(0);
@@ -396,6 +411,11 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // まえボタンの処理
   const handlePreviousChapter = async () => {
     if (!videoRef.current || currentChapterIndex === 0) return;
+    const now = Date.now();
+    if (now - previousChapterLastAcceptedAtRef.current < NEXT_CHAPTER_COOLDOWN_MS) {
+      return;
+    }
+    previousChapterLastAcceptedAtRef.current = now;
 
     try {
       if (currentChapterIndex > 0) {
@@ -412,6 +432,12 @@ const VideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   // はじめからボタンの処理
   const handleRestartFromBeginning = async () => {
+    const now = Date.now();
+    if (now - restartFromBeginningLastAcceptedAtRef.current < NEXT_CHAPTER_COOLDOWN_MS) {
+      return;
+    }
+    restartFromBeginningLastAcceptedAtRef.current = now;
+
     try {
       setShouldAutoPlay(false);
       setCurrentChapterIndex(0);

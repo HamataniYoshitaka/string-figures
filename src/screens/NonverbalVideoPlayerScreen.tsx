@@ -45,6 +45,7 @@ interface Props {
 
 // 再生速度の設定配列
 const PLAYBACK_RATES = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+const CHAPTER_ACTION_COOLDOWN_MS = 500;
 
 // 再生速度の表示文字列を取得する関数
 const getPlaybackRateDisplay = (rate: number): string => {
@@ -82,6 +83,10 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   const replayButtonRef = useRef<ReplayButtonRef>(null);
   const previousChapterButtonRef = useRef<PreviousChapterButtonRef>(null);
   const restartButtonRef = useRef<RestartButtonRef>(null);
+  const nextChapterLastAcceptedAtRef = useRef(0);
+  const replayLastAcceptedAtRef = useRef(0);
+  const previousChapterLastAcceptedAtRef = useRef(0);
+  const restartFromBeginningLastAcceptedAtRef = useRef(0);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [isTemporarilyDisabled, setIsTemporarilyDisabled] = useState(false);
@@ -329,6 +334,11 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // つぎへボタンの処理（playbackPosition はデュアル動画の合成位置）
   const handleNextChapter = async () => {
     if (!videoRef.current) return;
+    const now = Date.now();
+    if (now - nextChapterLastAcceptedAtRef.current < CHAPTER_ACTION_COOLDOWN_MS) {
+      return;
+    }
+    nextChapterLastAcceptedAtRef.current = now;
 
     try {
       if (
@@ -373,6 +383,11 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // もういちどボタンの処理（前半・後半とも 0 に戻して前半から再生）
   const handleReplay = async () => {
     if (!videoRef.current) return;
+    const now = Date.now();
+    if (now - replayLastAcceptedAtRef.current < CHAPTER_ACTION_COOLDOWN_MS) {
+      return;
+    }
+    replayLastAcceptedAtRef.current = now;
 
     try {
       setNonverbalPaddingResetKey((k) => k + 1);
@@ -389,6 +404,11 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
   // まえボタンの処理
   const handlePreviousChapter = async () => {
     if (!videoRef.current || currentChapterIndex === 0) return;
+    const now = Date.now();
+    if (now - previousChapterLastAcceptedAtRef.current < CHAPTER_ACTION_COOLDOWN_MS) {
+      return;
+    }
+    previousChapterLastAcceptedAtRef.current = now;
 
     try {
       if (currentChapterIndex > 0) {
@@ -404,6 +424,12 @@ const NonverbalVideoPlayerScreen: React.FC<Props> = ({ navigation, route }) => {
 
   // はじめからボタンの処理
   const handleRestartFromBeginning = async () => {
+    const now = Date.now();
+    if (now - restartFromBeginningLastAcceptedAtRef.current < CHAPTER_ACTION_COOLDOWN_MS) {
+      return;
+    }
+    restartFromBeginningLastAcceptedAtRef.current = now;
+
     try {
       setNonverbalPaddingResetKey((k) => k + 1);
       setShouldAutoPlay(false);
