@@ -944,7 +944,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                     {columns.map((column, index) => (
                       <View key={`${pageKey}-${index}`} style={styles.column}>
                         {column.map(renderCard)}
-                        {pageKey === 'basic' && index === 0 && renderCard(CommercialCollection1)}
+                        {index === 0 && renderCard(CommercialCollection1)}
                       </View>
                     ))}
                   </View>
