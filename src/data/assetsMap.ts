@@ -361,9 +361,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/72_spindle/preview.mp4'),
   },
   '73_sleeper': {
-    thumbnail: require('../../assets/string-figures/73_sleeper/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/73_sleeper/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/73_sleeper/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/73_sleeper/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/73_sleeper/chapters/01-1.mp4'),
   },
   '74_canoe': {
     thumbnail: require('../../assets/string-figures/74_canoe/thumbnail-kraft.jpg'),

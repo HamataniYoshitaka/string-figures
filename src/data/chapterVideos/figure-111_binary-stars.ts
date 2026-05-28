@@ -84,7 +84,7 @@ export const FIGURE_111_BINARY_STARS_NONVERBAL_CHAPTER_STILL_PAIRS = [
     standby: require('../../../assets/string-figures/111_binary-stars/chapters/04-2.jpg'),
   },
   {
-    primary: require('../../../assets/string-figures/111_binary-stars/chapters/07-1.jpg'),
+    primary: require('../../../assets/string-figures/111_binary-stars/chapters/07-1-1.jpg'),
     secondary: require('../../../assets/string-figures/111_binary-stars/chapters/07-1-2.jpg'),
     standby: require('../../../assets/string-figures/111_binary-stars/chapters/05-2.jpg'),
   },
