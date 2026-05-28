@@ -65,7 +65,7 @@ export const FIGURE_73_SLEEPER_NONVERBAL_CHAPTER_STILL_PAIRS = [
   /** 再生は最終章まで。ストリップ末尾のプレビュー用に直前スロットと別画像 */
   {
     primary: require('../../../assets/string-figures/73_sleeper/chapters/06-1.jpg'),
-    secondary: require('../../../assets/string-figures/73_sleeper/chapters/06-2.jpg'),
+    secondary: require('../../../assets/string-figures/73_sleeper/pattern.jpg'),
     standby: require('../../../assets/string-figures/73_sleeper/chapters/05-2.jpg'),
   },
 ] as const;
