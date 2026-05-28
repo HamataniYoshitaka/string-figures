@@ -37,7 +37,9 @@ interface Props {
 
 /** Figma 準拠のアーチ装飾（viewBox 428×345） */
 const ARCH_VIEWBOX = { w: 428, h: 345 };
-const ARCH_PATH_D = 'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
+const ARCH_PATH_D_DEFAULT = 'M0 0H428V344.5C356.986 221.5 68.416 226 0 344.5V0Z';
+const ARCH_PATH_D_TABLET_LANDSCAPE =
+    'M0 0H428V344.5C356.986 286 68.416 288 0 344.5V0Z';
 const ARCH_FILL_COLOR = '#FF623F';
 /** CloseIcon 28 + backButton padding 8×2 — タイトル中央揃え用の左右対称幅 */
 const HEADER_BACK_BUTTON_WIDTH = 28 + 8 * 2;
@@ -145,6 +147,10 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
     const insets = useSafeAreaInsets();
 
     const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+    const isTabletLandscape = isTablet && screenWidth > screenHeight;
+    const archPathD = isTabletLandscape
+        ? ARCH_PATH_D_TABLET_LANDSCAPE
+        : ARCH_PATH_D_DEFAULT;
     const headerPaddingTop =
         insets.top + (isTablet ? 16 : Platform.OS === 'android' ? 12 : 8);
     const archDisplayHeight = screenWidth * (ARCH_VIEWBOX.h / ARCH_VIEWBOX.w);
@@ -266,7 +272,7 @@ const IntroVoiceScreen: React.FC<Props> = ({ navigation, route }) => {
                         },
                     ]}
                 >
-                    <Path d={ARCH_PATH_D} fill={ARCH_FILL_COLOR} />
+                    <Path d={archPathD} fill={ARCH_FILL_COLOR} />
                 </Svg>
 
                 <SafeAreaView style={styles.safeArea} edges={['bottom', 'left', 'right']}>
