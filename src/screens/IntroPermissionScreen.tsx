@@ -445,6 +445,7 @@ const styles = StyleSheet.create({
         flex: 1,
         zIndex: 1,
         backgroundColor: 'transparent',
+        ...(Platform.OS === 'android' ? { elevation: 2 } : {}),
     },
     archTopFill: {
         position: 'absolute',
@@ -459,8 +460,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         right: 0,
-        zIndex: 1,
-        elevation: 1,
+        zIndex: 0,
+        elevation: 0,
     },
     header: {
         flexDirection: 'row',
