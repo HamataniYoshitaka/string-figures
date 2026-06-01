@@ -753,7 +753,7 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '26',
-    name: { ja: 'ハンモック', en: 'Hammock' },
+    name: { ja: 'あかちゃん', en: 'Baby' },
     difficulty: 'easy',
     directory: '26_hammock',
     ...ASSETS_MAP['26_hammock'],
