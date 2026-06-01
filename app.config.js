@@ -8,7 +8,7 @@ module.exports = {
       en: './locales/en.json',
       ja: './locales/ja.json',
     },
-    version: '1.1.0',
+    version: '1.1.1',
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
@@ -21,6 +21,7 @@ module.exports = {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.hamahouse.string-figures',
+      buildNumber: '2',
       infoPlist: {
         NSSpeechRecognitionUsageDescription: 'このアプリは、動画の操作を音声で行うために音声認識機能を使用します。',
         NSMicrophoneUsageDescription: 'このアプリは、音声認識のためにマイクへのアクセスが必要です。',
@@ -36,6 +37,7 @@ module.exports = {
       icon: './assets/icon.png',
       edgeToEdgeEnabled: true,
       package: 'com.hamahouse.stringfigures',
+      versionCode: 2,
       googleServicesFile: "./google-services.json",
       permissions: ['android.permission.RECORD_AUDIO'],
     },
