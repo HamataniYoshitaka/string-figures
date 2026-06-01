@@ -2007,13 +2007,19 @@ export const stringFigures: StringFigure[] = [
   },
   {
     id: '111',
-    name: { ja: '七夕', en: 'Binary Stars' },
+    name: { ja: 'たなばた', en: 'Binary Star' },
     difficulty: 'medium',
     directory: '111_binary-stars',
     ...ASSETS_MAP['111_binary-stars'],
-    description: { ja: 'このあやとりは、2つの星があることで有名です。手順はかなり複雑ですが、完成系はとても美しいです', en: 'This string figure is famous for having two stars. The sequence is quite complex, but the finished form is very beautiful.' },
+    description: { ja: '左右対称の大きな二つの星が並ぶ美しいあやとりです。その様子を織姫と彦星に見立てて「七夕（たなばた）」と名付けられました。最後の手順で織姫と彦星は別れ、天の川だけが残ります', en: 'This beautiful string figure features two large, symmetrical stars side by side. In Japan, these two stars represent Vega and Altair.' },
     premiumCourseId: 0, 
-    data: null,
+    data: {
+      region: null,
+      source: '“Binary Stars”\nSHISHIDO Yukio\n<i>Modern String Figures — (BISFA 4) </i> (1997)',
+      author: { ja: 'SHISHIDO Yukio', en: 'SHISHIDO Yukio' },
+      references: null
+    },
+
     nonverbalFormat: true
   },
   { id: '99999',
