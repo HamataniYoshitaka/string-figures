@@ -41,9 +41,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/7_snail/chapters/01-1.mp4'),
   },
   '8_elastic-band': {
-    thumbnail: require('../../assets/string-figures/8_elastic-band/thumbnail-kraft-s.gif'),
+    thumbnail: require('../../assets/string-figures/8_elastic-band/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/8_elastic-band/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/8_elastic-band/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/8_elastic-band/chapters/01-1.mp4'),
   },
   '9_chrysanthemum': {
     thumbnail: require('../../assets/string-figures/9_chrysanthemum/thumbnail-nonverbal.png'),
