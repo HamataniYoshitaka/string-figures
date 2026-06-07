@@ -151,9 +151,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/29_two-fishes/preview.mp4'),
   },
   '30_star': {
-    thumbnail: require('../../assets/string-figures/30_star/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/30_star/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/30_star/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/30_star/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/30_star/chapters/01-1.mp4'),
   },
   '31_weaving': { 
     thumbnail: require('../../assets/string-figures/31_weaving/thumbnail-kraft-s.gif'),
