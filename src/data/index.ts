@@ -883,7 +883,7 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['33'],
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '33',

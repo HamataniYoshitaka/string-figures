@@ -161,9 +161,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/31_weaving/preview.mp4'),
   },
   '32_canoe': {
-    thumbnail: require('../../assets/string-figures/32_canoe/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/32_canoe/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/32_canoe/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/32_canoe/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/32_canoe/chapters/01-1.mp4'),
   },
   '33_crub': {
     thumbnail: require('../../assets/string-figures/33_crub/thumbnail-kraft.jpg'),
