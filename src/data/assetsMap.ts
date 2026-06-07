@@ -81,9 +81,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/15_banana/preview.mp4'),
   },
   '16_sensu': {
-    thumbnail: require('../../assets/string-figures/16_sensu/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/16_sensu/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/16_sensu/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/16_sensu/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/16_sensu/chapters/01-1.mp4'),
   },
   '17_broom': {
     thumbnail: require('../../assets/string-figures/17_broom/thumbnail-nonverbal.png'),
