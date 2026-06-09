@@ -6,7 +6,7 @@
       "en": "./locales/en.json",
       "ja": "./locales/ja.json"
     },
-    "version": "1.1.1",
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hamahouse.string-figures",
-      "buildNumber": "2",
+      "buildNumber": "3",
       "infoPlist": {
         "NSSpeechRecognitionUsageDescription": "このアプリは、動画の操作を音声で行うために音声認識機能を使用します。",
         "NSMicrophoneUsageDescription": "このアプリは、音声認識のためにマイクへのアクセスが必要です。",
@@ -35,7 +35,7 @@
       "icon": "./assets/icon.png",
       "edgeToEdgeEnabled": true,
       "package": "com.hamahouse.stringfigures",
-      "versionCode": 2,
+      "versionCode": 3,
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ]
