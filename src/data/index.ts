@@ -90,7 +90,7 @@ export const stringFigures: StringFigure[] = [
     },
     premiumCourseId: 0, 
     data: null,
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '1',
