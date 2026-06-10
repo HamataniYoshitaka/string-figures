@@ -126,9 +126,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/24_shooting-star/chapters/01-1.mp4'),
   },
   '25_fingers-magic': {
-    thumbnail: require('../../assets/string-figures/25_fingers-magic/thumbnail-kraft-s.gif'),
+    thumbnail: require('../../assets/string-figures/25_fingers-magic/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/25_fingers-magic/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/25_fingers-magic/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/25_fingers-magic/chapters/01-1.mp4'),
   },
   '26_hammock': {
     thumbnail: require('../../assets/string-figures/26_hammock/thumbnail-nonverbal.png'),
