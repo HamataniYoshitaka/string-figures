@@ -61,9 +61,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/11_wink/preview.mp4'),
   },
   '12_9-diamonds': {
-    thumbnail: require('../../assets/string-figures/12_9-diamonds/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/12_9-diamonds/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/12_9-diamonds/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/12_9-diamonds/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/12_9-diamonds/chapters/01-1.mp4'),
   },
   '13_easy-broom': {
     thumbnail: require('../../assets/string-figures/13_easy-broom/thumbnail-nonverbal.png'),
