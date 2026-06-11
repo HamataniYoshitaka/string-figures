@@ -474,7 +474,7 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '世界中で親しまれているあやとりのトリックです', en: 'A world-renowned string figure trick.' },
     premiumCourseId: 0, 
     data: null,
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '11',

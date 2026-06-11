@@ -51,9 +51,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/9_chrysanthemum/chapters/01-1.mp4'),
   },
   '10_magic-fingers': {
-    thumbnail: require('../../assets/string-figures/10_magic-fingers/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/10_magic-fingers/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/10_magic-fingers/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/10_magic-fingers/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/10_magic-fingers/chapters/01-1.mp4'),
   },
   '11_wink': {
     thumbnail: require('../../assets/string-figures/11_wink/thumbnail-kraft-s.gif'),
