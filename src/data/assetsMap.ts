@@ -291,9 +291,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/57_thunder/chapters/01-1.mp4'),
   },
   '58_earth-and-sky': {
-    thumbnail: require('../../assets/string-figures/58_earth-and-sky/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/58_earth-and-sky/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/58_earth-and-sky/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/58_earth-and-sky/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/58_earth-and-sky/chapters/01-1.mp4'),
   },
   '59_kayaker': {
     thumbnail: require('../../assets/string-figures/59_kayaker/thumbnail-kraft.gif'),

@@ -1326,7 +1326,7 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '109',
