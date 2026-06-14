@@ -206,9 +206,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/40_moon-over-mountain/preview.mp4'),
   },
   '41_dandelion': {
-    thumbnail: require('../../assets/string-figures/41_dandelion/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/41_dandelion/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/41_dandelion/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/41_dandelion/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/41_dandelion/chapters/01-1.mp4'),
   },
   '42_apaches-door': {
     thumbnail: require('../../assets/string-figures/42_apaches-door/thumbnail-nonverbal.png'),
