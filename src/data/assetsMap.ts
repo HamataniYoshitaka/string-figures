@@ -516,9 +516,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/105_tieup-loop/chapters/01-1.mp4'),
   },
   '106_salt-house': {
-    thumbnail: require('../../assets/string-figures/106_salt-house/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/106_salt-house/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/106_salt-house/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/106_salt-house/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/106_salt-house/chapters/01-1.mp4'),
   },
   '108_toad': {
     thumbnail: require('../../assets/string-figures/108_toad/thumbnail-nonverbal.png'),
