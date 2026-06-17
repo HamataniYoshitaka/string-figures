@@ -506,9 +506,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/103_pair-thunderbird/preview.mp4'),
   },
   '104_baby-born': {
-    thumbnail: require('../../assets/string-figures/104_baby-born/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/104_baby-born/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/104_baby-born/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/104_baby-born/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/104_baby-born/chapters/01-1.mp4'),
   },
   '105_tieup-loop': {
     thumbnail: require('../../assets/string-figures/105_tieup-loop/thumbnail-nonverbal.png'),
