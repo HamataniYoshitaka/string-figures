@@ -8,6 +8,7 @@ import {
   Platform,
   Dimensions,
   Alert,
+  AppState,
   StatusBar,
   type NativeScrollEvent,
   type NativeSyntheticEvent,
@@ -132,6 +133,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   // StringFigureCardのリフレッシュ用キー
   const [refreshKey, setRefreshKey] = useState<number>(Date.now());
 
+  // バックグラウンド復帰時に Image を再マウントするためのキー
+  const [imageEpoch, setImageEpoch] = useState(0);
+
   // 画面幅の状態
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -238,7 +242,15 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     }, 1000);
   }, [checkAndShowReview]);
 
-
+  // バックグラウンド復帰時にネイティブ Image の表示ずれを防ぐ
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextState) => {
+      if (nextState === 'active') {
+        setImageEpoch((prev) => prev + 1);
+      }
+    });
+    return () => subscription.remove();
+  }, []);
 
   // 画面にフォーカスが戻ってきた時に設定を再読み込み
   useFocusEffect(
@@ -512,6 +524,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         currentLanguage={currentLanguage}
         purchasedItems={purchasedItems}
         refreshKey={refreshKey}
+        imageEpoch={imageEpoch}
         onPress={handleItemPress}
         onImageLoad={handleImageLoad}
       />

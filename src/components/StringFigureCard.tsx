@@ -19,6 +19,7 @@ interface Props {
   hideTitle?: boolean;
   purchasedItems?: number[];
   refreshKey?: number;
+  imageEpoch?: number;
   onPress: (item: StringFigure) => void;
   onImageLoad: (itemId: string, event: any) => void;
 }
@@ -31,6 +32,7 @@ const StringFigureCard: React.FC<Props> = ({
   hideTitle = false,
   purchasedItems = [],
   refreshKey,
+  imageEpoch = 0,
   onPress,
   onImageLoad,
 }) => {
@@ -131,6 +133,7 @@ const StringFigureCard: React.FC<Props> = ({
           <View style={styles.cardImageBordered}>
             {item.thumbnail ? (
               <Image
+                key={`${item.id}-${imageEpoch}`}
                 source={typeof item.thumbnail === 'string' ? { uri: item.thumbnail } : item.thumbnail}
                 style={styles.cardImage}
                 resizeMode="cover"

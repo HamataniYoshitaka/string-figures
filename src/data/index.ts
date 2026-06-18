@@ -1783,7 +1783,7 @@ export const stringFigures: StringFigure[] = [
     directory: '93_one-chief',
     ...ASSETS_MAP['93_one-chief'],
     description: { 
-      ja: '同じパターンが様々な地域で伝承されているあやとりです。このあやとりが採取されたカロリン諸島には「二人の首長」というあやとりもありますが、難易度は「ひとりの首長」の方が高いです', 
+      ja: '同じパターンが様々な地域で伝承されているあやとりです。このあやとりが採取されたカロリン諸島には「二人の首長」というあやとりもありますが、難易度はこの「ひとりの首長」の方が高いです', 
       en: 'This string figure is a pattern that has been handed down in many different regions. In the Caroline Islands, where this figure was collected, there is also a version called <i>Two Chiefs,</i> but <i>One Chief</i> is considered the more difficult of the two.' 
     },
     premiumCourseId: 1,
