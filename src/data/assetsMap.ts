@@ -456,9 +456,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/92_6diamonds/chapters/01-1.mp4'),
   },
   '93_one-chief': {
-    thumbnail: require('../../assets/string-figures/93_one-chief/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/93_one-chief/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/93_one-chief/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/93_one-chief/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/93_one-chief/chapters/01-1.mp4'),
   },
   '95_2people-sequence': {
     thumbnail: require('../../assets/string-figures/95_2people-sequence/thumbnail-kraft.gif'),
