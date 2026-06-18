@@ -540,7 +540,7 @@ export const stringFigures: StringFigure[] = [
     directory: '20_tuzumi',
     ...ASSETS_MAP['20_tuzumi'],
     description: { 
-      ja: '日本とナバホ族に伝わるあやとりです。日本では「つづみ」という名前で呼ばれますが、どちらも太鼓を表しています', 
+      ja: '日本では「つづみ」、北アメリカのナバホ族では「ドラム」という名前で伝えられいるあやとりで、どちらも太鼓を表しています', 
       en: 'This string figure is found in both Japan and Navajo tradition. In Japan it is called “Tsuzumi,” and in both cultures the figure represents a drum.' 
     },
     premiumCourseId: 0, 
@@ -550,7 +550,7 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '104',

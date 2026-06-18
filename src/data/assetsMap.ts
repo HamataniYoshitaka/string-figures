@@ -101,9 +101,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/19_two-chiefs/chapters/01-1.mp4'),
   },
   '20_tuzumi': {
-    thumbnail: require('../../assets/string-figures/20_tuzumi/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/20_tuzumi/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/20_tuzumi/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/20_tuzumi/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/20_tuzumi/chapters/01-1.mp4'),
   },
   '21_kikusui': {
     thumbnail: require('../../assets/string-figures/21_kikusui/thumbnail-kraft.jpg'),
