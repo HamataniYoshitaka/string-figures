@@ -436,9 +436,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/88_wrist-magic/preview.mp4'),
   },
   '89_mochitsuki': {
-    thumbnail: require('../../assets/string-figures/89_mochitsuki/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/89_mochitsuki/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/89_mochitsuki/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/89_mochitsuki/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/89_mochitsuki/chapters/01-1.mp4'),
   },
   '90_ring-magic': {
     thumbnail: require('../../assets/string-figures/90_ring-magic/thumbnail-kraft.gif'),

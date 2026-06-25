@@ -44,7 +44,6 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '86_rope-bridge': require('../../assets/string-figures/86_rope-bridge/chapters.json'),
   '87_palm-tree': require('../../assets/string-figures/87_palm-tree/chapters.json'),
   '88_wrist-magic': require('../../assets/string-figures/88_wrist-magic/chapters.json'),
-  '89_mochitsuki': require('../../assets/string-figures/89_mochitsuki/chapters.json'),
   '90_ring-magic': require('../../assets/string-figures/90_ring-magic/chapters.json'),
   '95_2people-sequence': require('../../assets/string-figures/95_2people-sequence/chapters.json'),
   '96_coral': require('../../assets/string-figures/96_coral/chapters.json'),
