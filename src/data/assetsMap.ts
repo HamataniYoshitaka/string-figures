@@ -426,9 +426,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/86_rope-bridge/chapters/01-1.mp4'),
   },
   '87_palm-tree': {
-    thumbnail: require('../../assets/string-figures/87_palm-tree/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/87_palm-tree/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/87_palm-tree/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/87_palm-tree/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/87_palm-tree/chapters/01-1.mp4'),
   },
   '88_wrist-magic': {
     thumbnail: require('../../assets/string-figures/88_wrist-magic/thumbnail-nonverbal.gif'),

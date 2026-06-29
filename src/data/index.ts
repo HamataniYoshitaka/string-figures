@@ -1764,8 +1764,8 @@ export const stringFigures: StringFigure[] = [
     directory: '87_palm-tree',
     ...ASSETS_MAP['87_palm-tree'],
     description: { 
-      ja: 'マレー島に伝わるあやとりです。ここではもう一人の人に手伝ってもらう手順を紹介していますが、足などを用いて一人で取ることも可能です', 
-      en: 'This string figure comes from Malaya. Here we introduce a method that involves help from another person, but it can also be done alone by using your feet, for example.' 
+      ja: 'トレス海峡に伝わるあやとりです。ここではアシスタントに手伝ってもらう手順を紹介していますが、伝承元のマレー島では足の指に糸をかけて一人で取り、地面から垂直に立ち上がるヤシの木を作ります', 
+      en: 'This string figure comes from the Torres Strait. The steps shown here use an assistant, but on Murray Island—the figure’s traditional home—it is performed alone, with the string looped over the toes, to form a palm tree rising vertically from the ground.' 
     },
     premiumCourseId: 0, 
     data: {
@@ -1774,7 +1774,7 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '93',
