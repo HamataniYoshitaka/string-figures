@@ -52,7 +52,7 @@ export const FIGURE_58_EARTH_AND_SKY_NONVERBAL_CHAPTER_STILL_PAIRS = [
   {
     primary: require('../../../assets/string-figures/58_earth-and-sky/chapters/02-1.jpg'),
     secondary: require('../../../assets/string-figures/58_earth-and-sky/chapters/02-1.jpg'),
-    standby: require('../../../assets/string-figures/58_earth-and-sky/chapters/00.jpg'),
+    standby: require('../../../assets/string-figures/58_earth-and-sky/chapters/00-1.jpg'),
   },
   {
     primary: require('../../../assets/string-figures/58_earth-and-sky/chapters/03-1-1.jpg'),
