@@ -155,10 +155,10 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/30_star/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/30_star/chapters/01-1.mp4'),
   },
-  '31_weaving': { 
-    thumbnail: require('../../assets/string-figures/31_weaving/thumbnail-kraft-s.gif'),
+  '31_weaving': {
+    thumbnail: require('../../assets/string-figures/31_weaving/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/31_weaving/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/31_weaving/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/31_weaving/chapters/01-1.mp4'),
   },
   '32_canoe': {
     thumbnail: require('../../assets/string-figures/32_canoe/thumbnail-nonverbal.png'),

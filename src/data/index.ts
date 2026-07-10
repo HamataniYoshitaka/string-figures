@@ -630,8 +630,8 @@ export const stringFigures: StringFigure[] = [
     directory: '88_wrist-magic',
     ...ASSETS_MAP['88_wrist-magic'],
     description: { 
-      ja: '相手の手首に巻きつけた糸が、あっという間に外れる有名なあやとりのトリックです。ここでは人差し指を使った手順を説明していますが、日本では主に中指を使います', 
-      en: 'This is a famous string-figure trick in which the thread wrapped around your partner’s wrist slips off in an instant. Here we explain a method that uses the index fingers, but in Japan people generally use the middle fingers.' 
+      ja: '相手の手首に巻きつけた糸が、あっという間に外れる有名なあやとりのトリックです', 
+      en: 'This is a famous string-figure trick in which the thread wrapped around your partner’s wrist slips off in an instant.' 
     },
     premiumCourseId: 0,
     data: {
@@ -852,18 +852,18 @@ export const stringFigures: StringFigure[] = [
     difficulty: 'easy',
     directory: '31_weaving',
     ...ASSETS_MAP['31_weaving'],
-    description: { 
-      ja: '日本の各地で、さまざまな名前で伝えられているあやとりです。手のひらの向きを変えることで、はたおり機が動きます', 
-      en: 'This string figure is passed down across Japan under various names. By changing the orientation of your palms, the loom appears to move.' 
+    description: {
+      ja: '日本の各地で、さまざまな名前で伝えられているあやとりです。手のひらの向きを変えることで、はたおり機が動きます',
+      en: 'This string figure is passed down across Japan under various names. By changing the orientation of your palms, the loom appears to move.'
     },
-    premiumCourseId: 0, 
+    premiumCourseId: 0,
     data: {
       region: { ja: '日本', en: 'Japan' },
       source: '“はたおり”\n有木昭久, 湯浅清四郎\n <i>楽しいあやとり遊び</i> (1973)',
       author: null,
       references: null
     },
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '32',
