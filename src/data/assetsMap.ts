@@ -471,9 +471,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/96_coral/preview.mp4'),
   },
   '97_barbed-spear': {
-    thumbnail: require('../../assets/string-figures/97_barbed-spear/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/97_barbed-spear/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/97_barbed-spear/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/97_barbed-spear/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/97_barbed-spear/chapters/01-1.mp4'),
   },
   '98_fish-trap': {
     thumbnail: require('../../assets/string-figures/98_fish-trap/thumbnail-nonverbal.png'),
