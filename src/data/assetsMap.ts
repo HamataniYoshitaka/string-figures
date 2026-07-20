@@ -316,9 +316,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/62_japanese-opening/preview.mp4'),
   },
   '64_a-man-flexing-his-biceps': {
-    thumbnail: require('../../assets/string-figures/64_a-man-flexing-his-biceps/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/64_a-man-flexing-his-biceps/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/64_a-man-flexing-his-biceps/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/64_a-man-flexing-his-biceps/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/64_a-man-flexing-his-biceps/chapters/01-1.mp4'),
   },
   '65_dog-walking': {
     thumbnail: require('../../assets/string-figures/65_dog-walking/thumbnail-kraft.gif'),
