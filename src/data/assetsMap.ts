@@ -501,9 +501,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/102_3d-house/preview.mp4'),
   },
   '103_pair-thunderbird': {
-    thumbnail: require('../../assets/string-figures/103_pair-thunderbird/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/103_pair-thunderbird/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/103_pair-thunderbird/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/103_pair-thunderbird/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/103_pair-thunderbird/chapters/01-1.mp4'),
   },
   '104_baby-born': {
     thumbnail: require('../../assets/string-figures/104_baby-born/thumbnail-nonverbal.gif'),
