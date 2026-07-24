@@ -331,9 +331,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/66_mouse/chapters/01-1.mp4'),
   },
   '67_island-moa': {
-    thumbnail: require('../../assets/string-figures/67_island-moa/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/67_island-moa/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/67_island-moa/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/67_island-moa/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/67_island-moa/chapters/01-1.mp4'),
   },
   '68_laia-flower': {
     thumbnail: require('../../assets/string-figures/68_laia-flower/thumbnail-nonverbal.png'),
