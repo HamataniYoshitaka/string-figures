@@ -28,7 +28,6 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '65_dog-walking': require('../../assets/string-figures/65_dog-walking/chapters.json'),
   '69_moon-between-mountains': require('../../assets/string-figures/69_moon-between-mountains/chapters.json'),
   '70_mountains': require('../../assets/string-figures/70_mountains/chapters.json'),
-  '72_spindle': require('../../assets/string-figures/72_spindle/chapters.json'),
   '76_sunrise-sunset': require('../../assets/string-figures/76_sunrise-sunset/chapters.json'),
   '77_bats': require('../../assets/string-figures/77_bats/chapters.json'),
   '79_omamori': require('../../assets/string-figures/79_omamori/chapters.json'),
