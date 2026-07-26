@@ -116,9 +116,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/22_spear/chapters/01-1.mp4'),
   },
   '23_finger-stroll': {
-    thumbnail: require('../../assets/string-figures/23_finger-stroll/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/23_finger-stroll/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/23_finger-stroll/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/23_finger-stroll/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/23_finger-stroll/chapters/01-1.mp4'),
   },
   '24_shooting-star': {
     thumbnail: require('../../assets/string-figures/24_shooting-star/thumbnail-nonverbal.png'),
