@@ -47,7 +47,15 @@ module.exports = {
     plugins: [
       'expo-font',
       'expo-speech-recognition',
-      'expo-localization',
+      [
+        'expo-localization',
+        {
+          supportedLocales: {
+            ios: ['en', 'ja'],
+            android: ['en', 'ja'],
+          },
+        },
+      ],
       [
         'expo-notifications',
         {
