@@ -1191,7 +1191,7 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '52',
@@ -1745,8 +1745,8 @@ export const stringFigures: StringFigure[] = [
     directory: '86_rope-bridge',
     ...ASSETS_MAP['86_rope-bridge'],
     description: { 
-      ja: 'パプアニューギニアのあやとりです。右手を引くと、大きな荷物を担いだ二人が吊り橋を渡って行きます。ここではもう一人の人に手伝ってもらう手順を紹介していますが、棒を口でくわえる、などの方法で一人で取ることも可能です', 
-      en: 'This string figure comes from Papua New Guinea. When you pull your right hand, a man carrying lumber crosses a suspension bridge. Here we introduce a method that involves assistance from another person, but it is also possible to perform it alone—for example, by holding the stick in your mouth.' 
+      ja: 'パプアニューギニアのあやとりです。右手を引くと、大きな荷物を担いだ二人が吊り橋を渡って行きます。ここではアシスタントに手伝ってもらう手順を紹介していますが、棒を口でくわえる、などの方法で一人で取ることも可能です', 
+      en: 'This string figure comes from Papua New Guinea. When you pull your right hand, a man carrying lumber crosses a suspension bridge. The steps shown here use an assistant, but it is also possible to do it alone—for example, by holding the stick in your mouth.' 
     },
     premiumCourseId: 3,
     data: {

@@ -15,7 +15,6 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '44_butterfly': require('../../assets/string-figures/44_butterfly/chapters.json'),
   '48_shovel': require('../../assets/string-figures/48_shovel/chapters.json'),
   '50_2story-siberian-house': require('../../assets/string-figures/50_2story-siberian-house/chapters.json'),
-  '51_seagull': require('../../assets/string-figures/51_seagull/chapters.json'),
   '52_mouth': require('../../assets/string-figures/52_mouth/chapters.json'),
   '53_2fawns': require('../../assets/string-figures/53_2fawns/chapters.json'),
   '55_parrot': require('../../assets/string-figures/55_parrot/chapters.json'),
