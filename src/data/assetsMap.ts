@@ -281,9 +281,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/55_parrot/preview.mp4'),
   },
   '56_teepee': {
-    thumbnail: require('../../assets/string-figures/56_teepee/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/56_teepee/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/56_teepee/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/56_teepee/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/56_teepee/chapters/01-1.mp4'),
   },
   '57_thunder': {
     thumbnail: require('../../assets/string-figures/57_thunder/thumbnail-nonverbal.png'),
