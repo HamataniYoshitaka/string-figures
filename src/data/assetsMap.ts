@@ -251,9 +251,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/49_caribou/chapters/01-1-1.mp4'),
   },
   '50_2story-siberian-house': {
-    thumbnail: require('../../assets/string-figures/50_2story-siberian-house/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/50_2story-siberian-house/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/50_2story-siberian-house/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/50_2story-siberian-house/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/50_2story-siberian-house/chapters/01-1.mp4'),
   },
   '51_seagull': {
     thumbnail: require('../../assets/string-figures/51_seagull/thumbnail-nonverbal.png'),
