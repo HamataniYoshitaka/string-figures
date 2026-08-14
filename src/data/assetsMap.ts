@@ -241,9 +241,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/47_turtle/chapters/01-1.mp4'),
   },
   '48_shovel': {
-    thumbnail: require('../../assets/string-figures/48_shovel/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/48_shovel/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/48_shovel/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/48_shovel/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/48_shovel/chapters/01-1.mp4'),
   },
   '49_caribou': {
     thumbnail: require('../../assets/string-figures/49_caribou/thumbnail-nonverbal.png'),
