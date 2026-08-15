@@ -136,9 +136,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/26_hammock/chapters/01-1.mp4'),
   },
   '27_fish': {
-    thumbnail: require('../../assets/string-figures/27_fish/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/27_fish/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/27_fish/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/27_fish/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/27_fish/chapters/01-1.mp4'),
   },
   '28_atanua-house': {
     thumbnail: require('../../assets/string-figures/28_atanua-house/thumbnail-nonverbal.png'),
