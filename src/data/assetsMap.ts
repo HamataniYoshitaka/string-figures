@@ -266,9 +266,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/52_mouth/preview.mp4'),
   },
   '53_2fawns': {
-    thumbnail: require('../../assets/string-figures/53_2fawns/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/53_2fawns/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/53_2fawns/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/53_2fawns/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/53_2fawns/chapters/01-1.mp4'),
   },
   '54_caribou-in-willows': {
     thumbnail: require('../../assets/string-figures/54_caribou-in-willows/thumbnail-nonverbal.png'),
