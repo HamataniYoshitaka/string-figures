@@ -602,7 +602,7 @@ export const stringFigures: StringFigure[] = [
     },
     premiumCourseId: 1, // 有料コース1
     data: null,
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   {
     id: '16',

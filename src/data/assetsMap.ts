@@ -16,9 +16,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/2_jacobs-ladder4/chapters/01-1.mp4'),
   },
   '3_spiderweb': {
-    thumbnail: require('../../assets/string-figures/3_spiderweb/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/3_spiderweb/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/3_spiderweb/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/3_spiderweb/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/3_spiderweb/chapters/01-1.mp4'),
   },
   '4_volcano': {
     thumbnail: require('../../assets/string-figures/4_volcano/thumbnail-nonverbal.png'),
