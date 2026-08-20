@@ -381,9 +381,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/76_sunrise-sunset/preview.mp4'),
   },
   '77_bats': {
-    thumbnail: require('../../assets/string-figures/77_bats/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/77_bats/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/77_bats/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/77_bats/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/77_bats/chapters/01-1.mp4'),
   },
   '78_bridge-turtle-plane': {
     thumbnail: require('../../assets/string-figures/78_bridge-turtle-plane/thumbnail-nonverbal.gif'),
