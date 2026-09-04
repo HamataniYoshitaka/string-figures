@@ -23,7 +23,6 @@ export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
   '80_calophyllum': require('../../assets/string-figures/80_calophyllum/chapters.json'),
   '82_storm-clouds': require('../../assets/string-figures/82_storm-clouds/chapters.json'),
   '83_dancers': require('../../assets/string-figures/83_dancers/chapters.json'),
-  '84_swan': require('../../assets/string-figures/84_swan/chapters.json'),
   '99_raven': require('../../assets/string-figures/99_raven/chapters.json'),
   '101_pola-bear': require('../../assets/string-figures/101_pola-bear/chapters.json'),
   '102_3d-house': require('../../assets/string-figures/102_3d-house/chapters.json'),

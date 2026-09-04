@@ -416,9 +416,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/83_dancers/preview.mp4'),
   },
   '84_swan': {
-    thumbnail: require('../../assets/string-figures/84_swan/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/84_swan/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/84_swan/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/84_swan/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/84_swan/chapters/01-1.mp4'),
   },
   '86_rope-bridge': {
     thumbnail: require('../../assets/string-figures/86_rope-bridge/thumbnail-nonverbal.gif'),
