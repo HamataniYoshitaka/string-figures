@@ -91,9 +91,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/17_broom/chapters/01-1.mp4'),
   },
   '18_mt-fuji': {
-    thumbnail: require('../../assets/string-figures/18_mt-fuji/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/18_mt-fuji/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/18_mt-fuji/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/18_mt-fuji/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/18_mt-fuji/chapters/01-1.mp4'),
   },
   '19_two-chiefs': {
     thumbnail: require('../../assets/string-figures/19_two-chiefs/thumbnail-nonverbal.png'),
