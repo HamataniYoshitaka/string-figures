@@ -146,9 +146,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/28_atanua-house/chapters/01-1.mp4'),
   },
   '29_two-fishes': {
-    thumbnail: require('../../assets/string-figures/29_two-fishes/thumbnail-kraft-s.gif'),
+    thumbnail: require('../../assets/string-figures/29_two-fishes/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/29_two-fishes/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/29_two-fishes/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/29_two-fishes/chapters/01-1.mp4'),
   },
   '30_star': {
     thumbnail: require('../../assets/string-figures/30_star/thumbnail-nonverbal.png'),
