@@ -406,9 +406,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/81_bat/chapters/01-1.mp4'),
   },
   '82_storm-clouds': {
-    thumbnail: require('../../assets/string-figures/82_storm-clouds/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/82_storm-clouds/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/82_storm-clouds/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/82_storm-clouds/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/82_storm-clouds/chapters/01-1.mp4'),
   },
   '83_dancers': {
     thumbnail: require('../../assets/string-figures/83_dancers/thumbnail-kraft.gif'),
