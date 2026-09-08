@@ -1,7 +1,6 @@
 import { Chapter } from '../types';
 
 export const CHAPTERS_MAP: { [key: string]: Chapter[] } = {
-  '11_wink': require('../../assets/string-figures/11_wink/chapters.json'),
   '14_footprint': require('../../assets/string-figures/14_footprint/chapters.json'),
   '15_banana': require('../../assets/string-figures/15_banana/chapters.json'),
   '39_the-sun': require('../../assets/string-figures/39_the-sun/chapters.json'),
