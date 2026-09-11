@@ -261,9 +261,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/51_seagull/chapters/01-1.mp4'),
   },
   '52_mouth': {
-    thumbnail: require('../../assets/string-figures/52_mouth/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/52_mouth/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/52_mouth/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/52_mouth/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/52_mouth/chapters/01-1.mp4'),
   },
   '53_2fawns': {
     thumbnail: require('../../assets/string-figures/53_2fawns/thumbnail-nonverbal.png'),
