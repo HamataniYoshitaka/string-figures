@@ -216,9 +216,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/42_apaches-door/chapters/01-1.mp4'),
   },
   '43_trampoline': {
-    thumbnail: require('../../assets/string-figures/43_trampoline/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/43_trampoline/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/43_trampoline/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/43_trampoline/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/43_trampoline/chapters/01-1.mp4'),
   },
   '44_butterfly': {
     thumbnail: require('../../assets/string-figures/44_butterfly/thumbnail-kraft-s.gif'),
