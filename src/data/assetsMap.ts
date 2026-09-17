@@ -491,9 +491,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/100_hold-the-sky/chapters/01-1.mp4'),
   },
   '101_pola-bear': {
-    thumbnail: require('../../assets/string-figures/101_pola-bear/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/101_pola-bear/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/101_pola-bear/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/101_pola-bear/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/101_pola-bear/chapters/01-1.mp4'),
   },
   '102_3d-house': {
     thumbnail: require('../../assets/string-figures/102_3d-house/thumbnail-kraft.jpg'),

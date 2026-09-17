@@ -1909,7 +1909,7 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['65', '84'],
-    nonverbalFormat: false
+    nonverbalFormat: true
   },
   // {
   //   id: '102',
