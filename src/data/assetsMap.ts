@@ -481,9 +481,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/98_fish-trap/chapters/01-1.mp4'),
   },
   '99_raven': {
-    thumbnail: require('../../assets/string-figures/99_raven/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/99_raven/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/99_raven/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/99_raven/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/99_raven/chapters/01-1.mp4'),
   },
   '100_hold-the-sky': {
     thumbnail: require('../../assets/string-figures/100_hold-the-sky/thumbnail-nonverbal.png'),
