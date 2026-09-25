@@ -391,9 +391,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/78_bridge-turtle-plane/chapters/01-1.mp4'),
   },
   '79_omamori': {
-    thumbnail: require('../../assets/string-figures/79_omamori/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/79_omamori/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/79_omamori/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/79_omamori/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/79_omamori/chapters/01-1.mp4'),
   },
   '80_calophyllum': {
     thumbnail: require('../../assets/string-figures/80_calophyllum/thumbnail-kraft.jpg'),
