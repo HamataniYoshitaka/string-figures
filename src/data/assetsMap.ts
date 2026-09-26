@@ -196,9 +196,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/38_dance-stage/chapters/01-1.mp4'),
   },
   '39_the-sun': {
-    thumbnail: require('../../assets/string-figures/39_the-sun/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/39_the-sun/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/39_the-sun/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/39_the-sun/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/39_the-sun/chapters/01-1.mp4'),
   },
   '40_moon-over-mountain': {
     thumbnail: require('../../assets/string-figures/40_moon-over-mountain/thumbnail-nonverbal.gif'),
