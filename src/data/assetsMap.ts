@@ -346,9 +346,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/69_moon-between-mountains/chapters/01-1.mp4'),
   },
   '70_mountains': {
-    thumbnail: require('../../assets/string-figures/70_mountains/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/70_mountains/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/70_mountains/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/70_mountains/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/70_mountains/chapters/01-1.mp4'),
   },
   '71_siberian-house': {
     thumbnail: require('../../assets/string-figures/71_siberian-house/thumbnail-nonverbal.gif'),
