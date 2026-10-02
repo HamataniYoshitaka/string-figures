@@ -341,9 +341,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/68_laia-flower/chapters/01-1.mp4'),
   },
   '69_moon-between-mountains': {
-    thumbnail: require('../../assets/string-figures/69_moon-between-mountains/thumbnail-kraft.jpg'),
+    thumbnail: require('../../assets/string-figures/69_moon-between-mountains/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/69_moon-between-mountains/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/69_moon-between-mountains/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/69_moon-between-mountains/chapters/01-1.mp4'),
   },
   '70_mountains': {
     thumbnail: require('../../assets/string-figures/70_mountains/thumbnail-kraft.jpg'),
