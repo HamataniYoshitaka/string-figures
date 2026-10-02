@@ -296,9 +296,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/58_earth-and-sky/chapters/01-1.mp4'),
   },
   '59_kayaker': {
-    thumbnail: require('../../assets/string-figures/59_kayaker/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/59_kayaker/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/59_kayaker/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/59_kayaker/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/59_kayaker/chapters/01-1.mp4'),
   },
   '60_position1': {
     thumbnail: require('../../assets/string-figures/60_position1/thumbnail-kraft.jpg'),
