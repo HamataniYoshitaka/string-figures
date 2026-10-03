@@ -276,9 +276,9 @@ export const ASSETS_MAP: {
     previewUrl: require('../../assets/string-figures/54_caribou-in-willows/chapters/01-1.mp4'),
   },
   '55_parrot': {
-    thumbnail: require('../../assets/string-figures/55_parrot/thumbnail-kraft.gif'),
+    thumbnail: require('../../assets/string-figures/55_parrot/thumbnail-nonverbal.gif'),
     patternImage: require('../../assets/string-figures/55_parrot/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/55_parrot/preview.mp4'),
+    previewUrl: require('../../assets/string-figures/55_parrot/chapters/01-1.mp4'),
   },
   '56_teepee': {
     thumbnail: require('../../assets/string-figures/56_teepee/thumbnail-nonverbal.png'),
