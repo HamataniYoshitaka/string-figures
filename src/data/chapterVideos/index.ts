@@ -476,7 +476,6 @@ import {
   FIGURE_101_POLA_BEAR_NONVERBAL_TOTAL_CHAPTERS,
   FIGURE_101_POLA_BEAR_NONVERBAL_VIDEO_PAIRS,
 } from './figure-101_pola-bear';
-import { FIGURE_102_3D_HOUSE_VIDEOS } from './figure-102_3d-house';
 import {
   FIGURE_103_PAIR_THUNDERBIRD_NONVERBAL_CHAPTER_STILL_PAIRS,
   FIGURE_103_PAIR_THUNDERBIRD_NONVERBAL_TOTAL_CHAPTERS,
@@ -538,7 +537,6 @@ export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
   '60_position1': FIGURE_60_POSITION1_VIDEOS,
   '61_opening-a': FIGURE_61_OPENING_A_VIDEOS,
   '62_japanese-opening': FIGURE_62_JAPANESE_OPENING_VIDEOS,
-  '102_3d-house': FIGURE_102_3D_HOUSE_VIDEOS,
 };
 
 export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, NonverbalChapterVideoPair>> = {

@@ -495,11 +495,6 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/101_pola-bear/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/101_pola-bear/chapters/01-1.mp4'),
   },
-  '102_3d-house': {
-    thumbnail: require('../../assets/string-figures/102_3d-house/thumbnail-kraft.jpg'),
-    patternImage: require('../../assets/string-figures/102_3d-house/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/102_3d-house/preview.mp4'),
-  },
   '103_pair-thunderbird': {
     thumbnail: require('../../assets/string-figures/103_pair-thunderbird/thumbnail-nonverbal.png'),
     patternImage: require('../../assets/string-figures/103_pair-thunderbird/pattern.jpg'),

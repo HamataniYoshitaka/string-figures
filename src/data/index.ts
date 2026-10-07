@@ -1911,24 +1911,6 @@ export const stringFigures: StringFigure[] = [
     relatedFigures: ['65', '84'],
     nonverbalFormat: true
   },
-  // {
-  //   id: '102',
-  //   name: { ja: '3Dハウス', en: '3D House' },
-  //   difficulty: 'hard',
-  //   directory: '102_3d-house',
-  //   ...ASSETS_MAP['102_3d-house'],
-  //   description: { 
-  //     ja: '', 
-  //     en: '' 
-  //   },
-  //   premiumCourseId: 0, 
-  //   data: {
-  //     region: { ja: '日本', en: 'Japan' },
-  //     source: '“3D House”\nK. Haddon\n <i>Some Australian String Figures</i> (1912)',
-  //     author: null,
-  //     references: null
-  //   }
-  // },
   {
     id: '103',
     name: { ja: 'つがいのライチョウ', en: 'Two Ptarmigans' },
