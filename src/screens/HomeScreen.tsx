@@ -63,8 +63,8 @@ const HOME_PAGE_BACKGROUND_COLORS = [
   '#B5CFF0', // basic
   '#9BB262', // easy
   '#FDBBDF', // medium (normal)
-  '#FADA5E', // hard
-  '#7EB8D8', // two_people（上記以外のトーン）
+  '#7EB8D8', // hard
+  '#FADA5E', // two_people（上記以外のトーン）
   '#D9B8E8', // bookmark
 ] as const;
 
@@ -554,9 +554,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           currentLanguage: currentLanguage,
           hideCloseButton: false,
         });
-      }
-      if (item.directNavigationDestination === 'SwitchingExplanationVideo') {
-        navigation.navigate('SwitchingExplanationVideo');
       }
       return;
     }

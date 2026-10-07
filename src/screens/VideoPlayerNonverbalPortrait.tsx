@@ -65,8 +65,8 @@ const DIFFICULTY_HEADER_FILL_COLORS = {
   basic: '#B5CFF0',
   easy: '#9BB262',
   medium: '#FDBBDF',
-  hard: '#FADA5E',
-  two_people: '#7EB8D8',
+  hard: '#7EB8D8',
+  two_people: '#FADA5E',
 } as const;
 
 type DifficultyHeaderFillKey = keyof typeof DIFFICULTY_HEADER_FILL_COLORS;

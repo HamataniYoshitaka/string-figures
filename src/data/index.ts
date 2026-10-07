@@ -12,19 +12,6 @@ import { ASSETS_MAP } from './assetsMap';
  */
 
 export const stringFigures: StringFigure[] = [
-  { id: '99997',
-    name: { ja: '解説動画を切り替え中です...', en: 'Switching explanation video...' },
-    difficulty: 'basic',
-    directory: '99997-switching',
-    thumbnail: require('../../assets/string-figures/99997-switching/thumbnail.jpg'),
-    patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
-    previewUrl: require('../../assets/string-figures/1_star/chapters/01-1.mp4'),
-    description: { ja: '解説動画を切り替え中です...', en: 'Switching explanation video...' },
-    premiumCourseId: 0,
-    directNavigationDestination: 'SwitchingExplanationVideo',
-    data: null,
-    nonverbalFormat: false
-  },
   {
     id: '6',
     name: { ja: 'ひもの結びかた', en: 'How to Tie a String Loop' },
