@@ -13,34 +13,6 @@ import { ASSETS_MAP } from './assetsMap';
 
 export const stringFigures: StringFigure[] = [
   {
-    id: '6',
-    name: { ja: 'ひもの結びかた', en: 'How to Tie a String Loop' },
-    difficulty: 'basic',
-    directory: '6_tieup',
-    ...ASSETS_MAP['6_tieup'],
-    description: { 
-      ja: 'まずはあやとりに使うひもを作りましょう\nここでは簡単で結び目の小さい「相引き結び（テグス結び）」を紹介します。\n何種類かの長さのひもを用意して使い分けると良いでしょう', 
-      en: 'First, learn how to tie the strings used for string figures.\nThis introduction will focus on the simple and small "Fisherman\'s Knot". It is recommended to prepare various lengths of strings to use them appropriately.' 
-    },
-    premiumCourseId: 0, 
-    data: null,
-    nonverbalFormat: true
-  },
-  {
-    id: '105',
-    name: { ja: 'ひもの束ねかた', en: 'How to Bundle a String Loop' },
-    difficulty: 'basic',
-    directory: '105_tieup-loop',
-    ...ASSETS_MAP['105_tieup-loop'],
-    description: { 
-      ja: 'あやとりの輪をコンパクトにたたむ簡単な方法を紹介します', 
-      en: 'This section introduces a simple way to neatly fold a string figure loop.' 
-    },
-    premiumCourseId: 0, 
-    data: null,
-    nonverbalFormat: true
-  },
-  {
     id: '1',
     name: { ja: '星', en: 'Star' },
     difficulty: 'easy',
@@ -1969,9 +1941,37 @@ export const stringFigures: StringFigure[] = [
 
     nonverbalFormat: true
   },
+  {
+    id: '6',
+    name: { ja: 'ひもの結びかた', en: 'How to Tie a String Loop' },
+    difficulty: 'easy',
+    directory: '6_tieup',
+    ...ASSETS_MAP['6_tieup'],
+    description: { 
+      ja: 'まずはあやとりに使うひもを作りましょう\nここでは簡単で結び目の小さい「相引き結び（テグス結び）」を紹介します。\n何種類かの長さのひもを用意して使い分けると良いでしょう', 
+      en: 'First, learn how to tie the strings used for string figures.\nThis introduction will focus on the simple and small "Fisherman\'s Knot". It is recommended to prepare various lengths of strings to use them appropriately.' 
+    },
+    premiumCourseId: 0, 
+    data: null,
+    nonverbalFormat: true
+  },
+  {
+    id: '105',
+    name: { ja: 'ひもの束ねかた', en: 'How to Bundle a String Loop' },
+    difficulty: 'easy',
+    directory: '105_tieup-loop',
+    ...ASSETS_MAP['105_tieup-loop'],
+    description: { 
+      ja: 'あやとりの輪をコンパクトにたたむ簡単な方法を紹介します', 
+      en: 'This section introduces a simple way to neatly fold a string figure loop.' 
+    },
+    premiumCourseId: 0, 
+    data: null,
+    nonverbalFormat: true
+  },
   { id: '99999',
-    name: { ja: 'このアプリの使い方', en: 'How to use this app' },
-    difficulty: 'basic',
+    name: { ja: 'このアプリの使いかた', en: 'How to use this app' },
+    difficulty: 'easy',
     directory: '0_introduction',
     thumbnail: require('../../assets/string-figures/0_introduction/thumbnail.webp'),
     patternImage: require('../../assets/string-figures/1_star/pattern.jpg'),
@@ -1981,6 +1981,5 @@ export const stringFigures: StringFigure[] = [
     directNavigationDestination: 'Intro',
     data: null,
     nonverbalFormat: false
-  },  
-
+  },
 ];

@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { BookmarkIcon, EasyIcon, NormalIcon, HardIcon, TutorialIcon, TwoPeopleIcon } from './icons';
+import { BookmarkIcon, EasyIcon, NormalIcon, HardIcon, TwoPeopleIcon } from './icons';
 
-type HomePageKey = 'basic' | 'easy' | 'medium' | 'hard' | 'two_people' | 'bookmark';
+type HomePageKey = 'easy' | 'medium' | 'hard' | 'two_people' | 'bookmark';
 
 interface FilterButtonsProps {
   pages: HomePageKey[];
@@ -27,7 +27,6 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
   const [containerWidth, setContainerWidth] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [buttonLayouts, setButtonLayouts] = useState<Record<HomePageKey, { x: number; width: number }>>({
-    basic: { x: 0, width: 0 },
     easy: { x: 0, width: 0 },
     medium: { x: 0, width: 0 },
     hard: { x: 0, width: 0 },
@@ -59,7 +58,6 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
 
   const getPageText = (pageKey: HomePageKey) => {
     const pageTexts: Record<HomePageKey, { ja: string; en: string }> = {
-      basic: { ja: 'きほん', en: 'Basic' },
       easy: { ja: 'かんたん', en: 'Easy' },
       medium: { ja: 'ふつう', en: 'Normal' },
       hard: { ja: 'むずかしい', en: 'Hard' },
@@ -71,9 +69,6 @@ const FilterButtons: React.FC<FilterButtonsProps> = ({
 
   const renderPageIcon = (pageKey: HomePageKey) => {
     const strokeColor = '#292524';
-    if (pageKey === 'basic') {
-      return <TutorialIcon width={28} height={28} strokeColor={strokeColor} strokeWidth={1} />;
-    }
     if (pageKey === 'easy') {
       return <EasyIcon width={28} height={28} strokeColor={strokeColor} strokeWidth={1} />;
     }

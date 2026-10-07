@@ -54,13 +54,12 @@ interface Props {
   navigation: HomeScreenNavigationProp;
 }
 
-type HomePageKey = 'basic' | 'easy' | 'medium' | 'hard' | 'two_people' | 'bookmark';
-const HOME_PAGE_KEYS: HomePageKey[] = ['basic', 'easy', 'medium', 'hard', 'two_people', 'bookmark'];
-const DEFAULT_HOME_PAGE: HomePageKey = 'basic';
+type HomePageKey = 'easy' | 'medium' | 'hard' | 'two_people' | 'bookmark';
+const HOME_PAGE_KEYS: HomePageKey[] = ['easy', 'medium', 'hard', 'two_people', 'bookmark'];
+const DEFAULT_HOME_PAGE: HomePageKey = 'easy';
 
 /** HOME_PAGE_KEYS と同じ順。スワイプ中の背景色補間に使用 */
 const HOME_PAGE_BACKGROUND_COLORS = [
-  '#B5CFF0', // basic
   '#9BB262', // easy
   '#FDBBDF', // medium (normal)
   '#7EB8D8', // hard
@@ -334,7 +333,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const isHomePageKey = (value: unknown): value is HomePageKey =>
-    value === 'basic' ||
     value === 'easy' ||
     value === 'medium' ||
     value === 'hard' ||
@@ -352,6 +350,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const loadSelectedHomePage = async () => {
     try {
       const savedPage = await AsyncStorage.getItem('selectedHomePage');
+      if (savedPage === 'basic') {
+        setSelectedPageKey('easy');
+        saveSelectedHomePage('easy');
+        return;
+      }
       if (savedPage && isHomePageKey(savedPage)) {
         setSelectedPageKey(savedPage);
         return;
@@ -468,7 +471,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       acc[pageKey] = organizeIntoColumns(pageFigures, columnsCount);
       return acc;
     }, {
-      basic: [],
       easy: [],
       medium: [],
       hard: [],
