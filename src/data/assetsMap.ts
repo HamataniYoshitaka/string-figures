@@ -540,4 +540,9 @@ export const ASSETS_MAP: {
     patternImage: require('../../assets/string-figures/111_binary-stars/pattern.jpg'),
     previewUrl: require('../../assets/string-figures/111_binary-stars/chapters/01-1.mp4'),
   },
+  '112_czechia': {
+    thumbnail: require('../../assets/string-figures/112_czechia/thumbnail-nonverbal.png'),
+    patternImage: require('../../assets/string-figures/112_czechia/pattern.jpg'),
+    previewUrl: require('../../assets/string-figures/112_czechia/chapters/01-1.mp4'),
+  },
 };

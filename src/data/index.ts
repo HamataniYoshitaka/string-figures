@@ -2022,6 +2022,23 @@ export const stringFigures: StringFigure[] = [
 
     nonverbalFormat: true
   },
+  {
+    id: '112',
+    name: { ja: 'チェコ', en: 'Czechia' },
+    difficulty: 'easy',
+    directory: '112_czechia',
+    ...ASSETS_MAP['112_czechia'],
+    description: { ja: '特徴的なチェコの国旗が見事に表現されたあやとりです。', en: 'This string figure beautifully represents the distinctive Czechia flag.' },
+    premiumCourseId: 0, 
+    data: {
+      region: null,
+      source: '“Flag Patterns”\nMAEKAWA Jun\n<i>Bulletin of String Figures Association 6 </i> (1981)',
+      author: { ja: '前川 淳', en: 'Jun Maekawa' },
+      references: null
+    },
+
+    nonverbalFormat: true
+  },
   { id: '99999',
     name: { ja: 'このアプリの使い方', en: 'How to use this app' },
     difficulty: 'basic',
