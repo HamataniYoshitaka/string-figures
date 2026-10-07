@@ -576,14 +576,10 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const handlePlayVideo = (item: StringFigure) => {
     handleCloseBottomSheet();
-    if (item.nonverbalFormat === true) {
-      navigation.navigate('NonverbalVideoPlayer', {
-        stringFigure: item,
-        currentLanguage: currentLanguage,
-      });
-    } else {
-      navigation.navigate('VideoPlayer', { stringFigure: item, currentLanguage: currentLanguage });
-    }
+    navigation.navigate('NonverbalVideoPlayer', {
+      stringFigure: item,
+      currentLanguage: currentLanguage,
+    });
   };
 
   const handleAdditionalCollectionPress = () => {

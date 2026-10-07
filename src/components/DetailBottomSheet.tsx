@@ -5,8 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  Image,
-  Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -14,15 +12,13 @@ import {
   BottomSheetScrollView,
   BottomSheetBackdrop,
 } from '@gorhom/bottom-sheet';
-import { Video, ResizeMode } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { StringFigure } from '../types';
-import { EasyIcon, NormalIcon, HardIcon, PlayIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon, TwoPeopleIcon, InfoCircleIcon, LockIcon } from './icons';
+import { EasyIcon, NormalIcon, HardIcon, BookmarkIcon, TutorialIcon, ExternalLinkIcon, TwoPeopleIcon, InfoCircleIcon } from './icons';
 import { useOrientation } from '../hooks/useOrientation';
 import { stringFigures } from '../data/index';
 import RelatedFigures from './RelatedFigures';
-import PurchaseButton from './PurchaseButton';
 import DetailBottomSheetNonverbalHero from './DetailBottomSheetNonverbalHero';
 
 /** @gorhom/bottom-sheet の BottomSheetBackground 既定の borderRadius に合わせる */
@@ -272,127 +268,22 @@ const DetailBottomSheet = forwardRef<DetailBottomSheetRef, Props>(({
 
         {/* コンテンツ */}
         <View style={styles.content}>
-          {item.nonverbalFormat ? (
-            <DetailBottomSheetNonverbalHero
-              item={item}
-              currentLanguage={currentLanguage}
-              isLocked={Boolean(isLocked)}
-              isAdditionalScene={isAdditionalScene}
-              purchasedItems={purchasedItems}
-              priceString={priceString}
-              onPlayPress={handlePlayPress}
-              onAdditionalCollectionPress={onAdditionalCollectionPress}
-              onPurchasePress={onPurchasePress}
-              getLocalizedText={getLocalizedText}
-              getButtonBackgroundColor={getButtonBackgroundColor}
-            />
-          ) : (
-            <>
-              {/* プレビュー動画エリア */}
-              <View style={styles.imageContainer}>
-                {item.previewUrl ? (
-                  <Video
-                    source={typeof item.previewUrl === 'string' 
-                      ? { uri: item.previewUrl } 
-                      : item.previewUrl
-                    }
-                    style={styles.videoPreview}
-                    shouldPlay={true}
-                    isLooping={true}
-                    isMuted={true}
-                    resizeMode={ResizeMode.COVER}
-                    useNativeControls={false}
-                  />
-                ) : (
-                  <View style={styles.imagePlaceholder}>
-                    <Text style={styles.imageText}>
-                      {getLocalizedText({ ja: '動画プレビュー', en: 'Video Preview' })}
-                    </Text>
-                  </View>
-                )}
-                {/* 白のグラデーション */}
-                <LinearGradient
-                  colors={['rgba(255,255,255,1.0)','rgba(255,255,255,0.4)', 'rgba(255,255,255,0.4)']}
-                  style={styles.gradientOverlayTop}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 0, y: 1 }}
-                />
-                {/* 白のグラデーション */}
-                <LinearGradient
-                  colors={['rgba(255,255,255,0.4)','rgba(255,255,255,0.4)', 'rgba(255,255,255,1.0)']}
-                  style={styles.gradientOverlayBottom}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 0, y: 1 }}
-                />
-                
-                {isAdditionalScene && item && item.premiumCourseId !== 0 ? (
-                  <View style={styles.purchaseButtonWrapper}>
-                    <PurchaseButton
-                      onPress={onPurchasePress}
-                      collectionId={item.premiumCourseId}
-                      currentLanguage={currentLanguage}
-                      backgroundColor={getButtonBackgroundColor()}
-                      disabled={purchasedItems.includes(item.premiumCourseId)}
-                      priceString={priceString}
-                    />
-                  </View>
-                ) : isLocked ? (
-                  <View style={styles.additionalCollectionButtonWrapper}>
-                    <TouchableOpacity
-                      style={[styles.additionalCollectionButton, { backgroundColor: getButtonBackgroundColor() }]}
-                      onPress={onAdditionalCollectionPress}
-                    >
-                      <LockIcon width={20} height={20} strokeWidth={0} fillColor="#ffffff" />
-                      <Text style={styles.additionalCollectionButtonText} maxFontSizeMultiplier={1.25}>
-                        {getLocalizedText({ ja: '追加コレクションを見る', en: 'See Additional Collection' })}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                ) : (
-                  <TouchableOpacity
-                    style={styles.playButton}
-                    onPress={handlePlayPress}
-                  >
-                    <PlayIcon width={24} height={28} strokeWidth={3} />
-                  </TouchableOpacity>
-                )}
-              </View>
-
-              {/* サムネイル - プレビュー動画エリアに重ねる */}
-              <View style={styles.thumbnailContainer}>
-                <View style={styles.thumbnail}>
-                  {item.patternImage ? (
-                    <Image 
-                      source={typeof item.patternImage === 'string' 
-                        ? { uri: item.patternImage } 
-                        : item.patternImage
-                      } 
-                      style={styles.thumbnailImage}
-                      resizeMode="cover"
-                    />
-                  ) : (
-                    <Text style={styles.thumbnailText}>
-                      {getLocalizedText({ ja: '完成図', en: 'Pattern' })}
-                    </Text>
-                  )}
-                </View>
-              </View>
-            </>
-          )}
+          <DetailBottomSheetNonverbalHero
+            item={item}
+            currentLanguage={currentLanguage}
+            isLocked={Boolean(isLocked)}
+            isAdditionalScene={isAdditionalScene}
+            purchasedItems={purchasedItems}
+            priceString={priceString}
+            onPlayPress={handlePlayPress}
+            onAdditionalCollectionPress={onAdditionalCollectionPress}
+            onPurchasePress={onPurchasePress}
+            getLocalizedText={getLocalizedText}
+            getButtonBackgroundColor={getButtonBackgroundColor}
+          />
 
           {/* 作品情報 */}
-          <View style={[styles.infoContainer, item.nonverbalFormat && styles.infoContainerNonverbal]}>
-            {!item.nonverbalFormat && (
-              <Text 
-                maxFontSizeMultiplier={1.35}
-                style={[
-                  styles.title,
-                  { fontFamily: currentLanguage === 'en' ? 'KronaOne-Regular' : 'LineSeed-Bold' }
-                ]}
-              >
-                {getLocalizedText(item.name)}
-              </Text>
-            )}
+          <View style={styles.infoContainer}>
             <View style={styles.difficultyContainer}>
               {(() => {
                 const IconComponent = getDifficultyIcon(item.difficulty);
@@ -641,136 +532,9 @@ const styles = StyleSheet.create({
   content: {
     // flex: 1 を削除（スクロール可能なコンテンツでは不要）
   },
-  imageContainer: {
-    position: 'relative',
-    marginBottom: 20,
-    marginHorizontal: 2,
-  },
-  imagePlaceholder: {
-    height: 240,
-    width: '100%',
-    backgroundColor: '#F5F5F5',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  videoPreview: {
-    height: 240,
-    width: '100%',
-    backgroundColor: '#F5F5F5',
-  },
-  gradientOverlayTop: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 100,
-  },
-  gradientOverlayBottom: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 140,
-  },
-  imageText: {
-    color: '#9E9E9E',
-    fontSize: 16,
-  },
-  playButton: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -35,
-    marginLeft: -35,
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    borderWidth: 2,
-    borderColor: 'white',
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingStart: 4,
-  },
-  additionalCollectionButtonWrapper: {
-    position: 'absolute',
-    top: '40%',
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  purchaseButtonWrapper: {
-    position: 'absolute',
-    top: '40%',
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 60,
-  },
-  additionalCollectionButton: {
-    borderRadius: 28,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    gap: 8,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.35,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
-  },
-  additionalCollectionButtonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: '700',
-  },
-  thumbnailContainer: {
-    position: 'absolute',
-    top: 180,
-    alignSelf: 'center',
-    zIndex: 10,
-  },
-  thumbnail: {
-    width: 120,
-    height: 120,
-    backgroundColor: '#F5F5F5',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#79716B',
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-  },
-  thumbnailImage: {
-    width: '100%',
-    height: '100%',
-  },
-  thumbnailText: {
-    color: '#9E9E9E',
-    fontSize: 12,
-  },
   infoContainer: {
     paddingHorizontal: 20,
-    marginTop: 48,
-  },
-  infoContainerNonverbal: {
     marginTop: 12,
-  },
-  title: {
-    fontSize: 24,
-    color: '#333',
-    marginBottom: 12,
-    textAlign: 'center',
   },
   difficultyContainer: {
     flexDirection: 'row',

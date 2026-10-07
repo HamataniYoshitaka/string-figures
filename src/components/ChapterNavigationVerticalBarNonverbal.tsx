@@ -1,11 +1,14 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { View, StyleSheet } from 'react-native';
-import NonverbalPreviousChapterLandscapeButton from './NonverbalPreviousChapterLandscapeButton';
-import { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
-import NonverbalReplayLandscapeButton from './NonverbalReplayLandscapeButton';
-import { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
-import NonverbalNextChapterLandscapeButton from './NonverbalNextChapterLandscapeButton';
-import { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
+import NonverbalPreviousChapterLandscapeButton, {
+  PreviousChapterLandscapeButtonRef,
+} from './NonverbalPreviousChapterLandscapeButton';
+import NonverbalReplayLandscapeButton, {
+  ReplayLandscapeButtonRef,
+} from './NonverbalReplayLandscapeButton';
+import NonverbalNextChapterLandscapeButton, {
+  NextChapterLandscapeButtonRef,
+} from './NonverbalNextChapterLandscapeButton';
 import NonverbalRestartButtonVertical from './NonverbalRestartButtonVertical';
 import AnimatedChapterNumberVertical from './AnimatedChapterNumberVertical';
 import { Chapter, StringFigure } from '../types';

@@ -12,10 +12,10 @@ import {
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { VideoPlayerSharedProps } from './VideoPlayerScreen';
+import { VideoPlayerSharedProps } from './videoPlayerSharedProps';
 import VideoPlayerNonverbalControlPanel from '../components/VideoPlayerNonverbalControlPanel';
 import { BookmarkIcon, CloseIcon } from '../components/icons';
-import { CHAPTER_VIDEOS, NONVERBAL_CHAPTER_VIDEO_PAIRS } from '../data/chapterVideos';
+import { NONVERBAL_CHAPTER_VIDEO_PAIRS } from '../data/chapterVideos';
 
 /** 前半（*-1）終了後、1枚目 Video レイヤーをフェードアウトする時間 */
 const NONVERBAL_PRIMARY_FADE_OUT_MS = 300;
@@ -74,13 +74,9 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
   const primaryFadeAnimationRef = useRef<Animated.CompositeAnimation | null>(null);
 
   const chapterNumber = currentChapterIndex + 1;
-  const fallbackVideoSource = stringFigure
-    ? CHAPTER_VIDEOS[stringFigure.directory]?.[chapterNumber]
+  const nonverbalVideoPair = stringFigure?.directory
+    ? NONVERBAL_CHAPTER_VIDEO_PAIRS[stringFigure.directory]?.[chapterNumber]
     : undefined;
-  const nonverbalVideoPair =
-    stringFigure?.nonverbalFormat && stringFigure.directory
-      ? NONVERBAL_CHAPTER_VIDEO_PAIRS[stringFigure.directory]?.[chapterNumber]
-      : undefined;
   const hasVideoPair = Boolean(nonverbalVideoPair);
 
   const pushSegmentPlayback = useCallback(
@@ -418,17 +414,7 @@ const VideoPlayerNonverbalLandscape: React.FC<VideoPlayerSharedProps> = ({
                   />
                 </Animated.View>
               </>
-            ) : (
-              <Video
-                key={`chapter-${currentChapterIndex}`}
-                ref={videoRef}
-                source={fallbackVideoSource}
-                style={styles.videoFill}
-                {...sharedVideoProps}
-                onPlaybackStatusUpdate={onPlaybackStatusUpdate}
-                onLoad={onVideoLoad}
-              />
-            )}
+            ) : null}
           </View>
         </View>
 

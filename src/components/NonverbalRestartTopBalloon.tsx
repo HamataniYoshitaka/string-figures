@@ -8,7 +8,10 @@ import {
 } from 'react-native';
 import { SkipBackwardIcon } from './icons';
 import BalloonTail from './icons/BalloonTail';
-import type { RestartButtonRef } from './RestartButton';
+
+export interface RestartButtonRef {
+  triggerRipple: () => void;
+}
 
 interface NonverbalRestartTopBalloonProps {
   onPress: () => void;

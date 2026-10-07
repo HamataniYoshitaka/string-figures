@@ -530,9 +530,6 @@ export type NonverbalChapterStillTriple = {
   standby: any;
 };
 
-export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
-};
-
 export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, NonverbalChapterVideoPair>> = {
   '1_star': FIGURE_1_STAR_NONVERBAL_VIDEO_PAIRS,
   '2_jacobs-ladder4': FIGURE_2_JACOBS_LADDER4_NONVERBAL_VIDEO_PAIRS,

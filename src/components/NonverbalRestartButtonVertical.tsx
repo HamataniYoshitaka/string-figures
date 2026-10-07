@@ -2,7 +2,10 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
 import { SkipBackwardIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
-import type { RestartButtonVerticalRef } from './RestartButtonVertical';
+
+export interface RestartButtonVerticalRef {
+  triggerRipple: () => void;
+}
 
 interface NonverbalRestartButtonVerticalProps {
   onPress: () => void;

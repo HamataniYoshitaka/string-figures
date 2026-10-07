@@ -19,7 +19,6 @@ export interface StringFigure {
   } | null;
   prerequisite?: string;
   relatedFigures?: string[];
-  nonverbalFormat?: boolean;
 }
 
 export interface Chapter {
@@ -45,7 +44,6 @@ export type RootStackParamList = {
   IntroComplete: undefined;
   IntroError: undefined;
   Home: undefined;
-  VideoPlayer: { stringFigure: StringFigure, currentLanguage: 'ja' | 'en' };
   NonverbalVideoPlayer: { stringFigure: StringFigure; currentLanguage: 'ja' | 'en' };
   Additional: undefined;  
   Policy: undefined;

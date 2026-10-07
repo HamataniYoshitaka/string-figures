@@ -8,7 +8,10 @@ import React, {
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import SpeedButtonTail from './icons/SpeedButtonTail';
-import type { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
+
+export interface ReplayLandscapeButtonRef {
+  triggerRipple: () => void;
+}
 import {
   getNonverbalCompositePlaybackPositionMs,
   getNonverbalCurrentChapterProgress,

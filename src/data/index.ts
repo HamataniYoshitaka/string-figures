@@ -6,7 +6,6 @@ import { ASSETS_MAP } from './assetsMap';
  * - 新しいあやとりを追加する場合は、ここに情報を追加してください。
  * - `directory`は、`src/assets/string-figures/` 内のフォルダ名と一致させてください。
  * - `premiumCourseId` は、0が無料、1以降が有料コースのIDを示します。
- * - ./chaptersMap.ts にも同様の追加が必要です。
  * - ./chapterVideos/figure-{directoryName}.ts にも各あやとりの動画パスを追加してください。
  * - ./assetsMap.ts にも同様の追加が必要です。
  */
@@ -21,7 +20,6 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '手のひらにかわいい星ができます。短め、太めのひもを使うと良いでしょう', en: 'A cute star can be made on the palm. It is good to use short and thick string.' },
     premiumCourseId: 0, 
     data: null,
-    nonverbalFormat: true
   },
   {
     id: '4',
@@ -37,7 +35,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '78',
@@ -56,7 +53,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
 
   {
@@ -77,7 +73,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['81'],
-    nonverbalFormat: true
   },
   {
     id: '8',
@@ -99,7 +94,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '13',
@@ -117,7 +111,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '22',
@@ -136,7 +129,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '25',
@@ -152,7 +144,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '89',
@@ -170,7 +161,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '95',
@@ -189,7 +179,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
 
   {
@@ -209,7 +198,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '36',
@@ -228,7 +216,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   { 
     id: '37',
@@ -247,7 +234,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '2',
@@ -266,7 +252,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '91',
@@ -285,7 +270,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '64',
@@ -304,7 +288,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
 
   {
@@ -324,7 +307,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '90',
@@ -343,7 +325,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
 
   {
@@ -364,7 +345,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['41'],
-    nonverbalFormat: true
   },
   {
     id: '7',
@@ -383,7 +363,6 @@ export const stringFigures: StringFigure[] = [
       author: { ja: '有木昭久', en: 'ARIKI Teruhisa' },
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '10',
@@ -394,7 +373,6 @@ export const stringFigures: StringFigure[] = [
     description: { ja: '世界中で親しまれているあやとりのトリックです', en: 'A world-renowned string figure trick.' },
     premiumCourseId: 0, 
     data: null,
-    nonverbalFormat: true
   },
   {
     id: '11',
@@ -413,7 +391,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '12',
@@ -432,7 +409,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '14',
@@ -451,7 +427,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '20',
@@ -470,7 +445,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '104',
@@ -489,7 +463,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
 
   {
@@ -508,7 +481,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '3',
@@ -522,7 +494,6 @@ export const stringFigures: StringFigure[] = [
     },
     premiumCourseId: 1, // 有料コース1
     data: null,
-    nonverbalFormat: true
   },
   {
     id: '16',
@@ -541,7 +512,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '88',
@@ -560,7 +530,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
 
   {
@@ -579,7 +548,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
     },
   {
     id: '18',
@@ -595,7 +563,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
     },
   {
     id: '19',
@@ -615,7 +582,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['93'],
-    nonverbalFormat: true
   },
   {
     id: '21',
@@ -634,7 +600,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '23',
@@ -650,7 +615,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '24',
@@ -669,7 +633,6 @@ export const stringFigures: StringFigure[] = [
       author: { ja: 'SHISHIDO Yukio', en: 'SHISHIDO Yukio' },
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '26',
@@ -688,7 +651,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '27',
@@ -707,7 +669,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '28',
@@ -726,7 +687,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
     },
   {
     id: '29',
@@ -745,7 +705,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
     },
   {
     id: '30',
@@ -764,7 +723,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '31',
@@ -783,7 +741,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '32',
@@ -803,7 +760,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['33'],
-    nonverbalFormat: true
   },
   {
     id: '33',
@@ -824,7 +780,6 @@ export const stringFigures: StringFigure[] = [
     },
     prerequisite: '32',
     relatedFigures: ['32'],
-    nonverbalFormat: true
   },
   { 
     id: '38',
@@ -844,7 +799,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['34', '80'],
-    nonverbalFormat: true
   },
   {
     id: '34',
@@ -864,7 +818,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['38', '80'],
-    nonverbalFormat: true
   },
   {
     id: '39',
@@ -883,7 +836,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
     },
   {
     id: '40',
@@ -902,7 +854,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '45',
@@ -921,7 +872,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '42',
@@ -941,7 +891,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['56'],
-    nonverbalFormat: true
   },
 
   { 
@@ -962,7 +911,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['9'],
-    nonverbalFormat: true
   },
   {
     id: '43',
@@ -981,7 +929,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
     },
   {
     id: '44',
@@ -999,7 +946,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '46',
@@ -1018,7 +964,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '47',
@@ -1036,7 +981,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '48',
@@ -1052,7 +996,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
     },
   {
     id: '49',
@@ -1072,7 +1015,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['54'],
-    nonverbalFormat: true
   },
   {
     id: '50',
@@ -1092,7 +1034,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['71'],
-    nonverbalFormat: true
   },
   {
     id: '51',
@@ -1111,7 +1052,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '52',
@@ -1130,7 +1070,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '53',
@@ -1149,7 +1088,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '54',
@@ -1169,7 +1107,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['49'],
-    nonverbalFormat: true
   },
   {
     id: '55',
@@ -1188,7 +1125,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '56',
@@ -1208,7 +1144,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['42'],
-    nonverbalFormat: true
   },
   {
     id: '57',
@@ -1227,7 +1162,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '58',
@@ -1246,7 +1180,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '109',
@@ -1265,7 +1198,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
 
   {
@@ -1286,7 +1218,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['70'],
-    nonverbalFormat: true
   },
   {
     id: '65',
@@ -1306,7 +1237,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['101'],
-    nonverbalFormat: true
   },
   {
     id: '66',
@@ -1325,7 +1255,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '67',
@@ -1344,7 +1273,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '68',
@@ -1363,7 +1291,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '69',
@@ -1382,7 +1309,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '70',
@@ -1403,7 +1329,6 @@ export const stringFigures: StringFigure[] = [
     },
     prerequisite: '59',
     relatedFigures: ['59'],
-    nonverbalFormat: true
   },
   {
     id: '71',
@@ -1423,7 +1348,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['50'],
-    nonverbalFormat: true
   },
   {
     id: '72',
@@ -1442,7 +1366,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '73',
@@ -1460,7 +1383,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '74',
@@ -1480,7 +1402,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['75'],
-    nonverbalFormat: true
   },
   {
     id: '75',
@@ -1501,7 +1422,6 @@ export const stringFigures: StringFigure[] = [
     },
     prerequisite: '74',
     relatedFigures: ['74'],
-    nonverbalFormat: true
   },
   {
     id: '76',
@@ -1520,7 +1440,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '77',
@@ -1539,7 +1458,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '79',
@@ -1558,7 +1476,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '80',
@@ -1578,7 +1495,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['38', '34'],
-    nonverbalFormat: true
   },
   {
     id: '81',
@@ -1598,7 +1514,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['5'],
-    nonverbalFormat: true
   },
   {
     id: '82',
@@ -1617,7 +1532,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '83',
@@ -1636,7 +1550,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '84',
@@ -1656,7 +1569,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['101'],
-    nonverbalFormat: true
   },
   {
     id: '86',
@@ -1675,7 +1587,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '87',
@@ -1694,7 +1605,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '93',
@@ -1714,7 +1624,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['19'],
-    nonverbalFormat: true
   },
   {
     id: '96',
@@ -1733,7 +1642,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '97',
@@ -1752,7 +1660,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '98',
@@ -1771,7 +1678,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '99',
@@ -1790,7 +1696,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '100',
@@ -1809,7 +1714,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '101',
@@ -1829,7 +1733,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
     relatedFigures: ['65', '84'],
-    nonverbalFormat: true
   },
   {
     id: '103',
@@ -1848,7 +1751,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '106',
@@ -1867,7 +1769,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '108',
@@ -1886,7 +1787,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '110',
@@ -1905,7 +1805,6 @@ export const stringFigures: StringFigure[] = [
       author: null,
       references: null
     },
-    nonverbalFormat: true
   },
   {
     id: '111',
@@ -1922,7 +1821,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
 
-    nonverbalFormat: true
   },
   {
     id: '112',
@@ -1939,7 +1837,6 @@ export const stringFigures: StringFigure[] = [
       references: null
     },
 
-    nonverbalFormat: true
   },
   {
     id: '6',
@@ -1953,7 +1850,6 @@ export const stringFigures: StringFigure[] = [
     },
     premiumCourseId: 0, 
     data: null,
-    nonverbalFormat: true
   },
   {
     id: '105',
@@ -1967,7 +1863,6 @@ export const stringFigures: StringFigure[] = [
     },
     premiumCourseId: 0, 
     data: null,
-    nonverbalFormat: true
   },
   { id: '99999',
     name: { ja: 'このアプリの使いかた', en: 'How to use this app' },
@@ -1980,6 +1875,5 @@ export const stringFigures: StringFigure[] = [
     premiumCourseId: 0,
     directNavigationDestination: 'Intro',
     data: null,
-    nonverbalFormat: false
   },
 ];

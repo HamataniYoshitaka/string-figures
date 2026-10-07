@@ -2,7 +2,10 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'react-native';
 import { ArrowUpIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
-import type { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
+
+export interface PreviousChapterLandscapeButtonRef {
+  triggerRipple: () => void;
+}
 
 interface NonverbalPreviousChapterLandscapeButtonProps {
   onPress: () => void;

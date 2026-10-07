@@ -238,7 +238,7 @@ const AdditionalScreen: React.FC<Props> = ({ navigation, route }) => {
 
     const handlePlayVideo = (item: StringFigure) => {
         handleCloseBottomSheet();
-        navigation.navigate('VideoPlayer', { stringFigure: item, currentLanguage: currentLanguage });
+        navigation.navigate('NonverbalVideoPlayer', { stringFigure: item, currentLanguage: currentLanguage });
     };
 
     const toggleBookmark = () => {

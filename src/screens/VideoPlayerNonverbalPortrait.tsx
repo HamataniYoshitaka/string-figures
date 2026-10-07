@@ -20,11 +20,10 @@ import LandScapeIcon from '../components/icons/LandScape';
 import ChapterNavigationBarNonverbal from '../components/ChapterNavigationBarNonverbal';
 import NonverbalRestartTopBalloon from '../components/NonverbalRestartTopBalloon';
 
-import { VideoPlayerSharedProps } from './VideoPlayerScreen';
+import { VideoPlayerSharedProps } from './videoPlayerSharedProps';
 import { EMPTY_NONVERBAL_SEGMENT_PLAYBACK } from '../utils/nonverbalChapterPlayback';
 import { useDeviceInfo } from '../hooks/useDeviceInfo';
 import {
-  CHAPTER_VIDEOS,
   NONVERBAL_CHAPTER_STILL_PAIRS,
   NONVERBAL_CHAPTER_VIDEO_PAIRS,
 } from '../data/chapterVideos';
@@ -489,14 +488,11 @@ const VideoPlayerNonverbalPortrait: React.FC<VideoPlayerSharedProps> = ({
   };
 
   const chapterNumber = currentChapterIndex + 1;
-  const fallbackVideoSource = stringFigure
-    ? CHAPTER_VIDEOS[stringFigure.directory]?.[chapterNumber]
-    : undefined;
-  const nonverbalVideoPair = stringFigure?.nonverbalFormat
+  const nonverbalVideoPair = stringFigure
     ? NONVERBAL_CHAPTER_VIDEO_PAIRS[stringFigure.directory]?.[chapterNumber]
     : undefined;
-  const primaryVideoSource = nonverbalVideoPair?.primary ?? fallbackVideoSource;
-  const secondaryVideoSource = nonverbalVideoPair?.secondary ?? fallbackVideoSource;
+  const primaryVideoSource = nonverbalVideoPair?.primary;
+  const secondaryVideoSource = nonverbalVideoPair?.secondary;
   const currentVideoSource = activeSegment === 'primary' ? primaryVideoSource : secondaryVideoSource;
 
   const pushSegmentPlayback = (update: Partial<{

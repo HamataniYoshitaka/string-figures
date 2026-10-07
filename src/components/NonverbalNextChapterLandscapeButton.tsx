@@ -3,7 +3,10 @@ import { TouchableWithoutFeedback, Animated, View, Text, StyleSheet } from 'reac
 import { ArrowDownIcon, CheckIcon } from './icons';
 import SpeedButtonTail from './icons/SpeedButtonTail';
 import { Chapter, StringFigure } from '../types';
-import type { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
+
+export interface NextChapterLandscapeButtonRef {
+  triggerRipple: () => void;
+}
 
 interface NonverbalNextChapterLandscapeButtonProps {
   onPress: () => void;

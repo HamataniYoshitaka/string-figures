@@ -9,11 +9,10 @@ import {
 
 import { CloseIcon } from './icons';
 import LandScapeIcon from './icons/LandScape';
-import { NextChapterLandscapeButtonRef } from './NextChapterLandscapeButton';
-import { ReplayLandscapeButtonRef } from './ReplayLandscapeButton';
-import { PreviousChapterLandscapeButtonRef } from './PreviousChapterLandscapeButton';
+import { NextChapterLandscapeButtonRef } from './NonverbalNextChapterLandscapeButton';
+import { ReplayLandscapeButtonRef } from './NonverbalReplayLandscapeButton';
+import { PreviousChapterLandscapeButtonRef } from './NonverbalPreviousChapterLandscapeButton';
 import ChapterNavigationVerticalBarNonverbal from './ChapterNavigationVerticalBarNonverbal';
-// import SpeedControlLandscape from './SpeedControlLandscape';
 import { Chapter, StringFigure } from '../types';
 import {
   EMPTY_NONVERBAL_SEGMENT_PLAYBACK,
