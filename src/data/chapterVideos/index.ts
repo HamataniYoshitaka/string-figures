@@ -293,14 +293,11 @@ import {
   FIGURE_59_KAYAKER_NONVERBAL_TOTAL_CHAPTERS,
   FIGURE_59_KAYAKER_NONVERBAL_VIDEO_PAIRS,
 } from './figure-59_kayaker';
-import { FIGURE_60_POSITION1_VIDEOS } from './figure-60_position1';
-import { FIGURE_61_OPENING_A_VIDEOS } from './figure-61_opening-a';
 import {
   FIGURE_64_A_MAN_FLEXING_HIS_BICEPS_NONVERBAL_CHAPTER_STILL_PAIRS,
   FIGURE_64_A_MAN_FLEXING_HIS_BICEPS_NONVERBAL_TOTAL_CHAPTERS,
   FIGURE_64_A_MAN_FLEXING_HIS_BICEPS_NONVERBAL_VIDEO_PAIRS,
 } from './figure-64_a-man-flexing-his-biceps';
-import { FIGURE_62_JAPANESE_OPENING_VIDEOS } from './figure-62_japanese-opening';
 import {
   FIGURE_65_DOG_WALKING_NONVERBAL_CHAPTER_STILL_PAIRS,
   FIGURE_65_DOG_WALKING_NONVERBAL_TOTAL_CHAPTERS,
@@ -534,9 +531,6 @@ export type NonverbalChapterStillTriple = {
 };
 
 export const CHAPTER_VIDEOS: Record<string, Record<number, any>> = {
-  '60_position1': FIGURE_60_POSITION1_VIDEOS,
-  '61_opening-a': FIGURE_61_OPENING_A_VIDEOS,
-  '62_japanese-opening': FIGURE_62_JAPANESE_OPENING_VIDEOS,
 };
 
 export const NONVERBAL_CHAPTER_VIDEO_PAIRS: Record<string, Record<number, NonverbalChapterVideoPair>> = {

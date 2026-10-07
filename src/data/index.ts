@@ -40,45 +40,6 @@ export const stringFigures: StringFigure[] = [
     nonverbalFormat: true
   },
   {
-    id: '60',
-    name: { ja: 'はじめの構え', en: 'Position 1' },
-    difficulty: 'basic',
-    directory: '60_position1',
-    ...ASSETS_MAP['60_position1'],
-    description: { 
-      ja: '「はじめの構え」は、ほとんどのあやとりの開始位置となる、最も基本的な構えです', 
-      en: 'The "Position 1" is the most basic position for most string figures.' 
-    },
-    premiumCourseId: 0, 
-    data: null,
-    nonverbalFormat: false
-  },
-  {
-    id: '61',
-    name: { ja: '人差し指の構え', en: 'Opening A' },
-    difficulty: 'basic',
-    directory: '61_opening-a',
-    ...ASSETS_MAP['61_opening-a'],
-    description: { ja: '世界中のあやとりの多くが、この「人差し指の構え」から始まります', en: 'Most string figures in the world start with this "Opening A".' },
-    premiumCourseId: 0, 
-    data: null,
-    nonverbalFormat: false
-  },
-  {
-    id: '62',
-    name: { ja: '中指の構え', en: 'Japanese Opening' },
-    difficulty: 'basic',
-    directory: '62_japanese-opening',
-    ...ASSETS_MAP['62_japanese-opening'],
-    description: { 
-      ja: '日本のあやとりの多くが、この「中指の構え」から始まります', 
-      en: 'Most string figures in Japan start with this "Japanese Opening".' 
-    },
-    premiumCourseId: 0, 
-    data: null,
-    nonverbalFormat: false
-  },
-  {
     id: '105',
     name: { ja: 'ひもの束ねかた', en: 'How to Bundle a String Loop' },
     difficulty: 'basic',
